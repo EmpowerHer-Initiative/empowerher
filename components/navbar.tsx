@@ -30,8 +30,8 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div>
-      <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-xs">
+    <div className="sticky top-0 z-50">
+      <nav className="w-full border-b bg-background/95 backdrop-blur-xs">
         <div className="container flex h-16 items-center justify-between">
           <Link href="/">
             <Logo className="size-8 text-primary" />
