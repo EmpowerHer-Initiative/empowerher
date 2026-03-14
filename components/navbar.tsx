@@ -1,0 +1,94 @@
+"use client"
+
+import Link from "next/link"
+import { Logo } from "./icons/logo"
+import { Button } from "./ui/button"
+import { Menu } from "lucide-react"
+import { useState } from "react"
+import { AnimatePresence, motion } from "motion/react"
+
+const links = [
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "Features",
+    href: "#",
+  },
+  {
+    label: "Pricing",
+    href: "#",
+  },
+  {
+    label: "Contact",
+    href: "#",
+  },
+]
+
+export const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <div>
+      <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-xs">
+        <div className="container flex h-16 items-center justify-between">
+          <Link href="/">
+            <Logo className="size-8" />
+          </Link>
+          <div className="hidden items-center gap-8 md:flex">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            <Button>Log in</Button>
+          </div>
+
+          <div className="flex items-center gap-3 md:hidden">
+            <Button>Log in</Button>
+            <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)}>
+              <Menu className="size-6" />
+            </Button>
+          </div>
+        </div>
+      </nav>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.5, type: "spring", bounce: 0 }}
+            className="fixed top-0 left-0 isolate z-50 h-full w-full py-8 md:hidden"
+          >
+            <div
+              className="absolute top-0 left-0 -z-10 h-full w-full bg-background/95 backdrop-blur-xs"
+              onClick={() => setIsOpen(false)}
+            ></div>
+            <div className="mb-10 flex flex-col items-center gap-8">
+              <Logo className="size-10" />
+            </div>
+            <div className="flex flex-col items-center">
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="w-full py-4 text-center text-2xl font-bold transition-colors hover:text-foreground"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}

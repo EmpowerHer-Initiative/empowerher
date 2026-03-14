@@ -138,3 +138,10 @@
 .motion-animate {
   @apply motion-blur-in-[4px] motion-opacity-in-0 motion-translate-y-in-[40px] motion-duration-1200;
 }
+
+@utility container {
+  width: 100%;
+  max-width: 1248px;
+  padding-inline: 1rem;
+  margin-inline: auto;
+}
