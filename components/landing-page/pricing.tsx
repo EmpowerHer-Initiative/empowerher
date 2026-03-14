@@ -57,7 +57,7 @@ export const Pricing = () => {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly")
 
   return (
-    <div className="container mx-auto max-w-6xl px-4 py-16">
+    <div className="container">
       <div className="mb-16">
         <h2 className="mb-4 max-w-xl text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
           We&apos;ve got a plan
@@ -69,7 +69,7 @@ export const Pricing = () => {
             onClick={() => setBilling("monthly")}
             className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
               billing === "monthly"
-                ? "bg-primary text-white shadow-sm"
+                ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -79,7 +79,7 @@ export const Pricing = () => {
             onClick={() => setBilling("annual")}
             className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
               billing === "annual"
-                ? "bg-primary text-white shadow-sm"
+                ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -92,7 +92,9 @@ export const Pricing = () => {
           <Card
             key={plan.name}
             className={`relative flex flex-col overflow-hidden rounded-2xl ${
-              plan.highlighted ? "dark shadow-dialog" : "shadow-card"
+              plan.highlighted
+                ? "dark shadow-dialog dark:bg-muted dark:text-foreground"
+                : "shadow-card"
             }`}
           >
             {/* Dark header */}
@@ -138,8 +140,8 @@ export const Pricing = () => {
               <ul className="flex-1 space-y-3">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-3 text-sm">
-                    <CheckCircle2 className="h-5 w-5 shrink-0 text-primary" />
-                    <span className="text-foreground">{feature}</span>
+                    <CheckCircle2 className="h-5 w-5 shrink-0" />
+                    <span>{feature}</span>
                   </li>
                 ))}
               </ul>
