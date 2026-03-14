@@ -34,7 +34,7 @@ export const Navbar = () => {
       <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-xs">
         <div className="container flex h-16 items-center justify-between">
           <Link href="/">
-            <Logo className="size-8" />
+            <Logo className="size-8 text-primary" />
           </Link>
           <div className="hidden items-center gap-8 md:flex">
             {links.map((link) => (

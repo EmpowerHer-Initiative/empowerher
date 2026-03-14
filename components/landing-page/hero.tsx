@@ -1,30 +1,52 @@
 "use client"
 
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, Star } from "lucide-react"
 import { BgPattern } from "../bg-pattern"
 import { Button } from "../ui/button"
 import Balancer from "react-wrap-balancer"
+import { Badge } from "../ui/badge"
 
 export const Hero = () => {
   return (
     <div className="relative overflow-hidden">
       <BgPattern />
-      <section className="container grid min-h-dvh px-0 md:grid-cols-2 md:gap-9">
+      <section className="container grid min-h-[calc(100dvh-4rem)] px-0 md:grid-cols-2 md:gap-9">
         <div className="relative flex flex-col items-start justify-center gap-4 px-4 py-20">
-          <div className="mx-auto flex max-w-xl flex-col gap-4">
-            <h1 className="motion-animate text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl">
-              <Balancer>Build something extraordinary today</Balancer>
-            </h1>
-            <p className="motion-animate text-lg text-muted-foreground motion-delay-100 md:text-xl">
-              <Balancer>
-                The all-in-one platform that helps you create, launch, and scale
-                your ideas faster than ever before. No complexity, just results.
-              </Balancer>
-            </p>
-            <div className="motion-animate mt-4 flex w-full flex-col gap-2 motion-delay-200 md:flex-row">
-              <Button size="lg" className="w-full justify-between md:w-64">
-                Get Started <ChevronRight />
-              </Button>
+          <div className="mx-auto flex max-w-xl grow flex-col gap-20">
+            <div className="flex grow flex-col justify-center gap-4">
+              <Badge
+                variant="outline"
+                className="mx-auto mb-8 motion-opacity-in-0 px-4 py-4 text-base motion-delay-1000 md:mx-0"
+              >
+                New Product Launch | Limited Time Offer <ChevronRight />
+              </Badge>
+              <h1 className="motion-animate text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl">
+                <Balancer>Build something extraordinary today</Balancer>
+              </h1>
+              <p className="motion-animate text-lg text-muted-foreground motion-delay-100 md:text-xl">
+                <Balancer>
+                  The all-in-one platform that helps you create, launch, and
+                  scale your ideas faster than ever before. No complexity, just
+                  results.
+                </Balancer>
+              </p>
+              <div className="motion-animate mt-4 flex w-full flex-col gap-2 motion-delay-200 md:flex-row">
+                <Button size="lg" className="w-full justify-between md:w-64">
+                  Get Started <ChevronRight />
+                </Button>
+              </div>
+            </div>
+
+            <div className="motion-animate mt-auto space-y-4 text-muted-foreground motion-delay-300">
+              <div className="flex items-center gap-1">
+                <Star fill="currentColor" />
+                <Star fill="currentColor" />
+                <Star fill="currentColor" />
+                <Star fill="currentColor" />
+                <Star fill="currentColor" />
+                4.9
+              </div>
+              <p>Trusted by 100,000+ users</p>
             </div>
           </div>
         </div>
