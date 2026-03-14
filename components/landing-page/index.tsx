@@ -19,7 +19,6 @@ import {
   Quote,
 } from "lucide-react"
 import Link from "next/link"
-import { Hero } from "@/components/landing-page/hero"
 
 const features = [
   {
@@ -120,9 +119,45 @@ const pricingPlans = [
 
 export default function LandingPage() {
   return (
-    <>
-      <Hero />
+    <div className="flex min-h-screen flex-col">
+      {/* Navigation */}
+      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+          <Link href="/" className="text-xl font-bold tracking-tight">
+            <span className="text-primary">Brand</span>
+          </Link>
+          <nav className="hidden items-center gap-8 md:flex">
+            <Link
+              href="#features"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Features
+            </Link>
+            <Link
+              href="#testimonials"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Testimonials
+            </Link>
+            <Link
+              href="#pricing"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Pricing
+            </Link>
+          </nav>
+          <div className="flex items-center gap-3">
+            <Button variant="ghost" size="sm">
+              Log in
+            </Button>
+            <Button size="sm">Get Started</Button>
+          </div>
+        </div>
+      </header>
+
       <main className="flex-1">
+        {/* Hero Section */}
+
         {/* Logos / Social Proof Bar */}
         <section className="border-y border-border/40 py-10">
           <div className="container mx-auto max-w-6xl px-4">
@@ -398,6 +433,6 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
-    </>
+    </div>
   )
 }
