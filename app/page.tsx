@@ -1,31 +1,32 @@
 // app/page.tsx
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import {
+  ArrowRight,
+  BarChart3,
+  CheckCircle2,
+  Quote,
+  Shield,
+  Star,
+  Users,
+  Zap,
+} from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import {
-  Star,
-  ArrowRight,
-  Zap,
-  Shield,
-  BarChart3,
-  Users,
-  CheckCircle2,
-  Quote,
-} from "lucide-react"
-import Link from "next/link"
-import { Hero } from "@/components/landing-page/hero"
-import { Features } from "@/components/landing-page/features"
-import { Results } from "@/components/landing-page/results"
-import { Trust } from "@/components/landing-page/trust"
-import { Testimonials } from "@/components/landing-page/testimonials"
-import { Pricing } from "@/components/landing-page/pricing"
-import { Cta } from "@/components/landing-page/cta"
+} from "@/components/ui/card";
+import { Cta } from "@/components/landing-page/cta";
+import { Features } from "@/components/landing-page/features";
+import { Hero } from "@/components/landing-page/hero";
+import { Pricing } from "@/components/landing-page/pricing";
+import { Results } from "@/components/landing-page/results";
+import { Testimonials } from "@/components/landing-page/testimonials";
+import { Trust } from "@/components/landing-page/trust";
 
 const testimonials = [
   {
@@ -49,7 +50,7 @@ const testimonials = [
       "Intuitive, powerful, and beautifully designed. Our clients love the results we deliver using this tool.",
     rating: 5,
   },
-]
+];
 
 export default function LandingPage() {
   return (
@@ -63,5 +64,5 @@ export default function LandingPage() {
         <Pricing />
       </div>
     </>
-  )
+  );
 }

@@ -1,6 +1,6 @@
 export const Results = () => {
   return (
-    <section className="bg-primary py-20 text-primary-foreground">
+    <section className="bg-primary text-primary-foreground py-20">
       <div className="container mx-auto max-w-6xl px-4">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           {[
@@ -13,7 +13,7 @@ export const Results = () => {
               <div className="mb-2 text-3xl font-bold md:text-4xl lg:text-5xl">
                 {stat.value}
               </div>
-              <div className="text-sm font-medium text-primary-foreground/70">
+              <div className="text-primary-foreground/70 text-sm font-medium">
                 {stat.label}
               </div>
             </div>
@@ -21,5 +21,5 @@ export const Results = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

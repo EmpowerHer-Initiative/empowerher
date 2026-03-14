@@ -1,9 +1,10 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent } from "../ui/card"
-import { CheckCircle2 } from "lucide-react"
-import { Button } from "../ui/button"
+import { useState } from "react";
+import { CheckCircle2 } from "lucide-react";
+
+import { Button } from "../ui/button";
+import { Card, CardContent } from "../ui/card";
 
 const pricingPlans = [
   {
@@ -51,10 +52,10 @@ const pricingPlans = [
     ],
     highlighted: false,
   },
-]
+];
 
 export const Pricing = () => {
-  const [billing, setBilling] = useState<"monthly" | "annual">("monthly")
+  const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
 
   return (
     <div className="container">
@@ -64,7 +65,7 @@ export const Pricing = () => {
           <br />
           that&apos;s perfect for you
         </h2>
-        <div className="mt-8 inline-flex items-center rounded-full border border-border bg-muted/50 p-1">
+        <div className="border-border bg-muted/50 mt-8 inline-flex items-center rounded-full border p-1">
           <button
             onClick={() => setBilling("monthly")}
             className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
@@ -102,18 +103,18 @@ export const Pricing = () => {
               <div className="mb-4 flex items-center gap-3">
                 <h3 className="text-lg font-semibold">{plan.name}</h3>
                 {plan.highlighted && (
-                  <span className="rounded-full bg-primary px-3 py-0.5 text-xs font-medium text-primary-foreground">
+                  <span className="bg-primary text-primary-foreground rounded-full px-3 py-0.5 text-xs font-medium">
                     Popular
                   </span>
                 )}
               </div>
               <div className="flex items-baseline gap-2">
                 <span className="text-5xl font-bold">{plan.price}</span>
-                <div className="flex flex-col text-sm text-muted-foreground">
+                <div className="text-muted-foreground flex flex-col text-sm">
                   <span>{plan.periodSub}</span>
                 </div>
               </div>
-              <p className="mt-3 text-sm text-muted-foreground">
+              <p className="text-muted-foreground mt-3 text-sm">
                 {plan.description}
               </p>
               <div className="mt-5 flex flex-col gap-3">
@@ -131,10 +132,10 @@ export const Pricing = () => {
 
             {/* Features section */}
             <CardContent className="flex flex-1 flex-col px-6 pt-6 pb-6">
-              <p className="mb-4 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+              <p className="text-muted-foreground mb-4 text-sm font-semibold tracking-wide uppercase">
                 Features
               </p>
-              <p className="mb-4 text-sm text-muted-foreground">
+              <p className="text-muted-foreground mb-4 text-sm">
                 {plan.featuresHeader}
               </p>
               <ul className="flex-1 space-y-3">
@@ -150,5 +151,5 @@ export const Pricing = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};

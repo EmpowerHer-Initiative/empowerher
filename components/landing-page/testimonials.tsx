@@ -1,6 +1,7 @@
-import { Quote, Star } from "lucide-react"
-import { Badge } from "../ui/badge"
-import { Card, CardContent, CardHeader } from "../ui/card"
+import { Quote, Star } from "lucide-react";
+
+import { Badge } from "../ui/badge";
+import { Card, CardContent, CardHeader } from "../ui/card";
 
 const testimonials = [
   {
@@ -59,11 +60,11 @@ const testimonials = [
       "The detailed reporting saves our team hours each week and helps demonstrate value to our clients.",
     rating: 5,
   },
-]
+];
 
 export const Testimonials = () => {
   return (
-    <div className="container mx-auto max-w-[1500px] border bg-muted p-8 xl:rounded-4xl">
+    <div className="bg-muted container mx-auto max-w-[1500px] border p-8 xl:rounded-4xl">
       <div className="mb-16">
         <Badge variant="outline" className="mb-4">
           Testimonials
@@ -71,15 +72,15 @@ export const Testimonials = () => {
         <h2 className="mb-4 max-w-xl text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
           Loved by thousands
         </h2>
-        <p className="max-w-2xl text-lg text-muted-foreground">
+        <p className="text-muted-foreground max-w-2xl text-lg">
           Don&apos;t just take our word for it — hear from our customers.
         </p>
       </div>
       <div className="grid gap-6 md:grid-cols-3">
         {testimonials.map((testimonial) => (
-          <Card key={testimonial.name} className="relative border-border/50">
+          <Card key={testimonial.name} className="border-border/50 relative">
             <CardHeader className="pb-3">
-              <Quote className="mb-2 h-8 w-8 text-primary/20" />
+              <Quote className="text-primary/20 mb-2 h-8 w-8" />
               <div className="flex gap-0.5">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
                   <Star
@@ -90,12 +91,12 @@ export const Testimonials = () => {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-sm leading-relaxed text-muted-foreground">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 &quot;{testimonial.content}&quot;
               </p>
               <div>
                 <p className="text-sm font-semibold">{testimonial.name}</p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   {testimonial.role}
                 </p>
               </div>
@@ -104,5 +105,5 @@ export const Testimonials = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};

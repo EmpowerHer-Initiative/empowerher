@@ -1,4 +1,4 @@
-type SVGProps = React.SVGProps<SVGSVGElement>
+type SVGProps = React.SVGProps<SVGSVGElement>;
 
 export const Logo = (props: SVGProps) => {
   return (
@@ -22,5 +22,5 @@ export const Logo = (props: SVGProps) => {
         </clipPath>
       </defs>
     </svg>
-  )
-}
+  );
+};

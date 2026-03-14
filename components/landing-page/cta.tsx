@@ -1,18 +1,20 @@
-import { Button } from "../ui/button"
-import { ArrowRight } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { ArrowRight } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+
+import { Button } from "../ui/button";
 
 export const Cta = ({ className }: { className?: string }) => {
   return (
     <section className={cn("dark container max-w-7xl", className)}>
-      <div className="relative flex items-center overflow-hidden rounded-4xl border bg-muted px-8 pt-14 pb-48 text-foreground md:px-16 md:py-20 md:pb-14">
+      <div className="bg-muted text-foreground relative flex items-center overflow-hidden rounded-4xl border px-8 pt-14 pb-48 md:px-16 md:py-20 md:pb-14">
         {/* Concentric circle decoration on the right */}
         <div className="pointer-events-none absolute right-0 translate-x-[40%] max-md:translate-y-[90%] md:translate-x-1/2">
           <div className="relative size-96 md:size-150">
             {Array.from({ length: 5 }).map((_, index) => (
               <div
                 key={index}
-                className={`absolute inset-0 rounded-full bg-foreground/5`}
+                className={`bg-foreground/5 absolute inset-0 rounded-full`}
                 style={{
                   inset: `${index * 40}px`,
                 }}
@@ -43,5 +45,5 @@ export const Cta = ({ className }: { className?: string }) => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

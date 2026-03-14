@@ -1,19 +1,20 @@
-import Link from "next/link"
-import { Cta } from "./landing-page/cta"
-import { Logo } from "./icons/logo"
+import Link from "next/link";
+
+import { Logo } from "./icons/logo";
+import { Cta } from "./landing-page/cta";
 
 export const Footer = () => {
   return (
     <>
       <Cta className="mb-30 md:-mb-30" />
-      <footer className="dark rounded-t-3xl border-t border-border/40 bg-background/95 pt-12 pb-12 text-foreground md:rounded-t-[4rem] md:pt-48 dark:bg-muted">
+      <footer className="dark border-border/40 bg-background/95 text-foreground dark:bg-muted rounded-t-3xl border-t pt-12 pb-12 md:rounded-t-[4rem] md:pt-48">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid gap-8 md:grid-cols-4">
             <div>
               <Link href="/">
-                <Logo className="size-10 text-foreground" />
+                <Logo className="text-foreground size-10" />
               </Link>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <p className="text-muted-foreground mt-2 text-sm">
                 Building the future, one project at a time.
               </p>
             </div>
@@ -38,7 +39,7 @@ export const Footer = () => {
                     <li key={link}>
                       <Link
                         href="#"
-                        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                        className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                       >
                         {link}
                       </Link>
@@ -48,11 +49,11 @@ export const Footer = () => {
               </div>
             ))}
           </div>
-          <div className="mt-10 border-t border-border/40 pt-6 text-center text-sm text-muted-foreground">
+          <div className="border-border/40 text-muted-foreground mt-10 border-t pt-6 text-center text-sm">
             © {new Date().getFullYear()} Brand. All rights reserved.
           </div>
         </div>
       </footer>
     </>
-  )
-}
+  );
+};

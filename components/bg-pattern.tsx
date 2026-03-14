@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { cn } from "../lib/utils"
+import { cn } from "../lib/utils";
 
 export const BgPattern = ({ className }: { className?: string }) => {
   return (
@@ -24,5 +24,5 @@ export const BgPattern = ({ className }: { className?: string }) => {
         }}
       />
     </div>
-  )
-}
+  );
+};

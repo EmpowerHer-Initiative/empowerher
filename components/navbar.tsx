@@ -1,11 +1,12 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Logo } from "./icons/logo"
-import { Button } from "./ui/button"
-import { Menu } from "lucide-react"
-import { useState } from "react"
-import { AnimatePresence, motion } from "motion/react"
+import { useState } from "react";
+import Link from "next/link";
+import { Menu } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+
+import { Logo } from "./icons/logo";
+import { Button } from "./ui/button";
 
 const links = [
   {
@@ -24,24 +25,24 @@ const links = [
     label: "Contact",
     href: "#",
   },
-]
+];
 
 export const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="sticky top-0 z-50">
-      <nav className="w-full border-b bg-background/95 backdrop-blur-xs">
+      <nav className="bg-background/95 w-full border-b backdrop-blur-xs">
         <div className="container flex h-16 items-center justify-between">
           <Link href="/">
-            <Logo className="size-8 text-primary" />
+            <Logo className="text-primary size-8" />
           </Link>
           <div className="hidden items-center gap-8 md:flex">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
               >
                 {link.label}
               </Link>
@@ -68,7 +69,7 @@ export const Navbar = () => {
             className="fixed top-0 left-0 isolate z-50 h-full w-full py-8 md:hidden"
           >
             <div
-              className="absolute top-0 left-0 -z-10 h-full w-full bg-background/95 backdrop-blur-xs"
+              className="bg-background/95 absolute top-0 left-0 -z-10 h-full w-full backdrop-blur-xs"
               onClick={() => setIsOpen(false)}
             ></div>
             <div className="mb-10 flex flex-col items-center gap-8">
@@ -79,7 +80,7 @@ export const Navbar = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="w-full py-4 text-center text-2xl font-bold transition-colors hover:text-foreground"
+                  className="hover:text-foreground w-full py-4 text-center text-2xl font-bold transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   {link.label}
@@ -90,5 +91,5 @@ export const Navbar = () => {
         )}
       </AnimatePresence>
     </div>
-  )
-}
+  );
+};

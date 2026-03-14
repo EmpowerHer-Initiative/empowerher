@@ -1,10 +1,11 @@
-"use client"
+"use client";
 
-import { ChevronRight, Star } from "lucide-react"
-import { BgPattern } from "../bg-pattern"
-import { Button } from "../ui/button"
-import Balancer from "react-wrap-balancer"
-import { Badge } from "../ui/badge"
+import { ChevronRight, Star } from "lucide-react";
+import Balancer from "react-wrap-balancer";
+
+import { BgPattern } from "../bg-pattern";
+import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
 
 export const Hero = () => {
   return (
@@ -16,28 +17,28 @@ export const Hero = () => {
             <div className="flex grow flex-col justify-center gap-4">
               <Badge
                 variant="outline"
-                className="mx-auto mb-8 motion-opacity-in-0 px-4 py-4 text-base motion-delay-1000 md:mx-0"
+                className="motion-opacity-in-0 motion-delay-1000 mx-auto mb-8 px-4 py-4 text-base md:mx-0"
               >
                 New Product Launch | Limited Time Offer <ChevronRight />
               </Badge>
               <h1 className="motion-animate text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl">
                 <Balancer>Build something extraordinary today</Balancer>
               </h1>
-              <p className="motion-animate text-lg text-muted-foreground motion-delay-100 md:text-xl">
+              <p className="motion-animate text-muted-foreground motion-delay-100 text-lg md:text-xl">
                 <Balancer>
                   The all-in-one platform that helps you create, launch, and
                   scale your ideas faster than ever before. No complexity, just
                   results.
                 </Balancer>
               </p>
-              <div className="motion-animate mt-4 flex w-full flex-col gap-2 motion-delay-200 md:flex-row">
+              <div className="motion-animate motion-delay-200 mt-4 flex w-full flex-col gap-2 md:flex-row">
                 <Button size="lg" className="w-full justify-between md:w-64">
                   Get Started <ChevronRight />
                 </Button>
               </div>
             </div>
 
-            <div className="motion-animate mt-auto space-y-4 text-muted-foreground motion-delay-300">
+            <div className="motion-animate text-muted-foreground motion-delay-300 mt-auto space-y-4">
               <div className="flex items-center gap-1">
                 <Star fill="currentColor" />
                 <Star fill="currentColor" />
@@ -51,7 +52,7 @@ export const Hero = () => {
           </div>
         </div>
         <div className="relative isolate flex min-h-96 items-center justify-center py-8">
-          <div className="relative aspect-video w-full shrink-0 origin-left translate-x-[30%] motion-scale-in-150 motion-blur-in-sm motion-opacity-in-0 overflow-hidden rounded-3xl motion-delay-400 md:w-[200%]">
+          <div className="motion-scale-in-150 motion-blur-in-sm motion-opacity-in-0 motion-delay-400 relative aspect-video w-full shrink-0 origin-left translate-x-[30%] overflow-hidden rounded-3xl md:w-[200%]">
             <img
               src="https://cdn.dribbble.com/userupload/12625976/file/original-477795e34939330965e12002052dcb49.jpg?resize=1024x768&vertical=center"
               alt=""
@@ -59,9 +60,9 @@ export const Hero = () => {
             />
           </div>
 
-          <div className="absolute inset-0 -z-10 w-screen bg-primary"></div>
+          <div className="bg-primary absolute inset-0 -z-10 w-screen"></div>
         </div>
       </section>
     </div>
-  )
-}
+  );
+};

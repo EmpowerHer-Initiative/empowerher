@@ -1,24 +1,25 @@
 // app/page.tsx
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import {
+  ArrowRight,
+  BarChart3,
+  CheckCircle2,
+  Quote,
+  Shield,
+  Star,
+  Users,
+  Zap,
+} from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import {
-  Star,
-  ArrowRight,
-  Zap,
-  Shield,
-  BarChart3,
-  Users,
-  CheckCircle2,
-  Quote,
-} from "lucide-react"
-import Link from "next/link"
+} from "@/components/ui/card";
 
 const features = [
   {
@@ -45,7 +46,7 @@ const features = [
     description:
       "Seamlessly work together with role-based access and shared workspaces.",
   },
-]
+];
 
 const testimonials = [
   {
@@ -69,7 +70,7 @@ const testimonials = [
       "Intuitive, powerful, and beautifully designed. Our clients love the results we deliver using this tool.",
     rating: 5,
   },
-]
+];
 
 const pricingPlans = [
   {
@@ -115,13 +116,13 @@ const pricingPlans = [
     ],
     highlighted: false,
   },
-]
+];
 
 export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Navigation */}
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="border-border/40 bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
         <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           <Link href="/" className="text-xl font-bold tracking-tight">
             <span className="text-primary">Brand</span>
@@ -129,19 +130,19 @@ export default function LandingPage() {
           <nav className="hidden items-center gap-8 md:flex">
             <Link
               href="#features"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
             >
               Features
             </Link>
             <Link
               href="#testimonials"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
             >
               Testimonials
             </Link>
             <Link
               href="#pricing"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
             >
               Pricing
             </Link>
@@ -159,12 +160,12 @@ export default function LandingPage() {
         {/* Hero Section */}
 
         {/* Logos / Social Proof Bar */}
-        <section className="border-y border-border/40 py-10">
+        <section className="border-border/40 border-y py-10">
           <div className="container mx-auto max-w-6xl px-4">
-            <p className="mb-8 text-center text-sm font-medium tracking-wider text-muted-foreground uppercase">
+            <p className="text-muted-foreground mb-8 text-center text-sm font-medium tracking-wider uppercase">
               Trusted by teams at
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 text-muted-foreground/50">
+            <div className="text-muted-foreground/50 flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
               {["Acme Corp", "Globex", "Initech", "Umbrella", "Stark Ind."].map(
                 (company) => (
                   <span
@@ -189,7 +190,7 @@ export default function LandingPage() {
               <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
                 Everything you need to succeed
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+              <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
                 Powerful features designed to help you work smarter, not harder.
               </p>
             </div>
@@ -197,10 +198,10 @@ export default function LandingPage() {
               {features.map((feature) => (
                 <Card
                   key={feature.title}
-                  className="group relative overflow-hidden border-border/50 bg-card/50 transition-all hover:shadow-lg"
+                  className="group border-border/50 bg-card/50 relative overflow-hidden transition-all hover:shadow-lg"
                 >
                   <CardHeader>
-                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                    <div className="bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground mb-3 flex h-12 w-12 items-center justify-center rounded-lg transition-colors">
                       <feature.icon className="h-6 w-6" />
                     </div>
                     <CardTitle className="text-lg">{feature.title}</CardTitle>
@@ -217,7 +218,7 @@ export default function LandingPage() {
         </section>
 
         {/* Stats Section */}
-        <section className="bg-primary py-20 text-primary-foreground">
+        <section className="bg-primary text-primary-foreground py-20">
           <div className="container mx-auto max-w-6xl px-4">
             <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
               {[
@@ -230,7 +231,7 @@ export default function LandingPage() {
                   <div className="mb-2 text-3xl font-bold md:text-4xl">
                     {stat.value}
                   </div>
-                  <div className="text-sm font-medium text-primary-foreground/70">
+                  <div className="text-primary-foreground/70 text-sm font-medium">
                     {stat.label}
                   </div>
                 </div>
@@ -249,7 +250,7 @@ export default function LandingPage() {
               <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
                 Loved by thousands
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+              <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
                 Don&apos;t just take our word for it — hear from our customers.
               </p>
             </div>
@@ -257,10 +258,10 @@ export default function LandingPage() {
               {testimonials.map((testimonial) => (
                 <Card
                   key={testimonial.name}
-                  className="relative border-border/50"
+                  className="border-border/50 relative"
                 >
                   <CardHeader className="pb-3">
-                    <Quote className="mb-2 h-8 w-8 text-primary/20" />
+                    <Quote className="text-primary/20 mb-2 h-8 w-8" />
                     <div className="flex gap-0.5">
                       {Array.from({ length: testimonial.rating }).map(
                         (_, i) => (
@@ -273,14 +274,14 @@ export default function LandingPage() {
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <p className="text-sm leading-relaxed text-muted-foreground">
+                    <p className="text-muted-foreground text-sm leading-relaxed">
                       &quot;{testimonial.content}&quot;
                     </p>
                     <div>
                       <p className="text-sm font-semibold">
                         {testimonial.name}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         {testimonial.role}
                       </p>
                     </div>
@@ -301,7 +302,7 @@ export default function LandingPage() {
               <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
                 Simple, transparent pricing
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+              <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
                 Choose the plan that fits your needs. Upgrade or downgrade at
                 any time.
               </p>
@@ -312,12 +313,12 @@ export default function LandingPage() {
                   key={plan.name}
                   className={`relative flex flex-col ${
                     plan.highlighted
-                      ? "scale-[1.02] border-primary shadow-lg shadow-primary/10"
+                      ? "border-primary shadow-primary/10 scale-[1.02] shadow-lg"
                       : "border-border/50"
                   }`}
                 >
                   {plan.highlighted && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-medium text-primary-foreground">
+                    <div className="bg-primary text-primary-foreground absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-xs font-medium">
                       Most Popular
                     </div>
                   )}
@@ -326,7 +327,7 @@ export default function LandingPage() {
                     <CardDescription>{plan.description}</CardDescription>
                     <div className="mt-2 flex items-baseline gap-1">
                       <span className="text-4xl font-bold">{plan.price}</span>
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-muted-foreground text-sm">
                         {plan.period}
                       </span>
                     </div>
@@ -338,7 +339,7 @@ export default function LandingPage() {
                           key={feature}
                           className="flex items-center gap-2 text-sm"
                         >
-                          <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
+                          <CheckCircle2 className="text-primary h-4 w-4 shrink-0" />
                           {feature}
                         </li>
                       ))}
@@ -359,11 +360,11 @@ export default function LandingPage() {
         {/* CTA Section */}
         <section className="py-24 md:py-32">
           <div className="container mx-auto max-w-6xl px-4">
-            <div className="rounded-2xl bg-primary p-10 text-center text-primary-foreground md:p-16">
+            <div className="bg-primary text-primary-foreground rounded-2xl p-10 text-center md:p-16">
               <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
                 Ready to get started?
               </h2>
-              <p className="mx-auto mb-8 max-w-xl text-lg text-primary-foreground/80">
+              <p className="text-primary-foreground/80 mx-auto mb-8 max-w-xl text-lg">
                 Join thousands of happy customers and start building something
                 amazing today.
               </p>
@@ -375,7 +376,7 @@ export default function LandingPage() {
                 <Button
                   size="lg"
                   variant="ghost"
-                  className="px-8 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                  className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground px-8"
                 >
                   Talk to sales
                 </Button>
@@ -386,14 +387,14 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border/40 py-12">
+      <footer className="border-border/40 border-t py-12">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid gap-8 md:grid-cols-4">
             <div>
               <Link href="/" className="text-lg font-bold">
                 <span className="text-primary">Brand</span>
               </Link>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <p className="text-muted-foreground mt-2 text-sm">
                 Building the future, one project at a time.
               </p>
             </div>
@@ -418,7 +419,7 @@ export default function LandingPage() {
                     <li key={link}>
                       <Link
                         href="#"
-                        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                        className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                       >
                         {link}
                       </Link>
@@ -428,11 +429,11 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
-          <div className="mt-10 border-t border-border/40 pt-6 text-center text-sm text-muted-foreground">
+          <div className="border-border/40 text-muted-foreground mt-10 border-t pt-6 text-center text-sm">
             © {new Date().getFullYear()} Brand. All rights reserved.
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }
