@@ -9,8 +9,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../ui/alert-dialog";
-import { Button } from "../ui/button";
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 interface VerifyEmailDialogProps {
   children?: React.ReactElement;
@@ -21,13 +27,19 @@ export const VerifyEmailDialog = ({
   children,
   email,
 }: VerifyEmailDialogProps) => {
-  const { isOpen, setIsOpen } = useNugsVerifyEmail();
+  const {
+    isOpen,
+    setIsOpen,
+    email: emailParams,
+    setEmail: setEmailParams,
+  } = useNugsVerifyEmail();
 
   return (
     <AlertDialog
       open={isOpen}
       onOpenChange={(open) => {
         setIsOpen(open);
+        setEmailParams(null);
       }}
     >
       <AlertDialogTrigger render={children} />
@@ -36,14 +48,29 @@ export const VerifyEmailDialog = ({
           <AlertDialogTitle>Verify Email</AlertDialogTitle>
           <AlertDialogDescription>
             We&apos;ve sent you an email to verify your email address. <br />
-            <span className="text-primary">{email}</span>
+            <span className="text-primary">{email || emailParams}</span>
           </AlertDialogDescription>
         </AlertDialogHeader>
+        <div className="my-4 flex justify-center">
+          <InputOTP maxLength={6}>
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+            </InputOTPGroup>
+            <InputOTPSeparator />
+            <InputOTPGroup>
+              <InputOTPSlot index={3} />
+              <InputOTPSlot index={4} />
+              <InputOTPSlot index={5} />
+            </InputOTPGroup>
+          </InputOTP>
+        </div>
         <AlertDialogFooter>
           <AlertDialogCancel
             render={<Button variant="outline">Cancel</Button>}
           />
-          <Button>Verify Email</Button>
+          <Button>Resend Code</Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

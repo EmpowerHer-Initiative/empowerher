@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,6 +15,8 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Wrapper } from "@/components/auth/wrapper";
+
+import ResetPasswordPage from "./reset";
 
 const formSchema = z.object({
   email: z.email(),
@@ -29,6 +32,13 @@ export default function LoginPage() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+  }
+
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+
+  if (token) {
+    return <ResetPasswordPage />;
   }
 
   return (

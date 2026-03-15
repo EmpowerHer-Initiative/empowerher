@@ -1,11 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-
-import { useNugsVerifyEmail } from "@/hooks/use-nugs";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,13 +13,10 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { VerifyEmailDialog } from "@/components/auth/verify-email-dialog";
 import { Wrapper } from "@/components/auth/wrapper";
 
 const formSchema = z
   .object({
-    email: z.email(),
-    name: z.string().min(1),
     password: z.string().min(8),
     confirmPassword: z.string().min(8),
   })
@@ -30,14 +25,10 @@ const formSchema = z
     message: "Passwords do not match",
   });
 
-export default function SignupPage() {
-  const { setIsOpen, setEmail } = useNugsVerifyEmail();
-
+export default function ResetPasswordPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      name: "",
       password: "",
       confirmPassword: "",
     },
@@ -45,56 +36,18 @@ export default function SignupPage() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    setIsOpen(true);
-    setEmail(values.email);
   }
+
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
 
   return (
     <div className="bg-muted flex min-h-dvh items-center-safe justify-center-safe p-8">
-      <VerifyEmailDialog email={form.getValues("email")} />
       <Wrapper
-        title="Sign up"
-        description="Hey, Enter your details to get sign up to your account"
+        title="Reset Password"
+        description="Hey, Enter your email to reset your password"
       >
         <form onSubmit={form.handleSubmit(onSubmit)} className="my-4 space-y-4">
-          <Controller
-            control={form.control}
-            name="name"
-            render={({ field, fieldState }) => (
-              <Field aria-invalid={fieldState.invalid}>
-                <FieldLabel>Name</FieldLabel>
-                <FieldContent>
-                  <Input
-                    {...field}
-                    aria-invalid={fieldState.invalid}
-                    placeholder="John Doe"
-                  />
-                </FieldContent>
-                <FieldError
-                  errors={fieldState.error ? [fieldState.error] : undefined}
-                />
-              </Field>
-            )}
-          />
-          <Controller
-            control={form.control}
-            name="email"
-            render={({ field, fieldState }) => (
-              <Field aria-invalid={fieldState.invalid}>
-                <FieldLabel>Email</FieldLabel>
-                <FieldContent>
-                  <Input
-                    {...field}
-                    aria-invalid={fieldState.invalid}
-                    placeholder="example@example.com"
-                  />
-                </FieldContent>
-                <FieldError
-                  errors={fieldState.error ? [fieldState.error] : undefined}
-                />
-              </Field>
-            )}
-          />
           <Controller
             control={form.control}
             name="password"
@@ -106,6 +59,7 @@ export default function SignupPage() {
                     {...field}
                     aria-invalid={fieldState.invalid}
                     placeholder="********"
+                    type="password"
                   />
                 </FieldContent>
                 <FieldError
@@ -125,6 +79,7 @@ export default function SignupPage() {
                     {...field}
                     aria-invalid={fieldState.invalid}
                     placeholder="********"
+                    type="password"
                   />
                 </FieldContent>
                 <FieldError
@@ -134,15 +89,9 @@ export default function SignupPage() {
             )}
           />
           <Button type="submit" className="w-full" size="lg">
-            Sign up
+            Reset Password
           </Button>
         </form>
-        <div className="text-muted-foreground text-sm">
-          Already have an account?{" "}
-          <Link href="/login" className="text-primary underline">
-            Login
-          </Link>
-        </div>
       </Wrapper>
     </div>
   );
