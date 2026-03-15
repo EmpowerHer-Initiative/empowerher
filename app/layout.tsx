@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
 
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+
 import { cn } from "@/lib/utils";
 
 import { Footer } from "@/components/footer";
@@ -36,9 +38,11 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
-          <Navbar />
-          {children}
-          <Footer />
+          <NuqsAdapter>
+            <Navbar />
+            {children}
+            <Footer />
+          </NuqsAdapter>
         </ThemeProvider>
       </body>
     </html>

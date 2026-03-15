@@ -1,0 +1,143 @@
+"use client";
+
+import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { useNugsVerifyEmail } from "@/hooks/use-nugs";
+
+import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldContent,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { VerifyEmailDialog } from "@/components/auth/verify-email-dialog";
+import { Wrapper } from "@/components/auth/wrapper";
+
+const formSchema = z.object({
+  email: z.email(),
+  name: z.string().min(1),
+  password: z.string().min(8),
+  confirmPassword: z.string().min(8),
+});
+
+export default function SignupPage() {
+  const { setIsOpen } = useNugsVerifyEmail();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      name: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+    setIsOpen(true);
+  }
+
+  return (
+    <div className="bg-muted flex min-h-dvh items-center-safe justify-center-safe p-8">
+      <VerifyEmailDialog email={form.getValues("email")} />
+      <Wrapper
+        title="Sign up"
+        description="Hey, Enter your details to get sign up to your account"
+      >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="my-4 space-y-4">
+          <Controller
+            control={form.control}
+            name="name"
+            render={({ field, fieldState }) => (
+              <Field aria-invalid={fieldState.invalid}>
+                <FieldLabel>Name</FieldLabel>
+                <FieldContent>
+                  <Input
+                    {...field}
+                    aria-invalid={fieldState.invalid}
+                    placeholder="John Doe"
+                  />
+                </FieldContent>
+                <FieldError
+                  errors={fieldState.error ? [fieldState.error] : undefined}
+                />
+              </Field>
+            )}
+          />
+          <Controller
+            control={form.control}
+            name="email"
+            render={({ field, fieldState }) => (
+              <Field aria-invalid={fieldState.invalid}>
+                <FieldLabel>Email</FieldLabel>
+                <FieldContent>
+                  <Input
+                    {...field}
+                    aria-invalid={fieldState.invalid}
+                    placeholder="example@example.com"
+                  />
+                </FieldContent>
+                <FieldError
+                  errors={fieldState.error ? [fieldState.error] : undefined}
+                />
+              </Field>
+            )}
+          />
+          <Controller
+            control={form.control}
+            name="password"
+            render={({ field, fieldState }) => (
+              <Field aria-invalid={fieldState.invalid}>
+                <FieldLabel>Password</FieldLabel>
+                <FieldContent>
+                  <Input
+                    {...field}
+                    aria-invalid={fieldState.invalid}
+                    placeholder="********"
+                  />
+                </FieldContent>
+                <FieldError
+                  errors={fieldState.error ? [fieldState.error] : undefined}
+                />
+              </Field>
+            )}
+          />
+          <Controller
+            control={form.control}
+            name="confirmPassword"
+            render={({ field, fieldState }) => (
+              <Field aria-invalid={fieldState.invalid}>
+                <FieldLabel>Confirm Password</FieldLabel>
+                <FieldContent>
+                  <Input
+                    {...field}
+                    aria-invalid={fieldState.invalid}
+                    placeholder="********"
+                  />
+                </FieldContent>
+                <FieldError
+                  errors={fieldState.error ? [fieldState.error] : undefined}
+                />
+              </Field>
+            )}
+          />
+          <Button type="submit" className="w-full" size="lg">
+            Sign up
+          </Button>
+        </form>
+        <div className="text-muted-foreground text-sm">
+          Already have an account?{" "}
+          <Link href="/login" className="text-primary underline">
+            Login
+          </Link>
+        </div>
+      </Wrapper>
+    </div>
+  );
+}

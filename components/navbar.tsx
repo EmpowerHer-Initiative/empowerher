@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 
@@ -30,6 +31,16 @@ const links = [
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const pathname = usePathname();
+
+  if (
+    pathname === "/login" ||
+    pathname === "/signup" ||
+    pathname === "/reset-password"
+  ) {
+    return null;
+  }
+
   return (
     <div className="sticky top-0 z-50">
       <nav className="bg-background/95 w-full border-b backdrop-blur-xs">
@@ -48,7 +59,7 @@ export const Navbar = () => {
               </Link>
             ))}
 
-            <Button>Log in</Button>
+            <Button render={<Link href="/login">Log in</Link>} />
           </div>
 
           <div className="flex items-center gap-3 md:hidden">

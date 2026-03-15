@@ -1,9 +1,22 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { Logo } from "./icons/logo";
 import { Cta } from "./landing-page/cta";
 
 export const Footer = () => {
+  const pathname = usePathname();
+
+  if (
+    pathname === "/login" ||
+    pathname === "/signup" ||
+    pathname === "/reset-password"
+  ) {
+    return null;
+  }
+
   return (
     <>
       <Cta className="mb-20 md:-mb-30" />
