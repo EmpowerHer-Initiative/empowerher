@@ -68,6 +68,7 @@ export default function SignupPage() {
                     {...field}
                     aria-invalid={fieldState.invalid}
                     placeholder="John Doe"
+                    size="lg"
                   />
                 </FieldContent>
                 <FieldError
@@ -87,6 +88,7 @@ export default function SignupPage() {
                     {...field}
                     aria-invalid={fieldState.invalid}
                     placeholder="example@example.com"
+                    size="lg"
                   />
                 </FieldContent>
                 <FieldError
@@ -106,6 +108,7 @@ export default function SignupPage() {
                     {...field}
                     aria-invalid={fieldState.invalid}
                     placeholder="********"
+                    size="lg"
                   />
                 </FieldContent>
                 <FieldError
@@ -125,6 +128,7 @@ export default function SignupPage() {
                     {...field}
                     aria-invalid={fieldState.invalid}
                     placeholder="********"
+                    size="lg"
                   />
                 </FieldContent>
                 <FieldError

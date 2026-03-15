@@ -51,6 +51,7 @@ export default function LoginPage() {
                     {...field}
                     aria-invalid={fieldState.invalid}
                     placeholder="example@example.com"
+                    size="lg"
                   />
                 </FieldContent>
                 <FieldError
@@ -70,6 +71,7 @@ export default function LoginPage() {
                     {...field}
                     aria-invalid={fieldState.invalid}
                     placeholder="********"
+                    size="lg"
                   />
                   <Link
                     href="/reset-password"

@@ -60,6 +60,7 @@ export default function ResetPasswordPage() {
                     aria-invalid={fieldState.invalid}
                     placeholder="********"
                     type="password"
+                    size="lg"
                   />
                 </FieldContent>
                 <FieldError
@@ -80,6 +81,7 @@ export default function ResetPasswordPage() {
                     aria-invalid={fieldState.invalid}
                     placeholder="********"
                     type="password"
+                    size="lg"
                   />
                 </FieldContent>
                 <FieldError

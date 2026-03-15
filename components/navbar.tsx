@@ -36,7 +36,8 @@ export const Navbar = () => {
   if (
     pathname === "/login" ||
     pathname === "/signup" ||
-    pathname === "/reset-password"
+    pathname === "/reset-password" ||
+    pathname.startsWith("/admin")
   ) {
     return null;
   }

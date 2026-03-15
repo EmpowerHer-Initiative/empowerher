@@ -59,6 +59,7 @@ export default function LoginPage() {
                     {...field}
                     aria-invalid={fieldState.invalid}
                     placeholder="example@example.com"
+                    size="lg"
                   />
                 </FieldContent>
                 <FieldError
