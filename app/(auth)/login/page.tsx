@@ -89,6 +89,7 @@ export default function LoginPage() {
                     aria-invalid={fieldState.invalid}
                     placeholder="********"
                     size="lg"
+                    type="password"
                   />
                   <Link
                     href="/reset-password"

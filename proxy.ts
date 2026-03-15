@@ -8,33 +8,23 @@ export async function proxy(request: Request) {
 
   const betterAuthSession = await isAuthenticated();
 
-  if (
-    pathname !== "/login" &&
-    pathname !== "/signup" &&
-    pathname !== "/reset-password" &&
-    !betterAuthSession &&
-    pathname !== "/setup" &&
-    pathname !== "/upgrade-app"
-  ) {
+  if (pathname.startsWith("/admin") && !betterAuthSession) {
     return NextResponse.redirect(new URL("/login", nextRequest.url));
   }
 
+  const hasVerifyEmailInParams =
+    nextRequest.nextUrl.searchParams.has("verify-email");
   if (
     (pathname === "/login" ||
       pathname === "/signup" ||
       pathname === "/reset-password") &&
-    betterAuthSession
+    betterAuthSession &&
+    !hasVerifyEmailInParams
   ) {
-    const isMobile =
-      nextRequest.nextUrl.searchParams.get("platform") === "mobile";
-    if (isMobile) {
-      return NextResponse.redirect(
-        new URL("/mobile-auth-callback", nextRequest.url)
-      );
-    }
-
     return NextResponse.redirect(new URL("/", nextRequest.url));
   }
+
+  return NextResponse.next();
 }
 
 export const config = {

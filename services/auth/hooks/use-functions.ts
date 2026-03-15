@@ -6,7 +6,6 @@ import { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useMutation } from "@tanstack/react-query";
 
 const useSignup = () => {
-  const router = useRouter();
   const trpc = useTRPC();
 
   return useMutation({
@@ -40,8 +39,6 @@ const useSignup = () => {
       return response;
     },
     onSuccess: () => {
-      router.push("/verify-email");
-      router.refresh();
       queryClient.setQueryData(trpc.user.getCurrentUser.queryKey(), (old) => {
         return old;
       });

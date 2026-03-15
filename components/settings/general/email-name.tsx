@@ -6,6 +6,8 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import { useNugsVerifyEmail } from "@/hooks/use-nugs";
+
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +19,7 @@ import {
 } from "@/components/ui/card";
 import { Field, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { VerifyEmailDialog } from "@/components/auth/verify-email-dialog";
 
 const schema = z.object({
   name: z.string().min(1, {
@@ -28,6 +31,8 @@ const schema = z.object({
 });
 
 export const EmailName = () => {
+  const { setIsOpen, setEmail } = useNugsVerifyEmail();
+
   const { data: user } = useCurrentUser();
   const updateUser = useUpdateUser();
   const verifyEmail = useResendEmailVerification();
@@ -112,20 +117,19 @@ export const EmailName = () => {
               variant={"destructive"}
               className="mt-2 w-48"
               disabled={verifyEmail.isPending}
-              onClick={() =>
+              onClick={() => {
                 verifyEmail.mutate(undefined, {
                   onSuccess: () => {
-                    router.push("/verify-email");
+                    setIsOpen(true);
+                    setEmail(user?.user.email || "");
                   },
                   onError: (error) => {
-                    toast.error(
-                      error.message || "Failed to send email verification"
-                    );
+                    toast.error(error.message);
                   },
-                })
-              }
+                });
+              }}
             >
-              Resend verification email
+              Verify Email
             </Button>
           </Alert>
         )}
@@ -138,6 +142,8 @@ export const EmailName = () => {
           Save
         </Button>
       </CardFooter>
+
+      <VerifyEmailDialog email={user?.user.email || ""} />
     </Card>
   );
 };
