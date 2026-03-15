@@ -51,7 +51,7 @@ export const VerifyEmailDialog = ({
         setEmailParams(null);
       }}
     >
-      <AlertDialogTrigger render={children} />
+      {children && <AlertDialogTrigger render={children} />}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Verify Email</AlertDialogTitle>
