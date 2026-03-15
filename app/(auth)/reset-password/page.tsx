@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useSendResetEmail } from "@/services/auth/hooks/use-functions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -30,8 +32,23 @@ export default function LoginPage() {
     },
   });
 
+  const sendResetEmail = useSendResetEmail();
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    sendResetEmail.mutate(
+      {
+        email: values.email,
+        redirectTo: `${window.location.origin}/reset-password`,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Reset password email sent");
+        },
+        onError: (error) => {
+          toast.error(error.message);
+        },
+      }
+    );
   }
 
   const searchParams = useSearchParams();
@@ -68,7 +85,12 @@ export default function LoginPage() {
               </Field>
             )}
           />
-          <Button type="submit" className="w-full" size="lg">
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            disabled={sendResetEmail.isPending}
+          >
             Reset Password
           </Button>
         </form>

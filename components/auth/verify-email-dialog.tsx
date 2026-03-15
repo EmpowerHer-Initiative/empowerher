@@ -1,3 +1,9 @@
+import {
+  useResendEmailVerification,
+  useVerifyEmail,
+} from "@/services/auth/hooks/use-functions";
+import { toast } from "sonner";
+
 import { useNugsVerifyEmail } from "@/hooks/use-nugs";
 
 import {
@@ -34,6 +40,9 @@ export const VerifyEmailDialog = ({
     setEmail: setEmailParams,
   } = useNugsVerifyEmail();
 
+  const resendEmailVerification = useResendEmailVerification();
+  const verifyEmail = useVerifyEmail();
+
   return (
     <AlertDialog
       open={isOpen}
@@ -52,25 +61,56 @@ export const VerifyEmailDialog = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div className="my-4 flex justify-center">
-          <InputOTP maxLength={6}>
+          <InputOTP
+            maxLength={6}
+            onComplete={verifyEmail.mutate}
+            disabled={
+              verifyEmail.isPending || resendEmailVerification.isPending
+            }
+          >
             <InputOTPGroup>
-              <InputOTPSlot index={0} />
-              <InputOTPSlot index={1} />
-              <InputOTPSlot index={2} />
+              <InputOTPSlot index={0} aria-invalid={verifyEmail.isError} />
+              <InputOTPSlot index={1} aria-invalid={verifyEmail.isError} />
+              <InputOTPSlot index={2} aria-invalid={verifyEmail.isError} />
             </InputOTPGroup>
             <InputOTPSeparator />
             <InputOTPGroup>
-              <InputOTPSlot index={3} />
-              <InputOTPSlot index={4} />
-              <InputOTPSlot index={5} />
+              <InputOTPSlot index={3} aria-invalid={verifyEmail.isError} />
+              <InputOTPSlot index={4} aria-invalid={verifyEmail.isError} />
+              <InputOTPSlot index={5} aria-invalid={verifyEmail.isError} />
             </InputOTPGroup>
           </InputOTP>
         </div>
         <AlertDialogFooter>
           <AlertDialogCancel
-            render={<Button variant="outline">Cancel</Button>}
+            render={
+              <Button
+                variant="outline"
+                disabled={
+                  verifyEmail.isPending || resendEmailVerification.isPending
+                }
+              >
+                Cancel
+              </Button>
+            }
           />
-          <Button>Resend Code</Button>
+          <Button
+            disabled={
+              resendEmailVerification.isPending || verifyEmail.isPending
+            }
+            onClick={() =>
+              resendEmailVerification.mutate(undefined, {
+                onSuccess: () => {
+                  toast.success("Email verification code sent");
+                },
+                onError: (error) => {
+                  toast.error(error.message);
+                },
+              })
+            }
+          >
+            Resend Code
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

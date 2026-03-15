@@ -8,6 +8,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { cn } from "@/lib/utils";
 
+import { Toaster } from "@/components/ui/sonner";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -47,6 +48,7 @@ export default function RootLayout({
                 {children}
                 <Footer />
               </Suspense>
+              <Toaster />
             </NuqsAdapter>
           </ThemeProvider>
         </TRPCReactProvider>

@@ -1,6 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  useSignin,
+  useSignInWithProvider,
+} from "@/services/auth/hooks/use-functions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -21,6 +26,8 @@ const formSchema = z.object({
 });
 
 export default function LoginPage() {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -29,8 +36,18 @@ export default function LoginPage() {
     },
   });
 
+  const signin = useSignin();
+  const onSignInWithProvider = useSignInWithProvider("google");
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    signin.mutate(values, {
+      onSuccess: () => {
+        router.push("/");
+      },
+      onError: (error) => {
+        form.setError("email", { message: error.message });
+      },
+    });
   }
 
   return (
@@ -86,7 +103,12 @@ export default function LoginPage() {
               </Field>
             )}
           />
-          <Button type="submit" className="w-full" size="lg">
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            disabled={signin.isPending}
+          >
             Login
           </Button>
         </form>

@@ -1,8 +1,10 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { useResetPassword } from "@/services/auth/hooks/use-functions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -34,12 +36,27 @@ export default function ResetPasswordPage() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
-
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+
+  const resetPassword = useResetPassword();
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    resetPassword.mutate(
+      {
+        newPassword: values.password,
+        token: token ?? "",
+      },
+      {
+        onSuccess: () => {
+          toast.success("Password reset successfully");
+        },
+        onError: (error) => {
+          toast.error(error.message);
+        },
+      }
+    );
+  }
 
   return (
     <div className="bg-muted flex min-h-dvh items-center-safe justify-center-safe p-8">
@@ -90,7 +107,12 @@ export default function ResetPasswordPage() {
               </Field>
             )}
           />
-          <Button type="submit" className="w-full" size="lg">
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            disabled={resetPassword.isPending}
+          >
             Reset Password
           </Button>
         </form>

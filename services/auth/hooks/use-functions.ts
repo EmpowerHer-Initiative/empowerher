@@ -65,6 +65,8 @@ const useSignin = () => {
         password: values.password,
       });
 
+      console.log(response);
+
       if (response.error) {
         throw new Error(response.error.message || response.error.statusText);
       }
@@ -226,7 +228,7 @@ const useVerifyEmail = () => {
       });
 
       setTimeout(() => {
-        router.push("/choose-plan");
+        router.push("/");
       }, 2000);
     },
     onError: () => {},

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSignup } from "@/services/auth/hooks/use-functions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -43,10 +44,19 @@ export default function SignupPage() {
     },
   });
 
+  const signup = useSignup();
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    setIsOpen(true);
-    setEmail(values.email);
+    signup.mutate(values, {
+      onSuccess: () => {
+        setIsOpen(true);
+        setEmail(values.email);
+      },
+      onError: (error) => {
+        form.setError("email", { message: error.message });
+      },
+    });
   }
 
   return (
@@ -137,7 +147,12 @@ export default function SignupPage() {
               </Field>
             )}
           />
-          <Button type="submit" className="w-full" size="lg">
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            disabled={signup.isPending}
+          >
             Sign up
           </Button>
         </form>
