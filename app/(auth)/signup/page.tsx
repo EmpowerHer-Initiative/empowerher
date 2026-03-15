@@ -119,6 +119,7 @@ export default function SignupPage() {
                     aria-invalid={fieldState.invalid}
                     placeholder="********"
                     size="lg"
+                    type="password"
                   />
                 </FieldContent>
                 <FieldError
@@ -139,6 +140,7 @@ export default function SignupPage() {
                     aria-invalid={fieldState.invalid}
                     placeholder="********"
                     size="lg"
+                    type="password"
                   />
                 </FieldContent>
                 <FieldError

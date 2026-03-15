@@ -36,6 +36,7 @@ function AlertDialogOverlay({
         "no-scrollbar",
         className
       )}
+      onClick={(e) => e.stopPropagation()}
       {...props}
     />
   );

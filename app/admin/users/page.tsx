@@ -1,28 +1,38 @@
 "use client";
 
-import { useState } from "react";
-import {
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable,
-  type ColumnDef,
-} from "@tanstack/react-table";
-import { format } from "date-fns";
-import { MoreHorizontal } from "lucide-react";
+import { Suspense, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useTRPC } from "@/services/trpc/client";
+import type { RouterOutputs } from "@/services/trpc/routers/_app";
+import { useQuery } from "@tanstack/react-query";
+import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import { useDebounce } from "@uidotdev/usehooks";
+import { ChevronDown, ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 
-import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/data-table";
+import { TabLineAnimate } from "@/components/tab-line-animate";
+
+// import { CreateUser } from "@/components/users/create-user";
+
+import { columns } from "./columns";
+
+type UserFromAPI = RouterOutputs["admin"]["users"]["getAll"][number];
 
 interface FilterUsers {
   page?: number;
@@ -33,317 +43,183 @@ interface FilterUsers {
 
 const sortByOptions: FilterUsers["sortBy"][] = ["email", "created", "banned"];
 
-export type User = {
-  id: string;
-  userName: string;
-  description: string;
-  email: string;
-  role: string;
-  status: "Active" | "Inactive" | "Deleted";
-  addDate: Date;
-  lastActive: Date;
-  access: boolean;
-};
+const UsersPage = () => {
+  const [sortBy, setSortBy] = useQueryState(
+    "sortBy",
+    parseAsString.withDefault("created")
+  );
 
-const FAKE_USERS: User[] = [
-  {
-    id: "1",
-    userName: "Kathryn Murphy",
-    description: "Description Text",
-    email: "nevaeh.simmons@example.com",
-    role: "Admin",
-    status: "Active",
-    addDate: new Date("2013-03-23"),
-    lastActive: new Date("2015-07-14"),
-    access: true,
-  },
-  {
-    id: "2",
-    userName: "Savannah Nguyen",
-    description: "Description Text",
-    email: "debbie.baker@example.com",
-    role: "Admin",
-    status: "Inactive",
-    addDate: new Date("2018-10-24"),
-    lastActive: new Date("2015-05-31"),
-    access: false,
-  },
-  {
-    id: "3",
-    userName: "Dianne Russell",
-    description: "Description Text",
-    email: "felicia.reid@example.com",
-    role: "Admin",
-    status: "Active",
-    addDate: new Date("2017-08-07"),
-    lastActive: new Date("2014-02-11"),
-    access: true,
-  },
-  {
-    id: "4",
-    userName: "Esther Howard",
-    description: "Description Text",
-    email: "jackson.graham@example.com",
-    role: "Admin",
-    status: "Deleted",
-    addDate: new Date("2016-04-28"),
-    lastActive: new Date("2019-10-25"),
-    access: false,
-  },
-  {
-    id: "5",
-    userName: "Cameron Williamson",
-    description: "Description Text",
-    email: "cameron.w@example.com",
-    role: "Admin",
-    status: "Active",
-    addDate: new Date("2019-01-15"),
-    lastActive: new Date("2024-03-01"),
-    access: true,
-  },
-  {
-    id: "6",
-    userName: "Jane Cooper",
-    description: "Description Text",
-    email: "jane.cooper@example.com",
-    role: "Admin",
-    status: "Inactive",
-    addDate: new Date("2020-06-12"),
-    lastActive: new Date("2023-11-20"),
-    access: false,
-  },
-  {
-    id: "7",
-    userName: "Robert Fox",
-    description: "Description Text",
-    email: "robert.fox@example.com",
-    role: "Admin",
-    status: "Active",
-    addDate: new Date("2015-09-03"),
-    lastActive: new Date("2025-02-28"),
-    access: true,
-  },
-  {
-    id: "8",
-    userName: "Kristin Watson",
-    description: "Description Text",
-    email: "kristin.watson@example.com",
-    role: "Admin",
-    status: "Deleted",
-    addDate: new Date("2017-12-08"),
-    lastActive: new Date("2020-04-15"),
-    access: false,
-  },
-  {
-    id: "9",
-    userName: "Jacob Jones",
-    description: "Description Text",
-    email: "jacob.jones@example.com",
-    role: "Admin",
-    status: "Active",
-    addDate: new Date("2021-03-22"),
-    lastActive: new Date("2025-01-10"),
-    access: true,
-  },
-  {
-    id: "10",
-    userName: "Leslie Alexander",
-    description: "Description Text",
-    email: "leslie.alexander@example.com",
-    role: "Admin",
-    status: "Inactive",
-    addDate: new Date("2018-07-19"),
-    lastActive: new Date("2022-08-05"),
-    access: false,
-  },
-];
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [limit, setLimit] = useQueryState(
+    "limit",
+    parseAsInteger.withDefault(10)
+  );
+  const [search, setSearch] = useQueryState(
+    "search",
+    parseAsString.withDefault("")
+  );
 
-const statusVariant: Record<
-  User["status"],
-  "default" | "destructive" | "outline"
-> = {
-  Active: "default",
-  Inactive: "destructive",
-  Deleted: "outline",
-};
+  const router = useRouter();
 
-const columns: ColumnDef<User>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(checked) => table.toggleAllPageRowsSelected(checked)}
-        onClick={(e) => e.stopPropagation()}
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(checked) => row.toggleSelected(checked)}
-        onClick={(e) => e.stopPropagation()}
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "userName",
-    header: "User Name",
-    cell: ({ row }) => {
-      const name = row.original.userName;
-      const initials = name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .slice(0, 2);
-      return (
-        <div className="flex items-center gap-3">
-          <div className="bg-muted text-muted-foreground flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-medium">
-            {initials}
-          </div>
-          <div>
-            <div className="font-medium">{name}</div>
-            <div className="text-muted-foreground text-xs">
-              {row.original.description}
-            </div>
-          </div>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "email",
-    header: "Email Address",
-  },
-  {
-    accessorKey: "role",
-    header: "User Role",
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <Badge variant={statusVariant[row.original.status]}>
-        {row.original.status}
-      </Badge>
-    ),
-  },
-  {
-    accessorKey: "addDate",
-    header: "Add Date",
-    cell: ({ row }) => format(row.original.addDate, "MMMM d, yyyy"),
-  },
-  {
-    accessorKey: "lastActive",
-    header: "Last Active",
-    cell: ({ row }) => format(row.original.lastActive, "MMMM d, yyyy"),
-  },
-  {
-    id: "actions",
-    header: () => <span className="sr-only">Action</span>,
-    cell: ({ row }) => (
-      <Button
-        variant="ghost"
-        size="xs"
-        className="size-8 p-0"
-        onClick={(e) => e.stopPropagation()}
-        aria-label={`Actions for ${row.original.userName}`}
-      >
-        <MoreHorizontal className="size-4" />
-      </Button>
-    ),
-  },
-];
+  const debouncedSearchTerm = useDebounce(search, 300);
 
-export default function UsersPage() {
-  const [globalFilter, setGlobalFilter] = useState("");
-  const table = useReactTable({
-    data: FAKE_USERS,
+  const trpc = useTRPC();
+  const {
+    data: users,
+    isPending,
+    error,
+  } = useQuery(
+    trpc.admin.users.getAll.queryOptions({
+      page,
+      limit,
+      sortBy: sortBy as FilterUsers["sortBy"],
+      search,
+    })
+  );
+  const { data: usersCount } = useQuery(
+    trpc.admin.users.getCount.queryOptions()
+  );
+
+  useEffect(() => {
+    if (debouncedSearchTerm.length > 0) {
+      setPage(1);
+    }
+  }, [debouncedSearchTerm, setPage]);
+
+  /* eslint-disable-next-line react-hooks/incompatible-library */
+  const table = useReactTable<UserFromAPI>({
+    data: users || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    manualPagination: true,
     state: {
-      globalFilter,
       pagination: {
-        pageIndex: 0,
-        pageSize: 10,
+        pageIndex: page - 1,
+        pageSize: limit,
       },
     },
-    onGlobalFilterChange: setGlobalFilter,
   });
 
   return (
     <div className="container">
-      <h1 className="text-2xl font-semibold">User Details</h1>
-      <p className="text-muted-foreground mt-1">
-        {table.getFilteredRowModel().rows.length} users
-      </p>
-
-      <div className="space-y-4">
-        <div className="mt-4 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <Input
-              placeholder="Search users"
-              className="w-full max-w-sm"
-              value={globalFilter ?? ""}
-              onChange={(e) => setGlobalFilter(e.target.value)}
+      <h1 className="mb-6 text-2xl font-semibold tracking-tight">Users</h1>
+      <TabLineAnimate
+        tabs={[{ label: "All", value: "all" }]}
+        className="mb-8"
+      />
+      <div className="mb-4 flex items-center gap-2">
+        <InputGroup className="w-full max-w-48">
+          <InputGroupAddon>
+            <Search />
+          </InputGroupAddon>
+          <InputGroupInput
+            placeholder="Search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </InputGroup>
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <Button variant="outline" className="font-medium">
+                Sort by:{" "}
+                <span className="capitalize">{sortBy?.replace("_", " ")}</span>{" "}
+                <ChevronDown data-arrow />
+              </Button>
+            }
+          />
+          <DropdownMenuContent className="w-40" align="start">
+            {sortByOptions.map((item) => (
+              <DropdownMenuItem
+                key={item}
+                onClick={() => {
+                  setSortBy(item as string);
+                }}
+                className="cursor-pointer text-sm font-medium"
+                data-checked={sortBy === item}
+              >
+                <span className="capitalize">{item?.replace("_", " ")}</span>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        {/* <CreateUser /> */}
+      </div>
+      <DataTable
+        isLoading={isPending}
+        table={table}
+        error={error}
+        onRowClick={(row) => router.push(`/admin/users/${row.original.id}`)}
+      />
+      <div
+        className={cn(
+          "bg-muted text-muted-foreground -mt-3 flex items-center justify-between rounded-b-xl p-4 pt-7 text-xs",
+          search.length > 0 && "hidden"
+        )}
+      >
+        <div className="flex items-center">
+          {page * limit - limit + 1}-
+          {Math.min(page * limit, usersCount?.[0]?.count ?? 0)} of{" "}
+          {usersCount?.[0]?.count ?? 0}{" "}
+          <Separator className="mx-2 h-5!" orientation="vertical" /> Results per
+          page{" "}
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={
+                <Button variant="outline" size="sm" className="ml-2">
+                  {limit} <ChevronDown data-arrow />
+                </Button>
+              }
             />
-            <Select>
-              <SelectTrigger className="w-[180px] capitalize">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                {sortByOptions.map((item) => (
-                  <SelectItem key={item} value={item}>
-                    <span className="capitalize">
-                      {item?.replace("_", " ")}
-                    </span>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <Button>Add User</Button>
+            <DropdownMenuContent className="min-w-20">
+              {[10, 15, 20, 100].map((item) => (
+                <DropdownMenuItem
+                  key={item}
+                  onClick={() => {
+                    setLimit(item);
+                    setPage(1);
+                  }}
+                  data-checked={limit === item}
+                >
+                  {item}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-
-        <DataTable table={table} />
-
-        <div className="text-muted-foreground flex items-center justify-between text-sm">
-          <span>
-            Showing{" "}
-            {table.getState().pagination.pageIndex *
-              table.getState().pagination.pageSize +
-              1}
-            -
-            {Math.min(
-              (table.getState().pagination.pageIndex + 1) *
-                table.getState().pagination.pageSize,
-              table.getFilteredRowModel().rows.length
-            )}{" "}
-            from {table.getFilteredRowModel().rows.length}
-          </span>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              Next
-            </Button>
-          </div>
+        <div className="flex items-center">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setPage(page - 1)}
+            disabled={page === 1}
+          >
+            <ChevronLeft />
+          </Button>
+          <p className="mx-2 tabular-nums">
+            <span className="text-foreground">{page}</span> /{" "}
+            {Math.ceil((usersCount?.[0]?.count ?? 0) / limit)}
+          </p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setPage(page + 1)}
+            disabled={page === Math.ceil((usersCount?.[0]?.count ?? 0) / limit)}
+          >
+            <ChevronRight />
+          </Button>
         </div>
       </div>
     </div>
   );
-}
+};
+
+const Page = () => {
+  return (
+    <Suspense>
+      <UsersPage />
+    </Suspense>
+  );
+};
+
+export default Page;
