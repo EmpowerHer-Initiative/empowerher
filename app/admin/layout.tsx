@@ -1,12 +1,31 @@
+import { headers } from "next/headers";
+import { notFound, redirect } from "next/navigation";
+import { auth } from "@/services/auth/auth";
+
 import { cn } from "@/lib/utils";
 
 import { NavbarAdmin } from "@/components/admin/navbar-admin";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const user = await auth.api.getSession({
+    headers: await headers(),
+    query: {
+      disableCookieCache: true,
+    },
+  });
+
+  if (!user) {
+    redirect("/");
+  }
+
+  if (user.user.role !== "admin") {
+    notFound();
+  }
+
   return (
     <div
       className={cn(

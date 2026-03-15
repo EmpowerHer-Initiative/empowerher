@@ -3,10 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { Menu } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 
 import { Logo } from "./icons/logo";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 
 const links = [
@@ -32,6 +34,8 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const pathname = usePathname();
+
+  const { data: user } = useCurrentUser();
 
   if (
     pathname === "/login" ||
@@ -60,7 +64,16 @@ export const Navbar = () => {
               </Link>
             ))}
 
-            <Button render={<Link href="/login">Log in</Link>} />
+            {user ? (
+              <Link href="/settings">
+                <Avatar>
+                  <AvatarImage src={user.user.image ?? undefined} />
+                  <AvatarFallback>{user.user.name?.charAt(0)}</AvatarFallback>
+                </Avatar>
+              </Link>
+            ) : (
+              <Button render={<Link href="/login">Log in</Link>} />
+            )}
           </div>
 
           <div className="flex items-center gap-3 md:hidden">

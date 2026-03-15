@@ -2,6 +2,8 @@ import { useRouter } from "next/navigation";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+import { authClient } from "../auth-client";
+
 export const useGetCustomerState = () => {
   const trpc = useTRPC();
   return useQuery(trpc.payments.getCustomerState.queryOptions());
@@ -51,4 +53,22 @@ export const useSwitchPlan = () => {
       },
     })
   );
+};
+
+/**
+ * Custom hook for generating customer portal link
+ * @returns UseMutationResult for generating portal link operation
+ */
+export const useGeneratePortalLink = () => {
+  return useMutation({
+    mutationFn: async () => {
+      const { data, error } = await authClient.customer.portal();
+
+      if (error) {
+        throw new Error(error.message || error.statusText);
+      }
+
+      return data;
+    },
+  });
 };

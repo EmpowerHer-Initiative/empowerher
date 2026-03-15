@@ -79,13 +79,13 @@ export const auth = betterAuth({
     },
   },
   advanced: {
-    crossSubDomainCookies: {
-      enabled: true,
-      domain:
-        process.env.NODE_ENV === "production"
-          ? "<YOUR_DOMAIN> (e.g. example.com)"
-          : "localhost",
-    },
+    // crossSubDomainCookies: {
+    //   enabled: true,
+    //   domain:
+    //     process.env.NODE_ENV === "production"
+    //       ? "<YOUR_DOMAIN> (e.g. example.com)"
+    //       : "localhost",
+    // },
   },
   session: {
     cookieCache: {

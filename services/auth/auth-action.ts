@@ -7,6 +7,8 @@ import type { Product } from "@polar-sh/sdk/models/components/product.js";
 import { Subscription } from "@polar-sh/sdk/models/components/subscription.js";
 import { eq } from "drizzle-orm";
 
+import { deleteFile } from "../trpc/routers/upload/action";
+
 function getPriceAmount(price: Product["prices"][number]): number {
   return "priceAmount" in price ? price.priceAmount : 0;
 }
@@ -146,7 +148,19 @@ export const revokeSubscriptionOnRefund = async (subscriptionId: string) => {
 export const deleteCustomer = async (data: Customer) => {
   if (!data.email) throw new Error("Customer email is required");
 
-  await db.delete(user).where(eq(user.email, data.email));
+  const deletedUser = await db
+    .delete(user)
+    .where(eq(user.email, data.email))
+    .returning()
+    .then((res) => res[0]);
+  if (!deletedUser) throw new Error("Failed to delete user");
+
+  // Deleting all images from the user
+  if (deletedUser.image) {
+    await deleteFile(deletedUser.image);
+  }
+
+  return deletedUser;
 };
 // ----------------------------
 // 👤 Customers END
