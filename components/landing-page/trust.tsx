@@ -1,6 +1,18 @@
+"use client";
+
+import { motionInView } from "@/lib/utils";
+import { motion } from "motion/react";
+
 export const Trust = () => {
   return (
-    <div className="container mx-auto max-w-6xl px-4">
+    <motion.div
+      className="container mx-auto max-w-6xl px-4"
+      variants={motionInView}
+      initial="hidden"
+      whileInView="visible"
+      transition={{ duration: 0.4 }}
+      viewport={{ once: true }}
+    >
       <p className="text-muted-foreground mb-8 text-center text-sm font-medium tracking-wider uppercase">
         Trusted by teams at
       </p>
@@ -13,6 +25,6 @@ export const Trust = () => {
           )
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };

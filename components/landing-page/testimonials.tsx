@@ -2,6 +2,8 @@ import { Quote, Star } from "lucide-react";
 
 import { Badge } from "../ui/badge";
 import { Card, CardContent, CardHeader } from "../ui/card";
+import { motionInView } from "@/lib/utils";
+import { motion } from "motion/react";
 
 const testimonials = [
   {
@@ -64,7 +66,14 @@ const testimonials = [
 
 export const Testimonials = () => {
   return (
-    <div className="bg-muted container mx-auto max-w-[1500px] border p-8 xl:rounded-4xl">
+    <motion.div
+      variants={motionInView}
+      initial="hidden"
+      whileInView="visible"
+      transition={{ duration: 0.4 }}
+      viewport={{ once: true }}
+      className="bg-muted container mx-auto max-w-[1500px] border p-8 xl:rounded-4xl"
+    >
       <div className="mb-16">
         <Badge variant="outline" className="mb-4">
           Testimonials
@@ -104,6 +113,6 @@ export const Testimonials = () => {
           </Card>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };

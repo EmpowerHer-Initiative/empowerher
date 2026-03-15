@@ -1,6 +1,8 @@
 import { BarChart3, Shield, Users, Zap } from "lucide-react";
 
 import { Badge } from "../ui/badge";
+import { motionInView } from "@/lib/utils";
+import { motion } from "motion/react";
 
 const features = [
   {
@@ -32,7 +34,14 @@ const features = [
 export const Features = () => {
   return (
     <section className="container">
-      <div className="mb-16">
+      <motion.div
+        className="mb-16"
+        variants={motionInView}
+        initial="hidden"
+        whileInView="visible"
+        transition={{ duration: 0.4 }}
+        viewport={{ once: true }}
+      >
         <Badge variant="outline" className="mb-4">
           Stake smart
         </Badge>
@@ -43,8 +52,15 @@ export const Features = () => {
           Maximize your staking and re-staking rewards while maintaining
           composibility for DeFi applications.
         </p>
-      </div>
-      <div className="grid gap-6 sm:grid-cols-2">
+      </motion.div>
+      <motion.div
+        className="grid gap-6 sm:grid-cols-2"
+        variants={motionInView}
+        initial="hidden"
+        whileInView="visible"
+        transition={{ duration: 0.4 }}
+        viewport={{ once: true, amount: 0.3 }}
+      >
         {features.map((feature) => (
           <div
             key={feature.title}
@@ -60,7 +76,7 @@ export const Features = () => {
             </div>
           </div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };

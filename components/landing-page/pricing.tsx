@@ -5,6 +5,8 @@ import { CheckCircle2 } from "lucide-react";
 
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
+import { motionInView } from "@/lib/utils";
+import { motion } from "motion/react";
 
 const pricingPlans = [
   {
@@ -58,7 +60,14 @@ export const Pricing = () => {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
 
   return (
-    <div className="container">
+    <motion.div
+      className="container"
+      variants={motionInView}
+      initial="hidden"
+      whileInView="visible"
+      transition={{ duration: 0.4 }}
+      viewport={{ once: true }}
+    >
       <div className="mb-16">
         <h2 className="mb-4 max-w-xl text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
           We&apos;ve got a plan
@@ -150,6 +159,6 @@ export const Pricing = () => {
           </Card>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };

@@ -1,3 +1,8 @@
+"use client";
+
+import { motionInView } from "@/lib/utils";
+import { motion } from "motion/react";
+
 export const Results = () => {
   return (
     <section className="bg-primary text-primary-foreground py-20">
@@ -8,15 +13,23 @@ export const Results = () => {
             { value: "99.9%", label: "Uptime" },
             { value: "50M+", label: "Requests/Day" },
             { value: "4.9/5", label: "User Rating" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
+          ].map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              className="text-center"
+              variants={motionInView}
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              viewport={{ once: true, amount: 1 }}
+            >
               <div className="mb-2 text-3xl font-bold md:text-4xl lg:text-5xl">
                 {stat.value}
               </div>
               <div className="text-primary-foreground/70 text-sm font-medium">
                 {stat.label}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

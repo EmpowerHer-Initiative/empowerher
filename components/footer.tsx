@@ -6,7 +6,7 @@ import { Cta } from "./landing-page/cta";
 export const Footer = () => {
   return (
     <>
-      <Cta className="mb-30 md:-mb-30" />
+      <Cta className="mb-20 md:-mb-30" />
       <footer className="dark border-border/40 bg-background/95 text-foreground dark:bg-muted rounded-t-3xl border-t pt-12 pb-12 md:rounded-t-[4rem] md:pt-48">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid gap-8 md:grid-cols-4">
