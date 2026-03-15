@@ -38,7 +38,7 @@ export const Footer = () => {
                   {col.links.map((link) => (
                     <li key={link}>
                       <Link
-                        href="#"
+                        href={`/${link.toLowerCase()}`}
                         className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                       >
                         {link}

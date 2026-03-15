@@ -3,6 +3,7 @@
 @import "shadcn/tailwind.css";
 
 @plugin "tailwindcss-motion";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -129,6 +130,18 @@
   --shadow-toast-save: inset 0 0 0 1px #2f3037, inset 0 2px 0 color-mix(in srgb, white calc(0.12 * 100%), transparent),
     inset 0 0 2px 2px color-mix(in srgb, white calc(0.06 * 100%), transparent), 0 16px 36px -6px color-mix(in srgb, black calc(0.36 * 100%), transparent),
     0 6px 16px -2px color-mix(in srgb, black calc(0.2 * 100%), transparent);
+}
+
+@utility prose-theme {
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-lead: var(--foreground);
+  --tw-prose-links: var(--foreground);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--foreground);
+  --tw-prose-bullets: var(--foreground);
+  --tw-prose-hr: var(--foreground);
+  --tw-prose-quotes: var(--foreground);
 }
 
 @layer base {
