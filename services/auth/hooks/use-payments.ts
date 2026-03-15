@@ -1,0 +1,54 @@
+import { useRouter } from "next/navigation";
+import { queryClient, useTRPC } from "@/services/trpc/client";
+import { useMutation, useQuery } from "@tanstack/react-query";
+
+export const useGetCustomerState = () => {
+  const trpc = useTRPC();
+  return useQuery(trpc.payments.getCustomerState.queryOptions());
+};
+
+/**
+ * Custom hook for initiating checkout process
+ * @returns UseMutationResult for checkout operation
+ */
+export const useCheckout = () => {
+  const router = useRouter();
+  const trpc = useTRPC();
+
+  return useMutation(
+    trpc.payments.createCheckout.mutationOptions({
+      onSuccess: (data) => {
+        if (!data) {
+          throw new Error("Failed to create checkout");
+        }
+
+        /* eslint-disable-next-line react-hooks/immutability */
+        window.location.href = data.url;
+      },
+      onError: (error) => {
+        if (error.data?.code === "UNAUTHORIZED") {
+          router.push("/signup");
+          return;
+        }
+      },
+    })
+  );
+};
+
+/**
+ * Custom hook for switching subscription plan
+ * @returns UseMutationResult for switching plan operation
+ */
+export const useSwitchPlan = () => {
+  const trpc = useTRPC();
+
+  return useMutation(
+    trpc.payments.switchPlan.mutationOptions({
+      onSuccess: async () => {
+        // Wait for 3 seconds to simulate the switch plan process
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        queryClient.invalidateQueries({ queryKey: ["customer-state"] });
+      },
+    })
+  );
+};

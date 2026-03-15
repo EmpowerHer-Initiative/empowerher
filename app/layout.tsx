@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
 
+import { Suspense } from "react";
+import { TRPCReactProvider } from "@/services/trpc/client";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { cn } from "@/lib/utils";
@@ -37,13 +39,17 @@ export default function RootLayout({
       )}
     >
       <body>
-        <ThemeProvider>
-          <NuqsAdapter>
-            <Navbar />
-            {children}
-            <Footer />
-          </NuqsAdapter>
-        </ThemeProvider>
+        <TRPCReactProvider>
+          <ThemeProvider>
+            <NuqsAdapter>
+              <Suspense>
+                <Navbar />
+                {children}
+                <Footer />
+              </Suspense>
+            </NuqsAdapter>
+          </ThemeProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   );
