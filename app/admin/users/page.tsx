@@ -102,7 +102,7 @@ const UsersPage = () => {
 
   return (
     <div className="container">
-      <h1 className="mb-6 text-2xl font-semibold tracking-tight">Users</h1>
+      <h1>Users</h1>
       <TabLineAnimate
         tabs={[{ label: "All", value: "all" }]}
         className="mb-8"

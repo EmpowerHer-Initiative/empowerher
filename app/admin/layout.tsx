@@ -30,7 +30,7 @@ export default async function AdminLayout({
     <div
       className={cn(
         "flex flex-col gap-12 pb-48",
-        "[&_h1]:text-foreground [&_h1]:text-4xl [&_h1]:font-bold"
+        "[&_h1]:text-foreground [&_h1]:mb-8 [&_h1]:text-4xl [&_h1]:font-bold"
       )}
     >
       <NavbarAdmin />
