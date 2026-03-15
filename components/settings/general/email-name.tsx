@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import { useResendEmailVerification } from "@/services/auth/hooks/use-functions";
 import { useCurrentUser, useUpdateUser } from "@/services/auth/hooks/use-user";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,7 +35,6 @@ export const EmailName = () => {
   const { data: user } = useCurrentUser();
   const updateUser = useUpdateUser();
   const verifyEmail = useResendEmailVerification();
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
