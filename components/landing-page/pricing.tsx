@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
+import { motion } from "motion/react";
+
+import { motionInView } from "@/lib/utils";
 
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
-import { motionInView } from "@/lib/utils";
-import { motion } from "motion/react";
 
 const pricingPlans = [
   {

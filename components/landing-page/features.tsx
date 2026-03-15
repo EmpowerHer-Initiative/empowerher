@@ -1,8 +1,9 @@
 import { BarChart3, Shield, Users, Zap } from "lucide-react";
+import { motion } from "motion/react";
+
+import { motionInView } from "@/lib/utils";
 
 import { Badge } from "../ui/badge";
-import { motionInView } from "@/lib/utils";
-import { motion } from "motion/react";
 
 const features = [
   {

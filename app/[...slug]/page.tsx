@@ -6,8 +6,10 @@ import { MDXContent } from "@content-collections/mdx/react";
 import { allPosts } from "content-collections";
 import { format } from "date-fns";
 import { ArrowLeftIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+
 import { cn } from "@/lib/utils";
+
+import { Button } from "@/components/ui/button";
 
 export default function PostPage() {
   const { slug } = useParams<{ slug: string[] }>();

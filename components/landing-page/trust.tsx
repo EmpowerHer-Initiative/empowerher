@@ -1,7 +1,8 @@
 "use client";
 
-import { motionInView } from "@/lib/utils";
 import { motion } from "motion/react";
+
+import { motionInView } from "@/lib/utils";
 
 export const Trust = () => {
   return (

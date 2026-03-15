@@ -1,9 +1,10 @@
 import { Quote, Star } from "lucide-react";
+import { motion } from "motion/react";
+
+import { motionInView } from "@/lib/utils";
 
 import { Badge } from "../ui/badge";
 import { Card, CardContent, CardHeader } from "../ui/card";
-import { motionInView } from "@/lib/utils";
-import { motion } from "motion/react";
 
 const testimonials = [
   {
