@@ -56,7 +56,8 @@ app/admin/products/
 ```tsx
 const trpc = useTRPC();
 const { data, isPending } = useQuery(trpc.router.procedure.queryOptions());
-const { mutate } = useMutation(trpc.router.procedure.mutationOptions());
+const createSomething = useMutation(trpc.router.procedure.mutationOptions());
+// access: createSomething.mutate(), createSomething.isPending, createSomething.isError
 ```
 
 Never call `fetch` directly. All internal data goes through tRPC.
