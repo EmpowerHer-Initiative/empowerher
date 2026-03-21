@@ -19,7 +19,7 @@ Collect all `.ts` and `.tsx` files that are new or modified. These are the files
 
 ## Step 2 — Enforce coding conventions on every changed file
 
-Read each file and check for **all four rules**. Fix violations **before** running the build. Do not ask the user — just fix them (exception: Rule 3 violations must be flagged, not auto-fixed).
+Read each file and check for **all three rules**. Fix violations **before** running the build. Do not ask the user — just fix them.
 
 ### Rule 1: Arrow functions only
 
@@ -33,15 +33,7 @@ Read each file and check for **all four rules**. Fix violations **before** runni
 - Replace `export default Foo` at the bottom of a file → remove it; add `export` in front of the `const` declaration instead.
 - Exception: Next.js page/layout/route files inside `app/` that Next.js requires a default export from — leave those as-is.
 
-### Rule 3: No raw axios or fetch calls
-
-- Never call `axios.get/post/put/delete/patch` directly at the call site.
-- Never call `fetch()` directly.
-- All external API calls must go through the shared `api` axios instance from `lib/api.ts`.
-- All route strings must come from `ApiRoutes` in `lib/api-routes.ts` — never hardcode URL strings at the call site.
-- If a call site violates this, flag it to the user — do not silently fix it, as it likely means `ApiRoutes` needs a new entry too.
-
-### Rule 4: File names must be kebab-case
+### Rule 3: File names must be kebab-case
 
 - All file names (components, hooks, utilities) must use **kebab-case**.
 - Convert the primary export name to kebab-case for the file name:

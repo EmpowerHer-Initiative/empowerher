@@ -61,68 +61,23 @@ const { mutate } = useMutation(trpc.router.procedure.mutationOptions());
 
 Never call `fetch` directly. All internal data goes through tRPC.
 
-## External API pattern (Axios)
-
-For external APIs (non-tRPC), use the shared `api` axios instance and `ApiRoutes` route builder.
-
-**Files live in `lib/`:**
-
-- `lib/api.ts` — axios instance + auth interceptor
-- `lib/api-routes.ts` — `ApiRoutes` route builder object
-
-**`lib/api.ts` shape:**
-
-```ts
-import axios from "axios";
-import { getSessionToken } from "./action";
-
-export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-});
-
-api.interceptors.request.use(async (config) => {
-  const token = await getSessionToken();
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-```
-
-**`lib/api-routes.ts` shape:**
-
-```ts
-export const ApiRoutes = {
-  resource: {
-    list: () => `/resource`,
-    get: (id: string) => `/resource/${id}`,
-    create: () => `/resource`,
-    update: (id: string) => `/resource/${id}`,
-    delete: (id: string) => `/resource/${id}`,
-  },
-};
-```
-
-**Rules:**
-
-- Never call `axios.get/post/...` directly — always use the `api` instance
-- Never hardcode URL strings at the call site — always use `ApiRoutes`
-- Route builders are plain functions that return strings — no logic, no fetch calls inside them
-- Query params go through a shared `appendQueryParams(path, params)` util
-
 ## Forms
 
 Always use React Hook Form + Zod. Never use uncontrolled inputs or `useState` for form state.
 
 ```tsx
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const schema = z.object({ email: z.string().email() });
 type FormValues = z.infer<typeof schema>;
 
-const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
+const {
+  register,
+  handleSubmit,
+  formState: { errors },
+} = useForm<FormValues>({
   resolver: zodResolver(schema),
 });
 ```
@@ -155,14 +110,14 @@ toast.error("Something went wrong");
 
 Use semantic Tailwind tokens — never raw colors like `text-gray-500`.
 
-| Intent       | Token                                      |
-| ------------ | ------------------------------------------ |
-| Primary UI   | `bg-primary` / `text-primary`             |
-| Subtle text  | `text-muted-foreground`                   |
-| Backgrounds  | `bg-muted` / `bg-card` / `bg-background` |
-| Borders      | `border` / `border-border`                |
-| Danger       | `text-destructive` / `bg-destructive`     |
-| Success      | `text-green-600` (no semantic token yet)  |
+| Intent      | Token                                    |
+| ----------- | ---------------------------------------- |
+| Primary UI  | `bg-primary` / `text-primary`            |
+| Subtle text | `text-muted-foreground`                  |
+| Backgrounds | `bg-muted` / `bg-card` / `bg-background` |
+| Borders     | `border` / `border-border`               |
+| Danger      | `text-destructive` / `bg-destructive`    |
+| Success     | `text-green-600` (no semantic token yet) |
 
 Always use `bg-card` for card surfaces, `bg-muted` for subtle section backgrounds.
 
