@@ -107,6 +107,25 @@ toast.error("Something went wrong");
 - Failed mutations → `toast.error`
 - Never use `alert()` or custom modal for transient feedback
 
+## Tailwind utilities
+
+- Always use `dvh` for viewport height — never `vh`
+- Always use `size-*` when width and height are equal — never `w-* h-*`
+
+```tsx
+// ✓ correct
+<div className="min-h-dvh" />
+<div className="h-dvh" />
+<div className="size-6" />
+<div className="size-full" />
+
+// ✗ wrong
+<div className="min-h-screen" />
+<div className="h-screen" />
+<div className="h-6 w-6" />
+<div className="h-full w-full" />
+```
+
 ## Color tokens
 
 **Never use arbitrary Tailwind colors.** No `text-gray-500`, no `bg-blue-600`, no `text-red-400`. Always use shadcn CSS variable tokens. This is a hard rule — no exceptions.
