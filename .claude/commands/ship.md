@@ -66,7 +66,20 @@ pnpm typecheck
 
 ---
 
-## Step 4 — Commit
+## Step 4 — Production build
+
+Run:
+
+```bash
+pnpm build
+```
+
+- If it **passes**: proceed to Step 5.
+- If it **fails**: read the errors, fix them in the relevant files, re-stage with `git add -A`, and re-run `pnpm build`. Repeat until it passes (maximum 3 attempts). If it still fails after 3 attempts, stop and explain the remaining errors to the user.
+
+---
+
+## Step 5 — Commit
 
 ```bash
 git commit -m "$ARGUMENTS"
@@ -76,7 +89,7 @@ If `$ARGUMENTS` is empty, write a concise commit message yourself that summarise
 
 ---
 
-## Step 5 — Push to production
+## Step 6 — Push to production
 
 ```bash
 git push origin main
@@ -97,7 +110,6 @@ Report success and list the files that were touched, grouped by: conventions fix
 
 | Wrong                  | Correct              |
 | ---------------------- | -------------------- |
-| `button-comp.tsx`      | `button.tsx`         |
 | `user_card.tsx`        | `user-card.tsx`      |
 | `useMyHook.tsx`        | `use-my-hook.ts`     |
 | `DataTableWrapper.tsx` | `data-table.tsx`     |
