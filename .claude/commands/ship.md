@@ -19,7 +19,7 @@ Collect all `.ts` and `.tsx` files that are new or modified. These are the files
 
 ## Step 2 — Enforce coding conventions on every changed file
 
-Read each file and check for **all three rules**. Fix violations **before** running the build. Do not ask the user — just fix them.
+Read each file and check for **all four rules**. Fix violations **before** running the build. Do not ask the user — just fix them (exception: Rule 3 violations must be flagged, not auto-fixed).
 
 ### Rule 1: Arrow functions only
 
@@ -33,7 +33,15 @@ Read each file and check for **all three rules**. Fix violations **before** runn
 - Replace `export default Foo` at the bottom of a file → remove it; add `export` in front of the `const` declaration instead.
 - Exception: Next.js page/layout/route files inside `app/` that Next.js requires a default export from — leave those as-is.
 
-### Rule 3: File names must be kebab-case
+### Rule 3: No raw axios or fetch calls
+
+- Never call `axios.get/post/put/delete/patch` directly at the call site.
+- Never call `fetch()` directly.
+- All external API calls must go through the shared `api` axios instance from `lib/api.ts`.
+- All route strings must come from `ApiRoutes` in `lib/api-routes.ts` — never hardcode URL strings at the call site.
+- If a call site violates this, flag it to the user — do not silently fix it, as it likely means `ApiRoutes` needs a new entry too.
+
+### Rule 4: File names must be kebab-case
 
 - All file names (components, hooks, utilities) must use **kebab-case**.
 - Convert the primary export name to kebab-case for the file name:
@@ -53,7 +61,26 @@ git add -A
 
 ---
 
-## Step 3 — TypeScript type-check
+## Step 3 — Format
+
+Run:
+
+```bash
+pnpm format
+```
+
+This formats all files in the project. After it completes, re-stage everything:
+
+```bash
+git add -A
+```
+
+- If it **passes**: proceed to Step 4.
+- If it **fails**: stop and report the error to the user.
+
+---
+
+## Step 4 — TypeScript type-check
 
 Run:
 
@@ -61,12 +88,12 @@ Run:
 pnpm typecheck
 ```
 
-- If it **passes**: proceed to Step 4.
+- If it **passes**: proceed to Step 5.
 - If it **fails**: read the errors, fix them in the relevant files, re-stage with `git add -A`, and re-run `pnpm typecheck`. Repeat until it passes (maximum 3 attempts). If it still fails after 3 attempts, stop and explain the remaining errors to the user.
 
 ---
 
-## Step 4 — Production build
+## Step 5 — Production build
 
 Run:
 
@@ -74,12 +101,12 @@ Run:
 pnpm build
 ```
 
-- If it **passes**: proceed to Step 5.
+- If it **passes**: proceed to Step 6.
 - If it **fails**: read the errors, fix them in the relevant files, re-stage with `git add -A`, and re-run `pnpm build`. Repeat until it passes (maximum 3 attempts). If it still fails after 3 attempts, stop and explain the remaining errors to the user.
 
 ---
 
-## Step 5 — Commit
+## Step 6 — Commit
 
 ```bash
 git commit -m "$ARGUMENTS"
@@ -89,7 +116,7 @@ If `$ARGUMENTS` is empty, write a concise commit message yourself that summarise
 
 ---
 
-## Step 6 — Push to production
+## Step 7 — Push to production
 
 ```bash
 git push origin main
