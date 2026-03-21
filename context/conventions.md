@@ -109,18 +109,39 @@ toast.error("Something went wrong");
 
 ## Color tokens
 
-Use semantic Tailwind tokens — never raw colors like `text-gray-500`.
+**Never use arbitrary Tailwind colors.** No `text-gray-500`, no `bg-blue-600`, no `text-red-400`. Always use shadcn CSS variable tokens. This is a hard rule — no exceptions.
 
-| Intent      | Token                                    |
-| ----------- | ---------------------------------------- |
-| Primary UI  | `bg-primary` / `text-primary`            |
-| Subtle text | `text-muted-foreground`                  |
-| Backgrounds | `bg-muted` / `bg-card` / `bg-background` |
-| Borders     | `border` / `border-border`               |
-| Danger      | `text-destructive` / `bg-destructive`    |
-| Success     | `text-green-600` (no semantic token yet) |
+If a color you need isn't in the list below, use the closest semantic token. Never invent a color.
 
-Always use `bg-card` for card surfaces, `bg-muted` for subtle section backgrounds.
+| Token | Usage |
+| ----- | ----- |
+| `bg-background` / `text-foreground` | Page background and default text |
+| `bg-card` / `text-card-foreground` | Card surfaces |
+| `bg-popover` / `text-popover-foreground` | Popovers, dropdowns |
+| `bg-primary` / `text-primary-foreground` | Primary actions, active state |
+| `bg-secondary` / `text-secondary-foreground` | Secondary actions |
+| `bg-muted` / `text-muted-foreground` | Subtle backgrounds, placeholder text, captions |
+| `bg-accent` / `text-accent-foreground` | Hover states, highlights |
+| `bg-destructive` / `text-destructive-foreground` | Errors, delete actions |
+| `border` | Default borders |
+| `ring` | Focus rings |
+| `input` | Input borders |
+
+**Examples:**
+
+```tsx
+// ✓ correct
+<p className="text-muted-foreground" />
+<div className="bg-card border" />
+<button className="bg-primary text-primary-foreground" />
+<span className="text-destructive" />
+
+// ✗ wrong
+<p className="text-gray-500" />
+<div className="bg-white border-gray-200" />
+<button className="bg-blue-600 text-white" />
+<span className="text-red-500" />
+```
 
 ## Coding rules
 
