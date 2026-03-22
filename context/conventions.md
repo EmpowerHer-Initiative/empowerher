@@ -112,6 +112,7 @@ toast.error("Something went wrong");
 
 - Always use `dvh` for viewport height — never `vh`
 - Always use `size-*` when width and height are equal — never `w-* h-*`
+- Always use the `!` important suffix at the **end** of a class — never the `!` prefix
 
 ```tsx
 // ✓ correct
@@ -119,12 +120,14 @@ toast.error("Something went wrong");
 <div className="h-dvh" />
 <div className="size-6" />
 <div className="size-full" />
+<div className="mb-0!" />
 
 // ✗ wrong
 <div className="min-h-screen" />
 <div className="h-screen" />
 <div className="h-6 w-6" />
 <div className="h-full w-full" />
+<div className="!mb-0" />
 ```
 
 ## Color tokens
