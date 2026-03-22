@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ColumnDef } from "@tanstack/react-table";
 import {
   AlertCircleIcon,
   BellIcon,
@@ -114,17 +115,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
+import { DataTable } from "@/components/data-table";
 
 export default function UIPage() {
   return (
@@ -713,9 +705,8 @@ const DropdownMenuSection = () => {
             Open menu
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>My account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
             <DropdownMenuGroup>
+              <DropdownMenuLabel>My account</DropdownMenuLabel>
               <DropdownMenuItem>
                 <UserIcon /> Profile
                 <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
@@ -744,16 +735,16 @@ const DropdownMenuSection = () => {
             Options
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>Preferences</DropdownMenuLabel>
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>Preferences</DropdownMenuLabel>
+              <DropdownMenuCheckboxItem
+                checked={showStatus}
+                onCheckedChange={setShowStatus}
+              >
+                Show status bar
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuCheckboxItem
-              checked={showStatus}
-              onCheckedChange={setShowStatus}
-            >
-              Show status bar
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuLabel>Team member</DropdownMenuLabel>
             <DropdownMenuRadioGroup value={radio} onValueChange={setRadio}>
               <DropdownMenuRadioItem value="ali">Ali</DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="sara">Sara</DropdownMenuRadioItem>
@@ -1001,56 +992,58 @@ const ToastSection = () => (
   </Section>
 );
 
+type TableRow = {
+  name: string;
+  email: string;
+  role: string;
+  amount: string;
+};
+
+const tableColumns: ColumnDef<TableRow>[] = [
+  { accessorKey: "name", header: "Name" },
+  { accessorKey: "email", header: "Email" },
+  { accessorKey: "role", header: "Role" },
+  { accessorKey: "amount", header: "Amount" },
+];
+
+const tableData: TableRow[] = [
+  {
+    name: "Ali Samadi",
+    email: "ali@example.com",
+    role: "Admin",
+    amount: "$250.00",
+  },
+  {
+    name: "Sara Jones",
+    email: "sara@example.com",
+    role: "Editor",
+    amount: "$150.00",
+  },
+  {
+    name: "Tom Lee",
+    email: "tom@example.com",
+    role: "Viewer",
+    amount: "$0.00",
+  },
+];
+
 const TableSection = () => (
-  <Section title="Table">
+  <Section title="Data Table">
     <Row label="Default">
       <div className="w-full max-w-2xl">
-        <Table>
-          <TableCaption>Recent transactions</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {[
-              {
-                name: "Ali Samadi",
-                email: "ali@example.com",
-                role: "Admin",
-                amount: "$250.00",
-              },
-              {
-                name: "Sara Jones",
-                email: "sara@example.com",
-                role: "Editor",
-                amount: "$150.00",
-              },
-              {
-                name: "Tom Lee",
-                email: "tom@example.com",
-                role: "Viewer",
-                amount: "$0.00",
-              },
-            ].map((row) => (
-              <TableRow key={row.email}>
-                <TableCell className="font-medium">{row.name}</TableCell>
-                <TableCell>{row.email}</TableCell>
-                <TableCell>{row.role}</TableCell>
-                <TableCell className="text-right">{row.amount}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
-              <TableCell className="text-right">$400.00</TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
+        <DataTable columns={tableColumns} data={tableData} />
+      </div>
+    </Row>
+
+    <Row label="Loading state">
+      <div className="w-full max-w-2xl">
+        <DataTable columns={tableColumns} data={[]} isLoading={3} />
+      </div>
+    </Row>
+
+    <Row label="Empty state">
+      <div className="w-full max-w-2xl">
+        <DataTable columns={tableColumns} data={[]} />
       </div>
     </Row>
   </Section>
