@@ -6,7 +6,10 @@ import { motionInView } from "@/lib/utils";
 
 export const Results = () => {
   return (
-    <section className="bg-primary text-primary-foreground py-20">
+    <section
+      id="results"
+      className="bg-primary text-primary-foreground scroll-mt-24 py-20"
+    >
       <div className="container mx-auto max-w-6xl px-4">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           {[

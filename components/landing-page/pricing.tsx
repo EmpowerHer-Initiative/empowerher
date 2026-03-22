@@ -55,7 +55,8 @@ export const Pricing = () => {
 
   return (
     <motion.div
-      className="container"
+      id="pricing"
+      className="container scroll-mt-24"
       variants={motionInView}
       initial="hidden"
       whileInView="visible"

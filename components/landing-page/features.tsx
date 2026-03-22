@@ -34,7 +34,7 @@ const features = [
 
 export const Features = () => {
   return (
-    <section className="container">
+    <section id="features" className="container scroll-mt-24">
       <motion.div
         className="mb-16"
         variants={motionInView}

@@ -73,7 +73,8 @@ export const Testimonials = () => {
       whileInView="visible"
       transition={{ duration: 0.4 }}
       viewport={{ once: true }}
-      className="bg-muted container mx-auto max-w-[1500px] border p-8 xl:rounded-4xl"
+      id="testimonials"
+      className="bg-muted container mx-auto max-w-[1500px] scroll-mt-24 border p-8 xl:rounded-4xl"
     >
       <div className="mb-16">
         <Badge variant="outline" className="mb-4">

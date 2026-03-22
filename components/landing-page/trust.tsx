@@ -7,7 +7,8 @@ import { motionInView } from "@/lib/utils";
 export const Trust = () => {
   return (
     <motion.div
-      className="container mx-auto max-w-6xl px-4"
+      id="trust"
+      className="container mx-auto max-w-6xl scroll-mt-24 px-4"
       variants={motionInView}
       initial="hidden"
       whileInView="visible"

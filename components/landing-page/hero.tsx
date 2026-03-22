@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 
 export const Hero = () => {
   return (
-    <div className="relative overflow-hidden">
+    <div id="hero" className="relative scroll-mt-24 overflow-hidden">
       <BgPattern />
       <section className="container grid min-h-[calc(100dvh-4rem)] px-0 md:grid-cols-2 md:gap-9">
         <div className="relative flex flex-col items-start justify-center gap-4 px-4 py-20">

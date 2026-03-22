@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { Menu } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
@@ -13,20 +13,20 @@ import { Button } from "./ui/button";
 
 const links = [
   {
+    label: "Features",
+    href: "/#features",
+  },
+  {
+    label: "Pricing",
+    href: "/#pricing",
+  },
+  {
     label: "Blog",
     href: "/blog",
   },
   {
-    label: "Features",
-    href: "#",
-  },
-  {
-    label: "Pricing",
-    href: "#",
-  },
-  {
     label: "Contact",
-    href: "#",
+    href: "mailto:a@alisamadii.com",
   },
 ];
 
@@ -34,6 +34,18 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    if (!href.startsWith("/#")) return;
+    e.preventDefault();
+    const id = href.slice(2);
+    if (pathname === "/") {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push(href);
+    }
+  };
 
   const { data: user } = useCurrentUser();
 
@@ -62,6 +74,7 @@ export const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
+                onClick={(e) => handleNavClick(e, link.href)}
               >
                 {link.label}
               </Link>
@@ -109,7 +122,10 @@ export const Navbar = () => {
                   key={link.href}
                   href={link.href}
                   className="hover:text-foreground w-full py-4 text-center text-2xl font-bold transition-colors"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => {
+                    handleNavClick(e, link.href);
+                    setIsOpen(false);
+                  }}
                 >
                   {link.label}
                 </Link>

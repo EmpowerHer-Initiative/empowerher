@@ -18,7 +18,7 @@ export const Blog = () => {
   const remaining = sorted.length - MAX_POSTS;
 
   return (
-    <section className="container">
+    <section id="blog" className="container scroll-mt-24">
       <motion.div
         className="mb-16"
         variants={motionInView}
