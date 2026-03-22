@@ -9,7 +9,9 @@ export const proxy = async (request: Request) => {
   const betterAuthSession = await isAuthenticated();
 
   if (
-    (pathname.startsWith("/admin") || pathname === "/checkout") &&
+    (pathname.startsWith("/admin") ||
+      pathname === "/checkout" ||
+      pathname === "/settings") &&
     !betterAuthSession
   ) {
     let loginPath = `/login?callbackUrl=${pathname}`;

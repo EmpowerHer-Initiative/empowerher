@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import { useTRPC } from "@/services/trpc/client";
+import { queryClient, useTRPC } from "@/services/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
@@ -40,7 +40,15 @@ export const PersonalInformation = () => {
   );
 
   const updateUser = useMutation(
-    useTRPC().admin.users.update.mutationOptions({
+    trpc.admin.users.update.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: trpc.admin.users.getById.pathKey(),
+        });
+        queryClient.invalidateQueries({
+          queryKey: trpc.admin.users.getAll.pathKey(),
+        });
+      },
       onError: (error) => {
         toast.error(error.message || "Failed to update user");
       },

@@ -34,9 +34,9 @@ const useRevokeSession = () => {
 
   return useMutation(
     trpc.sessions.revokeSession.mutationOptions({
-      onSuccess: (_, sessionId) => {
+      onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: trpc.sessions.getSessions.queryKey(sessionId),
+          queryKey: trpc.sessions.getSessions.pathKey(),
         });
       },
     })

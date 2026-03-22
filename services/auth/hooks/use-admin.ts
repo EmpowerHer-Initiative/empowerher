@@ -46,6 +46,9 @@ const useUpdateAdminUser = () => {
         queryClient.invalidateQueries({
           queryKey: trpc.admin.users.getAll.pathKey(),
         });
+        queryClient.invalidateQueries({
+          queryKey: trpc.admin.users.getById.pathKey(),
+        });
       },
     })
   );
