@@ -13,6 +13,7 @@ export const Footer = () => {
     pathname === "/login" ||
     pathname === "/signup" ||
     pathname === "/reset-password" ||
+    pathname === "/checkout" ||
     pathname.startsWith("/admin") ||
     pathname.startsWith("/ui")
   ) {

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   useSignin,
   useSignInWithProvider,
@@ -27,6 +27,12 @@ const formSchema = z.object({
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
+  const productId = searchParams.get("productId");
+  const destination = productId
+    ? `/checkout?productId=${productId}`
+    : callbackUrl;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,16 +45,16 @@ export default function LoginPage() {
   const signin = useSignin();
   const onSignInWithProvider = useSignInWithProvider("google");
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     signin.mutate(values, {
       onSuccess: () => {
-        router.push("/");
+        router.push(destination);
       },
       onError: (error) => {
         form.setError("email", { message: error.message });
       },
     });
-  }
+  };
 
   return (
     <div className="bg-muted flex min-h-dvh items-center-safe justify-center-safe p-8">
@@ -115,7 +121,16 @@ export default function LoginPage() {
         </form>
         <div className="text-muted-foreground text-sm">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-primary underline">
+          <Link
+            href={
+              productId
+                ? `/signup?callbackUrl=/checkout&productId=${productId}`
+                : callbackUrl !== "/"
+                  ? `/signup?callbackUrl=${callbackUrl}`
+                  : "/signup"
+            }
+            className="text-primary underline"
+          >
             Sign up
           </Link>
         </div>

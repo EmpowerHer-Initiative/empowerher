@@ -27,9 +27,11 @@ export const useCheckout = () => {
         /* eslint-disable-next-line react-hooks/immutability */
         window.location.href = data.url;
       },
-      onError: (error) => {
+      onError: (error, variables) => {
         if (error.data?.code === "UNAUTHORIZED") {
-          router.push("/signup");
+          router.push(
+            `/signup?callbackUrl=/checkout&productId=${variables.productId}`
+          );
           return;
         }
       },

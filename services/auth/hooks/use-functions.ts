@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/services/auth/auth-client";
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { queryClient, useTRPC } from "@/services/trpc/client";
@@ -116,7 +116,7 @@ const useSignin = () => {
  * @param provider - The social provider to use for authentication
  * @returns UseMutationResult for social sign-in operation
  */
-export function useSignInWithProvider(provider: "github" | "google") {
+export const useSignInWithProvider = (provider: "github" | "google") => {
   return useMutation({
     mutationFn: async ({ redirectUrl }: { redirectUrl: string }) => {
       const { data, error } = await authClient.signIn.social({
@@ -131,7 +131,7 @@ export function useSignInWithProvider(provider: "github" | "google") {
       return data;
     },
   });
-}
+};
 
 /**
  * Custom hook for sending password reset email
@@ -198,6 +198,7 @@ const useResetPassword = () => {
  */
 const useVerifyEmail = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { data: user } = useCurrentUser();
 
   const trpc = useTRPC();
@@ -224,8 +225,13 @@ const useVerifyEmail = () => {
         };
       });
 
+      const callbackUrl = searchParams.get("callbackUrl") ?? "/";
+      const productId = searchParams.get("productId");
+      const destination = productId
+        ? `/checkout?productId=${productId}`
+        : callbackUrl;
       setTimeout(() => {
-        router.push("/");
+        router.push(destination);
       }, 2000);
     },
     onError: () => {},

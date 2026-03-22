@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useSignup } from "@/services/auth/hooks/use-functions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -33,6 +34,9 @@ const formSchema = z
 
 export default function SignupPage() {
   const { setIsOpen, setEmail } = useNugsVerifyEmail();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
+  const productId = searchParams.get("productId");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,7 +50,7 @@ export default function SignupPage() {
 
   const signup = useSignup();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
     signup.mutate(values, {
       onSuccess: () => {
@@ -57,7 +61,7 @@ export default function SignupPage() {
         form.setError("email", { message: error.message });
       },
     });
-  }
+  };
 
   return (
     <div className="bg-muted flex min-h-dvh items-center-safe justify-center-safe p-8">
@@ -160,7 +164,16 @@ export default function SignupPage() {
         </form>
         <div className="text-muted-foreground text-sm">
           Already have an account?{" "}
-          <Link href="/login" className="text-primary underline">
+          <Link
+            href={
+              productId
+                ? `/login?callbackUrl=/checkout&productId=${productId}`
+                : callbackUrl !== "/"
+                  ? `/login?callbackUrl=${callbackUrl}`
+                  : "/login"
+            }
+            className="text-primary underline"
+          >
             Login
           </Link>
         </div>
