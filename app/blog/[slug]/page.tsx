@@ -1,19 +1,26 @@
-"use client";
-
 import Link from "next/link";
-import { notFound, useParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import { MDXContent } from "@content-collections/mdx/react";
-import { allPosts } from "content-collections";
+import { allBlogs } from "content-collections";
 import { format } from "date-fns";
 import { ArrowLeftIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
+import { TableOfContents } from "@/components/table-of-contents";
 
-export default function PostPage() {
-  const { slug } = useParams<{ slug: string[] }>();
-  const post = allPosts.find((post) => post._meta.path === slug.join("/"));
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export function generateStaticParams() {
+  return allBlogs.map((post) => ({ slug: post._meta.path }));
+}
+
+export default async function BlogPostPage({ params }: Props) {
+  const { slug } = await params;
+  const post = allBlogs.find((p) => p._meta.path === slug);
 
   if (!post) {
     return notFound();
@@ -24,42 +31,33 @@ export default function PostPage() {
       <Button
         variant="ghost"
         render={
-          <Link href="/">
-            <ArrowLeftIcon /> Back
+          <Link href="/blog">
+            <ArrowLeftIcon /> Back to blog
           </Link>
         }
       />
+
       <div className="mb-8 flex flex-col items-center gap-2 text-center">
+        <p className="text-muted-foreground text-sm">
+          {format(post.date, "MMMM d, yyyy")}
+        </p>
         <h1 className="text-3xl font-bold">{post.title}</h1>
         <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed md:text-base">
           {post.description}
         </p>
-
-        {post.thumbnail && (
+        {post.image && (
           <img
-            src={post.thumbnail}
+            src={post.image}
             alt={post.title}
-            className="mt-4 aspect-7/3 rounded-2xl object-cover outline"
+            className="mt-4 aspect-video w-full max-w-3xl rounded-2xl object-cover outline"
           />
         )}
-        {post.date && (
-          <p className="text-muted-foreground mt-2 text-sm">
-            {format(post.date, "MMMM d, yyyy")}
-          </p>
-        )}
       </div>
+
       <div className="flex w-full flex-col items-start gap-8 md:flex-row">
-        <div className="bg-muted shadow-card sticky flex shrink-0 flex-col gap-2 rounded-2xl p-8 md:top-18 md:w-100">
-          {post.headings.map((heading) => (
-            <Link
-              key={heading.id}
-              href={`#${heading.id}`}
-              className="text-muted-foreground hover:text-foreground transition-colors hover:underline"
-            >
-              {heading.text}
-            </Link>
-          ))}
-        </div>
+        {post.headings.length > 0 && (
+          <TableOfContents headings={post.headings} />
+        )}
         <div
           className={cn(
             "prose-theme prose w-full max-w-none",

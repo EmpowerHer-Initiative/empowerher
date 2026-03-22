@@ -27,10 +27,7 @@ export const adminOverviewRouter = createTRPCRouter({
           .select({ count: count() })
           .from(user)
           .where(gte(user.createdAt, startOfMonth)),
-        db
-          .select({ count: count() })
-          .from(user)
-          .where(eq(user.banned, true)),
+        db.select({ count: count() }).from(user).where(eq(user.banned, true)),
         db
           .select({ count: count() })
           .from(subscriptions)
@@ -56,10 +53,7 @@ export const adminOverviewRouter = createTRPCRouter({
           .select({ total: sum(orders.totalAmount) })
           .from(orders)
           .where(
-            and(
-              eq(orders.status, "paid"),
-              gte(orders.createdAt, startOfMonth)
-            )
+            and(eq(orders.status, "paid"), gte(orders.createdAt, startOfMonth))
           ),
         db
           .select({ total: sum(subscriptions.amount) })

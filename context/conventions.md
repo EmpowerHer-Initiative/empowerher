@@ -32,6 +32,7 @@ Available components in `@/components/ui/`:
 **Rules:**
 
 - Use `Button` — never `<button>`
+- Use `size="icon"` on `Button` whenever the button contains only an icon and no label
 - Use `Input` — never `<input>`
 - Use `Card` for any boxed content sections
 - Use `Dialog` / `AlertDialog` for modals and confirmations
@@ -169,6 +170,16 @@ If a color you need isn't in the list below, use the closest semantic token. Nev
 | Functions  | `function MyComp()`           | `const MyComp = () =>`                                              |
 | Exports    | `export default function Foo` | `export const Foo = () =>` (except Next.js page/layout/route files) |
 | File names | `UserCard.tsx`                | `user-card.tsx`                                                     |
+
+## Content (Markdown / MDX)
+
+Use **`@content-collections/core`** for all Markdown content. Collections are defined in `content-collections.ts` at the root. Each collection compiles MDX, extracts headings, and exports a typed `allX` array from the virtual `content-collections` module.
+
+- Add a new collection with `defineCollection` in `content-collections.ts`
+- Place content files in `content/<collection-directory>/`
+- Import with `import { allBlog } from "content-collections"` (name follows the collection `name` field)
+- Access processed MDX via `post.mdx`, render with `<MDXContent code={post.mdx} />` from `@content-collections/mdx/react`
+- Static routes should call `generateStaticParams` using the collection array
 
 ## Before writing code
 

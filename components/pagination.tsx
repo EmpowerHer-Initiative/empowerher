@@ -1,0 +1,55 @@
+import Link from "next/link";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+
+import { Button } from "@/components/ui/button";
+
+type Props = {
+  currentPage: number;
+  totalPages: number;
+  basePath: string;
+};
+
+export const Pagination = ({ currentPage, totalPages, basePath }: Props) => {
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const hasPrev = currentPage > 1;
+  const hasNext = currentPage < totalPages;
+
+  const href = (page: number) =>
+    page === 1 ? basePath : `${basePath}?page=${page}`;
+
+  return (
+    <div className="flex items-center justify-center gap-1">
+      <Button
+        variant="ghost"
+        size="icon"
+        disabled={!hasPrev}
+        render={hasPrev ? <Link href={href(currentPage - 1)} /> : undefined}
+      >
+        <ChevronLeftIcon />
+      </Button>
+
+      {pages.map((page) => (
+        <Button
+          key={page}
+          variant={page === currentPage ? "outline" : "ghost"}
+          size="sm"
+          render={page !== currentPage ? <Link href={href(page)} /> : undefined}
+          className={cn(page === currentPage && "pointer-events-none")}
+        >
+          {page}
+        </Button>
+      ))}
+
+      <Button
+        variant="ghost"
+        size="icon"
+        disabled={!hasNext}
+        render={hasNext ? <Link href={href(currentPage + 1)} /> : undefined}
+      >
+        <ChevronRightIcon />
+      </Button>
+    </div>
+  );
+};

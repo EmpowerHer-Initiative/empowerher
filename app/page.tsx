@@ -1,5 +1,6 @@
 "use client";
 
+import { Blog } from "@/components/landing-page/blog";
 import { Features } from "@/components/landing-page/features";
 import { Hero } from "@/components/landing-page/hero";
 import { Pricing } from "@/components/landing-page/pricing";
@@ -17,6 +18,7 @@ export default function LandingPage() {
         <Features />
         <Testimonials />
         <Pricing />
+        <Blog />
       </div>
     </>
   );

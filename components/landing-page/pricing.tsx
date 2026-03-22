@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useCheckout } from "@/services/auth/hooks/use-payments";
 import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { CheckCircle2 } from "lucide-react";
 import { motion } from "motion/react";
-import { useCheckout } from "@/services/auth/hooks/use-payments";
 
 import { motionInView } from "@/lib/utils";
 
@@ -31,7 +31,12 @@ const extractFeaturesFromMarkdown = (markdown: string): string[] =>
   markdown
     .split(/\\n|\n/)
     .filter((line) => /^[-*]\s+/.test(line.trim()))
-    .map((line) => line.trim().replace(/^[-*]\s+/, "").trim())
+    .map((line) =>
+      line
+        .trim()
+        .replace(/^[-*]\s+/, "")
+        .trim()
+    )
     .filter(Boolean);
 
 export const Pricing = () => {
