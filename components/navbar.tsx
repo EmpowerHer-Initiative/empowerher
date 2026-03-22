@@ -41,7 +41,8 @@ export const Navbar = () => {
     pathname === "/login" ||
     pathname === "/signup" ||
     pathname === "/reset-password" ||
-    pathname.startsWith("/admin")
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/ui")
   ) {
     return null;
   }
