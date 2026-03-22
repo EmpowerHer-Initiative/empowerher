@@ -27,7 +27,7 @@ Always reach for an existing shadcn component before writing any custom UI. Neve
 
 Available components in `@/components/ui/`:
 
-`alert` · `alert-dialog` · `avatar` · `badge` · `button` · `card` · `checkbox` · `dialog` · `dropdown-menu` · `field` · `input` · `input-group` · `input-otp` · `label` · `select` · `separator` · `skeleton` · `sonner` · `spinner` · `table` · `textarea`
+`alert` · `alert-dialog` · `avatar` · `badge` · `button` · `card` · `checkbox` · `dialog` · `dropdown-menu` · `field` · `input` · `input-group` · `input-otp` · `label` · `popover` · `select` · `separator` · `skeleton` · `sonner` · `spinner` · `table` · `textarea`
 
 **Rules:**
 

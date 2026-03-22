@@ -17,7 +17,7 @@ const ALLOWED_TYPES = [
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const SIGNED_URL_EXPIRY = 60 * 5; // 5 minutes
 
-export const ALLOWED_FOLDERS = ["users"] as const;
+export const ALLOWED_FOLDERS = ["users", "media"] as const;
 
 export const uploadRouter = createTRPCRouter({
   getUploadUrl: baseProcedure

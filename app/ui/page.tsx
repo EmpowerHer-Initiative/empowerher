@@ -106,6 +106,14 @@ import {
 } from "@/components/ui/input-otp";
 import { Label } from "@/components/ui/label";
 import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -115,6 +123,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { DataTable } from "@/components/data-table";
 
@@ -163,6 +172,10 @@ export default function UIPage() {
       <InputOTPSection />
       <Separator />
       <ToastSection />
+      <Separator />
+      <PopoverSection />
+      <Separator />
+      <TabsSection />
       <Separator />
       <TableSection />
     </div>
@@ -1028,6 +1041,182 @@ const tableData: TableRow[] = [
     amount: "$0.00",
   },
 ];
+
+const PopoverSection = () => (
+  <Section title="Popover">
+    <Row label="Sides">
+      {(["top", "bottom", "left", "right"] as const).map((side) => (
+        <Popover key={side}>
+          <PopoverTrigger render={<Button variant="outline" />}>
+            Open {side}
+          </PopoverTrigger>
+          <PopoverContent side={side}>
+            <PopoverHeader>
+              <PopoverTitle>Popover ({side})</PopoverTitle>
+              <PopoverDescription>
+                This popover opens on the {side} side.
+              </PopoverDescription>
+            </PopoverHeader>
+          </PopoverContent>
+        </Popover>
+      ))}
+    </Row>
+
+    <Row label="With content">
+      <Popover>
+        <PopoverTrigger render={<Button variant="outline" />}>
+          Profile info
+        </PopoverTrigger>
+        <PopoverContent side="bottom" align="start">
+          <PopoverHeader>
+            <PopoverTitle>Ali Samadi</PopoverTitle>
+            <PopoverDescription>ali@example.com</PopoverDescription>
+          </PopoverHeader>
+          <div className="mt-1 space-y-1 text-xs">
+            <p>
+              <span className="text-muted-foreground">Role:</span> Admin
+            </p>
+            <p>
+              <span className="text-muted-foreground">Joined:</span> Jan 2024
+            </p>
+          </div>
+        </PopoverContent>
+      </Popover>
+
+      <Popover>
+        <PopoverTrigger render={<Button variant="outline" />}>
+          With form
+        </PopoverTrigger>
+        <PopoverContent side="bottom">
+          <PopoverHeader>
+            <PopoverTitle>Update name</PopoverTitle>
+          </PopoverHeader>
+          <div className="mt-1 space-y-2">
+            <Label>Name</Label>
+            <Input placeholder="Ali Samadi" />
+            <Button size="sm" className="w-full">
+              Save
+            </Button>
+          </div>
+        </PopoverContent>
+      </Popover>
+    </Row>
+
+    <Row label="Alignment">
+      {(["start", "center", "end"] as const).map((align) => (
+        <Popover key={align}>
+          <PopoverTrigger render={<Button variant="outline" />}>
+            Align {align}
+          </PopoverTrigger>
+          <PopoverContent side="bottom" align={align}>
+            <PopoverHeader>
+              <PopoverTitle>Aligned {align}</PopoverTitle>
+              <PopoverDescription>
+                Popover aligned to the {align}.
+              </PopoverDescription>
+            </PopoverHeader>
+          </PopoverContent>
+        </Popover>
+      ))}
+    </Row>
+  </Section>
+);
+
+const TabsSection = () => (
+  <Section title="Tabs">
+    <Row label="Default (sliding background)">
+      <Tabs defaultValue="tab1" className="w-80">
+        <TabsList className="w-full">
+          <TabsTrigger value="tab1" layoutId="ui-tabs-demo" className="flex-1">
+            Account
+          </TabsTrigger>
+          <TabsTrigger value="tab2" layoutId="ui-tabs-demo" className="flex-1">
+            Password
+          </TabsTrigger>
+          <TabsTrigger value="tab3" layoutId="ui-tabs-demo" className="flex-1">
+            Settings
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="tab1">
+          <p className="text-muted-foreground text-sm">
+            Manage your account settings.
+          </p>
+        </TabsContent>
+        <TabsContent value="tab2">
+          <p className="text-muted-foreground text-sm">Change your password.</p>
+        </TabsContent>
+        <TabsContent value="tab3">
+          <p className="text-muted-foreground text-sm">
+            Configure preferences.
+          </p>
+        </TabsContent>
+      </Tabs>
+    </Row>
+
+    <Row label="No animation (no layoutId)">
+      <Tabs defaultValue="a" className="w-64">
+        <TabsList className="w-full">
+          <TabsTrigger value="a" className="flex-1">
+            Tab A
+          </TabsTrigger>
+          <TabsTrigger value="b" className="flex-1">
+            Tab B
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="a">
+          <p className="text-muted-foreground text-sm">Content A</p>
+        </TabsContent>
+        <TabsContent value="b">
+          <p className="text-muted-foreground text-sm">Content B</p>
+        </TabsContent>
+      </Tabs>
+    </Row>
+
+    <Row label="Line variant">
+      <Tabs defaultValue="x" className="w-64">
+        <TabsList variant="line" className="w-full">
+          <TabsTrigger value="x" className="flex-1">
+            Overview
+          </TabsTrigger>
+          <TabsTrigger value="y" className="flex-1">
+            Analytics
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="x">
+          <p className="text-muted-foreground text-sm">Overview content</p>
+        </TabsContent>
+        <TabsContent value="y">
+          <p className="text-muted-foreground text-sm">Analytics content</p>
+        </TabsContent>
+      </Tabs>
+    </Row>
+
+    <Row label="Vertical">
+      <Tabs defaultValue="v1" orientation="vertical" className="w-80">
+        <TabsList className="w-32">
+          <TabsTrigger value="v1" className="w-full">
+            Profile
+          </TabsTrigger>
+          <TabsTrigger value="v2" className="w-full">
+            Billing
+          </TabsTrigger>
+          <TabsTrigger value="v3" className="w-full">
+            Team
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="v1">
+          <p className="text-muted-foreground text-sm">Profile settings</p>
+        </TabsContent>
+        <TabsContent value="v2">
+          <p className="text-muted-foreground text-sm">Billing details</p>
+        </TabsContent>
+        <TabsContent value="v3">
+          <p className="text-muted-foreground text-sm">Team members</p>
+        </TabsContent>
+      </Tabs>
+    </Row>
+  </Section>
+);
 
 const TableSection = () => (
   <Section title="Data Table">

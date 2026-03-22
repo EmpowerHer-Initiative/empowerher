@@ -9,6 +9,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { cn } from "@/lib/utils";
 
 import { Toaster } from "@/components/ui/sonner";
+import { AdminToolbar } from "@/components/admin/admin-toolbar";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -47,6 +48,7 @@ export default function RootLayout({
                 <Navbar />
                 {children}
                 <Footer />
+                <AdminToolbar />
               </Suspense>
               <Toaster />
             </NuqsAdapter>

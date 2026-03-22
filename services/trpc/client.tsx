@@ -16,7 +16,7 @@ import { createTRPCContext } from "@trpc/tanstack-react-query";
 
 import type { AppRouter } from "./routers/_app";
 
-export function makeQueryClient() {
+export const makeQueryClient = () => {
   return new QueryClient({
     defaultOptions: {
       queries: {
@@ -47,14 +47,14 @@ export function makeQueryClient() {
       },
     }),
   });
-}
+};
 
 export const { TRPCProvider, useTRPC } = createTRPCContext<AppRouter>();
 
 let browserQueryClient: QueryClient;
 export let queryClient: QueryClient;
 
-function getQueryClient() {
+const getQueryClient = () => {
   if (typeof window === "undefined") {
     // Server: always make a new query client
     return makeQueryClient();
@@ -69,8 +69,8 @@ function getQueryClient() {
     queryClient = client;
   }
   return browserQueryClient;
-}
-function getUrl() {
+};
+const getUrl = () => {
   // On client (browser/WebView): use current origin so API works when page is
   // loaded from device IP (e.g. http://192.168.x.x:3000) instead of localhost
   if (typeof window !== "undefined") {
@@ -79,17 +79,17 @@ function getUrl() {
   const base = process.env.NEXT_PUBLIC_API_URL;
   if (!base) throw new Error("NEXT_PUBLIC_API_URL is not set");
   return `${base}/api/trpc`;
-}
+};
 // Export raw tRPC client for direct client-side calls (not through React Query)
 export let trpcClient:
   | ReturnType<typeof createTRPCClient<AppRouter>>
   | undefined;
 
-export function TRPCReactProvider(
+export const TRPCReactProvider = (
   props: Readonly<{
     children: React.ReactNode;
   }>
-) {
+) => {
   // NOTE: Avoid useState when initializing the query client if you don't
   //       have a suspense boundary between this and the code that may
   //       suspend because React will throw away the client on the initial
@@ -123,12 +123,12 @@ export function TRPCReactProvider(
       <TRPCProvider trpcClient={client} queryClient={queryClient}>
         <StoredTRPC>
           {props.children}
-          <ReactQueryDevtools />
+          <ReactQueryDevtools buttonPosition="top-right" />
         </StoredTRPC>
       </TRPCProvider>
     </QueryClientProvider>
   );
-}
+};
 
 // Store the TRPC instance so it can be accessed without calling the hook
 // This is useful for queryOptions() and mutationOptions() which aren't hooks
@@ -138,7 +138,7 @@ export let storedTRPC: ReturnType<typeof useTRPC> | undefined;
  * Internal component that stores the TRPC instance
  * Automatically initializes storedTRPC when TRPCReactProvider mounts
  */
-function StoredTRPC({ children }: { children: React.ReactNode }) {
+const StoredTRPC = ({ children }: { children: React.ReactNode }) => {
   const trpc = useTRPC();
 
   useEffect(() => {
@@ -148,4 +148,4 @@ function StoredTRPC({ children }: { children: React.ReactNode }) {
   }, [trpc]);
 
   return <>{children}</>;
-}
+};
