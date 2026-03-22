@@ -170,6 +170,7 @@ If a color you need isn't in the list below, use the closest semantic token. Nev
 | Functions  | `function MyComp()`           | `const MyComp = () =>`                                              |
 | Exports    | `export default function Foo` | `export const Foo = () =>` (except Next.js page/layout/route files) |
 | File names | `UserCard.tsx`                | `user-card.tsx`                                                     |
+| Apostrophe | `We'll`                       | `We&apos;ll` (use `&apos;` for apostrophes in JSX text content)     |
 
 ## Content (Markdown / MDX)
 

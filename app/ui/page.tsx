@@ -791,7 +791,9 @@ const FieldSection = () => (
         <Field>
           <FieldLabel>Email address</FieldLabel>
           <Input placeholder="you@example.com" />
-          <FieldDescription>We'll never share your email.</FieldDescription>
+          <FieldDescription>
+            We&apos;ll never share your email.
+          </FieldDescription>
         </Field>
         <Field>
           <FieldLabel>Password</FieldLabel>

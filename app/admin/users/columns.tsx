@@ -13,11 +13,13 @@ import { toast } from "sonner";
 
 import {
   AlertDialog,
+  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogMedia,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -31,7 +33,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Textarea } from "@/components/ui/textarea";
-import { ReadyConfirmDialog } from "@/components/confirm-alert-dialog";
 
 type UserFromAPI = RouterOutputs["admin"]["users"]["getAll"][number];
 
@@ -241,23 +242,34 @@ export const columns: ColumnDef<UserFromAPI>[] = [
             </AlertDialogContent>
           </AlertDialog>
 
-          <ReadyConfirmDialog
-            isOpen={deleteOpen}
-            onOpenChange={setDeleteOpen}
-            title="Delete user"
-            description="Are you sure you want to delete this user?"
-            action={{
-              label: "Delete user",
-              onClick: () =>
-                deleteAccount.mutate(row.original.id, {
-                  onSuccess: () => setDeleteOpen(false),
-                }),
-              isPending: deleteAccount.isPending,
-              isError: deleteAccount.isError,
-              error: deleteAccount.error?.message,
-              isSuccess: deleteAccount.isSuccess,
-            }}
-          />
+          <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+            <AlertDialogContent size="sm" onClick={(e) => e.stopPropagation()}>
+              <AlertDialogHeader>
+                <AlertDialogMedia>
+                  <Trash />
+                </AlertDialogMedia>
+                <AlertDialogTitle>Delete user</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Are you sure you want to delete this user? This action cannot
+                  be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  variant="destructive"
+                  disabled={deleteAccount.isPending}
+                  onClick={() =>
+                    deleteAccount.mutate(row.original.id, {
+                      onSuccess: () => setDeleteOpen(false),
+                    })
+                  }
+                >
+                  Delete user
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       );
     },
