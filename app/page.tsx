@@ -1,25 +1,19 @@
-"use client";
+import type { Metadata } from "next";
 
-import { Blog } from "@/components/landing-page/blog";
-import { Features } from "@/components/landing-page/features";
-import { Hero } from "@/components/landing-page/hero";
-import { Pricing } from "@/components/landing-page/pricing";
-import { Results } from "@/components/landing-page/results";
-import { Testimonials } from "@/components/landing-page/testimonials";
-import { Trust } from "@/components/landing-page/trust";
+import { siteConfig } from "@/lib/site";
+
+import { HomePage } from "./home-page";
+
+export const metadata: Metadata = {
+  title: siteConfig.pages.home.title,
+  description: siteConfig.pages.home.description,
+  openGraph: {
+    title: siteConfig.pages.home.title,
+    description: siteConfig.pages.home.description,
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
+  },
+};
 
 export default function LandingPage() {
-  return (
-    <>
-      <Hero />
-      <Results />
-      <div className="my-24 space-y-24">
-        <Trust />
-        <Features />
-        <Testimonials />
-        <Pricing />
-        <Blog />
-      </div>
-    </>
-  );
+  return <HomePage />;
 }

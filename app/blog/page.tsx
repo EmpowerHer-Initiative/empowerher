@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+
+import { siteConfig } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: siteConfig.pages.blog.title,
+  description: siteConfig.pages.blog.description,
+};
+
 import { allBlogs } from "content-collections";
 
 import { BlogCard } from "@/components/blog-card";
