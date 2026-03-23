@@ -39,5 +39,8 @@ export const siteConfig = {
     resetPassword: {
       title: "Reset Password",
     },
+    accountDeleted: {
+      title: "Account Deleted",
+    },
   },
 };
