@@ -17,6 +17,40 @@ Keep everything in one file unless ALL three are true:
 
 If multiple sub-components share one `useQuery` — keep them in the same file.
 
+## Popover / Dialog / AlertDialog — Content sub-component
+
+Whenever a `Popover`, `Dialog`, or `AlertDialog` contains hooks or logic, extract the inner content into a co-located `Content` sub-component in the **same file**. The parent only owns open/close state and renders `{isOpen && <Content onClose={...} />}` (or the dialog equivalent). This ensures hooks and heavy logic only run when the overlay is actually open.
+
+```tsx
+// ✓ correct — hooks live in Content, only mount when open
+export const DeleteUserDialog = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="destructive">Delete</Button>
+      </DialogTrigger>
+      <DialogContent>
+         <Content onClose={() => setOpen(false)} />
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const Content = ({ onClose }: { onClose: () => void }) => {
+  const deleteUser = useMutation(trpc.user.delete.mutationOptions());
+  // all logic here
+};
+
+// ✗ wrong — hooks run unconditionally in the parent
+export const DeleteUserDialog = () => {
+  const deleteUser = useMutation(...); // runs even when dialog is closed
+  const [open, setOpen] = useState(false);
+  ...
+};
+```
+
 ## Page files
 
 Pages import and render section components only — no data fetching, no inline logic.
@@ -136,19 +170,19 @@ toast.error("Something went wrong");
 
 If a color you need isn't in the list below, use the closest semantic token. Never invent a color.
 
-| Token | Usage |
-| ----- | ----- |
-| `bg-background` / `text-foreground` | Page background and default text |
-| `bg-card` / `text-card-foreground` | Card surfaces |
-| `bg-popover` / `text-popover-foreground` | Popovers, dropdowns |
-| `bg-primary` / `text-primary-foreground` | Primary actions, active state |
-| `bg-secondary` / `text-secondary-foreground` | Secondary actions |
-| `bg-muted` / `text-muted-foreground` | Subtle backgrounds, placeholder text, captions |
-| `bg-accent` / `text-accent-foreground` | Hover states, highlights |
-| `bg-destructive` / `text-destructive-foreground` | Errors, delete actions |
-| `border` | Default borders |
-| `ring` | Focus rings |
-| `input` | Input borders |
+| Token                                            | Usage                                          |
+| ------------------------------------------------ | ---------------------------------------------- |
+| `bg-background` / `text-foreground`              | Page background and default text               |
+| `bg-card` / `text-card-foreground`               | Card surfaces                                  |
+| `bg-popover` / `text-popover-foreground`         | Popovers, dropdowns                            |
+| `bg-primary` / `text-primary-foreground`         | Primary actions, active state                  |
+| `bg-secondary` / `text-secondary-foreground`     | Secondary actions                              |
+| `bg-muted` / `text-muted-foreground`             | Subtle backgrounds, placeholder text, captions |
+| `bg-accent` / `text-accent-foreground`           | Hover states, highlights                       |
+| `bg-destructive` / `text-destructive-foreground` | Errors, delete actions                         |
+| `border`                                         | Default borders                                |
+| `ring`                                           | Focus rings                                    |
+| `input`                                          | Input borders                                  |
 
 **Examples:**
 
