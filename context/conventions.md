@@ -164,6 +164,19 @@ toast.error("Something went wrong");
 <div className="!mb-0" />
 ```
 
+## className — always use cn
+
+Always use `cn()` from `@/lib/utils` for any dynamic or conditional className. Never use template literals or inline ternaries in className strings.
+
+```tsx
+// ✓ correct
+<div className={cn("base", isActive && "active", variant === "x" && "x-class")} />
+
+// ✗ wrong
+<div className={`base ${isActive ? "active" : ""}`} />
+<div className={"base " + (isActive ? "active" : "")} />
+```
+
 ## Color tokens
 
 **Never use arbitrary Tailwind colors.** No `text-gray-500`, no `bg-blue-600`, no `text-red-400`. Always use shadcn CSS variable tokens. This is a hard rule — no exceptions.

@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
+import { allBlogs } from "content-collections";
 
 import { siteConfig } from "@/lib/site";
+
+import { BlogCard } from "@/components/blog-card";
+import { Pagination } from "@/components/pagination";
 
 export const metadata: Metadata = {
   title: siteConfig.pages.blog.title,
   description: siteConfig.pages.blog.description,
 };
-
-import { allBlogs } from "content-collections";
-
-import { BlogCard } from "@/components/blog-card";
-import { Pagination } from "@/components/pagination";
 
 const PAGE_SIZE = 6;
 

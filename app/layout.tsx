@@ -3,7 +3,18 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
 
+import { Suspense } from "react";
+import { TRPCReactProvider } from "@/services/trpc/client";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+
 import { siteConfig } from "@/lib/site";
+import { cn } from "@/lib/utils";
+
+import { Toaster } from "@/components/ui/sonner";
+import { AdminToolbar } from "@/components/admin/admin-toolbar";
+import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/navbar";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -28,18 +39,6 @@ export const metadata: Metadata = {
     images: [siteConfig.ogImage],
   },
 };
-
-import { Suspense } from "react";
-import { TRPCReactProvider } from "@/services/trpc/client";
-import { NuqsAdapter } from "nuqs/adapters/next/app";
-
-import { cn } from "@/lib/utils";
-
-import { Toaster } from "@/components/ui/sonner";
-import { AdminToolbar } from "@/components/admin/admin-toolbar";
-import { Footer } from "@/components/footer";
-import { Navbar } from "@/components/navbar";
-import { ThemeProvider } from "@/components/theme-provider";
 
 const fontSans = Geist({
   subsets: ["latin"],

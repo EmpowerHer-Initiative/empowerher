@@ -2,10 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  useSignin,
-  useSignInWithProvider,
-} from "@/services/auth/hooks/use-functions";
+import { useSignin } from "@/services/auth/hooks/use-functions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -43,7 +40,6 @@ export const LoginForm = () => {
   });
 
   const signin = useSignin();
-  const onSignInWithProvider = useSignInWithProvider("google");
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     signin.mutate(values, {

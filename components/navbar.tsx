@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
-import { Menu } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { Menu, X } from "lucide-react";
+import { motion } from "motion/react";
+
+import { cn } from "@/lib/utils";
 
 import { Logo } from "./icons/logo";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -32,6 +34,13 @@ const links = [
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 0);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const pathname = usePathname();
   const router = useRouter();
@@ -94,46 +103,45 @@ export const Navbar = () => {
 
           <div className="flex items-center gap-3 md:hidden">
             <Button>Log in</Button>
-            <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)}>
-              <Menu className="size-6" />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
             </Button>
           </div>
         </div>
       </nav>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.5, type: "spring", bounce: 0 }}
-            className="fixed top-0 left-0 isolate z-50 h-full w-full py-8 md:hidden"
-          >
-            <div
-              className="bg-background/95 absolute top-0 left-0 -z-10 h-full w-full backdrop-blur-xs"
-              onClick={() => setIsOpen(false)}
-            ></div>
-            <div className="mb-10 flex flex-col items-center gap-8">
-              <Logo className="size-10" />
-            </div>
-            <div className="flex flex-col items-center">
-              {links.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="hover:text-foreground w-full py-4 text-center text-2xl font-bold transition-colors"
-                  onClick={(e) => {
-                    handleNavClick(e, link.href);
-                    setIsOpen(false);
-                  }}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </motion.div>
+      <motion.div
+        initial={{ height: 0 }}
+        animate={{ height: isOpen ? "auto" : 0 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className={cn(
+          "bg-muted/80 z-50 w-full overflow-hidden rounded-b-2xl border-b shadow-lg backdrop-blur-xl md:hidden",
+          isScrolled ? "fixed top-16" : "relative"
         )}
-      </AnimatePresence>
+      >
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : -20 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="flex flex-col py-8"
+        >
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="hover:text-foreground w-full px-5 py-4 text-2xl font-bold transition-colors"
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

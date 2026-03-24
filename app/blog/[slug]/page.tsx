@@ -1,6 +1,16 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { MDXContent } from "@content-collections/mdx/react";
+import { allBlogs } from "content-collections";
+import { format } from "date-fns";
+import { ArrowLeftIcon } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
+import { cn } from "@/lib/utils";
+
+import { Button } from "@/components/ui/button";
+import { TableOfContents } from "@/components/table-of-contents";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -27,18 +37,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
   };
 }
-
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { MDXContent } from "@content-collections/mdx/react";
-import { allBlogs } from "content-collections";
-import { format } from "date-fns";
-import { ArrowLeftIcon } from "lucide-react";
-
-import { cn } from "@/lib/utils";
-
-import { Button } from "@/components/ui/button";
-import { TableOfContents } from "@/components/table-of-contents";
 
 type Props = {
   params: Promise<{ slug: string }>;

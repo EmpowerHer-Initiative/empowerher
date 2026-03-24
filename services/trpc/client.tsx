@@ -123,7 +123,7 @@ export const TRPCReactProvider = (
       <TRPCProvider trpcClient={client} queryClient={queryClient}>
         <StoredTRPC>
           {props.children}
-          <ReactQueryDevtools buttonPosition="top-right" />
+          <ReactQueryDevtools />
         </StoredTRPC>
       </TRPCProvider>
     </QueryClientProvider>
