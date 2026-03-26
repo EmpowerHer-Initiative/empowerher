@@ -213,14 +213,70 @@ If a color you need isn't in the list below, use the closest semantic token. Nev
 <span className="text-red-500" />
 ```
 
+## Tech stack
+
+Next.js 16 · React 19 · TypeScript 5 · Tailwind CSS 4 · shadcn/ui · tRPC · Drizzle ORM · pnpm
+
 ## Coding rules
 
-| Rule       | Wrong                         | Right                                                               |
-| ---------- | ----------------------------- | ------------------------------------------------------------------- |
-| Functions  | `function MyComp()`           | `const MyComp = () =>`                                              |
-| Exports    | `export default function Foo` | `export const Foo = () =>` (except Next.js page/layout/route files) |
-| File names | `UserCard.tsx`                | `user-card.tsx`                                                     |
-| Apostrophe | `We'll`                       | `We&apos;ll` (use `&apos;` for apostrophes in JSX text content)     |
+### Rule 1 — Arrow functions only
+
+Never use the bare `function` keyword for component definitions or utility functions.
+
+```tsx
+// ✓ correct
+const Button = (props: ButtonProps) => { ... };
+const formatDate = (date: Date) => { ... };
+
+// ✗ wrong
+function Button(props: ButtonProps) { ... }
+function formatDate(date: Date) { ... }
+```
+
+**Exceptions** — leave these as-is, do not convert:
+
+- `generateMetadata`, `generateStaticParams`
+- Route handlers: `GET`, `POST`, `PUT`, `DELETE`, `PATCH`
+- Middleware
+- Email templates in `services/email/emails/` (see Rule 2)
+
+### Rule 2 — Named exports only — no `export default`
+
+```tsx
+// ✓ correct
+export const UserCard = () => { ... };
+
+// ✗ wrong
+export default function UserCard() { ... }
+export default UserCard;
+```
+
+**Exceptions** — keep default exports for:
+
+- Next.js page, layout, and route files inside `app/` (Next.js requires it)
+- Email templates in `services/email/emails/*.tsx` — React Email's preview system requires `export default function`. These files may also use the `.PreviewProps` static property on the function. Do not convert them to named exports or arrow functions.
+
+### Rule 3 — File names must be kebab-case
+
+All component, hook, and utility files use kebab-case. Convert the primary export name:
+
+| Wrong                  | Correct              |
+| ---------------------- | -------------------- |
+| `UserCard.tsx`         | `user-card.tsx`      |
+| `DataTableWrapper.tsx` | `data-table.tsx`     |
+| `useMyHook.tsx`        | `use-my-hook.ts`     |
+| `index.tsx` (generic)  | `component-name.tsx` |
+
+Never use PascalCase, camelCase, snake_case, or compound words without hyphens. Never name a file `index.tsx` generically.
+
+### Quick reference
+
+| Rule       | Wrong                    | Right                       |
+| ---------- | ------------------------ | --------------------------- |
+| Functions  | `function Button(props)` | `const Button = (props) =>` |
+| Exports    | `export default Button`  | `export const Button = ...` |
+| Files      | `UserCard.tsx`           | `user-card.tsx`             |
+| Apostrophe | `We'll` in JSX           | `We&apos;ll`                |
 
 ## Content (Markdown / MDX)
 
@@ -231,6 +287,10 @@ Use **`@content-collections/core`** for all Markdown content. Collections are de
 - Import with `import { allBlog } from "content-collections"` (name follows the collection `name` field)
 - Access processed MDX via `post.mdx`, render with `<MDXContent code={post.mdx} />` from `@content-collections/mdx/react`
 - Static routes should call `generateStaticParams` using the collection array
+
+## Database schema changes
+
+Edit `services/db/schema.ts` freely. Never run `pnpm drizzle-kit push` or any other database command — Ali runs those himself.
 
 ## Before writing code
 

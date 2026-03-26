@@ -9,4 +9,3 @@ Read all context files before starting any task.
 - [Client](context/client.md) — current client profile and module availability
 - [Project](context/project.md) — tech stack, app structure, deployment, module overview
 - [Conventions](context/conventions.md) — file layout, component rules, tRPC pattern, coding standards
-- [Skills](context/skills.md) — all available slash commands and when to use them
