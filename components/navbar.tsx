@@ -114,11 +114,11 @@ export const Navbar = () => {
         </div>
       </nav>
       <motion.div
-        initial={{ height: 0 }}
-        animate={{ height: isOpen ? "auto" : 0 }}
+        initial={{ height: 0, opacity: 0 }}
+        animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
         className={cn(
-          "bg-muted/80 z-50 w-full overflow-hidden rounded-b-2xl border-b shadow-lg backdrop-blur-xl md:hidden",
+          "bg-background z-50 w-full overflow-hidden border-b backdrop-blur-xl md:hidden",
           isScrolled ? "fixed top-16" : "relative"
         )}
       >
@@ -126,7 +126,7 @@ export const Navbar = () => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : -20 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="flex flex-col py-8"
+          className="flex flex-col pt-2 pb-4"
         >
           {links.map((link) => (
             <Link
