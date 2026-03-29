@@ -59,6 +59,16 @@ Pages import and render section components only — no data fetching, no inline 
 
 Always reach for an existing shadcn component before writing any custom UI. Never build a raw HTML element when a shadcn primitive covers it.
 
+**This project uses Base UI, not Radix UI.** Base UI does not support `asChild`. To render a trigger as a `Button`, use the `render` prop:
+
+```tsx
+<AlertDialogTrigger render={<Button variant="ghost" size="icon" />}>
+  <TrashIcon />
+</AlertDialogTrigger>
+```
+
+Never use `asChild`. Never wrap a `Button` inside a trigger — use `render` instead.
+
 Available components in `@/components/ui/`:
 
 `alert` · `alert-dialog` · `avatar` · `badge` · `button` · `card` · `checkbox` · `dialog` · `dropdown-menu` · `field` · `input` · `input-group` · `input-otp` · `label` · `popover` · `select` · `separator` · `skeleton` · `sonner` · `spinner` · `table` · `textarea`
@@ -287,6 +297,10 @@ Use **`@content-collections/core`** for all Markdown content. Collections are de
 - Import with `import { allBlog } from "content-collections"` (name follows the collection `name` field)
 - Access processed MDX via `post.mdx`, render with `<MDXContent code={post.mdx} />` from `@content-collections/mdx/react`
 - Static routes should call `generateStaticParams` using the collection array
+
+## File uploads
+
+Always use `react-dropzone` for any file upload UI — never build raw drag-and-drop or `<input type="file">` manually. Use `useDropzone` from `react-dropzone` and spread `getRootProps`/`getInputProps` onto the drop zone element.
 
 ## Database schema changes
 

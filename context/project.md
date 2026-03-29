@@ -12,18 +12,18 @@ A **reusable Next.js template** that Ali deploys for each new client via a Claud
 
 ## Tech Stack
 
-| Layer         | Tech                                   |
-| ------------- | -------------------------------------- |
-| Framework     | Next.js (App Router, Turbopack)        |
-| Language      | TypeScript 5                           |
-| Styling       | Tailwind CSS 4 + shadcn/ui (Base Nova) |
-| API           | tRPC 11                                |
-| Data fetching | TanStack React Query 5                 |
-| ORM           | Drizzle ORM                            |
-| Database      | Neon PostgreSQL                        |
-| Auth          | Better Auth                            |
-| Validation    | Zod 4                                  |
-| Forms         | React Hook Form                        |
+| Layer         | Tech                                                                    |
+| ------------- | ----------------------------------------------------------------------- |
+| Framework     | Next.js (App Router, Turbopack)                                         |
+| Language      | TypeScript 5                                                            |
+| Styling       | Tailwind CSS 4 + shadcn/ui (Base Nova) — uses **Base UI**, not Radix UI |
+| API           | tRPC 11                                                                 |
+| Data fetching | TanStack React Query 5                                                  |
+| ORM           | Drizzle ORM                                                             |
+| Database      | Neon PostgreSQL                                                         |
+| Auth          | Better Auth                                                             |
+| Validation    | Zod 4                                                                   |
+| Forms         | React Hook Form                                                         |
 
 ## Key scripts
 

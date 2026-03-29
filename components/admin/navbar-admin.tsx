@@ -13,10 +13,7 @@ const links = [
     label: "Subscriptions",
     href: "https://sandbox.polar.sh/dashboard",
   },
-  {
-    label: "Upload",
-    href: "https://dash.cloudflare.com/141cd3dddc7bedae0401bb3cc1a8b344/r2/default/buckets/template",
-  },
+  { label: "Media", href: "/admin/media" },
 ];
 
 export const NavbarAdmin = () => {
