@@ -72,6 +72,38 @@ The template contains all modules. Per-client setup strips what isn't needed:
 - **Payments** — optional (Stripe via `payments.ts` router)
 - **Admin panel** — optional
 - **Blog/posts** — optional
+- **Background jobs** — optional (Trigger.dev — see removal checklist below)
+
+## Trigger.dev — Background jobs (optional)
+
+All Trigger.dev code is intentionally isolated. Every file that belongs to it is marked with `// [TRIGGER.DEV]`.
+
+### Structure
+
+```
+services/trigger/
+  client.ts          — typed task exports + tasks helper (import from here in tRPC routers)
+  tasks/             — one file per task, e.g. example-task.ts
+trigger.config.ts    — root config (required by the CLI)
+```
+
+### How to add a task
+
+1. Create `services/trigger/tasks/my-task.ts` and export a `task({ id, run })`.
+2. Export the type from `services/trigger/client.ts`.
+3. Trigger it from a tRPC router: `await tasks.trigger<typeof myTask>("my-task", payload)`.
+
+### Removal checklist (for clients who don't need background jobs)
+
+1. `rm -rf services/trigger/`
+2. `rm trigger.config.ts`
+3. `rm .mcp.json`
+4. `pnpm remove @trigger.dev/sdk`
+5. Remove `trigger:dev` and `trigger:deploy` scripts from `package.json`
+6. Remove `TRIGGER_SECRET_KEY` from `.env` and `.env.example`
+7. Remove any `tasks.trigger(...)` calls from tRPC routers
+
+---
 
 ## How to add backend logic
 
