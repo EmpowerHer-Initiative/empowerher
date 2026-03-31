@@ -30,7 +30,7 @@ export default function AppointmentReminder({
       <Head />
       <Tailwind>
         <Body className="bg-white font-sans text-black">
-          <Preview>Reminder: {title} is coming up soon</Preview>
+          <Preview>Reminder: {title || ""} is coming up soon</Preview>
           <Container className="mx-auto max-w-2xl p-8">
             <Section className="bg-white">
               <Section className="p-8">
@@ -44,7 +44,7 @@ export default function AppointmentReminder({
                 </Text>
 
                 <Section className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6">
-                  <Text className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                  <Text className="mb-1 text-xs font-semibold tracking-wide text-gray-500 uppercase">
                     Appointment
                   </Text>
                   <Text className="mb-4 text-lg font-semibold text-black">
