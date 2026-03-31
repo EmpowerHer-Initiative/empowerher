@@ -155,6 +155,22 @@ export const orders = pgTable("order", {
   metadata: jsonb("metadata").$type<unknown>().notNull().default({}),
 });
 
+// [TRIGGER.DEV] — Remove this table when removing Trigger.dev from the project.
+export const appointments = pgTable("appointments", {
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  userId: text("user_id").references(() => user.id, { onDelete: "cascade" }),
+  userEmail: text("user_email").notNull(),
+  userName: text("user_name").notNull(),
+  title: text("title").notNull(),
+  description: text("description"),
+  scheduledAt: timestamp("scheduled_at").notNull(),
+  reminderSentAt: timestamp("reminder_sent_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export const webhookEvents = pgTable("webhook_events", {
   id: uuid("id")
     .primaryKey()

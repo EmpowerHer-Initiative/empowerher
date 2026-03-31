@@ -105,6 +105,36 @@ trigger.config.ts    — root config (required by the CLI)
 
 ---
 
+## Syncing template improvements to client projects
+
+Each client repo has two remotes:
+- `origin` — the client's own GitHub repo
+- `template` — `github.com/alisamadiillc/clients` (this template)
+
+### Pull a specific improvement
+
+```bash
+# 1. Fetch latest template commits
+git fetch template
+
+# 2. See what's new (adjust --since as needed)
+git log template/main --oneline --since="2 weeks ago"
+
+# 3. Cherry-pick only the commits that apply to this client
+git cherry-pick <commit-sha>
+
+# 4. Resolve any conflicts, then push
+git push
+```
+
+### Rules
+
+- **Cherry-pick, don't merge.** Never `git merge template/main` — it will pull in everything including modules this client doesn't use.
+- Pick bug fixes and shared improvements (email service, auth, tRPC patterns) into every client.
+- Skip feature-specific commits (new modules, client-specific schema changes).
+
+---
+
 ## How to add backend logic
 
 New data requirements → add a procedure in `services/trpc/routers/admin/` using `adminProcedure`. Never fetch directly from a component.

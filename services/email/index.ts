@@ -3,6 +3,8 @@ import { createElement } from "react";
 import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
 
 import AccountDeleted from "./emails/account-deleted";
+// [TRIGGER.DEV] — Remove this import when removing Trigger.dev from the project.
+import AppointmentReminder from "./emails/appointment-reminder";
 import ResetPassword from "./emails/reset-password";
 import VerifyEmail from "./emails/verify-email";
 import { renderEmail, renderText } from "./utils";
@@ -11,6 +13,13 @@ type TemplateProps = {
   verifyEmail: { verificationCode: string };
   resetPassword: { resetPasswordLink: string };
   accountDeleted: { userName?: string; feedbackLink?: string };
+  // [TRIGGER.DEV] — Remove this entry when removing Trigger.dev from the project.
+  appointmentReminder: {
+    userName: string;
+    title: string;
+    description?: string;
+    scheduledAt: string;
+  };
 };
 
 // Template registry — add new emails here, that's it
@@ -35,6 +44,12 @@ const templates: Record<string, EmailTemplate> = {
     subject: "Account deleted",
     fromLabel: "Account deleted",
     component: AccountDeleted,
+  },
+  // [TRIGGER.DEV] — Remove this entry when removing Trigger.dev from the project.
+  appointmentReminder: {
+    subject: "Reminder: your appointment is coming up",
+    fromLabel: "Appointment Reminder",
+    component: AppointmentReminder,
   },
 };
 
