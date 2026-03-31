@@ -22,7 +22,7 @@ export const Hero = () => {
                 New Product Launch | Limited Time Offer <ChevronRight />
               </Badge>
               <h1 className="motion-animate text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl">
-                <Balancer>Testing 1</Balancer>
+                <Balancer>Build something extraordinary today</Balancer>
               </h1>
               <p className="motion-animate text-muted-foreground motion-delay-100 text-lg md:text-xl">
                 <Balancer>
