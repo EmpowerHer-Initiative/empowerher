@@ -108,6 +108,7 @@ trigger.config.ts    — root config (required by the CLI)
 ## Syncing template improvements to client projects
 
 Each client repo has two remotes:
+
 - `origin` — the client's own GitHub repo
 - `template` — `github.com/alisamadiillc/clients` (this template)
 
