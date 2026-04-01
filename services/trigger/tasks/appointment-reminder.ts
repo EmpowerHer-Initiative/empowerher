@@ -1,10 +1,9 @@
 // [TRIGGER.DEV] — Remove this file when removing Trigger.dev from the project.
-import { logger, schedules } from "@trigger.dev/sdk/v3";
-import { and, eq, gte, isNull, lte } from "drizzle-orm";
-
 import { db } from "@/services/db";
 import { appointments } from "@/services/db/schema";
 import { sendEmail } from "@/services/email";
+import { logger, schedules } from "@trigger.dev/sdk/v3";
+import { and, eq, gte, isNull, lte } from "drizzle-orm";
 
 const formatDate = (date: Date) =>
   date.toLocaleString("en-US", {
@@ -75,13 +74,17 @@ export const appointmentReminderTask = schedules.task({
     );
 
     const succeeded = results
-      .filter((r): r is PromiseFulfilledResult<{ email: string; title: string }> => r.status === "fulfilled")
+      .filter(
+        (r): r is PromiseFulfilledResult<{ email: string; title: string }> =>
+          r.status === "fulfilled"
+      )
       .map((r) => r.value);
 
     const failed = results
       .filter((r): r is PromiseRejectedResult => r.status === "rejected")
       .map((r) => {
-        const message: string = r.reason instanceof Error ? r.reason.message : String(r.reason);
+        const message: string =
+          r.reason instanceof Error ? r.reason.message : String(r.reason);
         const email = message.match(/to (.+?):/)?.[1] ?? "unknown";
         logger.error(message);
         return { email, reason: message };

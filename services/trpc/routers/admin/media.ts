@@ -1,11 +1,11 @@
+import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
+import { r2, R2_BUCKET, R2_PUBLIC_URL } from "@/services/trpc/lib/r2";
 import {
   DeleteObjectCommand,
   ListObjectsV2Command,
   PutObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
-import { r2, R2_BUCKET, R2_PUBLIC_URL } from "@/services/trpc/lib/r2";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
@@ -93,9 +93,7 @@ export const adminMediaRouter = createTRPCRouter({
     .input(z.string().min(1))
     .mutation(async ({ input: key }) => {
       try {
-        await r2.send(
-          new DeleteObjectCommand({ Bucket: R2_BUCKET, Key: key })
-        );
+        await r2.send(new DeleteObjectCommand({ Bucket: R2_BUCKET, Key: key }));
         return { success: true };
       } catch (error) {
         throw new TRPCError({
