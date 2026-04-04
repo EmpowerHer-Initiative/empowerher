@@ -6,6 +6,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import {
   CheckIcon,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   ClipboardIcon,
   CloudUploadIcon,
   FileIcon,
@@ -39,6 +42,12 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Spinner } from "@/components/ui/spinner";
 
 export default function AdminMediaPage() {
@@ -227,17 +236,24 @@ const BrowseSection = () => {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
+  const [limit, setLimit] = useState(15);
+  const [cursorStack, setCursorStack] = useState<string[]>([]);
+  const currentCursor = cursorStack.at(-1);
 
   const { data, isPending } = useQuery(
     trpc.admin.media.listFiles.queryOptions({
       search: search || undefined,
-      limit: 50,
+      cursor: currentCursor,
+      limit,
     })
   );
 
   const deleteFile = useMutation(
     trpc.admin.media.deleteFile.mutationOptions({
       onSuccess: () => {
+        if (data?.files.length === 1 && cursorStack.length > 0) {
+          setCursorStack((prev) => prev.slice(0, -1));
+        }
         queryClient.invalidateQueries({
           queryKey: trpc.admin.media.listFiles.queryKey(),
         });
@@ -250,7 +266,22 @@ const BrowseSection = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setSearch(searchInput);
+    setCursorStack([]);
   };
+
+  const goToNextPage = () => {
+    if (data?.nextCursor) {
+      setCursorStack((prev) => [...prev, data.nextCursor!]);
+    }
+  };
+
+  const goToPrevPage = () => {
+    setCursorStack((prev) => prev.slice(0, -1));
+  };
+
+  const pageNumber = cursorStack.length + 1;
+  const hasNextPage = !!data?.nextCursor;
+  const hasPrevPage = cursorStack.length > 0;
 
   return (
     <div>
@@ -275,6 +306,7 @@ const BrowseSection = () => {
             onClick={() => {
               setSearch("");
               setSearchInput("");
+              setCursorStack([]);
             }}
           >
             Clear
@@ -291,17 +323,68 @@ const BrowseSection = () => {
       ) : !data?.files.length ? (
         <p className="text-muted-foreground text-sm">No files found.</p>
       ) : (
-        <div className="flex flex-col gap-2">
-          {data.files.map((file) => (
-            <FileRow
-              key={file.key}
-              file={file}
-              onDelete={() => deleteFile.mutate(file.key)}
-              isDeleting={
-                deleteFile.isPending && deleteFile.variables === file.key
-              }
-            />
-          ))}
+        <div>
+          <div className="flex flex-col gap-2">
+            {data.files.map((file) => (
+              <FileRow
+                key={file.key}
+                file={file}
+                onDelete={() => deleteFile.mutate(file.key)}
+                isDeleting={
+                  deleteFile.isPending && deleteFile.variables === file.key
+                }
+              />
+            ))}
+          </div>
+          <div className="bg-muted text-muted-foreground -mt-3 flex items-center justify-between rounded-b-xl p-4 pt-7 text-xs">
+            <div className="flex items-center">
+              Results per page
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  render={
+                    <Button variant="outline" size="sm" className="ml-2">
+                      {limit} <ChevronDown data-arrow />
+                    </Button>
+                  }
+                />
+                <DropdownMenuContent className="min-w-20">
+                  {[10, 15, 20].map((item) => (
+                    <DropdownMenuItem
+                      key={item}
+                      onClick={() => {
+                        setLimit(item);
+                        setCursorStack([]);
+                      }}
+                      data-checked={limit === item}
+                    >
+                      {item}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <div className="flex items-center">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={goToPrevPage}
+                disabled={!hasPrevPage}
+              >
+                <ChevronLeft />
+              </Button>
+              <p className="mx-2 tabular-nums">
+                <span className="text-foreground">{pageNumber}</span>
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={goToNextPage}
+                disabled={!hasNextPage}
+              >
+                <ChevronRight />
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </div>

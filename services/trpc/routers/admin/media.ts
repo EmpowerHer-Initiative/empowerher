@@ -55,7 +55,7 @@ export const adminMediaRouter = createTRPCRouter({
       })
     )
     .query(async ({ input }) => {
-      const { search, cursor, limit = 50 } = input;
+      const { search, cursor, limit = 15 } = input;
 
       try {
         const command = new ListObjectsV2Command({
