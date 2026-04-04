@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ChevronRight, Star } from "lucide-react";
 import Balancer from "react-wrap-balancer";
 
@@ -32,7 +33,11 @@ export const Hero = () => {
                 </Balancer>
               </p>
               <div className="motion-animate motion-delay-200 mt-4 flex w-full flex-col gap-2 md:flex-row">
-                <Button size="xl" className="w-full justify-between md:w-64">
+                <Button
+                  size="xl"
+                  className="w-full justify-between md:w-64"
+                  render={<Link href="/#pricing" />}
+                >
                   Get Started <ChevronRight />
                 </Button>
               </div>

@@ -102,7 +102,16 @@ export const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-3 md:hidden">
-            <Button>Log in</Button>
+            {user ? (
+              <Link href="/settings">
+                <Avatar>
+                  <AvatarImage src={user.user.image ?? undefined} />
+                  <AvatarFallback>{user.user.name?.charAt(0)}</AvatarFallback>
+                </Avatar>
+              </Link>
+            ) : (
+              <Button render={<Link href="/login">Log in</Link>} />
+            )}
             <Button
               variant="ghost"
               size="icon"

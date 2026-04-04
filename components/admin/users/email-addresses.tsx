@@ -10,7 +10,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
@@ -68,10 +67,6 @@ export const EmailAddresses = () => {
                   }
                 >
                   Mark as {user.emailVerified ? "unverified" : "verified"}
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem variant="destructive">
-                  Remove email
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

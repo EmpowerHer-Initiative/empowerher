@@ -22,7 +22,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -106,10 +105,6 @@ export const Password = () => {
         <DropdownMenuContent className="w-56" align="end">
           <DropdownMenuItem onClick={() => setChangePasswordOpen(true)}>
             Change password
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem className="text-red-500">
-            Remove password
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

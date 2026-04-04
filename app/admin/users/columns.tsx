@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUpdateAdminUser } from "@/services/auth/hooks/use-admin";
+import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useMutation } from "@tanstack/react-query";
@@ -101,6 +102,7 @@ export const columns: ColumnDef<UserFromAPI>[] = [
       const [isOpen, setIsOpen] = useState(false);
       const [banOpen, setBanOpen] = useState(false);
       const [deleteOpen, setDeleteOpen] = useState(false);
+      const { data: currentUser } = useCurrentUser();
       const updateAdminUser = useUpdateAdminUser();
       const deleteAccount = useMutation(
         useTRPC().admin.users.delete.mutationOptions({
@@ -164,14 +166,16 @@ export const columns: ColumnDef<UserFromAPI>[] = [
                 >
                   <Ban /> {row.original.banned ? "Unban" : "Ban"}
                 </DropdownMenuItem> */}
-                <DropdownMenuItem
-                  variant="destructive"
-                  onClick={() => {
-                    setDeleteOpen(true);
-                  }}
-                >
-                  <Trash /> Delete user
-                </DropdownMenuItem>
+                {currentUser?.user.id !== row.original.id && (
+                  <DropdownMenuItem
+                    variant="destructive"
+                    onClick={() => {
+                      setDeleteOpen(true);
+                    }}
+                  >
+                    <Trash /> Delete user
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>

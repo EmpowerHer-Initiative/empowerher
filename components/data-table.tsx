@@ -50,7 +50,7 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
           getCoreRowModel: getCoreRowModel(),
         });
 
-  const { onRowClick, className, error } = props;
+  const { onRowClick, className, error, isLoading } = props;
 
   return (
     <div className={cn("isolate overflow-hidden rounded-md border", className)}>
@@ -77,9 +77,9 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
           ))}
         </TableHeader>
         <TableBody>
-          {props.isLoading ? (
+          {isLoading ? (
             Array.from({
-              length: typeof props.isLoading === "number" ? props.isLoading : 4,
+              length: typeof isLoading === "number" ? isLoading : 4,
             }).map((_, index) => (
               <TableRow key={index}>
                 <TableCell
@@ -120,7 +120,13 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
                 }
                 className="h-24 text-center"
               >
-                {error ? error.message : "No results."}
+                {error ? (
+                  <div className="text-muted-foreground space-y-2">
+                    <p>{error.message || "Something went wrong."}</p>
+                  </div>
+                ) : (
+                  "No results."
+                )}
               </TableCell>
             </TableRow>
           )}

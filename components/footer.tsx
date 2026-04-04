@@ -38,27 +38,36 @@ export const Footer = () => {
             {[
               {
                 title: "Product",
-                links: ["Features", "Pricing", "Changelog", "Docs"],
+                links: [
+                  { label: "Features", href: "/#features" },
+                  { label: "Pricing", href: "/#pricing" },
+                  { label: "Blog", href: "/blog" },
+                ],
               },
               {
                 title: "Company",
-                links: ["About", "Blog", "Careers", "Contact"],
+                links: [
+                  { label: "Contact", href: "mailto:a@alisamadii.com" },
+                ],
               },
               {
                 title: "Legal",
-                links: ["Privacy", "Terms", "Security"],
+                links: [
+                  { label: "Privacy", href: "/privacy" },
+                  { label: "Terms", href: "/terms" },
+                ],
               },
             ].map((col) => (
               <div key={col.title}>
                 <h4 className="mb-3 text-sm font-semibold">{col.title}</h4>
                 <ul className="space-y-2">
                   {col.links.map((link) => (
-                    <li key={link}>
+                    <li key={link.label}>
                       <Link
-                        href={`/${link.toLowerCase()}`}
+                        href={link.href}
                         className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                       >
-                        {link}
+                        {link.label}
                       </Link>
                     </li>
                   ))}

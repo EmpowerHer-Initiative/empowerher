@@ -10,6 +10,9 @@ export const siteConfig = {
   description:
     "The all-in-one platform that helps you create, launch, and scale your ideas faster than ever before.",
 
+  // Contact email
+  email: "a@alisamadii.com",
+
   // Production URL — no trailing slash
   url: "https://yourdomain.com",
 

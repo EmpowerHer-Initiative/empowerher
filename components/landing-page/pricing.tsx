@@ -43,7 +43,7 @@ export const Pricing = () => {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
   const trpc = useTRPC();
   const { mutate: checkout, isPending: isCheckingOut } = useCheckout();
-  const { data: allProducts, isPending } = useQuery(
+  const { data: allProducts, isPending, isError } = useQuery(
     trpc.payments.getProducts.queryOptions()
   );
 
@@ -94,11 +94,20 @@ export const Pricing = () => {
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
-        {isPending
-          ? Array.from({ length: 3 }).map((_, i) => (
-              <Card key={i} className="h-64 animate-pulse" />
-            ))
-          : products.map((plan) => {
+        {isPending ? (
+          Array.from({ length: 3 }).map((_, i) => (
+            <Card key={i} className="h-64 animate-pulse" />
+          ))
+        ) : isError ? (
+          <p className="text-muted-foreground col-span-full text-center">
+            Unable to load plans. Please refresh the page and try again.
+          </p>
+        ) : products.length === 0 ? (
+          <p className="text-muted-foreground col-span-full text-center">
+            No plans available at the moment.
+          </p>
+        ) : (
+          products.map((plan) => {
               const features = plan.description
                 ? extractFeaturesFromMarkdown(plan.description)
                 : [];
@@ -144,6 +153,7 @@ export const Pricing = () => {
                       <Button
                         variant="outline"
                         className="w-full rounded-lg bg-transparent py-5 text-sm font-semibold"
+                        render={<a href="mailto:a@alisamadii.com" />}
                       >
                         Chat to sales
                       </Button>
@@ -170,7 +180,8 @@ export const Pricing = () => {
                   )}
                 </Card>
               );
-            })}
+            })
+        )}
       </div>
     </motion.div>
   );

@@ -53,7 +53,6 @@ export default function EachOrganization() {
         tabs={[
           { label: "Profile", value: "profile" },
           { label: "Payments", value: "payments" },
-          { label: "Settings", value: "settings" },
         ]}
         tab={activeTab}
         setTab={setActiveTab}

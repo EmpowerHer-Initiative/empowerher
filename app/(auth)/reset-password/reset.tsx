@@ -62,7 +62,7 @@ export default function ResetPasswordPage() {
     <div className="bg-muted flex min-h-dvh items-center-safe justify-center-safe p-8">
       <Wrapper
         title="Reset Password"
-        description="Hey, Enter your email to reset your password"
+        description="Enter your new password below"
       >
         <form onSubmit={form.handleSubmit(onSubmit)} className="my-4 space-y-4">
           <Controller

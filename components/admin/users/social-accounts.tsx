@@ -58,7 +58,7 @@ export const SocialAccounts = () => {
                   />
                   <DropdownMenuContent align="end" className="w-60">
                     <DropdownMenuItem variant="destructive">
-                      Remove email
+                      Remove account
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

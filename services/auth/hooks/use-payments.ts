@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import { authClient } from "../auth-client";
 
@@ -34,6 +35,7 @@ export const useCheckout = () => {
           );
           return;
         }
+        toast.error(error.message || "Failed to create checkout. Please try again.");
       },
     })
   );
@@ -48,9 +50,7 @@ export const useSwitchPlan = () => {
 
   return useMutation(
     trpc.payments.switchPlan.mutationOptions({
-      onSuccess: async () => {
-        // Wait for 3 seconds to simulate the switch plan process
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+      onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["customer-state"] });
       },
     })

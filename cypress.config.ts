@@ -11,6 +11,9 @@ export default defineConfig({
     supportFile: "cypress/support/e2e.ts",
     video: false,
     screenshotOnRunFailure: true,
+    defaultCommandTimeout: 10000,
+    viewportWidth: 1280,
+    viewportHeight: 720,
     setupNodeEvents(on) {
       on("task", {
         async deleteUserSessions(email: string) {

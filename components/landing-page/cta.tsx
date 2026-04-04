@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { siteConfig } from "@/lib/site";
 
 import { Button } from "../ui/button";
 
@@ -33,12 +34,12 @@ export const Cta = ({ className }: { className?: string }) => {
             around. We&apos;re happy to help you.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button size="xl" className="rounded-full">
+            <Button
+              size="xl"
+              className="rounded-full"
+              render={<a href={`mailto:${siteConfig.email}`} />}
+            >
               Book a discovery call
-              <ArrowRight />
-            </Button>
-            <Button size="xl" variant={"outline"} className="rounded-full">
-              Test Your Samples
               <ArrowRight />
             </Button>
           </div>

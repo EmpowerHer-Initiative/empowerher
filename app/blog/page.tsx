@@ -19,7 +19,7 @@ type Props = {
 
 export default async function BlogPage({ searchParams }: Props) {
   const { page } = await searchParams;
-  const currentPage = Math.max(1, parseInt(page ?? "1", 10));
+  const currentPage = Math.max(1, parseInt(page ?? "1", 10) || 1);
 
   const sorted = allBlogs.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -38,18 +38,24 @@ export default async function BlogPage({ searchParams }: Props) {
         </p>
       </div>
 
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
-          <BlogCard
-            key={post._meta.path}
-            href={`/blog/${post._meta.path}`}
-            title={post.title}
-            description={post.description}
-            date={post.date}
-            image={post.image}
-          />
-        ))}
-      </div>
+      {posts.length === 0 ? (
+        <p className="text-muted-foreground text-center">
+          No blog posts yet. Check back soon!
+        </p>
+      ) : (
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <BlogCard
+              key={post._meta.path}
+              href={`/blog/${post._meta.path}`}
+              title={post.title}
+              description={post.description}
+              date={post.date}
+              image={post.image}
+            />
+          ))}
+        </div>
+      )}
 
       {totalPages > 1 && (
         <div className="mt-12">
