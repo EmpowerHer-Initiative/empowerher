@@ -1,11 +1,12 @@
 // [TRIGGER.DEV] — Remove this file when removing Trigger.dev from the project.
-import { Footer } from "@/services/email/components/footer";
 import {
   Body,
   Container,
   Head,
   Heading,
   Html,
+  Img,
+  Link,
   Preview,
   Section,
   Tailwind,
@@ -29,25 +30,63 @@ export default function AppointmentReminder({
     <Html>
       <Head />
       <Tailwind>
-        <Body className="bg-white font-sans text-black">
+        <Body
+          className="font-sans"
+          style={{ backgroundColor: "#141414", margin: 0, padding: 0 }}
+        >
           <Preview>Reminder: {title || ""} is coming up soon</Preview>
-          <Container className="mx-auto max-w-2xl p-8">
-            <Section className="bg-white">
-              <Section className="p-8">
-                <Heading className="mb-6 text-2xl font-bold text-black">
+          <Container className="mx-auto max-w-xl py-12 px-4">
+            {/* Brand header */}
+            <Section className="mb-6 text-center">
+              <Img
+                src="https://cdn.alisamadii.com/company/logo-white.png"
+                width="40"
+                height="40"
+                alt="Dream Website"
+                className="mx-auto"
+              />
+            </Section>
+
+            {/* Card */}
+            <Section
+              style={{
+                backgroundColor: "#ffffff",
+                borderRadius: "12px",
+                overflow: "hidden",
+              }}
+            >
+              <Section className="px-10 pt-10 pb-6">
+                <Heading
+                  className="mt-0 mb-4 text-2xl font-bold"
+                  style={{ color: "#111111" }}
+                >
                   Upcoming appointment reminder
                 </Heading>
 
-                <Text className="mb-6 text-base leading-6 text-gray-700">
+                <Text className="mb-6 text-base leading-6 text-gray-600">
                   Hi {userName}, this is a reminder that you have an appointment
                   coming up in the next 24 hours.
                 </Text>
 
-                <Section className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6">
-                  <Text className="mb-1 text-xs font-semibold tracking-wide text-gray-500 uppercase">
+                {/* Appointment details */}
+                <Section
+                  className="mb-6 p-6"
+                  style={{
+                    backgroundColor: "#f5f5f5",
+                    borderRadius: "8px",
+                    border: "1px solid #e0e0e0",
+                  }}
+                >
+                  <Text
+                    className="mb-1 text-xs font-semibold uppercase tracking-widest"
+                    style={{ color: "#141414" }}
+                  >
                     Appointment
                   </Text>
-                  <Text className="mb-4 text-lg font-semibold text-black">
+                  <Text
+                    className="mb-4 text-lg font-semibold"
+                    style={{ color: "#111111" }}
+                  >
                     {title}
                   </Text>
 
@@ -57,18 +96,66 @@ export default function AppointmentReminder({
                     </Text>
                   )}
 
-                  <Text className="mb-0 text-sm font-medium text-black">
+                  <Text
+                    className="mb-0 text-sm font-medium"
+                    style={{ color: "#111111" }}
+                  >
                     {scheduledAt}
                   </Text>
                 </Section>
 
-                <Text className="text-sm text-gray-600">
+                <Text className="text-sm text-gray-500">
                   Please make sure you&apos;re prepared and arrive on time. If
                   you need to reschedule, please contact us as soon as possible.
                 </Text>
               </Section>
 
-              <Footer />
+              {/* Footer inside card */}
+              <Section
+                className="px-10 py-6"
+                style={{ borderTop: "1px solid #f0f0f0" }}
+              >
+                <Text className="mb-2 text-xs text-gray-400">
+                  For your security, we will never ask you to verify your
+                  password, credit card, or banking information via email.
+                </Text>
+                <Text className="m-0 text-xs text-gray-400">
+                  Questions?{" "}
+                  <Link
+                    href="mailto:support@dreamwebsite.com"
+                    style={{ color: "#141414" }}
+                    className="no-underline"
+                  >
+                    Contact support
+                  </Link>{" "}
+                  &middot;{" "}
+                  <Link
+                    href="/privacy"
+                    style={{ color: "#141414" }}
+                    className="no-underline"
+                  >
+                    Privacy
+                  </Link>{" "}
+                  &middot;{" "}
+                  <Link
+                    href="/terms"
+                    style={{ color: "#141414" }}
+                    className="no-underline"
+                  >
+                    Terms
+                  </Link>
+                </Text>
+              </Section>
+            </Section>
+
+            {/* Outer footer */}
+            <Section className="mt-6 text-center">
+              <Text
+                className="m-0 text-xs"
+                style={{ color: "rgba(255,255,255,0.7)" }}
+              >
+                &copy; {new Date().getFullYear()} Dream Website
+              </Text>
             </Section>
           </Container>
         </Body>

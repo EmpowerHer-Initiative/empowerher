@@ -49,6 +49,7 @@ export const proxy = async (request: Request) => {
     try {
       const session = await auth.api.getSession({
         headers: nextRequest.headers,
+        query: { disableCookieCache: true },
       });
 
       if (!session) {

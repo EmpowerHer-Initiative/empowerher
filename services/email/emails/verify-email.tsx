@@ -1,10 +1,11 @@
-import { Footer } from "@/services/email/components/footer";
 import {
   Body,
   Container,
   Head,
   Heading,
   Html,
+  Img,
+  Link,
   Preview,
   Section,
   Tailwind,
@@ -20,39 +21,121 @@ export default function VerifyEmail({ verificationCode }: VerifyEmailProps) {
     <Html>
       <Head />
       <Tailwind>
-        <Body className="bg-white font-sans text-black">
+        <Body
+          className="font-sans"
+          style={{ backgroundColor: "#141414", margin: 0, padding: 0 }}
+        >
           <Preview>Dream Website Email Verification</Preview>
-          <Container className="mx-auto max-w-2xl p-8">
-            <Section className="bg-white">
-              <Section className="p-8">
-                <Heading className="mb-6 text-2xl font-bold text-black">
+          <Container className="mx-auto max-w-xl py-12 px-4">
+            {/* Brand header */}
+            <Section className="mb-6 text-center">
+              <Img
+                src="https://cdn.alisamadii.com/company/logo-white.png"
+                width="40"
+                height="40"
+                alt="Dream Website"
+                className="mx-auto"
+              />
+            </Section>
+
+            {/* Card */}
+            <Section
+              style={{
+                backgroundColor: "#ffffff",
+                borderRadius: "12px",
+                overflow: "hidden",
+              }}
+            >
+              <Section className="px-10 pt-10 pb-6">
+                <Heading
+                  className="mt-0 mb-4 text-2xl font-bold"
+                  style={{ color: "#111111" }}
+                >
                   Verify your email address
                 </Heading>
-                <Text className="mb-6 text-base leading-6 text-gray-700">
-                  Welcome to Dream Website! We&apos;re excited to have you join
-                  our community. To complete your account setup, please verify
-                  your email address by entering the verification code below.
+                <Text className="mb-6 text-base leading-6 text-gray-600">
+                  Welcome to Dream Website! To complete your account setup,
+                  please use the verification code below.
                 </Text>
 
-                <Section className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6 text-center">
-                  <Text className="mb-2 text-sm font-semibold text-black">
-                    Verification code
+                {/* Code box */}
+                <Section
+                  className="mb-6 p-6 text-center"
+                  style={{
+                    backgroundColor: "#f5f5f5",
+                    borderRadius: "8px",
+                    border: "1px solid #e0e0e0",
+                  }}
+                >
+                  <Text
+                    className="mb-1 text-xs font-semibold uppercase tracking-widest"
+                    style={{ color: "#141414" }}
+                  >
+                    Verification Code
                   </Text>
-                  <Text className="mb-2 font-mono text-4xl font-bold text-black">
+                  <Text
+                    className="my-2 font-mono text-4xl font-bold"
+                    style={{ color: "#111111", letterSpacing: "0.15em" }}
+                  >
                     {verificationCode}
                   </Text>
-                  <Text className="text-sm text-gray-600">
-                    This code is valid for 10 minutes
+                  <Text className="m-0 text-xs text-gray-500">
+                    Valid for 10 minutes
                   </Text>
                 </Section>
 
-                <Text className="mb-6 text-sm text-gray-600">
+                <Text className="text-sm text-gray-500">
                   If you didn&apos;t create an account, you can safely ignore
                   this email.
                 </Text>
               </Section>
 
-              <Footer />
+              {/* Footer inside card */}
+              <Section
+                className="px-10 py-6"
+                style={{ borderTop: "1px solid #f0f0f0" }}
+              >
+                <Text className="mb-2 text-xs text-gray-400">
+                  For your security, we will never ask you to verify your
+                  password, credit card, or banking information via email.
+                </Text>
+                <Text className="m-0 text-xs text-gray-400">
+                  Questions?{" "}
+                  <Link
+                    href="mailto:support@dreamwebsite.com"
+                    style={{ color: "#141414" }}
+                    className="no-underline"
+                  >
+                    Contact support
+                  </Link>{" "}
+                  &middot;{" "}
+                  <Link
+                    href="/privacy"
+                    style={{ color: "#141414" }}
+                    className="no-underline"
+                  >
+                    Privacy
+                  </Link>{" "}
+                  &middot;{" "}
+                  <Link
+                    href="/terms"
+                    style={{ color: "#141414" }}
+                    className="no-underline"
+                  >
+                    Terms
+                  </Link>
+                </Text>
+              </Section>
+            </Section>
+
+            {/* Outer footer */}
+            <Section className="mt-6 text-center">
+              <Text
+                className="m-0 text-xs"
+                style={{ color: "rgba(255,255,255,0.7)" }}
+              >
+                &copy; {new Date().getFullYear()} Dream Website
+              </Text>
             </Section>
           </Container>
         </Body>

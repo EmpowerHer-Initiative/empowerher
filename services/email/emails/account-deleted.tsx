@@ -1,10 +1,10 @@
-import { Footer } from "@/services/email/components/footer";
 import {
   Body,
   Container,
   Head,
   Heading,
   Html,
+  Img,
   Link,
   Preview,
   Section,
@@ -25,85 +25,162 @@ export default function AccountDeleted({
     <Html>
       <Head />
       <Tailwind>
-        <Body className="bg-white font-sans text-black">
+        <Body
+          className="font-sans"
+          style={{ backgroundColor: "#141414", margin: 0, padding: 0 }}
+        >
           <Preview>We&apos;re sorry to see you go - Dream Website</Preview>
-          <Container className="mx-auto max-w-2xl p-8">
-            <Section className="bg-white">
-              <Section className="p-8">
-                <Heading className="mb-6 text-2xl font-bold text-black">
+          <Container className="mx-auto max-w-xl py-12 px-4">
+            {/* Brand header */}
+            <Section className="mb-6 text-center">
+              <Img
+                src="https://cdn.alisamadii.com/company/logo-white.png"
+                width="40"
+                height="40"
+                alt="Dream Website"
+                className="mx-auto"
+              />
+            </Section>
+
+            {/* Card */}
+            <Section
+              style={{
+                backgroundColor: "#ffffff",
+                borderRadius: "12px",
+                overflow: "hidden",
+              }}
+            >
+              <Section className="px-10 pt-10 pb-6">
+                <Heading
+                  className="mt-0 mb-4 text-2xl font-bold"
+                  style={{ color: "#111111" }}
+                >
                   We&apos;re sorry to see you go
                 </Heading>
-                <Text className="mb-6 text-base leading-6 text-gray-700">
+
+                <Text className="mb-4 text-base leading-6 text-gray-600">
                   Hi {userName},
                 </Text>
-                <Text className="mb-6 text-base leading-6 text-gray-700">
+                <Text className="mb-4 text-base leading-6 text-gray-600">
                   Your account has been successfully deleted as you requested.
-                  We&apos;re genuinely sad to see you leave, and we want you to
-                  know that it was a pleasure having you as part of our
-                  community.
+                  We&apos;re genuinely sad to see you leave, and it was a
+                  pleasure having you as part of our community.
+                </Text>
+                <Text className="mb-6 text-base leading-6 text-gray-600">
+                  If there was something we could have done better, we&apos;d
+                  love to hear from you — your feedback helps us improve for
+                  everyone.
                 </Text>
 
-                <Text className="mb-6 text-base leading-6 text-gray-700">
-                  We understand that products don&apos;t always fit
-                  everyone&apos;s needs, and that&apos;s okay. If there was
-                  something we could have done better, we&apos;d love to hear
-                  from you. Your feedback helps us improve for everyone.
-                </Text>
-
-                <Section className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6 text-center">
+                {/* CTA */}
+                <Section className="mb-6 text-center">
                   <Link
                     href={feedbackLink}
-                    className="inline-block rounded-lg bg-black px-8 py-3 text-base font-semibold text-white no-underline"
+                    className="inline-block px-8 py-3 text-base font-semibold text-white no-underline"
+                    style={{
+                      backgroundColor: "#141414",
+                      borderRadius: "8px",
+                      color: "#ffffff",
+                    }}
                   >
                     Share Your Feedback
                   </Link>
                 </Section>
 
-                <Section className="mb-6 rounded-lg border-l-4 border-blue-500 bg-blue-50 p-6">
-                  <Text className="mb-2 text-sm font-semibold text-black">
+                {/* What happens now */}
+                <Section
+                  className="mb-6 p-5"
+                  style={{
+                    backgroundColor: "#f5f5f5",
+                    borderRadius: "8px",
+                    borderLeft: "4px solid #141414",
+                  }}
+                >
+                  <Text
+                    className="mt-0 mb-3 text-sm font-semibold"
+                    style={{ color: "#111111" }}
+                  >
                     What happens now?
                   </Text>
-                  <Text className="mb-2 text-sm text-gray-700">
-                    • Your account and personal data have been permanently
+                  <Text className="my-1 text-sm text-gray-600">
+                    &bull; Your account and personal data have been permanently
                     deleted
                   </Text>
-                  <Text className="mb-2 text-sm text-gray-700">
-                    • Any active subscriptions have been cancelled
+                  <Text className="my-1 text-sm text-gray-600">
+                    &bull; Any active subscriptions have been cancelled
                   </Text>
-                  <Text className="mb-2 text-sm text-gray-700">
-                    • You might receive some emails from us
+                  <Text className="my-1 text-sm text-gray-600">
+                    &bull; You might receive some emails from us
                   </Text>
-                  <Text className="text-sm text-gray-700">
-                    • You&apos;re welcome to create a new account anytime if you
-                    change your mind
+                  <Text className="my-0 text-sm text-gray-600">
+                    &bull; You&apos;re welcome to create a new account anytime if
+                    you change your mind
                   </Text>
                 </Section>
 
-                <Text className="mb-6 text-base leading-6 text-gray-700">
-                  If you ever want to come back, we&apos;ll be here with open
-                  arms. You can create a new account anytime at{" "}
+                <Text className="mb-4 text-base leading-6 text-gray-600">
+                  If you ever want to come back, you can create a new account
+                  anytime at{" "}
                   <Link
                     href="https://dreamwebsite.com/signup"
-                    className="text-black underline"
+                    style={{ color: "#141414" }}
+                    className="no-underline"
                   >
                     dreamwebsite.com
                   </Link>
                   .
                 </Text>
 
-                <Text className="mb-6 text-base leading-6 text-gray-700">
-                  Thank you for giving us a try. We wish you all the best in
-                  your future endeavors.
+                <Text className="mb-6 text-base leading-6 text-gray-600">
+                  Thank you for giving us a try. We wish you all the best.
                 </Text>
 
-                <Text className="text-base leading-6 text-gray-700">
+                <Text className="m-0 text-base leading-6 text-gray-600">
                   Take care,
                   <br />
-                  The Dream Website Team
+                  <span style={{ color: "#111111", fontWeight: 600 }}>
+                    The Dream Website Team
+                  </span>
                 </Text>
               </Section>
 
-              <Footer />
+              {/* Footer inside card */}
+              <Section
+                className="px-10 py-6"
+                style={{ borderTop: "1px solid #f0f0f0" }}
+              >
+                <Text className="m-0 text-xs text-gray-400">
+                  This is a confirmation email sent by Dream Website regarding
+                  your account deletion. If you didn&apos;t request this,
+                  contact our support team immediately. View our{" "}
+                  <Link
+                    href="/privacy"
+                    style={{ color: "#141414" }}
+                    className="no-underline"
+                  >
+                    Privacy Policy
+                  </Link>{" "}
+                  and{" "}
+                  <Link
+                    href="/terms"
+                    style={{ color: "#141414" }}
+                    className="no-underline"
+                  >
+                    Terms of Service
+                  </Link>
+                  .
+                </Text>
+              </Section>
+            </Section>
+
+            {/* Outer footer */}
+            <Section className="mt-6 text-center">
+              <Text
+                className="m-0 text-xs"
+                style={{ color: "rgba(255,255,255,0.7)" }}
+              >
+                &copy; {new Date().getFullYear()} Dream Website
+              </Text>
             </Section>
           </Container>
         </Body>
