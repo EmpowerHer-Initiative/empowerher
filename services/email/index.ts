@@ -1,6 +1,7 @@
 // packages/email/index.ts
 import { createElement } from "react";
 import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
+import { siteConfig } from "@/lib/site";
 
 import AccountDeleted from "./emails/account-deleted";
 // [TRIGGER.DEV] — Remove this import when removing Trigger.dev from the project.
@@ -75,7 +76,7 @@ function getSesClient() {
   return sesClient;
 }
 
-const defaultFrom = `noreply@alisamadii.com`;
+const defaultFrom = siteConfig.noreplyEmail;
 
 // One function to rule them all
 export async function sendEmail<T extends keyof typeof templates>(

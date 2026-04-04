@@ -8,6 +8,7 @@ import { CheckCircle2 } from "lucide-react";
 import { motion } from "motion/react";
 
 import { motionInView } from "@/lib/utils";
+import { siteConfig } from "@/lib/site";
 
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
@@ -153,7 +154,7 @@ export const Pricing = () => {
                       <Button
                         variant="outline"
                         className="w-full rounded-lg bg-transparent py-5 text-sm font-semibold"
-                        render={<a href="mailto:a@alisamadii.com" />}
+                        render={<a href={`mailto:${siteConfig.email}`} />}
                       >
                         Chat to sales
                       </Button>

@@ -1,4 +1,5 @@
 // [TRIGGER.DEV] — Remove this file when removing Trigger.dev from the project.
+import { siteConfig } from "@/lib/site";
 import {
   Body,
   Container,
@@ -32,17 +33,21 @@ export default function AppointmentReminder({
       <Tailwind>
         <Body
           className="font-sans"
-          style={{ backgroundColor: "#141414", margin: 0, padding: 0 }}
+          style={{
+            backgroundColor: siteConfig.emailPrimaryColor,
+            margin: 0,
+            padding: 0,
+          }}
         >
           <Preview>Reminder: {title || ""} is coming up soon</Preview>
           <Container className="mx-auto max-w-xl py-12 px-4">
             {/* Brand header */}
             <Section className="mb-6 text-center">
               <Img
-                src="https://cdn.alisamadii.com/company/logo-white.png"
+                src={siteConfig.emailLogoUrl}
                 width="40"
                 height="40"
-                alt="Dream Website"
+                alt={siteConfig.name}
                 className="mx-auto"
               />
             </Section>
@@ -79,7 +84,7 @@ export default function AppointmentReminder({
                 >
                   <Text
                     className="mb-1 text-xs font-semibold uppercase tracking-widest"
-                    style={{ color: "#141414" }}
+                    style={{ color: siteConfig.emailPrimaryColor }}
                   >
                     Appointment
                   </Text>
@@ -122,24 +127,24 @@ export default function AppointmentReminder({
                 <Text className="m-0 text-xs text-gray-400">
                   Questions?{" "}
                   <Link
-                    href="mailto:support@dreamwebsite.com"
-                    style={{ color: "#141414" }}
+                    href={`mailto:${siteConfig.supportEmail}`}
+                    style={{ color: siteConfig.emailPrimaryColor }}
                     className="no-underline"
                   >
                     Contact support
                   </Link>{" "}
                   &middot;{" "}
                   <Link
-                    href="/privacy"
-                    style={{ color: "#141414" }}
+                    href={`${siteConfig.url}/privacy`}
+                    style={{ color: siteConfig.emailPrimaryColor }}
                     className="no-underline"
                   >
                     Privacy
                   </Link>{" "}
                   &middot;{" "}
                   <Link
-                    href="/terms"
-                    style={{ color: "#141414" }}
+                    href={`${siteConfig.url}/terms`}
+                    style={{ color: siteConfig.emailPrimaryColor }}
                     className="no-underline"
                   >
                     Terms
@@ -154,7 +159,7 @@ export default function AppointmentReminder({
                 className="m-0 text-xs"
                 style={{ color: "rgba(255,255,255,0.7)" }}
               >
-                &copy; {new Date().getFullYear()} Dream Website
+                &copy; {new Date().getFullYear()} {siteConfig.name}
               </Text>
             </Section>
           </Container>

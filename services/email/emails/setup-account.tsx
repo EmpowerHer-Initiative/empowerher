@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/site";
 import {
   Body,
   Container,
@@ -27,17 +28,21 @@ export default function SetupAccount({
       <Tailwind>
         <Body
           className="font-sans"
-          style={{ backgroundColor: "#141414", margin: 0, padding: 0 }}
+          style={{
+            backgroundColor: siteConfig.emailPrimaryColor,
+            margin: 0,
+            padding: 0,
+          }}
         >
-          <Preview>Welcome! Set up your Dream Website account</Preview>
+          <Preview>Welcome! Set up your {siteConfig.name} account</Preview>
           <Container className="mx-auto max-w-xl py-12 px-4">
             {/* Brand header */}
             <Section className="mb-6 text-center">
               <Img
-                src="https://cdn.alisamadii.com/company/logo-white.png"
+                src={siteConfig.emailLogoUrl}
                 width="40"
                 height="40"
-                alt="Dream Website"
+                alt={siteConfig.name}
                 className="mx-auto"
               />
             </Section>
@@ -55,7 +60,7 @@ export default function SetupAccount({
                   className="mt-0 mb-4 text-2xl font-bold"
                   style={{ color: "#111111" }}
                 >
-                  Welcome to Dream Website!
+                  Welcome to {siteConfig.name}!
                 </Heading>
                 <Text className="mb-6 text-base leading-6 text-gray-600">
                   Hi {customerName},
@@ -72,7 +77,7 @@ export default function SetupAccount({
                     href={setupAccountLink}
                     className="inline-block px-8 py-3 text-base font-semibold text-white no-underline"
                     style={{
-                      backgroundColor: "#141414",
+                      backgroundColor: siteConfig.emailPrimaryColor,
                       borderRadius: "8px",
                       color: "#ffffff",
                     }}
@@ -115,24 +120,24 @@ export default function SetupAccount({
                 <Text className="m-0 text-xs text-gray-400">
                   Questions?{" "}
                   <Link
-                    href="mailto:support@dreamwebsite.com"
-                    style={{ color: "#141414" }}
+                    href={`mailto:${siteConfig.supportEmail}`}
+                    style={{ color: siteConfig.emailPrimaryColor }}
                     className="no-underline"
                   >
                     Contact support
                   </Link>{" "}
                   &middot;{" "}
                   <Link
-                    href="/privacy"
-                    style={{ color: "#141414" }}
+                    href={`${siteConfig.url}/privacy`}
+                    style={{ color: siteConfig.emailPrimaryColor }}
                     className="no-underline"
                   >
                     Privacy
                   </Link>{" "}
                   &middot;{" "}
                   <Link
-                    href="/terms"
-                    style={{ color: "#141414" }}
+                    href={`${siteConfig.url}/terms`}
+                    style={{ color: siteConfig.emailPrimaryColor }}
                     className="no-underline"
                   >
                     Terms
@@ -147,7 +152,7 @@ export default function SetupAccount({
                 className="m-0 text-xs"
                 style={{ color: "rgba(255,255,255,0.7)" }}
               >
-                &copy; {new Date().getFullYear()} Dream Website
+                &copy; {new Date().getFullYear()} {siteConfig.name}
               </Text>
             </Section>
           </Container>
@@ -158,6 +163,6 @@ export default function SetupAccount({
 }
 
 SetupAccount.PreviewProps = {
-  setupAccountLink: "https://dreamwebsite.com/reset-password?token=abc123",
+  setupAccountLink: `${siteConfig.url}/reset-password?token=abc123`,
   customerName: "John Doe",
 } satisfies SetupAccountProps;

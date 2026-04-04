@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react";
 import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
+import { siteConfig } from "@/lib/site";
 
 import { Logo } from "./icons/logo";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -28,7 +29,7 @@ const links = [
   },
   {
     label: "Contact",
-    href: "mailto:a@alisamadii.com",
+    href: `mailto:${siteConfig.email}`,
   },
 ];
 

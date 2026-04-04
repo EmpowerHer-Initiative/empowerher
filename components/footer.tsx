@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { siteConfig } from "@/lib/site";
+
 import { Logo } from "./icons/logo";
 import { Cta } from "./landing-page/cta";
 
@@ -47,7 +49,7 @@ export const Footer = () => {
               {
                 title: "Company",
                 links: [
-                  { label: "Contact", href: "mailto:a@alisamadii.com" },
+                  { label: "Contact", href: `mailto:${siteConfig.email}` },
                 ],
               },
               {
@@ -76,7 +78,7 @@ export const Footer = () => {
             ))}
           </div>
           <div className="border-border/40 text-muted-foreground mt-10 border-t pt-6 text-center text-sm">
-            © {new Date().getFullYear()} Brand. All rights reserved.
+            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </div>
         </div>
       </footer>

@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/site";
 import {
   Body,
   Container,
@@ -19,7 +20,7 @@ interface AccountDeletedProps {
 
 export default function AccountDeleted({
   userName = "there",
-  feedbackLink = "https://dreamwebsite.com/feedback",
+  feedbackLink = `${siteConfig.url}/feedback`,
 }: AccountDeletedProps) {
   return (
     <Html>
@@ -27,17 +28,23 @@ export default function AccountDeleted({
       <Tailwind>
         <Body
           className="font-sans"
-          style={{ backgroundColor: "#141414", margin: 0, padding: 0 }}
+          style={{
+            backgroundColor: siteConfig.emailPrimaryColor,
+            margin: 0,
+            padding: 0,
+          }}
         >
-          <Preview>We&apos;re sorry to see you go - Dream Website</Preview>
+          <Preview>
+            We&apos;re sorry to see you go - {siteConfig.name}
+          </Preview>
           <Container className="mx-auto max-w-xl py-12 px-4">
             {/* Brand header */}
             <Section className="mb-6 text-center">
               <Img
-                src="https://cdn.alisamadii.com/company/logo-white.png"
+                src={siteConfig.emailLogoUrl}
                 width="40"
                 height="40"
-                alt="Dream Website"
+                alt={siteConfig.name}
                 className="mx-auto"
               />
             </Section>
@@ -78,7 +85,7 @@ export default function AccountDeleted({
                     href={feedbackLink}
                     className="inline-block px-8 py-3 text-base font-semibold text-white no-underline"
                     style={{
-                      backgroundColor: "#141414",
+                      backgroundColor: siteConfig.emailPrimaryColor,
                       borderRadius: "8px",
                       color: "#ffffff",
                     }}
@@ -93,7 +100,7 @@ export default function AccountDeleted({
                   style={{
                     backgroundColor: "#f5f5f5",
                     borderRadius: "8px",
-                    borderLeft: "4px solid #141414",
+                    borderLeft: `4px solid ${siteConfig.emailPrimaryColor}`,
                   }}
                 >
                   <Text
@@ -122,11 +129,11 @@ export default function AccountDeleted({
                   If you ever want to come back, you can create a new account
                   anytime at{" "}
                   <Link
-                    href="https://dreamwebsite.com/signup"
-                    style={{ color: "#141414" }}
+                    href={`${siteConfig.url}/signup`}
+                    style={{ color: siteConfig.emailPrimaryColor }}
                     className="no-underline"
                   >
-                    dreamwebsite.com
+                    {siteConfig.url.replace(/^https?:\/\//, "")}
                   </Link>
                   .
                 </Text>
@@ -139,7 +146,7 @@ export default function AccountDeleted({
                   Take care,
                   <br />
                   <span style={{ color: "#111111", fontWeight: 600 }}>
-                    The Dream Website Team
+                    The {siteConfig.name} Team
                   </span>
                 </Text>
               </Section>
@@ -150,20 +157,20 @@ export default function AccountDeleted({
                 style={{ borderTop: "1px solid #f0f0f0" }}
               >
                 <Text className="m-0 text-xs text-gray-400">
-                  This is a confirmation email sent by Dream Website regarding
-                  your account deletion. If you didn&apos;t request this,
-                  contact our support team immediately. View our{" "}
+                  This is a confirmation email sent by {siteConfig.name}{" "}
+                  regarding your account deletion. If you didn&apos;t request
+                  this, contact our support team immediately. View our{" "}
                   <Link
-                    href="/privacy"
-                    style={{ color: "#141414" }}
+                    href={`${siteConfig.url}/privacy`}
+                    style={{ color: siteConfig.emailPrimaryColor }}
                     className="no-underline"
                   >
                     Privacy Policy
                   </Link>{" "}
                   and{" "}
                   <Link
-                    href="/terms"
-                    style={{ color: "#141414" }}
+                    href={`${siteConfig.url}/terms`}
+                    style={{ color: siteConfig.emailPrimaryColor }}
                     className="no-underline"
                   >
                     Terms of Service
@@ -179,7 +186,7 @@ export default function AccountDeleted({
                 className="m-0 text-xs"
                 style={{ color: "rgba(255,255,255,0.7)" }}
               >
-                &copy; {new Date().getFullYear()} Dream Website
+                &copy; {new Date().getFullYear()} {siteConfig.name}
               </Text>
             </Section>
           </Container>
@@ -191,5 +198,5 @@ export default function AccountDeleted({
 
 AccountDeleted.PreviewProps = {
   userName: "John Doe",
-  feedbackLink: "https://dreamwebsite.com/feedback",
+  feedbackLink: `${siteConfig.url}/feedback`,
 } satisfies AccountDeletedProps;

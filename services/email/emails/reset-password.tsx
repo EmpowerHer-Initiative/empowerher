@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/site";
 import {
   Body,
   Container,
@@ -25,17 +26,21 @@ export default function ResetPassword({
       <Tailwind>
         <Body
           className="font-sans"
-          style={{ backgroundColor: "#141414", margin: 0, padding: 0 }}
+          style={{
+            backgroundColor: siteConfig.emailPrimaryColor,
+            margin: 0,
+            padding: 0,
+          }}
         >
-          <Preview>Dream Website Password Reset</Preview>
+          <Preview>{siteConfig.name} Password Reset</Preview>
           <Container className="mx-auto max-w-xl py-12 px-4">
             {/* Brand header */}
             <Section className="mb-6 text-center">
               <Img
-                src="https://cdn.alisamadii.com/company/logo-white.png"
+                src={siteConfig.emailLogoUrl}
                 width="40"
                 height="40"
-                alt="Dream Website"
+                alt={siteConfig.name}
                 className="mx-auto"
               />
             </Section>
@@ -56,9 +61,9 @@ export default function ResetPassword({
                   Reset your password
                 </Heading>
                 <Text className="mb-6 text-base leading-6 text-gray-600">
-                  We received a request to reset your password for your Dream
-                  Website account. Click the button below to create a new
-                  password. If you didn&apos;t request this, you can safely
+                  We received a request to reset your password for your{" "}
+                  {siteConfig.name} account. Click the button below to create a
+                  new password. If you didn&apos;t request this, you can safely
                   ignore this email.
                 </Text>
 
@@ -68,7 +73,7 @@ export default function ResetPassword({
                     href={resetPasswordLink}
                     className="inline-block px-8 py-3 text-base font-semibold text-white no-underline"
                     style={{
-                      backgroundColor: "#141414",
+                      backgroundColor: siteConfig.emailPrimaryColor,
                       borderRadius: "8px",
                       color: "#ffffff",
                     }}
@@ -109,24 +114,24 @@ export default function ResetPassword({
                 <Text className="m-0 text-xs text-gray-400">
                   Questions?{" "}
                   <Link
-                    href="mailto:support@dreamwebsite.com"
-                    style={{ color: "#141414" }}
+                    href={`mailto:${siteConfig.supportEmail}`}
+                    style={{ color: siteConfig.emailPrimaryColor }}
                     className="no-underline"
                   >
                     Contact support
                   </Link>{" "}
                   &middot;{" "}
                   <Link
-                    href="/privacy"
-                    style={{ color: "#141414" }}
+                    href={`${siteConfig.url}/privacy`}
+                    style={{ color: siteConfig.emailPrimaryColor }}
                     className="no-underline"
                   >
                     Privacy
                   </Link>{" "}
                   &middot;{" "}
                   <Link
-                    href="/terms"
-                    style={{ color: "#141414" }}
+                    href={`${siteConfig.url}/terms`}
+                    style={{ color: siteConfig.emailPrimaryColor }}
                     className="no-underline"
                   >
                     Terms
@@ -141,7 +146,7 @@ export default function ResetPassword({
                 className="m-0 text-xs"
                 style={{ color: "rgba(255,255,255,0.7)" }}
               >
-                &copy; {new Date().getFullYear()} Dream Website
+                &copy; {new Date().getFullYear()} {siteConfig.name}
               </Text>
             </Section>
           </Container>
@@ -152,5 +157,5 @@ export default function ResetPassword({
 }
 
 ResetPassword.PreviewProps = {
-  resetPasswordLink: "https://dreamwebsite.com/reset-password?token=abc123",
+  resetPasswordLink: `${siteConfig.url}/reset-password?token=abc123`,
 } satisfies ResetPasswordProps;

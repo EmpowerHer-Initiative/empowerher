@@ -1,7 +1,10 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Site Configuration
-// Update this file for each client. This is the only place you need to touch
-// for metadata, social previews, and page titles.
+// Site Configuration — Single source of truth for all client-specific values.
+// Update this file for each client. It drives: metadata, social previews,
+// page titles, email templates, navbar/footer, CORS origins, and more.
+//
+// The only thing NOT covered here: legal docs (content/legal/*.md) —
+// update company name & domains there manually.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const siteConfig = {
@@ -10,11 +13,22 @@ export const siteConfig = {
   description:
     "The all-in-one platform that helps you create, launch, and scale your ideas faster than ever before.",
 
-  // Contact email
+  // Contact email (shown on site — navbar, footer, 404)
   email: "a@alisamadii.com",
 
+  // Email sending
+  noreplyEmail: "noreply@alisamadii.com",
+  supportEmail: "support@alisamadii.com",
+
+  // Email template branding
+  emailLogoUrl: "https://cdn.alisamadii.com/company/logo-white.png",
+  emailPrimaryColor: "#141414",
+
+  // Legal entity name (copyright, email signatures)
+  companyName: "AliSamadii LLC",
+
   // Production URL — no trailing slash
-  url: "https://yourdomain.com",
+  url: "https://alisamadii.com",
 
   // Open Graph / social preview image
   // → Drop your hero image as public/og-image.png (1200×630 recommended)

@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { BgPattern } from "@/components/bg-pattern";
 import { Logo } from "@/components/icons/logo";
+import { siteConfig } from "@/lib/site";
 
 const NotFound = () => {
   const router = useRouter();
@@ -74,7 +75,7 @@ const NotFound = () => {
       >
         If you think this is a mistake,{" "}
         <Link
-          href="mailto:a@alisamadii.com"
+          href={`mailto:${siteConfig.email}`}
           className="hover:text-foreground underline underline-offset-4 transition-colors"
         >
           contact support
