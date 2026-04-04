@@ -13,7 +13,9 @@
     "db:push": "npx drizzle-kit push",
     "email:dev": "npx email dev --dir services/email/emails",
     "trigger:dev": "npx trigger.dev@latest dev",
-    "trigger:deploy": "npx trigger.dev@latest deploy"
+    "trigger:deploy": "npx trigger.dev@latest deploy",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1009.0",
@@ -80,6 +82,7 @@
     "@types/node": "^25.1.0",
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
+    "cypress": "^15.13.0",
     "drizzle-kit": "^0.31.9",
     "eslint": "^9.39.2",
     "eslint-config-next": "16.1.6",

@@ -1,6 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { isAuthenticated } from "./services/auth/action";
+import { auth } from "./services/auth/auth";
+
+function clearAuthCookies(response: NextResponse): NextResponse {
+  const cookieNames = [
+    "__Secure-better-auth.session_token",
+    "better-auth.session_token",
+  ];
+  for (const name of cookieNames) {
+    response.cookies.set(name, "", { maxAge: 0, path: "/" });
+  }
+  return response;
+}
 
 export const proxy = async (request: Request) => {
   const nextRequest = request as NextRequest;
@@ -31,6 +43,22 @@ export const proxy = async (request: Request) => {
     betterAuthSession &&
     !hasVerifyEmailInParams
   ) {
+    // Cookie exists — validate the session against the DB.
+    // If the session was deleted (e.g. revoked by admin), clear cookies
+    // so the user can access the login page.
+    try {
+      const session = await auth.api.getSession({
+        headers: nextRequest.headers,
+      });
+
+      if (!session) {
+        const response = NextResponse.next();
+        return clearAuthCookies(response);
+      }
+    } catch {
+      // On DB error, fall back to cookie-only behavior to avoid lockout
+    }
+
     const callbackUrl = nextRequest.nextUrl.searchParams.get("callbackUrl");
     const destination =
       callbackUrl && callbackUrl.startsWith("/") ? callbackUrl : "/";
