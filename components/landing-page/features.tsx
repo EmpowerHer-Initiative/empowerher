@@ -68,7 +68,6 @@ export const Features = () => {
             className="bg-muted/30 shadow-card relative flex flex-col gap-4 overflow-hidden rounded-2xl p-8"
           >
             <IconBox icon={feature.icon} />
-            {/* <DotGrid className="right-8 bottom-12" /> */}
             <div className="">
               <h3 className="text-lg font-semibold">{feature.title}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">

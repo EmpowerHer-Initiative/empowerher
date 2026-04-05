@@ -4,6 +4,8 @@ import { motion } from "motion/react";
 
 import { motionInView } from "@/lib/utils";
 
+const companies = ["Acme Corp", "Globex", "Initech", "Umbrella", "Stark Ind."];
+
 export const Trust = () => {
   return (
     <motion.div
@@ -19,13 +21,11 @@ export const Trust = () => {
         Trusted by teams at
       </p>
       <div className="text-muted-foreground/50 flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-        {["Acme Corp", "Globex", "Initech", "Umbrella", "Stark Ind."].map(
-          (company) => (
-            <span key={company} className="text-lg font-bold tracking-wide">
-              {company}
-            </span>
-          )
-        )}
+        {companies.map((company) => (
+          <span key={company} className="text-lg font-bold tracking-wide">
+            {company}
+          </span>
+        ))}
       </div>
     </motion.div>
   );

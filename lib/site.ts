@@ -1,10 +1,17 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // Site Configuration — Single source of truth for all client-specific values.
 // Update this file for each client. It drives: metadata, social previews,
-// page titles, email templates, navbar/footer, CORS origins, and more.
+// page titles, email templates, navbar/footer, landing page content, and more.
 //
-// The only thing NOT covered here: legal docs (content/legal/*.md) —
-// update company name & domains there manually.
+// ONBOARDING CHECKLIST — things to update beyond this file:
+// □ .env — database, auth secret, OAuth, Polar/Stripe, AWS SES
+// □ components/icons/logo.tsx — replace SVG paths with client logo
+// □ public/og-image.png — social preview image (1200×630)
+// □ public/favicon.ico — client favicon
+// □ app/globals.css — update --primary and other theme colors
+// □ content/legal/privacy.md — company name, domains, legal entity
+// □ content/legal/terms.md — company name, domains, legal entity
+// □ Upload client's white logo to CDN → update emailLogoUrl below
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const siteConfig = {
@@ -34,9 +41,9 @@ export const siteConfig = {
   // → Drop your hero image as public/og-image.png (1200×630 recommended)
   ogImage: "/og-image.png",
 
+  // ─────────────────────────────────────────────────────────────────────────
   // Per-page metadata
-  // title: shown in browser tab and social previews as "Page | SiteName"
-  // description: overrides the default for that page (optional)
+  // ─────────────────────────────────────────────────────────────────────────
   pages: {
     home: {
       title: "YourBrand",
