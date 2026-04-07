@@ -21,7 +21,7 @@ export const siteConfig = {
     "The all-in-one platform that helps you create, launch, and scale your ideas faster than ever before.",
 
   // Contact email (shown on site — navbar, footer, 404)
-  email: "a@alisamadii.com",
+  email: "alisamadi0583@gmail.com",
 
   // Email sending
   noreplyEmail: "noreply@alisamadii.com",
@@ -66,5 +66,21 @@ export const siteConfig = {
     accountDeleted: {
       title: "Account Deleted",
     },
+    contact: {
+      title: "Contact",
+      description: "Get in touch with us.",
+    },
   },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Agency identity — hardcoded, never changes per client.
+// Used in agency-sent emails (e.g. contact form notifications).
+// ─────────────────────────────────────────────────────────────────────────────
+export const agencyConfig = {
+  name: "AliSamadii",
+  companyName: "AliSamadii LLC",
+  email: "agency@alisamadii.com",
+  logoUrl: "https://cdn.alisamadii.com/company/logo-white.png",
+  primaryColor: "#FC8464",
 };

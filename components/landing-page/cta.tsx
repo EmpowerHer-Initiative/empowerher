@@ -1,7 +1,7 @@
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { siteConfig } from "@/lib/site";
 
 import { Button } from "../ui/button";
 
@@ -37,7 +37,7 @@ export const Cta = ({ className }: { className?: string }) => {
             <Button
               size="xl"
               className="rounded-full"
-              render={<a href={`mailto:${siteConfig.email}`} />}
+              render={<Link href="/contact" />}
             >
               Book a discovery call
               <ArrowRight />

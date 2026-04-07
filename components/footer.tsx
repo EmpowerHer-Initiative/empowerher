@@ -49,7 +49,7 @@ export const Footer = () => {
               {
                 title: "Company",
                 links: [
-                  { label: "Contact", href: `mailto:${siteConfig.email}` },
+                  { label: "Contact", href: "/contact" },
                 ],
               },
               {

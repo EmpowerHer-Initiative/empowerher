@@ -6,6 +6,7 @@ import { siteConfig } from "@/lib/site";
 import AccountDeleted from "./emails/account-deleted";
 // [TRIGGER.DEV] — Remove this import when removing Trigger.dev from the project.
 import AppointmentReminder from "./emails/appointment-reminder";
+import ContactMessage from "./emails/contact-message";
 import ResetPassword from "./emails/reset-password";
 import VerifyEmail from "./emails/verify-email";
 import { renderEmail, renderText } from "./utils";
@@ -21,11 +22,12 @@ type TemplateProps = {
     description?: string;
     scheduledAt: string;
   };
+  contactMessage: { name: string; email: string; phone?: string; message: string };
 };
 
 // Template registry — add new emails here, that's it
 type EmailTemplate = {
-  subject: string;
+  subject: string | ((props: Record<string, unknown>) => string);
   fromLabel: string;
   component: React.ComponentType<Record<string, unknown>>;
 };
@@ -51,6 +53,11 @@ const templates: Record<string, EmailTemplate> = {
     subject: "Reminder: your appointment is coming up",
     fromLabel: "Appointment Reminder",
     component: AppointmentReminder,
+  },
+  contactMessage: {
+    subject: (props) => `New message from ${props.name}`,
+    fromLabel: "Contact Form",
+    component: ContactMessage,
   },
 };
 
@@ -82,9 +89,13 @@ const defaultFrom = siteConfig.noreplyEmail;
 export async function sendEmail<T extends keyof typeof templates>(
   template: T,
   to: string | string[],
-  props: TemplateProps[keyof TemplateProps]
+  props: TemplateProps[keyof TemplateProps],
+  options?: { from?: string }
 ) {
   const { subject, fromLabel, component } = templates[template];
+  const resolvedSubject =
+    typeof subject === "function" ? subject(props as Record<string, unknown>) : subject;
+  const fromAddress = options?.from ?? defaultFrom;
   const toAddresses = Array.isArray(to) ? to : [to];
   const element = createElement(component, props);
   const htmlContent = await renderEmail(element);
@@ -93,10 +104,10 @@ export async function sendEmail<T extends keyof typeof templates>(
   try {
     await getSesClient().send(
       new SendEmailCommand({
-        Source: `${fromLabel} <${defaultFrom}>`,
+        Source: `${fromLabel} <${fromAddress}>`,
         Destination: { ToAddresses: toAddresses },
         Message: {
-          Subject: { Data: subject, Charset: "UTF-8" },
+          Subject: { Data: resolvedSubject, Charset: "UTF-8" },
           Body: {
             Html: { Data: htmlContent, Charset: "UTF-8" },
             Text: { Data: textContent, Charset: "UTF-8" },
