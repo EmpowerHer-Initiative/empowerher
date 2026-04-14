@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { allBlogs } from "content-collections";
+import { format } from "date-fns";
 
 import { siteConfig } from "@/lib/site";
 
-import { BlogCard } from "@/components/blog-card";
 import { Pagination } from "@/components/pagination";
 
 export const metadata: Metadata = {
@@ -30,31 +31,27 @@ export default async function BlogPage({ searchParams }: Props) {
   const posts = sorted.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
   return (
-    <div className="container mx-auto py-16">
-      <div className="mb-12 flex flex-col items-center gap-3 text-center">
-        <h1 className="text-4xl font-bold tracking-tight">Blog</h1>
-        <p className="text-muted-foreground max-w-xl text-base">
-          Thoughts, guides, and updates from the team.
-        </p>
-      </div>
+    <div className="container py-16">
+      <h1 className="mb-8 text-3xl font-bold">Blog</h1>
 
       {posts.length === 0 ? (
-        <p className="text-muted-foreground text-center">
-          No blog posts yet. Check back soon!
-        </p>
+        <p className="text-muted-foreground">No blog posts yet.</p>
       ) : (
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="space-y-4">
           {posts.map((post) => (
-            <BlogCard
-              key={post._meta.path}
-              href={`/blog/${post._meta.path}`}
-              title={post.title}
-              description={post.description}
-              date={post.date}
-              image={post.image}
-            />
+            <li key={post._meta.path}>
+              <Link href={`/blog/${post._meta.path}`} className="block">
+                <p className="text-muted-foreground text-xs">
+                  {format(new Date(post.date), "MMMM d, yyyy")}
+                </p>
+                <p className="font-medium">{post.title}</p>
+                <p className="text-muted-foreground text-sm">
+                  {post.description}
+                </p>
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
 
       {totalPages > 1 && (

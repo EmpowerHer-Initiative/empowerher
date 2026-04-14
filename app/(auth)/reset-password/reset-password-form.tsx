@@ -59,7 +59,7 @@ export const ResetPasswordForm = () => {
   }
 
   return (
-    <div className="bg-muted flex min-h-dvh items-center-safe justify-center-safe p-8">
+    <div className="flex min-h-dvh items-center justify-center p-8">
       <Wrapper
         title="Reset Password"
         description="Hey, Enter your email to reset your password"

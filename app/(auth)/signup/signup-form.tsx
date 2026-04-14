@@ -74,7 +74,7 @@ export const SignupForm = () => {
   };
 
   return (
-    <div className="bg-muted flex min-h-dvh items-center-safe justify-center-safe p-8">
+    <div className="flex min-h-dvh items-center justify-center p-8">
       <VerifyEmailDialog email={form.getValues("email")} />
       <Wrapper
         title="Sign up"

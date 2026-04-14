@@ -4,13 +4,10 @@ import { notFound } from "next/navigation";
 import { MDXContent } from "@content-collections/mdx/react";
 import { allBlogs } from "content-collections";
 import { format } from "date-fns";
-import { ArrowLeftIcon } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
-import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
-import { TableOfContents } from "@/components/table-of-contents";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -55,45 +52,19 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   return (
-    <div className="container mx-auto py-10">
-      <Button
-        variant="ghost"
-        render={
-          <Link href="/blog">
-            <ArrowLeftIcon /> Back to blog
-          </Link>
-        }
-      />
+    <div className="container py-10">
+      <Button variant="ghost" render={<Link href="/blog">Back to blog</Link>} />
 
-      <div className="mb-8 flex flex-col items-center gap-2 text-center">
+      <div className="mt-6 mb-8">
         <p className="text-muted-foreground text-sm">
           {format(post.date, "MMMM d, yyyy")}
         </p>
-        <h1 className="text-3xl font-bold">{post.title}</h1>
-        <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed md:text-base">
-          {post.description}
-        </p>
-        {post.image && (
-          <img
-            src={post.image}
-            alt={post.title}
-            className="mt-4 aspect-video w-full max-w-3xl rounded-2xl object-cover outline"
-          />
-        )}
+        <h1 className="mt-1 text-3xl font-bold">{post.title}</h1>
+        <p className="text-muted-foreground mt-2 text-sm">{post.description}</p>
       </div>
 
-      <div className="flex w-full flex-col items-start gap-8 md:flex-row">
-        {post.headings.length > 0 && (
-          <TableOfContents headings={post.headings} />
-        )}
-        <div
-          className={cn(
-            "prose-theme prose w-full max-w-none",
-            "[&_h1]:scroll-mt-24 [&_h2]:scroll-mt-24 [&_h3]:scroll-mt-24 [&_h4]:scroll-mt-24"
-          )}
-        >
-          <MDXContent code={post.mdx} />
-        </div>
+      <div className="prose-theme prose max-w-none">
+        <MDXContent code={post.mdx} />
       </div>
     </div>
   );

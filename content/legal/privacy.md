@@ -5,7 +5,7 @@ description: This Privacy Policy describes how we collect, use, and protect your
 
 **Last updated: February 7, 2026**
 
-<!-- UPDATE PER CLIENT: Replace company name and domains below -->
+{/* UPDATE PER CLIENT: Replace company name and domains below */}
 AliSamadii.LLC ("we," "our," or "us") operates the websites alisamadii.com, motion.alisamadii.com, docs.alisamadii.com, and packages.alisamadii.com (the "Services"). This Privacy Policy describes how we collect, use, and protect your information when you use our Services, including when you sign in with Google or other third-party providers.
 
 ## Information We Collect

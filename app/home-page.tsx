@@ -1,5 +1,3 @@
-"use client";
-
 import { Blog } from "@/components/landing-page/blog";
 import { Features } from "@/components/landing-page/features";
 import { Hero } from "@/components/landing-page/hero";
@@ -13,13 +11,11 @@ export const HomePage = () => {
     <>
       <Hero />
       <Results />
-      <div className="my-24 space-y-24">
-        <Trust />
-        <Features />
-        <Testimonials />
-        <Pricing />
-        <Blog />
-      </div>
+      <Trust />
+      <Features />
+      <Testimonials />
+      <Pricing />
+      <Blog />
     </>
   );
 };

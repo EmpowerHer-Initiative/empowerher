@@ -61,7 +61,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="bg-muted flex min-h-dvh items-center-safe justify-center-safe p-8">
+    <div className="flex min-h-dvh items-center justify-center p-8">
       <Wrapper
         title="Login"
         description="Hey, Enter your details to get sign in to your account"

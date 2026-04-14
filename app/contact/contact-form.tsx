@@ -4,12 +4,10 @@ import { useState } from "react";
 import { useTRPC } from "@/services/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { CheckCircle2, Mail, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-
-import { siteConfig } from "@/lib/site";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -66,168 +64,134 @@ export const ContactForm = () => {
 
   return (
     <section className="container py-16 md:py-24">
-      <div className="mx-auto grid max-w-5xl gap-12 md:grid-cols-2 md:gap-16">
-        {/* Left side */}
-        <div className="flex flex-col justify-center">
-          <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
-            Get in Touch
-          </h1>
-          <p className="text-muted-foreground mb-8 max-w-md text-lg">
-            Have a question, feedback, or just want to say hello? We&apos;d love
-            to hear from you. Fill out the form and we&apos;ll get back to you
-            as soon as possible.
-          </p>
-          <div className="text-muted-foreground flex items-center gap-3 text-sm">
-            <Mail className="size-4" />
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="hover:text-foreground transition-colors"
-            >
-              {siteConfig.email}
-            </a>
-          </div>
-        </div>
+      <div className="mx-auto max-w-lg">
+        <h1 className="mb-2 text-3xl font-bold">Contact</h1>
+        <p className="text-muted-foreground mb-8 text-sm">
+          Have a question? Fill out the form and we&apos;ll get back to you.
+        </p>
 
-        {/* Right side — form or success */}
-        <div className="bg-card rounded-2xl border p-8 shadow-sm">
-          {submitted ? (
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="bg-primary/10 mb-4 flex size-16 items-center justify-center rounded-full">
-                <CheckCircle2 className="text-primary size-8" />
-              </div>
-              <h2 className="mb-2 text-2xl font-semibold">Message Sent!</h2>
-              <p className="text-muted-foreground mb-6 max-w-sm">
-                Thank you for reaching out. We&apos;ll review your message and
-                get back to you soon.
-              </p>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSubmitted(false);
-                  form.reset();
-                }}
-              >
-                Send another message
-              </Button>
-            </div>
-          ) : (
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-5"
+        {submitted ? (
+          <div className="space-y-4 text-center">
+            <h2 className="text-xl font-semibold">Message Sent</h2>
+            <p className="text-muted-foreground text-sm">
+              Thank you for reaching out. We&apos;ll get back to you soon.
+            </p>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSubmitted(false);
+                form.reset();
+              }}
             >
-              <Controller
-                control={form.control}
-                name="name"
-                render={({ field, fieldState }) => (
-                  <Field aria-invalid={fieldState.invalid}>
-                    <FieldLabel>Name</FieldLabel>
-                    <FieldContent>
-                      <Input
-                        {...field}
-                        aria-invalid={fieldState.invalid}
-                        placeholder="Your name"
-                        size="lg"
-                      />
-                    </FieldContent>
-                    <FieldError
-                      errors={
-                        fieldState.error ? [fieldState.error] : undefined
-                      }
+              Send another message
+            </Button>
+          </div>
+        ) : (
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <Controller
+              control={form.control}
+              name="name"
+              render={({ field, fieldState }) => (
+                <Field aria-invalid={fieldState.invalid}>
+                  <FieldLabel>Name</FieldLabel>
+                  <FieldContent>
+                    <Input
+                      {...field}
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Your name"
+                      size="lg"
                     />
-                  </Field>
-                )}
-              />
-              <Controller
-                control={form.control}
-                name="email"
-                render={({ field, fieldState }) => (
-                  <Field aria-invalid={fieldState.invalid}>
-                    <FieldLabel>Email</FieldLabel>
-                    <FieldContent>
-                      <Input
-                        {...field}
-                        aria-invalid={fieldState.invalid}
-                        placeholder="you@example.com"
-                        type="email"
-                        size="lg"
-                      />
-                    </FieldContent>
-                    <FieldError
-                      errors={
-                        fieldState.error ? [fieldState.error] : undefined
-                      }
+                  </FieldContent>
+                  <FieldError
+                    errors={fieldState.error ? [fieldState.error] : undefined}
+                  />
+                </Field>
+              )}
+            />
+            <Controller
+              control={form.control}
+              name="email"
+              render={({ field, fieldState }) => (
+                <Field aria-invalid={fieldState.invalid}>
+                  <FieldLabel>Email</FieldLabel>
+                  <FieldContent>
+                    <Input
+                      {...field}
+                      aria-invalid={fieldState.invalid}
+                      placeholder="you@example.com"
+                      type="email"
+                      size="lg"
                     />
-                  </Field>
-                )}
-              />
-              <Controller
-                control={form.control}
-                name="phone"
-                render={({ field, fieldState }) => (
-                  <Field aria-invalid={fieldState.invalid}>
-                    <FieldLabel>
-                      Phone{" "}
-                      <span className="text-muted-foreground font-normal">
-                        (optional)
-                      </span>
-                    </FieldLabel>
-                    <FieldContent>
-                      <Input
-                        {...field}
-                        aria-invalid={fieldState.invalid}
-                        placeholder="+1 (555) 123-4567"
-                        type="tel"
-                        size="lg"
-                      />
-                    </FieldContent>
-                    <FieldError
-                      errors={
-                        fieldState.error ? [fieldState.error] : undefined
-                      }
+                  </FieldContent>
+                  <FieldError
+                    errors={fieldState.error ? [fieldState.error] : undefined}
+                  />
+                </Field>
+              )}
+            />
+            <Controller
+              control={form.control}
+              name="phone"
+              render={({ field, fieldState }) => (
+                <Field aria-invalid={fieldState.invalid}>
+                  <FieldLabel>
+                    Phone{" "}
+                    <span className="text-muted-foreground font-normal">
+                      (optional)
+                    </span>
+                  </FieldLabel>
+                  <FieldContent>
+                    <Input
+                      {...field}
+                      aria-invalid={fieldState.invalid}
+                      placeholder="+1 (555) 123-4567"
+                      type="tel"
+                      size="lg"
                     />
-                  </Field>
-                )}
-              />
-              <Controller
-                control={form.control}
-                name="message"
-                render={({ field, fieldState }) => (
-                  <Field aria-invalid={fieldState.invalid}>
-                    <FieldLabel>Message</FieldLabel>
-                    <FieldContent>
-                      <Textarea
-                        {...field}
-                        aria-invalid={fieldState.invalid}
-                        placeholder="Tell us what's on your mind..."
-                        rows={5}
-                      />
-                    </FieldContent>
-                    <FieldError
-                      errors={
-                        fieldState.error ? [fieldState.error] : undefined
-                      }
+                  </FieldContent>
+                  <FieldError
+                    errors={fieldState.error ? [fieldState.error] : undefined}
+                  />
+                </Field>
+              )}
+            />
+            <Controller
+              control={form.control}
+              name="message"
+              render={({ field, fieldState }) => (
+                <Field aria-invalid={fieldState.invalid}>
+                  <FieldLabel>Message</FieldLabel>
+                  <FieldContent>
+                    <Textarea
+                      {...field}
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Tell us what's on your mind..."
+                      rows={5}
                     />
-                  </Field>
-                )}
-              />
-              <Button
-                type="submit"
-                className="w-full"
-                size="lg"
-                disabled={submit.isPending}
-              >
-                {submit.isPending ? (
-                  <Spinner />
-                ) : (
-                  <>
-                    Send Message
-                    <Send className="ml-2 size-4" />
-                  </>
-                )}
-              </Button>
-            </form>
-          )}
-        </div>
+                  </FieldContent>
+                  <FieldError
+                    errors={fieldState.error ? [fieldState.error] : undefined}
+                  />
+                </Field>
+              )}
+            />
+            <Button
+              type="submit"
+              className="w-full"
+              size="lg"
+              disabled={submit.isPending}
+            >
+              {submit.isPending ? (
+                <Spinner />
+              ) : (
+                <>
+                  Send Message
+                  <Send className="ml-2 size-4" />
+                </>
+              )}
+            </Button>
+          </form>
+        )}
       </div>
     </section>
   );
