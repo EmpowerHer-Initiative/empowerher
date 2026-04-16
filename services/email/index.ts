@@ -6,7 +6,6 @@ import { siteConfig } from "@/lib/site";
 import AccountDeleted from "./emails/account-deleted";
 // [TRIGGER.DEV] — Remove this import when removing Trigger.dev from the project.
 import AppointmentReminder from "./emails/appointment-reminder";
-import ContactMessage from "./emails/contact-message";
 import ResetPassword from "./emails/reset-password";
 import VerifyEmail from "./emails/verify-email";
 import { renderEmail, renderText } from "./utils";
@@ -22,7 +21,6 @@ type TemplateProps = {
     description?: string;
     scheduledAt: string;
   };
-  contactMessage: { name: string; email: string; phone?: string; message: string };
 };
 
 // Template registry — add new emails here, that's it
@@ -53,11 +51,6 @@ const templates: Record<string, EmailTemplate> = {
     subject: "Reminder: your appointment is coming up",
     fromLabel: "Appointment Reminder",
     component: AppointmentReminder,
-  },
-  contactMessage: {
-    subject: (props) => `New message from ${props.name}`,
-    fromLabel: "Contact Form",
-    component: ContactMessage,
   },
 };
 

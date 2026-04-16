@@ -21,13 +21,14 @@ import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
-  name: z.string().min(1, "Name is required").max(100),
+  name: z.string().min(1, "Name is required").max(200),
   email: z.string().email("Please enter a valid email"),
+  subject: z.string().min(1, "Subject is required").max(500),
   phone: z.string().max(20).optional().or(z.literal("")),
   message: z
     .string()
     .min(10, "Message must be at least 10 characters")
-    .max(2000, "Message must be under 2000 characters"),
+    .max(5000, "Message must be under 5000 characters"),
 });
 
 export const ContactForm = () => {
@@ -39,6 +40,7 @@ export const ContactForm = () => {
     defaultValues: {
       name: "",
       email: "",
+      subject: "",
       phone: "",
       message: "",
     },
@@ -53,11 +55,7 @@ export const ContactForm = () => {
         toast.success("Message sent successfully!");
       },
       onError: (error) => {
-        if (error.message.includes("Rate limit")) {
-          toast.error("Too many messages. Please wait a minute and try again.");
-        } else {
-          toast.error("Something went wrong. Please try again.");
-        }
+        toast.error(error.message || "Something went wrong. Please try again.");
       },
     });
   };
@@ -120,6 +118,26 @@ export const ContactForm = () => {
                       aria-invalid={fieldState.invalid}
                       placeholder="you@example.com"
                       type="email"
+                      size="lg"
+                    />
+                  </FieldContent>
+                  <FieldError
+                    errors={fieldState.error ? [fieldState.error] : undefined}
+                  />
+                </Field>
+              )}
+            />
+            <Controller
+              control={form.control}
+              name="subject"
+              render={({ field, fieldState }) => (
+                <Field aria-invalid={fieldState.invalid}>
+                  <FieldLabel>Subject</FieldLabel>
+                  <FieldContent>
+                    <Input
+                      {...field}
+                      aria-invalid={fieldState.invalid}
+                      placeholder="What is this about?"
                       size="lg"
                     />
                   </FieldContent>
