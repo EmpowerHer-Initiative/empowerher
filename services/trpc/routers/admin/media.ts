@@ -1,4 +1,5 @@
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
+import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { r2, R2_BUCKET, R2_PUBLIC_URL } from "@/services/trpc/lib/r2";
 import {
   DeleteObjectCommand,
@@ -11,6 +12,7 @@ import { z } from "zod";
 
 export const adminMediaRouter = createTRPCRouter({
   getPresignedUrl: adminProcedure
+    .use(featureGuard("admin.media"))
     .input(
       z.object({
         fileName: z.string().min(1),
@@ -47,6 +49,7 @@ export const adminMediaRouter = createTRPCRouter({
     }),
 
   listFiles: adminProcedure
+    .use(featureGuard("admin.media"))
     .input(
       z.object({
         search: z.string().optional(),
@@ -90,6 +93,7 @@ export const adminMediaRouter = createTRPCRouter({
     }),
 
   deleteFile: adminProcedure
+    .use(featureGuard("admin.media"))
     .input(z.string().min(1))
     .mutation(async ({ input: key }) => {
       try {

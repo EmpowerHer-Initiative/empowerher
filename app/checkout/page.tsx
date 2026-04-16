@@ -2,13 +2,18 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCheckout } from "@/services/auth/hooks/use-payments";
+
+import { isFeatureEnabled } from "@/config/features";
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
 export default function CheckoutPage() {
+  if (!isFeatureEnabled("payments")) notFound();
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");

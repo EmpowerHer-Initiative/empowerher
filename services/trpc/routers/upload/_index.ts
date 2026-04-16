@@ -1,4 +1,5 @@
 import { baseProcedure, createTRPCRouter } from "@/services/trpc/init";
+import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { TRPCError } from "@trpc/server";
@@ -21,6 +22,7 @@ export const ALLOWED_FOLDERS = ["users", "media"] as const;
 
 export const uploadRouter = createTRPCRouter({
   getUploadUrl: baseProcedure
+    .use(featureGuard("upload"))
     .input(
       z.object({
         key: z.string().min(1),
@@ -73,6 +75,7 @@ export const uploadRouter = createTRPCRouter({
     }),
 
   getDownloadUrl: baseProcedure
+    .use(featureGuard("upload"))
     .input(
       z.object({
         key: z.string().min(1),
@@ -112,6 +115,7 @@ export const uploadRouter = createTRPCRouter({
     }),
 
   delete: baseProcedure
+    .use(featureGuard("upload"))
     .input(
       z.object({
         key: z.string().min(1),
@@ -123,6 +127,7 @@ export const uploadRouter = createTRPCRouter({
     }),
 
   update: baseProcedure
+    .use(featureGuard("upload"))
     .input(
       z.object({
         oldKey: z.string().min(1),

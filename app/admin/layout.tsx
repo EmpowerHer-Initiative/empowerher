@@ -2,6 +2,8 @@ import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { auth } from "@/services/auth/auth";
 
+import { isFeatureEnabled } from "@/config/features";
+
 import { cn } from "@/lib/utils";
 
 import { NavbarAdmin } from "@/components/admin/navbar-admin";
@@ -11,6 +13,8 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  if (!isFeatureEnabled("admin")) notFound();
+
   const user = await auth.api.getSession({
     headers: await headers(),
     query: {

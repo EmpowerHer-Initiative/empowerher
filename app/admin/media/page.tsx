@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { notFound } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
@@ -20,6 +21,7 @@ import {
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 
+import { isFeatureEnabled } from "@/config/features";
 import { cn } from "@/lib/utils";
 
 import {
@@ -37,20 +39,22 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import { Skeleton } from "@/components/ui/skeleton";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 
 export default function AdminMediaPage() {
+  // if (!isFeatureEnabled("admin.media")) notFound();
+
   return (
     <div className="container w-full">
       <h1>Media</h1>
@@ -104,11 +108,15 @@ const UploadSection = () => {
         queryClient.invalidateQueries({
           queryKey: trpc.admin.media.listFiles.queryKey(),
         });
-      } catch {
+      } catch (error) {
         setUploads((prev) =>
           prev.map((u) => (u.id === id ? { ...u, status: "error" } : u))
         );
-        toast.error(`Failed to upload ${file.name}`);
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : `Failed to upload ${file.name}`
+        );
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -240,7 +248,7 @@ const BrowseSection = () => {
   const [cursorStack, setCursorStack] = useState<string[]>([]);
   const currentCursor = cursorStack.at(-1);
 
-  const { data, isPending } = useQuery(
+  const { data, isPending, error } = useQuery(
     trpc.admin.media.listFiles.queryOptions({
       search: search || undefined,
       cursor: currentCursor,
@@ -320,6 +328,8 @@ const BrowseSection = () => {
             <Skeleton key={i} className="h-14 w-full rounded-lg" />
           ))}
         </div>
+      ) : error ? (
+        <p className="text-muted-foreground text-sm">{error.message}</p>
       ) : !data?.files.length ? (
         <p className="text-muted-foreground text-sm">No files found.</p>
       ) : (

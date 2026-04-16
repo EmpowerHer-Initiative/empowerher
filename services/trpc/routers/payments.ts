@@ -8,13 +8,14 @@ import {
   baseProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
+import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import type { SubscriptionProrationBehavior } from "@polar-sh/sdk/models/components/subscriptionprorationbehavior.js";
 import { TRPCError } from "@trpc/server";
 import { asc, desc, eq, or } from "drizzle-orm";
 import { z } from "zod";
 
 export const paymentsRouter = createTRPCRouter({
-  getCustomerState: authenticatedProcedure.query(async ({ ctx }) => {
+  getCustomerState: authenticatedProcedure.use(featureGuard("payments")).query(async ({ ctx }) => {
     try {
       const customerState = await polarClient.customers.getStateExternal({
         externalId: ctx.session.user.id,
@@ -53,7 +54,7 @@ export const paymentsRouter = createTRPCRouter({
    * Fetches all products ordered by price amount
    * @returns Promise<Product[]> - Array of products sorted by price
    */
-  getProducts: baseProcedure.query(async () => {
+  getProducts: baseProcedure.use(featureGuard("payments")).query(async () => {
     try {
       const productsList = await db
         .select()
@@ -77,6 +78,7 @@ export const paymentsRouter = createTRPCRouter({
    * @returns The updated product
    */
   updateProduct: adminProcedure
+    .use(featureGuard("admin.products"))
     .input(
       z.object({
         id: z.string(),
@@ -126,6 +128,7 @@ export const paymentsRouter = createTRPCRouter({
    * @returns The deleted product
    */
   deleteProduct: adminProcedure
+    .use(featureGuard("admin.products"))
     .input(z.string())
     .mutation(async ({ input }) => {
       try {
@@ -152,6 +155,7 @@ export const paymentsRouter = createTRPCRouter({
    * @returns Checkout session response
    */
   createCheckout: authenticatedProcedure
+    .use(featureGuard("payments"))
     .input(
       z.object({
         productId: z.string(),
@@ -201,6 +205,7 @@ export const paymentsRouter = createTRPCRouter({
    * @returns Promise<CheckoutSession> - Checkout session data
    */
   getCheckoutSession: baseProcedure
+    .use(featureGuard("payments"))
     .input(z.string())
     .query(async ({ input }) => {
       try {
@@ -228,6 +233,7 @@ export const paymentsRouter = createTRPCRouter({
    * @returns Response from the subscription update
    */
   switchPlan: authenticatedProcedure
+    .use(featureGuard("payments"))
     .input(
       z.object({
         subscriptionId: z.string(),
@@ -284,6 +290,7 @@ export const paymentsRouter = createTRPCRouter({
    * @returns Response from the customer deletion
    */
   deleteCustomer: authenticatedProcedure
+    .use(featureGuard("payments"))
     .input(z.string())
     .mutation(async ({ input }) => {
       try {
@@ -317,6 +324,7 @@ export const paymentsRouter = createTRPCRouter({
    * @returns Promise<Order[]> - Array of orders sorted by creation date (newest first)
    */
   getOrders: authenticatedProcedure
+    .use(featureGuard("payments"))
     .input(
       z.object({
         userId: z.string(),
@@ -349,6 +357,7 @@ export const paymentsRouter = createTRPCRouter({
    * @returns Promise<Subscription[]> - Array of subscriptions sorted by creation date (newest first)
    */
   getSubscriptions: authenticatedProcedure
+    .use(featureGuard("payments"))
     .input(
       z.object({
         userId: z.string(),
@@ -381,7 +390,7 @@ export const paymentsRouter = createTRPCRouter({
    * Generates a portal link for a customer
    * @returns Promise<CustomerSession> - Customer session data
    */
-  generatePortalLink: authenticatedProcedure.mutation(async ({ ctx }) => {
+  generatePortalLink: authenticatedProcedure.use(featureGuard("payments")).mutation(async ({ ctx }) => {
     try {
       const portalLink = await polarClient.customerSessions.create({
         externalCustomerId: ctx.session.user.id,

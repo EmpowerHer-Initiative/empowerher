@@ -1,8 +1,11 @@
 "use client";
 
 import { Suspense, useEffect } from "react";
+import { notFound } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
+
+import { isFeatureEnabled } from "@/config/features";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useQuery } from "@tanstack/react-query";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
@@ -215,6 +218,8 @@ const UsersPage = () => {
 };
 
 const Page = () => {
+  if (!isFeatureEnabled("admin.users")) notFound();
+
   return (
     <Suspense>
       <UsersPage />

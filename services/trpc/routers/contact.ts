@@ -4,9 +4,11 @@ import { z } from "zod";
 import { siteConfig } from "@/lib/site";
 
 import { baseProcedure, createTRPCRouter } from "../init";
+import { featureGuard } from "../middleware/feature-guard";
 
 export const contactRouter = createTRPCRouter({
   submit: baseProcedure
+    .use(featureGuard("contact"))
     .input(
       z.object({
         name: z.string().min(1).max(200),

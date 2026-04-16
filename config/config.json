@@ -1,0 +1,16 @@
+{
+  "blog": true,
+  "contact": true,
+  "payments": true,
+  "discounts": true,
+  "upload": true,
+  "auth": true,
+  "settings": true,
+  "email": true,
+  "admin": {
+    "enabled": true,
+    "users": true,
+    "products": true,
+    "media": true
+  }
+}

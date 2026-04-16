@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXContent } from "@content-collections/mdx/react";
 import { allBlogs } from "content-collections";
+
 import { format } from "date-fns";
 
 import { siteConfig } from "@/lib/site";

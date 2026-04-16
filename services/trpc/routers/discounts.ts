@@ -4,6 +4,7 @@ import {
   baseProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
+import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { TRPCError } from "@trpc/server";
 import { isPast } from "date-fns";
 import { z } from "zod";
@@ -23,8 +24,9 @@ async function getAllDiscounts() {
 }
 
 export const discountsRouter = createTRPCRouter({
-  getAll: adminProcedure.query(getAllDiscounts),
+  getAll: adminProcedure.use(featureGuard("discounts")).query(getAllDiscounts),
   verifyCode: baseProcedure
+    .use(featureGuard("discounts"))
     .input(z.object({ code: z.string() }))
     .query(async ({ input }) => {
       try {

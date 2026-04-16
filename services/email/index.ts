@@ -3,6 +3,8 @@ import { createElement } from "react";
 import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
 import { siteConfig } from "@/lib/site";
 
+import { isFeatureEnabled } from "@/config/features";
+
 import AccountDeleted from "./emails/account-deleted";
 // [TRIGGER.DEV] — Remove this import when removing Trigger.dev from the project.
 import AppointmentReminder from "./emails/appointment-reminder";
@@ -85,6 +87,10 @@ export async function sendEmail<T extends keyof typeof templates>(
   props: TemplateProps[keyof TemplateProps],
   options?: { from?: string }
 ) {
+  if (!isFeatureEnabled("email")) {
+    return { error: "Email service is not enabled" };
+  }
+
   const { subject, fromLabel, component } = templates[template];
   const resolvedSubject =
     typeof subject === "function" ? subject(props as Record<string, unknown>) : subject;

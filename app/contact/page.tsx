@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
+import { isFeatureEnabled } from "@/config/features";
 import { siteConfig } from "@/lib/site";
 
 import { ContactForm } from "./contact-form";
@@ -10,5 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  if (!isFeatureEnabled("contact")) notFound();
+
   return <ContactForm />;
 }

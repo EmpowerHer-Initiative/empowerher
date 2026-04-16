@@ -3,6 +3,7 @@ import { auth, polarClient } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
 import { user } from "@/services/db/schema";
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
+import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { TRPCError } from "@trpc/server";
 import { count, desc, eq, ilike, or } from "drizzle-orm";
 import { z } from "zod";
@@ -13,7 +14,7 @@ export const adminUsersRouter = createTRPCRouter({
    * @param id - The ID of the user to fetch
    * @returns Promise<User | undefined> - The user with matching ID or undefined if not found
    */
-  getById: adminProcedure.input(z.string()).query(async ({ input }) => {
+  getById: adminProcedure.use(featureGuard("admin.users")).input(z.string()).query(async ({ input }) => {
     try {
       const userResult = await db
         .select()
@@ -40,6 +41,7 @@ export const adminUsersRouter = createTRPCRouter({
    * @returns Promise<User[]> - Array of users matching the filter criteria
    */
   getAll: adminProcedure
+    .use(featureGuard("admin.users"))
     .input(
       z.object({
         page: z.number().optional(),
@@ -89,7 +91,7 @@ export const adminUsersRouter = createTRPCRouter({
    * Gets the total count of users in the database
    * @returns Promise<{count: number}[]> - Array containing the total user count
    */
-  getCount: adminProcedure.query(async () => {
+  getCount: adminProcedure.use(featureGuard("admin.users")).query(async () => {
     try {
       const countResult = await db.select({ count: count() }).from(user);
       return countResult;
@@ -112,6 +114,7 @@ export const adminUsersRouter = createTRPCRouter({
    * @returns Promise<User | undefined> - The updated user or undefined if not found
    */
   update: adminProcedure
+    .use(featureGuard("admin.users"))
     .input(
       z
         .object({
@@ -169,6 +172,7 @@ export const adminUsersRouter = createTRPCRouter({
    * @returns Promise<boolean> - Result of the password change operation
    */
   updatePassword: adminProcedure
+    .use(featureGuard("admin.users"))
     .input(
       z.object({
         userId: z.string(),
@@ -229,7 +233,7 @@ export const adminUsersRouter = createTRPCRouter({
    * @param id - The ID of the user to delete
    * @returns Promise<boolean> - Result of the delete operation
    */
-  delete: adminProcedure.input(z.string()).mutation(async ({ input, ctx }) => {
+  delete: adminProcedure.use(featureGuard("admin.users")).input(z.string()).mutation(async ({ input, ctx }) => {
     try {
       if (ctx.session.user.id === input) {
         throw new TRPCError({
