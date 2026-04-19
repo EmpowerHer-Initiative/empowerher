@@ -1,63 +1,51 @@
-Ask the user: "What is the client's website URL? (press Enter to skip if they don't have one)" — wait for their response before proceeding.
+**[1/6] Read scraped website data**
 
----
+Check if `context/scrape.md` exists in the project root.
 
-**[1/6] Scrape the client's website (if URL provided)**
+**If `context/scrape.md` does NOT exist:**
 
-If the user provided a URL:
+Tell the user:
 
-1. Use the `firecrawl_scrape` MCP tool to scrape the website. Pass the URL and set `formats: ["markdown"]`.
-2. From the scraped content, extract and summarize:
+```
+context/scrape.md not found.
+
+Before running /design, scrape the client's website using Firecrawl 
+(firecrawl.dev) and paste the full markdown output into context/scrape.md.
+
+Scrape each page of the client's site separately and include all content.
+Then re-run /design.
+```
+
+**Stop here — do not proceed to Step 2.**
+
+**If `context/scrape.md` EXISTS:**
+
+1. Read the file.
+2. From the scraped content, extract and analyze:
    - **Brand name** — company/product name
-   - **Brand colors** — primary, secondary, accent (exact hex values if visible in CSS/markup)
-   - **Typography** — font families, heading vs body weights
+   - **Brand colors** — any hex values visible in the content or CSS
+   - **Typography** — font families mentioned
    - **Content tone** — formal/casual, industry jargon, target audience
-   - **Logo and imagery style** — photography vs illustration, dark vs light theme
-   - **Overall aesthetic** — modern/classic, minimal/rich, corporate/playful
-   - **Page sections** — what sections exist on their current site (hero, features, testimonials, pricing, etc.)
-   - **Key messaging** — headline, tagline, value propositions
-3. Save the full scraped data and analysis to `context/scrape.md` in the project root. Format it as:
-
-```markdown
-# Scraped Brand Data
-
-**Source:** <URL>
-**Scraped:** <today's date>
-
-## Brand Identity
-- Name: ...
-- Colors: ...
-- Typography: ...
-- Tone: ...
-- Aesthetic: ...
-
-## Page Sections
-- ...
-
-## Key Messaging
-- Headline: ...
-- Tagline: ...
-- Value propositions: ...
-
-## Raw Content
-<full scraped markdown content>
-```
-
-4. Display a summary block:
+   - **Site navigation** — extract all nav links from the header/footer of the scraped content
+   - **Contact information** — address, phone, email, social links
+   - **Pages found** — identify all distinct pages in the scrape
+   - **Key messaging** — headlines, taglines, value propositions
+3. Display a summary block:
 
 ```
-🔍 Brand Analysis: <client name>
+Brand Analysis: <client name>
 
-  Colors:      #XXXX (primary), #XXXX (secondary), #XXXX (accent)
-  Typography:  <font families>
+  Colors:      <any colors found, or "not detected — will ask in Step 2">
+  Typography:  <font families, or "not detected">
   Tone:        <content tone>
-  Aesthetic:   <overall feel>
-  Sections:    <key sections found>
+  Pages:       <count> pages found in scrape
+  Nav:         <list of nav items>
+  Contact:     <email>, <phone>
+  Address:     <address>
+  Socials:     <list>
 ```
 
-If no URL was provided, skip this step and note that you're starting from a blank slate.
-
-✅ [1/6] Done
+[1/6] Done
 
 ---
 
@@ -65,7 +53,7 @@ If no URL was provided, skip this step and note that you're starting from a blan
 
 Create `context/client.md` with the client's core information.
 
-**If a website was scraped (Step 1 ran):**
+**If `context/scrape.md` exists (Step 1 found scraped data):**
 
 Extract the following from the scraped data and write it to `context/client.md`:
 - Company/brand name
@@ -77,6 +65,12 @@ Extract the following from the scraped data and write it to `context/client.md`:
 - Brand colors
 - Key differentiators
 - Website URL
+- Address (street, city, state, zip)
+- Phone number(s)
+- Email address(es)
+- Social media links (Facebook, Instagram, YouTube, Twitter/X, etc.)
+- Hours of operation (if listed)
+- Site page structure (list of all pages and their purpose)
 
 Display the profile to the user and ask: "Does this look right? Anything to add or correct?" — wait for their response. Update `context/client.md` with any corrections.
 
@@ -94,6 +88,9 @@ To build your client's profile, I need a few details:
   5. What is their main value proposition / what makes them different?
   6. What tone should the site have? (professional, friendly, bold, luxury, etc.)
   7. Do they have brand colors in mind? (hex values, or leave blank for the design skill to decide)
+  8. What is their address, phone, and email?
+  9. Do they have social media accounts? (URLs)
+  10. What pages should the site have? (e.g., Home, About, Services, Contact, Donate)
 ```
 
 Wait for the user to answer, then write their responses to `context/client.md`.
@@ -112,9 +109,30 @@ Wait for the user to answer, then write their responses to `context/client.md`.
 **Brand Colors:** ...
 **Key Differentiators:** ...
 **Website:** ... (or "None — new project")
+
+## Contact Information
+**Address:** ...
+**Phone:** ...
+**Email:** ...
+**Hours:** ... (or "Not listed")
+
+## Social Media
+- Facebook: ...
+- Instagram: ...
+- YouTube: ...
+- Twitter/X: ...
+
+## Site Structure
+| Page | Purpose |
+|------|---------|
+| Home | Landing page with hero, events, about |
+| About | Mission and history |
+| Services | Services offered |
+| Contact | Contact form and info |
+| ... | ... |
 ```
 
-✅ [2/6] Done
+[2/6] Done
 
 ---
 
@@ -166,7 +184,7 @@ Ask the user: "Which design style do you want? Pick a number:" — then display:
 
 Wait for the user to pick a number before proceeding.
 
-✅ [3/6] Done
+[3/6] Done
 
 ---
 
@@ -204,22 +222,30 @@ Map the choice to the installed skill path:
 
 Read the SKILL.md into your context. Every design decision from here must follow that skill's rules.
 
-✅ [4/6] Done
+[4/6] Done
 
 ---
 
 **[5/6] Update brand config**
 
-Read `context/client.md` for the client's information.
+Read `context/client.md` and `context/scrape.md` for the client's information.
 
 Update `lib/site.ts`:
 - Set `name` to the client's brand name
 - Set `description` to a compelling one-liner based on their value proposition
 - Set `email`, `noreplyEmail`, `supportEmail` to client values (ask if not in the profile)
 - Set `url` to the client's production domain (ask if not in the profile)
-- Update all `pages` metadata with client-appropriate titles and descriptions
 - Update `emailPrimaryColor` to match the new primary brand color
 - Update `companyName` to the client's legal entity name
+- Update existing `pages` metadata entries with client-appropriate titles and descriptions
+- **Add NEW entries to the `pages` object** for each client page that doesn't already have a template equivalent. For example, if the client has an About page, add:
+  ```typescript
+  about: {
+    title: "About Us",
+    description: "Learn about our mission and community.",
+  },
+  ```
+  Do this for every page in the client's sitemap from `context/scrape.md` that needs a new route.
 
 Update `app/globals.css`:
 - Replace `:root` CSS variable values with the client's brand palette (convert hex to oklch)
@@ -227,47 +253,129 @@ Update `app/globals.css`:
 - Keep all variable names unchanged — only update values
 - Keep all `@import`, `@plugin`, `@custom-variant`, `@theme inline`, `@utility`, and `@layer base` blocks intact
 
-✅ [5/6] Done
+[5/6] Done
 
 ---
 
 **[6/6] Design every page**
 
-Apply the loaded design skill to build out every page. For every file: read it first, keep all existing imports/hooks/logic intact, and only redesign the JSX and Tailwind classes.
+> **CRITICAL: The scraped data is your single source of truth.**
+>
+> Use ONLY the scraped data from `context/scrape.md` and the loaded design skill for ALL content and layout decisions. Do not rely on memory, cached data, or assumptions about the client. Every piece of text, every nav link, every contact detail, every page section must come from the scrape or be confirmed by the user.
+>
+> Only design pages and sections that actually exist in the scraped data. If the client has no blog, do not design blog pages. If the client has no pricing, do not create pricing sections. The scraped sitemap is the source of truth for what pages to create and design.
 
-**CRITICAL RULES — apply to every file you touch:**
+Read `context/scrape.md` and `context/client.md` before designing anything.
+
+For every file you touch: read it first, keep all existing imports/hooks/logic intact, and only redesign the JSX and Tailwind classes.
+
+**DESIGN RULES — apply to every file you touch:**
 - NEVER modify anything inside `components/ui/` — these are shadcn primitives, they are sacred
 - If you need a custom button, card, or interactive element that differs from shadcn, build it inline in the component file using raw HTML elements + Tailwind classes + CSS variables (e.g., `bg-[var(--primary)]`, `text-[var(--foreground)]`)
 - Keep all `"use client"` directives, React hooks, tRPC mutations, auth redirects, and form logic exactly as-is
 - Use `lucide-react` for icons
 - Reference `siteConfig` from `@/lib/site` for any brand text (name, description, email)
-- Reference `context/client.md` for the client's profile information when writing copy and content
+- Reference `context/scrape.md` for the client's actual content — headings, copy, descriptions, contact info
+- Reference `context/client.md` for the client's profile summary
+- **Image placeholders with AI prompt button:** When a section needs an image and no real image URL is available from the scrape, create a CSS-only placeholder (geometric patterns, gradient backgrounds, or colored blocks matching the intended dimensions). On each placeholder, add a small button in the top-right corner. When clicked, it toggles a prompt panel beneath the placeholder containing a ready-to-copy AI image generation prompt. The prompt must be contextual — describe the exact image needed for that section, matching the client's industry, brand tone, color palette, and the section's purpose (e.g., "A warm, softly lit photograph of a mosque interior with geometric Islamic patterns on the walls, natural light streaming through arched windows, muted emerald and cream tones, editorial photography style"). Only show this button on placeholders — never on real images. Build this inline in the component (do not modify components/ui/).
+- **ImagePlaceholder component:** Create `components/image-placeholder.tsx` as a reusable "use client" component for all image placeholders. Props: `aspectRatio` (string like "16/9"), `prompt` (the AI image generation prompt), and optional `className`. It renders a placeholder background with a small "AI Prompt" button (top-right). Clicking the button opens a shadcn Dialog showing the aspect ratio badge and the full prompt with a copy button. Use this component wherever a placeholder image is needed. When writing the `prompt` prop value, reference the client's profile from `context/client.md` to ensure the prompt matches their brand, industry, tone, and the specific section context. Always set the `aspectRatio` prop to match the design's intended image dimensions (e.g., "4/3" for landscape, "4/5" for portrait, "1/1" for square, "16/9" for wide). The aspect ratio is displayed in the dialog so the user knows what size to generate.
 
-**IF the client has a website (scraped data exists):**
+---
 
-Analyze the scraped site structure from `context/scrape.md` and the client profile from `context/client.md`. Based on the client's actual sections:
-- Create or modify landing page components in `components/landing-page/` to match the client's real site sections
-- You are NOT limited to the template's default components (hero, features, pricing, etc.) — create whatever sections the client's site actually has
-- Remove template components that don't apply to this client
-- Make sure the home page (`app/(marketing)/page.tsx` or `app/page.tsx`) imports and renders the correct components
-- Use the client's actual messaging, value props, and content from the scrape
+**Phase A — Plan page routes**
 
-**IF no website (starting from scratch):**
+Analyze the client's sitemap from `context/scrape.md`. For each page in the scrape, determine:
 
-Use the existing template components as starting points and design each from scratch:
-- `components/landing-page/hero.tsx` — headline, subheadline, CTA, visual element
-- `components/landing-page/results.tsx` — 3-4 stat blocks with numbers
-- `components/landing-page/trust.tsx` — logo cloud or trust badges
-- `components/landing-page/features.tsx` — 4-6 features with icons from lucide-react
-- `components/landing-page/testimonials.tsx` — 3-6 testimonial cards
-- `components/landing-page/pricing.tsx` — 2-3 pricing tiers with feature lists
-- `components/landing-page/blog.tsx` — latest 3 blog posts from content-collections
+1. Does this page map to an existing template route? (e.g., client "Contact" → existing `app/contact/`)
+2. Does it need a NEW route under `app/`? (e.g., client "About" → new `app/about/`)
+3. Is it purely a homepage section rather than a standalone page?
 
-**In both cases, also design:**
+Display the mapping to the user:
 
-Navigation and footer:
-- `components/navbar.tsx` — responsive navbar with logo, nav links, auth CTAs, mobile menu. Keep existing pathname-based hide logic.
-- `components/footer.tsx` — full footer with brand, nav columns, contact, copyright. Keep existing pathname-based hide logic.
+```
+Page Mapping:
+  Home        → app/page.tsx (redesign landing sections)
+  About       → NEW app/about/page.tsx
+  Services    → NEW app/services/page.tsx
+  Cemetery    → NEW app/cemetery/page.tsx
+  Contact     → EXISTING app/contact/page.tsx (redesign)
+  Donate      → NEW app/donate/page.tsx
+  Resources   → NEW app/resources/page.tsx
+```
+
+Ask: "Does this mapping look right? Any pages to skip or merge?" — wait for response.
+
+---
+
+**Phase B — Create new page routes**
+
+For each NEW page route from Phase A:
+
+1. Create `app/<page-name>/page.tsx` following the exact pattern from existing pages like `app/contact/page.tsx`:
+
+```tsx
+import type { Metadata } from "next";
+import { siteConfig } from "@/lib/site";
+import { PageNameContent } from "./page-name-content";
+
+export const metadata: Metadata = {
+  title: siteConfig.pages.pageName.title,
+  description: siteConfig.pages.pageName.description,
+};
+
+export default function PageNamePage() {
+  return <PageNameContent />;
+}
+```
+
+2. Create `app/<page-name>/page-name-content.tsx` as a client component (`"use client"`) with the actual page design and content. Pull ALL text content from the corresponding page section in `context/scrape.md`. Apply the loaded design skill for layout and styling.
+
+---
+
+**Phase C — Design landing page sections**
+
+Based on the client's ACTUAL homepage sections from `context/scrape.md`:
+
+1. For each section on the client's real homepage, either:
+   - Redesign an existing template component in `components/landing-page/` with the client's content
+   - OR create a NEW component in `components/landing-page/` if no template equivalent exists (e.g., `events.tsx`, `prayer-times.tsx`, `announcements.tsx`)
+
+2. Remove or empty out template components that have NO equivalent on the client's homepage (e.g., if client has no pricing section, empty out `pricing.tsx` to return `null`)
+
+3. Update `app/home-page.tsx` to import and render the correct set of components in the order they appear on the client's actual homepage
+
+---
+
+**Phase D — Update navigation and footer**
+
+All navigation content must come directly from `context/scrape.md`.
+
+**Navbar** (`components/navbar.tsx`):
+- Read the "Site Navigation" section from `context/scrape.md`
+- Replace the nav links with the client's exact navigation items, in the same order
+- Map each nav item to its correct route (new or existing)
+- Keep all existing pathname-based hide logic unchanged
+- Add any new page pathnames to the hide list if needed
+
+**Footer** (`components/footer.tsx`):
+- Read "Contact Information" and "Social Media" from `context/scrape.md` or `context/client.md`
+- Update the footer with the client's real:
+  - Address (street, city, state, zip)
+  - Phone number(s)
+  - Email address(es)
+  - Social media links with icons
+- Update the quick links to match the client's actual pages
+- Keep all existing pathname-based hide logic unchanged
+
+---
+
+**Phase E — Design existing and infrastructure pages**
+
+For template pages that ALSO exist on the client's site (e.g., contact), redesign them with the client's actual content from `context/scrape.md`.
+
+For template pages that do NOT exist on the client's site (e.g., blog, pricing), keep backend logic intact but do NOT include them in navigation — they stay hidden and undesigned.
+
+**Always design these infrastructure pages** (they are app infrastructure, not client content):
 
 Auth pages:
 - `components/auth/wrapper.tsx` — enhance with design aesthetic, add Logo, keep props interface intact
@@ -275,13 +383,12 @@ Auth pages:
 - `app/(auth)/signup/signup-form.tsx` — restyle layout only, keep all form logic
 - `app/(auth)/reset-password/reset-password-form.tsx` — restyle layout only, keep all form logic
 
-Other pages:
-- `app/contact/contact-form.tsx` — redesign layout, keep all form fields/validation/tRPC mutation
-- `app/blog/page.tsx` — redesign blog listing with proper cards/grid
-- `app/blog/[slug]/page.tsx` — style article layout with proper typography
+Other infrastructure pages:
 - `app/not-found.tsx` — style to match design language, keep logic
 - `app/success/page.tsx` — style payment success, keep verification logic
 - `app/account-deleted/page.tsx` — style confirmation, keep logic
+
+---
 
 After completing all files, run:
 
@@ -291,29 +398,40 @@ pnpm typecheck
 
 Fix any TypeScript errors. Do not change component logic to fix type errors — only fix import paths, missing props, or JSX structure issues.
 
-✅ [6/6] Done
+[6/6] Done
 
 ---
 
 At the end, display a clean summary:
 
 ```
-✅ Design complete!
+Design complete!
 
   Design skill:  <chosen skill name>
   Brand:         <client name>
   Colors:        <primary> / <secondary> / <accent>
   Scraped:       <URL or "none — designed from scratch">
+  Pages scraped: <count>
 
   Files updated:
-    ✓ context/client.md — client profile
-    ✓ context/scrape.md — scraped brand data (if applicable)
-    ✓ lib/site.ts — brand config
-    ✓ app/globals.css — color tokens
-    ✓ Landing sections — <list of components created/modified>
-    ✓ navbar + footer
-    ✓ auth pages (login, signup, reset-password)
-    ✓ contact, blog listing, blog detail, 404, success, account-deleted
+    context/client.md — client profile with contact info
+    context/scrape.md — read (user-provided)
+    lib/site.ts — brand config + new page metadata
+    app/globals.css — color tokens
+
+    Landing sections:
+    <list each component created/modified with one-line description>
+
+    New pages created:
+    <list each new app/<page>/page.tsx created>
+
+    Navigation:
+    navbar — links from scraped site navigation
+    footer — real address, phone, email, social links
+
+    Infrastructure pages:
+    auth pages (login, signup, reset-password)
+    404, success, account-deleted
 
   Next steps:
     1. Replace components/icons/logo.tsx with the client's logo SVG
@@ -322,4 +440,6 @@ At the end, display a clean summary:
     4. Upload client's white logo to CDN → update emailLogoUrl in lib/site.ts
     5. Update content/legal/privacy.md and terms.md with client's legal entity
     6. Run `pnpm dev` and review every page
+    7. Verify all navigation links work correctly
+    8. Replace any placeholder/static data with dynamic sources if needed
 ```
