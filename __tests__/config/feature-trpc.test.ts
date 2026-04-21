@@ -60,7 +60,7 @@ describe("tRPC feature guards", () => {
 
     expect(
       untracked,
-      `Router files with featureGuard not in EXPECTED_TRPC_GUARDS: ${untracked.join(", ")}`,
+      `Router files with featureGuard not in EXPECTED_TRPC_GUARDS: ${untracked.join(", ")}`
     ).toEqual([]);
   });
 });

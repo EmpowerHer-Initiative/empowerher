@@ -5,18 +5,13 @@ import { describe, expect, it } from "vitest";
 const ROOT = resolve(__dirname, "../..");
 
 const config: Record<string, unknown> = JSON.parse(
-  readFileSync(resolve(ROOT, "config/config.json"), "utf-8"),
+  readFileSync(resolve(ROOT, "config/config.json"), "utf-8")
 );
 
 // Parse FEATURE_ENV_MAP keys from check-env.ts source
 function getEnvMapKeys(): string[] {
-  const source = readFileSync(
-    resolve(ROOT, "scripts/check-env.ts"),
-    "utf-8",
-  );
-  const mapMatch = source.match(
-    /FEATURE_ENV_MAP[^{]*\{([\s\S]*?)^};/m,
-  );
+  const source = readFileSync(resolve(ROOT, "scripts/check-env.ts"), "utf-8");
+  const mapMatch = source.match(/FEATURE_ENV_MAP[^{]*\{([\s\S]*?)^};/m);
   if (!mapMatch) throw new Error("Could not parse FEATURE_ENV_MAP");
 
   const keys: string[] = [];
@@ -41,15 +36,12 @@ describe("env ↔ config sync", () => {
     const missing = envMapKeys.filter((key) => !configKeys.includes(key));
     expect(
       missing,
-      `FEATURE_ENV_MAP keys not in config.json: ${missing.join(", ")}`,
+      `FEATURE_ENV_MAP keys not in config.json: ${missing.join(", ")}`
     ).toEqual([]);
   });
 
   it("every .env.example var is tracked in FEATURE_ENV_MAP", () => {
-    const envExample = readFileSync(
-      resolve(ROOT, ".env.example"),
-      "utf-8",
-    );
+    const envExample = readFileSync(resolve(ROOT, ".env.example"), "utf-8");
     const envVars = envExample
       .split("\n")
       .filter((line) => /^[A-Z_]+=/.test(line))
@@ -57,16 +49,14 @@ describe("env ↔ config sync", () => {
 
     const envMapSource = readFileSync(
       resolve(ROOT, "scripts/check-env.ts"),
-      "utf-8",
+      "utf-8"
     );
 
-    const untracked = envVars.filter(
-      (v) => !envMapSource.includes(`"${v}"`),
-    );
+    const untracked = envVars.filter((v) => !envMapSource.includes(`"${v}"`));
 
     expect(
       untracked,
-      `.env.example vars not in FEATURE_ENV_MAP: ${untracked.join(", ")}`,
+      `.env.example vars not in FEATURE_ENV_MAP: ${untracked.join(", ")}`
     ).toEqual([]);
   });
 });

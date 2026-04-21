@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 const ROOT = resolve(__dirname, "../..");
 
 const config: Record<string, unknown> = JSON.parse(
-  readFileSync(resolve(ROOT, "config/config.json"), "utf-8"),
+  readFileSync(resolve(ROOT, "config/config.json"), "utf-8")
 );
 
 // Collect all feature keys from config (top-level + nested)
@@ -17,7 +17,7 @@ function getConfigKeys(): string[] {
     } else if (typeof value === "object" && value !== null) {
       keys.push(key);
       for (const [child, childVal] of Object.entries(
-        value as Record<string, unknown>,
+        value as Record<string, unknown>
       )) {
         if (child !== "enabled" && typeof childVal === "boolean") {
           keys.push(`${key}.${child}`);
@@ -37,10 +37,7 @@ const ROUTE_GUARDS: Record<string, string[]> = {
   settings: ["app/(marketing)/settings/layout.tsx"],
   contact: ["app/(marketing)/contact/page.tsx"],
   admin: ["app/admin/layout.tsx"],
-  "admin.users": [
-    "app/admin/users/page.tsx",
-    "app/admin/users/[id]/page.tsx",
-  ],
+  "admin.users": ["app/admin/users/page.tsx", "app/admin/users/[id]/page.tsx"],
   "admin.products": ["app/admin/products/page.tsx"],
   "admin.media": ["app/admin/media/page.tsx"],
   payments: ["app/checkout/page.tsx", "app/success/page.tsx"],
@@ -71,17 +68,17 @@ describe("feature flag consistency", () => {
     const orphans = configKeys.filter((key) => !allGuardedFlags.has(key));
     expect(
       orphans,
-      `Config flags with no guards: ${orphans.join(", ")}`,
+      `Config flags with no guards: ${orphans.join(", ")}`
     ).toEqual([]);
   });
 
   it("every guarded flag exists in config.json", () => {
     const missing = [...allGuardedFlags].filter(
-      (flag) => !configKeys.includes(flag),
+      (flag) => !configKeys.includes(flag)
     );
     expect(
       missing,
-      `Guarded flags not in config.json: ${missing.join(", ")}`,
+      `Guarded flags not in config.json: ${missing.join(", ")}`
     ).toEqual([]);
   });
 });

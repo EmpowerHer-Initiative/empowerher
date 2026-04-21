@@ -12,10 +12,7 @@ const EXPECTED_GUARDS: Record<string, string[]> = {
   settings: ["app/(marketing)/settings/layout.tsx"],
   contact: ["app/(marketing)/contact/page.tsx"],
   admin: ["app/admin/layout.tsx"],
-  "admin.users": [
-    "app/admin/users/page.tsx",
-    "app/admin/users/[id]/page.tsx",
-  ],
+  "admin.users": ["app/admin/users/page.tsx", "app/admin/users/[id]/page.tsx"],
   "admin.products": ["app/admin/products/page.tsx"],
   "admin.media": ["app/admin/media/page.tsx"],
   payments: ["app/checkout/page.tsx", "app/success/page.tsx"],
@@ -66,7 +63,7 @@ describe("feature route guards", () => {
 
     expect(
       untracked,
-      `Files with isFeatureEnabled not in EXPECTED_GUARDS: ${untracked.join(", ")}`,
+      `Files with isFeatureEnabled not in EXPECTED_GUARDS: ${untracked.join(", ")}`
     ).toEqual([]);
   });
 });

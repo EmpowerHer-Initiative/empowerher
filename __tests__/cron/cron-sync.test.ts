@@ -13,11 +13,11 @@ function getJobFileNames(): string[] {
 
 function getVercelCronJobNames(): string[] {
   const vercelJson = JSON.parse(
-    readFileSync(resolve(ROOT, "vercel.json"), "utf-8"),
+    readFileSync(resolve(ROOT, "vercel.json"), "utf-8")
   );
   return (vercelJson.crons ?? []).map(
     (cron: { path: string }) =>
-      new URL(cron.path, "http://localhost").searchParams.get("job")!,
+      new URL(cron.path, "http://localhost").searchParams.get("job")!
   );
 }
 
@@ -27,12 +27,18 @@ describe("cron job sync", () => {
 
   it("every job file has a matching vercel.json cron entry", () => {
     const missing = jobFiles.filter((name) => !vercelJobs.includes(name));
-    expect(missing, `Job files missing from vercel.json: ${missing.join(", ")}`).toEqual([]);
+    expect(
+      missing,
+      `Job files missing from vercel.json: ${missing.join(", ")}`
+    ).toEqual([]);
   });
 
   it("every vercel.json cron entry has a matching job file", () => {
     const extra = vercelJobs.filter((name) => !jobFiles.includes(name));
-    expect(extra, `vercel.json entries without job files: ${extra.join(", ")}`).toEqual([]);
+    expect(
+      extra,
+      `vercel.json entries without job files: ${extra.join(", ")}`
+    ).toEqual([]);
   });
 
   it("job files directory is not empty", () => {
