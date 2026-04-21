@@ -5,8 +5,13 @@ describe("Homepage", () => {
 
   it("should render the hero section with h1 and Get Started button", () => {
     cy.get("#hero").should("be.visible");
-    cy.get("#hero h1").should("contain.text", "Build something extraordinary today");
-    cy.get("#hero").contains("a", "Get Started").should("have.attr", "href", "/#pricing");
+    cy.get("#hero h1").should(
+      "contain.text",
+      "Build something extraordinary today"
+    );
+    cy.get("#hero")
+      .contains("a", "Get Started")
+      .should("have.attr", "href", "/#pricing");
   });
 
   it("should render the features section", () => {

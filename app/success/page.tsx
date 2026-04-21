@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { useSearchParams } from "next/navigation";
+import { notFound, useSearchParams } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 
 import { isFeatureEnabled } from "@/config/features";
-import { useQuery } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";

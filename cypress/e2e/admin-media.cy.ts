@@ -14,13 +14,17 @@ describe("Admin Media", () => {
   it("should show upload drop zone", () => {
     cy.visit("/admin/media");
 
-    cy.contains("Drag & drop, click to select, or paste an image").should("be.visible");
+    cy.contains("Drag & drop, click to select, or paste an image").should(
+      "be.visible"
+    );
   });
 
   it("should have a search form", () => {
     cy.visit("/admin/media");
 
-    cy.get('input[type="search"], input[placeholder*="Search"], input[name="search"]').should("exist");
+    cy.get(
+      'input[type="search"], input[placeholder*="Search"], input[name="search"]'
+    ).should("exist");
     cy.contains("button", "Search").should("exist");
     cy.contains("button", "Clear").should("exist");
   });

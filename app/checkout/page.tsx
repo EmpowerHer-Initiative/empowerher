@@ -2,8 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { useRouter, useSearchParams } from "next/navigation";
+import { notFound, useRouter, useSearchParams } from "next/navigation";
 import { useCheckout } from "@/services/auth/hooks/use-payments";
 
 import { isFeatureEnabled } from "@/config/features";

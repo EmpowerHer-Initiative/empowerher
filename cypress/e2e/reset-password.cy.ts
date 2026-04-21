@@ -30,7 +30,10 @@ describe("Reset password page", () => {
     it("should show password form when token param is present", () => {
       cy.contains("Reset Password").should("exist");
       cy.contains("Enter your new password below").should("exist");
-      cy.get('input[type="password"][placeholder="********"]').should("have.length.at.least", 2);
+      cy.get('input[type="password"][placeholder="********"]').should(
+        "have.length.at.least",
+        2
+      );
     });
 
     it("should show correct description text", () => {
@@ -38,15 +41,23 @@ describe("Reset password page", () => {
     });
 
     it("should validate password mismatch", () => {
-      cy.get('input[type="password"][placeholder="********"]').first().type("validpass1");
-      cy.get('input[type="password"][placeholder="********"]').last().type("different1");
+      cy.get('input[type="password"][placeholder="********"]')
+        .first()
+        .type("validpass1");
+      cy.get('input[type="password"][placeholder="********"]')
+        .last()
+        .type("different1");
       cy.get('button[type="submit"]').click();
       cy.get('[data-slot="field-error"]').should("exist");
     });
 
     it("should validate short password", () => {
-      cy.get('input[type="password"][placeholder="********"]').first().type("short");
-      cy.get('input[type="password"][placeholder="********"]').last().type("short");
+      cy.get('input[type="password"][placeholder="********"]')
+        .first()
+        .type("short");
+      cy.get('input[type="password"][placeholder="********"]')
+        .last()
+        .type("short");
       cy.get('button[type="submit"]').click();
       cy.get('[data-slot="field-error"]').should("exist");
     });

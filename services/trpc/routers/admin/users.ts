@@ -14,24 +14,27 @@ export const adminUsersRouter = createTRPCRouter({
    * @param id - The ID of the user to fetch
    * @returns Promise<User | undefined> - The user with matching ID or undefined if not found
    */
-  getById: adminProcedure.use(featureGuard("admin.users")).input(z.string()).query(async ({ input }) => {
-    try {
-      const userResult = await db
-        .select()
-        .from(user)
-        .where(eq(user.id, input))
-        .limit(1)
-        .then((result) => result[0]);
-      return userResult;
-    } catch (error) {
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message:
-          error instanceof Error ? error.message : "Failed to fetch user",
-        cause: error,
-      });
-    }
-  }),
+  getById: adminProcedure
+    .use(featureGuard("admin.users"))
+    .input(z.string())
+    .query(async ({ input }) => {
+      try {
+        const userResult = await db
+          .select()
+          .from(user)
+          .where(eq(user.id, input))
+          .limit(1)
+          .then((result) => result[0]);
+        return userResult;
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message:
+            error instanceof Error ? error.message : "Failed to fetch user",
+          cause: error,
+        });
+      }
+    }),
   /**
    * Router for fetching users with pagination, sorting, and search
    * @param page - Page number for pagination (default: 1)
@@ -233,33 +236,38 @@ export const adminUsersRouter = createTRPCRouter({
    * @param id - The ID of the user to delete
    * @returns Promise<boolean> - Result of the delete operation
    */
-  delete: adminProcedure.use(featureGuard("admin.users")).input(z.string()).mutation(async ({ input, ctx }) => {
-    try {
-      if (ctx.session.user.id === input) {
+  delete: adminProcedure
+    .use(featureGuard("admin.users"))
+    .input(z.string())
+    .mutation(async ({ input, ctx }) => {
+      try {
+        if (ctx.session.user.id === input) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "You cannot delete your own account",
+          });
+        }
+
+        const cookieStore = await cookies();
+        const response = await polarClient.customers.deleteExternal({
+          externalId: input,
+        });
+
+        // Delete all cookies
+        cookieStore.getAll().forEach((cookie) => {
+          cookieStore.delete(cookie.name);
+        });
+
+        return response;
+      } catch (error) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "You cannot delete your own account",
+          code: "INTERNAL_SERVER_ERROR",
+          message:
+            error instanceof Error
+              ? error.message
+              : "Failed to delete customer",
+          cause: error,
         });
       }
-
-      const cookieStore = await cookies();
-      const response = await polarClient.customers.deleteExternal({
-        externalId: input,
-      });
-
-      // Delete all cookies
-      cookieStore.getAll().forEach((cookie) => {
-        cookieStore.delete(cookie.name);
-      });
-
-      return response;
-    } catch (error) {
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message:
-          error instanceof Error ? error.message : "Failed to delete customer",
-        cause: error,
-      });
-    }
-  }),
+    }),
 });

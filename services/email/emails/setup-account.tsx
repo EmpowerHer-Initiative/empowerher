@@ -1,4 +1,3 @@
-import { siteConfig } from "@/lib/site";
 import {
   Body,
   Container,
@@ -12,6 +11,8 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { siteConfig } from "@/lib/site";
 
 interface SetupAccountProps {
   setupAccountLink?: string;
@@ -35,7 +36,7 @@ export default function SetupAccount({
           }}
         >
           <Preview>Welcome! Set up your {siteConfig.name} account</Preview>
-          <Container className="mx-auto max-w-xl py-12 px-4">
+          <Container className="mx-auto max-w-xl px-4 py-12">
             {/* Brand header */}
             <Section className="mb-6 text-center">
               <Img

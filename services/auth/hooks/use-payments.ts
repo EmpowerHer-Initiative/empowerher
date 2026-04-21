@@ -35,7 +35,9 @@ export const useCheckout = () => {
           );
           return;
         }
-        toast.error(error.message || "Failed to create checkout. Please try again.");
+        toast.error(
+          error.message || "Failed to create checkout. Please try again."
+        );
       },
     })
   );

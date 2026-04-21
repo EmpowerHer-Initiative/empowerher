@@ -11,9 +11,6 @@ import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 import { Toaster } from "@/components/ui/sonner";
-import { AdminToolbar } from "@/components/admin/admin-toolbar";
-import { Footer } from "@/components/footer";
-import { Navbar } from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
@@ -70,12 +67,7 @@ export default function RootLayout({
         <TRPCReactProvider>
           <ThemeProvider>
             <NuqsAdapter>
-              <Suspense>
-                <Navbar />
-                {children}
-                <Footer />
-                <AdminToolbar />
-              </Suspense>
+              <Suspense>{children}</Suspense>
               <Toaster />
             </NuqsAdapter>
           </ThemeProvider>

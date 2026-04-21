@@ -155,7 +155,6 @@ export const orders = pgTable("order", {
   metadata: jsonb("metadata").$type<unknown>().notNull().default({}),
 });
 
-
 export const webhookEvents = pgTable("webhook_events", {
   id: uuid("id")
     .primaryKey()

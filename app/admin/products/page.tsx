@@ -2,9 +2,9 @@
 
 import { notFound } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 
 import { isFeatureEnabled } from "@/config/features";
-import { useQuery } from "@tanstack/react-query";
 
 import { DataTable } from "@/components/data-table";
 

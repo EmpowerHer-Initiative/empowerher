@@ -3,7 +3,6 @@ import { notFound, redirect } from "next/navigation";
 import { auth } from "@/services/auth/auth";
 
 import { isFeatureEnabled } from "@/config/features";
-
 import { cn } from "@/lib/utils";
 
 import { NavbarAdmin } from "@/components/admin/navbar-admin";

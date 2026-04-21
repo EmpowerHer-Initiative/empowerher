@@ -35,7 +35,11 @@ describe("Admin User Detail", () => {
     cy.get("table tbody tr").first().click();
     cy.url({ timeout: 10000 }).should("match", /\/admin\/users\/.+/);
 
-    cy.contains('[role="tab"]', "Profile").should("have.attr", "data-state", "active");
+    cy.contains('[role="tab"]', "Profile").should(
+      "have.attr",
+      "data-state",
+      "active"
+    );
   });
 
   it("should switch to Payments tab", () => {
@@ -44,7 +48,11 @@ describe("Admin User Detail", () => {
     cy.url({ timeout: 10000 }).should("match", /\/admin\/users\/.+/);
 
     cy.contains('[role="tab"]', "Payments").click();
-    cy.contains('[role="tab"]', "Payments").should("have.attr", "data-state", "active");
+    cy.contains('[role="tab"]', "Payments").should(
+      "have.attr",
+      "data-state",
+      "active"
+    );
   });
 
   it("should show content in Payments tab", () => {

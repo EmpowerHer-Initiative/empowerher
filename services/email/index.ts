@@ -1,9 +1,9 @@
 // packages/email/index.ts
 import { createElement } from "react";
 import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
-import { siteConfig } from "@/lib/site";
 
 import { isFeatureEnabled } from "@/config/features";
+import { siteConfig } from "@/lib/site";
 
 import AccountDeleted from "./emails/account-deleted";
 import ResetPassword from "./emails/reset-password";
@@ -78,7 +78,9 @@ export async function sendEmail<T extends keyof typeof templates>(
 
   const { subject, fromLabel, component } = templates[template];
   const resolvedSubject =
-    typeof subject === "function" ? subject(props as Record<string, unknown>) : subject;
+    typeof subject === "function"
+      ? subject(props as Record<string, unknown>)
+      : subject;
   const fromAddress = options?.from ?? defaultFrom;
   const toAddresses = Array.isArray(to) ? to : [to];
   const element = createElement(component, props);

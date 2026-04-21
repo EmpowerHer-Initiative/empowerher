@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, Copy, Check } from "lucide-react";
+import { Check, Copy, Sparkles } from "lucide-react";
 
 import {
   Dialog,
@@ -38,19 +38,19 @@ export function ImagePlaceholder({
     <div className={className}>
       <div className="relative">
         <div
-          className="w-full rounded-2xl bg-gradient-to-br from-primary/[0.06] via-muted to-primary/[0.03] border border-border overflow-hidden"
+          className="from-primary/[0.06] via-muted to-primary/[0.03] border-border w-full overflow-hidden rounded-2xl border bg-gradient-to-br"
           style={{ aspectRatio }}
         >
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 rounded-full border border-border/60 flex items-center justify-center">
-              <div className="w-8 h-8 rounded-full border border-border/40" />
+            <div className="border-border/60 flex h-16 w-16 items-center justify-center rounded-full border">
+              <div className="border-border/40 h-8 w-8 rounded-full border" />
             </div>
           </div>
         </div>
 
         <Dialog>
-          <DialogTrigger className="absolute top-3 right-3 z-10 flex items-center gap-1.5 bg-foreground/90 text-background px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 hover:bg-foreground active:scale-[0.96] cursor-pointer">
-            <Sparkles className="w-3 h-3" />
+          <DialogTrigger className="bg-foreground/90 text-background hover:bg-foreground absolute top-3 right-3 z-10 flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-all duration-200 active:scale-[0.96]">
+            <Sparkles className="h-3 w-3" />
             AI Prompt
           </DialogTrigger>
           <DialogContent>
@@ -61,27 +61,29 @@ export function ImagePlaceholder({
                 create a fitting image for this section.
               </DialogDescription>
             </DialogHeader>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <span className="inline-flex items-center gap-1.5 rounded-md border border-border bg-muted/50 px-2 py-1 font-mono">
+            <div className="text-muted-foreground flex items-center gap-2 text-xs">
+              <span className="border-border bg-muted/50 inline-flex items-center gap-1.5 rounded-md border px-2 py-1 font-mono">
                 Aspect Ratio: {aspectRatio}
               </span>
             </div>
-            <div className="rounded-lg border border-border bg-muted/50 p-4">
-              <p className="text-sm leading-relaxed text-foreground">{fullPrompt}</p>
+            <div className="border-border bg-muted/50 rounded-lg border p-4">
+              <p className="text-foreground text-sm leading-relaxed">
+                {fullPrompt}
+              </p>
             </div>
             <DialogFooter>
               <button
                 onClick={handleCopy}
-                className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:opacity-90 active:scale-[0.98] cursor-pointer"
+                className="bg-primary text-primary-foreground inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
               >
                 {copied ? (
                   <>
-                    <Check className="w-4 h-4" />
+                    <Check className="h-4 w-4" />
                     Copied
                   </>
                 ) : (
                   <>
-                    <Copy className="w-4 h-4" />
+                    <Copy className="h-4 w-4" />
                     Copy Prompt
                   </>
                 )}

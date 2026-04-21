@@ -1,6 +1,6 @@
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
-import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { r2, R2_BUCKET, R2_PUBLIC_URL } from "@/services/trpc/lib/r2";
+import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import {
   DeleteObjectCommand,
   ListObjectsV2Command,

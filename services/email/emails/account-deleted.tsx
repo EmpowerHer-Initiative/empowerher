@@ -1,4 +1,3 @@
-import { siteConfig } from "@/lib/site";
 import {
   Body,
   Container,
@@ -12,6 +11,8 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { siteConfig } from "@/lib/site";
 
 interface AccountDeletedProps {
   userName?: string;
@@ -34,10 +35,8 @@ export default function AccountDeleted({
             padding: 0,
           }}
         >
-          <Preview>
-            We&apos;re sorry to see you go - {siteConfig.name}
-          </Preview>
-          <Container className="mx-auto max-w-xl py-12 px-4">
+          <Preview>We&apos;re sorry to see you go - {siteConfig.name}</Preview>
+          <Container className="mx-auto max-w-xl px-4 py-12">
             {/* Brand header */}
             <Section className="mb-6 text-center">
               <Img
@@ -120,8 +119,8 @@ export default function AccountDeleted({
                     &bull; You might receive some emails from us
                   </Text>
                   <Text className="my-0 text-sm text-gray-600">
-                    &bull; You&apos;re welcome to create a new account anytime if
-                    you change your mind
+                    &bull; You&apos;re welcome to create a new account anytime
+                    if you change your mind
                   </Text>
                 </Section>
 

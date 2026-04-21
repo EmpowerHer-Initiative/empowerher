@@ -15,41 +15,43 @@ import { asc, desc, eq, or } from "drizzle-orm";
 import { z } from "zod";
 
 export const paymentsRouter = createTRPCRouter({
-  getCustomerState: authenticatedProcedure.use(featureGuard("payments")).query(async ({ ctx }) => {
-    try {
-      const customerState = await polarClient.customers.getStateExternal({
-        externalId: ctx.session.user.id,
-      });
+  getCustomerState: authenticatedProcedure
+    .use(featureGuard("payments"))
+    .query(async ({ ctx }) => {
+      try {
+        const customerState = await polarClient.customers.getStateExternal({
+          externalId: ctx.session.user.id,
+        });
 
-      const productsList = await db
-        .select()
-        .from(products)
-        .where(
-          eq(products.id, customerState.activeSubscriptions?.[0]?.productId)
-        )
-        .limit(1)
-        .then((result) => result[0]);
+        const productsList = await db
+          .select()
+          .from(products)
+          .where(
+            eq(products.id, customerState.activeSubscriptions?.[0]?.productId)
+          )
+          .limit(1)
+          .then((result) => result[0]);
 
-      return {
-        ...customerState,
-        isUserHaveAccess:
-          customerState.activeSubscriptions?.[0]?.status === "active" ||
-          customerState.activeSubscriptions?.[0]?.status === "trialing",
-        currentProductId: customerState.activeSubscriptions?.[0]?.productId,
-        currentSubscriptionId: customerState.activeSubscriptions?.[0]?.id,
-        currentProduct: productsList,
-      };
-    } catch (error) {
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message:
-          error instanceof Error
-            ? error.message
-            : "Failed to fetch customer state",
-        cause: error,
-      });
-    }
-  }),
+        return {
+          ...customerState,
+          isUserHaveAccess:
+            customerState.activeSubscriptions?.[0]?.status === "active" ||
+            customerState.activeSubscriptions?.[0]?.status === "trialing",
+          currentProductId: customerState.activeSubscriptions?.[0]?.productId,
+          currentSubscriptionId: customerState.activeSubscriptions?.[0]?.id,
+          currentProduct: productsList,
+        };
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message:
+            error instanceof Error
+              ? error.message
+              : "Failed to fetch customer state",
+          cause: error,
+        });
+      }
+    }),
   /**
    * Fetches all products ordered by price amount
    * @returns Promise<Product[]> - Array of products sorted by price
@@ -390,21 +392,23 @@ export const paymentsRouter = createTRPCRouter({
    * Generates a portal link for a customer
    * @returns Promise<CustomerSession> - Customer session data
    */
-  generatePortalLink: authenticatedProcedure.use(featureGuard("payments")).mutation(async ({ ctx }) => {
-    try {
-      const portalLink = await polarClient.customerSessions.create({
-        externalCustomerId: ctx.session.user.id,
-      });
-      return portalLink;
-    } catch (error) {
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message:
-          error instanceof Error
-            ? error.message
-            : "Failed to generate portal link",
-        cause: error,
-      });
-    }
-  }),
+  generatePortalLink: authenticatedProcedure
+    .use(featureGuard("payments"))
+    .mutation(async ({ ctx }) => {
+      try {
+        const portalLink = await polarClient.customerSessions.create({
+          externalCustomerId: ctx.session.user.id,
+        });
+        return portalLink;
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message:
+            error instanceof Error
+              ? error.message
+              : "Failed to generate portal link",
+          cause: error,
+        });
+      }
+    }),
 });

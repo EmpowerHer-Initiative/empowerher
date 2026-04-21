@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { siteConfig } from "@/lib/site";
 
-import { HomePage } from "./home-page";
+import { Hero } from "@/components/landing-page/hero";
 
 export const metadata: Metadata = {
   title: siteConfig.pages.home.title,
@@ -15,5 +15,5 @@ export const metadata: Metadata = {
 };
 
 export default function LandingPage() {
-  return <HomePage />;
+  return <Hero />;
 }

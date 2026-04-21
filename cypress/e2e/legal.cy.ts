@@ -12,10 +12,11 @@ describe("Legal pages", () => {
   });
 
   it("should show 404 for non-existent legal page", () => {
-    cy.request({ url: "/nonexistent-legal-page", failOnStatusCode: false }).then(
-      (response) => {
-        expect(response.status).to.eq(404);
-      }
-    );
+    cy.request({
+      url: "/nonexistent-legal-page",
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(404);
+    });
   });
 });

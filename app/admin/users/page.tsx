@@ -1,11 +1,8 @@
 "use client";
 
 import { Suspense, useEffect } from "react";
-import { notFound } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
-
-import { isFeatureEnabled } from "@/config/features";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useQuery } from "@tanstack/react-query";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
@@ -13,6 +10,7 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { ChevronDown, ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 
+import { isFeatureEnabled } from "@/config/features";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";

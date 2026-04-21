@@ -1,4 +1,3 @@
-import { siteConfig } from "@/lib/site";
 import {
   Body,
   Container,
@@ -12,6 +11,8 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { siteConfig } from "@/lib/site";
 
 interface VerifyEmailProps {
   verificationCode?: string;
@@ -31,7 +32,7 @@ export default function VerifyEmail({ verificationCode }: VerifyEmailProps) {
           }}
         >
           <Preview>{siteConfig.name} Email Verification</Preview>
-          <Container className="mx-auto max-w-xl py-12 px-4">
+          <Container className="mx-auto max-w-xl px-4 py-12">
             {/* Brand header */}
             <Section className="mb-6 text-center">
               <Img
@@ -73,7 +74,7 @@ export default function VerifyEmail({ verificationCode }: VerifyEmailProps) {
                   }}
                 >
                   <Text
-                    className="mb-1 text-xs font-semibold uppercase tracking-widest"
+                    className="mb-1 text-xs font-semibold tracking-widest uppercase"
                     style={{ color: siteConfig.emailPrimaryColor }}
                   >
                     Verification Code

@@ -33,7 +33,11 @@ describe("Login page", () => {
   });
 
   it("should have Forgot password link pointing to /reset-password", () => {
-    cy.contains("a", "Forgot password?").should("have.attr", "href", "/reset-password");
+    cy.contains("a", "Forgot password?").should(
+      "have.attr",
+      "href",
+      "/reset-password"
+    );
   });
 
   it("should have Sign up link pointing to /signup", () => {
@@ -42,23 +46,31 @@ describe("Login page", () => {
 
   it("should preserve callbackUrl in signup link", () => {
     cy.visit("/login?callbackUrl=/settings");
-    cy.contains("a", "Sign up").should("have.attr", "href").and("include", "callbackUrl");
+    cy.contains("a", "Sign up")
+      .should("have.attr", "href")
+      .and("include", "callbackUrl");
   });
 
   it("should preserve productId in signup link", () => {
     cy.visit("/login?productId=abc123");
-    cy.contains("a", "Sign up").should("have.attr", "href").and("include", "productId");
+    cy.contains("a", "Sign up")
+      .should("have.attr", "href")
+      .and("include", "productId");
   });
 
   it("should redirect to / on successful login", () => {
-    cy.get('input[placeholder="example@example.com"]').type("alisamadi0583@gmail.com");
+    cy.get('input[placeholder="example@example.com"]').type(
+      "alisamadi0583@gmail.com"
+    );
     cy.get('input[type="password"]').type("rezaali83@");
     cy.get('button[type="submit"]').click();
     cy.url({ timeout: 10000 }).should("eq", Cypress.config().baseUrl + "/");
   });
 
   it("should show error message on wrong credentials", () => {
-    cy.get('input[placeholder="example@example.com"]').type("wrong@example.com");
+    cy.get('input[placeholder="example@example.com"]').type(
+      "wrong@example.com"
+    );
     cy.get('input[type="password"]').type("wrongpassword");
     cy.get('button[type="submit"]').click();
     cy.get('[data-slot="field-error"]', { timeout: 10000 }).should("exist");

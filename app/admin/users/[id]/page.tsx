@@ -1,13 +1,12 @@
 "use client";
 
-import { notFound } from "next/navigation";
-import { useParams, useRouter } from "next/navigation";
+import { notFound, useParams, useRouter } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
-
-import { isFeatureEnabled } from "@/config/features";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeftIcon, Loader, OctagonAlert } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
+
+import { isFeatureEnabled } from "@/config/features";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

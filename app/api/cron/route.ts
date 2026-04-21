@@ -1,6 +1,7 @@
-import { isFeatureEnabled } from "@/config/features";
-import { cronJobs } from "@/services/cron";
 import { NextRequest, NextResponse } from "next/server";
+import { cronJobs } from "@/services/cron";
+
+import { isFeatureEnabled } from "@/config/features";
 
 export async function GET(req: NextRequest) {
   if (!isFeatureEnabled("cron")) {
@@ -17,7 +18,10 @@ export async function GET(req: NextRequest) {
   if (jobName) {
     const job = cronJobs[jobName];
     if (!job) {
-      return NextResponse.json({ error: `Job "${jobName}" not found` }, { status: 404 });
+      return NextResponse.json(
+        { error: `Job "${jobName}" not found` },
+        { status: 404 }
+      );
     }
     const result = await job();
     return NextResponse.json({ job: jobName, result });

@@ -14,6 +14,10 @@ describe("Account deleted page", () => {
   });
 
   it("should have a create new account link to /signup", () => {
-    cy.contains("a", "Create a new account").should("have.attr", "href", "/signup");
+    cy.contains("a", "Create a new account").should(
+      "have.attr",
+      "href",
+      "/signup"
+    );
   });
 });

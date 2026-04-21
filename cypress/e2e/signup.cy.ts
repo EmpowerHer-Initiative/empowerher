@@ -8,7 +8,10 @@ describe("Signup page", () => {
     cy.contains("Sign up").should("exist");
     cy.get('input[placeholder="John Doe"]').should("exist");
     cy.get('input[placeholder="example@example.com"]').should("exist");
-    cy.get('input[type="password"][placeholder="********"]').should("have.length.at.least", 2);
+    cy.get('input[type="password"][placeholder="********"]').should(
+      "have.length.at.least",
+      2
+    );
     cy.get('button[type="submit"]').should("contain.text", "Sign up");
     cy.contains("a", "Login").should("exist");
   });
@@ -21,8 +24,12 @@ describe("Signup page", () => {
   it("should show password mismatch error when passwords differ", () => {
     cy.get('input[placeholder="John Doe"]').type("Test User");
     cy.get('input[placeholder="example@example.com"]').type("test@example.com");
-    cy.get('input[type="password"][placeholder="********"]').first().type("validpass1");
-    cy.get('input[type="password"][placeholder="********"]').last().type("different1");
+    cy.get('input[type="password"][placeholder="********"]')
+      .first()
+      .type("validpass1");
+    cy.get('input[type="password"][placeholder="********"]')
+      .last()
+      .type("different1");
     cy.get('button[type="submit"]').click();
     cy.get('[data-slot="field-error"]').should("exist");
   });
@@ -30,8 +37,12 @@ describe("Signup page", () => {
   it("should show validation error for short password", () => {
     cy.get('input[placeholder="John Doe"]').type("Test User");
     cy.get('input[placeholder="example@example.com"]').type("test@example.com");
-    cy.get('input[type="password"][placeholder="********"]').first().type("short");
-    cy.get('input[type="password"][placeholder="********"]').last().type("short");
+    cy.get('input[type="password"][placeholder="********"]')
+      .first()
+      .type("short");
+    cy.get('input[type="password"][placeholder="********"]')
+      .last()
+      .type("short");
     cy.get('button[type="submit"]').click();
     cy.get('[data-slot="field-error"]').should("exist");
   });
