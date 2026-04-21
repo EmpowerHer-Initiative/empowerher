@@ -53,7 +53,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 
 export default function AdminMediaPage() {
-  // if (!isFeatureEnabled("admin.media")) notFound();
+  if (!isFeatureEnabled("admin.media")) notFound();
 
   return (
     <div className="container w-full">
