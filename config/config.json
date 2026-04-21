@@ -6,6 +6,7 @@
   "upload": true,
   "auth": true,
   "settings": true,
+  "cron": true,
   "email": true,
   "admin": {
     "enabled": true,
