@@ -6,7 +6,7 @@
   "scripts": {
     "env:check": "tsx scripts/check-env.ts",
     "predev": "tsx scripts/check-env.ts",
-    "prebuild": "tsx scripts/check-env.ts",
+    "prebuild": "tsx scripts/check-env.ts && vitest run",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -15,6 +15,8 @@
     "typecheck": "tsc --noEmit",
     "db:push": "npx drizzle-kit push",
     "email:dev": "npx email dev --dir services/email/emails",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "cy:open": "cypress open",
     "cy:run": "cypress run"
   },
@@ -95,6 +97,7 @@
     "tailwindcss": "^4.1.18",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.0.0",
+    "vitest": "^4.1.4"
   }
 }
