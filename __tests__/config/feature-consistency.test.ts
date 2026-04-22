@@ -38,8 +38,8 @@ const ROUTE_GUARDS: Record<string, string[]> = {
   contact: ["app/(marketing)/contact/page.tsx"],
   admin: ["app/admin/layout.tsx"],
   "admin.users": ["app/admin/users/page.tsx", "app/admin/users/[id]/page.tsx"],
-  "admin.products": ["app/admin/products/page.tsx"],
-  "admin.media": ["app/admin/media/page.tsx"],
+  products: ["app/admin/products/page.tsx"],
+  media: ["app/admin/media/page.tsx"],
   payments: ["app/checkout/page.tsx", "app/success/page.tsx"],
   cron: ["app/api/cron/route.ts"],
   email: ["services/email/index.ts"],
@@ -48,12 +48,12 @@ const ROUTE_GUARDS: Record<string, string[]> = {
 const TRPC_GUARDS: Record<string, string[]> = {
   contact: ["services/trpc/routers/contact.ts"],
   discounts: ["services/trpc/routers/discounts.ts"],
-  payments: ["services/trpc/routers/payments.ts"],
-  "admin.products": ["services/trpc/routers/payments.ts"],
-  upload: ["services/trpc/routers/upload/_index.ts"],
+  payments: ["services/trpc/routers/billing.ts"],
+  products: ["services/trpc/routers/products.ts"],
+  upload: ["services/trpc/routers/files.ts"],
   admin: ["services/trpc/routers/admin/overview.ts"],
-  "admin.media": ["services/trpc/routers/admin/media.ts"],
-  "admin.users": ["services/trpc/routers/admin/users.ts"],
+  media: ["services/trpc/routers/files.ts"],
+  "admin.users": ["services/trpc/routers/users.ts"],
 };
 
 const allGuardedFlags = new Set([

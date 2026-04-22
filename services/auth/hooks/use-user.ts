@@ -3,15 +3,15 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 const useCurrentUser = () => {
   const trpc = useTRPC();
-  return useQuery(trpc.user.getCurrentUser.queryOptions());
+  return useQuery(trpc.users.getCurrent.queryOptions());
 };
 
 const useUpdateUser = () => {
   const trpc = useTRPC();
   return useMutation(
-    trpc.user.updateUser.mutationOptions({
+    trpc.users.update.mutationOptions({
       onSuccess: (_, variables) => {
-        queryClient.setQueryData(trpc.user.getCurrentUser.queryKey(), (old) => {
+        queryClient.setQueryData(trpc.users.getCurrent.queryKey(), (old) => {
           if (!old) return old;
           return {
             ...old,
@@ -33,10 +33,10 @@ const useRevokeSession = () => {
   const trpc = useTRPC();
 
   return useMutation(
-    trpc.sessions.revokeSession.mutationOptions({
+    trpc.auth.revokeSession.mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: trpc.sessions.getSessions.pathKey(),
+          queryKey: trpc.auth.listSessions.pathKey(),
         });
       },
     })

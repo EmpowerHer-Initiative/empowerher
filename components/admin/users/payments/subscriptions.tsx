@@ -21,13 +21,13 @@ export const Subscriptions = () => {
 
   const trpc = useTRPC();
   const { data: user } = useQuery(
-    trpc.admin.users.getById.queryOptions(id, {
+    trpc.users.get.queryOptions(id, {
       enabled: !!id,
     })
   );
 
   const { data: subscriptions, isPending } = useQuery(
-    trpc.payments.getSubscriptions.queryOptions(
+    trpc.billing.listSubscriptions.queryOptions(
       {
         userId: user?.id || "",
       },

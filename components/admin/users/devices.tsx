@@ -22,12 +22,12 @@ export const Devices = () => {
 
   const trpc = useTRPC();
   const { data: user } = useQuery(
-    trpc.admin.users.getById.queryOptions(id, {
+    trpc.users.get.queryOptions(id, {
       enabled: !!id,
     })
   );
   const { data: sessions } = useQuery(
-    trpc.sessions.getSessions.queryOptions(id, {
+    trpc.auth.listSessions.queryOptions(id, {
       enabled: !!id,
     })
   );
@@ -52,7 +52,7 @@ export const Devices = () => {
 function EachSessions({
   session,
 }: {
-  session: RouterOutputs["sessions"]["getSessions"][number];
+  session: RouterOutputs["auth"]["listSessions"][number];
 }) {
   const parser = new UAParser();
   const result = parser.setUA(session.userAgent ?? "").getResult();

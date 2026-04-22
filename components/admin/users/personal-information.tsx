@@ -34,19 +34,19 @@ export const PersonalInformation = () => {
   const { id } = useParams<{ id: string }>();
   const trpc = useTRPC();
   const { data: user } = useQuery(
-    trpc.admin.users.getById.queryOptions(id, {
+    trpc.users.get.queryOptions(id, {
       enabled: !!id,
     })
   );
 
   const updateUser = useMutation(
-    trpc.admin.users.update.mutationOptions({
+    trpc.users.adminUpdate.mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: trpc.admin.users.getById.pathKey(),
+          queryKey: trpc.users.get.pathKey(),
         });
         queryClient.invalidateQueries({
-          queryKey: trpc.admin.users.getAll.pathKey(),
+          queryKey: trpc.users.list.pathKey(),
         });
       },
       onError: (error) => {

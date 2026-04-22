@@ -7,7 +7,7 @@ import { authClient } from "../auth-client";
 
 export const useGetCustomerState = () => {
   const trpc = useTRPC();
-  return useQuery(trpc.payments.getCustomerState.queryOptions());
+  return useQuery(trpc.billing.getCustomerState.queryOptions());
 };
 
 /**
@@ -18,7 +18,7 @@ export const useCheckout = () => {
   const trpc = useTRPC();
 
   const mutation = useMutation(
-    trpc.payments.createCheckout.mutationOptions({
+    trpc.billing.createCheckout.mutationOptions({
       onSuccess: (data) => {
         if (!data?.url) {
           throw new Error("Failed to create checkout");

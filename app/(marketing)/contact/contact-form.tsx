@@ -46,7 +46,7 @@ export const ContactForm = () => {
     },
   });
 
-  const submit = useMutation(trpc.contact.submit.mutationOptions());
+  const submit = useMutation(trpc.contact.create.mutationOptions());
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     submit.mutate(values, {

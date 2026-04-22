@@ -18,7 +18,7 @@ export const SocialAccounts = () => {
 
   const trpc = useTRPC();
   const { data: accounts } = useQuery(
-    trpc.user.getAccounts.queryOptions(id, {
+    trpc.users.listAccounts.queryOptions(id, {
       enabled: !!id,
     })
   );

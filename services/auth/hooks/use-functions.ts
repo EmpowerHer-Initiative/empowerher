@@ -39,7 +39,7 @@ const useSignup = () => {
       return response;
     },
     onSuccess: () => {
-      queryClient.setQueryData(trpc.user.getCurrentUser.queryKey(), (old) => {
+      queryClient.setQueryData(trpc.users.getCurrent.queryKey(), (old) => {
         return old;
       });
     },
@@ -79,8 +79,8 @@ const useSignin = () => {
     onSuccess: (response) => {
       router.refresh();
       if (response) {
-        queryClient.setQueryData(trpc.user.getCurrentUser.queryKey(), () => {
-          const data: RouterOutputs["user"]["getCurrentUser"] = {
+        queryClient.setQueryData(trpc.users.getCurrent.queryKey(), () => {
+          const data: RouterOutputs["users"]["getCurrent"] = {
             session: {
               id: response.session.id,
               createdAt: response.session.createdAt.toISOString(),
@@ -217,7 +217,7 @@ const useVerifyEmail = () => {
       return data;
     },
     onSuccess: async () => {
-      queryClient.setQueryData(trpc.user.getCurrentUser.queryKey(), (old) => {
+      queryClient.setQueryData(trpc.users.getCurrent.queryKey(), (old) => {
         if (!old) return old;
         return {
           ...old,
@@ -286,8 +286,7 @@ const useLogout = () => {
       allQueries.forEach((query) => {
         const queryKey = query.queryKey;
         // Check if the top-level key is "products"
-        if (!queryKey || queryKey === trpc.payments.getProducts.queryKey())
-          return;
+        if (!queryKey || queryKey === trpc.products.listAll.queryKey()) return;
         queryClient.resetQueries({ queryKey });
       });
     },

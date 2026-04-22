@@ -1,7 +1,7 @@
 // hooks/use-upload.ts
 import { useCallback, useState } from "react";
 import { useTRPC } from "@/services/trpc/client";
-import { ALLOWED_FOLDERS } from "@/services/trpc/routers/upload/_index";
+import { ALLOWED_FOLDERS } from "@/services/trpc/routers/files";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
@@ -19,9 +19,9 @@ interface UploadResult {
 
 export function useUpload() {
   const trpc = useTRPC();
-  const getUploadUrl = useMutation(trpc.upload.getUploadUrl.mutationOptions());
-  const deleteFile = useMutation(trpc.upload.delete.mutationOptions());
-  const updateFile = useMutation(trpc.upload.update.mutationOptions());
+  const getUploadUrl = useMutation(trpc.files.getUploadUrl.mutationOptions());
+  const deleteFile = useMutation(trpc.files.delete.mutationOptions());
+  const updateFile = useMutation(trpc.files.update.mutationOptions());
 
   const [progress, setProgress] = useState<UploadProgress | null>(null);
   const [isUploading, setIsUploading] = useState(false);

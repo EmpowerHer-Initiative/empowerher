@@ -19,6 +19,7 @@
     "test:watch": "vitest",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
+    "routes": "tsx scripts/list-routes.ts",
     "prepare": "husky"
   },
   "dependencies": {

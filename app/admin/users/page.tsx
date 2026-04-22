@@ -33,7 +33,7 @@ import { TabLineAnimate } from "@/components/tab-line-animate";
 
 import { columns } from "./columns";
 
-type UserFromAPI = RouterOutputs["admin"]["users"]["getAll"][number];
+type UserFromAPI = RouterOutputs["users"]["list"][number];
 
 interface FilterUsers {
   page?: number;
@@ -70,16 +70,14 @@ const UsersPage = () => {
     isPending,
     error,
   } = useQuery(
-    trpc.admin.users.getAll.queryOptions({
+    trpc.users.list.queryOptions({
       page,
       limit,
       sortBy: sortBy as FilterUsers["sortBy"],
       search,
     })
   );
-  const { data: usersCount } = useQuery(
-    trpc.admin.users.getCount.queryOptions()
-  );
+  const { data: usersCount } = useQuery(trpc.users.count.queryOptions());
 
   useEffect(() => {
     if (debouncedSearchTerm.length > 0) {

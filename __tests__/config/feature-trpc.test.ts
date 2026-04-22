@@ -9,12 +9,12 @@ const ROOT = resolve(__dirname, "../..");
 const EXPECTED_TRPC_GUARDS: Record<string, string[]> = {
   contact: ["services/trpc/routers/contact.ts"],
   discounts: ["services/trpc/routers/discounts.ts"],
-  payments: ["services/trpc/routers/payments.ts"],
-  "admin.products": ["services/trpc/routers/payments.ts"],
-  upload: ["services/trpc/routers/upload/_index.ts"],
+  payments: ["services/trpc/routers/billing.ts"],
+  products: ["services/trpc/routers/products.ts"],
+  upload: ["services/trpc/routers/files.ts"],
   admin: ["services/trpc/routers/admin/overview.ts"],
-  "admin.media": ["services/trpc/routers/admin/media.ts"],
-  "admin.users": ["services/trpc/routers/admin/users.ts"],
+  media: ["services/trpc/routers/files.ts"],
+  "admin.users": ["services/trpc/routers/users.ts"],
 };
 
 function readFile(relativePath: string): string {

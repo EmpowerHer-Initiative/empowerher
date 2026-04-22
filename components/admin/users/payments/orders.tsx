@@ -21,13 +21,13 @@ export const Orders = () => {
 
   const trpc = useTRPC();
   const { data: user } = useQuery(
-    trpc.admin.users.getById.queryOptions(id, {
+    trpc.users.get.queryOptions(id, {
       enabled: !!id,
     })
   );
 
   const { data: orders, isPending } = useQuery(
-    trpc.payments.getInvoices.queryOptions(
+    trpc.billing.listInvoices.queryOptions(
       {
         userId: user?.id || "",
         email: user?.email || "",

@@ -7,7 +7,7 @@ import { baseProcedure, createTRPCRouter } from "../init";
 import { featureGuard } from "../middleware/feature-guard";
 
 export const contactRouter = createTRPCRouter({
-  submit: baseProcedure
+  create: baseProcedure
     .use(featureGuard("contact"))
     .input(
       z.object({

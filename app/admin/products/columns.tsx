@@ -15,7 +15,7 @@ import {
 import { FormattedJSON } from "@/components/json-format";
 
 export const paymentColumns: ColumnDef<
-  RouterOutputs["payments"]["getProducts"][number]
+  RouterOutputs["products"]["listAll"][number]
 >[] = [
   {
     header: "Product ID",

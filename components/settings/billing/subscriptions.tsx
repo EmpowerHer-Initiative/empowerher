@@ -19,7 +19,7 @@ export const BillingSubscriptions = () => {
   const { data: user } = useCurrentUser();
   const trpc = useTRPC();
   const { data: subscriptions, isPending } = useQuery(
-    trpc.payments.getSubscriptions.queryOptions(
+    trpc.billing.listSubscriptions.queryOptions(
       {
         userId: user?.user.id || "",
       },

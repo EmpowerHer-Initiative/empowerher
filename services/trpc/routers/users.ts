@@ -2,19 +2,33 @@ import { cookies, headers } from "next/headers";
 import { auth, stripeClient } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
 import { user } from "@/services/db/schema";
-import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
+import {
+  adminProcedure,
+  authenticatedProcedure,
+  createTRPCRouter,
+} from "@/services/trpc/init";
 import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { TRPCError } from "@trpc/server";
 import { count, desc, eq, ilike, or } from "drizzle-orm";
 import { z } from "zod";
 
-export const adminUsersRouter = createTRPCRouter({
+export const usersRouter = createTRPCRouter({
+  // ── Queries ──────────────────────────────────────────────
+
+  /**
+   * Fetches the current user
+   * @returns Promise<User> - The current user from session
+   */
+  getCurrent: authenticatedProcedure.query(async ({ ctx }) => {
+    return ctx.session;
+  }),
+
   /**
    * Fetches a user by their ID
    * @param id - The ID of the user to fetch
    * @returns Promise<User | undefined> - The user with matching ID or undefined if not found
    */
-  getById: adminProcedure
+  get: adminProcedure
     .use(featureGuard("admin.users"))
     .input(z.string())
     .query(async ({ input }) => {
@@ -35,6 +49,7 @@ export const adminUsersRouter = createTRPCRouter({
         });
       }
     }),
+
   /**
    * Router for fetching users with pagination, sorting, and search
    * @param page - Page number for pagination (default: 1)
@@ -43,7 +58,7 @@ export const adminUsersRouter = createTRPCRouter({
    * @param search - Search term to filter users by email or name
    * @returns Promise<User[]> - Array of users matching the filter criteria
    */
-  getAll: adminProcedure
+  list: adminProcedure
     .use(featureGuard("admin.users"))
     .input(
       z.object({
@@ -90,11 +105,35 @@ export const adminUsersRouter = createTRPCRouter({
         });
       }
     }),
+
+  /**
+   * Fetches all accounts linked to the current user
+   * @returns Promise<Account[]> - Array of linked accounts
+   */
+  listAccounts: authenticatedProcedure
+    .input(z.string().optional())
+    .query(async ({ input, ctx }) => {
+      try {
+        const userId = input;
+        const accounts = await (
+          await auth.$context
+        ).internalAdapter.findAccounts(userId ?? ctx.session.user.id);
+        return accounts;
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message:
+            error instanceof Error ? error.message : "Failed to fetch accounts",
+          cause: error,
+        });
+      }
+    }),
+
   /**
    * Gets the total count of users in the database
    * @returns Promise<{count: number}[]> - Array containing the total user count
    */
-  getCount: adminProcedure.use(featureGuard("admin.users")).query(async () => {
+  count: adminProcedure.use(featureGuard("admin.users")).query(async () => {
     try {
       const countResult = await db.select({ count: count() }).from(user);
       return countResult;
@@ -110,13 +149,59 @@ export const adminUsersRouter = createTRPCRouter({
     }
   }),
 
+  // ── Mutations ────────────────────────────────────────────
+
   /**
    * Updates a user's information
+   * @param data - Partial user data to update
+   * @returns Promise<void>
+   */
+  update: authenticatedProcedure
+    .input(
+      z
+        .object({
+          name: z.string().optional(),
+          image: z.string().optional(),
+        })
+        .partial()
+        .refine(
+          (data) => {
+            // Ensure at least one field is provided
+            return Object.keys(data).length > 0;
+          },
+          {
+            message: "At least one field must be provided for update",
+          }
+        )
+        .strict() // Only allow defined fields (type-safe with User.$inferSelect)
+    )
+    .mutation(async ({ input, ctx }) => {
+      try {
+        await auth.api.updateUser({
+          headers: await headers(),
+          body: {
+            ...input,
+          },
+        });
+
+        return { userId: ctx.session.user.id };
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message:
+            error instanceof Error ? error.message : "Failed to update user",
+          cause: error,
+        });
+      }
+    }),
+
+  /**
+   * Updates a user's information (admin)
    * @param id - The ID of the user to update
    * @param data - Partial user data to update
    * @returns Promise<User | undefined> - The updated user or undefined if not found
    */
-  update: adminProcedure
+  adminUpdate: adminProcedure
     .use(featureGuard("admin.users"))
     .input(
       z
@@ -167,6 +252,7 @@ export const adminUsersRouter = createTRPCRouter({
         });
       }
     }),
+
   /**
    * Changes a user's password and optionally revokes all sessions
    * @param newPassword - The new password to set

@@ -21,6 +21,12 @@ Every optional module is listed here with everything it owns. Use this file when
 - `components/auth/`
 - `app/api/[...all]/route.ts` — Better Auth API handler
 
+**tRPC routers**
+
+- `services/trpc/routers/auth.ts` — sessions, reset-password, rate-limit
+- `services/trpc/routers/users.ts` — user CRUD (self-service + admin)
+- `services/trpc/routers/verification.ts` — verification tokens
+
 **Schema tables** (`services/db/schema.ts`)
 
 - `user`, `session`, `account`, `verification`
@@ -42,7 +48,8 @@ Every optional module is listed here with everything it owns. Use this file when
 
 **Files**
 
-- `services/trpc/routers/payments.ts`
+- `services/trpc/routers/billing.ts` — checkout, subscriptions, invoices, customer
+- `services/trpc/routers/products.ts` — product catalog CRUD
 - `app/checkout/page.tsx`
 - `app/success/page.tsx`
 - `app/admin/products/page.tsx`
@@ -51,14 +58,14 @@ Every optional module is listed here with everything it owns. Use this file when
 
 **Schema tables** (`services/db/schema.ts`)
 
-- `products`, `subscriptions`, `orders`, `webhookEvents`
+- `products`, `subscription`, `invoices`, `webhookEvents`
 
 **Touches**
 
 - `services/auth/auth.ts` — Stripe plugin registration
-- `services/auth/auth-action.ts` — customer deletion handler
+- `services/auth/auth-action.ts` — webhook sync handlers
 - `services/auth/hooks/use-payments.ts`
-- `services/trpc/routers/_app.ts` — `paymentsRouter` import
+- `services/trpc/routers/_app.ts` — `billingRouter`, `productsRouter` imports
 
 **Env vars**
 
@@ -77,7 +84,7 @@ Every optional module is listed here with everything it owns. Use this file when
 **Files**
 
 - `app/admin/` — entire directory (except `products/` — belongs to Payments)
-- `services/trpc/routers/admin/` — entire directory
+- `services/trpc/routers/admin/` — overview stats
 - `components/admin/`
 
 **Touches**
@@ -126,15 +133,14 @@ Every optional module is listed here with everything it owns. Use this file when
 
 **Files**
 
-- `services/trpc/routers/upload/` — entire directory
+- `services/trpc/routers/files.ts` — upload/download URLs + admin media browsing
+- `services/trpc/routers/files-action.ts` — R2 delete helper
 - `services/trpc/lib/r2.ts`
 - `app/admin/media/page.tsx`
-- `services/trpc/routers/admin/media.ts`
 
 **Touches**
 
-- `services/trpc/routers/_app.ts` — `uploadRouter` import
-- `services/trpc/routers/admin/_index.ts` — `mediaRouter` import
+- `services/trpc/routers/_app.ts` — `filesRouter` import
 
 **Env vars**
 
@@ -173,4 +179,3 @@ Every optional module is listed here with everything it owns. Use this file when
 **Scripts**
 
 - `email:dev`
-

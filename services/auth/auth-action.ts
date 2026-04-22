@@ -4,7 +4,7 @@ import { invoices, products, user } from "@/services/db/schema";
 import { eq } from "drizzle-orm";
 import type Stripe from "stripe";
 
-import { deleteFile } from "../trpc/routers/upload/action";
+import { deleteFile } from "../trpc/routers/files-action";
 
 // ----------------------------
 // 📦 Products

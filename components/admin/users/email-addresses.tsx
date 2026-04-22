@@ -18,7 +18,7 @@ export const EmailAddresses = () => {
   const { id } = useParams<{ id: string }>();
   const trpc = useTRPC();
   const { data: user } = useQuery(
-    trpc.admin.users.getById.queryOptions(id, {
+    trpc.users.get.queryOptions(id, {
       enabled: !!id,
     })
   );

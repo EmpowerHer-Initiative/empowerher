@@ -8,10 +8,10 @@
   "settings": true,
   "cron": true,
   "email": true,
+  "products": true,
+  "media": true,
   "admin": {
     "enabled": true,
-    "users": true,
-    "products": true,
-    "media": true
+    "users": true
   }
 }

@@ -33,7 +33,7 @@ export default function TestingPricingPage() {
     data: products,
     isPending,
     isError,
-  } = useQuery(trpc.payments.listProducts.queryOptions());
+  } = useQuery(trpc.products.list.queryOptions());
   const checkout = useCheckout();
   const [selected, setSelected] = useState<Set<string>>(new Set());
 

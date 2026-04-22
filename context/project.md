@@ -58,9 +58,15 @@ services/
   email/           — email templates/sending
   trpc/
     routers/
-      admin/       — admin-only procedures (adminProcedure)
-      payments.ts  — Stripe-related procedures
-      user.ts      — user procedures
+      auth.ts        — sessions, reset-password
+      users.ts       — user CRUD (self-service + admin)
+      products.ts    — product catalog
+      billing.ts     — checkout, subscriptions, invoices
+      discounts.ts   — promotion codes
+      files.ts       — upload/download + admin media
+      contact.ts     — contact form
+      verification.ts — verification tokens
+      admin/         — dashboard overview stats
 ```
 
 ## Modules and optionality
@@ -69,7 +75,7 @@ The template contains all modules. Per-client setup strips what isn't needed:
 
 - **Landing page** — always present
 - **Auth** — optional (Better Auth)
-- **Payments** — optional (Stripe via `payments.ts` router)
+- **Payments** — optional (Stripe via `billing.ts` + `products.ts` routers)
 - **Admin panel** — optional
 - **Blog/posts** — optional
 - **Background jobs** — optional (Trigger.dev — see removal checklist below)

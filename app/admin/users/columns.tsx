@@ -35,7 +35,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Textarea } from "@/components/ui/textarea";
 
-type UserFromAPI = RouterOutputs["admin"]["users"]["getAll"][number];
+type UserFromAPI = RouterOutputs["users"]["list"][number];
 
 export const columnsLoading: ColumnDef<UserFromAPI>[] = [
   {
@@ -105,11 +105,11 @@ export const columns: ColumnDef<UserFromAPI>[] = [
       const { data: currentUser } = useCurrentUser();
       const updateAdminUser = useUpdateAdminUser();
       const deleteAccount = useMutation(
-        useTRPC().admin.users.delete.mutationOptions({
+        useTRPC().users.delete.mutationOptions({
           onSuccess: () => {
             toast.success("User deleted successfully");
             queryClient.invalidateQueries({
-              queryKey: trpc.admin.users.getAll.pathKey(),
+              queryKey: trpc.users.list.pathKey(),
             });
           },
         })

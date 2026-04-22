@@ -9,7 +9,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 export const discountsRouter = createTRPCRouter({
-  getAll: adminProcedure.use(featureGuard("discounts")).query(async () => {
+  list: adminProcedure.use(featureGuard("discounts")).query(async () => {
     try {
       const promotionCodes = await stripeClient.promotionCodes.list({
         limit: 50,
@@ -28,7 +28,7 @@ export const discountsRouter = createTRPCRouter({
     }
   }),
 
-  verifyCode: baseProcedure
+  verify: baseProcedure
     .use(featureGuard("discounts"))
     .input(z.object({ code: z.string() }))
     .query(async ({ input }) => {

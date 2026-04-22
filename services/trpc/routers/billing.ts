@@ -2,19 +2,14 @@ import { cookies } from "next/headers";
 import { stripeClient } from "@/services/auth/auth";
 import { deleteCustomer } from "@/services/auth/auth-action";
 import { db } from "@/services/db/index";
-import { invoices, products, subscription, user } from "@/services/db/schema";
-import {
-  adminProcedure,
-  authenticatedProcedure,
-  baseProcedure,
-  createTRPCRouter,
-} from "@/services/trpc/init";
+import { invoices, subscription, user } from "@/services/db/schema";
+import { authenticatedProcedure, createTRPCRouter } from "@/services/trpc/init";
 import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { TRPCError } from "@trpc/server";
-import { asc, desc, eq, or } from "drizzle-orm";
+import { desc, eq, or } from "drizzle-orm";
 import { z } from "zod";
 
-export const paymentsRouter = createTRPCRouter({
+export const billingRouter = createTRPCRouter({
   /**
    * Fetches active subscriptions for the current user
    */
@@ -51,88 +46,62 @@ export const paymentsRouter = createTRPCRouter({
     }),
 
   /**
-   * Fetches all products from local DB, sorted by price
+   * Fetches subscriptions for a specific user by user ID
    */
-  getProducts: baseProcedure.use(featureGuard("payments")).query(async () => {
-    try {
-      const productsList = await db
-        .select()
-        .from(products)
-        .orderBy(asc(products.priceAmount));
-      return productsList;
-    } catch (error) {
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message:
-          error instanceof Error ? error.message : "Failed to fetch products",
-        cause: error,
-      });
-    }
-  }),
-
-  /**
-   * Updates an existing product in local DB
-   */
-  updateProduct: adminProcedure
-    .use(featureGuard("admin.products"))
+  listSubscriptions: authenticatedProcedure
+    .use(featureGuard("payments"))
     .input(
       z.object({
-        id: z.string(),
-        product: z.object({
-          name: z.string().optional(),
-          description: z.string().optional(),
-          popular: z.boolean().optional(),
-          priceAmount: z.number().optional(),
-          priceCurrency: z.string().optional(),
-          recurringInterval: z
-            .enum(["day", "week", "month", "year"])
-            .optional(),
-          isRecurring: z.boolean().optional(),
-          isArchived: z.boolean().optional(),
-          metadata: z.any().optional(),
-        }),
+        userId: z.string(),
       })
     )
-    .mutation(async ({ input }) => {
+    .query(async ({ input }) => {
       try {
-        const { id, ...productData } = input;
-        const [updatedProduct] = await db
-          .update(products)
-          .set({
-            ...productData,
-            updatedAt: new Date(),
-          })
-          .where(eq(products.id, id))
-          .returning();
-        return updatedProduct;
+        const subs = await db
+          .select()
+          .from(subscription)
+          .where(eq(subscription.referenceId, input.userId))
+          .orderBy(desc(subscription.periodStart));
+
+        return subs;
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message:
-            error instanceof Error ? error.message : "Failed to update product",
+            error instanceof Error
+              ? error.message
+              : "Failed to fetch subscriptions",
           cause: error,
         });
       }
     }),
 
   /**
-   * Deletes a product from local DB
+   * Fetches invoices for a specific user by user ID or email
    */
-  deleteProduct: adminProcedure
-    .use(featureGuard("admin.products"))
-    .input(z.string())
-    .mutation(async ({ input }) => {
+  listInvoices: authenticatedProcedure
+    .use(featureGuard("payments"))
+    .input(
+      z.object({
+        userId: z.string(),
+        email: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
       try {
-        const [deletedProduct] = await db
-          .delete(products)
-          .where(eq(products.id, input))
-          .returning();
-        return deletedProduct;
+        const { userId, email } = input;
+        const invoicesList = await db
+          .select()
+          .from(invoices)
+          .where(or(eq(invoices.userId, userId), eq(invoices.email, email)))
+          .orderBy(desc(invoices.createdAt));
+
+        return invoicesList;
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message:
-            error instanceof Error ? error.message : "Failed to delete product",
+            error instanceof Error ? error.message : "Failed to fetch invoices",
           cause: error,
         });
       }
@@ -205,68 +174,6 @@ export const paymentsRouter = createTRPCRouter({
     }),
 
   /**
-   * Fetches invoices for a specific user by user ID or email
-   */
-  getInvoices: authenticatedProcedure
-    .use(featureGuard("payments"))
-    .input(
-      z.object({
-        userId: z.string(),
-        email: z.string(),
-      })
-    )
-    .query(async ({ input }) => {
-      try {
-        const { userId, email } = input;
-        const invoicesList = await db
-          .select()
-          .from(invoices)
-          .where(or(eq(invoices.userId, userId), eq(invoices.email, email)))
-          .orderBy(desc(invoices.createdAt));
-
-        return invoicesList;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error ? error.message : "Failed to fetch invoices",
-          cause: error,
-        });
-      }
-    }),
-
-  /**
-   * Fetches subscriptions for a specific user by user ID
-   */
-  getSubscriptions: authenticatedProcedure
-    .use(featureGuard("payments"))
-    .input(
-      z.object({
-        userId: z.string(),
-      })
-    )
-    .query(async ({ input }) => {
-      try {
-        const subs = await db
-          .select()
-          .from(subscription)
-          .where(eq(subscription.referenceId, input.userId))
-          .orderBy(desc(subscription.periodStart));
-
-        return subs;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to fetch subscriptions",
-          cause: error,
-        });
-      }
-    }),
-
-  /**
    * Deletes a customer from Stripe and clears all cookies
    */
   deleteCustomer: authenticatedProcedure
@@ -305,25 +212,4 @@ export const paymentsRouter = createTRPCRouter({
         });
       }
     }),
-
-  /**
-   * Public: lists active products from local DB for pricing pages
-   */
-  listProducts: baseProcedure.use(featureGuard("payments")).query(async () => {
-    try {
-      const productsList = await db
-        .select()
-        .from(products)
-        .where(eq(products.isArchived, false))
-        .orderBy(asc(products.priceAmount));
-      return productsList;
-    } catch (error) {
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message:
-          error instanceof Error ? error.message : "Failed to list products",
-        cause: error,
-      });
-    }
-  }),
 });

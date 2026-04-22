@@ -53,7 +53,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 
 export default function AdminMediaPage() {
-  if (!isFeatureEnabled("admin.media")) notFound();
+  if (!isFeatureEnabled("media")) notFound();
 
   return (
     <div className="container w-full">
@@ -70,7 +70,7 @@ const UploadSection = () => {
   const [uploads, setUploads] = useState<UploadItem[]>([]);
 
   const getPresignedUrl = useMutation(
-    trpc.admin.media.getPresignedUrl.mutationOptions()
+    trpc.files.getPresignedUrl.mutationOptions()
   );
 
   const uploadFile = useCallback(
@@ -106,7 +106,7 @@ const UploadSection = () => {
         );
 
         queryClient.invalidateQueries({
-          queryKey: trpc.admin.media.listFiles.queryKey(),
+          queryKey: trpc.files.list.queryKey(),
         });
       } catch (error) {
         setUploads((prev) =>
@@ -249,7 +249,7 @@ const BrowseSection = () => {
   const currentCursor = cursorStack.at(-1);
 
   const { data, isPending, error } = useQuery(
-    trpc.admin.media.listFiles.queryOptions({
+    trpc.files.list.queryOptions({
       search: search || undefined,
       cursor: currentCursor,
       limit,
@@ -257,13 +257,13 @@ const BrowseSection = () => {
   );
 
   const deleteFile = useMutation(
-    trpc.admin.media.deleteFile.mutationOptions({
+    trpc.files.adminDelete.mutationOptions({
       onSuccess: () => {
         if (data?.files.length === 1 && cursorStack.length > 0) {
           setCursorStack((prev) => prev.slice(0, -1));
         }
         queryClient.invalidateQueries({
-          queryKey: trpc.admin.media.listFiles.queryKey(),
+          queryKey: trpc.files.list.queryKey(),
         });
         toast.success("File deleted");
       },
