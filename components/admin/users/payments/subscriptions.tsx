@@ -1,7 +1,7 @@
 import { useParams } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
-import { differenceInDays, format } from "date-fns";
+import { format } from "date-fns";
 import { Braces } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -37,23 +37,6 @@ export const Subscriptions = () => {
     )
   );
 
-  // Calculate financial metrics
-  const totalRevenue =
-    subscriptions?.reduce(
-      (acc, subscription) => acc + subscription.amount,
-      0
-    ) || 0;
-
-  const totalRefunded =
-    subscriptions?.reduce((acc, subscription) => {
-      if (subscription.canceledAt) {
-        return acc + subscription.amount;
-      }
-      return acc;
-    }, 0) || 0;
-
-  const netProfit = totalRevenue - totalRefunded;
-
   return (
     <div>
       <DataTable
@@ -62,22 +45,19 @@ export const Subscriptions = () => {
           {
             id: "id",
             header: "ID",
-            cell: ({ row }) => <Badge>{row.original.id}</Badge>,
+            cell: ({ row }) => (
+              <Badge className="font-mono text-xs">
+                {row.original.id.slice(0, 12)}…
+              </Badge>
+            ),
           },
           {
-            id: "can_request_refund",
-            header: "Can Request Refund",
+            id: "plan",
+            header: "Plan",
             cell: ({ row }) => (
-              <code className="bg-muted rounded-md p-1 text-xs">
-                {row.original.startedAt
-                  ? differenceInDays(
-                      new Date(),
-                      new Date(row.original.startedAt)
-                    ) <= 7
-                    ? "true"
-                    : "false"
-                  : "-"}
-              </code>
+              <Badge variant="outline" className="capitalize">
+                {row.original.plan}
+              </Badge>
             ),
           },
           {
@@ -94,16 +74,13 @@ export const Subscriptions = () => {
             ),
           },
           {
-            id: "total_amount",
-            header: "Amount",
+            id: "interval",
+            header: "Interval",
             cell: ({ row }) => (
-              <span>${(row.original.amount / 100).toFixed(2)}</span>
+              <span className="capitalize">
+                {row.original.billingInterval ?? "-"}
+              </span>
             ),
-          },
-          {
-            id: "recurring_interval",
-            header: "Recurring Interval",
-            cell: ({ row }) => <Badge>{row.original.recurringInterval}</Badge>,
           },
           {
             id: "cancelAtPeriodEnd",
@@ -115,14 +92,16 @@ export const Subscriptions = () => {
             ),
           },
           {
-            id: "created_at",
-            header: "Created At",
+            id: "period_end",
+            header: "Period End",
             cell: ({ row }) => (
               <span>
-                {format(
-                  row.original.createdAt ?? new Date(),
-                  "MM/dd/yyyy hh:mm a"
-                )}
+                {row.original.periodEnd
+                  ? format(
+                      new Date(row.original.periodEnd),
+                      "MM/dd/yyyy hh:mm a"
+                    )
+                  : "-"}
               </span>
             ),
           },
@@ -149,30 +128,6 @@ export const Subscriptions = () => {
         ]}
         data={subscriptions || []}
       />
-      <div className="bg-muted text-muted-foreground -mt-3 rounded-b-xl p-4 pt-7 text-xs">
-        <div className="mt-4 grid grid-cols-3 gap-4 text-center">
-          <div>
-            <p className="text-foreground text-lg font-medium">Total Revenue</p>
-            <p className="text-xl">${(totalRevenue / 100).toFixed(2)}</p>
-          </div>
-          <div>
-            <p className="text-foreground text-lg font-medium">
-              Total Refunded
-            </p>
-            <p className="text-xl text-red-600">
-              ${(totalRefunded / 100).toFixed(2)}
-            </p>
-          </div>
-          <div>
-            <p className="text-foreground text-lg font-medium">Net Profit</p>
-            <p
-              className={`text-xl ${netProfit >= 0 ? "text-green-600" : "text-red-600"}`}
-            >
-              ${(netProfit / 100).toFixed(2)}
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

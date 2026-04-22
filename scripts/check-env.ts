@@ -16,7 +16,7 @@ const FEATURE_ENV_MAP: Record<string, string[]> = {
   ],
   auth: ["BETTER_AUTH_SECRET"],
   cron: ["CRON_SECRET"],
-  payments: ["POLAR_ACCESS_TOKEN", "POLAR_WEBHOOK_SECRET", "POLAR_SERVER"],
+  payments: ["STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET"],
   upload: [
     "R2_ENDPOINT",
     "R2_ACCESS_KEY_ID",

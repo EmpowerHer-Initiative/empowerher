@@ -1,5 +1,5 @@
 import { cookies, headers } from "next/headers";
-import { auth, polarClient } from "@/services/auth/auth";
+import { auth, stripeClient } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
 import { user } from "@/services/db/schema";
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
@@ -248,17 +248,28 @@ export const adminUsersRouter = createTRPCRouter({
           });
         }
 
-        const cookieStore = await cookies();
-        const response = await polarClient.customers.deleteExternal({
-          externalId: input,
-        });
+        // Find user to get Stripe customer ID
+        const dbUser = await db
+          .select()
+          .from(user)
+          .where(eq(user.id, input))
+          .limit(1)
+          .then((res) => res[0]);
 
+        if (dbUser?.stripeCustomerId) {
+          await stripeClient.customers.del(dbUser.stripeCustomerId);
+        }
+
+        // Delete user from database
+        await db.delete(user).where(eq(user.id, input));
+
+        const cookieStore = await cookies();
         // Delete all cookies
         cookieStore.getAll().forEach((cookie) => {
           cookieStore.delete(cookie.name);
         });
 
-        return response;
+        return { success: true };
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

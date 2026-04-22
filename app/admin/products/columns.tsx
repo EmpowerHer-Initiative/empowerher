@@ -19,7 +19,7 @@ export const paymentColumns: ColumnDef<
 >[] = [
   {
     header: "Product ID",
-    accessorKey: "productId",
+    accessorKey: "id",
     cell: ({ row }) => {
       return <Badge>{row.original.id}</Badge>;
     },
@@ -30,56 +30,13 @@ export const paymentColumns: ColumnDef<
   },
   {
     header: "Price",
-    accessorKey: "price",
+    accessorKey: "priceAmount",
     cell: ({ row }) => {
       return (
         <Badge className="bg-blue-500">${row.original.priceAmount / 100}</Badge>
       );
     },
   },
-  {
-    header: "Slug",
-    accessorKey: "slug",
-  },
-  // {
-  //   header: "isPopular",
-  //   accessorKey: "popular",
-  //   cell: ({ row }) => {
-  //     /* eslint-disable */
-  //     const updateProduct = useMutation(
-  //       useTRPC().payments.updateProduct.mutationOptions({
-  //         onSuccess: () => {
-  //           queryClient.invalidateQueries({
-  //             queryKey: useTRPC().payments.getProducts.queryKey(),
-  //           });
-  //         },
-  //       })
-  //     );
-  //     /* eslint-enable */
-
-  //     return (
-  //       <Select
-  //         defaultValue={row.original.popular ? "true" : "false"}
-  //         onValueChange={(value) => {
-  //           updateProduct.mutate({
-  //             id: row.original.id,
-  //             product: {
-  //               popular: value === "true",
-  //             },
-  //           });
-  //         }}
-  //       >
-  //         <SelectTrigger>
-  //           <SelectValue placeholder="Select a popular" />
-  //         </SelectTrigger>
-  //         <SelectContent>
-  //           <SelectItem value="true">Yes</SelectItem>
-  //           <SelectItem value="false">No</SelectItem>
-  //         </SelectContent>
-  //       </Select>
-  //     );
-  //   },
-  // },
   {
     header: "Is Recurring",
     accessorKey: "isRecurring",
@@ -88,12 +45,13 @@ export const paymentColumns: ColumnDef<
     },
   },
   {
-    header: "Interval Count",
-    accessorKey: "trialIntervalCount",
-  },
-  {
-    header: "Trial Interval",
-    accessorKey: "trialInterval",
+    header: "Interval",
+    accessorKey: "recurringInterval",
+    cell: ({ row }) => (
+      <span className="capitalize">
+        {row.original.recurringInterval ?? "-"}
+      </span>
+    ),
   },
   {
     header: "Created At",

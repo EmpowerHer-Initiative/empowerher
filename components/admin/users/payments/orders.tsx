@@ -27,7 +27,7 @@ export const Orders = () => {
   );
 
   const { data: orders, isPending } = useQuery(
-    trpc.payments.getOrders.queryOptions(
+    trpc.payments.getInvoices.queryOptions(
       {
         userId: user?.id || "",
         email: user?.email || "",
@@ -47,10 +47,6 @@ export const Orders = () => {
     orders?.reduce((acc, order) => {
       if (order.status === "refunded") {
         return acc + order.totalAmount;
-      } else if (order.status === "partially_refunded") {
-        // Assuming 50% refund for partially refunded orders
-        // You may want to adjust this or add a refund_amount field to the schema
-        return acc + order.totalAmount * 0.5;
       }
       return acc;
     }, 0) || 0;
@@ -65,7 +61,11 @@ export const Orders = () => {
           {
             id: "id",
             header: "ID",
-            cell: ({ row }) => <Badge>{row.original.id}</Badge>,
+            cell: ({ row }) => (
+              <Badge className="font-mono text-xs">
+                {row.original.id.slice(0, 16)}…
+              </Badge>
+            ),
           },
           {
             id: "can_request_refund",
@@ -91,7 +91,7 @@ export const Orders = () => {
                 variant={
                   row.original.status === "paid"
                     ? "default"
-                    : row.original.status === "pending"
+                    : row.original.status === "open"
                       ? "secondary"
                       : "destructive"
                 }
@@ -110,7 +110,9 @@ export const Orders = () => {
           {
             id: "billing_reason",
             header: "Billing Reason",
-            cell: ({ row }) => <Badge>{row.original.billingReason}</Badge>,
+            cell: ({ row }) => (
+              <Badge>{row.original.billingReason ?? "-"}</Badge>
+            ),
           },
           {
             id: "created_at",

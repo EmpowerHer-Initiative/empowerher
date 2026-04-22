@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
-import { polarClient } from "@/services/auth/auth";
+import { stripeClient } from "@/services/auth/auth";
+import { deleteCustomer } from "@/services/auth/auth-action";
 import { db } from "@/services/db/index";
-import { orders, products, subscriptions } from "@/services/db/schema";
+import { invoices, products, subscription, user } from "@/services/db/schema";
 import {
   adminProcedure,
   authenticatedProcedure,
@@ -9,37 +10,33 @@ import {
   createTRPCRouter,
 } from "@/services/trpc/init";
 import { featureGuard } from "@/services/trpc/middleware/feature-guard";
-import type { SubscriptionProrationBehavior } from "@polar-sh/sdk/models/components/subscriptionprorationbehavior.js";
 import { TRPCError } from "@trpc/server";
 import { asc, desc, eq, or } from "drizzle-orm";
 import { z } from "zod";
 
 export const paymentsRouter = createTRPCRouter({
+  /**
+   * Fetches active subscriptions for the current user
+   */
   getCustomerState: authenticatedProcedure
     .use(featureGuard("payments"))
     .query(async ({ ctx }) => {
       try {
-        const customerState = await polarClient.customers.getStateExternal({
-          externalId: ctx.session.user.id,
-        });
-
-        const productsList = await db
+        const subs = await db
           .select()
-          .from(products)
-          .where(
-            eq(products.id, customerState.activeSubscriptions?.[0]?.productId)
-          )
-          .limit(1)
-          .then((result) => result[0]);
+          .from(subscription)
+          .where(eq(subscription.referenceId, ctx.session.user.id));
+
+        const activeSub = subs.find(
+          (s) => s.status === "active" || s.status === "trialing"
+        );
 
         return {
-          ...customerState,
-          isUserHaveAccess:
-            customerState.activeSubscriptions?.[0]?.status === "active" ||
-            customerState.activeSubscriptions?.[0]?.status === "trialing",
-          currentProductId: customerState.activeSubscriptions?.[0]?.productId,
-          currentSubscriptionId: customerState.activeSubscriptions?.[0]?.id,
-          currentProduct: productsList,
+          subscriptions: subs,
+          activeSubscription: activeSub ?? null,
+          isUserHaveAccess: !!activeSub,
+          currentPlan: activeSub?.plan ?? null,
+          currentSubscriptionId: activeSub?.id ?? null,
         };
       } catch (error) {
         throw new TRPCError({
@@ -52,9 +49,9 @@ export const paymentsRouter = createTRPCRouter({
         });
       }
     }),
+
   /**
-   * Fetches all products ordered by price amount
-   * @returns Promise<Product[]> - Array of products sorted by price
+   * Fetches all products from local DB, sorted by price
    */
   getProducts: baseProcedure.use(featureGuard("payments")).query(async () => {
     try {
@@ -74,10 +71,7 @@ export const paymentsRouter = createTRPCRouter({
   }),
 
   /**
-   * Updates an existing product
-   * @param id - The ID of the product to update
-   * @param product - Partial product data to update
-   * @returns The updated product
+   * Updates an existing product in local DB
    */
   updateProduct: adminProcedure
     .use(featureGuard("admin.products"))
@@ -87,10 +81,7 @@ export const paymentsRouter = createTRPCRouter({
         product: z.object({
           name: z.string().optional(),
           description: z.string().optional(),
-          trialInterval: z.enum(["day", "week", "month", "year"]).optional(),
-          trialIntervalCount: z.number().optional(),
           popular: z.boolean().optional(),
-          slug: z.string().optional(),
           priceAmount: z.number().optional(),
           priceCurrency: z.string().optional(),
           recurringInterval: z
@@ -125,9 +116,7 @@ export const paymentsRouter = createTRPCRouter({
     }),
 
   /**
-   * Deletes a product by ID
-   * @param id - The ID of the product to delete
-   * @returns The deleted product
+   * Deletes a product from local DB
    */
   deleteProduct: adminProcedure
     .use(featureGuard("admin.products"))
@@ -150,45 +139,59 @@ export const paymentsRouter = createTRPCRouter({
     }),
 
   /**
-   * Creates a checkout session for a product
-   * @param productId - The ID of the product to checkout
-   * @param successUrl - Optional custom success URL
-   * @param discountId - Optional discount code ID
-   * @returns Checkout session response
+   * Creates a Stripe checkout session
    */
   createCheckout: authenticatedProcedure
     .use(featureGuard("payments"))
     .input(
       z.object({
-        productId: z.string(),
+        priceIds: z.array(z.string()).min(1),
         successUrl: z.string().optional(),
-        discountId: z.string().optional(),
+        cancelUrl: z.string().optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {
       try {
-        const { productId, successUrl, discountId } = input;
+        const { priceIds, successUrl, cancelUrl } = input;
 
-        const checkoutIdPlaceholder = "{CHECKOUT_ID}";
-        let url: string;
-        if (successUrl) {
-          const delimiter = successUrl.includes("?") ? "&" : "?";
-          url = `${successUrl}${delimiter}checkout_id=${checkoutIdPlaceholder}`;
-        } else {
-          const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(
-            /\/$/,
-            ""
-          );
-          url = `${base}/success?checkout_id=${checkoutIdPlaceholder}`;
+        // Get or create Stripe customer ID
+        const dbUser = await db
+          .select()
+          .from(user)
+          .where(eq(user.id, ctx.session.user.id))
+          .limit(1)
+          .then((res) => res[0]);
+
+        let customerId = dbUser?.stripeCustomerId;
+
+        if (!customerId) {
+          const customer = await stripeClient.customers.create({
+            email: ctx.session.user.email,
+            name: ctx.session.user.name,
+            metadata: { userId: ctx.session.user.id },
+          });
+          customerId = customer.id;
+          await db
+            .update(user)
+            .set({ stripeCustomerId: customer.id })
+            .where(eq(user.id, ctx.session.user.id));
         }
 
-        const response = await polarClient.checkouts.create({
-          products: [productId],
-          externalCustomerId: ctx.session.user.id,
-          successUrl: url,
-          discountId: discountId ?? undefined,
+        const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/$/, "");
+
+        const session = await stripeClient.checkout.sessions.create({
+          customer: customerId,
+          mode: "subscription",
+          line_items: priceIds.map((id) => ({ price: id, quantity: 1 })),
+          success_url: successUrl || `${base}/success`,
+          cancel_url: cancelUrl || `${base}/`,
         });
-        return response;
+
+        if (!session.url) {
+          throw new Error("Failed to create checkout session URL");
+        }
+
+        return { url: session.url };
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -202,94 +205,69 @@ export const paymentsRouter = createTRPCRouter({
     }),
 
   /**
-   * Retrieves a checkout session by ID
-   * @param checkoutId - The ID of the checkout session
-   * @returns Promise<CheckoutSession> - Checkout session data
+   * Fetches invoices for a specific user by user ID or email
    */
-  getCheckoutSession: baseProcedure
+  getInvoices: authenticatedProcedure
     .use(featureGuard("payments"))
-    .input(z.string())
+    .input(
+      z.object({
+        userId: z.string(),
+        email: z.string(),
+      })
+    )
     .query(async ({ input }) => {
       try {
-        const response = await polarClient.checkouts.get({
-          id: input,
+        const { userId, email } = input;
+        const invoicesList = await db
+          .select()
+          .from(invoices)
+          .where(or(eq(invoices.userId, userId), eq(invoices.email, email)))
+          .orderBy(desc(invoices.createdAt));
+
+        return invoicesList;
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message:
+            error instanceof Error ? error.message : "Failed to fetch invoices",
+          cause: error,
         });
-        return response;
+      }
+    }),
+
+  /**
+   * Fetches subscriptions for a specific user by user ID
+   */
+  getSubscriptions: authenticatedProcedure
+    .use(featureGuard("payments"))
+    .input(
+      z.object({
+        userId: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        const subs = await db
+          .select()
+          .from(subscription)
+          .where(eq(subscription.referenceId, input.userId))
+          .orderBy(desc(subscription.periodStart));
+
+        return subs;
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message:
             error instanceof Error
               ? error.message
-              : "Failed to get checkout session",
+              : "Failed to fetch subscriptions",
           cause: error,
         });
       }
     }),
 
   /**
-   * Switches a subscription to a different product/plan
-   * @param subscriptionId - The ID of the subscription to update
-   * @param toProductId - The ID of the new product/plan
-   * @param prorationBehavior - Optional proration behavior
-   * @returns Response from the subscription update
-   */
-  switchPlan: authenticatedProcedure
-    .use(featureGuard("payments"))
-    .input(
-      z.object({
-        subscriptionId: z.string(),
-        toProductId: z.string(),
-        prorationBehavior: z
-          .enum([
-            "prorate",
-            "invoice",
-          ] as const satisfies readonly SubscriptionProrationBehavior[])
-          .optional()
-          .default("prorate"),
-      })
-    )
-    .mutation(async ({ input }) => {
-      try {
-        const { subscriptionId, toProductId, prorationBehavior } = input;
-
-        // Fetch the current subscription to check its status
-        const subscription = await polarClient.subscriptions.get({
-          id: subscriptionId,
-        });
-
-        // Check if the subscription is in trial period
-        if (subscription.status === "trialing") {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message:
-              "Cannot switch plans while subscription is in trial period. Please wait until your trial ends or cancel and start a new subscription.",
-          });
-        }
-
-        const response = await polarClient.subscriptions.update({
-          id: subscriptionId,
-          subscriptionUpdate: {
-            productId: toProductId,
-            prorationBehavior:
-              prorationBehavior as SubscriptionProrationBehavior,
-          },
-        });
-        return response;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error ? error.message : "Failed to switch plan",
-          cause: error,
-        });
-      }
-    }),
-
-  /**
-   * Deletes a customer and clears all cookies
-   * @param userId - The ID of the user/customer to delete
-   * @returns Response from the customer deletion
+   * Deletes a customer from Stripe and clears all cookies
    */
   deleteCustomer: authenticatedProcedure
     .use(featureGuard("payments"))
@@ -297,11 +275,20 @@ export const paymentsRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       try {
         const cookieStore = await cookies();
-        await polarClient.customers.deleteExternal({
-          externalId: input,
-        });
 
-        // Delete all cookies
+        const dbUser = await db
+          .select()
+          .from(user)
+          .where(eq(user.id, input))
+          .limit(1)
+          .then((res) => res[0]);
+
+        if (dbUser?.stripeCustomerId) {
+          await stripeClient.customers.del(dbUser.stripeCustomerId);
+        }
+
+        await deleteCustomer(dbUser?.email ?? "");
+
         cookieStore.getAll().forEach((cookie) => {
           cookieStore.delete(cookie.name);
         });
@@ -320,95 +307,23 @@ export const paymentsRouter = createTRPCRouter({
     }),
 
   /**
-   * Fetches orders for a specific user by user ID or email
-   * @param userId - The ID of the user to get orders for
-   * @param email - The email of the user to get orders for
-   * @returns Promise<Order[]> - Array of orders sorted by creation date (newest first)
+   * Public: lists active products from local DB for pricing pages
    */
-  getOrders: authenticatedProcedure
-    .use(featureGuard("payments"))
-    .input(
-      z.object({
-        userId: z.string(),
-        email: z.string(),
-      })
-    )
-    .query(async ({ input }) => {
-      try {
-        const { userId, email } = input;
-        const ordersList = await db
-          .select()
-          .from(orders)
-          .where(or(eq(orders.userId, userId), eq(orders.email, email)))
-          .orderBy(desc(orders.createdAt));
-
-        return ordersList;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error ? error.message : "Failed to fetch orders",
-          cause: error,
-        });
-      }
-    }),
-
-  /**
-   * Fetches subscriptions for a specific user by user ID
-   * @param userId - The ID of the user to get subscriptions for
-   * @returns Promise<Subscription[]> - Array of subscriptions sorted by creation date (newest first)
-   */
-  getSubscriptions: authenticatedProcedure
-    .use(featureGuard("payments"))
-    .input(
-      z.object({
-        userId: z.string(),
-      })
-    )
-    .query(async ({ input }) => {
-      try {
-        const { userId } = input;
-
-        const subscriptionsList = await db
-          .select()
-          .from(subscriptions)
-          .where(eq(subscriptions.userId, userId))
-          .orderBy(desc(subscriptions.createdAt));
-
-        return subscriptionsList;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to fetch subscriptions",
-          cause: error,
-        });
-      }
-    }),
-
-  /**
-   * Generates a portal link for a customer
-   * @returns Promise<CustomerSession> - Customer session data
-   */
-  generatePortalLink: authenticatedProcedure
-    .use(featureGuard("payments"))
-    .mutation(async ({ ctx }) => {
-      try {
-        const portalLink = await polarClient.customerSessions.create({
-          externalCustomerId: ctx.session.user.id,
-        });
-        return portalLink;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to generate portal link",
-          cause: error,
-        });
-      }
-    }),
+  listProducts: baseProcedure.use(featureGuard("payments")).query(async () => {
+    try {
+      const productsList = await db
+        .select()
+        .from(products)
+        .where(eq(products.isArchived, false))
+        .orderBy(asc(products.priceAmount));
+      return productsList;
+    } catch (error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message:
+          error instanceof Error ? error.message : "Failed to list products",
+        cause: error,
+      });
+    }
+  }),
 });

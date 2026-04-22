@@ -1,4 +1,4 @@
-import { polarClient } from "@/services/auth/auth";
+import { stripeClient } from "@/services/auth/auth";
 import {
   adminProcedure,
   baseProcedure,
@@ -6,60 +6,70 @@ import {
 } from "@/services/trpc/init";
 import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { TRPCError } from "@trpc/server";
-import { isPast } from "date-fns";
 import { z } from "zod";
 
-async function getAllDiscounts() {
-  try {
-    const response = await polarClient.discounts.list({});
-    return response.result.items;
-  } catch (error) {
-    throw new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
-      message:
-        error instanceof Error ? error.message : "Failed to fetch discounts",
-      cause: error,
-    });
-  }
-}
-
 export const discountsRouter = createTRPCRouter({
-  getAll: adminProcedure.use(featureGuard("discounts")).query(getAllDiscounts),
+  getAll: adminProcedure.use(featureGuard("discounts")).query(async () => {
+    try {
+      const promotionCodes = await stripeClient.promotionCodes.list({
+        limit: 50,
+        expand: ["data.coupon"],
+      });
+      return promotionCodes.data;
+    } catch (error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Failed to fetch promotion codes",
+        cause: error,
+      });
+    }
+  }),
+
   verifyCode: baseProcedure
     .use(featureGuard("discounts"))
     .input(z.object({ code: z.string() }))
     .query(async ({ input }) => {
       try {
-        const discounts = await getAllDiscounts();
+        const promotionCodes = await stripeClient.promotionCodes.list({
+          code: input.code,
+          active: true,
+          limit: 1,
+        });
 
-        const discount = discounts?.find(
-          (discount) =>
-            discount.code?.toLowerCase() === input.code?.toLowerCase()
-        );
-
-        if (!discount) {
+        const promoCode = promotionCodes.data[0];
+        if (!promoCode) {
           throw new TRPCError({
             code: "NOT_FOUND",
-            message: "Discount not found",
+            message: "Discount code not found",
           });
         }
 
+        // Check expiration
         if (
-          discount.maxRedemptions &&
-          discount.redemptionsCount >= discount.maxRedemptions
+          promoCode.expires_at &&
+          new Date(promoCode.expires_at * 1000) < new Date()
         ) {
           throw new TRPCError({
             code: "BAD_REQUEST",
-            message: "Discount has reached the maximum number of redemptions",
-          });
-        } else if (discount.endsAt && isPast(discount.endsAt)) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Discount has expired",
+            message: "Discount code has expired",
           });
         }
 
-        return discount;
+        // Check max redemptions
+        if (
+          promoCode.max_redemptions &&
+          promoCode.times_redeemed >= promoCode.max_redemptions
+        ) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Discount code has reached the maximum number of uses",
+          });
+        }
+
+        return promoCode;
       } catch (error) {
         throw new TRPCError({
           code:
@@ -67,7 +77,7 @@ export const discountsRouter = createTRPCRouter({
           message:
             error instanceof TRPCError
               ? error.message
-              : "Failed to verify discount",
+              : "Failed to verify discount code",
           cause: error instanceof TRPCError ? error.cause : undefined,
         });
       }

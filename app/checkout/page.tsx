@@ -15,15 +15,15 @@ export default function CheckoutPage() {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const productId = searchParams.get("productId");
+  const priceIds = searchParams.get("priceIds")?.split(",").filter(Boolean);
   const { mutate: checkout, isError } = useCheckout();
 
   useEffect(() => {
-    if (!productId) {
+    if (!priceIds?.length) {
       router.replace("/");
       return;
     }
-    checkout({ productId });
+    checkout({ priceIds });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -39,7 +39,7 @@ export default function CheckoutPage() {
     );
   }
 
-  if (!productId) return null;
+  if (!priceIds?.length) return null;
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-4">

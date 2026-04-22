@@ -1,31 +1,18 @@
-import { Fragment, useState } from "react";
+"use client";
+
 import {
   useCheckout,
   useGetCustomerState,
   useSwitchPlan,
 } from "@/services/auth/hooks/use-payments";
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
-import { queryClient, useTRPC } from "@/services/trpc/client";
-import type { RouterOutputs } from "@/services/trpc/routers/_app";
+import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
-import { addMonths, addYears, format, formatDistanceToNow } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 
-import { cn } from "@/lib/utils";
-
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/data-table";
 
 export const BillingSubscriptions = () => {
@@ -41,32 +28,6 @@ export const BillingSubscriptions = () => {
       }
     )
   );
-  const getProducts = useQuery(trpc.payments.getProducts.queryOptions());
-
-  // Helper function to get next billing date
-  const getNextBillingDate = (
-    subscription: RouterOutputs["payments"]["getSubscriptions"][number]
-  ) => {
-    if (!subscription.startedAt) return null;
-
-    const startDate = new Date(subscription.startedAt);
-    const interval = subscription.recurringInterval;
-
-    if (interval === "month") {
-      return addMonths(startDate, 1);
-    } else if (interval === "year") {
-      return addYears(startDate, 1);
-    }
-    return null;
-  };
-
-  // Helper function to format currency
-  const formatCurrency = (amount: number, currency: string = "usd") => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: currency.toUpperCase(),
-    }).format(amount / 100); // Assuming amount is in cents
-  };
 
   return (
     <Card>
@@ -74,28 +35,23 @@ export const BillingSubscriptions = () => {
         <CardTitle>Subscriptions</CardTitle>
       </CardHeader>
       <DataTable
-        isLoading={isPending || getProducts.isPending}
+        isLoading={isPending}
         columns={[
           {
             id: "plan",
             header: "Plan",
-            cell: ({ row }) => {
-              const product = getProducts.data?.find(
-                (product) => product.id === row.original.productId
-              );
-              return (
-                <div className="flex flex-col">
-                  <Badge variant="outline" className="w-fit">
-                    {product?.name.replace("month", "").replace("year", "")}
+            cell: ({ row }) => (
+              <div className="flex flex-col">
+                <Badge variant="outline" className="w-fit capitalize">
+                  {row.original.plan}
+                </Badge>
+                {row.original.status === "trialing" && (
+                  <Badge variant="secondary" className="mt-1 w-fit text-xs">
+                    Trial
                   </Badge>
-                  {row.original.status === "trialing" && (
-                    <Badge variant="secondary" className="mt-1 w-fit text-xs">
-                      Trial
-                    </Badge>
-                  )}
-                </div>
-              );
-            },
+                )}
+              </div>
+            ),
           },
           {
             id: "status",
@@ -116,32 +72,27 @@ export const BillingSubscriptions = () => {
             ),
           },
           {
-            id: "amount",
-            header: "Amount",
+            id: "interval",
+            header: "Interval",
             cell: ({ row }) => (
-              <div className="flex flex-col">
-                <span className="font-medium">
-                  {formatCurrency(row.original.amount, row.original.currency)}
-                </span>
-                <span className="text-muted-foreground text-sm">
-                  /{row.original.recurringInterval}
-                </span>
-              </div>
+              <span className="text-sm capitalize">
+                {row.original.billingInterval ?? "-"}
+              </span>
             ),
           },
           {
-            id: "next_billing",
+            id: "period_end",
             header: "Next Billing",
             cell: ({ row }) => {
-              const nextBilling = getNextBillingDate(row.original);
+              const end = row.original.periodEnd;
               return (
                 <span className="flex flex-col">
                   <span className="text-sm">
-                    {nextBilling ? format(nextBilling, "MMM dd, yyyy") : "-"}
+                    {end ? format(new Date(end), "MMM dd, yyyy") : "-"}
                   </span>
                   <span className="text-muted-foreground text-xs">
-                    {nextBilling
-                      ? formatDistanceToNow(nextBilling, { addSuffix: true })
+                    {end
+                      ? formatDistanceToNow(new Date(end), { addSuffix: true })
                       : "-"}
                   </span>
                 </span>
@@ -161,17 +112,6 @@ export const BillingSubscriptions = () => {
               </Badge>
             ),
           },
-          {
-            id: "created_at",
-            header: "Created",
-            cell: ({ row }) => (
-              <span className="text-sm">
-                {row.original.createdAt
-                  ? format(row.original.createdAt, "MMM dd, yyyy")
-                  : "-"}
-              </span>
-            ),
-          },
         ]}
         data={subscriptions || []}
       />
@@ -181,154 +121,34 @@ export const BillingSubscriptions = () => {
 };
 
 const UpgradeSection = () => {
-  const trpc = useTRPC();
-  const getProducts = useQuery(trpc.payments.getProducts.queryOptions());
-
-  return (
-    <>
-      <CardHeader>Upgrade</CardHeader>
-      <CardContent className="p-0">
-        {getProducts.data
-          ?.filter((product) => !product.isArchived)
-          .map((product) => (
-            <Fragment key={product.id}>
-              <EachProduct product={product} />
-              <Separator />
-            </Fragment>
-          ))}
-      </CardContent>
-    </>
-  );
-};
-
-interface EachProductProps {
-  product: RouterOutputs["payments"]["getProducts"][number];
-}
-
-const EachProduct = ({ product }: EachProductProps) => {
-  const [open, setOpen] = useState(false);
-  const [immediateUpdate, setImmediateUpdate] = useState(false);
-
   const { data } = useGetCustomerState();
   const checkout = useCheckout();
   const switchPlan = useSwitchPlan();
 
-  // Determine if the button should say "Upgrade" or "Downgrade" based on price comparison
-  const trpc = useTRPC();
-  const products = useQuery(trpc.payments.getProducts.queryOptions());
-  const filteredProducts = products.data?.filter((p) => !p.isArchived) || [];
-  const currentProduct = filteredProducts.find(
-    (p) => p.id === data?.currentProductId
-  );
-
-  // If user has no current subscription, it's always an upgrade
-  // If user has a subscription, compare prices
-  const isDowngrade = currentProduct
-    ? product.priceAmount < currentProduct.priceAmount
-    : false;
-
-  const handleUpgrade = (
-    product: RouterOutputs["payments"]["getProducts"][number]
-  ) => {
-    if (data?.isUserHaveAccess) {
-      switchPlan.mutate(
-        {
-          subscriptionId: data?.currentSubscriptionId || "",
-          toProductId: product.id,
-          prorationBehavior: immediateUpdate ? "invoice" : "prorate",
-        },
-        {
-          onSuccess: () => {
-            setOpen(false);
-            queryClient.invalidateQueries({
-              queryKey: trpc.payments.getOrders.queryKey(),
-            });
-          },
-        }
-      );
-    } else {
-      checkout.mutate({
-        productId: product.id,
-        successUrl: "/portfolio",
-      });
-    }
+  const handleUpgrade = (priceId: string) => {
+    checkout.mutate({ priceIds: [priceId] });
   };
 
   return (
-    <div key={product.id} className="flex items-center justify-between p-6">
-      <div className="flex flex-col">
-        <h3>
-          {product.name}{" "}
-          <span className="text-muted-foreground text-sm">
-            {product.priceAmount / 100}/{product.recurringInterval}
-          </span>
-        </h3>
-        <p className="text-muted-foreground text-sm whitespace-pre-line">
-          {product.description}
+    <>
+      <CardHeader>Upgrade</CardHeader>
+      <CardContent>
+        <p className="text-muted-foreground text-sm">
+          Configure your plans in <code>services/auth/auth.ts</code> under the
+          Stripe plugin&apos;s <code>subscription.plans</code> array with your
+          Stripe price IDs.
         </p>
-      </div>
-      {data?.currentProductId !== product.id ? (
-        <AlertDialog open={open} onOpenChange={setOpen}>
-          <AlertDialogTrigger
-            render={<Button>{isDowngrade ? "Downgrade" : "Upgrade"}</Button>}
-          />
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                {isDowngrade ? "Downgrade" : "Upgrade"}
-              </AlertDialogTitle>
-            </AlertDialogHeader>
-            <div className={cn("space-y-4", isDowngrade && "opacity-50")}>
-              <p className="text-muted-foreground text-sm">
-                Choose when you want your plan to be updated:
-              </p>
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="immediate-update"
-                  checked={immediateUpdate}
-                  onCheckedChange={(checked) =>
-                    setImmediateUpdate(checked as boolean)
-                  }
-                  disabled={isDowngrade}
-                />
-                <label
-                  htmlFor="immediate-update"
-                  className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Apply changes immediately
-                </label>
-              </div>
-              <p className="text-muted-foreground text-xs">
-                {immediateUpdate
-                  ? "Your plan will be updated immediately and you'll be charged the prorated amount."
-                  : "Your plan will be updated at your next billing cycle. No immediate charges."}
-              </p>
-            </div>
-            <AlertDialogFooter>
-              <AlertDialogCancel
-                render={<Button variant="outline">Cancel</Button>}
-              />
-              <Button onClick={() => handleUpgrade(product)}>
-                {isDowngrade ? "Downgrade" : "Upgrade"}
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      ) : (
-        <Button
-          variant={
-            data?.currentProductId === product.id ? "outline" : undefined
-          }
-          disabled={data?.currentProductId === product.id}
-          onClick={() => handleUpgrade(product)}
-        >
-          {data?.currentProductId === product.id
-            ? "Current Plan"
-            : data?.isUserHaveAccess
-              ? "Upgrade"
-              : "Purchase"}
-        </Button>
-      )}
-    </div>
+        {/* Example buttons — replace with your actual plan config:
+        <div className="mt-4 flex gap-2">
+          <Button onClick={() => handleUpgrade("basic")}>
+            {data?.currentPlan === "basic" ? "Current Plan" : "Basic"}
+          </Button>
+          <Button onClick={() => handleUpgrade("pro")}>
+            {data?.currentPlan === "pro" ? "Current Plan" : "Pro"}
+          </Button>
+        </div>
+        */}
+      </CardContent>
+    </>
   );
 };

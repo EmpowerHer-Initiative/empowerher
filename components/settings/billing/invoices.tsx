@@ -11,7 +11,7 @@ export const BillingInvoices = () => {
 
   const trpc = useTRPC();
   const { data: orders } = useQuery(
-    trpc.payments.getOrders.queryOptions(
+    trpc.payments.getInvoices.queryOptions(
       {
         userId: user?.user.id || "",
         email: user?.user.email || "",
@@ -51,61 +51,68 @@ export const BillingInvoices = () => {
               : "Time pending";
 
             return (
-              <div
+              <a
                 key={order.id}
-                className="bg-primary shadow-dialog aspect-16/8 rounded-xl p-4 text-white"
+                href={order.hostedInvoiceUrl ?? undefined}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
               >
-                <div className="relative z-10 flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-xs tracking-[0.2em] text-white/70 uppercase">
-                      Invoice
-                    </p>
-                    <p className="text-sm font-semibold">
-                      {order.invoiceNumber || "Pending"}
-                    </p>
+                <div className="bg-primary shadow-dialog aspect-16/8 rounded-xl p-4 text-white transition-opacity hover:opacity-90">
+                  <div className="relative z-10 flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-xs tracking-[0.2em] text-white/70 uppercase">
+                        Invoice
+                      </p>
+                      <p className="text-sm font-semibold">
+                        {order.invoiceNumber || "Pending"}
+                      </p>
+                    </div>
+                    <Badge
+                      variant={
+                        order.totalAmount < 0
+                          ? "secondary"
+                          : order.status === "paid"
+                            ? "default"
+                            : "destructive"
+                      }
+                    >
+                      {order.totalAmount < 0 ? "refunded" : order.status}
+                    </Badge>
                   </div>
-                  <Badge
-                    variant={
-                      order.totalAmount < 0
-                        ? "secondary"
-                        : order.status === "paid"
-                          ? "default"
-                          : "destructive"
-                    }
-                  >
-                    {order.totalAmount < 0 ? "refunded" : order.status}
-                  </Badge>
+                  <div className="relative z-10 mt-4 grid grid-cols-2 gap-3 text-xs text-white/80">
+                    <div>
+                      <p className="text-white/60">Amount</p>
+                      <code className="text-sm font-semibold text-white">
+                        {isRefund
+                          ? `-$${Math.abs(amount).toFixed(2)}`
+                          : `$${amount.toFixed(2)}`}
+                      </code>
+                    </div>
+                    <div>
+                      <p className="text-white/60">Date</p>
+                      <p className="text-sm font-semibold text-white">
+                        {createdAtLabel}
+                      </p>
+                      <p className="text-[11px] text-white/60">{timeLabel}</p>
+                    </div>
+                    <div>
+                      <p className="text-white/60">Product</p>
+                      <code className="text-sm font-semibold text-white">
+                        {order.productId
+                          ? order.productId.slice(0, 10) + "..."
+                          : "—"}
+                      </code>
+                    </div>
+                    <div>
+                      <p className="text-white/60">Status note</p>
+                      <p className="text-sm font-semibold text-white">
+                        {isRefund ? "Refund processed" : "Purchase confirmed"}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div className="relative z-10 mt-4 grid grid-cols-2 gap-3 text-xs text-white/80">
-                  <div>
-                    <p className="text-white/60">Amount</p>
-                    <code className="text-sm font-semibold text-white">
-                      {isRefund
-                        ? `-$${Math.abs(amount).toFixed(2)}`
-                        : `$${amount.toFixed(2)}`}
-                    </code>
-                  </div>
-                  <div>
-                    <p className="text-white/60">Date</p>
-                    <p className="text-sm font-semibold text-white">
-                      {createdAtLabel}
-                    </p>
-                    <p className="text-[11px] text-white/60">{timeLabel}</p>
-                  </div>
-                  <div>
-                    <p className="text-white/60">Product</p>
-                    <code className="text-sm font-semibold text-white">
-                      {order.productId.slice(0, 10) + "..." || "—"}
-                    </code>
-                  </div>
-                  <div>
-                    <p className="text-white/60">Status note</p>
-                    <p className="text-sm font-semibold text-white">
-                      {isRefund ? "Refund processed" : "Purchase confirmed"}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              </a>
             );
           })
         )}

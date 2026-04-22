@@ -12,7 +12,7 @@ const links: { label: string; href: string; feature?: FeatureKey }[] = [
   { label: "Products", href: "/admin/products", feature: "admin.products" },
   {
     label: "Subscriptions",
-    href: "https://sandbox.polar.sh/dashboard",
+    href: "https://dashboard.stripe.com",
     feature: "payments",
   },
   { label: "Media", href: "/admin/media", feature: "admin.media" },

@@ -122,7 +122,7 @@ export const AdminOverview = () => {
 type RecentOrder = {
   id: string;
   email: string;
-  billingName: string;
+  billingName: string | null;
   totalAmount: number;
   status: string;
   createdAt: string | null;

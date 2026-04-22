@@ -4,7 +4,7 @@
 // page titles, email templates, navbar/footer, landing page content, and more.
 //
 // ONBOARDING CHECKLIST — things to update beyond this file:
-// □ .env — database, auth secret, OAuth, Polar/Stripe, AWS SES
+// □ .env — database, auth secret, OAuth, Stripe, AWS SES
 // □ components/icons/logo.tsx — replace SVG paths with client logo
 // □ public/og-image.png — social preview image (1200×630)
 // □ public/favicon.ico — client favicon

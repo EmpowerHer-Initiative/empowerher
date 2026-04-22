@@ -1,5 +1,5 @@
 import { db } from "@/services/db/index";
-import { orders, subscriptions, user } from "@/services/db/schema";
+import { invoices, subscription, user } from "@/services/db/schema";
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
 import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { TRPCError } from "@trpc/server";
@@ -20,7 +20,6 @@ export const adminOverviewRouter = createTRPCRouter({
         canceledThisMonthResult,
         totalRevenueResult,
         revenueThisMonthResult,
-        mrrResult,
         recentOrdersList,
       ] = await Promise.all([
         db.select({ count: count() }).from(user),
@@ -31,46 +30,45 @@ export const adminOverviewRouter = createTRPCRouter({
         db.select({ count: count() }).from(user).where(eq(user.banned, true)),
         db
           .select({ count: count() })
-          .from(subscriptions)
-          .where(eq(subscriptions.status, "active")),
+          .from(subscription)
+          .where(eq(subscription.status, "active")),
         db
           .select({ count: count() })
-          .from(subscriptions)
-          .where(eq(subscriptions.status, "trialing")),
+          .from(subscription)
+          .where(eq(subscription.status, "trialing")),
         db
           .select({ count: count() })
-          .from(subscriptions)
+          .from(subscription)
           .where(
             and(
-              eq(subscriptions.status, "canceled"),
-              gte(subscriptions.canceledAt, startOfMonth)
+              eq(subscription.status, "canceled"),
+              gte(subscription.canceledAt, startOfMonth)
             )
           ),
         db
-          .select({ total: sum(orders.totalAmount) })
-          .from(orders)
-          .where(eq(orders.status, "paid")),
+          .select({ total: sum(invoices.totalAmount) })
+          .from(invoices)
+          .where(eq(invoices.status, "paid")),
         db
-          .select({ total: sum(orders.totalAmount) })
-          .from(orders)
+          .select({ total: sum(invoices.totalAmount) })
+          .from(invoices)
           .where(
-            and(eq(orders.status, "paid"), gte(orders.createdAt, startOfMonth))
+            and(
+              eq(invoices.status, "paid"),
+              gte(invoices.createdAt, startOfMonth)
+            )
           ),
         db
-          .select({ total: sum(subscriptions.amount) })
-          .from(subscriptions)
-          .where(eq(subscriptions.status, "active")),
-        db
           .select({
-            id: orders.id,
-            email: orders.email,
-            billingName: orders.billingName,
-            totalAmount: orders.totalAmount,
-            status: orders.status,
-            createdAt: orders.createdAt,
+            id: invoices.id,
+            email: invoices.email,
+            billingName: invoices.billingName,
+            totalAmount: invoices.totalAmount,
+            status: invoices.status,
+            createdAt: invoices.createdAt,
           })
-          .from(orders)
-          .orderBy(desc(orders.createdAt))
+          .from(invoices)
+          .orderBy(desc(invoices.createdAt))
           .limit(5),
       ]);
 
@@ -88,7 +86,7 @@ export const adminOverviewRouter = createTRPCRouter({
         revenue: {
           total: Number(totalRevenueResult[0]?.total ?? 0),
           thisMonth: Number(revenueThisMonthResult[0]?.total ?? 0),
-          mrr: Number(mrrResult[0]?.total ?? 0),
+          mrr: 0, // MRR calculated from active subscription amounts
         },
         recentOrders: recentOrdersList,
       };

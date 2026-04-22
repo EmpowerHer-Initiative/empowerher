@@ -7,7 +7,7 @@ export const Payments = () => {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Orders</CardTitle>
+          <CardTitle>Invoices</CardTitle>
         </CardHeader>
         <CardContent>
           <Orders />
