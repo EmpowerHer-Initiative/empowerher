@@ -277,6 +277,10 @@ For every file you touch: read it first, keep all existing imports/hooks/logic i
 - Reference `siteConfig` from `@/lib/site` for any brand text (name, description, email)
 - Reference `context/scrape.md` for the client's actual content — headings, copy, descriptions, contact info
 - Reference `context/client.md` for the client's profile summary
+- **Clickable contact info** — whenever address, phone, or email appears anywhere on the site (footer, contact page, landing sections), make them interactive links:
+  - Address → `<a href="https://www.google.com/maps/search/?api=1&query=ENCODED_ADDRESS" target="_blank" rel="noopener noreferrer">` (URL-encode full address for `query` param)
+  - Phone → `<a href="tel:+1XXXXXXXXXX">` (E.164 format in href, formatted display text)
+  - Email → `<a href="mailto:email@example.com">`
 - **Image placeholders with AI prompt button:** When a section needs an image and no real image URL is available from the scrape, create a CSS-only placeholder (geometric patterns, gradient backgrounds, or colored blocks matching the intended dimensions). On each placeholder, add a small button in the top-right corner. When clicked, it toggles a prompt panel beneath the placeholder containing a ready-to-copy AI image generation prompt. The prompt must be contextual — describe the exact image needed for that section, matching the client's industry, brand tone, color palette, and the section's purpose (e.g., "A warm, softly lit photograph of a mosque interior with geometric Islamic patterns on the walls, natural light streaming through arched windows, muted emerald and cream tones, editorial photography style"). Only show this button on placeholders — never on real images. Build this inline in the component (do not modify components/ui/).
 - **ImagePlaceholder component:** Create `components/image-placeholder.tsx` as a reusable "use client" component for all image placeholders. Props: `aspectRatio` (string like "16/9"), `prompt` (the AI image generation prompt), and optional `className`. It renders a placeholder background with a small "AI Prompt" button (top-right). Clicking the button opens a shadcn Dialog showing the aspect ratio badge and the full prompt with a copy button. Use this component wherever a placeholder image is needed. When writing the `prompt` prop value, reference the client's profile from `context/client.md` to ensure the prompt matches their brand, industry, tone, and the specific section context. Always set the `aspectRatio` prop to match the design's intended image dimensions (e.g., "4/3" for landscape, "4/5" for portrait, "1/1" for square, "16/9" for wide). The aspect ratio is displayed in the dialog so the user knows what size to generate.
 
@@ -359,11 +363,11 @@ All navigation content must come directly from `context/scrape.md`.
 
 **Footer** (`components/footer.tsx`):
 - Read "Contact Information" and "Social Media" from `context/scrape.md` or `context/client.md`
-- Update the footer with the client's real:
-  - Address (street, city, state, zip)
-  - Phone number(s)
-  - Email address(es)
-  - Social media links with icons
+- Update the footer with the client's real contact info — all clickable:
+  - Address (street, city, state, zip) — wrap in `<a href="https://www.google.com/maps/search/?api=1&query=ENCODED_ADDRESS" target="_blank" rel="noopener noreferrer">`. URL-encode the full address string for the `query` param using `encodeURIComponent()` at build time or hardcode the encoded string.
+  - Phone number(s) — wrap in `<a href="tel:+1XXXXXXXXXX">` (use E.164 format in href, display formatted number as text)
+  - Email address(es) — wrap in `<a href="mailto:email@example.com">`
+  - Social media links with icons — each links to its URL with `target="_blank"`
 - Update the quick links to match the client's actual pages
 - Keep all existing pathname-based hide logic unchanged
 
