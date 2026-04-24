@@ -1,17 +1,9 @@
 {
+  "auth": true,
+  "payments": true,
+  "storage": true,
   "blog": true,
   "contact": true,
-  "payments": true,
-  "discounts": true,
-  "upload": true,
-  "auth": true,
-  "settings": true,
   "cron": true,
-  "email": true,
-  "products": true,
-  "media": true,
-  "admin": {
-    "enabled": true,
-    "users": true
-  }
+  "email": true
 }

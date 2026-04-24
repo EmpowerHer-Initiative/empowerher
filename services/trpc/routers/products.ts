@@ -56,7 +56,7 @@ export const productsRouter = createTRPCRouter({
    * Updates an existing product in local DB
    */
   update: adminProcedure
-    .use(featureGuard("products"))
+    .use(featureGuard("payments"))
     .input(
       z.object({
         id: z.string(),
@@ -101,7 +101,7 @@ export const productsRouter = createTRPCRouter({
    * Deletes a product from local DB
    */
   delete: adminProcedure
-    .use(featureGuard("products"))
+    .use(featureGuard("payments"))
     .input(z.string())
     .mutation(async ({ input }) => {
       try {

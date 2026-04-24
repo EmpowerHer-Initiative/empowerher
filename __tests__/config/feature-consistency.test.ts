@@ -8,52 +8,34 @@ const config: Record<string, unknown> = JSON.parse(
   readFileSync(resolve(ROOT, "config/config.json"), "utf-8")
 );
 
-// Collect all feature keys from config (top-level + nested)
+// Collect all feature keys from config (all top-level booleans)
 function getConfigKeys(): string[] {
-  const keys: string[] = [];
-  for (const [key, value] of Object.entries(config)) {
-    if (typeof value === "boolean") {
-      keys.push(key);
-    } else if (typeof value === "object" && value !== null) {
-      keys.push(key);
-      for (const [child, childVal] of Object.entries(
-        value as Record<string, unknown>
-      )) {
-        if (child !== "enabled" && typeof childVal === "boolean") {
-          keys.push(`${key}.${child}`);
-        }
-      }
-    }
-  }
-  return keys;
+  return Object.keys(config).filter((key) => typeof config[key] === "boolean");
 }
 
 // Collect all flags referenced in route + tRPC guard maps
-// (same maps as the other test files — single source of truth would be better,
-//  but keeping tests independent is more important)
 const ROUTE_GUARDS: Record<string, string[]> = {
-  auth: ["app/(auth)/layout.tsx"],
+  auth: ["app/(auth)/layout.tsx", "app/(marketing)/settings/layout.tsx"],
   blog: ["app/(marketing)/blog/layout.tsx"],
-  settings: ["app/(marketing)/settings/layout.tsx"],
   contact: ["app/(marketing)/contact/page.tsx"],
-  admin: ["app/admin/layout.tsx"],
-  "admin.users": ["app/admin/users/page.tsx", "app/admin/users/[id]/page.tsx"],
-  products: ["app/admin/products/page.tsx"],
-  media: ["app/admin/media/page.tsx"],
-  payments: ["app/checkout/page.tsx", "app/success/page.tsx"],
+  payments: [
+    "app/checkout/page.tsx",
+    "app/success/page.tsx",
+    "app/admin/products/page.tsx",
+  ],
+  storage: ["app/admin/media/page.tsx"],
   cron: ["app/api/cron/route.ts"],
   email: ["services/email/index.ts"],
 };
 
 const TRPC_GUARDS: Record<string, string[]> = {
   contact: ["services/trpc/routers/contact.ts"],
-  discounts: ["services/trpc/routers/discounts.ts"],
-  payments: ["services/trpc/routers/billing.ts"],
-  products: ["services/trpc/routers/products.ts"],
-  upload: ["services/trpc/routers/files.ts"],
-  admin: ["services/trpc/routers/admin/overview.ts"],
-  media: ["services/trpc/routers/files.ts"],
-  "admin.users": ["services/trpc/routers/users.ts"],
+  payments: [
+    "services/trpc/routers/billing.ts",
+    "services/trpc/routers/discounts.ts",
+    "services/trpc/routers/products.ts",
+  ],
+  storage: ["services/trpc/routers/files.ts"],
 };
 
 const allGuardedFlags = new Set([

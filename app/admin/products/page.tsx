@@ -11,7 +11,7 @@ import { DataTable } from "@/components/data-table";
 import { paymentColumns } from "@/app/admin/products/columns";
 
 export default function ProductsPage() {
-  if (!isFeatureEnabled("products")) notFound();
+  if (!isFeatureEnabled("payments")) notFound();
 
   const trpc = useTRPC();
   const { data, isLoading } = useQuery(trpc.products.listAll.queryOptions());

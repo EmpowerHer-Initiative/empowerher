@@ -10,7 +10,7 @@ Every optional module is listed here with everything it owns. Use this file when
 
 ## Auth
 
-> Core — only remove if the client needs zero authentication.
+> Core — only remove if the client needs zero authentication. Config flag: `auth` — also controls settings page visibility.
 
 **Files**
 
@@ -44,12 +44,13 @@ Every optional module is listed here with everything it owns. Use this file when
 
 ## Payments
 
-> Optional. Remove for clients who don't sell anything.
+> Optional. Remove for clients who don't sell anything. Config flag: `payments` — also controls products, discounts, and billing UI in settings.
 
 **Files**
 
 - `services/trpc/routers/billing.ts` — checkout, subscriptions, invoices, customer
 - `services/trpc/routers/products.ts` — product catalog CRUD
+- `services/trpc/routers/discounts.ts` — promotion code verification
 - `app/checkout/page.tsx`
 - `app/success/page.tsx`
 - `app/admin/products/page.tsx`
@@ -74,28 +75,6 @@ Every optional module is listed here with everything it owns. Use this file when
 **Dependencies**
 
 - `@better-auth/stripe`, `stripe`
-
----
-
-## Admin Panel
-
-> Optional. Remove for clients who manage everything via external tools.
-
-**Files**
-
-- `app/admin/` — entire directory (except `products/` — belongs to Payments)
-- `services/trpc/routers/admin/` — overview stats
-- `components/admin/`
-
-**Touches**
-
-- `app/layout.tsx` — `AdminToolbar` import
-- `components/navbar.tsx` — hides navbar on `/admin` routes
-- `services/trpc/routers/_app.ts` — `adminRouter` import
-
-**Dependencies**
-
-- `@tanstack/react-table`
 
 ---
 
@@ -127,9 +106,9 @@ Every optional module is listed here with everything it owns. Use this file when
 
 ---
 
-## File Uploads (R2)
+## Storage (R2)
 
-> Optional. Remove for clients who don't upload files or images.
+> Optional. Remove for clients who don't upload files or images. Config flag: `storage`.
 
 **Files**
 

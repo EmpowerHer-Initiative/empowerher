@@ -8,13 +8,12 @@ const ROOT = resolve(__dirname, "../..");
 // Add entry when adding featureGuard to a tRPC router.
 const EXPECTED_TRPC_GUARDS: Record<string, string[]> = {
   contact: ["services/trpc/routers/contact.ts"],
-  discounts: ["services/trpc/routers/discounts.ts"],
-  payments: ["services/trpc/routers/billing.ts"],
-  products: ["services/trpc/routers/products.ts"],
-  upload: ["services/trpc/routers/files.ts"],
-  admin: ["services/trpc/routers/admin/overview.ts"],
-  media: ["services/trpc/routers/files.ts"],
-  "admin.users": ["services/trpc/routers/users.ts"],
+  payments: [
+    "services/trpc/routers/billing.ts",
+    "services/trpc/routers/discounts.ts",
+    "services/trpc/routers/products.ts",
+  ],
+  storage: ["services/trpc/routers/files.ts"],
 };
 
 function readFile(relativePath: string): string {

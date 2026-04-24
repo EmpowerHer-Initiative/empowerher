@@ -1,12 +1,10 @@
 "use client";
 
-import { notFound, useParams, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeftIcon, Loader, OctagonAlert } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
-
-import { isFeatureEnabled } from "@/config/features";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -16,8 +14,6 @@ import { Payments } from "./payments";
 import { Profile } from "./profile";
 
 export default function EachOrganization() {
-  if (!isFeatureEnabled("admin.users")) notFound();
-
   const [activeTab, setActiveTab] = useQueryState(
     "tab",
     parseAsString.withDefault("profile")

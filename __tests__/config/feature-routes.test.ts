@@ -7,15 +7,15 @@ const ROOT = resolve(__dirname, "../..");
 // ─── Expected route guards ──────────────────────────────────────────
 // Add entry when adding a new guarded route. Test fails if guard is missing.
 const EXPECTED_GUARDS: Record<string, string[]> = {
-  auth: ["app/(auth)/layout.tsx"],
+  auth: ["app/(auth)/layout.tsx", "app/(marketing)/settings/layout.tsx"],
   blog: ["app/(marketing)/blog/layout.tsx"],
-  settings: ["app/(marketing)/settings/layout.tsx"],
   contact: ["app/(marketing)/contact/page.tsx"],
-  admin: ["app/admin/layout.tsx"],
-  "admin.users": ["app/admin/users/page.tsx", "app/admin/users/[id]/page.tsx"],
-  products: ["app/admin/products/page.tsx"],
-  media: ["app/admin/media/page.tsx"],
-  payments: ["app/checkout/page.tsx", "app/success/page.tsx"],
+  payments: [
+    "app/checkout/page.tsx",
+    "app/success/page.tsx",
+    "app/admin/products/page.tsx",
+  ],
+  storage: ["app/admin/media/page.tsx"],
   cron: ["app/api/cron/route.ts"],
   email: ["services/email/index.ts"],
 };

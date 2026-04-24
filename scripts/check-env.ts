@@ -17,7 +17,7 @@ const FEATURE_ENV_MAP: Record<string, string[]> = {
   auth: ["BETTER_AUTH_SECRET"],
   cron: ["CRON_SECRET"],
   payments: ["STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET"],
-  upload: [
+  storage: [
     "R2_ENDPOINT",
     "R2_ACCESS_KEY_ID",
     "R2_SECRET_ACCESS_KEY",

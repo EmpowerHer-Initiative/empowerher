@@ -1,12 +1,11 @@
 import { db } from "@/services/db/index";
 import { invoices, subscription, user } from "@/services/db/schema";
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
-import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { TRPCError } from "@trpc/server";
 import { and, count, desc, eq, gte, sum } from "drizzle-orm";
 
 export const adminOverviewRouter = createTRPCRouter({
-  getStats: adminProcedure.use(featureGuard("admin")).query(async () => {
+  getStats: adminProcedure.query(async () => {
     try {
       const now = new Date();
       const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);

@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function SettingsLayout({ children }: Props) {
-  if (!isFeatureEnabled("settings")) notFound();
+  if (!isFeatureEnabled("auth")) notFound();
 
   return (
     <div className="mx-auto max-w-3xl gap-8 px-8 pt-20">

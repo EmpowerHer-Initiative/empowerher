@@ -7,7 +7,6 @@ import {
   authenticatedProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
-import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { TRPCError } from "@trpc/server";
 import { count, desc, eq, ilike, or } from "drizzle-orm";
 import { z } from "zod";
@@ -28,27 +27,24 @@ export const usersRouter = createTRPCRouter({
    * @param id - The ID of the user to fetch
    * @returns Promise<User | undefined> - The user with matching ID or undefined if not found
    */
-  get: adminProcedure
-    .use(featureGuard("admin.users"))
-    .input(z.string())
-    .query(async ({ input }) => {
-      try {
-        const userResult = await db
-          .select()
-          .from(user)
-          .where(eq(user.id, input))
-          .limit(1)
-          .then((result) => result[0]);
-        return userResult;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error ? error.message : "Failed to fetch user",
-          cause: error,
-        });
-      }
-    }),
+  get: adminProcedure.input(z.string()).query(async ({ input }) => {
+    try {
+      const userResult = await db
+        .select()
+        .from(user)
+        .where(eq(user.id, input))
+        .limit(1)
+        .then((result) => result[0]);
+      return userResult;
+    } catch (error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message:
+          error instanceof Error ? error.message : "Failed to fetch user",
+        cause: error,
+      });
+    }
+  }),
 
   /**
    * Router for fetching users with pagination, sorting, and search
@@ -59,7 +55,6 @@ export const usersRouter = createTRPCRouter({
    * @returns Promise<User[]> - Array of users matching the filter criteria
    */
   list: adminProcedure
-    .use(featureGuard("admin.users"))
     .input(
       z.object({
         page: z.number().optional(),
@@ -133,7 +128,7 @@ export const usersRouter = createTRPCRouter({
    * Gets the total count of users in the database
    * @returns Promise<{count: number}[]> - Array containing the total user count
    */
-  count: adminProcedure.use(featureGuard("admin.users")).query(async () => {
+  count: adminProcedure.query(async () => {
     try {
       const countResult = await db.select({ count: count() }).from(user);
       return countResult;
@@ -202,7 +197,6 @@ export const usersRouter = createTRPCRouter({
    * @returns Promise<User | undefined> - The updated user or undefined if not found
    */
   adminUpdate: adminProcedure
-    .use(featureGuard("admin.users"))
     .input(
       z
         .object({
@@ -261,7 +255,6 @@ export const usersRouter = createTRPCRouter({
    * @returns Promise<boolean> - Result of the password change operation
    */
   updatePassword: adminProcedure
-    .use(featureGuard("admin.users"))
     .input(
       z.object({
         userId: z.string(),
@@ -322,49 +315,44 @@ export const usersRouter = createTRPCRouter({
    * @param id - The ID of the user to delete
    * @returns Promise<boolean> - Result of the delete operation
    */
-  delete: adminProcedure
-    .use(featureGuard("admin.users"))
-    .input(z.string())
-    .mutation(async ({ input, ctx }) => {
-      try {
-        if (ctx.session.user.id === input) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "You cannot delete your own account",
-          });
-        }
-
-        // Find user to get Stripe customer ID
-        const dbUser = await db
-          .select()
-          .from(user)
-          .where(eq(user.id, input))
-          .limit(1)
-          .then((res) => res[0]);
-
-        if (dbUser?.stripeCustomerId) {
-          await stripeClient.customers.del(dbUser.stripeCustomerId);
-        }
-
-        // Delete user from database
-        await db.delete(user).where(eq(user.id, input));
-
-        const cookieStore = await cookies();
-        // Delete all cookies
-        cookieStore.getAll().forEach((cookie) => {
-          cookieStore.delete(cookie.name);
-        });
-
-        return { success: true };
-      } catch (error) {
+  delete: adminProcedure.input(z.string()).mutation(async ({ input, ctx }) => {
+    try {
+      if (ctx.session.user.id === input) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to delete customer",
-          cause: error,
+          code: "BAD_REQUEST",
+          message: "You cannot delete your own account",
         });
       }
-    }),
+
+      // Find user to get Stripe customer ID
+      const dbUser = await db
+        .select()
+        .from(user)
+        .where(eq(user.id, input))
+        .limit(1)
+        .then((res) => res[0]);
+
+      if (dbUser?.stripeCustomerId) {
+        await stripeClient.customers.del(dbUser.stripeCustomerId);
+      }
+
+      // Delete user from database
+      await db.delete(user).where(eq(user.id, input));
+
+      const cookieStore = await cookies();
+      // Delete all cookies
+      cookieStore.getAll().forEach((cookie) => {
+        cookieStore.delete(cookie.name);
+      });
+
+      return { success: true };
+    } catch (error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message:
+          error instanceof Error ? error.message : "Failed to delete customer",
+        cause: error,
+      });
+    }
+  }),
 });

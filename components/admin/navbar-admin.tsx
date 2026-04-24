@@ -8,14 +8,14 @@ import { cn } from "@/lib/utils";
 
 const links: { label: string; href: string; feature?: FeatureKey }[] = [
   { label: "Overview", href: "/admin" },
-  { label: "Users", href: "/admin/users", feature: "admin.users" },
-  { label: "Products", href: "/admin/products", feature: "products" },
+  { label: "Users", href: "/admin/users" },
+  { label: "Products", href: "/admin/products", feature: "payments" },
   {
     label: "Subscriptions",
     href: "https://dashboard.stripe.com",
     feature: "payments",
   },
-  { label: "Media", href: "/admin/media", feature: "media" },
+  { label: "Media", href: "/admin/media", feature: "storage" },
 ];
 
 export const NavbarAdmin = () => {
