@@ -7,6 +7,7 @@ const ROOT = resolve(__dirname, "../..");
 // ─── Expected tRPC feature guards ───────────────────────────────────
 // Add entry when adding featureGuard to a tRPC router.
 const EXPECTED_TRPC_GUARDS: Record<string, string[]> = {
+  auth: ["services/trpc/routers/auth.ts", "services/trpc/routers/users.ts"],
   contact: ["services/trpc/routers/contact.ts"],
   payments: [
     "services/trpc/routers/billing.ts",

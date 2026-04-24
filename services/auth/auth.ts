@@ -14,6 +14,8 @@ import { nextCookies } from "better-auth/next-js";
 import { admin, bearer, emailOTP } from "better-auth/plugins";
 import Stripe from "stripe";
 
+import { isFeatureEnabled } from "@/config/features";
+
 import { sendEmail } from "../email";
 import {
   createInvoice,
@@ -27,10 +29,19 @@ import {
   updateSubscription,
 } from "./auth-action";
 
-export const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!);
+const stripeClient = isFeatureEnabled("payments")
+  ? new Stripe(process.env.STRIPE_SECRET_KEY!)
+  : null;
+
+export function getStripeClient(): Stripe {
+  if (!stripeClient) {
+    throw new Error("Stripe is not configured. Enable the payments feature.");
+  }
+  return stripeClient;
+}
 
 export const auth = betterAuth({
-  baseURL: "http://localhost:3000",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000",
   database: drizzleAdapter(db, {
     provider: "pg",
     schema: {
@@ -127,70 +138,77 @@ export const auth = betterAuth({
         }
       },
     }),
-    stripe({
-      stripeClient,
-      stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
-      createCustomerOnSignUp: true,
-      onEvent: async (event) => {
-        // Audit trail
-        await db.insert(webhookEvents).values({
-          timestamp: new Date(event.created * 1000),
-          type: event.type,
-          payload: event.data,
-        });
+    ...(isFeatureEnabled("payments") && stripeClient
+      ? [
+          stripe({
+            stripeClient,
+            stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
+            createCustomerOnSignUp: true,
+            onEvent: async (event) => {
+              // Audit trail
+              await db.insert(webhookEvents).values({
+                timestamp: new Date(event.created * 1000),
+                type: event.type,
+                payload: event.data,
+              });
 
-        // Sync products
-        if (
-          event.type === "product.created" ||
-          event.type === "product.updated" ||
-          event.type === "product.deleted"
-        ) {
-          const product = event.data.object as Stripe.Product;
-          if (event.type === "product.created") {
-            await createProduct(product);
-          } else if (event.type === "product.updated") {
-            await updateProduct(product);
-          } else {
-            await deleteProduct(product);
-          }
-        }
+              // Sync products
+              if (
+                event.type === "product.created" ||
+                event.type === "product.updated" ||
+                event.type === "product.deleted"
+              ) {
+                const product = event.data.object as Stripe.Product;
+                if (event.type === "product.created") {
+                  await createProduct(product);
+                } else if (event.type === "product.updated") {
+                  await updateProduct(product);
+                } else {
+                  await deleteProduct(product);
+                }
+              }
 
-        // Sync invoices → orders
-        if (event.type === "invoice.paid" || event.type === "invoice.created") {
-          const invoice = event.data.object as Stripe.Invoice;
-          await createInvoice(invoice);
-        }
-        if (
-          event.type === "invoice.updated" ||
-          event.type === "invoice.payment_failed"
-        ) {
-          const invoice = event.data.object as Stripe.Invoice;
-          await updateInvoice(invoice);
-        }
+              // Sync invoices → orders
+              if (
+                event.type === "invoice.paid" ||
+                event.type === "invoice.created"
+              ) {
+                const invoice = event.data.object as Stripe.Invoice;
+                await createInvoice(invoice);
+              }
+              if (
+                event.type === "invoice.updated" ||
+                event.type === "invoice.payment_failed"
+              ) {
+                const invoice = event.data.object as Stripe.Invoice;
+                await updateInvoice(invoice);
+              }
 
-        // Sync subscriptions
-        if (
-          event.type === "customer.subscription.created" ||
-          event.type === "customer.subscription.updated" ||
-          event.type === "customer.subscription.deleted"
-        ) {
-          const sub = event.data.object as Stripe.Subscription;
-          if (event.type === "customer.subscription.created") {
-            await createSubscription(sub);
-          } else if (event.type === "customer.subscription.updated") {
-            await updateSubscription(sub);
-          } else {
-            await deleteSubscription(sub);
-          }
-        }
+              // Sync subscriptions
+              if (
+                event.type === "customer.subscription.created" ||
+                event.type === "customer.subscription.updated" ||
+                event.type === "customer.subscription.deleted"
+              ) {
+                const sub = event.data.object as Stripe.Subscription;
+                if (event.type === "customer.subscription.created") {
+                  await createSubscription(sub);
+                } else if (event.type === "customer.subscription.updated") {
+                  await updateSubscription(sub);
+                } else {
+                  await deleteSubscription(sub);
+                }
+              }
 
-        // Sync refunds → update invoice status directly
-        if (event.type === "charge.refunded") {
-          const charge = event.data.object as Stripe.Charge;
-          await handleChargeRefunded(charge);
-        }
-      },
-    }),
+              // Sync refunds → update invoice status directly
+              if (event.type === "charge.refunded") {
+                const charge = event.data.object as Stripe.Charge;
+                await handleChargeRefunded(charge);
+              }
+            },
+          }),
+        ]
+      : []),
     nextCookies(),
   ],
 });

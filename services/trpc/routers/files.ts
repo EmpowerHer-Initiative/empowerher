@@ -1,5 +1,6 @@
 import {
   adminProcedure,
+  authenticatedProcedure,
   baseProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
@@ -12,7 +13,6 @@ import {
   PutObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { TRPCError } from "@trpc/server";
 import z from "zod";
 
 import { deleteFile } from "./files-action";
@@ -32,42 +32,18 @@ export const ALLOWED_FOLDERS = ["users", "media"] as const;
 export const filesRouter = createTRPCRouter({
   getDownloadUrl: baseProcedure
     .use(featureGuard("storage"))
-    .input(
-      z.object({
-        key: z.string().min(1),
-      })
-    )
+    .input(z.object({ key: z.string().min(1) }))
     .query(async ({ input }) => {
-      try {
-        const command = new GetObjectCommand({
-          Bucket: R2_BUCKET,
-          Key: input.key,
-        });
+      const command = new GetObjectCommand({
+        Bucket: R2_BUCKET,
+        Key: input.key,
+      });
 
-        let signedUrl: string;
+      const signedUrl = await getSignedUrl(r2, command, {
+        expiresIn: SIGNED_URL_EXPIRY,
+      });
 
-        try {
-          signedUrl = await getSignedUrl(r2, command, {
-            expiresIn: SIGNED_URL_EXPIRY,
-          });
-        } catch (err) {
-          console.error("Failed to generate download URL:", err);
-          throw new TRPCError({
-            code: "INTERNAL_SERVER_ERROR",
-            message: "Failed to generate download URL",
-          });
-        }
-
-        return { signedUrl };
-      } catch (err) {
-        if (err instanceof TRPCError) throw err;
-
-        console.error("Unexpected error in getDownloadUrl:", err);
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "An unexpected error occurred while preparing download",
-        });
-      }
+      return { signedUrl };
     }),
 
   list: adminProcedure
@@ -82,39 +58,31 @@ export const filesRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const { search, cursor, limit = 15 } = input;
 
-      try {
-        const command = new ListObjectsV2Command({
-          Bucket: R2_BUCKET,
-          MaxKeys: limit,
-          ContinuationToken: cursor,
-          Prefix: search ?? undefined,
-        });
+      const command = new ListObjectsV2Command({
+        Bucket: R2_BUCKET,
+        MaxKeys: limit,
+        ContinuationToken: cursor,
+        Prefix: search ?? undefined,
+      });
 
-        const response = await r2.send(command);
+      const response = await r2.send(command);
 
-        const files = (response.Contents ?? [])
-          .filter((obj) => !obj.Key!.endsWith("/"))
-          .map((obj) => ({
-            key: obj.Key!,
-            size: obj.Size ?? 0,
-            lastModified: obj.LastModified?.toISOString() ?? null,
-            publicUrl: `${R2_PUBLIC_URL}/${obj.Key}`,
-          }));
+      const files = (response.Contents ?? [])
+        .filter((obj) => !obj.Key!.endsWith("/"))
+        .map((obj) => ({
+          key: obj.Key!,
+          size: obj.Size ?? 0,
+          lastModified: obj.LastModified?.toISOString() ?? null,
+          publicUrl: `${R2_PUBLIC_URL}/${obj.Key}`,
+        }));
 
-        return {
-          files,
-          nextCursor: response.NextContinuationToken ?? null,
-        };
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error ? error.message : "Failed to list files",
-        });
-      }
+      return {
+        files,
+        nextCursor: response.NextContinuationToken ?? null,
+      };
     }),
 
-  getUploadUrl: baseProcedure
+  getUploadUrl: authenticatedProcedure
     .use(featureGuard("storage"))
     .input(
       z.object({
@@ -127,44 +95,24 @@ export const filesRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input }) => {
-      try {
-        const key = input.folder ? `${input.folder}/${input.key}` : input.key;
+      const key = input.folder ? `${input.folder}/${input.key}` : input.key;
 
-        const command = new PutObjectCommand({
-          Bucket: R2_BUCKET,
-          Key: key,
-          ContentType: input.contentType,
-          ContentLength: input.size,
-        });
+      const command = new PutObjectCommand({
+        Bucket: R2_BUCKET,
+        Key: key,
+        ContentType: input.contentType,
+        ContentLength: input.size,
+      });
 
-        let signedUrl: string;
+      const signedUrl = await getSignedUrl(r2, command, {
+        expiresIn: SIGNED_URL_EXPIRY,
+      });
 
-        try {
-          signedUrl = await getSignedUrl(r2, command, {
-            expiresIn: SIGNED_URL_EXPIRY,
-          });
-        } catch (err) {
-          console.error("Failed to generate signed URL:", err);
-          throw new TRPCError({
-            code: "INTERNAL_SERVER_ERROR",
-            message: "Failed to generate upload URL",
-          });
-        }
-
-        return {
-          signedUrl,
-          key,
-          publicUrl: `${R2_PUBLIC_URL}/${key}`,
-        };
-      } catch (err) {
-        if (err instanceof TRPCError) throw err;
-
-        console.error("Unexpected error in getUploadUrl:", err);
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "An unexpected error occurred while preparing upload",
-        });
-      }
+      return {
+        signedUrl,
+        key,
+        publicUrl: `${R2_PUBLIC_URL}/${key}`,
+      };
     }),
 
   getPresignedUrl: adminProcedure
@@ -179,32 +127,24 @@ export const filesRouter = createTRPCRouter({
       const { fileName, contentType } = input;
       const key = `${Date.now()}-${fileName.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
 
-      try {
-        const command = new PutObjectCommand({
-          Bucket: R2_BUCKET,
-          Key: key,
-          ContentType: contentType,
-        });
+      const command = new PutObjectCommand({
+        Bucket: R2_BUCKET,
+        Key: key,
+        ContentType: contentType,
+      });
 
-        const presignedUrl = await getSignedUrl(r2, command, {
-          expiresIn: 300,
-        });
+      const presignedUrl = await getSignedUrl(r2, command, {
+        expiresIn: 300,
+      });
 
-        return {
-          presignedUrl,
-          key,
-          publicUrl: `${R2_PUBLIC_URL}/${key}`,
-        };
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error ? error.message : "Failed to generate URL",
-        });
-      }
+      return {
+        presignedUrl,
+        key,
+        publicUrl: `${R2_PUBLIC_URL}/${key}`,
+      };
     }),
 
-  update: baseProcedure
+  update: authenticatedProcedure
     .use(featureGuard("storage"))
     .input(
       z.object({
@@ -216,57 +156,33 @@ export const filesRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input }) => {
-      try {
-        let key = input.oldKey;
+      let key = input.oldKey;
 
-        if (key.startsWith("http")) {
-          key = key.replace(R2_PUBLIC_URL + "/", "");
-        }
-
-        const command = new PutObjectCommand({
-          Bucket: R2_BUCKET,
-          Key: key.split("?")[0],
-          ContentType: input.contentType,
-          ContentLength: input.size,
-        });
-
-        let signedUrl: string;
-
-        try {
-          signedUrl = await getSignedUrl(r2, command, {
-            expiresIn: SIGNED_URL_EXPIRY,
-          });
-        } catch (err) {
-          console.error("Failed to generate signed URL for update:", err);
-          throw new TRPCError({
-            code: "INTERNAL_SERVER_ERROR",
-            message: "Failed to generate upload URL for replacement file",
-          });
-        }
-
-        return {
-          signedUrl,
-          key,
-          publicUrl: `${R2_PUBLIC_URL}/${key}`,
-        };
-      } catch (err) {
-        if (err instanceof TRPCError) throw err;
-
-        console.error("Unexpected error in update:", err);
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "An unexpected error occurred while updating file",
-        });
+      if (key.startsWith("http")) {
+        key = key.replace(R2_PUBLIC_URL + "/", "");
       }
+
+      const command = new PutObjectCommand({
+        Bucket: R2_BUCKET,
+        Key: key.split("?")[0],
+        ContentType: input.contentType,
+        ContentLength: input.size,
+      });
+
+      const signedUrl = await getSignedUrl(r2, command, {
+        expiresIn: SIGNED_URL_EXPIRY,
+      });
+
+      return {
+        signedUrl,
+        key,
+        publicUrl: `${R2_PUBLIC_URL}/${key}`,
+      };
     }),
 
-  delete: baseProcedure
+  delete: authenticatedProcedure
     .use(featureGuard("storage"))
-    .input(
-      z.object({
-        key: z.string().min(1),
-      })
-    )
+    .input(z.object({ key: z.string().min(1) }))
     .mutation(async ({ input }) => {
       await deleteFile(input.key);
       return { success: true };
@@ -276,15 +192,7 @@ export const filesRouter = createTRPCRouter({
     .use(featureGuard("storage"))
     .input(z.string().min(1))
     .mutation(async ({ input: key }) => {
-      try {
-        await r2.send(new DeleteObjectCommand({ Bucket: R2_BUCKET, Key: key }));
-        return { success: true };
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error ? error.message : "Failed to delete file",
-        });
-      }
+      await r2.send(new DeleteObjectCommand({ Bucket: R2_BUCKET, Key: key }));
+      return { success: true };
     }),
 });

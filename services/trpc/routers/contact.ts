@@ -21,32 +21,30 @@ export const contactRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const apiUrl = process.env.CLIENT_API_URL;
       const apiKey = process.env.CLIENT_API_SECRET;
+      const endpointId = process.env.CLIENT_CONTACT_ENDPOINT_ID;
 
-      if (!apiUrl || !apiKey) {
+      if (!apiUrl || !apiKey || !endpointId) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Contact API is not configured",
         });
       }
 
-      const response = await fetch(
-        `${apiUrl}/api/contact/RREqH17RvSstTXs5UnVl1iFn1151GpZY`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": apiKey,
-          },
-          body: JSON.stringify({
-            name: input.name,
-            email: input.email,
-            subject: input.subject,
-            message: input.message,
-            metadata: input.phone ? { phone: input.phone } : undefined,
-            sourceUrl: siteConfig.url,
-          }),
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/contact/${endpointId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+        },
+        body: JSON.stringify({
+          name: input.name,
+          email: input.email,
+          subject: input.subject,
+          message: input.message,
+          metadata: input.phone ? { phone: input.phone } : undefined,
+          sourceUrl: siteConfig.url,
+        }),
+      });
 
       if (!response.ok) {
         const body = await response.json().catch(() => ({}));

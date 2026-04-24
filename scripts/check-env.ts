@@ -24,6 +24,7 @@ const FEATURE_ENV_MAP: Record<string, string[]> = {
     "R2_BUCKET_NAME",
     "R2_PUBLIC_URL",
   ],
+  contact: ["CLIENT_CONTACT_ENDPOINT_ID"],
   email: ["AWS_BUCKET_ORIGIN", "AWS_ACCESS_KEY_VALUE", "AWS_SECRET_KEY_VALUE"],
 };
 

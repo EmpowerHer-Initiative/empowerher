@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { isFeatureEnabled } from "./config/features";
 import { isAuthenticated } from "./services/auth/action";
 import { auth } from "./services/auth/auth";
 
@@ -18,14 +19,16 @@ export const proxy = async (request: Request) => {
   const nextRequest = request as NextRequest;
   const { pathname } = nextRequest.nextUrl;
 
+  if (!isFeatureEnabled("auth")) return NextResponse.next();
+
   const betterAuthSession = await isAuthenticated();
 
-  if (
-    (pathname.startsWith("/admin") ||
-      pathname === "/checkout" ||
-      pathname === "/settings") &&
-    !betterAuthSession
-  ) {
+  const isProtectedRoute =
+    pathname.startsWith("/admin") ||
+    pathname === "/settings" ||
+    (pathname === "/checkout" && isFeatureEnabled("payments"));
+
+  if (isProtectedRoute && !betterAuthSession) {
     let loginPath = `/login?callbackUrl=${pathname}`;
     if (pathname === "/checkout") {
       const productId = nextRequest.nextUrl.searchParams.get("productId");

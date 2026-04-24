@@ -29,6 +29,11 @@ export default function SettingsPage() {
     );
   }
 
+  if (!user.data) {
+    router.replace("/login?callbackUrl=/settings");
+    return null;
+  }
+
   return (
     <div className="space-y-16">
       <div className="space-y-6">

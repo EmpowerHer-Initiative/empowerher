@@ -1,4 +1,6 @@
-import { notFound } from "next/navigation";
+import { headers } from "next/headers";
+import { notFound, redirect } from "next/navigation";
+import { auth } from "@/services/auth/auth";
 
 import { isFeatureEnabled } from "@/config/features";
 
@@ -12,8 +14,14 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function SettingsLayout({ children }: Props) {
+export default async function SettingsLayout({ children }: Props) {
   if (!isFeatureEnabled("auth")) notFound();
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) redirect("/login?callbackUrl=/settings");
 
   return (
     <div className="mx-auto max-w-3xl gap-8 px-8 pt-20">

@@ -1,4 +1,4 @@
-import { stripeClient } from "@/services/auth/auth";
+import { getStripeClient } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
 import { invoices, products, subscription, user } from "@/services/db/schema";
 import { eq } from "drizzle-orm";
@@ -20,7 +20,7 @@ async function resolvePrice(
   if (!defaultPrice) return null;
   if (typeof defaultPrice === "object") return defaultPrice;
   // It's a string ID — fetch the full price from Stripe
-  return stripeClient.prices.retrieve(defaultPrice);
+  return getStripeClient().prices.retrieve(defaultPrice);
 }
 
 export const createProduct = async (product: Stripe.Product) => {
@@ -228,7 +228,7 @@ export const handleChargeRefunded = async (charge: Stripe.Charge) => {
       : charge.payment_intent?.id;
   if (!paymentIntentId) return;
 
-  const result = await stripeClient.invoicePayments.list({
+  const result = await getStripeClient().invoicePayments.list({
     payment: { payment_intent: paymentIntentId, type: "payment_intent" },
     limit: 1,
   });

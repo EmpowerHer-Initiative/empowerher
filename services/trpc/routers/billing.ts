@@ -1,5 +1,4 @@
-import { cookies } from "next/headers";
-import { stripeClient } from "@/services/auth/auth";
+import { getStripeClient } from "@/services/auth/auth";
 import { deleteCustomer } from "@/services/auth/auth-action";
 import { db } from "@/services/db/index";
 import { invoices, products, subscription, user } from "@/services/db/schema";
@@ -10,88 +9,54 @@ import { desc, eq, or } from "drizzle-orm";
 import { z } from "zod";
 
 export const billingRouter = createTRPCRouter({
-  /**
-   * Fetches active subscriptions for the current user
-   */
   getCustomerState: authenticatedProcedure
     .use(featureGuard("payments"))
     .query(async ({ ctx }) => {
-      try {
-        const subs = await db
-          .select()
-          .from(subscription)
-          .where(eq(subscription.referenceId, ctx.session.user.id));
+      const subs = await db
+        .select()
+        .from(subscription)
+        .where(eq(subscription.referenceId, ctx.session.user.id));
 
-        const activeSub = subs.find(
-          (s) => s.status === "active" || s.status === "trialing"
-        );
+      const activeSub = subs.find(
+        (s) => s.status === "active" || s.status === "trialing"
+      );
 
-        return {
-          subscriptions: subs,
-          activeSubscription: activeSub ?? null,
-          isUserHaveAccess: !!activeSub,
-          currentPlan: activeSub?.plan ?? null,
-          currentSubscriptionId: activeSub?.id ?? null,
-        };
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to fetch customer state",
-          cause: error,
-        });
-      }
+      return {
+        subscriptions: subs,
+        activeSubscription: activeSub ?? null,
+        isUserHaveAccess: !!activeSub,
+        currentPlan: activeSub?.plan ?? null,
+        currentSubscriptionId: activeSub?.id ?? null,
+      };
     }),
 
-  /**
-   * Fetches subscriptions for a specific user by user ID
-   */
   listSubscriptions: authenticatedProcedure
     .use(featureGuard("payments"))
-    .input(
-      z.object({
-        userId: z.string(),
-      })
-    )
+    .input(z.object({ userId: z.string() }))
     .query(async ({ input }) => {
-      try {
-        const subs = await db
-          .select({
-            subscription: subscription,
-            productName: products.name,
-          })
-          .from(subscription)
-          .leftJoin(products, eq(products.priceId, subscription.plan))
-          .where(eq(subscription.referenceId, input.userId))
-          .orderBy(desc(subscription.periodStart));
+      const subs = await db
+        .select({
+          subscription: subscription,
+          productName: products.name,
+        })
+        .from(subscription)
+        .leftJoin(products, eq(products.priceId, subscription.plan))
+        .where(eq(subscription.referenceId, input.userId))
+        .orderBy(desc(subscription.periodStart));
 
-        return subs.map((s) => ({
-          ...s.subscription,
-          productName: s.productName,
-        }));
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to fetch subscriptions",
-          cause: error,
-        });
-      }
+      return subs.map((s) => ({
+        ...s.subscription,
+        productName: s.productName,
+      }));
     }),
 
-  /**
-   * Verifies a Stripe checkout session by ID
-   */
   verifyCheckout: authenticatedProcedure
     .use(featureGuard("payments"))
     .input(z.object({ sessionId: z.string() }))
     .query(async ({ input }) => {
+      const stripe = getStripeClient();
       try {
-        const session = await stripeClient.checkout.sessions.retrieve(
+        const session = await stripe.checkout.sessions.retrieve(
           input.sessionId
         );
         return {
@@ -99,67 +64,44 @@ export const billingRouter = createTRPCRouter({
           paymentStatus: session.payment_status,
           customerEmail: session.customer_details?.email ?? null,
         };
-      } catch (error) {
+      } catch {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Checkout session not found",
-          cause: error,
         });
       }
     }),
 
-  /**
-   * Fetches invoices for a specific user by user ID or email
-   */
   listInvoices: authenticatedProcedure
     .use(featureGuard("payments"))
-    .input(
-      z.object({
-        userId: z.string(),
-        email: z.string(),
-      })
-    )
+    .input(z.object({ userId: z.string(), email: z.string() }))
     .query(async ({ input }) => {
-      try {
-        const { userId, email } = input;
-        const invoicesList = await db
-          .select({
-            id: invoices.id,
-            userId: invoices.userId,
-            email: invoices.email,
-            productId: invoices.productId,
-            subscriptionId: invoices.subscriptionId,
-            billingName: invoices.billingName,
-            billingReason: invoices.billingReason,
-            totalAmount: invoices.totalAmount,
-            invoiceNumber: invoices.invoiceNumber,
-            status: invoices.status,
-            discountAmount: invoices.discountAmount,
-            currency: invoices.currency,
-            hostedInvoiceUrl: invoices.hostedInvoiceUrl,
-            pdfUrl: invoices.pdfUrl,
-            createdAt: invoices.createdAt,
-            updatedAt: invoices.updatedAt,
-            metadata: invoices.metadata,
-          })
-          .from(invoices)
-          .where(or(eq(invoices.userId, userId), eq(invoices.email, email)))
-          .orderBy(desc(invoices.createdAt));
-
-        return invoicesList;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error ? error.message : "Failed to fetch invoices",
-          cause: error,
-        });
-      }
+      const { userId, email } = input;
+      return db
+        .select({
+          id: invoices.id,
+          userId: invoices.userId,
+          email: invoices.email,
+          productId: invoices.productId,
+          subscriptionId: invoices.subscriptionId,
+          billingName: invoices.billingName,
+          billingReason: invoices.billingReason,
+          totalAmount: invoices.totalAmount,
+          invoiceNumber: invoices.invoiceNumber,
+          status: invoices.status,
+          discountAmount: invoices.discountAmount,
+          currency: invoices.currency,
+          hostedInvoiceUrl: invoices.hostedInvoiceUrl,
+          pdfUrl: invoices.pdfUrl,
+          createdAt: invoices.createdAt,
+          updatedAt: invoices.updatedAt,
+          metadata: invoices.metadata,
+        })
+        .from(invoices)
+        .where(or(eq(invoices.userId, userId), eq(invoices.email, email)))
+        .orderBy(desc(invoices.createdAt));
     }),
 
-  /**
-   * Creates a Stripe checkout session
-   */
   createCheckout: authenticatedProcedure
     .use(featureGuard("payments"))
     .input(
@@ -170,71 +112,59 @@ export const billingRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      try {
-        const { priceIds, successUrl, cancelUrl } = input;
+      const stripe = getStripeClient();
+      const { priceIds, successUrl, cancelUrl } = input;
 
-        // Get or create Stripe customer ID
-        const dbUser = await db
-          .select()
-          .from(user)
-          .where(eq(user.id, ctx.session.user.id))
-          .limit(1)
-          .then((res) => res[0]);
+      // Get or create Stripe customer ID
+      const dbUser = await db
+        .select()
+        .from(user)
+        .where(eq(user.id, ctx.session.user.id))
+        .limit(1)
+        .then((res) => res[0]);
 
-        let customerId = dbUser?.stripeCustomerId;
+      let customerId = dbUser?.stripeCustomerId;
 
-        if (!customerId) {
-          const customer = await stripeClient.customers.create({
-            email: ctx.session.user.email,
-            name: ctx.session.user.name,
-            metadata: { userId: ctx.session.user.id },
-          });
-          customerId = customer.id;
-          await db
-            .update(user)
-            .set({ stripeCustomerId: customer.id })
-            .where(eq(user.id, ctx.session.user.id));
-        }
-
-        const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/$/, "");
-
-        const session = await stripeClient.checkout.sessions.create({
-          customer: customerId,
-          mode: "subscription",
-          line_items: priceIds.map((id) => ({ price: id, quantity: 1 })),
-          success_url:
-            successUrl || `${base}/success?session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: cancelUrl || `${base}/`,
+      if (!customerId) {
+        const customer = await stripe.customers.create({
+          email: ctx.session.user.email,
+          name: ctx.session.user.name,
+          metadata: { userId: ctx.session.user.id },
         });
+        customerId = customer.id;
+        await db
+          .update(user)
+          .set({ stripeCustomerId: customer.id })
+          .where(eq(user.id, ctx.session.user.id));
+      }
 
-        if (!session.url) {
-          throw new Error("Failed to create checkout session URL");
-        }
+      const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/$/, "");
 
-        return { url: session.url };
-      } catch (error) {
+      const session = await stripe.checkout.sessions.create({
+        customer: customerId,
+        mode: "subscription",
+        line_items: priceIds.map((id) => ({ price: id, quantity: 1 })),
+        success_url:
+          successUrl || `${base}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: cancelUrl || `${base}/`,
+      });
+
+      if (!session.url) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to create checkout",
-          cause: error,
+          message: "Failed to create checkout session URL",
         });
       }
+
+      return { url: session.url };
     }),
 
-  /**
-   * Creates a Stripe billing portal session
-   */
   createPortalSession: authenticatedProcedure
     .use(featureGuard("payments"))
-    .input(
-      z.object({
-        returnUrl: z.string().optional(),
-      })
-    )
+    .input(z.object({ returnUrl: z.string().optional() }))
     .mutation(async ({ input, ctx }) => {
+      const stripe = getStripeClient();
+
       const dbUser = await db
         .select()
         .from(user)
@@ -251,7 +181,7 @@ export const billingRouter = createTRPCRouter({
 
       const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/$/, "");
 
-      const session = await stripeClient.billingPortal.sessions.create({
+      const session = await stripe.billingPortal.sessions.create({
         customer: dbUser.stripeCustomerId,
         return_url: input.returnUrl
           ? `${base}${input.returnUrl}`
@@ -261,9 +191,6 @@ export const billingRouter = createTRPCRouter({
       return { url: session.url };
     }),
 
-  /**
-   * Switches subscription to a different price
-   */
   switchPlan: authenticatedProcedure
     .use(featureGuard("payments"))
     .input(
@@ -273,6 +200,8 @@ export const billingRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      const stripe = getStripeClient();
+
       const sub = await db
         .select()
         .from(subscription)
@@ -287,7 +216,7 @@ export const billingRouter = createTRPCRouter({
         });
       }
 
-      const stripeSub = await stripeClient.subscriptions.retrieve(
+      const stripeSub = await stripe.subscriptions.retrieve(
         input.subscriptionId
       );
       const itemId = stripeSub.items.data[0]?.id;
@@ -299,24 +228,20 @@ export const billingRouter = createTRPCRouter({
         });
       }
 
-      const updated = await stripeClient.subscriptions.update(
-        input.subscriptionId,
-        {
-          items: [{ id: itemId, price: input.newPriceId }],
-          proration_behavior: "create_prorations",
-        }
-      );
+      const updated = await stripe.subscriptions.update(input.subscriptionId, {
+        items: [{ id: itemId, price: input.newPriceId }],
+        proration_behavior: "create_prorations",
+      });
 
       return { subscriptionId: updated.id, status: updated.status };
     }),
 
-  /**
-   * Fetches full subscription details live from Stripe, including all items
-   */
   getSubscriptionDetails: authenticatedProcedure
     .use(featureGuard("payments"))
     .input(z.object({ subscriptionId: z.string() }))
     .query(async ({ input, ctx }) => {
+      const stripe = getStripeClient();
+
       // Verify ownership via local DB
       const sub = await db
         .select()
@@ -333,7 +258,7 @@ export const billingRouter = createTRPCRouter({
       }
 
       // Fetch live from Stripe with expanded product data
-      const stripeSub = await stripeClient.subscriptions.retrieve(
+      const stripeSub = await stripe.subscriptions.retrieve(
         input.subscriptionId,
         { expand: ["items.data.price.product"] }
       );
@@ -372,43 +297,25 @@ export const billingRouter = createTRPCRouter({
       };
     }),
 
-  /**
-   * Deletes a customer from Stripe and clears all cookies
-   */
   deleteCustomer: authenticatedProcedure
     .use(featureGuard("payments"))
     .input(z.string())
     .mutation(async ({ input }) => {
-      try {
-        const cookieStore = await cookies();
+      const stripe = getStripeClient();
 
-        const dbUser = await db
-          .select()
-          .from(user)
-          .where(eq(user.id, input))
-          .limit(1)
-          .then((res) => res[0]);
+      const dbUser = await db
+        .select()
+        .from(user)
+        .where(eq(user.id, input))
+        .limit(1)
+        .then((res) => res[0]);
 
-        if (dbUser?.stripeCustomerId) {
-          await stripeClient.customers.del(dbUser.stripeCustomerId);
-        }
-
-        await deleteCustomer(dbUser?.email ?? "");
-
-        cookieStore.getAll().forEach((cookie) => {
-          cookieStore.delete(cookie.name);
-        });
-
-        return true;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to delete customer",
-          cause: error,
-        });
+      if (dbUser?.stripeCustomerId) {
+        await stripe.customers.del(dbUser.stripeCustomerId);
       }
+
+      await deleteCustomer(dbUser?.email ?? "");
+
+      return true;
     }),
 });
