@@ -84,6 +84,31 @@ export const billingRouter = createTRPCRouter({
     }),
 
   /**
+   * Verifies a Stripe checkout session by ID
+   */
+  verifyCheckout: authenticatedProcedure
+    .use(featureGuard("payments"))
+    .input(z.object({ sessionId: z.string() }))
+    .query(async ({ input }) => {
+      try {
+        const session = await stripeClient.checkout.sessions.retrieve(
+          input.sessionId
+        );
+        return {
+          status: session.status,
+          paymentStatus: session.payment_status,
+          customerEmail: session.customer_details?.email ?? null,
+        };
+      } catch (error) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Checkout session not found",
+          cause: error,
+        });
+      }
+    }),
+
+  /**
    * Fetches invoices for a specific user by user ID or email
    */
   listInvoices: authenticatedProcedure
@@ -177,7 +202,8 @@ export const billingRouter = createTRPCRouter({
           customer: customerId,
           mode: "subscription",
           line_items: priceIds.map((id) => ({ price: id, quantity: 1 })),
-          success_url: successUrl || `${base}/success`,
+          success_url:
+            successUrl || `${base}/success?session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: cancelUrl || `${base}/`,
         });
 

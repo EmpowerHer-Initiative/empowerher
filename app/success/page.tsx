@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect, useSearchParams } from "next/navigation";
+import { useTRPC } from "@/services/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 
 import { isFeatureEnabled } from "@/config/features";
 
@@ -12,16 +13,17 @@ import { Spinner } from "@/components/ui/spinner";
 export default function SuccessPage() {
   if (!isFeatureEnabled("payments")) notFound();
 
-  // Better Auth Stripe plugin redirects to successUrl after checkout
-  const [isReady, setIsReady] = useState(false);
+  const searchParams = useSearchParams();
+  const sessionId = searchParams.get("session_id");
 
-  useEffect(() => {
-    // Small delay to allow webhook to process
-    const timer = setTimeout(() => setIsReady(true), 1500);
-    return () => clearTimeout(timer);
-  }, []);
+  if (!sessionId) redirect("/");
 
-  if (!isReady) {
+  const trpc = useTRPC();
+  const { data, isLoading, isError } = useQuery(
+    trpc.billing.verifyCheckout.queryOptions({ sessionId })
+  );
+
+  if (isLoading) {
     return (
       <div className="flex min-h-dvh items-center justify-center p-8">
         <div className="w-full max-w-sm space-y-6 text-center">
@@ -29,6 +31,25 @@ export default function SuccessPage() {
           <p className="text-muted-foreground text-sm">
             Verifying your payment…
           </p>
+        </div>
+      </div>
+    );
+  }
+
+  const isSuccess =
+    data?.status === "complete" && data?.paymentStatus === "paid";
+
+  if (isError || !isSuccess) {
+    return (
+      <div className="flex min-h-dvh items-center justify-center p-8">
+        <div className="w-full max-w-sm space-y-6 text-center">
+          <h1 className="text-xl font-semibold">Payment failed</h1>
+          <p className="text-muted-foreground text-sm">
+            Something went wrong with your payment. Please try again.
+          </p>
+          <Button render={<Link href="/" />} className="w-full" size="lg">
+            Go back
+          </Button>
         </div>
       </div>
     );
