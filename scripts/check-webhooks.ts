@@ -6,10 +6,23 @@
 
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { createInterface } from "node:readline/promises";
 import { config } from "dotenv";
 import Stripe from "stripe";
 
 const ROOT = resolve(import.meta.dirname, "..");
+
+// ─── Check feature flag ────────────────────────────────────────────
+const projectConfig: Record<string, unknown> = JSON.parse(
+  readFileSync(resolve(ROOT, "config/config.json"), "utf-8")
+);
+
+if (!projectConfig.payments) {
+  console.log(
+    `\n  \x1b[43m\x1b[1m\x1b[37m ⚠ SKIPPED \x1b[0m  \x1b[33mpayments\x1b[0m is disabled in \x1b[33mconfig/config.json\x1b[0m\n`
+  );
+  process.exit(0);
+}
 
 config({ path: resolve(ROOT, ".env") });
 
@@ -82,16 +95,16 @@ function getLocalEvents(): Set<string> {
 async function getStripeEvents(): Promise<{
   events: Set<string>;
   hasWildcard: boolean;
-  endpoints: { url: string; events: string[] }[];
+  endpoints: { id: string; url: string; events: string[] }[];
 }> {
   const list = await stripe.webhookEndpoints.list();
   const events = new Set<string>();
   let hasWildcard = false;
-  const endpoints: { url: string; events: string[] }[] = [];
+  const endpoints: { id: string; url: string; events: string[] }[] = [];
 
   for (const ep of list.data) {
     if (!ep.enabled_events) continue;
-    endpoints.push({ url: ep.url, events: [...ep.enabled_events] });
+    endpoints.push({ id: ep.id, url: ep.url, events: [...ep.enabled_events] });
 
     if (ep.enabled_events.includes("*")) {
       hasWildcard = true;
@@ -214,6 +227,45 @@ async function main() {
     log(
       `  ${c.gray}Enable these in ${c.yellow}Stripe Dashboard → Webhooks${c.gray} or remove handlers from ${c.yellow}services/auth/auth.ts${c.reset}`
     );
+    log();
+  }
+
+  // ─── Auto-enable missing events ─────────────────────────────────
+  if (notEnabled.length > 0 && !hasWildcard) {
+    const rl = createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    const answer = await rl.question(
+      `  ${c.cyan}Enable them via Stripe API now?${c.reset} [y/N]: `
+    );
+    rl.close();
+
+    if (answer.trim().toLowerCase() === "y") {
+      const nonWildcardEndpoints = endpoints.filter(
+        (ep) => !ep.events.includes("*")
+      );
+
+      for (const ep of nonWildcardEndpoints) {
+        const merged = [...new Set([...ep.events, ...notEnabled])];
+        try {
+          await stripe.webhookEndpoints.update(ep.id, {
+            enabled_events:
+              merged as Stripe.WebhookEndpointUpdateParams.EnabledEvent[],
+          });
+          log(
+            `\n  ${c.bgGreen}${c.bold}${c.white} ✓ UPDATED ${c.reset}  Enabled ${c.green}${notEnabled.length}${c.reset} event${notEnabled.length !== 1 ? "s" : ""} on ${c.dim}${ep.url}${c.reset}`
+          );
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          log(
+            `\n  ${c.bgRed}${c.bold}${c.white} ✗ FAILED ${c.reset}  ${c.red}${msg}${c.reset} on ${c.dim}${ep.url}${c.reset}`
+          );
+        }
+      }
+      log();
+      process.exit(0);
+    }
     log();
   }
 
