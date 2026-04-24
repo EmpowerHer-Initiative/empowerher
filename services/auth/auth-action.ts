@@ -1,13 +1,7 @@
 import { stripeClient } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
-import {
-  invoices,
-  products,
-  refunds,
-  subscription,
-  user,
-} from "@/services/db/schema";
-import { and, eq, sql } from "drizzle-orm";
+import { invoices, products, subscription, user } from "@/services/db/schema";
+import { eq } from "drizzle-orm";
 import type Stripe from "stripe";
 
 import { deleteFile } from "../trpc/routers/files-action";
@@ -68,6 +62,9 @@ export const updateProduct = async (product: Stripe.Product) => {
       updatedAt: new Date(product.updated * 1000),
     })
     .where(eq(products.id, product.id));
+};
+export const deleteProduct = async (product: Stripe.Product) => {
+  await db.delete(products).where(eq(products.id, product.id));
 };
 // ----------------------------
 // 📦 Products END
@@ -221,35 +218,27 @@ export const updateInvoice = async (invoice: Stripe.Invoice) => {
 // ----------------------------
 
 // ----------------------------
-// 💸 Refunds
+// 💸 Refunds — update invoice status directly
 // ----------------------------
 
-type RefundStatus = typeof refunds.$inferInsert.status;
+export const handleChargeRefunded = async (charge: Stripe.Charge) => {
+  const paymentIntentId =
+    typeof charge.payment_intent === "string"
+      ? charge.payment_intent
+      : charge.payment_intent?.id;
+  if (!paymentIntentId) return;
 
-async function resolveInvoiceId(
-  paymentIntentId: string | null | undefined
-): Promise<string | null> {
-  if (!paymentIntentId) return null;
   const result = await stripeClient.invoicePayments.list({
     payment: { payment_intent: paymentIntentId, type: "payment_intent" },
     limit: 1,
   });
   const invoicePayment = result.data[0];
-  if (!invoicePayment) return null;
-  return typeof invoicePayment.invoice === "string"
-    ? invoicePayment.invoice
-    : invoicePayment.invoice.id;
-}
+  if (!invoicePayment) return;
 
-function extractStringId(
-  field: string | { id: string } | null | undefined
-): string | null {
-  if (!field) return null;
-  return typeof field === "string" ? field : field.id;
-}
-
-async function updateInvoiceRefundStatus(invoiceId: string | null) {
-  if (!invoiceId) return;
+  const invoiceId =
+    typeof invoicePayment.invoice === "string"
+      ? invoicePayment.invoice
+      : invoicePayment.invoice.id;
 
   const invoice = await db
     .select()
@@ -259,109 +248,14 @@ async function updateInvoiceRefundStatus(invoiceId: string | null) {
     .then((r) => r[0]);
   if (!invoice) return;
 
-  const [result] = await db
-    .select({
-      total: sql<number>`COALESCE(SUM(${refunds.amount}), 0)`,
-    })
-    .from(refunds)
-    .where(
-      and(eq(refunds.invoiceId, invoiceId), eq(refunds.status, "succeeded"))
-    );
-
-  const succeededTotal = result?.total ?? 0;
-  if (succeededTotal <= 0) return;
-
   const newStatus =
-    succeededTotal >= invoice.totalAmount ? "void" : "uncollectible";
+    charge.amount_refunded >= invoice.totalAmount ? "void" : "uncollectible";
 
   await db
     .update(invoices)
     .set({ status: newStatus, updatedAt: new Date() })
     .where(eq(invoices.id, invoiceId));
-}
-
-export const createRefund = async (refund: Stripe.Refund) => {
-  const paymentIntentId = extractStringId(refund.payment_intent);
-  const chargeId = extractStringId(refund.charge);
-  const invoiceId = await resolveInvoiceId(paymentIntentId);
-
-  await db
-    .insert(refunds)
-    .values({
-      id: refund.id,
-      invoiceId,
-      chargeId,
-      paymentIntentId,
-      amount: refund.amount,
-      currency: refund.currency,
-      status: (refund.status ?? "pending") as RefundStatus,
-      reason: refund.reason ?? null,
-      failureReason: refund.failure_reason ?? null,
-      createdAt: new Date(refund.created * 1000),
-      updatedAt: new Date(),
-      metadata: (refund.metadata as Record<string, unknown>) ?? {},
-    })
-    .onConflictDoNothing();
-
-  await updateInvoiceRefundStatus(invoiceId);
 };
-
-export const updateRefund = async (refund: Stripe.Refund) => {
-  const paymentIntentId = extractStringId(refund.payment_intent);
-  const invoiceId = await resolveInvoiceId(paymentIntentId);
-
-  await db
-    .update(refunds)
-    .set({
-      status: (refund.status ?? "pending") as RefundStatus,
-      reason: refund.reason ?? null,
-      failureReason: refund.failure_reason ?? null,
-      invoiceId,
-      updatedAt: new Date(),
-    })
-    .where(eq(refunds.id, refund.id));
-
-  await updateInvoiceRefundStatus(invoiceId);
-};
-
-export const handleChargeRefunded = async (charge: Stripe.Charge) => {
-  const paymentIntentId = extractStringId(charge.payment_intent);
-  const invoiceId = await resolveInvoiceId(paymentIntentId);
-  const chargeId = charge.id;
-
-  if (charge.refunds?.data) {
-    for (const refund of charge.refunds.data) {
-      await db
-        .insert(refunds)
-        .values({
-          id: refund.id,
-          invoiceId,
-          chargeId,
-          paymentIntentId,
-          amount: refund.amount,
-          currency: refund.currency,
-          status: (refund.status ?? "pending") as RefundStatus,
-          reason: refund.reason ?? null,
-          failureReason: refund.failure_reason ?? null,
-          createdAt: new Date(refund.created * 1000),
-          updatedAt: new Date(),
-          metadata: (refund.metadata as Record<string, unknown>) ?? {},
-        })
-        .onConflictDoNothing();
-    }
-  }
-
-  await updateInvoiceRefundStatus(invoiceId);
-};
-
-export const revokeSubscriptionOnRefund = async (subscriptionId: string) => {
-  if (!subscriptionId) throw new Error("Subscription ID is required");
-
-  await stripeClient.subscriptions.cancel(subscriptionId);
-};
-// ----------------------------
-// 💸 Refunds END
-// ----------------------------
 
 // ----------------------------
 // 👤 Customers

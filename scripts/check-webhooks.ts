@@ -46,8 +46,7 @@ const CATEGORY_PREFIXES: [string, string][] = [
   ["product.", "products"],
   ["invoice.", "invoices"],
   ["customer.subscription.", "subscriptions"],
-  ["charge.", "refunds"],
-  ["refund.", "refunds"],
+  ["charge.", "charges"],
 ];
 
 function categorize(event: string): string {

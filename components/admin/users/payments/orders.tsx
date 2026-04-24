@@ -1,7 +1,7 @@
 import { useParams } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
-import { differenceInDays, format } from "date-fns";
+import { format } from "date-fns";
 import { Braces } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -54,22 +54,6 @@ export const Orders = () => {
               <Badge className="font-mono text-xs">
                 {row.original.id.slice(0, 16)}…
               </Badge>
-            ),
-          },
-          {
-            id: "can_request_refund",
-            header: "Can Request Refund",
-            cell: ({ row }) => (
-              <code className="bg-muted rounded-md p-1 text-xs">
-                {row.original.createdAt
-                  ? differenceInDays(
-                      new Date(),
-                      new Date(row.original.createdAt)
-                    ) <= 7
-                    ? "true"
-                    : "false"
-                  : "-"}
-              </code>
             ),
           },
           {

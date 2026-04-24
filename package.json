@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "env:check": "tsx scripts/check-env.ts",
-    "predev": "tsx scripts/check-env.ts",
-    "prebuild": "tsx scripts/check-env.ts && vitest run",
+    "predev": "tsx scripts/check-env.ts && tsx scripts/check-webhooks.ts",
+    "prebuild": "tsx scripts/check-env.ts && tsx scripts/check-webhooks.ts && vitest run",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",

@@ -18,13 +18,12 @@ import { sendEmail } from "../email";
 import {
   createInvoice,
   createProduct,
-  createRefund,
   createSubscription,
+  deleteProduct,
   deleteSubscription,
   handleChargeRefunded,
   updateInvoice,
   updateProduct,
-  updateRefund,
   updateSubscription,
 } from "./auth-action";
 
@@ -68,12 +67,12 @@ export const auth = betterAuth({
       },
     },
   },
-  socialProviders: {
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    },
-  },
+  // socialProviders: {
+  //   google: {
+  //     clientId: process.env.GOOGLE_CLIENT_ID as string,
+  //     clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+  //   },
+  // },
   advanced: {
     // crossSubDomainCookies: {
     //   enabled: true,
@@ -87,9 +86,6 @@ export const auth = betterAuth({
     cookieCache: {
       enabled: true,
       maxAge: 5 * 60, // Cache duration in seconds (5 minutes)
-      refreshCache: {
-        updateAge: 60, // Refresh when 60 seconds remain before expiry
-      },
     },
   },
   databaseHooks: {
@@ -146,14 +142,16 @@ export const auth = betterAuth({
         // Sync products
         if (
           event.type === "product.created" ||
-          event.type === "product.updated"
+          event.type === "product.updated" ||
+          event.type === "product.deleted"
         ) {
           const product = event.data.object as Stripe.Product;
-          console.log(product);
           if (event.type === "product.created") {
             await createProduct(product);
-          } else {
+          } else if (event.type === "product.updated") {
             await updateProduct(product);
+          } else {
+            await deleteProduct(product);
           }
         }
 
@@ -186,24 +184,10 @@ export const auth = betterAuth({
           }
         }
 
-        // Sync refunds
+        // Sync refunds → update invoice status directly
         if (event.type === "charge.refunded") {
           const charge = event.data.object as Stripe.Charge;
           await handleChargeRefunded(charge);
-        }
-
-        if (
-          event.type === "charge.refund.updated" ||
-          event.type === "refund.created" ||
-          event.type === "refund.updated" ||
-          event.type === "refund.failed"
-        ) {
-          const refund = event.data.object as Stripe.Refund;
-          if (event.type === "refund.created") {
-            await createRefund(refund);
-          } else {
-            await updateRefund(refund);
-          }
         }
       },
     }),

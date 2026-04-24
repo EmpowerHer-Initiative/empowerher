@@ -2,17 +2,11 @@ import { cookies } from "next/headers";
 import { stripeClient } from "@/services/auth/auth";
 import { deleteCustomer } from "@/services/auth/auth-action";
 import { db } from "@/services/db/index";
-import {
-  invoices,
-  products,
-  refunds,
-  subscription,
-  user,
-} from "@/services/db/schema";
+import { invoices, products, subscription, user } from "@/services/db/schema";
 import { authenticatedProcedure, createTRPCRouter } from "@/services/trpc/init";
 import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { TRPCError } from "@trpc/server";
-import { desc, eq, or, sql } from "drizzle-orm";
+import { desc, eq, or } from "drizzle-orm";
 import { z } from "zod";
 
 export const billingRouter = createTRPCRouter({
@@ -122,10 +116,6 @@ export const billingRouter = createTRPCRouter({
             createdAt: invoices.createdAt,
             updatedAt: invoices.updatedAt,
             metadata: invoices.metadata,
-            refundedAmount: sql<number>`COALESCE((
-              SELECT SUM(r.amount) FROM refund r
-              WHERE r.invoice_id = ${invoices.id} AND r.status = 'succeeded'
-            ), 0)`.as("refunded_amount"),
           })
           .from(invoices)
           .where(or(eq(invoices.userId, userId), eq(invoices.email, email)))

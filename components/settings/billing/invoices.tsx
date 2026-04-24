@@ -30,22 +30,7 @@ const columns: ColumnDef<Invoice>[] = [
     accessorKey: "totalAmount",
     cell: ({ row }) => {
       const amount = row.original.totalAmount / 100;
-      const refunded = row.original.refundedAmount / 100;
-      const isRefunded = refunded > 0;
-      return (
-        <div>
-          <span
-            className={isRefunded ? "text-muted-foreground line-through" : ""}
-          >
-            ${amount.toFixed(2)}
-          </span>
-          {isRefunded && (
-            <span className="ml-1 text-xs text-red-500">
-              -${refunded.toFixed(2)}
-            </span>
-          )}
-        </div>
-      );
+      return <span>${amount.toFixed(2)}</span>;
     },
   },
   {
@@ -60,15 +45,12 @@ const columns: ColumnDef<Invoice>[] = [
     header: "Status",
     accessorKey: "status",
     cell: ({ row }) => {
-      const { status, refundedAmount, totalAmount } = row.original;
-      const isFullRefund = refundedAmount >= totalAmount && refundedAmount > 0;
-      const isPartialRefund =
-        refundedAmount > 0 && refundedAmount < totalAmount;
+      const { status } = row.original;
 
-      if (isFullRefund) {
+      if (status === "void") {
         return <Badge variant="secondary">refunded</Badge>;
       }
-      if (isPartialRefund) {
+      if (status === "uncollectible") {
         return <Badge variant="outline">partial refund</Badge>;
       }
 

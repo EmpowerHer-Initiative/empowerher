@@ -164,37 +164,6 @@ export const invoices = pgTable("invoice", {
   metadata: jsonb("metadata").$type<unknown>().notNull().default({}),
 });
 
-// Local mirror of Stripe refunds — synced via webhooks
-export const refunds = pgTable("refund", {
-  id: text("id").primaryKey(), // Stripe refund ID (re_xxx)
-  invoiceId: text("invoice_id"), // resolved via PaymentIntent
-  chargeId: text("charge_id"),
-  paymentIntentId: text("payment_intent_id"),
-  amount: integer("amount").notNull().default(0),
-  currency: text("currency").notNull().default("usd"),
-  status: text("status", {
-    enum: [
-      "pending",
-      "requires_action",
-      "succeeded",
-      "failed",
-      "canceled",
-    ] as const,
-  }).notNull(),
-  reason: text("reason", {
-    enum: [
-      "duplicate",
-      "expired_uncaptured_charge",
-      "fraudulent",
-      "requested_by_customer",
-    ] as const satisfies readonly Stripe.Refund.Reason[],
-  }),
-  failureReason: text("failure_reason"),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
-  metadata: jsonb("metadata").$type<unknown>().notNull().default({}),
-});
-
 export const webhookEvents = pgTable("webhook_events", {
   id: uuid("id")
     .primaryKey()
