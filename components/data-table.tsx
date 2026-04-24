@@ -46,7 +46,7 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
   const tableConfig =
     "table" in props
       ? props.table
-      : // eslint-disable-next-line react-hooks/rules-of-hooks
+      : // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/incompatible-library
         useReactTable({
           data: props.data,
           columns: props.columns,

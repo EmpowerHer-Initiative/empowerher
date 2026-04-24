@@ -2,11 +2,8 @@
 
 import { useMemo, useState } from "react";
 import {
-  useCheckout,
   useGeneratePortalLink,
-  useGetCustomerState,
   useSubscriptionDetails,
-  useSwitchPlan,
 } from "@/services/auth/hooks/use-payments";
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { useTRPC } from "@/services/trpc/client";
@@ -14,13 +11,7 @@ import { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useQuery } from "@tanstack/react-query";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import { format, formatDistanceToNow } from "date-fns";
-import {
-  ChevronDown,
-  ChevronRight,
-  CreditCard,
-  ExternalLink,
-  Loader2,
-} from "lucide-react";
+import { ChevronDown, ChevronRight, CreditCard, Loader2 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -342,14 +333,6 @@ export const BillingSubscriptions = () => {
 };
 
 const UpgradeSection = () => {
-  const { data } = useGetCustomerState();
-  const checkout = useCheckout();
-  const switchPlan = useSwitchPlan();
-
-  const handleUpgrade = (priceId: string) => {
-    checkout.mutate({ priceIds: [priceId] });
-  };
-
   return (
     <p className="text-muted-foreground text-sm">
       Configure your plans in <code>services/auth/auth.ts</code> under the
