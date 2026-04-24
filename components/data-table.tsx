@@ -1,5 +1,6 @@
 "use client";
 
+import { type ReactNode } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -27,6 +28,8 @@ type DataTableProps<TData, TValue> = {
   isLoading?: boolean | number;
   error?: TRPCClientErrorBase<DefaultErrorShape> | null;
   className?: string;
+  expandedRows?: Set<string>;
+  renderExpandedRow?: (row: Row<TData>) => ReactNode;
 } & (
   | {
       table: TableType<TData>;
@@ -50,7 +53,14 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
           getCoreRowModel: getCoreRowModel(),
         });
 
-  const { onRowClick, className, error, isLoading } = props;
+  const {
+    onRowClick,
+    className,
+    error,
+    isLoading,
+    expandedRows,
+    renderExpandedRow,
+  } = props;
 
   return (
     <div className={cn("isolate overflow-hidden rounded-md border", className)}>
@@ -91,25 +101,47 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
               </TableRow>
             ))
           ) : tableConfig.getRowModel().rows?.length ? (
-            tableConfig.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-                className={cn(
-                  "h-16",
-                  onRowClick
-                    ? "hover:bg-muted/50 cursor-pointer transition-colors"
-                    : ""
-                )}
-                onClick={() => onRowClick?.(row)}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="px-4">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
+            tableConfig.getRowModel().rows.map((row) => {
+              const isExpanded = expandedRows?.has(row.id);
+              return (
+                <>
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    className={cn(
+                      "h-16",
+                      onRowClick
+                        ? "hover:bg-muted/50 cursor-pointer transition-colors"
+                        : "",
+                      isExpanded ? "border-b-0" : ""
+                    )}
+                    onClick={() => onRowClick?.(row)}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className="px-4">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                  {isExpanded && renderExpandedRow && (
+                    <TableRow
+                      key={`${row.id}-expanded`}
+                      className="bg-muted/30 hover:bg-muted/30"
+                    >
+                      <TableCell
+                        colSpan={row.getVisibleCells().length}
+                        className="px-4 py-3"
+                      >
+                        {renderExpandedRow(row)}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </>
+              );
+            })
           ) : (
             <TableRow>
               <TableCell

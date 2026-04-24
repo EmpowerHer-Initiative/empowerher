@@ -8,6 +8,7 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
+import type Stripe from "stripe";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -85,7 +86,20 @@ export const subscription = pgTable("subscription", {
   referenceId: text("reference_id").notNull(),
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
-  status: text("status").notNull().default("incomplete"),
+  status: text("status", {
+    enum: [
+      "active",
+      "canceled",
+      "incomplete",
+      "incomplete_expired",
+      "past_due",
+      "paused",
+      "trialing",
+      "unpaid",
+    ] as const satisfies readonly Stripe.Subscription.Status[],
+  })
+    .notNull()
+    .default("incomplete"),
   periodStart: timestamp("period_start"),
   periodEnd: timestamp("period_end"),
   cancelAtPeriodEnd: boolean("cancel_at_period_end").default(false),
@@ -95,6 +109,9 @@ export const subscription = pgTable("subscription", {
   trialStart: timestamp("trial_start"),
   trialEnd: timestamp("trial_end"),
   seats: integer("seats"),
+  totalAmount: integer("total_amount").notNull().default(0),
+  currency: text("currency").notNull().default("usd"),
+  itemCount: integer("item_count").notNull().default(1),
   billingInterval: text("billing_interval"),
   stripeScheduleId: text("stripe_schedule_id"),
 });
@@ -129,11 +146,50 @@ export const invoices = pgTable("invoice", {
   billingReason: text("billing_reason"),
   totalAmount: integer("total_amount").notNull().default(0),
   invoiceNumber: text("invoice_number"),
-  status: text("status").notNull(),
+  status: text("status", {
+    enum: [
+      "draft",
+      "open",
+      "paid",
+      "uncollectible",
+      "void",
+    ] as const satisfies readonly Stripe.Invoice.Status[],
+  }).notNull(),
   discountAmount: integer("discount_amount").notNull().default(0),
   currency: text("currency").notNull().default("usd"),
   hostedInvoiceUrl: text("hosted_invoice_url"),
   pdfUrl: text("pdf_url"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+  metadata: jsonb("metadata").$type<unknown>().notNull().default({}),
+});
+
+// Local mirror of Stripe refunds — synced via webhooks
+export const refunds = pgTable("refund", {
+  id: text("id").primaryKey(), // Stripe refund ID (re_xxx)
+  invoiceId: text("invoice_id"), // resolved via PaymentIntent
+  chargeId: text("charge_id"),
+  paymentIntentId: text("payment_intent_id"),
+  amount: integer("amount").notNull().default(0),
+  currency: text("currency").notNull().default("usd"),
+  status: text("status", {
+    enum: [
+      "pending",
+      "requires_action",
+      "succeeded",
+      "failed",
+      "canceled",
+    ] as const,
+  }).notNull(),
+  reason: text("reason", {
+    enum: [
+      "duplicate",
+      "expired_uncaptured_charge",
+      "fraudulent",
+      "requested_by_customer",
+    ] as const satisfies readonly Stripe.Refund.Reason[],
+  }),
+  failureReason: text("failure_reason"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
   metadata: jsonb("metadata").$type<unknown>().notNull().default({}),

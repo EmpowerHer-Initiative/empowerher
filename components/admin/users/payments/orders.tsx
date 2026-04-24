@@ -39,19 +39,8 @@ export const Orders = () => {
     )
   );
 
-  // Calculate financial metrics
   const totalRevenue =
     orders?.reduce((acc, order) => acc + order.totalAmount, 0) || 0;
-
-  const totalRefunded =
-    orders?.reduce((acc, order) => {
-      if (order.status === "refunded") {
-        return acc + order.totalAmount;
-      }
-      return acc;
-    }, 0) || 0;
-
-  const netProfit = totalRevenue - totalRefunded;
 
   return (
     <div>
@@ -150,27 +139,9 @@ export const Orders = () => {
         data={orders || []}
       />
       <div className="bg-muted text-muted-foreground -mt-3 rounded-b-xl p-4 pt-7 text-xs">
-        <div className="mt-4 grid grid-cols-3 gap-4 text-center">
-          <div>
-            <p className="text-foreground text-lg font-medium">Total Revenue</p>
-            <p className="text-xl">${(totalRevenue / 100).toFixed(2)}</p>
-          </div>
-          <div>
-            <p className="text-foreground text-lg font-medium">
-              Total Refunded
-            </p>
-            <p className="text-xl text-red-600">
-              ${(totalRefunded / 100).toFixed(2)}
-            </p>
-          </div>
-          <div>
-            <p className="text-foreground text-lg font-medium">Net Profit</p>
-            <p
-              className={`text-xl ${netProfit >= 0 ? "text-green-600" : "text-red-600"}`}
-            >
-              ${(netProfit / 100).toFixed(2)}
-            </p>
-          </div>
+        <div className="mt-4 text-center">
+          <p className="text-foreground text-lg font-medium">Total Revenue</p>
+          <p className="text-xl">${(totalRevenue / 100).toFixed(2)}</p>
         </div>
       </div>
     </div>

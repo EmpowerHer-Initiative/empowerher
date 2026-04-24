@@ -1,16 +1,112 @@
+"use client";
+
 import { useMemo } from "react";
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { useTRPC } from "@/services/trpc/client";
+import { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useQuery } from "@tanstack/react-query";
+import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
+import { ExternalLink } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/data-table";
+
+type Invoice = RouterOutputs["billing"]["listInvoices"][number];
+
+const columns: ColumnDef<Invoice>[] = [
+  {
+    header: "Invoice",
+    accessorKey: "invoiceNumber",
+    cell: ({ row }) => (
+      <span className="font-mono text-sm">
+        {row.original.invoiceNumber || "Pending"}
+      </span>
+    ),
+  },
+  {
+    header: "Amount",
+    accessorKey: "totalAmount",
+    cell: ({ row }) => {
+      const amount = row.original.totalAmount / 100;
+      const refunded = row.original.refundedAmount / 100;
+      const isRefunded = refunded > 0;
+      return (
+        <div>
+          <span
+            className={isRefunded ? "text-muted-foreground line-through" : ""}
+          >
+            ${amount.toFixed(2)}
+          </span>
+          {isRefunded && (
+            <span className="ml-1 text-xs text-red-500">
+              -${refunded.toFixed(2)}
+            </span>
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    header: "Date",
+    accessorKey: "createdAt",
+    cell: ({ row }) =>
+      row.original.createdAt
+        ? format(row.original.createdAt, "MMM d, yyyy")
+        : "—",
+  },
+  {
+    header: "Status",
+    accessorKey: "status",
+    cell: ({ row }) => {
+      const { status, refundedAmount, totalAmount } = row.original;
+      const isFullRefund = refundedAmount >= totalAmount && refundedAmount > 0;
+      const isPartialRefund =
+        refundedAmount > 0 && refundedAmount < totalAmount;
+
+      if (isFullRefund) {
+        return <Badge variant="secondary">refunded</Badge>;
+      }
+      if (isPartialRefund) {
+        return <Badge variant="outline">partial refund</Badge>;
+      }
+
+      return (
+        <Badge variant={status === "paid" ? "default" : "destructive"}>
+          {status}
+        </Badge>
+      );
+    },
+  },
+  {
+    id: "actions",
+    header: "",
+    cell: ({ row }) => {
+      const invoice = row.original;
+      if (!invoice.hostedInvoiceUrl) return null;
+      return (
+        <div className="flex justify-end">
+          <a
+            href={invoice.hostedInvoiceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="ghost" size="icon" className="size-8">
+              <ExternalLink className="size-4" />
+            </Button>
+          </a>
+        </div>
+      );
+    },
+  },
+];
 
 export const BillingInvoices = () => {
   const { data: user } = useCurrentUser();
 
   const trpc = useTRPC();
-  const { data: orders } = useQuery(
+  const { data: orders, isLoading } = useQuery(
     trpc.billing.listInvoices.queryOptions(
       {
         userId: user?.user.id || "",
@@ -23,8 +119,7 @@ export const BillingInvoices = () => {
     )
   );
 
-  // Memoize filtered data to prevent unnecessary re-renders
-  const ordersByUserId = useMemo(
+  const invoices = useMemo(
     () => orders?.filter((order) => order.userId === user?.user.id) || [],
     [orders, user?.user]
   );
@@ -32,91 +127,9 @@ export const BillingInvoices = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-muted-foreground relative z-10 mt-4 text-sm">
-        Orders
+        Invoices
       </h3>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {ordersByUserId.length === 0 ? (
-          <div className="text-muted-foreground col-span-full text-center">
-            No orders found
-          </div>
-        ) : (
-          ordersByUserId.map((order) => {
-            const amount = order.totalAmount / 100;
-            const isRefund = amount < 0;
-            const createdAtLabel = order.createdAt
-              ? format(order.createdAt, "MMM d, yyyy")
-              : "Date pending";
-            const timeLabel = order.createdAt
-              ? format(order.createdAt, "hh:mm a")
-              : "Time pending";
-
-            return (
-              <a
-                key={order.id}
-                href={order.hostedInvoiceUrl ?? undefined}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                <div className="bg-primary shadow-dialog aspect-16/8 rounded-xl p-4 text-white transition-opacity hover:opacity-90">
-                  <div className="relative z-10 flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-xs tracking-[0.2em] text-white/70 uppercase">
-                        Invoice
-                      </p>
-                      <p className="text-sm font-semibold">
-                        {order.invoiceNumber || "Pending"}
-                      </p>
-                    </div>
-                    <Badge
-                      variant={
-                        order.totalAmount < 0
-                          ? "secondary"
-                          : order.status === "paid"
-                            ? "default"
-                            : "destructive"
-                      }
-                    >
-                      {order.totalAmount < 0 ? "refunded" : order.status}
-                    </Badge>
-                  </div>
-                  <div className="relative z-10 mt-4 grid grid-cols-2 gap-3 text-xs text-white/80">
-                    <div>
-                      <p className="text-white/60">Amount</p>
-                      <code className="text-sm font-semibold text-white">
-                        {isRefund
-                          ? `-$${Math.abs(amount).toFixed(2)}`
-                          : `$${amount.toFixed(2)}`}
-                      </code>
-                    </div>
-                    <div>
-                      <p className="text-white/60">Date</p>
-                      <p className="text-sm font-semibold text-white">
-                        {createdAtLabel}
-                      </p>
-                      <p className="text-[11px] text-white/60">{timeLabel}</p>
-                    </div>
-                    <div>
-                      <p className="text-white/60">Product</p>
-                      <code className="text-sm font-semibold text-white">
-                        {order.productId
-                          ? order.productId.slice(0, 10) + "..."
-                          : "—"}
-                      </code>
-                    </div>
-                    <div>
-                      <p className="text-white/60">Status note</p>
-                      <p className="text-sm font-semibold text-white">
-                        {isRefund ? "Refund processed" : "Purchase confirmed"}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            );
-          })
-        )}
-      </div>
+      <DataTable columns={columns} data={invoices} isLoading={isLoading} />
     </div>
   );
 };

@@ -20,6 +20,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "routes": "tsx scripts/list-routes.ts",
+    "webhooks:check": "tsx scripts/check-webhooks.ts",
     "prepare": "husky"
   },
   "dependencies": {

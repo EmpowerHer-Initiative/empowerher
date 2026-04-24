@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Accounts } from "@/components/settings/accounts";
 import { BillingInvoices } from "@/components/settings/billing/invoices";
-import { BillingPortal } from "@/components/settings/billing/portal";
+import { BillingSubscriptions } from "@/components/settings/billing/subscriptions";
 import { DangerSettings } from "@/components/settings/danger";
 import { GeneralAvatar } from "@/components/settings/general/avatar";
 import { EmailName } from "@/components/settings/general/email-name";
@@ -40,8 +40,7 @@ export default function SettingsPage() {
       </div>
       <div className="space-y-6">
         <h2 className="text-3xl font-semibold capitalize">Billing</h2>
-        <BillingPortal />
-        {/* <BillingSubscriptions /> */}
+        <BillingSubscriptions />
         <BillingInvoices />
       </div>
       <div className="space-y-6">

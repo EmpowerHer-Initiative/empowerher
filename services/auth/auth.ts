@@ -18,8 +18,14 @@ import { sendEmail } from "../email";
 import {
   createInvoice,
   createProduct,
+  createRefund,
+  createSubscription,
+  deleteSubscription,
+  handleChargeRefunded,
   updateInvoice,
   updateProduct,
+  updateRefund,
+  updateSubscription,
 } from "./auth-action";
 
 export const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -129,19 +135,6 @@ export const auth = betterAuth({
       stripeClient,
       stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
       createCustomerOnSignUp: true,
-      // subscription: {
-      //   enabled: true,
-      //   plans: [
-      //     {
-      //       name: "business",
-      //       priceId: "price_1T8OT4JWSaXYFWiaGaVL8b71",
-      //     },
-      //     {
-      //       name: "website",
-      //       priceId: "price_1T8Oc3JWSaXYFWiabxmbNXQ0",
-      //     },
-      //   ],
-      // },
       onEvent: async (event) => {
         // Audit trail
         await db.insert(webhookEvents).values({
@@ -175,6 +168,42 @@ export const auth = betterAuth({
         ) {
           const invoice = event.data.object as Stripe.Invoice;
           await updateInvoice(invoice);
+        }
+
+        // Sync subscriptions
+        if (
+          event.type === "customer.subscription.created" ||
+          event.type === "customer.subscription.updated" ||
+          event.type === "customer.subscription.deleted"
+        ) {
+          const sub = event.data.object as Stripe.Subscription;
+          if (event.type === "customer.subscription.created") {
+            await createSubscription(sub);
+          } else if (event.type === "customer.subscription.updated") {
+            await updateSubscription(sub);
+          } else {
+            await deleteSubscription(sub);
+          }
+        }
+
+        // Sync refunds
+        if (event.type === "charge.refunded") {
+          const charge = event.data.object as Stripe.Charge;
+          await handleChargeRefunded(charge);
+        }
+
+        if (
+          event.type === "charge.refund.updated" ||
+          event.type === "refund.created" ||
+          event.type === "refund.updated" ||
+          event.type === "refund.failed"
+        ) {
+          const refund = event.data.object as Stripe.Refund;
+          if (event.type === "refund.created") {
+            await createRefund(refund);
+          } else {
+            await updateRefund(refund);
+          }
         }
       },
     }),

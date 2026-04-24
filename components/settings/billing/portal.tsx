@@ -15,11 +15,14 @@ export const BillingPortal = () => {
       <CardContent>
         <Button
           onClick={() =>
-            generatePortalLink.mutate(undefined, {
-              onError: (error) => {
-                toast.error(error.message || "Failed to open billing portal");
-              },
-            })
+            generatePortalLink.mutate(
+              { returnUrl: "/settings" },
+              {
+                onError: (error) => {
+                  toast.error(error.message || "Failed to open billing portal");
+                },
+              }
+            )
           }
           size={"lg"}
           disabled={generatePortalLink.isPending}

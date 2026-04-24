@@ -3,8 +3,6 @@ import { queryClient, useTRPC } from "@/services/trpc/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { authClient } from "../auth-client";
-
 export const useGetCustomerState = () => {
   const trpc = useTRPC();
   return useQuery(trpc.billing.getCustomerState.queryOptions());
@@ -61,36 +59,30 @@ export const useCheckout = () => {
  * Custom hook for switching subscription plan
  */
 export const useSwitchPlan = () => {
-  return useMutation({
-    mutationFn: async ({
-      plan,
-      subscriptionId,
-    }: {
-      plan: string;
-      subscriptionId?: string;
-    }) => {
-      const { data, error } = await authClient.subscription.upgrade({
-        plan,
-        subscriptionId,
-        successUrl: "/settings",
-        cancelUrl: "/settings",
-      });
+  const trpc = useTRPC();
 
-      if (error) {
-        throw new Error(error.message || error.statusText);
-      }
+  return useMutation(
+    trpc.billing.switchPlan.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["payments", "getCustomerState"],
+        });
+        toast.success("Plan updated successfully");
+      },
+    })
+  );
+};
 
-      return data;
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({
-        queryKey: ["payments", "getCustomerState"],
-      });
-      if (data && "url" in data && data.url) {
-        /* eslint-disable-next-line react-hooks/immutability */
-        window.location.href = data.url;
-      }
-    },
+/**
+ * Fetches full subscription details live from Stripe (all items, status, etc.)
+ */
+export const useSubscriptionDetails = (subscriptionId: string | null) => {
+  const trpc = useTRPC();
+  return useQuery({
+    ...trpc.billing.getSubscriptionDetails.queryOptions({
+      subscriptionId: subscriptionId ?? "",
+    }),
+    enabled: !!subscriptionId,
   });
 };
 
@@ -98,23 +90,16 @@ export const useSwitchPlan = () => {
  * Custom hook for generating Stripe billing portal link
  */
 export const useGeneratePortalLink = () => {
-  return useMutation({
-    mutationFn: async () => {
-      const { data, error } = await authClient.subscription.billingPortal({
-        returnUrl: "/settings",
-      });
+  const trpc = useTRPC();
 
-      if (error) {
-        throw new Error(error.message || error.statusText);
-      }
-
-      return data;
-    },
-    onSuccess: (data) => {
-      if (data?.url) {
-        /* eslint-disable-next-line react-hooks/immutability */
-        window.location.href = data.url;
-      }
-    },
-  });
+  return useMutation(
+    trpc.billing.createPortalSession.mutationOptions({
+      onSuccess: (data) => {
+        if (data?.url) {
+          /* eslint-disable-next-line react-hooks/immutability */
+          window.location.href = data.url;
+        }
+      },
+    })
+  );
 };
