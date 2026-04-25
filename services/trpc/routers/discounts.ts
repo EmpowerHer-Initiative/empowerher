@@ -1,4 +1,4 @@
-import { getStripeClient } from "@/services/auth/auth";
+import { listPromotionCodes } from "@/services/payments";
 import {
   adminProcedure,
   baseProcedure,
@@ -10,26 +10,20 @@ import { z } from "zod";
 
 export const discountsRouter = createTRPCRouter({
   list: adminProcedure.use(featureGuard("payments")).query(async () => {
-    const stripe = getStripeClient();
-    const promotionCodes = await stripe.promotionCodes.list({
-      limit: 50,
-      expand: ["data.coupon"],
-    });
-    return promotionCodes.data;
+    return listPromotionCodes({ limit: 50 });
   }),
 
   verify: baseProcedure
     .use(featureGuard("payments"))
     .input(z.object({ code: z.string() }))
     .query(async ({ input }) => {
-      const stripe = getStripeClient();
-      const promotionCodes = await stripe.promotionCodes.list({
+      const codes = await listPromotionCodes({
         code: input.code,
         active: true,
         limit: 1,
       });
 
-      const promoCode = promotionCodes.data[0];
+      const promoCode = codes[0];
       if (!promoCode) {
         throw new TRPCError({
           code: "NOT_FOUND",
@@ -38,8 +32,8 @@ export const discountsRouter = createTRPCRouter({
       }
 
       if (
-        promoCode.expires_at &&
-        new Date(promoCode.expires_at * 1000) < new Date()
+        promoCode.expiresAt &&
+        new Date(promoCode.expiresAt * 1000) < new Date()
       ) {
         throw new TRPCError({
           code: "BAD_REQUEST",
@@ -48,8 +42,8 @@ export const discountsRouter = createTRPCRouter({
       }
 
       if (
-        promoCode.max_redemptions &&
-        promoCode.times_redeemed >= promoCode.max_redemptions
+        promoCode.maxRedemptions &&
+        promoCode.timesRedeemed >= promoCode.maxRedemptions
       ) {
         throw new TRPCError({
           code: "BAD_REQUEST",

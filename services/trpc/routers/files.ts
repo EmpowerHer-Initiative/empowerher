@@ -1,18 +1,17 @@
 import {
+  deleteObject,
+  getDownloadUrl,
+  getPublicUrl,
+  getUploadUrl,
+  listFiles,
+} from "@/services/storage";
+import {
   adminProcedure,
   authenticatedProcedure,
   baseProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
-import { r2, R2_BUCKET, R2_PUBLIC_URL } from "@/services/trpc/lib/r2";
 import { featureGuard } from "@/services/trpc/middleware/feature-guard";
-import {
-  DeleteObjectCommand,
-  GetObjectCommand,
-  ListObjectsV2Command,
-  PutObjectCommand,
-} from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import z from "zod";
 
 import { deleteFile } from "./files-action";
@@ -34,15 +33,7 @@ export const filesRouter = createTRPCRouter({
     .use(featureGuard("storage"))
     .input(z.object({ key: z.string().min(1) }))
     .query(async ({ input }) => {
-      const command = new GetObjectCommand({
-        Bucket: R2_BUCKET,
-        Key: input.key,
-      });
-
-      const signedUrl = await getSignedUrl(r2, command, {
-        expiresIn: SIGNED_URL_EXPIRY,
-      });
-
+      const { signedUrl } = await getDownloadUrl(input.key, SIGNED_URL_EXPIRY);
       return { signedUrl };
     }),
 
@@ -57,29 +48,7 @@ export const filesRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       const { search, cursor, limit = 15 } = input;
-
-      const command = new ListObjectsV2Command({
-        Bucket: R2_BUCKET,
-        MaxKeys: limit,
-        ContinuationToken: cursor,
-        Prefix: search ?? undefined,
-      });
-
-      const response = await r2.send(command);
-
-      const files = (response.Contents ?? [])
-        .filter((obj) => !obj.Key!.endsWith("/"))
-        .map((obj) => ({
-          key: obj.Key!,
-          size: obj.Size ?? 0,
-          lastModified: obj.LastModified?.toISOString() ?? null,
-          publicUrl: `${R2_PUBLIC_URL}/${obj.Key}`,
-        }));
-
-      return {
-        files,
-        nextCursor: response.NextContinuationToken ?? null,
-      };
+      return listFiles({ prefix: search, cursor, maxKeys: limit });
     }),
 
   getUploadUrl: authenticatedProcedure
@@ -97,22 +66,12 @@ export const filesRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const key = input.folder ? `${input.folder}/${input.key}` : input.key;
 
-      const command = new PutObjectCommand({
-        Bucket: R2_BUCKET,
-        Key: key,
-        ContentType: input.contentType,
-        ContentLength: input.size,
-      });
-
-      const signedUrl = await getSignedUrl(r2, command, {
+      return getUploadUrl({
+        key,
+        contentType: input.contentType,
+        contentLength: input.size,
         expiresIn: SIGNED_URL_EXPIRY,
       });
-
-      return {
-        signedUrl,
-        key,
-        publicUrl: `${R2_PUBLIC_URL}/${key}`,
-      };
     }),
 
   getPresignedUrl: adminProcedure
@@ -127,20 +86,16 @@ export const filesRouter = createTRPCRouter({
       const { fileName, contentType } = input;
       const key = `${Date.now()}-${fileName.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
 
-      const command = new PutObjectCommand({
-        Bucket: R2_BUCKET,
-        Key: key,
-        ContentType: contentType,
-      });
-
-      const presignedUrl = await getSignedUrl(r2, command, {
+      const result = await getUploadUrl({
+        key,
+        contentType,
         expiresIn: 300,
       });
 
       return {
-        presignedUrl,
-        key,
-        publicUrl: `${R2_PUBLIC_URL}/${key}`,
+        presignedUrl: result.signedUrl,
+        key: result.key,
+        publicUrl: result.publicUrl,
       };
     }),
 
@@ -159,25 +114,17 @@ export const filesRouter = createTRPCRouter({
       let key = input.oldKey;
 
       if (key.startsWith("http")) {
-        key = key.replace(R2_PUBLIC_URL + "/", "");
+        key = key.replace(getPublicUrl(""), "");
       }
 
-      const command = new PutObjectCommand({
-        Bucket: R2_BUCKET,
-        Key: key.split("?")[0],
-        ContentType: input.contentType,
-        ContentLength: input.size,
-      });
+      key = key.split("?")[0];
 
-      const signedUrl = await getSignedUrl(r2, command, {
+      return getUploadUrl({
+        key,
+        contentType: input.contentType,
+        contentLength: input.size,
         expiresIn: SIGNED_URL_EXPIRY,
       });
-
-      return {
-        signedUrl,
-        key,
-        publicUrl: `${R2_PUBLIC_URL}/${key}`,
-      };
     }),
 
   delete: authenticatedProcedure
@@ -192,7 +139,7 @@ export const filesRouter = createTRPCRouter({
     .use(featureGuard("storage"))
     .input(z.string().min(1))
     .mutation(async ({ input: key }) => {
-      await r2.send(new DeleteObjectCommand({ Bucket: R2_BUCKET, Key: key }));
+      await deleteObject(key);
       return { success: true };
     }),
 });

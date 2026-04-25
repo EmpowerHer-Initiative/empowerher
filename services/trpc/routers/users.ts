@@ -1,7 +1,8 @@
 import { headers } from "next/headers";
-import { auth, getStripeClient } from "@/services/auth/auth";
+import { auth } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
 import { user } from "@/services/db/schema";
+import { deleteCustomer } from "@/services/payments";
 import {
   adminProcedure,
   authenticatedProcedure,
@@ -201,8 +202,7 @@ export const usersRouter = createTRPCRouter({
         .then((res) => res[0]);
 
       if (dbUser?.stripeCustomerId && isFeatureEnabled("payments")) {
-        const stripe = getStripeClient();
-        await stripe.customers.del(dbUser.stripeCustomerId);
+        await deleteCustomer(dbUser.stripeCustomerId);
       }
 
       await db.delete(user).where(eq(user.id, input));
