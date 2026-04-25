@@ -253,6 +253,11 @@ Update `app/globals.css`:
 - Keep all variable names unchanged — only update values
 - Keep all `@import`, `@plugin`, `@custom-variant`, `@theme inline`, `@utility`, and `@layer base` blocks intact
 
+Update `context/aws-ses-setup.md`:
+- Replace all `{clientname}` placeholders with the client's name (lowercase, no spaces — e.g., `acme`)
+- Replace `CLIENTDOMAIN.com` with the client's actual domain
+- This makes the SES setup doc ready to copy-paste for this client
+
 [5/6] Done
 
 ---
