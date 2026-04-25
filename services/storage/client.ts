@@ -37,9 +37,17 @@ export function getPublicUrl(key: string): string {
 function normalizeKey(key: string): string {
   let normalized = key;
   if (normalized.startsWith("http")) {
-    normalized = normalized.replace(R2_PUBLIC_URL + "/", "");
+    normalized = decodeURIComponent(
+      normalized.replace(R2_PUBLIC_URL + "/", "")
+    );
   }
-  return normalized.split("?")[0];
+  normalized = normalized.split("?")[0];
+
+  if (normalized.includes("..") || normalized.startsWith("/")) {
+    throw new Error("Invalid file key");
+  }
+
+  return normalized;
 }
 
 export async function getDownloadUrl(

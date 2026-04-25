@@ -96,9 +96,7 @@ export async function sendEmail<T extends keyof TemplateProps>(
     );
     return { data: true };
   } catch (error) {
-    return {
-      error:
-        error instanceof Error ? error.message : "An unknown error occurred",
-    };
+    console.error("[email] Send failed:", error);
+    return { error: "Failed to send email" };
   }
 }

@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process";
+import { spawnSync } from "node:child_process";
 import { readdirSync } from "node:fs";
 import { resolve } from "node:path";
 
@@ -44,12 +44,11 @@ process.stdin.on("data", (key: string) => {
     const script = scripts[selected];
     const file = resolve(SCRIPTS_DIR, `${script}.ts`);
     console.log(`\x1b[1m▶ Running: ${script}\x1b[0m\n`);
-    try {
-      execSync(`tsx ${file}`, {
-        cwd: resolve(SCRIPTS_DIR, ".."),
-        stdio: "inherit",
-      });
-    } catch {
+    const result = spawnSync("tsx", [file], {
+      cwd: resolve(SCRIPTS_DIR, ".."),
+      stdio: "inherit",
+    });
+    if (result.status !== 0) {
       process.exit(1);
     }
     process.exit(0);

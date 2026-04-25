@@ -47,10 +47,6 @@ export const contactRouter = createTRPCRouter({
       });
 
       if (!response.ok) {
-        const body = await response.json().catch(() => ({}));
-        const message =
-          (body as { error?: string }).error || "Failed to send message";
-
         if (response.status === 429) {
           throw new TRPCError({
             code: "TOO_MANY_REQUESTS",
@@ -60,7 +56,7 @@ export const contactRouter = createTRPCRouter({
 
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message,
+          message: "Failed to send message",
         });
       }
 

@@ -17,6 +17,13 @@ import { siteConfig } from "@/lib/site";
 
 config();
 
+function sanitizeError(err: unknown): string {
+  const msg = err instanceof Error ? err.message : String(err);
+  return msg
+    .replace(/AKIA[0-9A-Z]{12,}/g, "AKIA***REDACTED***")
+    .replace(/arn:aws:[^\s'"]*/g, "arn:aws:***");
+}
+
 // ── ANSI helpers ──────────────────────────────────────────────────────────────
 const RESET = "\x1b[0m";
 const BOLD = "\x1b[1m";
@@ -177,7 +184,7 @@ async function checkAccountStatus() {
       );
     }
   } catch (err) {
-    console.log(red(`  ✗ ${err instanceof Error ? err.message : String(err)}`));
+    console.log(red(`  ✗ ${sanitizeError(err)}`));
   }
 }
 
@@ -222,7 +229,7 @@ async function verifyIdentityStatus() {
       console.log(`  ${identity.padEnd(40)} ${statusColor(status)}${label}`);
     }
   } catch (err) {
-    console.log(red(`  ✗ ${err instanceof Error ? err.message : String(err)}`));
+    console.log(red(`  ✗ ${sanitizeError(err)}`));
   }
 }
 
@@ -272,7 +279,7 @@ async function checkDkimStatus() {
       console.log();
     }
   } catch (err) {
-    console.log(red(`  ✗ ${err instanceof Error ? err.message : String(err)}`));
+    console.log(red(`  ✗ ${sanitizeError(err)}`));
   }
 }
 
@@ -305,7 +312,7 @@ async function sendTestEmail() {
       console.log(dim("    Check your inbox (and spam folder)"));
     }
   } catch (err) {
-    console.log(red(`  ✗ ${err instanceof Error ? err.message : String(err)}`));
+    console.log(red(`  ✗ ${sanitizeError(err)}`));
   }
 }
 
@@ -362,7 +369,7 @@ async function viewSendStatistics() {
       `  ${bold("Total".padEnd(22))} ${bold(String(totalSent).padEnd(8))} ${bold(String(totalSent - totalBounces - totalRejects).padEnd(11))} ${totalBounces > 0 ? red(bold(String(totalBounces).padEnd(9))) : bold(String(totalBounces).padEnd(9))} ${totalComplaints > 0 ? red(bold(String(totalComplaints).padEnd(12))) : bold(String(totalComplaints).padEnd(12))} ${totalRejects > 0 ? red(bold(String(totalRejects))) : bold(String(totalRejects))}`
     );
   } catch (err) {
-    console.log(red(`  ✗ ${err instanceof Error ? err.message : String(err)}`));
+    console.log(red(`  ✗ ${sanitizeError(err)}`));
   }
 }
 
@@ -402,7 +409,7 @@ async function checkSpecificEmail() {
       console.log(`  Token:     ${dim(attr.VerificationToken)}`);
     }
   } catch (err) {
-    console.log(red(`  ✗ ${err instanceof Error ? err.message : String(err)}`));
+    console.log(red(`  ✗ ${sanitizeError(err)}`));
   }
 }
 

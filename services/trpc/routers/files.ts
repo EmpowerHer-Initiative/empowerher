@@ -79,7 +79,9 @@ export const filesRouter = createTRPCRouter({
     .input(
       z.object({
         fileName: z.string().min(1),
-        contentType: z.string().min(1),
+        contentType: z.string().refine((v) => ALLOWED_TYPES.includes(v), {
+          message: "File type not allowed",
+        }),
       })
     )
     .mutation(async ({ input }) => {
