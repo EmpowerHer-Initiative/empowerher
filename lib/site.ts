@@ -28,7 +28,7 @@ export const siteConfig = {
   supportEmail: "support@alisamadii.com",
 
   // Email template branding
-  emailLogoUrl: "https://cdn.alisamadii.com/company/logo-white.png",
+  emailLogoUrl: "https://cdn.alisamadii.com/company/business-logo-black.png",
   emailPrimaryColor: "#141414",
 
   // Legal entity name (copyright, email signatures)

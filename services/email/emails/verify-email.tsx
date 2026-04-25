@@ -1,16 +1,5 @@
-import {
-  Body,
-  Container,
-  Head,
-  Heading,
-  Html,
-  Img,
-  Link,
-  Preview,
-  Section,
-  Tailwind,
-  Text,
-} from "@react-email/components";
+import EmailLayout from "@/services/email/components/layout";
+import { Heading, Section, Text } from "@react-email/components";
 
 import { siteConfig } from "@/lib/site";
 
@@ -20,133 +9,37 @@ interface VerifyEmailProps {
 
 export default function VerifyEmail({ verificationCode }: VerifyEmailProps) {
   return (
-    <Html>
-      <Head />
-      <Tailwind>
-        <Body
-          className="font-sans"
-          style={{
-            backgroundColor: siteConfig.emailPrimaryColor,
-            margin: 0,
-            padding: 0,
-          }}
+    <EmailLayout preview={`${siteConfig.name} — Verify your email`}>
+      <Heading
+        className="mt-0 mb-4 text-xl font-bold"
+        style={{ color: "#111111" }}
+      >
+        Verify your email
+      </Heading>
+      <Text className="mb-6 text-base leading-6 text-gray-600">
+        Enter this code to verify your email address.
+      </Text>
+
+      <Section
+        className="mb-6 p-6 text-center"
+        style={{
+          backgroundColor: "#f5f5f5",
+          borderRadius: "6px",
+        }}
+      >
+        <Text
+          className="my-0 font-mono text-3xl font-bold"
+          style={{ color: "#111111", letterSpacing: "0.15em" }}
         >
-          <Preview>{siteConfig.name} Email Verification</Preview>
-          <Container className="mx-auto max-w-xl px-4 py-12">
-            {/* Brand header */}
-            <Section className="mb-6 text-center">
-              <Img
-                src={siteConfig.emailLogoUrl}
-                width="40"
-                height="40"
-                alt={siteConfig.name}
-                className="mx-auto"
-              />
-            </Section>
+          {verificationCode}
+        </Text>
+      </Section>
 
-            {/* Card */}
-            <Section
-              style={{
-                backgroundColor: "#ffffff",
-                borderRadius: "12px",
-                overflow: "hidden",
-              }}
-            >
-              <Section className="px-10 pt-10 pb-6">
-                <Heading
-                  className="mt-0 mb-4 text-2xl font-bold"
-                  style={{ color: "#111111" }}
-                >
-                  Verify your email address
-                </Heading>
-                <Text className="mb-6 text-base leading-6 text-gray-600">
-                  Welcome to {siteConfig.name}! To complete your account setup,
-                  please use the verification code below.
-                </Text>
-
-                {/* Code box */}
-                <Section
-                  className="mb-6 p-6 text-center"
-                  style={{
-                    backgroundColor: "#f5f5f5",
-                    borderRadius: "8px",
-                    border: "1px solid #e0e0e0",
-                  }}
-                >
-                  <Text
-                    className="mb-1 text-xs font-semibold tracking-widest uppercase"
-                    style={{ color: siteConfig.emailPrimaryColor }}
-                  >
-                    Verification Code
-                  </Text>
-                  <Text
-                    className="my-2 font-mono text-4xl font-bold"
-                    style={{ color: "#111111", letterSpacing: "0.15em" }}
-                  >
-                    {verificationCode}
-                  </Text>
-                  <Text className="m-0 text-xs text-gray-500">
-                    Valid for 10 minutes
-                  </Text>
-                </Section>
-
-                <Text className="text-sm text-gray-500">
-                  If you didn&apos;t create an account, you can safely ignore
-                  this email.
-                </Text>
-              </Section>
-
-              {/* Footer inside card */}
-              <Section
-                className="px-10 py-6"
-                style={{ borderTop: "1px solid #f0f0f0" }}
-              >
-                <Text className="mb-2 text-xs text-gray-400">
-                  For your security, we will never ask you to verify your
-                  password, credit card, or banking information via email.
-                </Text>
-                <Text className="m-0 text-xs text-gray-400">
-                  Questions?{" "}
-                  <Link
-                    href={`mailto:${siteConfig.supportEmail}`}
-                    style={{ color: siteConfig.emailPrimaryColor }}
-                    className="no-underline"
-                  >
-                    Contact support
-                  </Link>{" "}
-                  &middot;{" "}
-                  <Link
-                    href={`${siteConfig.url}/privacy`}
-                    style={{ color: siteConfig.emailPrimaryColor }}
-                    className="no-underline"
-                  >
-                    Privacy
-                  </Link>{" "}
-                  &middot;{" "}
-                  <Link
-                    href={`${siteConfig.url}/terms`}
-                    style={{ color: siteConfig.emailPrimaryColor }}
-                    className="no-underline"
-                  >
-                    Terms
-                  </Link>
-                </Text>
-              </Section>
-            </Section>
-
-            {/* Outer footer */}
-            <Section className="mt-6 text-center">
-              <Text
-                className="m-0 text-xs"
-                style={{ color: "rgba(255,255,255,0.7)" }}
-              >
-                &copy; {new Date().getFullYear()} {siteConfig.name}
-              </Text>
-            </Section>
-          </Container>
-        </Body>
-      </Tailwind>
-    </Html>
+      <Text className="m-0 text-sm text-gray-400">
+        This code expires in 10 minutes. If you didn&apos;t request this, you
+        can safely ignore this email.
+      </Text>
+    </EmailLayout>
   );
 }
 

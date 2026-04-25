@@ -1,4 +1,6 @@
 import { createInterface } from "node:readline";
+// ── Email templates (imported from service) ──────────────────────────────────
+import { templates } from "@/services/email/index";
 import {
   GetAccountSendingEnabledCommand,
   GetIdentityDkimAttributesCommand,
@@ -61,25 +63,6 @@ function statusColor(status: string) {
 const NOREPLY_EMAIL = siteConfig.noreplyEmail;
 const SUPPORT_EMAIL = siteConfig.supportEmail;
 
-// ── Email templates registry (mirrors services/email/index.ts) ────────────────
-const EMAIL_TEMPLATES = [
-  {
-    name: "verifyEmail",
-    subject: "Verify your email",
-    fromLabel: "Verify your email",
-  },
-  {
-    name: "resetPassword",
-    subject: "Reset your password",
-    fromLabel: "Reset your password",
-  },
-  {
-    name: "accountDeleted",
-    subject: "Account deleted",
-    fromLabel: "Account deleted",
-  },
-];
-
 // ── SES Client ────────────────────────────────────────────────────────────────
 function createSesClient(): SESClient {
   const accessKeyId = process.env.AWS_ACCESS_KEY_VALUE;
@@ -118,7 +101,10 @@ let selected = 0;
 
 function renderMenu() {
   process.stdout.write(CLEAR);
-  console.log(`\n${bold("📧 SES Email Health Check")}\n`);
+  const domain = NOREPLY_EMAIL.split("@")[1] ?? "unknown";
+  console.log(
+    `\n${bold("📧 SES Email Health Check")}  ${dim(`(${domain})`)}\n`
+  );
   MENU_OPTIONS.forEach((name, i) => {
     if (i === selected) {
       console.log(`  ${cyan("❯")} ${bold(name)}`);
@@ -428,9 +414,11 @@ function listEmailTemplates() {
   );
   console.log(`  ${"─".repeat(70)}`);
 
-  for (const t of EMAIL_TEMPLATES) {
+  for (const [name, tmpl] of Object.entries(templates)) {
+    const subject =
+      typeof tmpl.subject === "function" ? "(dynamic)" : tmpl.subject;
     console.log(
-      `  ${cyan(t.name.padEnd(22))} ${t.subject.padEnd(30)} ${t.fromLabel}`
+      `  ${cyan(name.padEnd(22))} ${subject.padEnd(30)} ${tmpl.fromLabel}`
     );
   }
 

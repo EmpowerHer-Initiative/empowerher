@@ -5,7 +5,6 @@ import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
 import { isFeatureEnabled } from "@/config/features";
 import { siteConfig } from "@/lib/site";
 
-import AccountDeleted from "./emails/account-deleted";
 import ResetPassword from "./emails/reset-password";
 import VerifyEmail from "./emails/verify-email";
 import { renderEmail, renderText } from "./utils";
@@ -13,7 +12,6 @@ import { renderEmail, renderText } from "./utils";
 type TemplateProps = {
   verifyEmail: { verificationCode: string };
   resetPassword: { resetPasswordLink: string };
-  accountDeleted: { userName?: string; feedbackLink?: string };
 };
 
 // Template registry — add new emails here, that's it
@@ -23,7 +21,7 @@ type EmailTemplate = {
   component: React.ComponentType<Record<string, unknown>>;
 };
 
-const templates: Record<string, EmailTemplate> = {
+export const templates: Record<string, EmailTemplate> = {
   verifyEmail: {
     subject: "Verify your email",
     fromLabel: "Verify your email",
@@ -33,11 +31,6 @@ const templates: Record<string, EmailTemplate> = {
     subject: "Reset your password",
     fromLabel: "Reset your password",
     component: ResetPassword,
-  },
-  accountDeleted: {
-    subject: "Account deleted",
-    fromLabel: "Account deleted",
-    component: AccountDeleted,
   },
 };
 
@@ -66,10 +59,10 @@ function getSesClient() {
 const defaultFrom = siteConfig.noreplyEmail;
 
 // One function to rule them all
-export async function sendEmail<T extends keyof typeof templates>(
+export async function sendEmail<T extends keyof TemplateProps>(
   template: T,
   to: string | string[],
-  props: TemplateProps[keyof TemplateProps],
+  props: TemplateProps[T],
   options?: { from?: string }
 ) {
   if (!isFeatureEnabled("email")) {
