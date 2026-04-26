@@ -20,21 +20,20 @@ export const contactRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const apiUrl = process.env.CLIENT_API_URL;
-      const apiKey = process.env.CLIENT_API_SECRET;
-      const endpointId = process.env.CLIENT_CONTACT_ENDPOINT_ID;
+      const apiToken = process.env.CLIENT_API_TOKEN;
 
-      if (!apiUrl || !apiKey || !endpointId) {
+      if (!apiUrl || !apiToken) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Contact API is not configured",
         });
       }
 
-      const response = await fetch(`${apiUrl}/api/contact/${endpointId}`, {
+      const response = await fetch(`${apiUrl}/api/contact/token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": apiKey,
+          "x-api-key": apiToken,
         },
         body: JSON.stringify({
           name: input.name,
@@ -47,16 +46,23 @@ export const contactRouter = createTRPCRouter({
       });
 
       if (!response.ok) {
+        const body = await response.json().catch(() => null);
+        const serverMessage = (body as { error?: string })?.error;
+
+        console.error("[contact] API error:", response.status, serverMessage);
+
         if (response.status === 429) {
           throw new TRPCError({
             code: "TOO_MANY_REQUESTS",
-            message: "Rate limit exceeded. Please wait a minute and try again.",
+            message:
+              serverMessage ||
+              "Rate limit exceeded. Please wait a minute and try again.",
           });
         }
 
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Failed to send message",
+          message: serverMessage || "Failed to send message",
         });
       }
 

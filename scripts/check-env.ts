@@ -8,12 +8,7 @@ const ROOT = resolve(import.meta.dirname, "..");
 // Add a new feature: featureName: ["VAR_1", "VAR_2"]
 // Remove a feature: delete the line
 const FEATURE_ENV_MAP: Record<string, string[]> = {
-  _always: [
-    "DATABASE_URL",
-    "NEXT_PUBLIC_API_URL",
-    "CLIENT_API_SECRET",
-    "CLIENT_API_URL",
-  ],
+  _always: ["DATABASE_URL", "NEXT_PUBLIC_API_URL"],
   auth: ["BETTER_AUTH_SECRET"],
   cron: ["CRON_SECRET"],
   payments: ["STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET"],
@@ -24,7 +19,7 @@ const FEATURE_ENV_MAP: Record<string, string[]> = {
     "R2_BUCKET_NAME",
     "R2_PUBLIC_URL",
   ],
-  contact: ["CLIENT_CONTACT_ENDPOINT_ID"],
+  contact: ["CLIENT_API_TOKEN", "CLIENT_API_URL"],
   email: ["AWS_BUCKET_ORIGIN", "AWS_ACCESS_KEY_VALUE", "AWS_SECRET_KEY_VALUE"],
 };
 
