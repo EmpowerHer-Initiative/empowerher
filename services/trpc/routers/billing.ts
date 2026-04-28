@@ -1,6 +1,6 @@
 import { deleteCustomer as deleteCustomerAction } from "@/services/auth/auth-action";
 import { db } from "@/services/db/index";
-import { invoices, products, subscription, user } from "@/services/db/schema";
+import { orders, products, subscription, user } from "@/services/db/schema";
 import {
   createCheckoutSession,
   createCustomer,
@@ -13,17 +13,28 @@ import {
 import { authenticatedProcedure, createTRPCRouter } from "@/services/trpc/init";
 import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { TRPCError } from "@trpc/server";
-import { desc, eq, or } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
 
 export const billingRouter = createTRPCRouter({
   getCustomerState: authenticatedProcedure
     .use(featureGuard("payments"))
     .query(async ({ ctx }) => {
-      const subs = await db
-        .select()
-        .from(subscription)
-        .where(eq(subscription.referenceId, ctx.session.user.id));
+      const [subs, paidOrders] = await Promise.all([
+        db
+          .select()
+          .from(subscription)
+          .where(eq(subscription.referenceId, ctx.session.user.id)),
+        db
+          .select()
+          .from(orders)
+          .where(eq(orders.userId, ctx.session.user.id))
+          .then((rows) =>
+            rows.filter(
+              (o) => o.status === "paid" || o.status === "partially_refunded"
+            )
+          ),
+      ]);
 
       const activeSub = subs.find(
         (s) => s.status === "active" || s.status === "trialing"
@@ -32,7 +43,8 @@ export const billingRouter = createTRPCRouter({
       return {
         subscriptions: subs,
         activeSubscription: activeSub ?? null,
-        isUserHaveAccess: !!activeSub,
+        paidOrders,
+        isUserHaveAccess: !!activeSub || paidOrders.length > 0,
         currentPlan: activeSub?.plan ?? null,
         currentSubscriptionId: activeSub?.id ?? null,
       };
@@ -72,34 +84,24 @@ export const billingRouter = createTRPCRouter({
       }
     }),
 
-  listInvoices: authenticatedProcedure
+  listOrders: authenticatedProcedure
     .use(featureGuard("payments"))
-    .input(z.object({ userId: z.string(), email: z.string() }))
+    .input(z.object({ userId: z.string() }))
     .query(async ({ input }) => {
-      const { userId, email } = input;
-      return db
+      const rows = await db
         .select({
-          id: invoices.id,
-          userId: invoices.userId,
-          email: invoices.email,
-          productId: invoices.productId,
-          subscriptionId: invoices.subscriptionId,
-          billingName: invoices.billingName,
-          billingReason: invoices.billingReason,
-          totalAmount: invoices.totalAmount,
-          invoiceNumber: invoices.invoiceNumber,
-          status: invoices.status,
-          discountAmount: invoices.discountAmount,
-          currency: invoices.currency,
-          hostedInvoiceUrl: invoices.hostedInvoiceUrl,
-          pdfUrl: invoices.pdfUrl,
-          createdAt: invoices.createdAt,
-          updatedAt: invoices.updatedAt,
-          metadata: invoices.metadata,
+          order: orders,
+          productName: products.name,
         })
-        .from(invoices)
-        .where(or(eq(invoices.userId, userId), eq(invoices.email, email)))
-        .orderBy(desc(invoices.createdAt));
+        .from(orders)
+        .leftJoin(products, eq(products.id, orders.productId))
+        .where(eq(orders.userId, input.userId))
+        .orderBy(desc(orders.createdAt));
+
+      return rows.map((r) => ({
+        ...r.order,
+        productName: r.productName,
+      }));
     }),
 
   createCheckout: authenticatedProcedure
@@ -136,12 +138,19 @@ export const billingRouter = createTRPCRouter({
           .where(eq(user.id, ctx.session.user.id));
       }
 
+      // Determine mode based on product's recurring status
+      const [product] = await db
+        .select({ isRecurring: products.isRecurring })
+        .from(products)
+        .where(eq(products.priceId, priceIds[0]))
+        .limit(1);
+
       const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/$/, "");
 
       return createCheckoutSession({
         customerId,
         priceIds,
-        mode: "subscription",
+        mode: product?.isRecurring ? "subscription" : "payment",
         successUrl:
           successUrl || `${base}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancelUrl: cancelUrl || `${base}/`,

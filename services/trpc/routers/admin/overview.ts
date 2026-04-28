@@ -1,5 +1,5 @@
 import { db } from "@/services/db/index";
-import { invoices, subscription, user } from "@/services/db/schema";
+import { orders, subscription, user } from "@/services/db/schema";
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
 import { and, count, desc, eq, gte, sum } from "drizzle-orm";
 
@@ -15,8 +15,10 @@ export const adminOverviewRouter = createTRPCRouter({
       activeSubsResult,
       trialingSubsResult,
       canceledThisMonthResult,
-      totalRevenueResult,
-      revenueThisMonthResult,
+      subRevenueResult,
+      subRevenueThisMonthResult,
+      orderRevenueResult,
+      orderRevenueThisMonthResult,
       recentOrdersList,
     ] = await Promise.all([
       db.select({ count: count() }).from(user),
@@ -43,31 +45,47 @@ export const adminOverviewRouter = createTRPCRouter({
           )
         ),
       db
-        .select({ total: sum(invoices.totalAmount) })
-        .from(invoices)
-        .where(eq(invoices.status, "paid")),
+        .select({ total: sum(subscription.totalAmount) })
+        .from(subscription)
+        .where(eq(subscription.status, "active")),
       db
-        .select({ total: sum(invoices.totalAmount) })
-        .from(invoices)
+        .select({ total: sum(subscription.totalAmount) })
+        .from(subscription)
         .where(
           and(
-            eq(invoices.status, "paid"),
-            gte(invoices.createdAt, startOfMonth)
+            eq(subscription.status, "active"),
+            gte(subscription.periodStart, startOfMonth)
           )
         ),
       db
+        .select({ total: sum(orders.amount) })
+        .from(orders)
+        .where(eq(orders.status, "paid")),
+      db
+        .select({ total: sum(orders.amount) })
+        .from(orders)
+        .where(
+          and(eq(orders.status, "paid"), gte(orders.createdAt, startOfMonth))
+        ),
+      db
         .select({
-          id: invoices.id,
-          email: invoices.email,
-          billingName: invoices.billingName,
-          totalAmount: invoices.totalAmount,
-          status: invoices.status,
-          createdAt: invoices.createdAt,
+          id: orders.id,
+          userId: orders.userId,
+          amount: orders.amount,
+          status: orders.status,
+          createdAt: orders.createdAt,
         })
-        .from(invoices)
-        .orderBy(desc(invoices.createdAt))
+        .from(orders)
+        .orderBy(desc(orders.createdAt))
         .limit(5),
     ]);
+
+    const subRevenue = Number(subRevenueResult[0]?.total ?? 0);
+    const orderRevenue = Number(orderRevenueResult[0]?.total ?? 0);
+    const subRevenueMonth = Number(subRevenueThisMonthResult[0]?.total ?? 0);
+    const orderRevenueMonth = Number(
+      orderRevenueThisMonthResult[0]?.total ?? 0
+    );
 
     return {
       users: {
@@ -81,11 +99,17 @@ export const adminOverviewRouter = createTRPCRouter({
         canceledThisMonth: canceledThisMonthResult[0]?.count ?? 0,
       },
       revenue: {
-        total: Number(totalRevenueResult[0]?.total ?? 0),
-        thisMonth: Number(revenueThisMonthResult[0]?.total ?? 0),
+        total: subRevenue + orderRevenue,
+        thisMonth: subRevenueMonth + orderRevenueMonth,
         mrr: 0,
       },
-      recentOrders: recentOrdersList,
+      recentOrders: recentOrdersList.map((o) => ({
+        id: o.id,
+        totalAmount: o.amount,
+        status: o.status,
+        createdAt: o.createdAt?.toISOString() ?? null,
+        referenceId: o.userId,
+      })),
     };
   }),
 });

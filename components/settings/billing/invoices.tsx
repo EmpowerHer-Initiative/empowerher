@@ -1,35 +1,32 @@
 "use client";
 
-import { useMemo } from "react";
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { useTRPC } from "@/services/trpc/client";
 import { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useQuery } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { ExternalLink } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/data-table";
 
-type Invoice = RouterOutputs["billing"]["listInvoices"][number];
+type Order = RouterOutputs["billing"]["listOrders"][number];
 
-const columns: ColumnDef<Invoice>[] = [
+const columns: ColumnDef<Order>[] = [
   {
-    header: "Invoice",
-    accessorKey: "invoiceNumber",
+    header: "Product",
+    accessorKey: "productName",
     cell: ({ row }) => (
-      <span className="font-mono text-sm">
-        {row.original.invoiceNumber || "Pending"}
+      <span className="text-sm font-medium">
+        {row.original.productName || "—"}
       </span>
     ),
   },
   {
     header: "Amount",
-    accessorKey: "totalAmount",
+    accessorKey: "amount",
     cell: ({ row }) => {
-      const amount = row.original.totalAmount / 100;
+      const amount = row.original.amount / 100;
       return <span>${amount.toFixed(2)}</span>;
     },
   },
@@ -47,39 +44,20 @@ const columns: ColumnDef<Invoice>[] = [
     cell: ({ row }) => {
       const { status } = row.original;
 
-      if (status === "void") {
-        return <Badge variant="secondary">refunded</Badge>;
-      }
-      if (status === "uncollectible") {
-        return <Badge variant="outline">partial refund</Badge>;
-      }
+      const variant =
+        status === "paid"
+          ? "default"
+          : status === "refunded"
+            ? "secondary"
+            : status === "partially_refunded"
+              ? "outline"
+              : status === "void"
+                ? "destructive"
+                : "secondary";
 
-      return (
-        <Badge variant={status === "paid" ? "default" : "destructive"}>
-          {status}
-        </Badge>
-      );
-    },
-  },
-  {
-    id: "actions",
-    header: "",
-    cell: ({ row }) => {
-      const invoice = row.original;
-      if (!invoice.hostedInvoiceUrl) return null;
-      return (
-        <div className="flex justify-end">
-          <a
-            href={invoice.hostedInvoiceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button variant="ghost" size="icon" className="size-8">
-              <ExternalLink className="size-4" />
-            </Button>
-          </a>
-        </div>
-      );
+      const label = status === "partially_refunded" ? "partial refund" : status;
+
+      return <Badge variant={variant}>{label}</Badge>;
     },
   },
 ];
@@ -88,30 +66,28 @@ export const BillingInvoices = () => {
   const { data: user } = useCurrentUser();
 
   const trpc = useTRPC();
-  const { data: orders, isLoading } = useQuery(
-    trpc.billing.listInvoices.queryOptions(
+  const { data: ordersList, isLoading } = useQuery(
+    trpc.billing.listOrders.queryOptions(
       {
         userId: user?.user.id || "",
-        email: user?.user.email || "",
       },
       {
-        enabled: !!user?.user.id || !!user?.user.email,
+        enabled: !!user?.user.id,
         refetchOnWindowFocus: true,
       }
     )
   );
 
-  const invoices = useMemo(
-    () => orders?.filter((order) => order.userId === user?.user.id) || [],
-    [orders, user?.user]
-  );
-
   return (
     <div className="space-y-4">
       <h3 className="text-muted-foreground relative z-10 mt-4 text-sm">
-        Invoices
+        Payment History
       </h3>
-      <DataTable columns={columns} data={invoices} isLoading={isLoading} />
+      <DataTable
+        columns={columns}
+        data={ordersList ?? []}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

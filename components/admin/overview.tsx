@@ -121,31 +121,18 @@ export const AdminOverview = () => {
 
 type RecentOrder = {
   id: string;
-  email: string;
-  billingName: string | null;
   totalAmount: number;
   status: string;
   createdAt: string | null;
+  referenceId: string;
 };
 
 const recentOrdersColumns: ColumnDef<RecentOrder>[] = [
   {
-    accessorKey: "billingName",
-    header: "Customer",
+    accessorKey: "id",
+    header: "ID",
     cell: ({ row }) => (
-      <div className="flex items-center gap-3">
-        <div className="bg-muted flex size-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold">
-          {row.original.billingName?.charAt(0)?.toUpperCase() ?? "?"}
-        </div>
-        <div>
-          <p className="text-sm leading-none font-medium">
-            {row.original.billingName}
-          </p>
-          <p className="text-muted-foreground mt-0.5 text-xs">
-            {row.original.email}
-          </p>
-        </div>
-      </div>
+      <span className="font-mono text-xs">{row.original.id.slice(0, 16)}…</span>
     ),
   },
   {
@@ -162,7 +149,7 @@ const recentOrdersColumns: ColumnDef<RecentOrder>[] = [
     header: "Status",
     cell: ({ row }) => (
       <Badge
-        variant={row.original.status === "paid" ? "default" : "secondary"}
+        variant={row.original.status === "active" ? "default" : "secondary"}
         className="capitalize"
       >
         {row.original.status}

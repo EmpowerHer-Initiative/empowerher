@@ -57,9 +57,10 @@ const log = console.log;
 // ─── Event categories ──────────────────────────────────────────────
 const CATEGORY_PREFIXES: [string, string][] = [
   ["product.", "products"],
-  ["invoice.", "invoices"],
+  ["payment_intent.", "orders"],
+  ["charge.", "orders"],
+  ["checkout.", "orders"],
   ["customer.subscription.", "subscriptions"],
-  ["charge.", "charges"],
 ];
 
 function categorize(event: string): string {

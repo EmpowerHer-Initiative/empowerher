@@ -26,21 +26,22 @@ export const Orders = () => {
     })
   );
 
-  const { data: orders, isPending } = useQuery(
-    trpc.billing.listInvoices.queryOptions(
+  const { data: ordersList, isPending } = useQuery(
+    trpc.billing.listOrders.queryOptions(
       {
         userId: user?.id || "",
-        email: user?.email || "",
       },
       {
-        enabled: !!user?.id || !!user?.email,
+        enabled: !!user?.id,
         refetchOnWindowFocus: true,
       }
     )
   );
 
   const totalRevenue =
-    orders?.reduce((acc, order) => acc + order.totalAmount, 0) || 0;
+    ordersList
+      ?.filter((o) => o.status === "paid" || o.status === "partially_refunded")
+      .reduce((acc, o) => acc + o.amount - o.refundedAmount, 0) || 0;
 
   return (
     <div>
@@ -57,39 +58,40 @@ export const Orders = () => {
             ),
           },
           {
+            id: "product",
+            header: "Product",
+            cell: ({ row }) => <span>{row.original.productName || "—"}</span>,
+          },
+          {
             id: "status",
             header: "Status",
-            cell: ({ row }) => (
-              <Badge
-                variant={
-                  row.original.status === "paid"
-                    ? "default"
-                    : row.original.status === "open"
-                      ? "secondary"
-                      : "destructive"
-                }
-              >
-                {row.original.status}
-              </Badge>
-            ),
+            cell: ({ row }) => {
+              const { status } = row.original;
+              const variant =
+                status === "paid"
+                  ? "default"
+                  : status === "refunded"
+                    ? "secondary"
+                    : status === "partially_refunded"
+                      ? "outline"
+                      : status === "void"
+                        ? "destructive"
+                        : "secondary";
+              const label =
+                status === "partially_refunded" ? "partial refund" : status;
+              return <Badge variant={variant}>{label}</Badge>;
+            },
           },
           {
-            id: "total_amount",
+            id: "amount",
             header: "Amount",
             cell: ({ row }) => (
-              <span>${(row.original.totalAmount / 100).toFixed(2)}</span>
-            ),
-          },
-          {
-            id: "billing_reason",
-            header: "Billing Reason",
-            cell: ({ row }) => (
-              <Badge>{row.original.billingReason ?? "-"}</Badge>
+              <span>${(row.original.amount / 100).toFixed(2)}</span>
             ),
           },
           {
             id: "created_at",
-            header: "Created At",
+            header: "Date",
             cell: ({ row }) => (
               <span>
                 {format(
@@ -120,11 +122,11 @@ export const Orders = () => {
             ),
           },
         ]}
-        data={orders || []}
+        data={ordersList || []}
       />
       <div className="bg-muted text-muted-foreground -mt-3 rounded-b-xl p-4 pt-7 text-xs">
         <div className="mt-4 text-center">
-          <p className="text-foreground text-lg font-medium">Total Revenue</p>
+          <p className="text-foreground text-lg font-medium">Net Revenue</p>
           <p className="text-xl">${(totalRevenue / 100).toFixed(2)}</p>
         </div>
       </div>

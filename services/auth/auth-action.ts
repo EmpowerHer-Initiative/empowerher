@@ -1,6 +1,6 @@
 import { getStripeClient } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
-import { invoices, products, subscription, user } from "@/services/db/schema";
+import { orders, products, subscription, user } from "@/services/db/schema";
 import { eq } from "drizzle-orm";
 import type Stripe from "stripe";
 
@@ -153,73 +153,94 @@ export const deleteSubscription = async (sub: Stripe.Subscription) => {
 // ----------------------------
 
 // ----------------------------
-// 🛒 Orders (from Stripe invoices)
+// 🛒 Orders — one-time purchase lifecycle
 // ----------------------------
-export const createInvoice = async (invoice: Stripe.Invoice) => {
-  const customerId =
-    typeof invoice.customer === "string"
-      ? invoice.customer
-      : invoice.customer?.id;
 
-  // Look up user by stripeCustomerId
-  const dbUser = customerId
-    ? await db
-        .select()
-        .from(user)
-        .where(eq(user.stripeCustomerId, customerId))
-        .limit(1)
-        .then((res) => res[0])
-    : null;
+export const handleCheckoutCompleted = async (
+  session: Stripe.Checkout.Session
+) => {
+  // Only handle one-time purchases (subscriptions handled by Better Auth)
+  if (session.mode !== "payment") return;
+
+  const paymentIntentId =
+    typeof session.payment_intent === "string"
+      ? session.payment_intent
+      : session.payment_intent?.id;
+  if (!paymentIntentId) return;
+
+  const customerId =
+    typeof session.customer === "string"
+      ? session.customer
+      : session.customer?.id;
+  if (!customerId) return;
+
+  const dbUser = await findUserByCustomerId(customerId);
+  if (!dbUser) return;
+
+  // Fetch line items for product/price info
+  const stripeClient = getStripeClient();
+  const lineItems = await stripeClient.checkout.sessions.listLineItems(
+    session.id
+  );
+  const firstItem = lineItems.data[0];
+
+  const priceId = firstItem?.price?.id ?? null;
+  const productRef = firstItem?.price?.product;
+  const productId =
+    typeof productRef === "string"
+      ? productRef
+      : productRef && "id" in productRef
+        ? productRef.id
+        : null;
+
+  const status = session.payment_status === "paid" ? "paid" : "pending";
 
   await db
-    .insert(invoices)
+    .insert(orders)
     .values({
-      id: invoice.id,
-      userId: dbUser?.id ?? "",
-      email: invoice.customer_email ?? dbUser?.email ?? "",
-      productId:
-        invoice.lines?.data?.[0]?.pricing?.price_details?.price?.toString() ??
-        null,
-      subscriptionId:
-        invoice.parent?.subscription_details?.subscription?.toString() ?? null,
-      billingName: invoice.customer_name ?? null,
-      billingReason: invoice.billing_reason ?? null,
-      totalAmount: invoice.amount_paid ?? 0,
-      invoiceNumber: invoice.number ?? null,
-      status: invoice.status ?? "draft",
-      discountAmount: invoice.total_discount_amounts?.[0]?.amount ?? 0,
-      currency: invoice.currency ?? "usd",
-      hostedInvoiceUrl: invoice.hosted_invoice_url ?? null,
-      pdfUrl: invoice.invoice_pdf ?? null,
-      createdAt: new Date(invoice.created * 1000),
-      updatedAt: new Date(),
-      metadata: (invoice.metadata as Record<string, unknown>) ?? {},
+      id: paymentIntentId,
+      userId: dbUser.id,
+      stripeCustomerId: customerId,
+      productId,
+      priceId,
+      amount: session.amount_total ?? 0,
+      currency: session.currency ?? "usd",
+      status,
+      stripeSessionId: session.id,
+      metadata: session.metadata ?? {},
     })
     .onConflictDoNothing();
 };
 
-export const updateInvoice = async (invoice: Stripe.Invoice) => {
+export const handleAsyncPaymentSucceeded = async (
+  session: Stripe.Checkout.Session
+) => {
+  const paymentIntentId =
+    typeof session.payment_intent === "string"
+      ? session.payment_intent
+      : session.payment_intent?.id;
+  if (!paymentIntentId) return;
+
   await db
-    .update(invoices)
-    .set({
-      status: invoice.status ?? "draft",
-      totalAmount: invoice.amount_paid ?? 0,
-      invoiceNumber: invoice.number ?? null,
-      billingName: invoice.customer_name ?? null,
-      hostedInvoiceUrl: invoice.hosted_invoice_url ?? null,
-      pdfUrl: invoice.invoice_pdf ?? null,
-      updatedAt: new Date(),
-    })
-    .where(eq(invoices.id, invoice.id));
+    .update(orders)
+    .set({ status: "paid", updatedAt: new Date() })
+    .where(eq(orders.id, paymentIntentId));
 };
 
-// ----------------------------
-// 🛒 Orders END
-// ----------------------------
+export const handleAsyncPaymentFailed = async (
+  session: Stripe.Checkout.Session
+) => {
+  const paymentIntentId =
+    typeof session.payment_intent === "string"
+      ? session.payment_intent
+      : session.payment_intent?.id;
+  if (!paymentIntentId) return;
 
-// ----------------------------
-// 💸 Refunds — update invoice status directly
-// ----------------------------
+  await db
+    .update(orders)
+    .set({ status: "void", updatedAt: new Date() })
+    .where(eq(orders.id, paymentIntentId));
+};
 
 export const handleChargeRefunded = async (charge: Stripe.Charge) => {
   const paymentIntentId =
@@ -228,34 +249,29 @@ export const handleChargeRefunded = async (charge: Stripe.Charge) => {
       : charge.payment_intent?.id;
   if (!paymentIntentId) return;
 
-  const result = await getStripeClient().invoicePayments.list({
-    payment: { payment_intent: paymentIntentId, type: "payment_intent" },
-    limit: 1,
-  });
-  const invoicePayment = result.data[0];
-  if (!invoicePayment) return;
-
-  const invoiceId =
-    typeof invoicePayment.invoice === "string"
-      ? invoicePayment.invoice
-      : invoicePayment.invoice.id;
-
-  const invoice = await db
-    .select()
-    .from(invoices)
-    .where(eq(invoices.id, invoiceId))
+  // Only update if order exists (skip subscription charges)
+  const order = await db
+    .select({ id: orders.id, amount: orders.amount })
+    .from(orders)
+    .where(eq(orders.id, paymentIntentId))
     .limit(1)
     .then((r) => r[0]);
-  if (!invoice) return;
+  if (!order) return;
 
-  const newStatus =
-    charge.amount_refunded >= invoice.totalAmount ? "void" : "uncollectible";
-
+  const isFullRefund = charge.amount_refunded >= order.amount;
   await db
-    .update(invoices)
-    .set({ status: newStatus, updatedAt: new Date() })
-    .where(eq(invoices.id, invoiceId));
+    .update(orders)
+    .set({
+      status: isFullRefund ? "refunded" : "partially_refunded",
+      refundedAmount: charge.amount_refunded,
+      updatedAt: new Date(),
+    })
+    .where(eq(orders.id, paymentIntentId));
 };
+
+// ----------------------------
+// 🛒 Orders END
+// ----------------------------
 
 // ----------------------------
 // 👤 Customers

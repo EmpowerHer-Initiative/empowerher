@@ -18,13 +18,14 @@ import { isFeatureEnabled } from "@/config/features";
 
 import { sendEmail } from "../email";
 import {
-  createInvoice,
   createProduct,
   createSubscription,
   deleteProduct,
   deleteSubscription,
+  handleAsyncPaymentFailed,
+  handleAsyncPaymentSucceeded,
   handleChargeRefunded,
-  updateInvoice,
+  handleCheckoutCompleted,
   updateProduct,
   updateSubscription,
 } from "./auth-action";
@@ -168,20 +169,18 @@ export const auth = betterAuth({
                 }
               }
 
-              // Sync invoices → orders
-              if (
-                event.type === "invoice.paid" ||
-                event.type === "invoice.created"
-              ) {
-                const invoice = event.data.object as Stripe.Invoice;
-                await createInvoice(invoice);
+              // Orders — one-time purchase lifecycle
+              if (event.type === "checkout.session.completed") {
+                const session = event.data.object as Stripe.Checkout.Session;
+                await handleCheckoutCompleted(session);
               }
-              if (
-                event.type === "invoice.updated" ||
-                event.type === "invoice.payment_failed"
-              ) {
-                const invoice = event.data.object as Stripe.Invoice;
-                await updateInvoice(invoice);
+              if (event.type === "checkout.session.async_payment_succeeded") {
+                const session = event.data.object as Stripe.Checkout.Session;
+                await handleAsyncPaymentSucceeded(session);
+              }
+              if (event.type === "checkout.session.async_payment_failed") {
+                const session = event.data.object as Stripe.Checkout.Session;
+                await handleAsyncPaymentFailed(session);
               }
 
               // Sync subscriptions
@@ -200,7 +199,7 @@ export const auth = betterAuth({
                 }
               }
 
-              // Sync refunds → update invoice status directly
+              // Refunds → update order status
               if (event.type === "charge.refunded") {
                 const charge = event.data.object as Stripe.Charge;
                 await handleChargeRefunded(charge);
