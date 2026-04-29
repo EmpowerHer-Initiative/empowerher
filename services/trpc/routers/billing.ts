@@ -1,4 +1,5 @@
-import { deleteCustomer as deleteCustomerAction } from "@/services/auth/auth-action";
+import { removeCustomer } from "@/services/auth/actions";
+import { getStripeClient } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
 import { orders, products, subscription, user } from "@/services/db/schema";
 import {
@@ -88,7 +89,15 @@ export const billingRouter = createTRPCRouter({
     .use(featureGuard("payments"))
     .input(z.object({ userId: z.string() }))
     .query(async ({ input }) => {
-      const rows = await db
+      const dbUser = await db
+        .select()
+        .from(user)
+        .where(eq(user.id, input.userId))
+        .limit(1)
+        .then((r) => r[0]);
+
+      // Get one-time purchase orders from DB
+      const dbRows = await db
         .select({
           order: orders,
           productName: products.name,
@@ -98,10 +107,65 @@ export const billingRouter = createTRPCRouter({
         .where(eq(orders.userId, input.userId))
         .orderBy(desc(orders.createdAt));
 
-      return rows.map((r) => ({
-        ...r.order,
+      const dbOrders = dbRows.map((r) => ({
+        id: r.order.id,
+        amount: r.order.amount,
+        currency: r.order.currency,
+        status: r.order.status,
         productName: r.productName,
+        billingReason: r.order.billingReason,
+        refundedAmount: r.order.refundedAmount,
+        receiptUrl: r.order.receiptUrl,
+        createdAt: r.order.createdAt,
+        type: "one_time" as const,
       }));
+
+      // Get subscription invoices from Stripe SDK
+      let invoiceOrders: Array<{
+        id: string;
+        amount: number;
+        currency: string;
+        status: string;
+        productName: string | null;
+        billingReason: string;
+        refundedAmount: number;
+        receiptUrl: string | null;
+        createdAt: Date | null;
+        type: string;
+      }> = [];
+      if (dbUser?.stripeCustomerId) {
+        const stripe = getStripeClient();
+        const invoices = await stripe.invoices.list({
+          customer: dbUser.stripeCustomerId,
+          limit: 100,
+          status: "paid",
+        });
+
+        invoiceOrders = invoices.data.map((inv) => {
+          const firstLine = inv.lines?.data?.[0];
+          const description = firstLine
+            ? (firstLine as { description?: string }).description
+            : null;
+
+          return {
+            id: inv.id,
+            amount: inv.amount_paid,
+            currency: inv.currency,
+            status: inv.status ?? "paid",
+            productName: description ?? null,
+            billingReason: inv.billing_reason ?? "subscription",
+            refundedAmount: 0,
+            receiptUrl: inv.hosted_invoice_url ?? null,
+            createdAt: new Date(inv.created * 1000),
+            type: "subscription" as const,
+          };
+        });
+      }
+
+      // Merge and sort by date descending
+      return [...dbOrders, ...invoiceOrders].sort(
+        (a, b) => (b.createdAt?.getTime() ?? 0) - (a.createdAt?.getTime() ?? 0)
+      );
     }),
 
   createCheckout: authenticatedProcedure
@@ -257,7 +321,7 @@ export const billingRouter = createTRPCRouter({
         await deleteCustomer(dbUser.stripeCustomerId);
       }
 
-      await deleteCustomerAction(dbUser?.email ?? "");
+      await removeCustomer(dbUser?.email ?? "");
 
       return true;
     }),

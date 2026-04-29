@@ -154,6 +154,7 @@ export const orders = pgTable("order", {
   refundedAmount: integer("refunded_amount").notNull().default(0),
   billingReason: text("billing_reason").notNull().default("purchase"),
   stripeSessionId: text("stripe_session_id"),
+  receiptUrl: text("receipt_url"),
   metadata: jsonb("metadata").$type<unknown>().notNull().default({}),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),

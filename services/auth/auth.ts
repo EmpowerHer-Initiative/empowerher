@@ -18,17 +18,17 @@ import { isFeatureEnabled } from "@/config/features";
 
 import { sendEmail } from "../email";
 import {
+  completeCheckout,
+  confirmAsyncPayment,
   createProduct,
   createSubscription,
   deleteProduct,
   deleteSubscription,
-  handleAsyncPaymentFailed,
-  handleAsyncPaymentSucceeded,
-  handleChargeRefunded,
-  handleCheckoutCompleted,
+  failAsyncPayment,
+  processRefund,
   updateProduct,
   updateSubscription,
-} from "./auth-action";
+} from "./actions";
 
 const stripeClient = isFeatureEnabled("payments")
   ? new Stripe(process.env.STRIPE_SECRET_KEY!)
@@ -172,15 +172,15 @@ export const auth = betterAuth({
               // Orders — one-time purchase lifecycle
               if (event.type === "checkout.session.completed") {
                 const session = event.data.object as Stripe.Checkout.Session;
-                await handleCheckoutCompleted(session);
+                await completeCheckout(session);
               }
               if (event.type === "checkout.session.async_payment_succeeded") {
                 const session = event.data.object as Stripe.Checkout.Session;
-                await handleAsyncPaymentSucceeded(session);
+                await confirmAsyncPayment(session);
               }
               if (event.type === "checkout.session.async_payment_failed") {
                 const session = event.data.object as Stripe.Checkout.Session;
-                await handleAsyncPaymentFailed(session);
+                await failAsyncPayment(session);
               }
 
               // Sync subscriptions
@@ -202,7 +202,7 @@ export const auth = betterAuth({
               // Refunds → update order status
               if (event.type === "charge.refunded") {
                 const charge = event.data.object as Stripe.Charge;
-                await handleChargeRefunded(charge);
+                await processRefund(charge);
               }
             },
           }),

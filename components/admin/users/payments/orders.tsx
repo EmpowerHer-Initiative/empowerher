@@ -2,7 +2,7 @@ import { useParams } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { Braces } from "lucide-react";
+import { Braces, ExternalLink } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -100,6 +100,22 @@ export const Orders = () => {
                 )}
               </span>
             ),
+          },
+          {
+            id: "receipt",
+            header: "Receipt",
+            cell: ({ row }) =>
+              row.original.receiptUrl ? (
+                <a
+                  href={row.original.receiptUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button variant="outline" size="icon">
+                    <ExternalLink />
+                  </Button>
+                </a>
+              ) : null,
           },
           {
             id: "json-data",

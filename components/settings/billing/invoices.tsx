@@ -6,8 +6,10 @@ import { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useQuery } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
+import { ExternalLink } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/data-table";
 
 type Order = RouterOutputs["billing"]["listOrders"][number];
@@ -59,6 +61,22 @@ const columns: ColumnDef<Order>[] = [
 
       return <Badge variant={variant}>{label}</Badge>;
     },
+  },
+  {
+    id: "receipt",
+    cell: ({ row }) =>
+      row.original.receiptUrl ? (
+        <a
+          href={row.original.receiptUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button variant="outline" size="sm">
+            <ExternalLink className="mr-1 h-3 w-3" />
+            Receipt
+          </Button>
+        </a>
+      ) : null,
   },
 ];
 
