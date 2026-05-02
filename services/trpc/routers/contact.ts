@@ -29,7 +29,7 @@ export const contactRouter = createTRPCRouter({
         });
       }
 
-      const response = await fetch(`${apiUrl}/api/contact/token`, {
+      const response = await fetch(`${apiUrl}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

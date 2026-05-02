@@ -114,6 +114,7 @@ export const subscription = pgTable("subscription", {
   itemCount: integer("item_count").notNull().default(1),
   billingInterval: text("billing_interval"),
   stripeScheduleId: text("stripe_schedule_id"),
+  metadata: jsonb("metadata").$type<unknown>().notNull().default({}),
 });
 
 // Local mirror of Stripe products — synced via webhooks

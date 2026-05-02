@@ -43,6 +43,7 @@ export async function createCheckoutSession(
     line_items: input.priceIds.map((id) => ({ price: id, quantity: 1 })),
     success_url: input.successUrl,
     cancel_url: input.cancelUrl,
+    metadata: input.metadata,
     ...(input.mode === "payment" && {
       payment_intent_data: {
         metadata: {

@@ -1,11 +1,14 @@
 import { db } from "@/services/db/index";
-import { subscription } from "@/services/db/schema";
+import { products, subscription } from "@/services/db/schema";
 import { eq } from "drizzle-orm";
 import type Stripe from "stripe";
 
 import { findUserByCustomerId } from "./helpers";
 
-function buildSubscriptionValues(sub: Stripe.Subscription, userId: string) {
+async function buildSubscriptionValues(
+  sub: Stripe.Subscription,
+  userId: string
+) {
   const customerId =
     typeof sub.customer === "string" ? sub.customer : sub.customer.id;
   const firstItem = sub.items.data[0];
@@ -15,6 +18,29 @@ function buildSubscriptionValues(sub: Stripe.Subscription, userId: string) {
     0
   );
   const currency = firstItem?.price?.currency ?? "usd";
+
+  // Look up product metadata to merge with subscription metadata
+  const productRef = firstItem?.price?.product;
+  const productId =
+    typeof productRef === "string"
+      ? productRef
+      : productRef && "id" in productRef
+        ? productRef.id
+        : null;
+
+  const product = productId
+    ? await db
+        .select({ metadata: products.metadata })
+        .from(products)
+        .where(eq(products.id, productId))
+        .limit(1)
+        .then((r) => r[0])
+    : null;
+
+  const productMeta =
+    product?.metadata && typeof product.metadata === "object"
+      ? (product.metadata as Record<string, unknown>)
+      : {};
 
   return {
     plan: firstItem?.price?.lookup_key ?? firstItem?.price?.id ?? "unknown",
@@ -37,6 +63,7 @@ function buildSubscriptionValues(sub: Stripe.Subscription, userId: string) {
     currency,
     itemCount: sub.items.data.length,
     billingInterval: firstItem?.price?.recurring?.interval ?? null,
+    metadata: { ...sub.metadata, ...productMeta },
   };
 }
 
@@ -48,7 +75,7 @@ export const createSubscription = async (sub: Stripe.Subscription) => {
 
   await db
     .insert(subscription)
-    .values({ id: sub.id, ...buildSubscriptionValues(sub, dbUser.id) })
+    .values({ id: sub.id, ...(await buildSubscriptionValues(sub, dbUser.id)) })
     .onConflictDoNothing();
 };
 
@@ -60,7 +87,7 @@ export const updateSubscription = async (sub: Stripe.Subscription) => {
 
   await db
     .update(subscription)
-    .set(buildSubscriptionValues(sub, dbUser.id))
+    .set(await buildSubscriptionValues(sub, dbUser.id))
     .where(eq(subscription.stripeSubscriptionId, sub.id));
 };
 

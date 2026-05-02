@@ -116,6 +116,7 @@ export const billingRouter = createTRPCRouter({
         billingReason: r.order.billingReason,
         refundedAmount: r.order.refundedAmount,
         receiptUrl: r.order.receiptUrl,
+        metadata: r.order.metadata,
         createdAt: r.order.createdAt,
         type: "one_time" as const,
       }));
@@ -130,6 +131,7 @@ export const billingRouter = createTRPCRouter({
         billingReason: string;
         refundedAmount: number;
         receiptUrl: string | null;
+        metadata: unknown;
         createdAt: Date | null;
         type: string;
       }> = [];
@@ -156,6 +158,7 @@ export const billingRouter = createTRPCRouter({
             billingReason: inv.billing_reason ?? "subscription",
             refundedAmount: 0,
             receiptUrl: inv.hosted_invoice_url ?? null,
+            metadata: {},
             createdAt: new Date(inv.created * 1000),
             type: "subscription" as const,
           };
@@ -202,12 +205,24 @@ export const billingRouter = createTRPCRouter({
           .where(eq(user.id, ctx.session.user.id));
       }
 
-      // Determine mode based on product's recurring status
+      // Determine mode and grab product metadata for the checkout session
       const [product] = await db
-        .select({ isRecurring: products.isRecurring })
+        .select({
+          isRecurring: products.isRecurring,
+          metadata: products.metadata,
+        })
         .from(products)
         .where(eq(products.priceId, priceIds[0]))
         .limit(1);
+
+      const productMeta =
+        product?.metadata && typeof product.metadata === "object"
+          ? Object.fromEntries(
+              Object.entries(product.metadata as Record<string, unknown>).map(
+                ([k, v]) => [k, String(v)]
+              )
+            )
+          : undefined;
 
       const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/$/, "");
 
@@ -215,6 +230,7 @@ export const billingRouter = createTRPCRouter({
         customerId,
         priceIds,
         mode: product?.isRecurring ? "subscription" : "payment",
+        metadata: productMeta,
         successUrl:
           successUrl || `${base}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancelUrl: cancelUrl || `${base}/`,

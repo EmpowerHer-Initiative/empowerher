@@ -14,6 +14,7 @@ export type CreateCheckoutInput = {
   mode: "subscription" | "payment";
   successUrl: string;
   cancelUrl: string;
+  metadata?: Record<string, string>;
 };
 
 export type CreateCheckoutOutput = {
