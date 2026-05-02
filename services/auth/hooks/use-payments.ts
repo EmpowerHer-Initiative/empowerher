@@ -64,14 +64,16 @@ export const useSwitchPlan = () => {
   return useMutation(
     trpc.billing.switchPlan.mutationOptions({
       onSuccess: (_data, variables) => {
-        queryClient.invalidateQueries({
-          queryKey: trpc.billing.getCustomerState.queryKey(),
-        });
         toast.success(
           variables.immediate !== false
             ? "Plan upgraded successfully"
             : "Downgrade scheduled for end of billing period"
         );
+        setTimeout(() => {
+          queryClient.invalidateQueries({
+            queryKey: trpc.billing.getCustomerState.queryKey(),
+          });
+        }, 2000);
       },
       onError: () => {
         toast.error("Failed to switch plan");

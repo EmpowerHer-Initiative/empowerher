@@ -131,6 +131,25 @@ function SubscriptionDetailsPanel({
         </p>
       )}
 
+      {data?.scheduledChange && (
+        <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm dark:border-amber-800 dark:bg-amber-950">
+          <p className="font-medium text-amber-800 dark:text-amber-200">
+            Scheduled plan change
+          </p>
+          <p className="text-amber-700 dark:text-amber-300">
+            Switching to{" "}
+            <span className="font-medium">
+              {data.scheduledChange.newProductName ?? "new plan"}
+            </span>{" "}
+            on{" "}
+            {format(
+              new Date(data.scheduledChange.effectiveDate * 1000),
+              "MMM d, yyyy"
+            )}
+          </p>
+        </div>
+      )}
+
       {data && data.items.length > 0 && (
         <div className="rounded-md border">
           <table className="w-full text-sm">

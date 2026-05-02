@@ -48,6 +48,12 @@ export type SubscriptionItem = {
   quantity: number;
 };
 
+export type ScheduledPlanChange = {
+  newPriceId: string;
+  newProductName: string | null;
+  effectiveDate: number;
+};
+
 export type SubscriptionDetails = {
   id: string;
   status: string;
@@ -57,6 +63,7 @@ export type SubscriptionDetails = {
   currentPeriodStart: number | null;
   currentPeriodEnd: number | null;
   items: SubscriptionItem[];
+  scheduledChange: ScheduledPlanChange | null;
 };
 
 export type SwitchPlanInput = {

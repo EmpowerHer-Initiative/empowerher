@@ -36,7 +36,7 @@ const formSchema = z
 
 export const SignupForm = () => {
   const router = useRouter();
-  const { setIsOpen, setEmail } = useNugsVerifyEmail();
+  const { isOpen, setIsOpen, setEmail } = useNugsVerifyEmail();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
   const productId = searchParams.get("productId");
@@ -46,8 +46,8 @@ export const SignupForm = () => {
   const { data: user } = useCurrentUser();
 
   useEffect(() => {
-    if (user) router.replace(destination);
-  }, [user, router, destination]);
+    if (user && !isOpen) router.replace(destination);
+  }, [user, isOpen, router, destination]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

@@ -89,8 +89,46 @@ export async function getSubscriptionDetails(
 ): Promise<SubscriptionDetails> {
   const stripe = getStripeClient();
   const stripeSub = await stripe.subscriptions.retrieve(subscriptionId, {
-    expand: ["items.data.price.product"],
+    expand: ["items.data.price.product", "schedule"],
   });
+
+  // Check for a scheduled plan change
+  let scheduledChange: SubscriptionDetails["scheduledChange"] = null;
+  const schedule =
+    typeof stripeSub.schedule === "object" && stripeSub.schedule
+      ? stripeSub.schedule
+      : null;
+
+  if (
+    schedule &&
+    (schedule.status === "active" || schedule.status === "not_started") &&
+    schedule.phases.length > 1
+  ) {
+    const nextPhase = schedule.phases[schedule.phases.length - 1];
+    const nextItem = nextPhase.items[0];
+    if (nextItem) {
+      const nextPriceId =
+        typeof nextItem.price === "string" ? nextItem.price : nextItem.price.id;
+      const currentPriceId = stripeSub.items.data[0]?.price.id;
+
+      if (nextPriceId !== currentPriceId) {
+        // Fetch the product name for the upcoming plan
+        const nextPrice = await stripe.prices.retrieve(nextPriceId, {
+          expand: ["product"],
+        });
+        const nextProduct =
+          typeof nextPrice.product === "object" && "name" in nextPrice.product
+            ? nextPrice.product
+            : null;
+
+        scheduledChange = {
+          newPriceId: nextPriceId,
+          newProductName: nextProduct?.name ?? null,
+          effectiveDate: nextPhase.start_date,
+        };
+      }
+    }
+  }
 
   return {
     id: stripeSub.id,
@@ -121,6 +159,7 @@ export async function getSubscriptionDetails(
         quantity: item.quantity ?? 1,
       };
     }),
+    scheduledChange,
   };
 }
 
@@ -139,7 +178,7 @@ export async function switchPlan(
     // Upgrade: apply immediately with proration
     const updated = await stripe.subscriptions.update(input.subscriptionId, {
       items: [{ id: itemId, price: input.newPriceId }],
-      proration_behavior: "create_prorations",
+      proration_behavior: "always_invoice",
     });
     return { subscriptionId: updated.id, status: updated.status };
   }
