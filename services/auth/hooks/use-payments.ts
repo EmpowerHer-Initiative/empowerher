@@ -57,52 +57,24 @@ export const useCheckout = () => {
 
 /**
  * Custom hook for switching subscription plan.
- * Optimistically updates the cache so the UI reflects the change instantly,
- * then polls to sync once the Stripe webhook has updated the DB.
  */
 export const useSwitchPlan = () => {
   const trpc = useTRPC();
-  const queryKey = trpc.billing.getCustomerState.queryKey();
 
   return useMutation(
     trpc.billing.switchPlan.mutationOptions({
-      onMutate: async (variables) => {
-        await queryClient.cancelQueries({ queryKey });
-        const previous = queryClient.getQueryData(queryKey);
-
-        queryClient.setQueryData(queryKey, (old: typeof previous) => {
-          if (!old) return old;
-          return {
-            ...old,
-            currentPlan: variables.newPriceId,
-            activeSubscription: old.activeSubscription
-              ? { ...old.activeSubscription, plan: variables.newPriceId }
-              : old.activeSubscription,
-          };
-        });
-
-        return { previous };
-      },
-      onError: (_err, _variables, context) => {
-        if (context?.previous) {
-          queryClient.setQueryData(queryKey, context.previous);
-        }
-        toast.error("Failed to switch plan");
-      },
       onSuccess: (_data, variables) => {
+        queryClient.invalidateQueries({
+          queryKey: trpc.billing.getCustomerState.queryKey(),
+        });
         toast.success(
           variables.immediate !== false
             ? "Plan upgraded successfully"
             : "Downgrade scheduled for end of billing period"
         );
-
-        // Poll a few times to sync cache with DB after webhook lands
-        let attempts = 0;
-        const interval = setInterval(() => {
-          attempts++;
-          queryClient.invalidateQueries({ queryKey });
-          if (attempts >= 5) clearInterval(interval);
-        }, 2000);
+      },
+      onError: () => {
+        toast.error("Failed to switch plan");
       },
     })
   );

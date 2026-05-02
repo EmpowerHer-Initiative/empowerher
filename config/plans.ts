@@ -4,6 +4,7 @@
 export const plans = {
   basic: { name: "Basic", priceId: "price_1TQzZhG7Gvayjjm601pJ8OrY" },
   pro: { name: "Pro", priceId: "price_1TSj32G7Gvayjjm6l8dReLjM" },
+  business: { name: "Business", priceId: "price_1TSkgMG7Gvayjjm6uRAvYoWh" },
 } as const satisfies Record<string, { name: string; priceId: string }>;
 
 export const oneTimeProducts = {

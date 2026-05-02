@@ -64,7 +64,7 @@ export default function FeaturesPage() {
   return (
     <div className="space-y-16">
       <Button disabled={!access.hasPlanOrHigher("basic")}>Basic</Button>
-      <Button disabled={!access.hasPlanOrHigher("pro")}>Pro</Button>
+      <Button disabled={!access.hasPlanOrHigher("business")}>Business</Button>
       {/* ─── Subscription Plans ─────────────────────────────────── */}
       {subscriptionProducts.length > 0 && (
         <section className="space-y-6">
@@ -124,13 +124,14 @@ export default function FeaturesPage() {
                                 access.activeSubscription!
                                   .stripeSubscriptionId!,
                               newPriceId: product.priceId!,
-                              immediate: true,
+                              immediate: isUpgrade,
                             })
                           }
                           disabled={switchPlan.isPending}
                           variant={isUpgrade ? "default" : "outline"}
                         >
-                          {switchPlan.isPending
+                          {switchPlan.isPending &&
+                          switchPlan.variables?.newPriceId === product.priceId
                             ? "Processing…"
                             : isUpgrade
                               ? `Upgrade to ${product.name}`

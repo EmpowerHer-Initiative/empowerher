@@ -289,16 +289,25 @@ export const billingRouter = createTRPCRouter({
         });
       }
 
+      if (sub.status === "canceled") {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message:
+            "Cannot switch a canceled subscription. Please subscribe to a new plan.",
+        });
+      }
+
       try {
         return await switchPlan({
           subscriptionId: input.subscriptionId,
           newPriceId: input.newPriceId,
           immediate: input.immediate,
         });
-      } catch {
+      } catch (err) {
+        console.error(err);
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to switch plan",
+          message: err instanceof Error ? err.message : "Failed to switch plan",
         });
       }
     }),
