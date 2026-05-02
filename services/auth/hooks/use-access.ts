@@ -7,17 +7,22 @@ import {
 
 import { useGetCustomerState } from "./use-payments";
 
+type PlanEntry = { name: string; priceId: string };
+const plansRecord = plans as Record<string, PlanEntry>;
+const productsRecord = oneTimeProducts as Record<string, PlanEntry>;
+
 export function useAccess() {
   const state = useGetCustomerState();
   const currentPlan = state.data?.currentPlan ?? null;
   const paidOrders = state.data?.paidOrders ?? [];
-  const planKeys = Object.keys(plans) as PlanKey[];
+  const planKeys = Object.keys(plansRecord);
 
   return {
     ...state,
 
     /** Exact plan match by key */
-    hasPlan: (key: PlanKey) => currentPlan === plans[key].priceId,
+    hasPlan: (key: PlanKey) =>
+      currentPlan === plansRecord[key as string]?.priceId,
 
     /** Exact plan match by priceId (for dynamic product iteration) */
     hasPlanByPriceId: (priceId: string) => currentPlan === priceId,
@@ -25,9 +30,9 @@ export function useAccess() {
     /** Plan or higher (key order = price order from sync script) */
     hasPlanOrHigher: (key: PlanKey) => {
       if (!currentPlan) return false;
-      const requiredIndex = planKeys.indexOf(key);
+      const requiredIndex = planKeys.indexOf(key as string);
       const currentIndex = planKeys.findIndex(
-        (k) => plans[k].priceId === currentPlan
+        (k) => plansRecord[k]?.priceId === currentPlan
       );
       return currentIndex >= 0 && currentIndex >= requiredIndex;
     },
@@ -43,22 +48,26 @@ export function useAccess() {
 
     /** One-time purchase check by key */
     hasProduct: (key: ProductKey) =>
-      paidOrders.some((o) => o.priceId === oneTimeProducts[key].priceId),
+      paidOrders.some(
+        (o) => o.priceId === productsRecord[key as string]?.priceId
+      ),
 
     /** One-time purchase check by priceId (for dynamic product iteration) */
     hasProductByPriceId: (priceId: string) =>
       paidOrders.some((o) => o.priceId === priceId),
 
     /** Get price ID for a plan */
-    getPlanPriceId: (key: PlanKey) => plans[key].priceId,
+    getPlanPriceId: (key: PlanKey) => plansRecord[key as string]?.priceId ?? "",
 
     /** Get price ID for a one-time product */
-    getProductPriceId: (key: ProductKey) => oneTimeProducts[key].priceId,
+    getProductPriceId: (key: ProductKey) =>
+      productsRecord[key as string]?.priceId ?? "",
 
     /** Get display name for a plan */
-    getPlanName: (key: PlanKey) => plans[key].name,
+    getPlanName: (key: PlanKey) => plansRecord[key as string]?.name ?? "",
 
     /** Get display name for a one-time product */
-    getProductName: (key: ProductKey) => oneTimeProducts[key].name,
+    getProductName: (key: ProductKey) =>
+      productsRecord[key as string]?.name ?? "",
   };
 }

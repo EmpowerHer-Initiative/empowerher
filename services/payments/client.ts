@@ -1,6 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { getStripeClient } from "@/services/auth/auth";
-import { notSupported } from "@/services/not-supported";
 
 import type {
   CreateCheckoutInput,

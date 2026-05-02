@@ -63,8 +63,6 @@ export default function FeaturesPage() {
 
   return (
     <div className="space-y-16">
-      <Button disabled={!access.hasPlanOrHigher("basic")}>Basic</Button>
-      <Button disabled={!access.hasPlanOrHigher("business")}>Business</Button>
       {/* ─── Subscription Plans ─────────────────────────────────── */}
       {subscriptionProducts.length > 0 && (
         <section className="space-y-6">
@@ -85,9 +83,6 @@ export default function FeaturesPage() {
               const isUpgrade =
                 access.hasSubscription &&
                 product.priceAmount > currentPriceAmount;
-              const isDowngrade =
-                access.hasSubscription &&
-                product.priceAmount < currentPriceAmount;
 
               return (
                 <Card key={product.id}>
