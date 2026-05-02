@@ -62,6 +62,7 @@ export type SubscriptionDetails = {
 export type SwitchPlanInput = {
   subscriptionId: string;
   newPriceId: string;
+  immediate?: boolean;
 };
 
 export type SwitchPlanOutput = {

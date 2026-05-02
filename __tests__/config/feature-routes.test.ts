@@ -18,6 +18,7 @@ const EXPECTED_GUARDS: Record<string, string[]> = {
     "app/checkout/page.tsx",
     "app/success/page.tsx",
     "app/admin/products/page.tsx",
+    "app/(marketing)/features/layout.tsx",
   ],
   storage: ["app/admin/media/page.tsx"],
   cron: ["app/api/cron/route.ts"],

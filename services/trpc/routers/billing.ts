@@ -271,6 +271,7 @@ export const billingRouter = createTRPCRouter({
       z.object({
         subscriptionId: z.string(),
         newPriceId: z.string(),
+        immediate: z.boolean().optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -292,6 +293,7 @@ export const billingRouter = createTRPCRouter({
         return await switchPlan({
           subscriptionId: input.subscriptionId,
           newPriceId: input.newPriceId,
+          immediate: input.immediate,
         });
       } catch {
         throw new TRPCError({

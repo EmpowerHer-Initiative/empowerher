@@ -6,7 +6,7 @@
   "scripts": {
     "env:check": "tsx scripts/check-env.ts",
     "predev": "tsx scripts/check-env.ts && tsx scripts/check-webhooks.ts",
-    "prebuild": "tsx scripts/check-env.ts && tsx scripts/check-webhooks.ts && vitest run",
+    "prebuild": "tsx scripts/check-env.ts && tsx scripts/check-webhooks.ts && tsx scripts/sync-plans.ts && vitest run",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -23,6 +23,7 @@
     "routes": "tsx scripts/list-routes.ts",
     "crons": "tsx scripts/list-crons.ts",
     "webhooks:check": "tsx scripts/check-webhooks.ts",
+    "sync:plans": "tsx scripts/sync-plans.ts",
     "scripts:menu": "tsx scripts/run.ts",
     "prepare": "husky"
   },
