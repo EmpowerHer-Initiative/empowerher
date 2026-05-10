@@ -267,6 +267,7 @@ async function main() {
     const created = await polar.webhooks.createWebhookEndpoint({
       url,
       format: "raw",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       events: [...localEvents] as any,
     });
 
@@ -439,6 +440,7 @@ async function main() {
         const merged = [...new Set([...target.events, ...notEnabled])];
         await polar.webhooks.updateWebhookEndpoint({
           id: target.id,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           webhookEndpointUpdate: { events: merged as any },
         });
         log();

@@ -20,4 +20,3 @@ To use the components in your app, import them as follows:
 import { Button } from "@/components/ui/button";
 ```
 
-Whenever customer is deleted from Stripe, then we need to remove the stripe_customer_id from the user.

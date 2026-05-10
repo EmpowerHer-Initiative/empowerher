@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import {
   useCheckout,
   useGeneratePortalLink,
@@ -27,7 +27,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/data-table";
 
 export const BillingSubscriptions = () => {

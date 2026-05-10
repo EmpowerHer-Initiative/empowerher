@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -104,9 +104,8 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
             tableConfig.getRowModel().rows.map((row) => {
               const isExpanded = expandedRows?.has(row.id);
               return (
-                <>
+                <Fragment key={row.id}>
                   <TableRow
-                    key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                     className={cn(
                       "h-16",
@@ -127,10 +126,7 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
                     ))}
                   </TableRow>
                   {isExpanded && renderExpandedRow && (
-                    <TableRow
-                      key={`${row.id}-expanded`}
-                      className="bg-muted/30 hover:bg-muted/30"
-                    >
+                    <TableRow className="bg-muted/30 hover:bg-muted/30">
                       <TableCell
                         colSpan={row.getVisibleCells().length}
                         className="px-4 py-3"
@@ -139,7 +135,7 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
                       </TableCell>
                     </TableRow>
                   )}
-                </>
+                </Fragment>
               );
             })
           ) : (

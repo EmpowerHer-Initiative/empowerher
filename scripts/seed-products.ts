@@ -214,6 +214,7 @@ async function main() {
             priceCurrency: "usd",
           },
         ],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any);
 
       created.push({ name: product.name, id: product.id });

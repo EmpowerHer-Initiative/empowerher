@@ -1,12 +1,12 @@
 /**
- * Sync Plans — fetches all active Stripe products and generates config/plans.ts
+ * Sync Plans — fetches all active Polar products and generates config/plans.ts
  * Run: pnpm sync:plans
  */
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { Polar } from "@polar-sh/sdk";
 import { config } from "dotenv";
-import Stripe from "stripe";
 
 const ROOT = resolve(import.meta.dirname, "..");
 
@@ -25,14 +25,18 @@ if (!projectConfig.payments) {
 config({ path: resolve(ROOT, ".env") });
 
 // ─── Validate env ──────────────────────────────────────────────────
-if (!process.env.STRIPE_SECRET_KEY?.trim()) {
+if (!process.env.POLAR_ACCESS_TOKEN?.trim()) {
   console.log(
-    `\n  \x1b[41m\x1b[1m\x1b[37m ✗ MISSING \x1b[0m  \x1b[31mSTRIPE_SECRET_KEY\x1b[0m is not set in \x1b[33m.env\x1b[0m\n`
+    `\n  \x1b[41m\x1b[1m\x1b[37m ✗ MISSING \x1b[0m  \x1b[31mPOLAR_ACCESS_TOKEN\x1b[0m is not set in \x1b[33m.env\x1b[0m\n`
   );
   process.exit(1);
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const polar = new Polar({
+  accessToken: process.env.POLAR_ACCESS_TOKEN,
+  server:
+    (process.env.POLAR_SERVER as "sandbox" | "production") || "production",
+});
 
 // ─── ANSI helpers ──────────────────────────────────────────────────
 const c = {
@@ -63,30 +67,35 @@ function toCamelCase(str: string): string {
     .join("");
 }
 
-type PlanEntry = { key: string; name: string; priceId: string };
+function getPriceAmount(
+  price: { amountType: string; priceAmount?: number } | undefined
+): number {
+  if (!price) return 0;
+  return "priceAmount" in price ? (price.priceAmount ?? 0) : 0;
+}
+
+type PlanEntry = { key: string; name: string; productId: string };
 
 // ─── Main ──────────────────────────────────────────────────────────
 async function main() {
   console.log();
 
-  let products: Stripe.Product[];
+  let products: Awaited<
+    ReturnType<typeof polar.products.list>
+  >["result"]["items"];
   try {
-    const result = await stripe.products.list({
-      active: true,
-      expand: ["data.default_price"],
-      limit: 100,
-    });
-    products = result.data;
+    const result = await polar.products.list({});
+    products = result.result.items.filter((p) => !p.isArchived);
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     console.log(
-      `  ${c.bgRed}${c.bold}${c.white} ✗ STRIPE API ${c.reset}  ${c.red}${msg}${c.reset}\n`
+      `  ${c.bgRed}${c.bold}${c.white} ✗ POLAR API ${c.reset}  ${c.red}${msg}${c.reset}\n`
     );
     process.exit(1);
   }
 
   if (products.length === 0) {
-    console.log(`  ${c.yellow}No active products found in Stripe.${c.reset}\n`);
+    console.log(`  ${c.yellow}No active products found in Polar.${c.reset}\n`);
     process.exit(0);
   }
 
@@ -94,46 +103,28 @@ async function main() {
   const oneTimeProducts: PlanEntry[] = [];
 
   for (const product of products) {
-    const price =
-      typeof product.default_price === "object" && product.default_price
-        ? product.default_price
-        : null;
-
-    if (!price?.id) {
-      console.log(
-        `  ${c.yellow}⚠${c.reset} ${c.dim}Skipping "${product.name}" — no default price${c.reset}`
-      );
-      continue;
-    }
-
     const entry: PlanEntry = {
       key: toCamelCase(product.name),
       name: product.name,
-      priceId: price.id,
+      productId: product.id,
     };
 
-    if (price.recurring) {
+    if (product.recurringInterval) {
       plans.push(entry);
     } else {
       oneTimeProducts.push(entry);
     }
   }
 
-  // Sort plans by unit_amount (cheapest first) for natural hierarchy
+  // Sort by price (cheapest first)
   const sortByPrice = (a: PlanEntry, b: PlanEntry) => {
-    const priceA = products.find(
-      (p) =>
-        typeof p.default_price === "object" && p.default_price?.id === a.priceId
-    )?.default_price;
-    const priceB = products.find(
-      (p) =>
-        typeof p.default_price === "object" && p.default_price?.id === b.priceId
-    )?.default_price;
-    const amountA =
-      typeof priceA === "object" && priceA ? (priceA.unit_amount ?? 0) : 0;
-    const amountB =
-      typeof priceB === "object" && priceB ? (priceB.unit_amount ?? 0) : 0;
-    return amountA - amountB;
+    const productA = products.find((p) => p.id === a.productId);
+    const productB = products.find((p) => p.id === b.productId);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (
+      getPriceAmount(productA?.prices[0] as any) -
+      getPriceAmount(productB?.prices[0] as any)
+    );
   };
 
   plans.sort(sortByPrice);
@@ -142,19 +133,21 @@ async function main() {
   // ─── Generate file ──────────────────────────────────────────────
   const formatEntries = (entries: PlanEntry[]) =>
     entries
-      .map((e) => `  ${e.key}: { name: "${e.name}", priceId: "${e.priceId}" },`)
+      .map(
+        (e) => `  ${e.key}: { name: "${e.name}", productId: "${e.productId}" },`
+      )
       .join("\n");
 
   const content = `// Auto-generated by: pnpm sync:plans
-// Do not edit manually — re-run the script after changing Stripe products.
+// Do not edit manually — re-run the script after changing Polar products.
 
 export const plans = {
 ${formatEntries(plans)}
-} as const satisfies Record<string, { name: string; priceId: string }>;
+} as const satisfies Record<string, { name: string; productId: string }>;
 
 export const oneTimeProducts = {
 ${formatEntries(oneTimeProducts)}
-} as const satisfies Record<string, { name: string; priceId: string }>;
+} as const satisfies Record<string, { name: string; productId: string }>;
 
 export type PlanKey = keyof typeof plans;
 export type ProductKey = keyof typeof oneTimeProducts;
@@ -172,7 +165,7 @@ export type ProductKey = keyof typeof oneTimeProducts;
     console.log(`  ${c.bold}${c.cyan}Subscription Plans${c.reset}`);
     for (const p of plans) {
       console.log(
-        `  ${c.green}│${c.reset} ${p.key} → ${c.dim}${p.name}${c.reset} ${c.gray}(${p.priceId})${c.reset}`
+        `  ${c.green}│${c.reset} ${p.key} → ${c.dim}${p.name}${c.reset} ${c.gray}(${p.productId})${c.reset}`
       );
     }
     console.log();
@@ -182,7 +175,7 @@ export type ProductKey = keyof typeof oneTimeProducts;
     console.log(`  ${c.bold}${c.cyan}One-Time Products${c.reset}`);
     for (const p of oneTimeProducts) {
       console.log(
-        `  ${c.green}│${c.reset} ${p.key} → ${c.dim}${p.name}${c.reset} ${c.gray}(${p.priceId})${c.reset}`
+        `  ${c.green}│${c.reset} ${p.key} → ${c.dim}${p.name}${c.reset} ${c.gray}(${p.productId})${c.reset}`
       );
     }
     console.log();

@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useAccess } from "@/services/auth/hooks/use-access";
 import { useCheckout } from "@/services/auth/hooks/use-payments";
 import { useTRPC } from "@/services/trpc/client";
@@ -31,7 +30,6 @@ function formatInterval(interval: string | null) {
 
 export default function FeaturesPage() {
   const trpc = useTRPC();
-  const router = useRouter();
   const access = useAccess();
   const {
     data: allProducts,
