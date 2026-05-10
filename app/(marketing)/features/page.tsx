@@ -46,11 +46,6 @@ export default function FeaturesPage() {
     );
   }
 
-  if (!access.data) {
-    router.replace("/login?callbackUrl=/features");
-    return null;
-  }
-
   const subscriptionProducts = allProducts?.filter((p) => p.isRecurring) ?? [];
   const oneTimeProducts = allProducts?.filter((p) => !p.isRecurring) ?? [];
 

@@ -24,6 +24,7 @@
     "crons": "tsx scripts/list-crons.ts",
     "webhooks:check": "tsx scripts/check-webhooks.ts",
     "webhooks:fix": "tsx scripts/check-webhooks.ts --fix",
+    "seed:products": "tsx scripts/seed-products.ts",
     "sync:plans": "tsx scripts/sync-plans.ts",
     "scripts:menu": "tsx scripts/run.ts",
     "prepare": "husky"

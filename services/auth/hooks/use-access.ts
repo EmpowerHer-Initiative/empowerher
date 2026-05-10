@@ -1,3 +1,6 @@
+import type { paymentsRouter } from "@/services/trpc/routers/payments";
+import type { inferRouterOutputs } from "@trpc/server";
+
 import {
   oneTimeProducts,
   plans,
@@ -7,14 +10,23 @@ import {
 
 import { useGetCustomerState } from "./use-payments";
 
+type CustomerState = inferRouterOutputs<
+  typeof paymentsRouter
+>["getCustomerState"];
+type PaidOrder = CustomerState["paidOrders"][number];
+type ActiveSubscription = CustomerState["activeSubscriptions"][number];
+
 type PlanEntry = { name: string; productId: string };
 const plansRecord = plans as Record<string, PlanEntry>;
 const productsRecord = oneTimeProducts as Record<string, PlanEntry>;
 
 export function useAccess() {
   const state = useGetCustomerState();
+
+  const activeSub: ActiveSubscription | null =
+    state.data?.activeSubscriptions?.[0] ?? null;
   const currentProductId = state.data?.currentProductId ?? null;
-  const paidOrders = state.data?.paidOrders ?? [];
+  const paidOrders: PaidOrder[] = state.data?.paidOrders ?? [];
   const planKeys = Object.keys(plansRecord);
 
   return {
@@ -24,7 +36,7 @@ export function useAccess() {
     hasPlan: (key: PlanKey) =>
       currentProductId === plansRecord[key as string]?.productId,
 
-    /** Exact plan match by productId (for dynamic product iteration) */
+    /** Exact plan match by productId */
     hasPlanByProductId: (productId: string) => currentProductId === productId,
 
     /** Plan or higher (key order = price order from sync script) */
@@ -38,10 +50,10 @@ export function useAccess() {
     },
 
     /** Has any active subscription */
-    hasSubscription: !!state.data?.activeSubscription,
+    hasSubscription: !!activeSub,
 
     /** Active subscription object */
-    activeSubscription: state.data?.activeSubscription ?? null,
+    activeSubscription: activeSub,
 
     /** Current subscription's productId */
     currentProductId,
@@ -52,7 +64,7 @@ export function useAccess() {
         (o) => o.productId === productsRecord[key as string]?.productId
       ),
 
-    /** One-time purchase check by productId (for dynamic product iteration) */
+    /** One-time purchase check by productId */
     hasProductByProductId: (productId: string) =>
       paidOrders.some((o) => o.productId === productId),
 

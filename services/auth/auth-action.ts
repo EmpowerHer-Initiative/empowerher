@@ -6,6 +6,7 @@ import { eq } from "drizzle-orm";
 
 import { db } from "../db";
 import { orders, products, subscriptions, user } from "../db/schema";
+import { deleteFile } from "../trpc/routers/files-action";
 import { polarClient } from "./auth";
 
 function getPriceAmount(price: Product["prices"][number]): number {
@@ -147,7 +148,17 @@ export const revokeSubscriptionOnRefund = async (subscriptionId: string) => {
 export const deleteCustomer = async (data: Customer) => {
   if (!data.email) throw new Error("Customer email is required");
 
-  await db.delete(user).where(eq(user.email, data.email));
+  const deletedUser = await db
+    .delete(user)
+    .where(eq(user.email, data.email))
+    .returning()
+    .then((res) => res[0]);
+
+  if (deletedUser?.image) {
+    await deleteFile(deletedUser.image);
+  }
+
+  return deletedUser;
 };
 // ----------------------------
 // 👤 Customers END
