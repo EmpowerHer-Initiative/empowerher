@@ -10,6 +10,7 @@ import {
 } from "@/services/trpc/init";
 import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import type { SubscriptionProrationBehavior } from "@polar-sh/sdk/models/components/subscriptionprorationbehavior.js";
+import { ResourceNotFound } from "@polar-sh/sdk/models/errors/resourcenotfound.js";
 import { TRPCError } from "@trpc/server";
 import { asc, desc, eq, or } from "drizzle-orm";
 import { z } from "zod";
@@ -179,6 +180,23 @@ export const paymentsRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       try {
         const { productId, successUrl, discountId } = input;
+
+        // Ensure customer exists in Polar, create if not found
+        try {
+          await polarClient.customers.getExternal({
+            externalId: ctx.session.user.id,
+          });
+        } catch (err) {
+          if (err instanceof ResourceNotFound) {
+            await polarClient.customers.create({
+              email: ctx.session.user.email,
+              name: ctx.session.user.name ?? undefined,
+              externalId: ctx.session.user.id,
+            });
+          } else {
+            throw err;
+          }
+        }
 
         const checkoutIdPlaceholder = "{CHECKOUT_ID}";
         let url: string;
