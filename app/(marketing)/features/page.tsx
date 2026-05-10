@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAccess } from "@/services/auth/hooks/use-access";
-import { useCheckout, useSwitchPlan } from "@/services/auth/hooks/use-payments";
+import { useCheckout } from "@/services/auth/hooks/use-payments";
 import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 
@@ -37,7 +37,6 @@ export default function FeaturesPage() {
     trpc.products.list.queryOptions()
   );
   const checkout = useCheckout();
-  const switchPlan = useSwitchPlan();
 
   if (access.isPending || productsLoading) {
     return (
@@ -55,12 +54,6 @@ export default function FeaturesPage() {
   const subscriptionProducts = allProducts?.filter((p) => p.isRecurring) ?? [];
   const oneTimeProducts = allProducts?.filter((p) => !p.isRecurring) ?? [];
 
-  // Current subscription's price amount for upgrade/downgrade comparison
-  const currentProduct = subscriptionProducts.find(
-    (p) => p.priceId === access.currentPlanPriceId
-  );
-  const currentPriceAmount = currentProduct?.priceAmount ?? 0;
-
   return (
     <div className="space-y-16">
       {/* ─── Subscription Plans ─────────────────────────────────── */}
@@ -70,19 +63,14 @@ export default function FeaturesPage() {
             <h2 className="text-3xl font-semibold">Subscription Plans</h2>
             <p className="text-muted-foreground mt-1 text-sm">
               {access.hasSubscription
-                ? `You're on the ${currentProduct?.name ?? "Unknown"} plan.`
+                ? "You have an active subscription."
                 : "Subscribe to unlock features."}
             </p>
           </div>
 
           <div className="grid gap-4">
             {subscriptionProducts.map((product) => {
-              const isCurrent = product.priceId
-                ? access.hasPlanByPriceId(product.priceId)
-                : false;
-              const isUpgrade =
-                access.hasSubscription &&
-                product.priceAmount > currentPriceAmount;
+              const isCurrent = access.hasPlanByProductId(product.id);
 
               return (
                 <Card key={product.id}>
@@ -111,41 +99,16 @@ export default function FeaturesPage() {
 
                   {!isCurrent && (
                     <CardContent>
-                      {access.hasSubscription ? (
-                        <Button
-                          onClick={() =>
-                            switchPlan.mutate({
-                              subscriptionId:
-                                access.activeSubscription!
-                                  .stripeSubscriptionId!,
-                              newPriceId: product.priceId!,
-                              immediate: isUpgrade,
-                            })
-                          }
-                          disabled={switchPlan.isPending}
-                          variant={isUpgrade ? "default" : "outline"}
-                        >
-                          {switchPlan.isPending &&
-                          switchPlan.variables?.newPriceId === product.priceId
-                            ? "Processing…"
-                            : isUpgrade
-                              ? `Upgrade to ${product.name}`
-                              : `Downgrade to ${product.name}`}
-                        </Button>
-                      ) : (
-                        <Button
-                          onClick={() =>
-                            checkout.mutate({
-                              priceIds: [product.priceId!],
-                            })
-                          }
-                          disabled={checkout.isPending}
-                        >
-                          {checkout.isPending
-                            ? "Redirecting…"
-                            : `Subscribe to ${product.name}`}
-                        </Button>
-                      )}
+                      <Button
+                        onClick={() =>
+                          checkout.mutate({ productId: product.id })
+                        }
+                        disabled={checkout.isPending}
+                      >
+                        {checkout.isPending
+                          ? "Redirecting…"
+                          : `Subscribe to ${product.name}`}
+                      </Button>
                     </CardContent>
                   )}
                 </Card>
@@ -167,9 +130,7 @@ export default function FeaturesPage() {
 
           <div className="grid gap-4">
             {oneTimeProducts.map((product) => {
-              const purchased = product.priceId
-                ? access.hasProductByPriceId(product.priceId)
-                : false;
+              const purchased = access.hasProductByProductId(product.id);
 
               return (
                 <Card key={product.id}>
@@ -197,9 +158,7 @@ export default function FeaturesPage() {
                     <CardContent>
                       <Button
                         onClick={() =>
-                          checkout.mutate({
-                            priceIds: [product.priceId!],
-                          })
+                          checkout.mutate({ productId: product.id })
                         }
                         disabled={checkout.isPending}
                       >

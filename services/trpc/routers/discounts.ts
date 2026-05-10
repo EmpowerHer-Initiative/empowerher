@@ -1,4 +1,4 @@
-import { listPromotionCodes } from "@/services/payments";
+import { polarClient } from "@/services/auth/auth";
 import {
   adminProcedure,
   baseProcedure,
@@ -10,48 +10,25 @@ import { z } from "zod";
 
 export const discountsRouter = createTRPCRouter({
   list: adminProcedure.use(featureGuard("payments")).query(async () => {
-    return listPromotionCodes({ limit: 50 });
+    const result = await polarClient.discounts.list({});
+    return result.result.items;
   }),
 
   verify: baseProcedure
     .use(featureGuard("payments"))
     .input(z.object({ code: z.string() }))
     .query(async ({ input }) => {
-      const codes = await listPromotionCodes({
-        code: input.code,
-        active: true,
-        limit: 1,
-      });
+      const result = await polarClient.discounts.list({});
+      const discount = result.result.items.find((d) => d.code === input.code);
 
-      const promoCode = codes[0];
-      if (!promoCode) {
+      if (!discount) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Discount code not found",
         });
       }
 
-      if (
-        promoCode.expiresAt &&
-        new Date(promoCode.expiresAt * 1000) < new Date()
-      ) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Discount code has expired",
-        });
-      }
-
-      if (
-        promoCode.maxRedemptions &&
-        promoCode.timesRedeemed >= promoCode.maxRedemptions
-      ) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Discount code has reached the maximum number of uses",
-        });
-      }
-
-      return promoCode;
+      return discount;
     }),
 });
 

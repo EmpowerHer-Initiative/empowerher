@@ -1,5 +1,4 @@
 import { useGeneratePortalLink } from "@/services/auth/hooks/use-payments";
-import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,16 +13,7 @@ export const BillingPortal = () => {
       </CardHeader>
       <CardContent>
         <Button
-          onClick={() =>
-            generatePortalLink.mutate(
-              { returnUrl: "/settings" },
-              {
-                onError: (error) => {
-                  toast.error(error.message || "Failed to open billing portal");
-                },
-              }
-            )
-          }
+          onClick={() => generatePortalLink.mutate()}
           size={"lg"}
           disabled={generatePortalLink.isPending}
         >

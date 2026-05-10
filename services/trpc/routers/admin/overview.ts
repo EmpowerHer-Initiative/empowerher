@@ -1,5 +1,5 @@
 import { db } from "@/services/db/index";
-import { orders, subscription, user } from "@/services/db/schema";
+import { orders, subscriptions, user } from "@/services/db/schema";
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
 import { and, count, desc, eq, gte, sum } from "drizzle-orm";
 
@@ -29,40 +29,40 @@ export const adminOverviewRouter = createTRPCRouter({
       db.select({ count: count() }).from(user).where(eq(user.banned, true)),
       db
         .select({ count: count() })
-        .from(subscription)
-        .where(eq(subscription.status, "active")),
+        .from(subscriptions)
+        .where(eq(subscriptions.status, "active")),
       db
         .select({ count: count() })
-        .from(subscription)
-        .where(eq(subscription.status, "trialing")),
+        .from(subscriptions)
+        .where(eq(subscriptions.status, "trialing")),
       db
         .select({ count: count() })
-        .from(subscription)
+        .from(subscriptions)
         .where(
           and(
-            eq(subscription.status, "canceled"),
-            gte(subscription.canceledAt, startOfMonth)
+            eq(subscriptions.status, "canceled"),
+            gte(subscriptions.canceledAt, startOfMonth)
           )
         ),
       db
-        .select({ total: sum(subscription.totalAmount) })
-        .from(subscription)
-        .where(eq(subscription.status, "active")),
+        .select({ total: sum(subscriptions.amount) })
+        .from(subscriptions)
+        .where(eq(subscriptions.status, "active")),
       db
-        .select({ total: sum(subscription.totalAmount) })
-        .from(subscription)
+        .select({ total: sum(subscriptions.amount) })
+        .from(subscriptions)
         .where(
           and(
-            eq(subscription.status, "active"),
-            gte(subscription.periodStart, startOfMonth)
+            eq(subscriptions.status, "active"),
+            gte(subscriptions.createdAt, startOfMonth)
           )
         ),
       db
-        .select({ total: sum(orders.amount) })
+        .select({ total: sum(orders.totalAmount) })
         .from(orders)
         .where(eq(orders.status, "paid")),
       db
-        .select({ total: sum(orders.amount) })
+        .select({ total: sum(orders.totalAmount) })
         .from(orders)
         .where(
           and(eq(orders.status, "paid"), gte(orders.createdAt, startOfMonth))
@@ -71,7 +71,7 @@ export const adminOverviewRouter = createTRPCRouter({
         .select({
           id: orders.id,
           userId: orders.userId,
-          amount: orders.amount,
+          totalAmount: orders.totalAmount,
           status: orders.status,
           createdAt: orders.createdAt,
         })
@@ -105,7 +105,7 @@ export const adminOverviewRouter = createTRPCRouter({
       },
       recentOrders: recentOrdersList.map((o) => ({
         id: o.id,
-        totalAmount: o.amount,
+        totalAmount: o.totalAmount,
         status: o.status,
         createdAt: o.createdAt?.toISOString() ?? null,
         referenceId: o.userId,

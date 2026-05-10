@@ -6,10 +6,8 @@ import { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useQuery } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { ExternalLink } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/data-table";
 
 type Order = RouterOutputs["billing"]["listOrders"][number];
@@ -26,9 +24,9 @@ const columns: ColumnDef<Order>[] = [
   },
   {
     header: "Amount",
-    accessorKey: "amount",
+    accessorKey: "totalAmount",
     cell: ({ row }) => {
-      const amount = row.original.amount / 100;
+      const amount = row.original.totalAmount / 100;
       return <span>${amount.toFixed(2)}</span>;
     },
   },
@@ -45,38 +43,23 @@ const columns: ColumnDef<Order>[] = [
     accessorKey: "status",
     cell: ({ row }) => {
       const { status } = row.original;
-
       const variant =
         status === "paid"
           ? "default"
           : status === "refunded"
             ? "secondary"
-            : status === "partially_refunded"
-              ? "outline"
-              : status === "void"
-                ? "destructive"
-                : "secondary";
-
-      const label = status === "partially_refunded" ? "partial refund" : status;
-
-      return <Badge variant={variant}>{label}</Badge>;
+            : "outline";
+      return <Badge variant={variant}>{status}</Badge>;
     },
   },
   {
-    id: "receipt",
-    cell: ({ row }) =>
-      row.original.receiptUrl ? (
-        <a
-          href={row.original.receiptUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button variant="outline" size="sm">
-            <ExternalLink className="mr-1 h-3 w-3" />
-            Receipt
-          </Button>
-        </a>
-      ) : null,
+    header: "Invoice",
+    accessorKey: "invoiceNumber",
+    cell: ({ row }) => (
+      <span className="text-muted-foreground font-mono text-xs">
+        {row.original.invoiceNumber || "—"}
+      </span>
+    ),
   },
 ];
 

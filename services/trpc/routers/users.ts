@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { auth } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
 import { user } from "@/services/db/schema";
-import { deleteCustomer } from "@/services/payments";
+import { deleteCustomerByEmail } from "@/services/payments";
 import {
   adminProcedure,
   authenticatedProcedure,
@@ -201,8 +201,8 @@ export const usersRouter = createTRPCRouter({
         .limit(1)
         .then((res) => res[0]);
 
-      if (dbUser?.stripeCustomerId && isFeatureEnabled("payments")) {
-        await deleteCustomer(dbUser.stripeCustomerId);
+      if (dbUser?.email && isFeatureEnabled("payments")) {
+        await deleteCustomerByEmail(dbUser.email);
       }
 
       await db.delete(user).where(eq(user.id, input));

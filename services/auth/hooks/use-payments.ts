@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { authClient } from "@/services/auth/auth-client";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -9,66 +9,50 @@ export const useGetCustomerState = () => {
 };
 
 /**
- * Custom hook for initiating checkout via Stripe
+ * Initiates checkout via Polar hosted page
  */
 export const useCheckout = () => {
-  const router = useRouter();
-  const trpc = useTRPC();
-
-  const mutation = useMutation(
-    trpc.billing.createCheckout.mutationOptions({
-      onSuccess: (data) => {
-        if (!data?.url) {
-          throw new Error("Failed to create checkout");
-        }
-        /* eslint-disable-next-line react-hooks/immutability */
-        window.location.href = data.url;
-      },
-      onError: (error, variables) => {
-        if (error.data?.code === "UNAUTHORIZED") {
-          router.push(
-            `/signup?callbackUrl=/checkout&priceIds=${variables.priceIds.join(",")}`
-          );
-          return;
-        }
-        toast.error(
-          error.message || "Failed to create checkout. Please try again."
-        );
-      },
-    })
-  );
-
-  return {
-    ...mutation,
-    mutate: (
-      input: { priceIds: string[]; successUrl?: string; cancelUrl?: string },
-      options?: Parameters<typeof mutation.mutate>[1]
-    ) => {
-      mutation.mutate(
-        {
-          ...input,
-          cancelUrl: input.cancelUrl ?? window.location.href,
-        },
-        options
+  return useMutation({
+    mutationFn: async (input: { productId: string; successUrl?: string }) => {
+      const result = await authClient.checkout({
+        products: [input.productId],
+        successUrl: input.successUrl,
+      });
+      if (result.error) throw new Error(result.error.message);
+    },
+    onError: (error) => {
+      toast.error(
+        error.message || "Failed to create checkout. Please try again."
       );
     },
-  };
+  });
 };
 
 /**
- * Custom hook for switching subscription plan.
+ * Opens Polar customer portal
  */
-export const useSwitchPlan = () => {
+export const useGeneratePortalLink = () => {
+  return useMutation({
+    mutationFn: async () => {
+      const result = await authClient.customer.portal();
+      if (result.error) throw new Error(result.error.message);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to open billing portal");
+    },
+  });
+};
+
+/**
+ * Cancel a subscription
+ */
+export const useCancelSubscription = () => {
   const trpc = useTRPC();
 
   return useMutation(
-    trpc.billing.switchPlan.mutationOptions({
-      onSuccess: (_data, variables) => {
-        toast.success(
-          variables.immediate !== false
-            ? "Plan upgraded successfully"
-            : "Downgrade scheduled for end of billing period"
-        );
+    trpc.billing.cancelSubscription.mutationOptions({
+      onSuccess: () => {
+        toast.success("Subscription canceled");
         setTimeout(() => {
           queryClient.invalidateQueries({
             queryKey: trpc.billing.getCustomerState.queryKey(),
@@ -76,14 +60,14 @@ export const useSwitchPlan = () => {
         }, 2000);
       },
       onError: () => {
-        toast.error("Failed to switch plan");
+        toast.error("Failed to cancel subscription");
       },
     })
   );
 };
 
 /**
- * Fetches full subscription details live from Stripe (all items, status, etc.)
+ * Fetches subscription details from Polar
  */
 export const useSubscriptionDetails = (subscriptionId: string | null) => {
   const trpc = useTRPC();
@@ -93,22 +77,4 @@ export const useSubscriptionDetails = (subscriptionId: string | null) => {
     }),
     enabled: !!subscriptionId,
   });
-};
-
-/**
- * Custom hook for generating Stripe billing portal link
- */
-export const useGeneratePortalLink = () => {
-  const trpc = useTRPC();
-
-  return useMutation(
-    trpc.billing.createPortalSession.mutationOptions({
-      onSuccess: (data) => {
-        if (data?.url) {
-          /* eslint-disable-next-line react-hooks/immutability */
-          window.location.href = data.url;
-        }
-      },
-    })
-  );
 };

@@ -75,7 +75,7 @@ The template contains all modules. Per-client setup strips what isn't needed:
 
 - **Landing page** — always present
 - **Auth** — optional (Better Auth)
-- **Payments** — optional (Stripe via `billing.ts` + `products.ts` routers)
+- **Payments** — optional (Polar via `billing.ts` + `products.ts` routers)
 - **Admin panel** — optional
 - **Blog/posts** — optional
 - **Background jobs** — optional (Trigger.dev — see removal checklist below)

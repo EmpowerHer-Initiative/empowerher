@@ -7,13 +7,13 @@ import {
 
 import { useGetCustomerState } from "./use-payments";
 
-type PlanEntry = { name: string; priceId: string };
+type PlanEntry = { name: string; productId: string };
 const plansRecord = plans as Record<string, PlanEntry>;
 const productsRecord = oneTimeProducts as Record<string, PlanEntry>;
 
 export function useAccess() {
   const state = useGetCustomerState();
-  const currentPlan = state.data?.currentPlan ?? null;
+  const currentProductId = state.data?.currentProductId ?? null;
   const paidOrders = state.data?.paidOrders ?? [];
   const planKeys = Object.keys(plansRecord);
 
@@ -22,17 +22,17 @@ export function useAccess() {
 
     /** Exact plan match by key */
     hasPlan: (key: PlanKey) =>
-      currentPlan === plansRecord[key as string]?.priceId,
+      currentProductId === plansRecord[key as string]?.productId,
 
-    /** Exact plan match by priceId (for dynamic product iteration) */
-    hasPlanByPriceId: (priceId: string) => currentPlan === priceId,
+    /** Exact plan match by productId (for dynamic product iteration) */
+    hasPlanByProductId: (productId: string) => currentProductId === productId,
 
     /** Plan or higher (key order = price order from sync script) */
     hasPlanOrHigher: (key: PlanKey) => {
-      if (!currentPlan) return false;
+      if (!currentProductId) return false;
       const requiredIndex = planKeys.indexOf(key as string);
       const currentIndex = planKeys.findIndex(
-        (k) => plansRecord[k]?.priceId === currentPlan
+        (k) => plansRecord[k]?.productId === currentProductId
       );
       return currentIndex >= 0 && currentIndex >= requiredIndex;
     },
@@ -43,25 +43,26 @@ export function useAccess() {
     /** Active subscription object */
     activeSubscription: state.data?.activeSubscription ?? null,
 
-    /** Current plan's priceId */
-    currentPlanPriceId: currentPlan,
+    /** Current subscription's productId */
+    currentProductId,
 
     /** One-time purchase check by key */
     hasProduct: (key: ProductKey) =>
       paidOrders.some(
-        (o) => o.priceId === productsRecord[key as string]?.priceId
+        (o) => o.productId === productsRecord[key as string]?.productId
       ),
 
-    /** One-time purchase check by priceId (for dynamic product iteration) */
-    hasProductByPriceId: (priceId: string) =>
-      paidOrders.some((o) => o.priceId === priceId),
+    /** One-time purchase check by productId (for dynamic product iteration) */
+    hasProductByProductId: (productId: string) =>
+      paidOrders.some((o) => o.productId === productId),
 
-    /** Get price ID for a plan */
-    getPlanPriceId: (key: PlanKey) => plansRecord[key as string]?.priceId ?? "",
+    /** Get productId for a plan */
+    getPlanProductId: (key: PlanKey) =>
+      plansRecord[key as string]?.productId ?? "",
 
-    /** Get price ID for a one-time product */
-    getProductPriceId: (key: ProductKey) =>
-      productsRecord[key as string]?.priceId ?? "",
+    /** Get productId for a one-time product */
+    getProductProductId: (key: ProductKey) =>
+      productsRecord[key as string]?.productId ?? "",
 
     /** Get display name for a plan */
     getPlanName: (key: PlanKey) => plansRecord[key as string]?.name ?? "",

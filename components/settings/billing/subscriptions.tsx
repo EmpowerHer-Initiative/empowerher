@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import {
+  useCancelSubscription,
   useGeneratePortalLink,
   useSubscriptionDetails,
 } from "@/services/auth/hooks/use-payments";
@@ -21,7 +22,7 @@ import { DataTable } from "@/components/data-table";
 
 type Subscription = RouterOutputs["billing"]["listSubscriptions"][number];
 
-const STATUS_COLORS: Record<Subscription["status"], string> = {
+const STATUS_COLORS: Record<string, string> = {
   active: "bg-emerald-500",
   trialing: "bg-blue-500",
   past_due: "bg-amber-500",
@@ -36,7 +37,7 @@ function StatusDot({
   status,
   isCanceling,
 }: {
-  status: Subscription["status"];
+  status: string;
   isCanceling?: boolean;
 }) {
   const color =
@@ -51,58 +52,43 @@ function StatusDot({
   );
 }
 
-function SubscriptionDetailsPanel({
-  subscriptionId,
-  sub,
-}: {
-  subscriptionId: string;
-  sub: Subscription;
-}) {
-  const { data, isLoading, error } = useSubscriptionDetails(subscriptionId);
+function SubscriptionDetailsPanel({ sub }: { sub: Subscription }) {
+  const { data, isLoading } = useSubscriptionDetails(sub.id);
 
   return (
     <div className="space-y-4">
-      {/* Subscription-level info from local DB */}
       <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm sm:grid-cols-4">
         <div>
           <p className="text-muted-foreground text-xs">Status</p>
           <div className="mt-0.5 flex items-center gap-1.5">
             <StatusDot
               status={sub.status}
-              isCanceling={!!(sub.cancelAtPeriodEnd || sub.cancelAt)}
+              isCanceling={!!sub.cancelAtPeriodEnd}
             />
             <span className="capitalize">
-              {sub.cancelAtPeriodEnd || sub.cancelAt ? "canceling" : sub.status}
+              {sub.cancelAtPeriodEnd ? "canceling" : sub.status}
             </span>
           </div>
         </div>
         <div>
           <p className="text-muted-foreground text-xs">Auto-Renewal</p>
           <Badge
-            variant={
-              sub.cancelAtPeriodEnd || sub.cancelAt ? "destructive" : "default"
-            }
+            variant={sub.cancelAtPeriodEnd ? "destructive" : "default"}
             className="mt-0.5"
           >
-            {sub.cancelAtPeriodEnd || sub.cancelAt ? "Off" : "On"}
+            {sub.cancelAtPeriodEnd ? "Off" : "On"}
           </Badge>
         </div>
         <div className="min-w-0">
           <p className="text-muted-foreground text-xs">Subscription ID</p>
           <span className="text-muted-foreground block truncate font-mono text-xs">
-            {sub.stripeSubscriptionId ?? "—"}
+            {sub.id}
           </span>
         </div>
         <div>
-          <p className="text-muted-foreground text-xs">Billing Interval</p>
-          <span className="capitalize">{sub.billingInterval ?? "—"}</span>
+          <p className="text-muted-foreground text-xs">Interval</p>
+          <span className="capitalize">{sub.recurringInterval ?? "—"}</span>
         </div>
-        {sub.cancelAt && (
-          <div>
-            <p className="text-muted-foreground text-xs">Cancels At</p>
-            <span>{format(new Date(sub.cancelAt), "MMM d, yyyy")}</span>
-          </div>
-        )}
         {sub.canceledAt && (
           <div>
             <p className="text-muted-foreground text-xs">Canceled At</p>
@@ -117,76 +103,32 @@ function SubscriptionDetailsPanel({
         )}
       </div>
 
-      {/* Items fetched live from Stripe */}
       {isLoading && (
         <div className="text-muted-foreground flex items-center gap-2 py-2 text-sm">
           <Loader2 className="size-4 animate-spin" />
-          Loading items...
+          Loading details...
         </div>
       )}
 
-      {error && !data && (
-        <p className="text-muted-foreground text-sm">
-          Could not load subscription items.
-        </p>
-      )}
-
-      {data?.scheduledChange && (
-        <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm dark:border-amber-800 dark:bg-amber-950">
-          <p className="font-medium text-amber-800 dark:text-amber-200">
-            Scheduled plan change
-          </p>
-          <p className="text-amber-700 dark:text-amber-300">
-            Switching to{" "}
-            <span className="font-medium">
-              {data.scheduledChange.newProductName ?? "new plan"}
-            </span>{" "}
-            on{" "}
-            {format(
-              new Date(data.scheduledChange.effectiveDate * 1000),
-              "MMM d, yyyy"
-            )}
-          </p>
-        </div>
-      )}
-
-      {data && data.items.length > 0 && (
-        <div className="rounded-md border">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="text-muted-foreground border-b text-left">
-                <th className="px-3 py-2 font-medium">Product</th>
-                <th className="px-3 py-2 font-medium">Price</th>
-                <th className="px-3 py-2 font-medium">Interval</th>
-                <th className="px-3 py-2 font-medium">Qty</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.items.map((item) => (
-                <tr key={item.id} className="border-b last:border-b-0">
-                  <td className="px-3 py-2">
-                    {item.productName ?? (
-                      <span className="text-muted-foreground font-mono text-xs">
-                        {item.productId?.slice(0, 16)}...
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-3 py-2">
-                    ${(item.unitAmount / 100).toFixed(2)}{" "}
-                    <span className="text-muted-foreground uppercase">
-                      {item.currency}
-                    </span>
-                  </td>
-                  <td className="px-3 py-2">
-                    {item.interval
-                      ? `Every ${item.intervalCount && item.intervalCount > 1 ? `${item.intervalCount} ` : ""}${item.interval}`
-                      : "One-time"}
-                  </td>
-                  <td className="px-3 py-2">{item.quantity}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {data && (
+        <div className="rounded-md border p-3 text-sm">
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <span className="text-muted-foreground text-xs">Amount</span>
+              <p>
+                ${((data.amount ?? 0) / 100).toFixed(2)}{" "}
+                {data.currency?.toUpperCase()}
+              </p>
+            </div>
+            <div>
+              <span className="text-muted-foreground text-xs">Started</span>
+              <p>
+                {data.startedAt
+                  ? format(new Date(data.startedAt), "MMM d, yyyy")
+                  : "—"}
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -199,7 +141,7 @@ export const BillingSubscriptions = () => {
   const generatePortalLink = useGeneratePortalLink();
 
   const trpc = useTRPC();
-  const { data: subscriptions, isPending } = useQuery(
+  const { data: subscriptionsList, isPending } = useQuery(
     trpc.billing.listSubscriptions.queryOptions(
       {
         userId: user?.user.id || "",
@@ -228,9 +170,7 @@ export const BillingSubscriptions = () => {
         id: "plan",
         header: "Plan",
         cell: ({ row }) => {
-          const isCanceling = !!(
-            row.original.cancelAtPeriodEnd || row.original.cancelAt
-          );
+          const isCanceling = !!row.original.cancelAtPeriodEnd;
           return (
             <div className="flex items-center gap-2.5">
               <StatusDot
@@ -238,7 +178,7 @@ export const BillingSubscriptions = () => {
                 isCanceling={isCanceling}
               />
               <span className="max-w-[140px] truncate font-medium">
-                {row.original.productName ?? row.original.plan}
+                {row.original.productName ?? row.original.productId}
               </span>
             </div>
           );
@@ -248,11 +188,11 @@ export const BillingSubscriptions = () => {
         id: "price",
         header: "Price",
         cell: ({ row }) => {
-          if (!row.original.totalAmount)
+          if (!row.original.amount)
             return <span className="text-muted-foreground">—</span>;
           return (
             <span className="text-sm">
-              ${(row.original.totalAmount / 100).toFixed(2)}
+              ${(row.original.amount / 100).toFixed(2)}
               <span className="text-muted-foreground ml-1 text-xs uppercase">
                 {row.original.currency}
               </span>
@@ -261,30 +201,19 @@ export const BillingSubscriptions = () => {
         },
       },
       {
-        id: "period_end",
-        header: "Next Billing",
-        cell: ({ row }) => {
-          const end = row.original.periodEnd;
-          return (
-            <span className="flex flex-col">
-              <span className="text-sm">
-                {end ? format(new Date(end), "MMM dd, yyyy") : "-"}
-              </span>
-              <span className="text-muted-foreground text-xs">
-                {end
-                  ? formatDistanceToNow(new Date(end), { addSuffix: true })
-                  : "-"}
-              </span>
-            </span>
-          );
-        },
+        id: "interval",
+        header: "Interval",
+        cell: ({ row }) => (
+          <span className="capitalize">
+            {row.original.recurringInterval ?? "—"}
+          </span>
+        ),
       },
       {
         id: "actions",
         header: "",
         cell: ({ row }) => {
           const isExpanded = expandedRows.has(row.id);
-          if (!row.original.stripeSubscriptionId) return null;
           return (
             <div className="flex justify-end">
               <Button
@@ -321,7 +250,7 @@ export const BillingSubscriptions = () => {
           variant="outline"
           size="icon"
           disabled={generatePortalLink.isPending}
-          onClick={() => generatePortalLink.mutate({ returnUrl: "/settings" })}
+          onClick={() => generatePortalLink.mutate()}
         >
           {generatePortalLink.isPending ? (
             <Loader2 className="size-3.5 animate-spin" />
@@ -333,30 +262,12 @@ export const BillingSubscriptions = () => {
       <DataTable
         isLoading={isPending}
         columns={columns}
-        data={subscriptions || []}
+        data={subscriptionsList || []}
         expandedRows={expandedRows}
-        renderExpandedRow={(row: Row<Subscription>) => {
-          const sub = row.original;
-          if (!sub.stripeSubscriptionId) return null;
-          return (
-            <SubscriptionDetailsPanel
-              subscriptionId={sub.stripeSubscriptionId}
-              sub={sub}
-            />
-          );
-        }}
+        renderExpandedRow={(row: Row<Subscription>) => (
+          <SubscriptionDetailsPanel sub={row.original} />
+        )}
       />
-      <UpgradeSection />
     </div>
-  );
-};
-
-const UpgradeSection = () => {
-  return (
-    <p className="text-muted-foreground text-sm">
-      Configure your plans in <code>services/auth/auth.ts</code> under the
-      Stripe plugin&apos;s <code>subscription.plans</code> array with your
-      Stripe price IDs.
-    </p>
   );
 };

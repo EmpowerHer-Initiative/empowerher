@@ -2,7 +2,7 @@ import { useParams } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { Braces, ExternalLink } from "lucide-react";
+import { Braces } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -40,8 +40,8 @@ export const Orders = () => {
 
   const totalRevenue =
     ordersList
-      ?.filter((o) => o.status === "paid" || o.status === "partially_refunded")
-      .reduce((acc, o) => acc + o.amount - o.refundedAmount, 0) || 0;
+      ?.filter((o) => o.status === "paid")
+      .reduce((acc, o) => acc + o.totalAmount - o.discountAmount, 0) || 0;
 
   return (
     <div>
@@ -72,21 +72,24 @@ export const Orders = () => {
                   ? "default"
                   : status === "refunded"
                     ? "secondary"
-                    : status === "partially_refunded"
-                      ? "outline"
-                      : status === "void"
-                        ? "destructive"
-                        : "secondary";
-              const label =
-                status === "partially_refunded" ? "partial refund" : status;
-              return <Badge variant={variant}>{label}</Badge>;
+                    : "outline";
+              return <Badge variant={variant}>{status}</Badge>;
             },
           },
           {
             id: "amount",
             header: "Amount",
             cell: ({ row }) => (
-              <span>${(row.original.amount / 100).toFixed(2)}</span>
+              <span>${(row.original.totalAmount / 100).toFixed(2)}</span>
+            ),
+          },
+          {
+            id: "invoice",
+            header: "Invoice",
+            cell: ({ row }) => (
+              <span className="text-muted-foreground font-mono text-xs">
+                {row.original.invoiceNumber || "—"}
+              </span>
             ),
           },
           {
@@ -100,22 +103,6 @@ export const Orders = () => {
                 )}
               </span>
             ),
-          },
-          {
-            id: "receipt",
-            header: "Receipt",
-            cell: ({ row }) =>
-              row.original.receiptUrl ? (
-                <a
-                  href={row.original.receiptUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button variant="outline" size="icon">
-                    <ExternalLink />
-                  </Button>
-                </a>
-              ) : null,
           },
           {
             id: "json-data",

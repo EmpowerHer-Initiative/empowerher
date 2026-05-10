@@ -1,24 +1,6 @@
 export {
-  createCheckoutSession,
-  createCustomer,
-  createPortalSession,
-  deleteCustomer,
+  cancelSubscription,
+  deleteCustomerByEmail,
   getSubscriptionDetails,
-  listPromotionCodes,
-  retrieveCheckoutSession,
-  switchPlan,
 } from "./client";
-export type {
-  CreateCheckoutInput,
-  CreateCheckoutOutput,
-  CreateCustomerInput,
-  CreateCustomerOutput,
-  CreatePortalSessionInput,
-  CreatePortalSessionOutput,
-  PromotionCode,
-  RetrieveCheckoutOutput,
-  SubscriptionDetails,
-  SubscriptionItem,
-  SwitchPlanInput,
-  SwitchPlanOutput,
-} from "./types";
+export type { Order, Product, Subscription } from "./types";

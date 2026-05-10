@@ -56,7 +56,7 @@ export const Subscriptions = () => {
             header: "Plan",
             cell: ({ row }) => (
               <Badge variant="outline" className="capitalize">
-                {row.original.plan}
+                {row.original.productName ?? row.original.productId}
               </Badge>
             ),
           },
@@ -78,7 +78,7 @@ export const Subscriptions = () => {
             header: "Interval",
             cell: ({ row }) => (
               <span className="capitalize">
-                {row.original.billingInterval ?? "-"}
+                {row.original.recurringInterval ?? "-"}
               </span>
             ),
           },
@@ -92,13 +92,13 @@ export const Subscriptions = () => {
             ),
           },
           {
-            id: "period_end",
-            header: "Period End",
+            id: "created_at",
+            header: "Created",
             cell: ({ row }) => (
               <span>
-                {row.original.periodEnd
+                {row.original.createdAt
                   ? format(
-                      new Date(row.original.periodEnd),
+                      new Date(row.original.createdAt),
                       "MM/dd/yyyy hh:mm a"
                     )
                   : "-"}

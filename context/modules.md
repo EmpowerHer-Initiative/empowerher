@@ -63,18 +63,18 @@ Every optional module is listed here with everything it owns. Use this file when
 
 **Touches**
 
-- `services/auth/auth.ts` — Stripe plugin registration
+- `services/auth/auth.ts` — Polar plugin registration
 - `services/auth/auth-action.ts` — webhook sync handlers
 - `services/auth/hooks/use-payments.ts`
 - `services/trpc/routers/_app.ts` — `billingRouter`, `productsRouter` imports
 
 **Env vars**
 
-- `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`
+- `POLAR_ACCESS_TOKEN`, `POLAR_WEBHOOK_SECRET`, `POLAR_SERVER`
 
 **Dependencies**
 
-- `@better-auth/stripe`, `stripe`
+- `@polar-sh/better-auth`, `@polar-sh/sdk`
 
 ---
 

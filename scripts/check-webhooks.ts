@@ -1,16 +1,23 @@
 /**
- * Webhook Sync Check — compares Stripe Dashboard webhook events
- * against locally handled events in services/auth/auth.ts.
- * Run: pnpm webhooks:check
+ * Webhook Setup & Sync — manages Polar webhook endpoints, secrets, and events.
+ *
+ * Without flags: report-only (safe for predev/prebuild hooks)
+ * With --fix:    interactive — creates endpoints, syncs secrets, enables events
+ *
+ * Run: pnpm webhooks:check        (report)
+ * Run: pnpm webhooks:fix          (interactive fix)
  */
 
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { createInterface } from "node:readline/promises";
+import { createInterface } from "node:readline";
+import { Polar } from "@polar-sh/sdk";
 import { config } from "dotenv";
-import Stripe from "stripe";
 
+const FIX_MODE = process.argv.includes("--fix");
 const ROOT = resolve(import.meta.dirname, "..");
+const DEFAULT_WEBHOOK_URL =
+  "https://webhooks.alisamadii.com/api/auth/polar/webhooks";
 
 // ─── Check feature flag ────────────────────────────────────────────
 const projectConfig: Record<string, unknown> = JSON.parse(
@@ -27,14 +34,18 @@ if (!projectConfig.payments) {
 config({ path: resolve(ROOT, ".env") });
 
 // ─── Validate env ──────────────────────────────────────────────────
-if (!process.env.STRIPE_SECRET_KEY?.trim()) {
+if (!process.env.POLAR_ACCESS_TOKEN?.trim()) {
   console.log(
-    `\n  \x1b[41m\x1b[1m\x1b[37m ✗ MISSING \x1b[0m  \x1b[31mSTRIPE_SECRET_KEY\x1b[0m is not set in \x1b[33m.env\x1b[0m\n`
+    `\n  \x1b[41m\x1b[1m\x1b[37m ✗ MISSING \x1b[0m  \x1b[31mPOLAR_ACCESS_TOKEN\x1b[0m is not set in \x1b[33m.env\x1b[0m\n`
   );
   process.exit(1);
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const polar = new Polar({
+  accessToken: process.env.POLAR_ACCESS_TOKEN,
+  server:
+    (process.env.POLAR_SERVER as "sandbox" | "production") || "production",
+});
 
 // ─── ANSI helpers ──────────────────────────────────────────────────
 const c = {
@@ -54,13 +65,51 @@ const c = {
 
 const log = console.log;
 
+// ─── Interactive helpers ───────────────────────────────────────────
+function confirm(question: string): Promise<boolean> {
+  const rl = createInterface({ input: process.stdin, output: process.stdout });
+  return new Promise((res) => {
+    rl.question(question, (answer) => {
+      rl.close();
+      res(answer.trim().toLowerCase() === "y");
+    });
+  });
+}
+
+function prompt(question: string): Promise<string> {
+  const rl = createInterface({ input: process.stdin, output: process.stdout });
+  return new Promise((res) => {
+    rl.question(question, (answer) => {
+      rl.close();
+      res(answer.trim());
+    });
+  });
+}
+
+// ─── .env updater ──────────────────────────────────────────────────
+function updateEnvSecret(newSecret: string): void {
+  const envPath = resolve(ROOT, ".env");
+  let content = readFileSync(envPath, "utf-8");
+
+  const regex = /^POLAR_WEBHOOK_SECRET=.*$/m;
+  if (regex.test(content)) {
+    content = content.replace(regex, `POLAR_WEBHOOK_SECRET=${newSecret}`);
+  } else {
+    content = content.trimEnd() + `\nPOLAR_WEBHOOK_SECRET=${newSecret}\n`;
+  }
+
+  writeFileSync(envPath, content, "utf-8");
+}
+
 // ─── Event categories ──────────────────────────────────────────────
 const CATEGORY_PREFIXES: [string, string][] = [
   ["product.", "products"],
-  ["payment_intent.", "orders"],
-  ["charge.", "orders"],
-  ["checkout.", "orders"],
-  ["customer.subscription.", "subscriptions"],
+  ["order.", "orders"],
+  ["checkout.", "checkout"],
+  ["subscription.", "subscriptions"],
+  ["customer.", "customers"],
+  ["refund.", "refunds"],
+  ["benefit.", "benefits"],
 ];
 
 function categorize(event: string): string {
@@ -83,39 +132,80 @@ function groupByCategory(events: string[]): Record<string, string[]> {
 function getLocalEvents(): Set<string> {
   const authPath = resolve(ROOT, "services/auth/auth.ts");
   const content = readFileSync(authPath, "utf-8");
-  const regex = /event\.type\s*===\s*"([^"]+)"/g;
   const events = new Set<string>();
+
+  const payloadRegex = /payload\.type\s*===\s*"([^"]+)"/g;
   let match: RegExpExecArray | null;
-  while ((match = regex.exec(content)) !== null) {
+  while ((match = payloadRegex.exec(content)) !== null) {
     events.add(match[1]);
   }
+
+  const handlerMap: Record<string, string> = {
+    onProductCreated: "product.created",
+    onProductUpdated: "product.updated",
+    onOrderCreated: "order.created",
+    onOrderUpdated: "order.updated",
+    onOrderPaid: "order.paid",
+    onOrderRefunded: "order.refunded",
+    onCustomerCreated: "customer.created",
+    onCustomerUpdated: "customer.updated",
+    onCustomerDeleted: "customer.deleted",
+    onSubscriptionCreated: "subscription.created",
+    onSubscriptionUpdated: "subscription.updated",
+    onSubscriptionActive: "subscription.active",
+    onSubscriptionCanceled: "subscription.canceled",
+    onSubscriptionUncanceled: "subscription.uncanceled",
+    onSubscriptionRevoked: "subscription.revoked",
+    onCheckoutCreated: "checkout.created",
+    onCheckoutUpdated: "checkout.updated",
+    onRefundCreated: "refund.created",
+    onRefundUpdated: "refund.updated",
+  };
+
+  for (const [handler, event] of Object.entries(handlerMap)) {
+    if (content.includes(handler)) {
+      events.add(event);
+    }
+  }
+
   return events;
 }
 
-// ─── Fetch Stripe webhook events ──────────────────────────────────
-async function getStripeEvents(): Promise<{
+// ─── Endpoint type ─────────────────────────────────────────────────
+type Endpoint = {
+  id: string;
+  url: string;
+  events: string[];
+  enabled: boolean;
+  secret: string;
+};
+
+// ─── Fetch Polar webhook endpoints ────────────────────────────────
+async function getPolarEndpoints(): Promise<{
   events: Set<string>;
-  hasWildcard: boolean;
-  endpoints: { id: string; url: string; events: string[] }[];
+  endpoints: Endpoint[];
 }> {
-  const list = await stripe.webhookEndpoints.list();
+  const result = await polar.webhooks.listWebhookEndpoints({});
   const events = new Set<string>();
-  let hasWildcard = false;
-  const endpoints: { id: string; url: string; events: string[] }[] = [];
+  const endpoints: Endpoint[] = [];
 
-  for (const ep of list.data) {
-    if (!ep.enabled_events) continue;
-    endpoints.push({ id: ep.id, url: ep.url, events: [...ep.enabled_events] });
+  for (const ep of result.result.items) {
+    endpoints.push({
+      id: ep.id,
+      url: ep.url,
+      events: [...ep.events],
+      enabled: ep.enabled,
+      secret: ep.secret,
+    });
 
-    if (ep.enabled_events.includes("*")) {
-      hasWildcard = true;
-    }
-    for (const evt of ep.enabled_events) {
-      if (evt !== "*") events.add(evt);
+    if (ep.enabled) {
+      for (const evt of ep.events) {
+        events.add(evt);
+      }
     }
   }
 
-  return { events, hasWildcard, endpoints };
+  return { events, endpoints };
 }
 
 // ─── Main ──────────────────────────────────────────────────────────
@@ -123,46 +213,153 @@ async function main() {
   log();
 
   const localEvents = getLocalEvents();
+  let hasIssues = false;
 
-  let stripeData: Awaited<ReturnType<typeof getStripeEvents>>;
+  // ═══════════════════════════════════════════════════════════════════
+  // Stage 1: Fetch state
+  // ═══════════════════════════════════════════════════════════════════
+  let polarData: Awaited<ReturnType<typeof getPolarEndpoints>>;
   try {
-    stripeData = await getStripeEvents();
+    polarData = await getPolarEndpoints();
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     log(
-      `  ${c.bgRed}${c.bold}${c.white} ✗ STRIPE API ${c.reset}  ${c.red}${msg}${c.reset}\n`
+      `  ${c.bgRed}${c.bold}${c.white} ✗ POLAR API ${c.reset}  ${c.red}${msg}${c.reset}\n`
     );
     process.exit(1);
   }
 
-  const { events: stripeEvents, hasWildcard, endpoints } = stripeData;
+  // ═══════════════════════════════════════════════════════════════════
+  // Stage 2: Endpoint resolution
+  // ═══════════════════════════════════════════════════════════════════
+  let target: Endpoint | null =
+    polarData.endpoints.find((ep) => ep.enabled) ??
+    polarData.endpoints[0] ??
+    null;
+
+  if (!target) {
+    if (!FIX_MODE) {
+      log(
+        `  ${c.bgRed}${c.bold}${c.white} ✗ NO ENDPOINT ${c.reset}  No webhook endpoint configured in Polar`
+      );
+      log();
+      log(
+        `  ${c.gray}Run ${c.yellow}pnpm webhooks:fix${c.gray} to create one automatically${c.reset}`
+      );
+      log();
+      process.exit(1);
+    }
+
+    // Interactive: create endpoint
+    log(
+      `  ${c.bold}${c.cyan}No webhook endpoint found — let's create one${c.reset}`
+    );
+    log();
+
+    const input = await prompt(
+      `  ${c.bold}Webhook URL ${c.dim}(${DEFAULT_WEBHOOK_URL})${c.reset}${c.bold}: ${c.reset}`
+    );
+    const url = input || DEFAULT_WEBHOOK_URL;
+
+    log();
+    log(`  Creating endpoint...`);
+
+    const created = await polar.webhooks.createWebhookEndpoint({
+      url,
+      format: "raw",
+      events: [...localEvents] as any,
+    });
+
+    target = {
+      id: created.id,
+      url: created.url,
+      events: [...created.events],
+      enabled: created.enabled,
+      secret: created.secret,
+    };
+
+    log(
+      `  ${c.bgGreen}${c.bold}${c.white} ✓ CREATED ${c.reset}  ${c.dim}${target.url}${c.reset}  ${c.gray}(${target.events.length} events)${c.reset}`
+    );
+    log();
+
+    // Write secret to .env
+    updateEnvSecret(target.secret);
+    log(
+      `  ${c.bgGreen}${c.bold}${c.white} ✓ SECRET ${c.reset}  ${c.green}POLAR_WEBHOOK_SECRET${c.reset} saved to ${c.dim}.env${c.reset}`
+    );
+    log();
+
+    // Endpoint was just created with all local events — skip to summary
+    log(
+      `  ${c.bgGreen}${c.bold}${c.white} ✓ WEBHOOKS ${c.reset}  All ${c.green}${localEvents.size}${c.reset} events are in sync.\n`
+    );
+    process.exit(0);
+  }
 
   // Show endpoints
   log(`  ${c.bold}${c.cyan}Webhook Endpoints${c.reset}`);
-  for (const ep of endpoints) {
-    const label = hasWildcard && ep.events.includes("*") ? " (wildcard)" : "";
+  for (const ep of polarData.endpoints) {
+    const status = ep.enabled
+      ? `${c.green}enabled${c.reset}`
+      : `${c.red}disabled${c.reset}`;
     log(
-      `  ${c.gray}│${c.reset} ${c.dim}${ep.url}${c.reset}${c.yellow}${label}${c.reset}  ${c.gray}(${ep.events.length} events)${c.reset}`
+      `  ${c.gray}│${c.reset} ${c.dim}${ep.url}${c.reset}  ${status}  ${c.gray}(${ep.events.length} events)${c.reset}`
     );
   }
   log();
 
-  if (hasWildcard) {
+  // ═══════════════════════════════════════════════════════════════════
+  // Stage 3: Secret sync
+  // ═══════════════════════════════════════════════════════════════════
+  const currentSecret = process.env.POLAR_WEBHOOK_SECRET?.trim() || "";
+
+  if (currentSecret === target.secret) {
     log(
-      `  ${c.bgYellow}${c.bold}${c.white} ⚠ WILDCARD ${c.reset}  Stripe endpoint uses ${c.yellow}*${c.reset} — all events enabled. Only checking local handlers.\n`
+      `  ${c.bgGreen}${c.bold}${c.white} ✓ SECRET ${c.reset}  ${c.dim}POLAR_WEBHOOK_SECRET in sync${c.reset}`
     );
+  } else if (!currentSecret) {
+    if (FIX_MODE) {
+      updateEnvSecret(target.secret);
+      log(
+        `  ${c.bgGreen}${c.bold}${c.white} ✓ SECRET ${c.reset}  ${c.green}POLAR_WEBHOOK_SECRET${c.reset} saved to ${c.dim}.env${c.reset}`
+      );
+    } else {
+      log(
+        `  ${c.bgRed}${c.bold}${c.white} ✗ SECRET ${c.reset}  ${c.red}POLAR_WEBHOOK_SECRET${c.reset} is empty in ${c.yellow}.env${c.reset}`
+      );
+      log(
+        `  ${c.gray}Run ${c.yellow}pnpm webhooks:fix${c.gray} to sync automatically${c.reset}`
+      );
+      hasIssues = true;
+    }
+  } else {
+    if (FIX_MODE) {
+      updateEnvSecret(target.secret);
+      log(
+        `  ${c.bgGreen}${c.bold}${c.white} ✓ SECRET ${c.reset}  ${c.green}POLAR_WEBHOOK_SECRET${c.reset} updated in ${c.dim}.env${c.reset}`
+      );
+    } else {
+      log(
+        `  ${c.bgYellow}${c.bold}${c.white} ⚠ SECRET ${c.reset}  ${c.yellow}POLAR_WEBHOOK_SECRET${c.reset} in ${c.yellow}.env${c.reset} does not match Polar endpoint`
+      );
+      log(
+        `  ${c.gray}Run ${c.yellow}pnpm webhooks:fix${c.gray} to sync automatically${c.reset}`
+      );
+      hasIssues = true;
+    }
   }
+  log();
 
-  // Compare
-  const inSync = [...localEvents].filter(
-    (e) => hasWildcard || stripeEvents.has(e)
-  );
-  const notHandled = [...stripeEvents].filter((e) => !localEvents.has(e));
-  const notEnabled = hasWildcard
-    ? []
-    : [...localEvents].filter((e) => !stripeEvents.has(e));
+  // ═══════════════════════════════════════════════════════════════════
+  // Stage 4: Event sync
+  // ═══════════════════════════════════════════════════════════════════
+  const polarEvents = polarData.events;
+  const inSync = [...localEvents].filter((e) => polarEvents.has(e));
+  const notHandled = [...polarEvents].filter((e) => !localEvents.has(e));
+  const notEnabled = [...localEvents].filter((e) => !polarEvents.has(e));
 
-  const hasIssues = notHandled.length > 0 || notEnabled.length > 0;
+  if (notHandled.length > 0 || notEnabled.length > 0) hasIssues = true;
 
   // ─── In Sync ───────────────────────────────────────────────────
   if (inSync.length > 0) {
@@ -186,7 +383,7 @@ async function main() {
   // ─── Not Handled ───────────────────────────────────────────────
   if (notHandled.length > 0) {
     log(
-      `  ${c.bgYellow}${c.bold}${c.white} ⚠ NOT HANDLED ${c.reset}  ${c.yellow}${notHandled.length}${c.reset} event${notHandled.length !== 1 ? "s" : ""} enabled in Stripe but not handled locally`
+      `  ${c.bgYellow}${c.bold}${c.white} ⚠ NOT HANDLED ${c.reset}  ${c.yellow}${notHandled.length}${c.reset} event${notHandled.length !== 1 ? "s" : ""} enabled in Polar but not handled locally`
     );
     log();
 
@@ -202,7 +399,7 @@ async function main() {
     }
 
     log(
-      `  ${c.gray}Add handlers in ${c.yellow}services/auth/auth.ts${c.gray} or disable in Stripe Dashboard${c.reset}`
+      `  ${c.gray}Add handlers in ${c.yellow}services/auth/auth.ts${c.gray} or disable in Polar Dashboard${c.reset}`
     );
     log();
   }
@@ -210,7 +407,7 @@ async function main() {
   // ─── Not Enabled ───────────────────────────────────────────────
   if (notEnabled.length > 0) {
     log(
-      `  ${c.bgRed}${c.bold}${c.white} ✗ NOT ENABLED ${c.reset}  ${c.red}${notEnabled.length}${c.reset} event${notEnabled.length !== 1 ? "s" : ""} handled locally but not enabled in Stripe`
+      `  ${c.bgRed}${c.bold}${c.white} ✗ NOT ENABLED ${c.reset}  ${c.red}${notEnabled.length}${c.reset} event${notEnabled.length !== 1 ? "s" : ""} handled locally but not enabled in Polar`
     );
     log();
 
@@ -225,49 +422,41 @@ async function main() {
       log();
     }
 
-    log(
-      `  ${c.gray}Enable these in ${c.yellow}Stripe Dashboard → Webhooks${c.gray} or remove handlers from ${c.yellow}services/auth/auth.ts${c.reset}`
-    );
-    log();
-  }
-
-  // ─── Auto-enable missing events ─────────────────────────────────
-  if (notEnabled.length > 0 && !hasWildcard) {
-    const rl = createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
-    const answer = await rl.question(
-      `  ${c.cyan}Enable them via Stripe API now?${c.reset} [y/N]: `
-    );
-    rl.close();
-
-    if (answer.trim().toLowerCase() === "y") {
-      const nonWildcardEndpoints = endpoints.filter(
-        (ep) => !ep.events.includes("*")
+    if (FIX_MODE) {
+      log(
+        `  ${c.bold}Will enable ${c.yellow}${notEnabled.length}${c.reset} event${notEnabled.length !== 1 ? "s" : ""} on endpoint:${c.reset}`
       );
-
-      for (const ep of nonWildcardEndpoints) {
-        const merged = [...new Set([...ep.events, ...notEnabled])];
-        try {
-          await stripe.webhookEndpoints.update(ep.id, {
-            enabled_events:
-              merged as Stripe.WebhookEndpointUpdateParams.EnabledEvent[],
-          });
-          log(
-            `\n  ${c.bgGreen}${c.bold}${c.white} ✓ UPDATED ${c.reset}  Enabled ${c.green}${notEnabled.length}${c.reset} event${notEnabled.length !== 1 ? "s" : ""} on ${c.dim}${ep.url}${c.reset}`
-          );
-        } catch (err) {
-          const msg = err instanceof Error ? err.message : String(err);
-          log(
-            `\n  ${c.bgRed}${c.bold}${c.white} ✗ FAILED ${c.reset}  ${c.red}${msg}${c.reset} on ${c.dim}${ep.url}${c.reset}`
-          );
-        }
+      log(`  ${c.dim}${target.url}${c.reset}`);
+      log();
+      for (const e of notEnabled.sort()) {
+        log(`  ${c.green}+${c.reset}  ${e}`);
       }
       log();
-      process.exit(0);
+
+      const ok = await confirm(`  ${c.bold}Confirm? (y/N): ${c.reset}`);
+
+      if (ok) {
+        const merged = [...new Set([...target.events, ...notEnabled])];
+        await polar.webhooks.updateWebhookEndpoint({
+          id: target.id,
+          webhookEndpointUpdate: { events: merged as any },
+        });
+        log();
+        log(
+          `  ${c.bgGreen}${c.bold}${c.white} ✓ ENABLED ${c.reset}  ${c.green}${notEnabled.length}${c.reset} event${notEnabled.length !== 1 ? "s" : ""} added to ${c.dim}${target.url}${c.reset}`
+        );
+        log();
+        hasIssues = false;
+      } else {
+        log();
+        log(`  ${c.yellow}Aborted.${c.reset}\n`);
+      }
+    } else {
+      log(
+        `  ${c.gray}Run ${c.yellow}pnpm webhooks:fix${c.gray} to enable automatically, or remove handlers from ${c.yellow}services/auth/auth.ts${c.reset}`
+      );
+      log();
     }
-    log();
   }
 
   // ─── All clear ─────────────────────────────────────────────────

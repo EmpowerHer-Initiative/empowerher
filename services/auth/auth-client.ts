@@ -1,4 +1,4 @@
-import { stripeClient } from "@better-auth/stripe/client";
+import { polarClient } from "@polar-sh/better-auth";
 import {
   adminClient,
   emailOTPClient,
@@ -14,6 +14,6 @@ export const authClient = createAuthClient({
     adminClient(),
     inferAdditionalFields<typeof auth>(),
     emailOTPClient(),
-    stripeClient({ subscription: true }),
+    polarClient(),
   ],
 });
