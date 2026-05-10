@@ -10,6 +10,7 @@ import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useQuery } from "@tanstack/react-query";
 import { addMonths, addYears, format, formatDistanceToNow } from "date-fns";
+import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
 
@@ -253,9 +254,18 @@ const EachProduct = ({ product }: EachProductProps) => {
         {
           onSuccess: () => {
             setOpen(false);
-            queryClient.invalidateQueries({
-              queryKey: trpc.payments.getOrders.queryKey(),
-            });
+            toast.success("Plan updated successfully");
+            setTimeout(() => {
+              queryClient.invalidateQueries({
+                queryKey: trpc.payments.getSubscriptions.queryKey(),
+              });
+              queryClient.invalidateQueries({
+                queryKey: trpc.payments.getCustomerState.queryKey(),
+              });
+            }, 2000);
+          },
+          onError: (error) => {
+            toast.error(error.message || "Failed to switch plan");
           },
         }
       );
@@ -321,8 +331,15 @@ const EachProduct = ({ product }: EachProductProps) => {
               <AlertDialogCancel
                 render={<Button variant="outline">Cancel</Button>}
               />
-              <Button onClick={() => handleUpgrade(product)}>
-                {isDowngrade ? "Downgrade" : "Upgrade"}
+              <Button
+                onClick={() => handleUpgrade(product)}
+                disabled={switchPlan.isPending || checkout.isPending}
+              >
+                {switchPlan.isPending || checkout.isPending
+                  ? "Processing..."
+                  : isDowngrade
+                    ? "Downgrade"
+                    : "Upgrade"}
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

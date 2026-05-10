@@ -11,7 +11,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table";
 
-type Order = RouterOutputs["billing"]["listOrders"][number];
+type Order = RouterOutputs["payments"]["listOrders"][number];
 
 const columns: ColumnDef<Order>[] = [
   {
@@ -74,7 +74,7 @@ export const BillingOrders = () => {
     isError,
     error,
   } = useQuery(
-    trpc.billing.listOrders.queryOptions(
+    trpc.payments.listOrders.queryOptions(
       {
         userId: user?.user.id || "",
       },

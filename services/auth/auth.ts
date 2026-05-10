@@ -166,7 +166,9 @@ export const auth = betterAuth({
                 },
                 onOrderRefunded: async ({ data }) => {
                   await updateOrder(data);
-                  await revokeSubscriptionOnRefund(data.subscriptionId ?? "");
+                  if (data.subscriptionId) {
+                    await revokeSubscriptionOnRefund(data.subscriptionId);
+                  }
                 },
                 onCustomerDeleted: async ({ data }) => {
                   await deleteCustomer(data);

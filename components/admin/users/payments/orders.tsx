@@ -26,8 +26,12 @@ export const Orders = () => {
     })
   );
 
-  const { data: ordersList, isPending } = useQuery(
-    trpc.billing.listOrders.queryOptions(
+  const {
+    data: ordersList,
+    isPending,
+    isError,
+  } = useQuery(
+    trpc.payments.listOrders.queryOptions(
       {
         userId: user?.id || "",
       },
@@ -42,6 +46,12 @@ export const Orders = () => {
     ordersList
       ?.filter((o) => o.status === "paid")
       .reduce((acc, o) => acc + o.totalAmount - o.discountAmount, 0) || 0;
+
+  if (isError) {
+    return (
+      <p className="text-destructive py-4 text-sm">Failed to load orders.</p>
+    );
+  }
 
   return (
     <div>

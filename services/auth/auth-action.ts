@@ -24,34 +24,37 @@ const INTERVAL_VALUES = ["day", "week", "month", "year"] as const;
 
 export const createProduct = async (data: Product) => {
   const firstPrice = data.prices[0];
-  await db.insert(products).values({
-    id: data.id,
-    name: data.name,
-    description: data.description ?? null,
-    popular: false,
-    priceAmount: firstPrice ? getPriceAmount(firstPrice) : 0,
-    priceCurrency: firstPrice ? getPriceCurrency(firstPrice) : "usd",
-    recurringInterval:
-      data.recurringInterval &&
-      INTERVAL_VALUES.includes(
-        data.recurringInterval as (typeof INTERVAL_VALUES)[number]
-      )
-        ? (data.recurringInterval as (typeof INTERVAL_VALUES)[number])
-        : null,
-    isRecurring: data.isRecurring,
-    isArchived: false,
-    trialInterval:
-      data.trialInterval &&
-      INTERVAL_VALUES.includes(
-        data.trialInterval as (typeof INTERVAL_VALUES)[number]
-      )
-        ? (data.trialInterval as (typeof INTERVAL_VALUES)[number])
-        : null,
-    trialIntervalCount: data.trialIntervalCount ?? 0,
-    metadata: data.metadata ?? {},
-    createdAt: data.createdAt ? new Date(data.createdAt) : new Date(),
-    updatedAt: data.modifiedAt ? new Date(data.modifiedAt) : new Date(),
-  });
+  await db
+    .insert(products)
+    .values({
+      id: data.id,
+      name: data.name,
+      description: data.description ?? null,
+      popular: false,
+      priceAmount: firstPrice ? getPriceAmount(firstPrice) : 0,
+      priceCurrency: firstPrice ? getPriceCurrency(firstPrice) : "usd",
+      recurringInterval:
+        data.recurringInterval &&
+        INTERVAL_VALUES.includes(
+          data.recurringInterval as (typeof INTERVAL_VALUES)[number]
+        )
+          ? (data.recurringInterval as (typeof INTERVAL_VALUES)[number])
+          : null,
+      isRecurring: data.isRecurring,
+      isArchived: false,
+      trialInterval:
+        data.trialInterval &&
+        INTERVAL_VALUES.includes(
+          data.trialInterval as (typeof INTERVAL_VALUES)[number]
+        )
+          ? (data.trialInterval as (typeof INTERVAL_VALUES)[number])
+          : null,
+      trialIntervalCount: data.trialIntervalCount ?? 0,
+      metadata: data.metadata ?? {},
+      createdAt: data.createdAt ? new Date(data.createdAt) : new Date(),
+      updatedAt: data.modifiedAt ? new Date(data.modifiedAt) : new Date(),
+    })
+    .onConflictDoNothing();
 };
 
 export const updateProduct = async (data: Product) => {
@@ -85,7 +88,6 @@ export const updateProduct = async (data: Product) => {
     })
     .where(eq(products.id, data.id));
 };
-
 // ----------------------------
 // 📦 Products END
 // ----------------------------
@@ -97,23 +99,27 @@ export const createOrder = async (data: Order) => {
   if (!data.customer.externalId)
     throw new Error("Customer external ID is required");
 
-  await db.insert(orders).values({
-    id: data.id,
-    subscriptionId: data.subscriptionId ?? "",
-    email: data.customer.email ?? "",
-    userId: data.customer.externalId,
-    billingReason: data.billingReason,
-    productId: data.productId ?? "",
-    billingName: data.billingName ?? "",
-    totalAmount: data.totalAmount,
-    invoiceNumber: data.invoiceNumber,
-    status: data.status,
-    discountAmount: data.discountAmount,
-    createdAt: data.createdAt,
-    updatedAt: data.modifiedAt,
-    metadata: data.product?.metadata ?? data.metadata ?? {},
-  });
+  await db
+    .insert(orders)
+    .values({
+      id: data.id,
+      subscriptionId: data.subscriptionId ?? "",
+      email: data.customer.email ?? "",
+      userId: data.customer.externalId,
+      billingReason: data.billingReason,
+      productId: data.productId ?? "",
+      billingName: data.billingName ?? "",
+      totalAmount: data.totalAmount,
+      invoiceNumber: data.invoiceNumber,
+      status: data.status,
+      discountAmount: data.discountAmount,
+      createdAt: data.createdAt,
+      updatedAt: data.modifiedAt,
+      metadata: data.product?.metadata ?? data.metadata ?? {},
+    })
+    .onConflictDoNothing();
 };
+
 export const updateOrder = async (data: Order) => {
   await db
     .update(orders)
@@ -131,6 +137,7 @@ export const updateOrder = async (data: Order) => {
     })
     .where(eq(orders.id, data.id));
 };
+
 export const revokeSubscriptionOnRefund = async (subscriptionId: string) => {
   if (!subscriptionId) throw new Error("Subscription ID is required");
 
@@ -168,27 +175,31 @@ export const deleteCustomer = async (data: Customer) => {
 // 📅 Subscriptions
 // ----------------------------
 export const createSubscription = async (data: Subscription) => {
-  await db.insert(subscriptions).values({
-    id: data.id,
-    status: data.status,
-    email: data.customer.email ?? "",
-    userId: data.customer.externalId ?? "",
-    productId: data.productId,
-    amount: data.amount,
-    currency: data.currency,
-    createdAt: data.createdAt,
-    updatedAt: data.modifiedAt,
-    trialStart: data.trialStart,
-    trialEnd: data.trialEnd,
-    startedAt: data.startedAt,
-    canceledAt: data.canceledAt,
-    cancelAtPeriodEnd: data.cancelAtPeriodEnd,
-    recurringInterval: data.recurringInterval,
-    customerCancellationReason: data.customerCancellationReason,
-    customerCancellationComment: data.customerCancellationComment,
-    metadata: data.product.metadata ?? data.metadata ?? {},
-  });
+  await db
+    .insert(subscriptions)
+    .values({
+      id: data.id,
+      status: data.status,
+      email: data.customer.email ?? "",
+      userId: data.customer.externalId ?? "",
+      productId: data.productId,
+      amount: data.amount,
+      currency: data.currency,
+      createdAt: data.createdAt,
+      updatedAt: data.modifiedAt,
+      trialStart: data.trialStart,
+      trialEnd: data.trialEnd,
+      startedAt: data.startedAt,
+      canceledAt: data.canceledAt,
+      cancelAtPeriodEnd: data.cancelAtPeriodEnd,
+      recurringInterval: data.recurringInterval,
+      customerCancellationReason: data.customerCancellationReason,
+      customerCancellationComment: data.customerCancellationComment,
+      metadata: data.product?.metadata ?? data.metadata ?? {},
+    })
+    .onConflictDoNothing();
 };
+
 export const updateSubscription = async (data: Subscription) => {
   await db
     .update(subscriptions)
@@ -208,7 +219,7 @@ export const updateSubscription = async (data: Subscription) => {
       recurringInterval: data.recurringInterval,
       customerCancellationReason: data.customerCancellationReason,
       customerCancellationComment: data.customerCancellationComment,
-      metadata: data.product.metadata ?? data.metadata ?? {},
+      metadata: data.product?.metadata ?? data.metadata ?? {},
     })
     .where(eq(subscriptions.id, data.id));
 };

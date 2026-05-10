@@ -30,11 +30,17 @@ const formatCurrency = (cents: number) =>
 
 export const AdminOverview = () => {
   const trpc = useTRPC();
-  const { data, isPending } = useQuery(
+  const { data, isPending, isError } = useQuery(
     trpc.admin.overview.getStats.queryOptions()
   );
 
   if (isPending) return <OverviewSkeleton />;
+  if (isError)
+    return (
+      <p className="text-destructive py-8 text-center text-sm">
+        Failed to load dashboard stats.
+      </p>
+    );
   if (!data) return null;
 
   const { users, subscriptions, revenue, recentOrders } = data;

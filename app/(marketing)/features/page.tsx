@@ -33,15 +33,25 @@ export default function FeaturesPage() {
   const trpc = useTRPC();
   const router = useRouter();
   const access = useAccess();
-  const { data: allProducts, isPending: productsLoading } = useQuery(
-    trpc.products.list.queryOptions()
-  );
+  const {
+    data: allProducts,
+    isPending: productsLoading,
+    isError,
+  } = useQuery(trpc.products.list.queryOptions());
   const checkout = useCheckout();
 
   if (access.isPending || productsLoading) {
     return (
       <div className="flex h-48 items-center justify-center">
         <Spinner />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex h-48 items-center justify-center">
+        <p className="text-muted-foreground">Failed to load products.</p>
       </div>
     );
   }

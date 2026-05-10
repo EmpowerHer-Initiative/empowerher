@@ -10,7 +10,6 @@ const EXPECTED_TRPC_GUARDS: Record<string, string[]> = {
   auth: ["services/trpc/routers/auth.ts", "services/trpc/routers/users.ts"],
   contact: ["services/trpc/routers/contact.ts"],
   payments: [
-    "services/trpc/routers/billing.ts",
     "services/trpc/routers/discounts.ts",
     "services/trpc/routers/payments.ts",
     "services/trpc/routers/products.ts",

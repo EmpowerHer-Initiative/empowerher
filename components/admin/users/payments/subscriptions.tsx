@@ -26,8 +26,12 @@ export const Subscriptions = () => {
     })
   );
 
-  const { data: subscriptions, isPending } = useQuery(
-    trpc.billing.listSubscriptions.queryOptions(
+  const {
+    data: subscriptions,
+    isPending,
+    isError,
+  } = useQuery(
+    trpc.payments.listSubscriptions.queryOptions(
       {
         userId: user?.id || "",
       },
@@ -36,6 +40,14 @@ export const Subscriptions = () => {
       }
     )
   );
+
+  if (isError) {
+    return (
+      <p className="text-destructive py-4 text-sm">
+        Failed to load subscriptions.
+      </p>
+    );
+  }
 
   return (
     <div>

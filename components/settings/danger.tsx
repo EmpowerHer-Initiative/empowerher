@@ -34,7 +34,7 @@ export const DangerSettings = () => {
 
   const router = useRouter();
   const deleteAccount = useMutation(
-    useTRPC().billing.deleteCustomer.mutationOptions({
+    useTRPC().payments.deleteCustomer.mutationOptions({
       onSuccess: () => {
         router.push("/account-deleted");
         router.refresh();

@@ -1,7 +1,13 @@
 import { cookies } from "next/headers";
+import { removeCustomer } from "@/services/auth/actions";
 import { polarClient } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
-import { orders, products, subscriptions } from "@/services/db/schema";
+import { orders, products, subscriptions, user } from "@/services/db/schema";
+import {
+  cancelSubscription,
+  deleteCustomerByEmail,
+  getSubscriptionDetails,
+} from "@/services/payments";
 import {
   adminProcedure,
   authenticatedProcedure,
@@ -12,85 +18,74 @@ import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import type { SubscriptionProrationBehavior } from "@polar-sh/sdk/models/components/subscriptionprorationbehavior.js";
 import { ResourceNotFound } from "@polar-sh/sdk/models/errors/resourcenotfound.js";
 import { TRPCError } from "@trpc/server";
-import { asc, desc, eq, or } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 
 export const paymentsRouter = createTRPCRouter({
+  // ─── Customer State ──────────────────────────────────────────────
   getCustomerState: authenticatedProcedure
     .use(featureGuard("payments"))
     .query(async ({ ctx }) => {
+      let customerState;
       try {
-        const [customerState, paidOrders] = await Promise.all([
-          polarClient.customers.getStateExternal({
-            externalId: ctx.session.user.id,
-          }),
-          db
+        customerState = await polarClient.customers.getStateExternal({
+          externalId: ctx.session.user.id,
+        });
+      } catch (err) {
+        if (err instanceof ResourceNotFound) {
+          const paidOrders = await db
             .select()
             .from(orders)
             .where(eq(orders.userId, ctx.session.user.id))
-            .then((rows) => rows.filter((o) => o.status === "paid")),
-        ]);
+            .then((rows) => rows.filter((o) => o.status === "paid"));
 
-        const activeSub = customerState.activeSubscriptions?.[0] ?? null;
-
-        const currentProduct = activeSub
-          ? await db
-              .select()
-              .from(products)
-              .where(eq(products.id, activeSub.productId))
-              .limit(1)
-              .then((result) => result[0] ?? null)
-          : null;
-
-        return {
-          ...customerState,
-          paidOrders,
-          isUserHaveAccess:
-            activeSub?.status === "active" ||
-            activeSub?.status === "trialing" ||
-            paidOrders.length > 0,
-          currentProductId: activeSub?.productId ?? null,
-          currentSubscriptionId: activeSub?.id ?? null,
-          currentProduct,
-        };
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to fetch customer state",
-          cause: error,
-        });
+          return {
+            activeSubscriptions: [] as never[],
+            paidOrders,
+            isUserHaveAccess: paidOrders.length > 0,
+            currentProductId: null,
+            currentSubscriptionId: null,
+            currentProduct: null,
+          };
+        }
+        throw err;
       }
-    }),
-  /**
-   * Fetches all products ordered by price amount
-   * @returns Promise<Product[]> - Array of products sorted by price
-   */
-  getProducts: baseProcedure.use(featureGuard("payments")).query(async () => {
-    try {
-      const productsList = await db
+
+      const paidOrders = await db
         .select()
-        .from(products)
-        .orderBy(asc(products.priceAmount));
-      return productsList;
-    } catch (error) {
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message:
-          error instanceof Error ? error.message : "Failed to fetch products",
-        cause: error,
-      });
-    }
+        .from(orders)
+        .where(eq(orders.userId, ctx.session.user.id))
+        .then((rows) => rows.filter((o) => o.status === "paid"));
+
+      const activeSub = customerState.activeSubscriptions?.[0] ?? null;
+
+      const currentProduct = activeSub
+        ? await db
+            .select()
+            .from(products)
+            .where(eq(products.id, activeSub.productId))
+            .limit(1)
+            .then((result) => result[0] ?? null)
+        : null;
+
+      return {
+        ...customerState,
+        paidOrders,
+        isUserHaveAccess:
+          activeSub?.status === "active" ||
+          activeSub?.status === "trialing" ||
+          paidOrders.length > 0,
+        currentProductId: activeSub?.productId ?? null,
+        currentSubscriptionId: activeSub?.id ?? null,
+        currentProduct,
+      };
+    }),
+
+  // ─── Products ────────────────────────────────────────────────────
+  getProducts: baseProcedure.use(featureGuard("payments")).query(async () => {
+    return db.select().from(products).orderBy(asc(products.priceAmount));
   }),
 
-  /**
-   * Updates an existing product
-   * @param id - The ID of the product to update
-   * @param product - Partial product data to update
-   * @returns The updated product
-   */
   updateProduct: adminProcedure
     .use(featureGuard("payments"))
     .input(
@@ -102,7 +97,6 @@ export const paymentsRouter = createTRPCRouter({
           trialInterval: z.enum(["day", "week", "month", "year"]).optional(),
           trialIntervalCount: z.number().optional(),
           popular: z.boolean().optional(),
-          slug: z.string().optional(),
           priceAmount: z.number().optional(),
           priceCurrency: z.string().optional(),
           recurringInterval: z
@@ -115,59 +109,26 @@ export const paymentsRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input }) => {
-      try {
-        const { id, ...productData } = input;
-        const [updatedProduct] = await db
-          .update(products)
-          .set({
-            ...productData,
-            updatedAt: new Date(),
-          })
-          .where(eq(products.id, id))
-          .returning();
-        return updatedProduct;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error ? error.message : "Failed to update product",
-          cause: error,
-        });
-      }
+      const [updated] = await db
+        .update(products)
+        .set({ ...input.product, updatedAt: new Date() })
+        .where(eq(products.id, input.id))
+        .returning();
+      return updated;
     }),
 
-  /**
-   * Deletes a product by ID
-   * @param id - The ID of the product to delete
-   * @returns The deleted product
-   */
   deleteProduct: adminProcedure
     .use(featureGuard("payments"))
     .input(z.string())
     .mutation(async ({ input }) => {
-      try {
-        const [deletedProduct] = await db
-          .delete(products)
-          .where(eq(products.id, input))
-          .returning();
-        return deletedProduct;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error ? error.message : "Failed to delete product",
-          cause: error,
-        });
-      }
+      const [deleted] = await db
+        .delete(products)
+        .where(eq(products.id, input))
+        .returning();
+      return deleted;
     }),
 
-  /**
-   * Creates a checkout session for a product
-   * @param productId - The ID of the product to checkout
-   * @param successUrl - Optional custom success URL
-   * @param discountId - Optional discount code ID
-   * @returns Checkout session response
-   */
+  // ─── Checkout ────────────────────────────────────────────────────
   createCheckout: authenticatedProcedure
     .use(featureGuard("payments"))
     .input(
@@ -178,91 +139,140 @@ export const paymentsRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      try {
-        const { productId, successUrl, discountId } = input;
+      const { productId, successUrl, discountId } = input;
 
-        // Ensure customer exists in Polar, create if not found
-        try {
-          await polarClient.customers.getExternal({
+      // Ensure customer exists in Polar, create if not found
+      try {
+        await polarClient.customers.getExternal({
+          externalId: ctx.session.user.id,
+        });
+      } catch (err) {
+        if (err instanceof ResourceNotFound) {
+          await polarClient.customers.create({
+            email: ctx.session.user.email,
+            name: ctx.session.user.name ?? undefined,
             externalId: ctx.session.user.id,
           });
-        } catch (err) {
-          if (err instanceof ResourceNotFound) {
-            await polarClient.customers.create({
-              email: ctx.session.user.email,
-              name: ctx.session.user.name ?? undefined,
-              externalId: ctx.session.user.id,
-            });
-          } else {
-            throw err;
-          }
-        }
-
-        const checkoutIdPlaceholder = "{CHECKOUT_ID}";
-        let url: string;
-        if (successUrl) {
-          const delimiter = successUrl.includes("?") ? "&" : "?";
-          url = `${successUrl}${delimiter}checkout_id=${checkoutIdPlaceholder}`;
         } else {
-          const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(
-            /\/$/,
-            ""
-          );
-          url = `${base}/success?checkout_id=${checkoutIdPlaceholder}`;
+          throw err;
         }
-
-        const response = await polarClient.checkouts.create({
-          products: [productId],
-          externalCustomerId: ctx.session.user.id,
-          successUrl: url,
-          discountId: discountId ?? undefined,
-        });
-        return response;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to create checkout",
-          cause: error,
-        });
       }
+
+      const checkoutIdPlaceholder = "{CHECKOUT_ID}";
+      let url: string;
+      if (successUrl) {
+        const delimiter = successUrl.includes("?") ? "&" : "?";
+        url = `${successUrl}${delimiter}checkout_id=${checkoutIdPlaceholder}`;
+      } else {
+        const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/$/, "");
+        url = `${base}/success?checkout_id=${checkoutIdPlaceholder}`;
+      }
+
+      return polarClient.checkouts.create({
+        products: [productId],
+        externalCustomerId: ctx.session.user.id,
+        successUrl: url,
+        discountId: discountId ?? undefined,
+      });
     }),
 
-  /**
-   * Retrieves a checkout session by ID
-   * @param checkoutId - The ID of the checkout session
-   * @returns Promise<CheckoutSession> - Checkout session data
-   */
   getCheckoutSession: baseProcedure
     .use(featureGuard("payments"))
     .input(z.string())
     .query(async ({ input }) => {
-      try {
-        const response = await polarClient.checkouts.get({
-          id: input,
-        });
-        return response;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to get checkout session",
-          cause: error,
-        });
-      }
+      return polarClient.checkouts.get({ id: input });
     }),
 
-  /**
-   * Switches a subscription to a different product/plan
-   * @param subscriptionId - The ID of the subscription to update
-   * @param toProductId - The ID of the new product/plan
-   * @param prorationBehavior - Optional proration behavior
-   * @returns Response from the subscription update
-   */
+  // ─── Subscriptions ───────────────────────────────────────────────
+  getSubscriptions: authenticatedProcedure
+    .use(featureGuard("payments"))
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      if (
+        input.userId !== ctx.session.user.id &&
+        ctx.session.user.role !== "admin"
+      ) {
+        throw new TRPCError({ code: "FORBIDDEN" });
+      }
+
+      return db
+        .select()
+        .from(subscriptions)
+        .where(eq(subscriptions.userId, input.userId))
+        .orderBy(desc(subscriptions.createdAt));
+    }),
+
+  listSubscriptions: authenticatedProcedure
+    .use(featureGuard("payments"))
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      if (
+        input.userId !== ctx.session.user.id &&
+        ctx.session.user.role !== "admin"
+      ) {
+        throw new TRPCError({ code: "FORBIDDEN" });
+      }
+
+      const subs = await db
+        .select({
+          subscription: subscriptions,
+          productName: products.name,
+        })
+        .from(subscriptions)
+        .leftJoin(products, eq(products.id, subscriptions.productId))
+        .where(eq(subscriptions.userId, input.userId))
+        .orderBy(desc(subscriptions.createdAt));
+
+      return subs.map((s) => ({
+        ...s.subscription,
+        productName: s.productName,
+      }));
+    }),
+
+  getSubscriptionDetails: authenticatedProcedure
+    .use(featureGuard("payments"))
+    .input(z.object({ subscriptionId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const sub = await db
+        .select()
+        .from(subscriptions)
+        .where(eq(subscriptions.id, input.subscriptionId))
+        .limit(1)
+        .then((r) => r[0]);
+
+      if (!sub || sub.userId !== ctx.session.user.id) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      return getSubscriptionDetails(input.subscriptionId);
+    }),
+
+  cancelSubscription: authenticatedProcedure
+    .use(featureGuard("payments"))
+    .input(z.object({ subscriptionId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const sub = await db
+        .select()
+        .from(subscriptions)
+        .where(eq(subscriptions.id, input.subscriptionId))
+        .limit(1)
+        .then((r) => r[0]);
+
+      if (!sub || sub.userId !== ctx.session.user.id) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      if (sub.status === "canceled") {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Subscription is already canceled",
+        });
+      }
+
+      await cancelSubscription(input.subscriptionId);
+      return { success: true };
+    }),
+
   switchPlan: authenticatedProcedure
     .use(featureGuard("payments"))
     .input(
@@ -278,166 +288,121 @@ export const paymentsRouter = createTRPCRouter({
           .default("prorate"),
       })
     )
-    .mutation(async ({ input }) => {
-      try {
-        const { subscriptionId, toProductId, prorationBehavior } = input;
+    .mutation(async ({ input, ctx }) => {
+      const { subscriptionId, toProductId, prorationBehavior } = input;
 
-        // Fetch the current subscription to check its status
-        const subscription = await polarClient.subscriptions.get({
-          id: subscriptionId,
-        });
+      // Verify ownership via local DB
+      const sub = await db
+        .select()
+        .from(subscriptions)
+        .where(eq(subscriptions.id, subscriptionId))
+        .limit(1)
+        .then((r) => r[0]);
 
-        // Check if the subscription is in trial period
-        if (subscription.status === "trialing") {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message:
-              "Cannot switch plans while subscription is in trial period. Please wait until your trial ends or cancel and start a new subscription.",
-          });
-        }
+      if (!sub || sub.userId !== ctx.session.user.id) {
+        throw new TRPCError({ code: "FORBIDDEN" });
+      }
 
-        const response = await polarClient.subscriptions.update({
-          id: subscriptionId,
-          subscriptionUpdate: {
-            productId: toProductId,
-            prorationBehavior:
-              prorationBehavior as SubscriptionProrationBehavior,
-          },
-        });
-        return response;
-      } catch (error) {
+      // Check trial status from Polar
+      const subscription = await polarClient.subscriptions.get({
+        id: subscriptionId,
+      });
+
+      if (subscription.status === "trialing") {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error ? error.message : "Failed to switch plan",
-          cause: error,
+          code: "BAD_REQUEST",
+          message: "Cannot switch plans while subscription is in trial period.",
         });
       }
+
+      return polarClient.subscriptions.update({
+        id: subscriptionId,
+        subscriptionUpdate: {
+          productId: toProductId,
+          prorationBehavior: prorationBehavior as SubscriptionProrationBehavior,
+        },
+      });
     }),
 
-  /**
-   * Deletes a customer and clears all cookies
-   * @param userId - The ID of the user/customer to delete
-   * @returns Response from the customer deletion
-   */
-  deleteCustomer: authenticatedProcedure
+  // ─── Orders ──────────────────────────────────────────────────────
+  listOrders: authenticatedProcedure
     .use(featureGuard("payments"))
-    .input(z.string())
-    .mutation(async ({ input }) => {
-      try {
-        const cookieStore = await cookies();
-        await polarClient.customers.deleteExternal({
-          externalId: input,
-        });
-
-        // Delete all cookies
-        cookieStore.getAll().forEach((cookie) => {
-          cookieStore.delete(cookie.name);
-        });
-
-        return true;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to delete customer",
-          cause: error,
-        });
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      if (
+        input.userId !== ctx.session.user.id &&
+        ctx.session.user.role !== "admin"
+      ) {
+        throw new TRPCError({ code: "FORBIDDEN" });
       }
+
+      const dbRows = await db
+        .select({
+          order: orders,
+          productName: products.name,
+        })
+        .from(orders)
+        .leftJoin(products, eq(products.id, orders.productId))
+        .where(eq(orders.userId, input.userId))
+        .orderBy(desc(orders.createdAt));
+
+      return dbRows.map((r) => ({
+        id: r.order.id,
+        totalAmount: r.order.totalAmount,
+        status: r.order.status,
+        productName: r.productName,
+        billingReason: r.order.billingReason,
+        invoiceNumber: r.order.invoiceNumber,
+        discountAmount: r.order.discountAmount,
+        metadata: r.order.metadata,
+        createdAt: r.order.createdAt,
+      }));
     }),
 
-  /**
-   * Fetches orders for a specific user by user ID or email
-   * @param userId - The ID of the user to get orders for
-   * @param email - The email of the user to get orders for
-   * @returns Promise<Order[]> - Array of orders sorted by creation date (newest first)
-   */
-  getOrders: authenticatedProcedure
-    .use(featureGuard("payments"))
-    .input(
-      z.object({
-        userId: z.string(),
-        email: z.string(),
-      })
-    )
-    .query(async ({ input }) => {
-      try {
-        const { userId, email } = input;
-        const ordersList = await db
-          .select()
-          .from(orders)
-          .where(or(eq(orders.userId, userId), eq(orders.email, email)))
-          .orderBy(desc(orders.createdAt));
-
-        return ordersList;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error ? error.message : "Failed to fetch orders",
-          cause: error,
-        });
-      }
-    }),
-
-  /**
-   * Fetches subscriptions for a specific user by user ID
-   * @param userId - The ID of the user to get subscriptions for
-   * @returns Promise<Subscription[]> - Array of subscriptions sorted by creation date (newest first)
-   */
-  getSubscriptions: authenticatedProcedure
-    .use(featureGuard("payments"))
-    .input(
-      z.object({
-        userId: z.string(),
-      })
-    )
-    .query(async ({ input }) => {
-      try {
-        const { userId } = input;
-
-        const subscriptionsList = await db
-          .select()
-          .from(subscriptions)
-          .where(eq(subscriptions.userId, userId))
-          .orderBy(desc(subscriptions.createdAt));
-
-        return subscriptionsList;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to fetch subscriptions",
-          cause: error,
-        });
-      }
-    }),
-
-  /**
-   * Generates a portal link for a customer
-   * @returns Promise<CustomerSession> - Customer session data
-   */
+  // ─── Portal ──────────────────────────────────────────────────────
   generatePortalLink: authenticatedProcedure
     .use(featureGuard("payments"))
     .mutation(async ({ ctx }) => {
-      try {
-        const portalLink = await polarClient.customerSessions.create({
-          externalCustomerId: ctx.session.user.id,
-        });
-        return portalLink;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to generate portal link",
-          cause: error,
-        });
+      return polarClient.customerSessions.create({
+        externalCustomerId: ctx.session.user.id,
+      });
+    }),
+
+  // ─── Customer Deletion ──────────────────────────────────────────
+  deleteCustomer: authenticatedProcedure
+    .use(featureGuard("payments"))
+    .input(z.string())
+    .mutation(async ({ input, ctx }) => {
+      if (input !== ctx.session.user.id) {
+        throw new TRPCError({ code: "FORBIDDEN" });
       }
+
+      const cookieStore = await cookies();
+
+      const dbUser = await db
+        .select()
+        .from(user)
+        .where(eq(user.id, input))
+        .limit(1)
+        .then((res) => res[0]);
+
+      // Delete from Polar
+      if (dbUser?.email) {
+        try {
+          await deleteCustomerByEmail(dbUser.email);
+        } catch {
+          // Customer may not exist in Polar yet
+        }
+      }
+
+      // Delete from local DB
+      await removeCustomer(dbUser?.email ?? "");
+
+      // Clear cookies
+      cookieStore.getAll().forEach((cookie) => {
+        cookieStore.delete(cookie.name);
+      });
+
+      return true;
     }),
 });
