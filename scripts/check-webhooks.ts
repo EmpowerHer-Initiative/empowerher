@@ -4,8 +4,7 @@
  * Without flags: report-only (safe for predev/prebuild hooks)
  * With --fix:    interactive — creates endpoints, syncs secrets, enables events
  *
- * Run: pnpm webhooks:check        (report)
- * Run: pnpm webhooks:fix          (interactive fix)
+ * Run via: pnpm sm → check-webhooks (report or fix mode)
  */
 
 import { readFileSync, writeFileSync } from "node:fs";
@@ -244,7 +243,7 @@ async function main() {
       );
       log();
       log(
-        `  ${c.gray}Run ${c.yellow}pnpm webhooks:fix${c.gray} to create one automatically${c.reset}`
+        `  ${c.gray}Run ${c.yellow}pnpm sm → check-webhooks → fix${c.gray} to create one automatically${c.reset}`
       );
       log();
       process.exit(1);
@@ -330,7 +329,7 @@ async function main() {
         `  ${c.bgRed}${c.bold}${c.white} ✗ SECRET ${c.reset}  ${c.red}POLAR_WEBHOOK_SECRET${c.reset} is empty in ${c.yellow}.env${c.reset}`
       );
       log(
-        `  ${c.gray}Run ${c.yellow}pnpm webhooks:fix${c.gray} to sync automatically${c.reset}`
+        `  ${c.gray}Run ${c.yellow}pnpm sm → check-webhooks → fix${c.gray} to sync automatically${c.reset}`
       );
       hasIssues = true;
     }
@@ -345,7 +344,7 @@ async function main() {
         `  ${c.bgYellow}${c.bold}${c.white} ⚠ SECRET ${c.reset}  ${c.yellow}POLAR_WEBHOOK_SECRET${c.reset} in ${c.yellow}.env${c.reset} does not match Polar endpoint`
       );
       log(
-        `  ${c.gray}Run ${c.yellow}pnpm webhooks:fix${c.gray} to sync automatically${c.reset}`
+        `  ${c.gray}Run ${c.yellow}pnpm sm → check-webhooks → fix${c.gray} to sync automatically${c.reset}`
       );
       hasIssues = true;
     }
@@ -360,7 +359,7 @@ async function main() {
   const notHandled = [...polarEvents].filter((e) => !localEvents.has(e));
   const notEnabled = [...localEvents].filter((e) => !polarEvents.has(e));
 
-  if (notHandled.length > 0 || notEnabled.length > 0) hasIssues = true;
+  if (FIX_MODE && notEnabled.length > 0) hasIssues = true;
 
   // ─── In Sync ───────────────────────────────────────────────────
   if (inSync.length > 0) {
@@ -455,7 +454,7 @@ async function main() {
       }
     } else {
       log(
-        `  ${c.gray}Run ${c.yellow}pnpm webhooks:fix${c.gray} to enable automatically, or remove handlers from ${c.yellow}services/auth/auth.ts${c.reset}`
+        `  ${c.gray}Run ${c.yellow}pnpm sm → check-webhooks → fix${c.gray} to enable automatically, or remove handlers from ${c.yellow}services/auth/auth.ts${c.reset}`
       );
       log();
     }

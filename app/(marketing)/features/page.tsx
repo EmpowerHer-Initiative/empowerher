@@ -59,6 +59,9 @@ export default function FeaturesPage() {
 
   return (
     <div className="space-y-16">
+      <Button disabled={!access.hasPlanOrHigher("starter")}>Basic</Button>
+      <Button disabled={!access.hasPlanOrHigher("pro")}>Pro</Button>
+      <Button disabled={!access.hasPlanOrHigher("business")}>Business</Button>
       {/* ─── Subscription Plans ─────────────────────────────────── */}
       {subscriptionProducts.length > 0 && (
         <section className="space-y-6">

@@ -16,25 +16,41 @@ type CustomerState = inferRouterOutputs<
 type PaidOrder = CustomerState["paidOrders"][number];
 type ActiveSubscription = CustomerState["activeSubscriptions"][number];
 
-type PlanEntry = { name: string; productId: string };
+type PlanEntry = {
+  name: string;
+  monthlyProductId: string;
+  yearlyProductId: string;
+};
+type ProductEntry = { name: string; productId: string };
+
 const plansRecord = plans as Record<string, PlanEntry>;
-const productsRecord = oneTimeProducts as Record<string, PlanEntry>;
+const productsRecord = oneTimeProducts as Record<string, ProductEntry>;
+
+function matchesPlan(plan: PlanEntry | undefined, productId: string | null) {
+  if (!plan || !productId) return false;
+  return (
+    plan.monthlyProductId === productId || plan.yearlyProductId === productId
+  );
+}
 
 export function useAccess() {
-  const state = useGetCustomerState();
+  const { data, isPending, isError, error } = useGetCustomerState();
 
   const activeSub: ActiveSubscription | null =
-    state.data?.activeSubscriptions?.[0] ?? null;
-  const currentProductId = state.data?.currentProductId ?? null;
-  const paidOrders: PaidOrder[] = state.data?.paidOrders ?? [];
+    data?.activeSubscriptions?.[0] ?? null;
+  const currentProductId = data?.currentProductId ?? null;
+  const paidOrders: PaidOrder[] = data?.paidOrders ?? [];
   const planKeys = Object.keys(plansRecord);
 
   return {
-    ...state,
+    data,
+    isPending,
+    isError,
+    error,
 
-    /** Exact plan match by key */
+    /** Exact plan match by key (matches both monthly and yearly) */
     hasPlan: (key: PlanKey) =>
-      currentProductId === plansRecord[key as string]?.productId,
+      matchesPlan(plansRecord[key as string], currentProductId),
 
     /** Exact plan match by productId */
     hasPlanByProductId: (productId: string) => currentProductId === productId,
@@ -43,8 +59,8 @@ export function useAccess() {
     hasPlanOrHigher: (key: PlanKey) => {
       if (!currentProductId) return false;
       const requiredIndex = planKeys.indexOf(key as string);
-      const currentIndex = planKeys.findIndex(
-        (k) => plansRecord[k]?.productId === currentProductId
+      const currentIndex = planKeys.findIndex((k) =>
+        matchesPlan(plansRecord[k], currentProductId)
       );
       return currentIndex >= 0 && currentIndex >= requiredIndex;
     },
@@ -68,9 +84,13 @@ export function useAccess() {
     hasProductByProductId: (productId: string) =>
       paidOrders.some((o) => o.productId === productId),
 
-    /** Get productId for a plan */
-    getPlanProductId: (key: PlanKey) =>
-      plansRecord[key as string]?.productId ?? "",
+    /** Get productIds for a plan */
+    getPlanProductIds: (key: PlanKey) => {
+      const plan = plansRecord[key as string];
+      return plan
+        ? { monthly: plan.monthlyProductId, yearly: plan.yearlyProductId }
+        : { monthly: "", yearly: "" };
+    },
 
     /** Get productId for a one-time product */
     getProductProductId: (key: ProductKey) =>

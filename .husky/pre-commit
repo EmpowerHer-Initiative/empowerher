@@ -1,4 +1,4 @@
 pnpm format
 git add -u
-pnpm run env:check
+tsx scripts/check-env.ts
 pnpm test

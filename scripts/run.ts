@@ -1,27 +1,85 @@
 import { spawnSync } from "node:child_process";
-import { readdirSync } from "node:fs";
 import { resolve } from "node:path";
+import { createInterface } from "node:readline";
 
 const SCRIPTS_DIR = import.meta.dirname;
-const SELF = "run.ts";
+const ROOT = resolve(SCRIPTS_DIR, "..");
 
-const scripts = readdirSync(SCRIPTS_DIR)
-  .filter((f) => f.endsWith(".ts") && f !== SELF)
-  .map((f) => f.replace(".ts", ""));
+// ─── Script registry ──────────────────────────────────────────────
+const scripts = [
+  { name: "check-env", desc: "Validate required env vars by feature flag" },
+  { name: "check-webhooks", desc: "Sync Polar webhook endpoints" },
+  { name: "check-email", desc: "AWS SES email health check" },
+  { name: "sync-plans", desc: "Generate config/plans.ts from Polar" },
+  { name: "seed-products", desc: "Create test products in Polar" },
+  { name: "list-routes", desc: "Show all tRPC routes" },
+  { name: "list-crons", desc: "Show cron jobs from vercel.json" },
+];
+
+// ─── ANSI helpers ─────────────────────────────────────────────────
+const c = {
+  reset: "\x1b[0m",
+  bold: "\x1b[1m",
+  dim: "\x1b[2m",
+  cyan: "\x1b[36m",
+  gray: "\x1b[90m",
+};
+
+const maxName = Math.max(...scripts.map((s) => s.name.length));
 
 let selected = 0;
 
 function render() {
   process.stdout.write("\x1b[2J\x1b[H");
-  console.log("\n\x1b[1m📋 Available scripts\x1b[0m\n");
-  scripts.forEach((name, i) => {
+  console.log(`\n${c.bold}  Scripts${c.reset}\n`);
+  scripts.forEach(({ name, desc }, i) => {
+    const pad = " ".repeat(maxName - name.length + 2);
     if (i === selected) {
-      console.log(`  \x1b[36m❯\x1b[0m \x1b[1m${name}\x1b[0m`);
+      console.log(
+        `  ${c.cyan}❯${c.reset} ${c.bold}${name}${c.reset}${pad}${c.dim}${desc}${c.reset}`
+      );
     } else {
-      console.log(`    \x1b[2m${name}\x1b[0m`);
+      console.log(`    ${c.dim}${name}${pad}${desc}${c.reset}`);
     }
   });
-  console.log("\n\x1b[2m↑/↓ to move · Enter to run · q to quit\x1b[0m");
+  console.log(`\n${c.gray}  ↑/↓ move · Enter run · q quit${c.reset}`);
+}
+
+function promptMode(): Promise<string[]> {
+  return new Promise((res) => {
+    process.stdout.write(
+      `\n  ${c.bold}Mode:${c.reset} ${c.dim}(r)eport${c.reset} / ${c.dim}(f)ix${c.reset} `
+    );
+    const rl = createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    rl.once("line", (answer) => {
+      rl.close();
+      res(answer.trim().toLowerCase() === "f" ? ["--fix"] : []);
+    });
+  });
+}
+
+async function runScript(name: string) {
+  process.stdout.write("\x1b[2J\x1b[H");
+  process.stdin.setRawMode(false);
+  process.stdin.pause();
+
+  let args: string[] = [];
+  if (name === "check-webhooks") {
+    args = await promptMode();
+  }
+
+  const file = resolve(SCRIPTS_DIR, `${name}.ts`);
+  console.log(
+    `${c.bold}▶ ${name}${args.length ? ` ${args.join(" ")}` : ""}${c.reset}\n`
+  );
+  const result = spawnSync("tsx", [file, ...args], {
+    cwd: ROOT,
+    stdio: "inherit",
+  });
+  process.exit(result.status ?? 0);
 }
 
 process.stdin.setRawMode(true);
@@ -37,30 +95,15 @@ process.stdin.on("data", (key: string) => {
   }
 
   if (key === "\r") {
-    process.stdout.write("\x1b[2J\x1b[H");
-    process.stdin.setRawMode(false);
-    process.stdin.pause();
-
-    const script = scripts[selected];
-    const file = resolve(SCRIPTS_DIR, `${script}.ts`);
-    console.log(`\x1b[1m▶ Running: ${script}\x1b[0m\n`);
-    const result = spawnSync("tsx", [file], {
-      cwd: resolve(SCRIPTS_DIR, ".."),
-      stdio: "inherit",
-    });
-    if (result.status !== 0) {
-      process.exit(1);
-    }
-    process.exit(0);
+    runScript(scripts[selected].name);
+    return;
   }
 
-  // Arrow up
   if (key === "\x1b[A" || key === "k") {
     selected = (selected - 1 + scripts.length) % scripts.length;
     render();
   }
 
-  // Arrow down
   if (key === "\x1b[B" || key === "j") {
     selected = (selected + 1) % scripts.length;
     render();

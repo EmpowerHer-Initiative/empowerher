@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { useAccess } from "@/services/auth/hooks/use-access";
 import {
   useCheckout,
   useGeneratePortalLink,
-  useGetCustomerState,
   useSwitchPlan,
 } from "@/services/auth/hooks/use-payments";
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
@@ -225,7 +225,7 @@ const EachProduct = ({ product }: EachProductProps) => {
   const [open, setOpen] = useState(false);
   const [immediateUpdate, setImmediateUpdate] = useState(false);
 
-  const { data } = useGetCustomerState();
+  const { data } = useAccess();
   const checkout = useCheckout();
   const switchPlan = useSwitchPlan();
 

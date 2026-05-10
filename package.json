@@ -4,7 +4,6 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "env:check": "tsx scripts/check-env.ts",
     "predev": "tsx scripts/check-env.ts && tsx scripts/check-webhooks.ts",
     "prebuild": "tsx scripts/check-env.ts && tsx scripts/check-webhooks.ts && tsx scripts/sync-plans.ts && vitest run",
     "dev": "next dev --turbopack",
@@ -14,19 +13,12 @@
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
     "db:push": "npx drizzle-kit push",
-    "email:check": "tsx scripts/check-email.ts",
     "email:dev": "npx email dev --dir services/email/emails",
     "test": "vitest run",
     "test:watch": "vitest",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "routes": "tsx scripts/list-routes.ts",
-    "crons": "tsx scripts/list-crons.ts",
-    "webhooks:check": "tsx scripts/check-webhooks.ts",
-    "webhooks:fix": "tsx scripts/check-webhooks.ts --fix",
-    "seed:products": "tsx scripts/seed-products.ts",
-    "sync:plans": "tsx scripts/sync-plans.ts",
-    "scripts:menu": "tsx scripts/run.ts",
+    "sm": "tsx scripts/run.ts",
     "prepare": "husky"
   },
   "dependencies": {
