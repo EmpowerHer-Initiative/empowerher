@@ -10,7 +10,7 @@ import { FeatureGate } from "@/config/feature-gate";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Accounts } from "@/components/settings/accounts";
-import { BillingInvoices } from "@/components/settings/billing/invoices";
+import { BillingOrders } from "@/components/settings/billing/orders";
 import { BillingSubscriptions } from "@/components/settings/billing/subscriptions";
 import { DangerSettings } from "@/components/settings/danger";
 import { GeneralAvatar } from "@/components/settings/general/avatar";
@@ -49,7 +49,7 @@ export default function SettingsPage() {
         <div className="space-y-6">
           <h2 className="text-3xl font-semibold capitalize">Billing</h2>
           <BillingSubscriptions />
-          <BillingInvoices />
+          <BillingOrders />
         </div>
       </FeatureGate>
       <div className="space-y-6">

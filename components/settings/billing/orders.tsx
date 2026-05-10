@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table";
 
@@ -53,7 +54,7 @@ const columns: ColumnDef<Order>[] = [
     },
   },
   {
-    header: "Invoice",
+    header: "Order #",
     accessorKey: "invoiceNumber",
     cell: ({ row }) => (
       <span className="text-muted-foreground font-mono text-xs">
@@ -63,11 +64,16 @@ const columns: ColumnDef<Order>[] = [
   },
 ];
 
-export const BillingInvoices = () => {
+export const BillingOrders = () => {
   const { data: user } = useCurrentUser();
 
   const trpc = useTRPC();
-  const { data: ordersList, isLoading } = useQuery(
+  const {
+    data: ordersList,
+    isLoading,
+    isError,
+    error,
+  } = useQuery(
     trpc.billing.listOrders.queryOptions(
       {
         userId: user?.user.id || "",
@@ -82,13 +88,26 @@ export const BillingInvoices = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-muted-foreground relative z-10 mt-4 text-sm">
-        Payment History
+        Order History
       </h3>
-      <DataTable
-        columns={columns}
-        data={ordersList ?? []}
-        isLoading={isLoading}
-      />
+      {isError ? (
+        <Alert variant="destructive">
+          <AlertDescription>
+            Failed to load orders.{" "}
+            {error?.message && (
+              <span className="text-muted-foreground text-xs">
+                {error.message}
+              </span>
+            )}
+          </AlertDescription>
+        </Alert>
+      ) : (
+        <DataTable
+          columns={columns}
+          data={ordersList ?? []}
+          isLoading={isLoading}
+        />
+      )}
     </div>
   );
 };

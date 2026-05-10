@@ -3,6 +3,7 @@ import { authClient } from "@/services/auth/auth-client";
 import { useQuery } from "@tanstack/react-query";
 import { KeyRound } from "lucide-react";
 
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -47,7 +48,12 @@ const providerConfig: Record<string, { label: string; icon: React.ReactNode }> =
   };
 
 export const Accounts = () => {
-  const { data: accounts, isPending } = useQuery({
+  const {
+    data: accounts,
+    isPending,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["accounts"],
     queryFn: async () => {
       const accounts = await authClient.listAccounts();
@@ -62,32 +68,45 @@ export const Accounts = () => {
         <CardTitle>Connected accounts</CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
-        {isPending
-          ? Array.from({ length: 3 }).map((_, index) => (
-              <Skeleton key={index} className="h-14 w-full" />
-            ))
-          : accounts?.data?.map((account) => {
-              const config = providerConfig[account.providerId] ?? {
-                label: account.providerId,
-                icon: <KeyRound className="size-5" />,
-              };
-              return (
-                <div
-                  key={account.id}
-                  className="bg-muted/30 flex items-center justify-between rounded-lg border px-4 py-3"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="bg-background text-muted-foreground flex size-9 items-center justify-center rounded-md border">
-                      {config.icon}
-                    </div>
-                    <span className="font-medium">{config.label}</span>
+        {isError ? (
+          <Alert variant="destructive">
+            <AlertDescription>
+              Failed to load accounts.{" "}
+              {error?.message && (
+                <span className="text-muted-foreground text-xs">
+                  {error.message}
+                </span>
+              )}
+            </AlertDescription>
+          </Alert>
+        ) : isPending ? (
+          Array.from({ length: 3 }).map((_, index) => (
+            <Skeleton key={index} className="h-14 w-full" />
+          ))
+        ) : (
+          accounts?.data?.map((account) => {
+            const config = providerConfig[account.providerId] ?? {
+              label: account.providerId,
+              icon: <KeyRound className="size-5" />,
+            };
+            return (
+              <div
+                key={account.id}
+                className="bg-muted/30 flex items-center justify-between rounded-lg border px-4 py-3"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-background text-muted-foreground flex size-9 items-center justify-center rounded-md border">
+                    {config.icon}
                   </div>
-                  <Badge variant="secondary" className="gap-1.5">
-                    Connected
-                  </Badge>
+                  <span className="font-medium">{config.label}</span>
                 </div>
-              );
-            })}
+                <Badge variant="secondary" className="gap-1.5">
+                  Connected
+                </Badge>
+              </div>
+            );
+          })
+        )}
       </CardContent>
     </Card>
   );

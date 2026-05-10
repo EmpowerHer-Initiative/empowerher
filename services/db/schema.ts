@@ -111,7 +111,7 @@ export const subscriptions = pgTable("subscription", {
   email: text("email").notNull(),
   amount: integer("amount").notNull(),
   currency: text("currency").notNull().default("usd"),
-  productId: text("product_id").notNull(),
+  productId: uuid("product_id").notNull(),
   status: text("status", {
     enum: Object.values(SubscriptionStatus) as [SubscriptionStatus],
   }).notNull(),
@@ -132,13 +132,13 @@ export const subscriptions = pgTable("subscription", {
   metadata: jsonb("metadata").$type<unknown>().notNull().default({}),
 });
 
-export const orders = pgTable("order", {
+export const orders = pgTable("orders", {
   id: uuid("id")
     .primaryKey()
     .default(sql`gen_random_uuid()`),
   userId: text("user_id").notNull(),
   email: text("email").notNull(),
-  productId: text("product_id").notNull(),
+  productId: uuid("product_id").notNull(),
   billingName: text("billing_name").notNull(),
   subscriptionId: text("subscription_id").notNull(),
   billingReason: text("billing_reason", {

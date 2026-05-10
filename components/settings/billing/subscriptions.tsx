@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import {
   useCheckout,
+  useGeneratePortalLink,
   useGetCustomerState,
   useSwitchPlan,
 } from "@/services/auth/hooks/use-payments";
@@ -12,6 +13,7 @@ import { addMonths, addYears, format, formatDistanceToNow } from "date-fns";
 
 import { cn } from "@/lib/utils";
 
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -23,7 +25,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/data-table";
@@ -31,7 +32,12 @@ import { DataTable } from "@/components/data-table";
 export const BillingSubscriptions = () => {
   const { data: user } = useCurrentUser();
   const trpc = useTRPC();
-  const { data: subscriptions, isPending } = useQuery(
+  const {
+    data: subscriptions,
+    isPending,
+    isError,
+    error,
+  } = useQuery(
     trpc.payments.getSubscriptions.queryOptions(
       {
         userId: user?.user.id || "",
@@ -43,161 +49,171 @@ export const BillingSubscriptions = () => {
   );
   const getProducts = useQuery(trpc.payments.getProducts.queryOptions());
 
-  // Helper function to get next billing date
   const getNextBillingDate = (
     subscription: RouterOutputs["payments"]["getSubscriptions"][number]
   ) => {
     if (!subscription.startedAt) return null;
-
     const startDate = new Date(subscription.startedAt);
     const interval = subscription.recurringInterval;
-
-    if (interval === "month") {
-      return addMonths(startDate, 1);
-    } else if (interval === "year") {
-      return addYears(startDate, 1);
-    }
+    if (interval === "month") return addMonths(startDate, 1);
+    if (interval === "year") return addYears(startDate, 1);
     return null;
   };
 
-  // Helper function to format currency
   const formatCurrency = (amount: number, currency: string = "usd") => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: currency.toUpperCase(),
-    }).format(amount / 100); // Assuming amount is in cents
+    }).format(amount / 100);
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Subscriptions</CardTitle>
-      </CardHeader>
-      <DataTable
-        isLoading={isPending || getProducts.isPending}
-        columns={[
-          {
-            id: "plan",
-            header: "Plan",
-            cell: ({ row }) => {
-              const product = getProducts.data?.find(
-                (product) => product.id === row.original.productId
-              );
-              return (
-                <div className="flex flex-col">
-                  <Badge variant="outline" className="w-fit">
-                    {product?.name.replace("month", "").replace("year", "")}
+    <div className="space-y-8">
+      {/* Subscriptions */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-muted-foreground text-sm">Subscriptions</h3>
+          <PortalButton />
+        </div>
+        {isError ? (
+          <Alert variant="destructive">
+            <AlertDescription>
+              Failed to load subscriptions.{" "}
+              {error?.message && (
+                <span className="text-muted-foreground text-xs">
+                  {error.message}
+                </span>
+              )}
+            </AlertDescription>
+          </Alert>
+        ) : (
+          <DataTable
+            isLoading={isPending || getProducts.isPending}
+            columns={[
+              {
+                id: "plan",
+                header: "Plan",
+                cell: ({ row }) => {
+                  const product = getProducts.data?.find(
+                    (product) => product.id === row.original.productId
+                  );
+                  return (
+                    <div className="flex flex-col">
+                      <Badge variant="outline" className="w-fit">
+                        {product?.name.replace("month", "").replace("year", "")}
+                      </Badge>
+                      {row.original.status === "trialing" && (
+                        <Badge
+                          variant="secondary"
+                          className="mt-1 w-fit text-xs"
+                        >
+                          Trial
+                        </Badge>
+                      )}
+                    </div>
+                  );
+                },
+              },
+              {
+                id: "status",
+                header: "Status",
+                cell: ({ row }) => (
+                  <Badge
+                    variant={
+                      row.original.status === "active" ||
+                      row.original.status === "trialing"
+                        ? "default"
+                        : row.original.status === "canceled"
+                          ? "destructive"
+                          : "secondary"
+                    }
+                  >
+                    {row.original.status}
                   </Badge>
-                  {row.original.status === "trialing" && (
-                    <Badge variant="secondary" className="mt-1 w-fit text-xs">
-                      Trial
-                    </Badge>
-                  )}
-                </div>
-              );
-            },
-          },
-          {
-            id: "status",
-            header: "Status",
-            cell: ({ row }) => (
-              <Badge
-                variant={
-                  row.original.status === "active" ||
-                  row.original.status === "trialing"
-                    ? "default"
-                    : row.original.status === "canceled"
-                      ? "destructive"
-                      : "secondary"
-                }
-              >
-                {row.original.status}
-              </Badge>
-            ),
-          },
-          {
-            id: "amount",
-            header: "Amount",
-            cell: ({ row }) => (
-              <div className="flex flex-col">
-                <span className="font-medium">
-                  {formatCurrency(row.original.amount, row.original.currency)}
-                </span>
-                <span className="text-muted-foreground text-sm">
-                  /{row.original.recurringInterval}
-                </span>
-              </div>
-            ),
-          },
-          {
-            id: "next_billing",
-            header: "Next Billing",
-            cell: ({ row }) => {
-              const nextBilling = getNextBillingDate(row.original);
-              return (
-                <span className="flex flex-col">
+                ),
+              },
+              {
+                id: "amount",
+                header: "Amount",
+                cell: ({ row }) => (
+                  <div className="flex flex-col">
+                    <span className="font-medium">
+                      {formatCurrency(
+                        row.original.amount,
+                        row.original.currency
+                      )}
+                    </span>
+                    <span className="text-muted-foreground text-sm">
+                      /{row.original.recurringInterval}
+                    </span>
+                  </div>
+                ),
+              },
+              {
+                id: "next_billing",
+                header: "Next Billing",
+                cell: ({ row }) => {
+                  const nextBilling = getNextBillingDate(row.original);
+                  return (
+                    <span className="flex flex-col">
+                      <span className="text-sm">
+                        {nextBilling
+                          ? format(nextBilling, "MMM dd, yyyy")
+                          : "-"}
+                      </span>
+                      <span className="text-muted-foreground text-xs">
+                        {nextBilling
+                          ? formatDistanceToNow(nextBilling, {
+                              addSuffix: true,
+                            })
+                          : "-"}
+                      </span>
+                    </span>
+                  );
+                },
+              },
+              {
+                id: "auto_renewal",
+                header: "Auto-Renewal",
+                cell: ({ row }) => (
+                  <Badge
+                    variant={
+                      row.original.cancelAtPeriodEnd ? "destructive" : "default"
+                    }
+                  >
+                    {row.original.cancelAtPeriodEnd ? "Off" : "On"}
+                  </Badge>
+                ),
+              },
+              {
+                id: "created_at",
+                header: "Created",
+                cell: ({ row }) => (
                   <span className="text-sm">
-                    {nextBilling ? format(nextBilling, "MMM dd, yyyy") : "-"}
-                  </span>
-                  <span className="text-muted-foreground text-xs">
-                    {nextBilling
-                      ? formatDistanceToNow(nextBilling, { addSuffix: true })
+                    {row.original.createdAt
+                      ? format(row.original.createdAt, "MMM dd, yyyy")
                       : "-"}
                   </span>
-                </span>
-              );
-            },
-          },
-          {
-            id: "auto_renewal",
-            header: "Auto-Renewal",
-            cell: ({ row }) => (
-              <Badge
-                variant={
-                  row.original.cancelAtPeriodEnd ? "destructive" : "default"
-                }
-              >
-                {row.original.cancelAtPeriodEnd ? "Off" : "On"}
-              </Badge>
-            ),
-          },
-          {
-            id: "created_at",
-            header: "Created",
-            cell: ({ row }) => (
-              <span className="text-sm">
-                {row.original.createdAt
-                  ? format(row.original.createdAt, "MMM dd, yyyy")
-                  : "-"}
-              </span>
-            ),
-          },
-        ]}
-        data={subscriptions || []}
-      />
-      <UpgradeSection />
-    </Card>
-  );
-};
+                ),
+              },
+            ]}
+            data={subscriptions || []}
+          />
+        )}
+      </div>
 
-const UpgradeSection = () => {
-  const trpc = useTRPC();
-  const getProducts = useQuery(trpc.payments.getProducts.queryOptions());
-
-  return (
-    <>
-      <CardHeader>Upgrade</CardHeader>
-      <CardContent className="p-0">
-        {getProducts.data
-          ?.filter((product) => !product.isArchived)
-          .map((product) => (
-            <Fragment key={product.id}>
-              <EachProduct product={product} />
-              <Separator />
-            </Fragment>
-          ))}
-      </CardContent>
-    </>
+      {/* Plans */}
+      <div className="space-y-4">
+        <h3 className="text-muted-foreground text-sm">Plans</h3>
+        <div className="divide-y">
+          {getProducts.data
+            ?.filter((product) => !product.isArchived)
+            .map((product) => (
+              <EachProduct key={product.id} product={product} />
+            ))}
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -213,7 +229,6 @@ const EachProduct = ({ product }: EachProductProps) => {
   const checkout = useCheckout();
   const switchPlan = useSwitchPlan();
 
-  // Determine if the button should say "Upgrade" or "Downgrade" based on price comparison
   const trpc = useTRPC();
   const products = useQuery(trpc.payments.getProducts.queryOptions());
   const filteredProducts = products.data?.filter((p) => !p.isArchived) || [];
@@ -221,8 +236,6 @@ const EachProduct = ({ product }: EachProductProps) => {
     (p) => p.id === data?.currentProductId
   );
 
-  // If user has no current subscription, it's always an upgrade
-  // If user has a subscription, compare prices
   const isDowngrade = currentProduct
     ? product.priceAmount < currentProduct.priceAmount
     : false;
@@ -255,7 +268,7 @@ const EachProduct = ({ product }: EachProductProps) => {
   };
 
   return (
-    <div key={product.id} className="flex items-center justify-between p-6">
+    <div className="flex items-center justify-between py-4">
       <div className="flex flex-col">
         <h3>
           {product.name}{" "}
@@ -330,5 +343,20 @@ const EachProduct = ({ product }: EachProductProps) => {
         </Button>
       )}
     </div>
+  );
+};
+
+const PortalButton = () => {
+  const generatePortalLink = useGeneratePortalLink();
+
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      onClick={() => generatePortalLink.mutate()}
+      disabled={generatePortalLink.isPending}
+    >
+      {generatePortalLink.isPending ? "Loading..." : "Manage Billing"}
+    </Button>
   );
 };

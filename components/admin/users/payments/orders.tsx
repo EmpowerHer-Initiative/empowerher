@@ -84,8 +84,8 @@ export const Orders = () => {
             ),
           },
           {
-            id: "invoice",
-            header: "Invoice",
+            id: "orderNumber",
+            header: "Order #",
             cell: ({ row }) => (
               <span className="text-muted-foreground font-mono text-xs">
                 {row.original.invoiceNumber || "—"}
