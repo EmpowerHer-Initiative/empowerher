@@ -295,21 +295,21 @@ For every file you touch: read it first, keep all existing imports/hooks/logic i
 
 Analyze the client's sitemap from `context/scrape.md`. For each page in the scrape, determine:
 
-1. Does this page map to an existing template route? (e.g., client "Contact" → existing `app/contact/`)
-2. Does it need a NEW route under `app/`? (e.g., client "About" → new `app/about/`)
+1. Does this page map to an existing template route? (e.g., client "Contact" → existing `app/(marketing)/contact/`)
+2. Does it need a NEW route under `app/(marketing)/`? (e.g., client "About" → new `app/(marketing)/about/`)
 3. Is it purely a homepage section rather than a standalone page?
 
 Display the mapping to the user:
 
 ```
 Page Mapping:
-  Home        → app/page.tsx (redesign landing sections)
-  About       → NEW app/about/page.tsx
-  Services    → NEW app/services/page.tsx
-  Cemetery    → NEW app/cemetery/page.tsx
-  Contact     → EXISTING app/contact/page.tsx (redesign)
-  Donate      → NEW app/donate/page.tsx
-  Resources   → NEW app/resources/page.tsx
+  Home        → app/(marketing)/page.tsx (redesign landing sections)
+  About       → NEW app/(marketing)/about/page.tsx
+  Services    → NEW app/(marketing)/services/page.tsx
+  Cemetery    → NEW app/(marketing)/cemetery/page.tsx
+  Contact     → EXISTING app/(marketing)/contact/page.tsx (redesign)
+  Donate      → NEW app/(marketing)/donate/page.tsx
+  Resources   → NEW app/(marketing)/resources/page.tsx
 ```
 
 Ask: "Does this mapping look right? Any pages to skip or merge?" — wait for response.
@@ -320,7 +320,7 @@ Ask: "Does this mapping look right? Any pages to skip or merge?" — wait for re
 
 For each NEW page route from Phase A:
 
-1. Create `app/<page-name>/page.tsx` with metadata and all page content in the same file. Define section components inside the file — do NOT create separate component files.
+1. Create `app/(marketing)/<page-name>/page.tsx` with metadata and all page content in the same file. Define section components inside the file — do NOT create separate component files.
 
 ```tsx
 import type { Metadata } from "next";
