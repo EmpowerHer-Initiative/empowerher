@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "predev": "tsx scripts/check-env.ts && tsx scripts/check-webhooks.ts",
+    "predev": "tsx scripts/check-env.ts && tsx scripts/check-webhooks.ts && tsx scripts/sync-plans.ts",
     "prebuild": "tsx scripts/check-env.ts && tsx scripts/check-webhooks.ts && tsx scripts/sync-plans.ts && vitest run",
     "dev": "next dev --turbopack",
     "build": "next build",

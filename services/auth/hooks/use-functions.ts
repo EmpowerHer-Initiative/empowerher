@@ -196,7 +196,7 @@ const useResetPassword = () => {
  * Custom hook for email verification using OTP
  * @returns UseMutationResult for email verification operation
  */
-const useVerifyEmail = () => {
+const useVerifyEmail = (options?: { onSuccess?: () => void }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: user } = useCurrentUser();
@@ -225,14 +225,18 @@ const useVerifyEmail = () => {
         };
       });
 
-      const callbackUrl = searchParams.get("callbackUrl") ?? "/";
-      const productId = searchParams.get("productId");
-      const destination = productId
-        ? `/checkout?productId=${productId}`
-        : callbackUrl;
-      setTimeout(() => {
-        router.push(destination);
-      }, 2000);
+      if (options?.onSuccess) {
+        options.onSuccess();
+      } else {
+        const callbackUrl = searchParams.get("callbackUrl") ?? "/";
+        const productId = searchParams.get("productId");
+        const destination = productId
+          ? `/checkout?productId=${productId}`
+          : callbackUrl;
+        setTimeout(() => {
+          router.push(destination);
+        }, 2000);
+      }
     },
     onError: () => {},
   });

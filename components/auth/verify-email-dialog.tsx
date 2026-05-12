@@ -27,11 +27,13 @@ import {
 interface VerifyEmailDialogProps {
   children?: React.ReactElement;
   email: string;
+  onSuccess?: () => void;
 }
 
 export const VerifyEmailDialog = ({
   children,
   email,
+  onSuccess,
 }: VerifyEmailDialogProps) => {
   const {
     isOpen,
@@ -41,7 +43,7 @@ export const VerifyEmailDialog = ({
   } = useNugsVerifyEmail();
 
   const resendEmailVerification = useResendEmailVerification();
-  const verifyEmail = useVerifyEmail();
+  const verifyEmail = useVerifyEmail({ onSuccess });
 
   return (
     <AlertDialog

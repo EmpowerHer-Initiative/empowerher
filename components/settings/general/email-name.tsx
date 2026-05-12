@@ -141,7 +141,10 @@ export const EmailName = () => {
         </Button>
       </CardFooter>
 
-      <VerifyEmailDialog email={user?.user.email || ""} />
+      <VerifyEmailDialog
+        email={user?.user.email || ""}
+        onSuccess={() => setIsOpen(false)}
+      />
     </Card>
   );
 };

@@ -96,15 +96,35 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
-        after: async () => {
-          // if (process.env.RESEND_AUDIENCE_GENERAL_ID) {
-          //   await createAudience({
-          //     email: user.email,
-          //     firstName: user.name,
-          //     unsubscribed: false,
-          //     audienceId: process.env.RESEND_AUDIENCE_GENERAL_ID as string,
-          //   });
-          // }
+        before: async (user) => {
+          try {
+            const existing = await polarClient.customers.list({
+              email: user.email,
+            });
+            const customer = existing.result.items[0];
+            if (customer?.externalId) {
+              return { data: { ...user, id: customer.externalId } };
+            }
+          } catch {
+            // Polar unreachable — continue with generated ID
+          }
+        },
+        after: async (user) => {
+          try {
+            const existing = await polarClient.customers.list({
+              email: user.email,
+            });
+            const customer = existing.result.items[0];
+            if (!customer) {
+              await polarClient.customers.create({
+                email: user.email,
+                name: user.name,
+                externalId: user.id,
+              });
+            }
+          } catch (e) {
+            console.warn(`[polar] Customer sync failed for ${user.email}:`, e);
+          }
         },
       },
     },
@@ -136,7 +156,7 @@ export const auth = betterAuth({
       ? [
           polar({
             client: polarClient,
-            createCustomerOnSignUp: true,
+            createCustomerOnSignUp: false,
             use: [
               portal(),
               usage(),
