@@ -119,7 +119,7 @@ const UploadSection = () => {
         );
       }
     },
-    [queryClient, getPresignedUrl]
+    [queryClient, getPresignedUrl, trpc.files.list]
   );
 
   // Paste to upload

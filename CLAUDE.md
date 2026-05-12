@@ -16,7 +16,7 @@ This project is a **headless starter template**. The UI is intentionally strippe
 
 ### What this means
 
-- **Landing page sections** (`components/landing-page/`) are empty shells — just a `<section>` tag with an id and label text (e.g., "Hero Section"). They contain no layout, no styling, no data fetching. When designing for a client, rebuild each section from scratch using the existing shadcn primitives in `components/ui/`.
+- **Landing page** (`app/(marketing)/page.tsx`) is a single file with empty shell sections — just a `<section>` tag with an id and label text (e.g., "Hero Section"). No layout, no styling, no data fetching. When designing for a client, rebuild sections from scratch directly in this file. Define section components inside the same file — never create separate files in `components/` for marketing content.
 - **Navbar and footer** (`components/navbar.tsx`, `components/footer.tsx`) are bare functional shells — route-aware visibility logic only, no design opinions.
 - **Blog pages** (`app/blog/`) render posts from content-collections with minimal markup — a plain list on the listing page, raw prose on the detail page. No cards, no grid layouts, no table of contents.
 - **Auth pages** (`app/(auth)/`) are simple centered forms — working validation and mutations, no decorative wrappers or backgrounds.
@@ -36,7 +36,7 @@ This project is a **headless starter template**. The UI is intentionally strippe
 1. Read `lib/site.ts` for brand config (name, emails, URLs)
 2. Update `app/globals.css` color tokens for the client's palette
 3. Replace `components/icons/logo.tsx` with the client's logo
-4. Design each landing section from scratch inside its existing file
+4. Design each landing section from scratch inside `app/(marketing)/page.tsx`
 5. Style the navbar, footer, blog, auth, and contact pages
 6. Use only shadcn primitives from `components/ui/` — don't install new UI libraries
 7. Keep all tRPC hooks, auth flows, and backend integrations as-is

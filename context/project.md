@@ -45,7 +45,6 @@ app/
 components/
   admin/           — admin-specific components
   auth/            — auth forms/UI
-  landing-page/    — landing page sections
   settings/        — settings UI
   ui/              — shadcn primitives
   data-table.tsx   — shared DataTable (always use this for lists)

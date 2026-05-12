@@ -24,7 +24,7 @@ export default function CheckoutPage() {
       return;
     }
     checkout({ productId });
-  }, [productId]);
+  }, [productId, checkout, router]);
 
   if (isError) {
     return (

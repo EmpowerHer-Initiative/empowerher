@@ -64,7 +64,7 @@ export const Password = () => {
     if (changePasswordOpen) {
       form.reset();
     }
-  }, [changePasswordOpen]);
+  }, [changePasswordOpen, form]);
 
   const changePassword = useMutation(
     useTRPC().users.updatePassword.mutationOptions({

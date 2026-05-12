@@ -320,38 +320,47 @@ Ask: "Does this mapping look right? Any pages to skip or merge?" — wait for re
 
 For each NEW page route from Phase A:
 
-1. Create `app/<page-name>/page.tsx` following the exact pattern from existing pages like `app/contact/page.tsx`:
+1. Create `app/<page-name>/page.tsx` with metadata and all page content in the same file. Define section components inside the file — do NOT create separate component files.
 
 ```tsx
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site";
-import { PageNameContent } from "./page-name-content";
 
 export const metadata: Metadata = {
   title: siteConfig.pages.pageName.title,
   description: siteConfig.pages.pageName.description,
 };
 
+const SectionOne = () => { /* ... */ };
+const SectionTwo = () => { /* ... */ };
+
 export default function PageNamePage() {
-  return <PageNameContent />;
+  return (
+    <>
+      <SectionOne />
+      <SectionTwo />
+    </>
+  );
 }
 ```
 
-2. Create `app/<page-name>/page-name-content.tsx` as a client component (`"use client"`) with the actual page design and content. Pull ALL text content from the corresponding page section in `context/scrape.md`. Apply the loaded design skill for layout and styling.
+2. Only split into a separate `-content.tsx` client component file if the page genuinely needs `"use client"` (interactivity, hooks) while the parent needs server-side metadata. Otherwise keep everything in `page.tsx`.
+
+3. Pull ALL text content from the corresponding page section in `context/scrape.md`. Apply the loaded design skill for layout and styling.
 
 ---
 
-**Phase C — Design landing page sections**
+**Phase C — Design landing page**
+
+All landing page sections live directly in `app/(marketing)/page.tsx`. Do NOT create separate component files in `components/` for marketing content.
 
 Based on the client's ACTUAL homepage sections from `context/scrape.md`:
 
-1. For each section on the client's real homepage, either:
-   - Redesign an existing template component in `components/landing-page/` with the client's content
-   - OR create a NEW component in `components/landing-page/` if no template equivalent exists (e.g., `events.tsx`, `prayer-times.tsx`, `announcements.tsx`)
+1. Define each section as a component inside `app/(marketing)/page.tsx` (e.g., `const HeroSection = () => { ... }`, `const EventsSection = () => { ... }`)
 
-2. Remove or empty out template components that have NO equivalent on the client's homepage (e.g., if client has no pricing section, empty out `pricing.tsx` to return `null`)
+2. Only include sections that exist on the client's actual homepage — do not add sections they don't have
 
-3. Update `app/home-page.tsx` to import and render the correct set of components in the order they appear on the client's actual homepage
+3. Compose all sections in the default export `LandingPage` component in the order they appear on the client's homepage
 
 ---
 
@@ -428,8 +437,8 @@ Design complete!
     lib/site.ts — brand config + new page metadata
     app/globals.css — color tokens
 
-    Landing sections:
-    <list each component created/modified with one-line description>
+    Landing page:
+    app/(marketing)/page.tsx — all sections defined inline
 
     New pages created:
     <list each new app/<page>/page.tsx created>
