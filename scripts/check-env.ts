@@ -8,8 +8,8 @@ const ROOT = resolve(import.meta.dirname, "..");
 // Add a new feature: featureName: ["VAR_1", "VAR_2"]
 // Remove a feature: delete the line
 const FEATURE_ENV_MAP: Record<string, string[]> = {
-  _always: ["DATABASE_URL", "NEXT_PUBLIC_API_URL"],
-  auth: ["BETTER_AUTH_SECRET"],
+  _always: [],
+  auth: ["BETTER_AUTH_SECRET", "DATABASE_URL", "NEXT_PUBLIC_API_URL"],
   cron: ["CRON_SECRET"],
   payments: ["POLAR_ACCESS_TOKEN", "POLAR_WEBHOOK_SECRET", "POLAR_SERVER"],
   storage: [

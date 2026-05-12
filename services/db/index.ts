@@ -1,11 +1,11 @@
 import { drizzle } from "drizzle-orm/neon-http";
 
-if (!process.env.DATABASE_URL) {
+import { isFeatureEnabled } from "@/config/features";
+
+if (isFeatureEnabled("auth") && !process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 
-/**
- * Drizzle database instance configured with Neon HTTP driver
- * Provides database connection and query capabilities for the application
- */
-export const db = drizzle(process.env.DATABASE_URL);
+export const db = process.env.DATABASE_URL
+  ? drizzle(process.env.DATABASE_URL)
+  : (null as unknown as ReturnType<typeof drizzle>);
