@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,6 +28,17 @@ const formSchema = z.object({
 
 export const PersonalInformation = () => {
   const [newAvatar, setNewAvatar] = useState<File | null>(null);
+
+  const avatarObjectUrl = useMemo(
+    () => (newAvatar ? URL.createObjectURL(newAvatar) : null),
+    [newAvatar]
+  );
+
+  useEffect(() => {
+    return () => {
+      if (avatarObjectUrl) URL.revokeObjectURL(avatarObjectUrl);
+    };
+  }, [avatarObjectUrl]);
 
   const { upload } = useUpload();
 
@@ -82,11 +93,7 @@ export const PersonalInformation = () => {
     <div>
       <div className="flex items-center gap-4">
         <Avatar className="size-16">
-          <AvatarImage
-            src={
-              newAvatar ? URL.createObjectURL(newAvatar) : (user?.image ?? "")
-            }
-          />
+          <AvatarImage src={avatarObjectUrl ?? user?.image ?? ""} />
           <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="space-y-1">
@@ -154,17 +161,6 @@ export const PersonalInformation = () => {
           )}
         />
       </form>
-
-      {/* <ToastSave
-        isDirty={form.formState.isDirty}
-        onReset={() => form.reset()}
-        onSave={() => submitButtonRef.current?.click()}
-        isLoading={updateUser.isPending}
-        isSuccess={updateUser.isSuccess}
-        isError={
-          Object.keys(form.formState.errors).length > 0 || updateUser.isError
-        }
-      /> */}
     </div>
   );
 };

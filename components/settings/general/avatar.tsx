@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useCurrentUser, useUpdateUser } from "@/services/auth/hooks/use-user";
 import { toast } from "sonner";
 
@@ -72,9 +72,20 @@ export const GeneralAvatar = () => {
 
 const AvatarPreview = React.memo(
   ({ avatar, userImage }: { avatar: File | null; userImage: string }) => {
+    const objectUrl = useMemo(
+      () => (avatar ? URL.createObjectURL(avatar) : null),
+      [avatar]
+    );
+
+    useEffect(() => {
+      return () => {
+        if (objectUrl) URL.revokeObjectURL(objectUrl);
+      };
+    }, [objectUrl]);
+
     return (
       <Avatar className="size-24">
-        <AvatarImage src={avatar ? URL.createObjectURL(avatar) : userImage} />
+        <AvatarImage src={objectUrl ?? userImage} />
         <AvatarFallback />
       </Avatar>
     );

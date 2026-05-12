@@ -53,6 +53,7 @@ export const EmailName = () => {
         onSuccess: () => {
           form.reset({
             name: values.name,
+            email: values.email,
           });
           toast.success("Name updated successfully");
         },

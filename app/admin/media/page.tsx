@@ -119,8 +119,7 @@ const UploadSection = () => {
         );
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [queryClient]
+    [queryClient, getPresignedUrl]
   );
 
   // Paste to upload

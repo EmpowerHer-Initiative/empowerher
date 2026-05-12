@@ -24,8 +24,7 @@ export default function CheckoutPage() {
       return;
     }
     checkout({ productId });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [productId]);
 
   if (isError) {
     return (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -60,6 +60,12 @@ export const Password = () => {
     },
   });
 
+  useEffect(() => {
+    if (changePasswordOpen) {
+      form.reset();
+    }
+  }, [changePasswordOpen]);
+
   const changePassword = useMutation(
     useTRPC().users.updatePassword.mutationOptions({
       onError: (error) => {
@@ -110,10 +116,7 @@ export const Password = () => {
       </DropdownMenu>
 
       <Dialog open={changePasswordOpen} onOpenChange={setChangePasswordOpen}>
-        <DialogContent
-          className="md:max-w-96"
-          onAnimationStart={() => changePasswordOpen && form.reset()}
-        >
+        <DialogContent className="md:max-w-96">
           <DialogHeader>
             <DialogTitle>Change password</DialogTitle>
           </DialogHeader>
@@ -181,61 +184,6 @@ export const Password = () => {
 
             <FieldError errors={[form.formState.errors.root]} />
           </form>
-          {/* <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
-              >
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field, formState }) => (
-                    <FormItem>
-                      <LabelInput
-                        label="Password"
-                        placeholder="Enter new password"
-                        error={formState.errors.password?.message}
-                        type="password"
-                        autoComplete="off"
-                        {...field}
-                      />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="confirmPassword"
-                  render={({ field, formState }) => (
-                    <FormItem>
-                      <LabelInput
-                        label="Confirm password"
-                        placeholder="Confirm new password"
-                        type="password"
-                        error={formState.errors.confirmPassword?.message}
-                        autoComplete="off"
-                        {...field}
-                      />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="revokeAllSessions"
-                  render={({ field, formState }) => (
-                    <FormItem>
-                      <FormLabel htmlFor={field.name}>
-                        <Checkbox
-                          id={field.name}
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                        Revoke all sessions
-                      </FormLabel>
-                    </FormItem>
-                  )}
-                />
-              </form>
-            </Form> */}
           <DialogFooter>
             <DialogClose
               render={

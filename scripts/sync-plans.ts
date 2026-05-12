@@ -78,9 +78,9 @@ function stripInterval(name: string): string {
   return name.replace(/\s*[—–-]\s*(Monthly|Yearly)\s*$/i, "").trim();
 }
 
-function getPriceAmount(
-  price: { amountType: string; priceAmount?: number } | undefined
-): number {
+type PolarPrice = { amountType: string; priceAmount?: number };
+
+function getPriceAmount(price: PolarPrice | undefined): number {
   if (!price) return 0;
   return "priceAmount" in price ? (price.priceAmount ?? 0) : 0;
 }
@@ -154,10 +154,9 @@ async function main() {
   const plans = [...planMap.values()].sort((a, b) => {
     const productA = products.find((p) => p.id === a.monthlyProductId);
     const productB = products.find((p) => p.id === b.monthlyProductId);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (
-      getPriceAmount(productA?.prices[0] as any) -
-      getPriceAmount(productB?.prices[0] as any)
+      getPriceAmount(productA?.prices[0] as PolarPrice | undefined) -
+      getPriceAmount(productB?.prices[0] as PolarPrice | undefined)
     );
   });
 
@@ -165,10 +164,9 @@ async function main() {
   oneTimeProducts.sort((a, b) => {
     const productA = products.find((p) => p.id === a.productId);
     const productB = products.find((p) => p.id === b.productId);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (
-      getPriceAmount(productA?.prices[0] as any) -
-      getPriceAmount(productB?.prices[0] as any)
+      getPriceAmount(productA?.prices[0] as PolarPrice | undefined) -
+      getPriceAmount(productB?.prices[0] as PolarPrice | undefined)
     );
   });
 

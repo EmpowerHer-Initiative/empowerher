@@ -127,13 +127,18 @@ export const DangerSettings = () => {
                 <Button
                   variant="destructive"
                   disabled={inputValue !== "DELETE" || deleteAccount.isPending}
-                  onClick={() =>
-                    deleteAccount.mutate(user.data?.user.id ?? "", {
+                  onClick={() => {
+                    const userId = user.data?.user.id;
+                    if (!userId) {
+                      toast.error("Unable to delete account: user not found");
+                      return;
+                    }
+                    deleteAccount.mutate(userId, {
                       onError: (error) => {
                         toast.error(error.message);
                       },
-                    })
-                  }
+                    });
+                  }}
                 >
                   Delete Account
                 </Button>

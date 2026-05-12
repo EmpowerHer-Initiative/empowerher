@@ -57,6 +57,7 @@ export const SocialAccounts = () => {
                     }
                   />
                   <DropdownMenuContent align="end" className="w-60">
+                    {/* TODO: implement removal */}
                     <DropdownMenuItem variant="destructive">
                       Remove account
                     </DropdownMenuItem>

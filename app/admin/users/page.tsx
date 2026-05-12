@@ -214,7 +214,7 @@ const UsersPage = () => {
 
 const Page = () => {
   return (
-    <Suspense>
+    <Suspense fallback={null}>
       <UsersPage />
     </Suspense>
   );

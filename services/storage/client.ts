@@ -54,6 +54,7 @@ export async function getDownloadUrl(
   key: string,
   expiresIn = DEFAULT_EXPIRY
 ): Promise<SignedUrlOutput> {
+  key = normalizeKey(key);
   const command = new GetObjectCommand({ Bucket: R2_BUCKET, Key: key });
   const signedUrl = await getSignedUrl(r2, command, { expiresIn });
   return { signedUrl, key, publicUrl: getPublicUrl(key) };

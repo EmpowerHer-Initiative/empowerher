@@ -67,7 +67,7 @@ export default function RootLayout({
         <TRPCReactProvider>
           <ThemeProvider>
             <NuqsAdapter>
-              <Suspense>{children}</Suspense>
+              <Suspense fallback={null}>{children}</Suspense>
               <Toaster />
             </NuqsAdapter>
           </ThemeProvider>

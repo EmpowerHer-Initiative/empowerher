@@ -4,6 +4,7 @@ import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const useSignup = () => {
   const trpc = useTRPC();
@@ -107,7 +108,9 @@ const useSignin = () => {
         });
       }
     },
-    onError: () => {},
+    onError: (error) => {
+      toast.error(error.message || "Sign in failed");
+    },
   });
 };
 
@@ -238,7 +241,9 @@ const useVerifyEmail = (options?: { onSuccess?: () => void }) => {
         }, 2000);
       }
     },
-    onError: () => {},
+    onError: (error) => {
+      toast.error(error.message || "Email verification failed");
+    },
   });
 };
 

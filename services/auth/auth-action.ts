@@ -4,7 +4,7 @@ import { Subscription } from "@polar-sh/sdk/models/components/subscription.js";
 import { eq } from "drizzle-orm";
 
 import { db } from "../db";
-import { orders, products, subscriptions, user } from "../db/schema";
+import { orders, products, subscriptions } from "../db/schema";
 import { polarClient } from "./auth";
 
 function getPriceAmount(price: Product["prices"][number]): number {
