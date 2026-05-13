@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
@@ -19,21 +20,17 @@ export const contactRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input }) => {
-      const apiUrl = process.env.CLIENT_API_URL;
-      const apiToken = process.env.CLIENT_API_TOKEN;
+      const incomingHeaders = await headers();
+      const origin =
+        incomingHeaders.get("origin") ||
+        incomingHeaders.get("referer") ||
+        siteConfig.url;
 
-      if (!apiUrl || !apiToken) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Contact API is not configured",
-        });
-      }
-
-      const response = await fetch(`${apiUrl}/api/contact`, {
+      const response = await fetch(`https://www.alisamadii.com/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": apiToken,
+          Origin: origin,
         },
         body: JSON.stringify({
           name: input.name,
