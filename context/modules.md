@@ -141,7 +141,7 @@ Every optional module is listed here with everything it owns. Use this file when
 
 **Touches**
 
-- `services/auth/auth.ts` — `sendEmail("resetPassword", ...)` call
+- `services/auth/auth.ts` — `emailService.send({ ... })` calls for password reset and email verification
 
 **Env vars**
 

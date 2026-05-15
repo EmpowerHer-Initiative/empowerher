@@ -1,43 +1,14 @@
-// packages/email/index.ts
-import { createElement } from "react";
-import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
+import type { ReactElement } from "react";
+import { SES } from "@aws-sdk/client-ses";
+import { render } from "@react-email/render";
 
 import { isFeatureEnabled } from "@/config/features";
 import { siteConfig } from "@/lib/site";
 
-import ResetPassword from "./emails/reset-password";
-import VerifyEmail from "./emails/verify-email";
-import { renderEmail, renderText } from "./utils";
+let ses: SES | null = null;
 
-type TemplateProps = {
-  verifyEmail: { verificationCode: string };
-  resetPassword: { resetPasswordLink: string };
-};
-
-// Template registry — add new emails here, that's it
-type EmailTemplate = {
-  subject: string | ((props: Record<string, unknown>) => string);
-  fromLabel: string;
-  component: React.ComponentType<Record<string, unknown>>;
-};
-
-export const templates: Record<string, EmailTemplate> = {
-  verifyEmail: {
-    subject: "Verify your email",
-    fromLabel: "Verify your email",
-    component: VerifyEmail,
-  },
-  resetPassword: {
-    subject: "Reset your password",
-    fromLabel: "Reset your password",
-    component: ResetPassword,
-  },
-};
-
-let sesClient: SESClient | null = null;
-
-function getSesClient() {
-  if (!sesClient) {
+function getSes() {
+  if (!ses) {
     const accessKeyId = process.env.AWS_ACCESS_KEY_VALUE;
     const secretAccessKey = process.env.AWS_SECRET_KEY_VALUE;
 
@@ -45,58 +16,43 @@ function getSesClient() {
       throw new Error("Missing AWS credentials in environment variables");
     }
 
-    sesClient = new SESClient({
+    ses = new SES({
       region: process.env.AWS_BUCKET_ORIGIN || "us-east-1",
-      credentials: {
-        accessKeyId,
-        secretAccessKey,
-      },
+      credentials: { accessKeyId, secretAccessKey },
     });
   }
-  return sesClient;
+  return ses;
 }
 
-const defaultFrom = siteConfig.noreplyEmail;
+type SendOptions = {
+  from?: string;
+  to: string | string[];
+  subject: string;
+  react: ReactElement;
+};
 
-// One function to rule them all
-export async function sendEmail<T extends keyof TemplateProps>(
-  template: T,
-  to: string | string[],
-  props: TemplateProps[T],
-  options?: { from?: string }
-) {
+async function send({ from, to, subject, react }: SendOptions) {
   if (!isFeatureEnabled("email")) {
     return { error: "Email service is not enabled" };
   }
 
-  const { subject, fromLabel, component } = templates[template];
-  const resolvedSubject =
-    typeof subject === "function"
-      ? subject(props as Record<string, unknown>)
-      : subject;
-  const fromAddress = options?.from ?? defaultFrom;
+  const html = await render(react);
   const toAddresses = Array.isArray(to) ? to : [to];
-  const element = createElement(component, props);
-  const htmlContent = await renderEmail(element);
-  const textContent = await renderText(element);
 
   try {
-    await getSesClient().send(
-      new SendEmailCommand({
-        Source: `${fromLabel} <${fromAddress}>`,
-        Destination: { ToAddresses: toAddresses },
-        Message: {
-          Subject: { Data: resolvedSubject, Charset: "UTF-8" },
-          Body: {
-            Html: { Data: htmlContent, Charset: "UTF-8" },
-            Text: { Data: textContent, Charset: "UTF-8" },
-          },
-        },
-      })
-    );
-    return { data: true };
+    await getSes().sendEmail({
+      Source: from ?? siteConfig.noreplyEmail,
+      Destination: { ToAddresses: toAddresses },
+      Message: {
+        Subject: { Charset: "UTF-8", Data: subject },
+        Body: { Html: { Charset: "UTF-8", Data: html } },
+      },
+    });
+    return { data: true as const };
   } catch (error) {
     console.error("[email] Send failed:", error);
     return { error: "Failed to send email" };
   }
 }
+
+export const email = { send };

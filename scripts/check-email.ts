@@ -1,6 +1,5 @@
 import { createInterface } from "node:readline";
-// ── Email templates (imported from service) ──────────────────────────────────
-import { templates } from "@/services/email/index";
+// ── Email templates ──────────────────────────────────────────────────────────
 import {
   GetAccountSendingEnabledCommand,
   GetIdentityDkimAttributesCommand,
@@ -300,9 +299,14 @@ async function sendTestEmail() {
   console.log(`\n  Sending test email to ${bold(email)}...`);
 
   try {
-    const { sendEmail } = await import("@/services/email/index");
-    const result = await sendEmail("verifyEmail", email, {
-      verificationCode: "TEST-123456",
+    const { createElement } = await import("react");
+    const { email: emailService } = await import("@/services/email/index");
+    const { default: VerifyEmail } =
+      await import("@/services/email/emails/verify-email");
+    const result = await emailService.send({
+      to: email,
+      subject: "Test email",
+      react: createElement(VerifyEmail, { verificationCode: "TEST-123456" }),
     });
 
     if ("error" in result) {
@@ -421,13 +425,12 @@ function listEmailTemplates() {
   );
   console.log(`  ${"─".repeat(70)}`);
 
-  for (const [name, tmpl] of Object.entries(templates)) {
-    const subject =
-      typeof tmpl.subject === "function" ? "(dynamic)" : tmpl.subject;
-    console.log(
-      `  ${cyan(name.padEnd(22))} ${subject.padEnd(30)} ${tmpl.fromLabel}`
-    );
-  }
+  console.log(
+    `  ${cyan("verifyEmail".padEnd(22))} ${"Verify your email".padEnd(30)}`
+  );
+  console.log(
+    `  ${cyan("resetPassword".padEnd(22))} ${"Reset your password".padEnd(30)}`
+  );
 
   console.log(`\n  ${bold("Configured Sender Addresses")}`);
   console.log(`  No-Reply:  ${bold(NOREPLY_EMAIL)}`);

@@ -59,7 +59,7 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="bg-muted flex min-h-dvh items-center justify-center p-8">
+    <div className="flex min-h-dvh items-center justify-center p-8">
       <Wrapper
         title="Reset Password"
         description="Enter your new password below"

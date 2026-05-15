@@ -41,8 +41,8 @@ export const ResetPasswordForm = () => {
         redirectTo: `${window.location.origin}/reset-password`,
       },
       {
-        onSuccess: () => {
-          toast.success("Reset password email sent");
+        onSuccess: (data) => {
+          toast.success(data.message || "Reset password email sent");
         },
         onError: (error) => {
           toast.error(error.message);

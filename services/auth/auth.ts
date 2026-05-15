@@ -1,3 +1,4 @@
+import { createElement } from "react";
 import { db } from "@/services/db/index";
 import {
   account,
@@ -16,7 +17,9 @@ import { admin, bearer, emailOTP } from "better-auth/plugins";
 
 import { isFeatureEnabled } from "@/config/features";
 
-import { sendEmail } from "../email";
+import { email as emailService } from "../email";
+import ResetPassword from "../email/emails/reset-password";
+import VerifyEmail from "../email/emails/verify-email";
 import {
   createOrder,
   createProduct,
@@ -49,9 +52,17 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url, token }) => {
-      await sendEmail("resetPassword", user.email, {
-        resetPasswordLink: `${url}?token=${token}`,
+      const { error } = await emailService.send({
+        to: user.email,
+        subject: "Reset your password",
+        react: createElement(ResetPassword, {
+          resetPasswordLink: `${url}?token=${token}`,
+        }),
       });
+
+      if (error) {
+        throw new APIError("BAD_REQUEST", { message: error });
+      }
     },
   },
   account: {
@@ -138,8 +149,10 @@ export const auth = betterAuth({
         if (type === "sign-in") {
           // Send the OTP for sign in
         } else if (type === "email-verification") {
-          const { error } = await sendEmail("verifyEmail", email, {
-            verificationCode: otp,
+          const { error } = await emailService.send({
+            to: email,
+            subject: "Verify your email",
+            react: createElement(VerifyEmail, { verificationCode: otp }),
           });
 
           if (error) {

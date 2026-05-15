@@ -1,24 +1,37 @@
-import type { Metadata } from "next";
+"use client";
 
-import { siteConfig } from "@/lib/site";
+import { useState } from "react";
 
-export const metadata: Metadata = {
-  title: siteConfig.pages.home.title,
-  description: siteConfig.pages.home.description,
-  openGraph: {
-    title: siteConfig.pages.home.title,
-    description: siteConfig.pages.home.description,
-    images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
-  },
-};
+import { Button } from "@/components/ui/button";
+
+import { sendTestEmail } from "./actions";
 
 const Hero = () => {
+  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">(
+    "idle"
+  );
+
+  const handleSend = async () => {
+    setStatus("loading");
+    const result = await sendTestEmail();
+    setStatus("error" in result ? "error" : "sent");
+  };
+
   return (
     <section
       id="hero"
       className="flex flex-col items-center gap-4 py-20 text-center"
     >
       <h1 className="text-2xl font-bold">Hero Section</h1>
+      <Button onClick={handleSend} disabled={status === "loading"}>
+        {status === "loading"
+          ? "Sending..."
+          : status === "sent"
+            ? "Sent!"
+            : status === "error"
+              ? "Failed — try again"
+              : "Send Test Email"}
+      </Button>
     </section>
   );
 };
