@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
+import type { EmailLogMetadata } from "@/services/db/schema";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -32,6 +33,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -61,6 +69,14 @@ const statusOptions = [
   { label: "Failed", value: "failed" },
 ] as const;
 
+function formatBytes(bytes: number) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  if (bytes < 1024 * 1024 * 1024)
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  return `${(bytes / (1024 * 1024 * 1024)).toFixed(1)} GB`;
+}
+
 const LogsPage = () => {
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
   const [limit, setLimit] = useQueryState(
@@ -80,6 +96,8 @@ const LogsPage = () => {
     parseAsString.withDefault("")
   );
 
+  const [selectedLogId, setSelectedLogId] = useState<string | null>(null);
+  const [previewOpen, setPreviewOpen] = useState(false);
   const [purgeOpen, setPurgeOpen] = useState(false);
   const [lastRefresh, setLastRefresh] = useState(Date.now());
   const [secondsAgo, setSecondsAgo] = useState(0);
@@ -115,9 +133,19 @@ const LogsPage = () => {
     refetchInterval: 60_000,
   });
 
+  const { data: tableSize } = useQuery({
+    ...trpc.logs.tableSize.queryOptions(),
+    refetchInterval: 60_000,
+  });
+
   const { data: purgePreview } = useQuery({
     ...trpc.logs.purgePreview.queryOptions(),
     enabled: purgeOpen,
+  });
+
+  const { data: selectedLog } = useQuery({
+    ...trpc.logs.get.queryOptions(selectedLogId!),
+    enabled: !!selectedLogId,
   });
 
   const purgeMutation = useMutation(
@@ -176,6 +204,8 @@ const LogsPage = () => {
             <h2 className="text-foreground text-lg font-bold">Activity Logs</h2>
             <p className="text-muted-foreground text-xs">
               Last refreshed: {secondsAgo}s ago
+              {tableSize &&
+                ` · Table size: ${formatBytes(tableSize.sizeBytes)}`}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -263,7 +293,17 @@ const LogsPage = () => {
         </div>
 
         {/* Table */}
-        <DataTable isLoading={isPending} table={table} error={error} />
+        <div className="[&_td:last-child]:bg-background [&_th:last-child]:bg-background [&_td:last-child]:sticky [&_td:last-child]:right-0 [&_th:last-child]:sticky [&_th:last-child]:right-0">
+          <DataTable
+            isLoading={isPending}
+            table={table}
+            error={error}
+            onRowClick={(row) => {
+              setSelectedLogId(row.original.id);
+              setPreviewOpen(true);
+            }}
+          />
+        </div>
 
         {/* Pagination */}
         <div
@@ -324,6 +364,41 @@ const LogsPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Email Preview Dialog */}
+      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+        <DialogContent className="max-w-4xl">
+          <DialogHeader>
+            <DialogTitle>
+              {selectedLog
+                ? ((selectedLog.metadata as EmailLogMetadata)?.subject ??
+                  "Log Details")
+                : "Loading..."}
+            </DialogTitle>
+            <DialogDescription>
+              {selectedLog && (
+                <span>
+                  To: {(selectedLog.metadata as EmailLogMetadata)?.to} · Status:{" "}
+                  {selectedLog.status}
+                  {selectedLog.error && ` · Error: ${selectedLog.error}`}
+                </span>
+              )}
+            </DialogDescription>
+          </DialogHeader>
+          {selectedLog && (selectedLog.metadata as EmailLogMetadata)?.html ? (
+            <iframe
+              srcDoc={(selectedLog.metadata as EmailLogMetadata).html}
+              className="h-[500px] w-full rounded border"
+              sandbox=""
+              title="Email preview"
+            />
+          ) : selectedLog ? (
+            <pre className="text-muted-foreground overflow-auto rounded border p-4 text-xs">
+              {JSON.stringify(selectedLog.metadata, null, 2)}
+            </pre>
+          ) : null}
+        </DialogContent>
+      </Dialog>
 
       {/* Purge Dialog */}
       <AlertDialog open={purgeOpen} onOpenChange={setPurgeOpen}>

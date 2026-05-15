@@ -161,6 +161,8 @@ export type EmailLogMetadata = {
   to: string;
   subject: string;
   attachmentCount?: number;
+  html?: string;
+  retry?: boolean;
 };
 
 export type DataChangeMetadata = {

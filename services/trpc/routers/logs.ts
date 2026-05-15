@@ -1,10 +1,28 @@
 import { db } from "@/services/db/index";
-import { activityLog } from "@/services/db/schema";
+import { activityLog, type EmailLogMetadata } from "@/services/db/schema";
+import { email } from "@/services/email";
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
+import { TRPCError } from "@trpc/server";
 import { and, count, desc, eq, ilike, lt, sql } from "drizzle-orm";
 import { z } from "zod";
 
 export const logsRouter = createTRPCRouter({
+  tableSize: adminProcedure.query(async () => {
+    const result = await db.execute(
+      sql`SELECT pg_total_relation_size('activity_log') as size_bytes`
+    );
+    return { sizeBytes: Number(result.rows[0].size_bytes) };
+  }),
+
+  get: adminProcedure.input(z.string()).query(async ({ input }) => {
+    return db
+      .select()
+      .from(activityLog)
+      .where(eq(activityLog.id, input))
+      .limit(1)
+      .then((result) => result[0] ?? null);
+  }),
+
   list: adminProcedure
     .input(
       z.object({
@@ -55,6 +73,46 @@ export const logsRouter = createTRPCRouter({
         .from(activityLog)
         .where(conditions.length > 0 ? and(...conditions) : undefined);
     }),
+
+  retry: adminProcedure.input(z.string()).mutation(async ({ input }) => {
+    const entry = await db
+      .select()
+      .from(activityLog)
+      .where(eq(activityLog.id, input))
+      .limit(1)
+      .then((r) => r[0]);
+
+    if (!entry || entry.type !== "email") {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "Log entry is not an email",
+      });
+    }
+
+    const meta = entry.metadata as EmailLogMetadata;
+
+    if (!meta.html) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "No HTML content stored for this email",
+      });
+    }
+
+    const result = await email.resend({
+      to: meta.to,
+      subject: meta.subject,
+      html: meta.html,
+    });
+
+    if ("error" in result) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: result.error,
+      });
+    }
+
+    return { success: true };
+  }),
 
   delete: adminProcedure.input(z.string()).mutation(async ({ input }) => {
     await db.delete(activityLog).where(eq(activityLog.id, input));

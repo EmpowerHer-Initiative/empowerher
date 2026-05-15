@@ -7,7 +7,7 @@ import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useMutation } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatDistanceToNow } from "date-fns";
-import { Trash } from "lucide-react";
+import { Copy, MoreHorizontal, RefreshCw, Trash } from "lucide-react";
 import { toast } from "sonner";
 
 import {
@@ -22,6 +22,14 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type LogFromAPI = RouterOutputs["logs"]["list"][number];
 
@@ -99,8 +107,14 @@ export const columns: ColumnDef<LogFromAPI>[] = [
 ];
 
 const ActionCell = ({ log }: { log: LogFromAPI }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const trpc = useTRPC();
+
+  const canRetry =
+    log.type === "email" &&
+    log.status === "failed" &&
+    !!(log.metadata as EmailLogMetadata)?.html;
 
   const deleteLog = useMutation(
     trpc.logs.delete.mutationOptions({
@@ -116,19 +130,73 @@ const ActionCell = ({ log }: { log: LogFromAPI }) => {
     })
   );
 
+  const retryLog = useMutation(
+    trpc.logs.retry.mutationOptions({
+      onSuccess: () => {
+        toast.success("Email resent successfully");
+        queryClient.invalidateQueries({
+          queryKey: trpc.logs.list.pathKey(),
+        });
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    })
+  );
+
   return (
     <div className="flex justify-end">
-      <Button
-        variant="ghost"
-        size="icon"
-        className="text-muted-foreground hover:text-destructive"
-        onClick={(e) => {
-          e.stopPropagation();
-          setDeleteOpen(true);
-        }}
-      >
-        <Trash size={14} />
-      </Button>
+      <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+        <DropdownMenuTrigger
+          render={
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <MoreHorizontal />
+            </Button>
+          }
+        />
+        <DropdownMenuContent
+          align="end"
+          className="w-48"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <DropdownMenuGroup>
+            <DropdownMenuItem
+              onClick={() => {
+                navigator.clipboard.writeText(log.id);
+                toast.success("ID copied to clipboard");
+                setIsOpen(false);
+              }}
+            >
+              <Copy /> Copy ID
+            </DropdownMenuItem>
+            {canRetry && (
+              <DropdownMenuItem
+                onClick={() => {
+                  retryLog.mutate(log.id);
+                  setIsOpen(false);
+                }}
+                disabled={retryLog.isPending}
+              >
+                <RefreshCw /> Retry
+              </DropdownMenuItem>
+            )}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              variant="destructive"
+              onClick={() => {
+                setDeleteOpen(true);
+                setIsOpen(false);
+              }}
+            >
+              <Trash /> Delete
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <AlertDialogContent size="sm" onClick={(e) => e.stopPropagation()}>

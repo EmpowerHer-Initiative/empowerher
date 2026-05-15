@@ -82,6 +82,7 @@ async function send({ from, to, subject, react, attachments }: SendOptions) {
         to: toAddresses.join(", "),
         subject,
         attachmentCount: attachments?.length,
+        html,
       },
     });
     return { data: true as const };
@@ -97,6 +98,7 @@ async function send({ from, to, subject, react, attachments }: SendOptions) {
         to: toAddresses.join(", "),
         subject,
         attachmentCount: attachments?.length,
+        html,
       },
       error: errorMessage,
     });
@@ -104,4 +106,53 @@ async function send({ from, to, subject, react, attachments }: SendOptions) {
   }
 }
 
-export const email = { send };
+async function resend({
+  from,
+  to,
+  subject,
+  html,
+}: {
+  from?: string;
+  to: string | string[];
+  subject: string;
+  html: string;
+}) {
+  if (!isFeatureEnabled("email")) {
+    return { error: "Email service is not enabled" };
+  }
+
+  const toAddresses = Array.isArray(to) ? to : [to];
+  const source = from ?? siteConfig.noreplyEmail;
+
+  try {
+    await getSes().sendEmail({
+      Source: source,
+      Destination: { ToAddresses: toAddresses },
+      Message: {
+        Subject: { Charset: "UTF-8", Data: subject },
+        Body: { Html: { Charset: "UTF-8", Data: html } },
+      },
+    });
+    log({
+      type: "email",
+      status: "success",
+      summary: `[Retry] Email to ${toAddresses.join(", ")}: ${subject}`,
+      metadata: { to: toAddresses.join(", "), subject, html, retry: true },
+    });
+    return { data: true as const };
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Failed to send email";
+    console.error("[email] Resend failed:", error);
+    log({
+      type: "email",
+      status: "failed",
+      summary: `[Retry] Email to ${toAddresses.join(", ")}: ${subject}`,
+      metadata: { to: toAddresses.join(", "), subject, html, retry: true },
+      error: errorMessage,
+    });
+    return { error: errorMessage };
+  }
+}
+
+export const email = { send, resend };
