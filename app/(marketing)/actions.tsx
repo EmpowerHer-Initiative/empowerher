@@ -10,3 +10,26 @@ export async function sendTestEmail() {
     react: <VerifyEmail verificationCode="TEST-123456" />,
   });
 }
+
+export async function sendTestEmailWithAttachment(formData: FormData) {
+  const file = formData.get("file") as File | null;
+
+  if (!file) {
+    return { error: "No file provided" };
+  }
+
+  const buffer = Buffer.from(await file.arrayBuffer());
+
+  return email.send({
+    to: "alisamadi0583@gmail.com",
+    subject: "Test email with attachment",
+    react: <VerifyEmail verificationCode="ATTACHMENT-TEST" />,
+    attachments: [
+      {
+        filename: file.name,
+        content: buffer,
+        contentType: file.type || "application/octet-stream",
+      },
+    ],
+  });
+}
