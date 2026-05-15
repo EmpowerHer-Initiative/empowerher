@@ -16,6 +16,7 @@ const links: { label: string; href: string; feature?: FeatureKey }[] = [
     feature: "payments",
   },
   { label: "Media", href: "/admin/media", feature: "storage" },
+  { label: "Logs", href: "/admin/logs" },
 ];
 
 export const NavbarAdmin = () => {

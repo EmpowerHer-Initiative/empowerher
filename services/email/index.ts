@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import { log } from "@/services/log";
 import { SES } from "@aws-sdk/client-ses";
 import { render } from "@react-email/render";
 import MailComposer from "nodemailer/lib/mail-composer";
@@ -73,12 +74,33 @@ async function send({ from, to, subject, react, attachments }: SendOptions) {
         },
       });
     }
+    log({
+      type: "email",
+      status: "success",
+      summary: `Email to ${toAddresses.join(", ")}: ${subject}`,
+      metadata: {
+        to: toAddresses.join(", "),
+        subject,
+        attachmentCount: attachments?.length,
+      },
+    });
     return { data: true as const };
   } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Failed to send email";
     console.error("[email] Send failed:", error);
-    return {
-      error: error instanceof Error ? error.message : "Failed to send email",
-    };
+    log({
+      type: "email",
+      status: "failed",
+      summary: `Email to ${toAddresses.join(", ")}: ${subject}`,
+      metadata: {
+        to: toAddresses.join(", "),
+        subject,
+        attachmentCount: attachments?.length,
+      },
+      error: errorMessage,
+    });
+    return { error: errorMessage };
   }
 }
 

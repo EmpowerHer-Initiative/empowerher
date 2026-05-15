@@ -155,6 +155,38 @@ export const orders = pgTable("orders", {
   metadata: jsonb("metadata").$type<unknown>().notNull().default({}),
 });
 
+// ── Activity Log ─────────────────────────────────────────────────────────────
+
+export type EmailLogMetadata = {
+  to: string;
+  subject: string;
+  attachmentCount?: number;
+};
+
+export type DataChangeMetadata = {
+  entity: string;
+  entityId: string;
+  action: "create" | "update" | "delete";
+  changes?: Record<string, { from: unknown; to: unknown }>;
+};
+
+export type ActivityLogMetadata = EmailLogMetadata | DataChangeMetadata;
+
+export const activityLog = pgTable("activity_log", {
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  type: text("type", { enum: ["email", "data_change"] }).notNull(),
+  status: text("status", { enum: ["success", "failed"] }).notNull(),
+  actor: text("actor"),
+  summary: text("summary"),
+  metadata: jsonb("metadata").$type<ActivityLogMetadata>().notNull(),
+  error: text("error"),
+  createdAt: timestamp("created_at")
+    .$defaultFn(() => new Date())
+    .notNull(),
+});
+
 export const webhookEvents = pgTable("webhook_events", {
   id: uuid("id")
     .primaryKey()
