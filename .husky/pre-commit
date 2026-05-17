@@ -1,4 +1,5 @@
 pnpm format
+pnpm typecheck
 git add -u
 tsx scripts/check-env.ts
 pnpm test

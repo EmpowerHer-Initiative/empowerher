@@ -76,8 +76,7 @@ const getUrl = () => {
   if (typeof window !== "undefined") {
     return `${window.location.origin}/api/trpc`;
   }
-  const base = process.env.NEXT_PUBLIC_API_URL;
-  if (!base) throw new Error("NEXT_PUBLIC_API_URL is not set");
+  const base = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
   return `${base}/api/trpc`;
 };
 // Export raw tRPC client for direct client-side calls (not through React Query)

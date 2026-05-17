@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import { removeCustomer } from "@/services/auth/actions";
-import { polarClient } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
 import { orders, products, subscriptions, user } from "@/services/db/schema";
 import {
@@ -21,11 +20,15 @@ import { TRPCError } from "@trpc/server";
 import { asc, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 
+const getPolarClient = () =>
+  import("@/services/auth/auth").then((m) => m.polarClient);
+
 export const paymentsRouter = createTRPCRouter({
   // ─── Customer State ──────────────────────────────────────────────
   getCustomerState: authenticatedProcedure
     .use(featureGuard("payments"))
     .query(async ({ ctx }) => {
+      const polarClient = await getPolarClient();
       let customerState;
       try {
         customerState = await polarClient.customers.getStateExternal({
@@ -141,6 +144,7 @@ export const paymentsRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { productId, successUrl, discountId } = input;
 
+      const polarClient = await getPolarClient();
       // Ensure customer exists in Polar, create if not found
       try {
         await polarClient.customers.getExternal({
@@ -180,6 +184,7 @@ export const paymentsRouter = createTRPCRouter({
     .use(featureGuard("payments"))
     .input(z.string())
     .query(async ({ input }) => {
+      const polarClient = await getPolarClient();
       return polarClient.checkouts.get({ id: input });
     }),
 
@@ -303,6 +308,7 @@ export const paymentsRouter = createTRPCRouter({
         throw new TRPCError({ code: "FORBIDDEN" });
       }
 
+      const polarClient = await getPolarClient();
       // Check trial status from Polar
       const subscription = await polarClient.subscriptions.get({
         id: subscriptionId,
@@ -363,6 +369,7 @@ export const paymentsRouter = createTRPCRouter({
   generatePortalLink: authenticatedProcedure
     .use(featureGuard("payments"))
     .mutation(async ({ ctx }) => {
+      const polarClient = await getPolarClient();
       return polarClient.customerSessions.create({
         externalCustomerId: ctx.session.user.id,
       });

@@ -1,6 +1,5 @@
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
-import { auth } from "@/services/auth/auth";
 
 import { isFeatureEnabled } from "@/config/features";
 
@@ -17,6 +16,7 @@ interface Props {
 export default async function SettingsLayout({ children }: Props) {
   if (!isFeatureEnabled("auth")) notFound();
 
+  const { auth } = await import("@/services/auth/auth");
   const session = await auth.api.getSession({
     headers: await headers(),
   });

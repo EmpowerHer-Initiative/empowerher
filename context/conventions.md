@@ -306,6 +306,32 @@ Always use `react-dropzone` for any file upload UI — never build raw drag-and-
 
 Edit `services/db/schema.ts` freely. Never run `pnpm drizzle-kit push` or any other database command — Ali runs those himself.
 
+## Feature-gated imports — always lazy
+
+Any module that depends on optional services (auth, payments, email, storage) **must not** be imported statically at the top of a file. Static imports execute module-level initialization (SDK constructors, `new URL()`, DB connections) at import time — even if the feature is disabled and the code path never runs. This crashes the app when env vars are missing.
+
+**Rule:** Use dynamic `await import()` inside the code path that actually needs the module.
+
+```tsx
+// ✓ correct — auth module only loads when feature is enabled
+if (isFeatureEnabled("auth")) {
+  const { auth } = await import("@/services/auth/auth");
+  const session = await auth.api.getSession({ headers });
+}
+
+// ✗ wrong — initializes Polar SDK, better-auth, DB at import time
+import { auth } from "@/services/auth/auth";
+```
+
+This applies to:
+- `services/auth/auth.ts` — initializes Polar SDK + better-auth (both call `new URL()`)
+- `services/payments/` — depends on Polar SDK
+- `services/email/` — depends on AWS SES client
+- `services/storage/` — depends on R2/S3 client
+- Any file that imports from the above
+
+**Where this matters most:** `proxy.ts` (middleware) runs on every request. A static import there crashes the entire site.
+
 ## Before writing code
 
 1. Read relevant existing files first — never assume what's there

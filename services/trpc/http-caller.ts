@@ -5,11 +5,10 @@ import { createTRPCClient, httpBatchLink } from "@trpc/client";
 import type { AppRouter } from "./routers/_app";
 
 function getApiUrl(): string {
-  const base = process.env.NEXT_PUBLIC_API_URL ?? "";
-  if (!base) {
-    throw new Error("NEXT_PUBLIC_API_URL must be set for HTTP caller");
-  }
-  return `${base.replace(/\/$/, "")}/api/trpc`;
+  const base = (
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
+  ).replace(/\/$/, "");
+  return `${base}/api/trpc`;
 }
 
 /**

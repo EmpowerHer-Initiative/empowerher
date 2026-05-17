@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { isFeatureEnabled } from "./config/features";
 import { isAuthenticated } from "./services/auth/action";
-import { auth } from "./services/auth/auth";
 
 function clearAuthCookies(response: NextResponse): NextResponse {
   const cookieNames = [
@@ -50,6 +49,7 @@ export const proxy = async (request: Request) => {
     // If the session was deleted (e.g. revoked by admin), clear cookies
     // so the user can access the login page.
     try {
+      const { auth } = await import("./services/auth/auth");
       const session = await auth.api.getSession({
         headers: nextRequest.headers,
         query: { disableCookieCache: true },
