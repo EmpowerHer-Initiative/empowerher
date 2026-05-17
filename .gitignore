@@ -41,6 +41,5 @@ next-env.d.ts
 .content-collections
 
 # Auto-generated
-config/plans.ts
 
 .env
