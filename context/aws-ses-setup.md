@@ -3,14 +3,14 @@
 ## 1. Create IAM User
 
 1. Go to **IAM → Users → Create user**
-2. Name: `client-{clientname}`
+2. Name: `client-empowerher`
 3. No console access needed
 
 ## 2. Attach Inline Policy
 
 **Users → {user} → Add permissions → Create inline policy → JSON tab**
 
-- **Policy name:** `SES-SendOnly-{clientname}` (e.g. `SES-SendOnly-acme`)
+- **Policy name:** `SES-SendOnly-empowerher` (e.g. `SES-SendOnly-acme`)
 - **Description:** `Allow sending emails from {clientdomain.com} only`
 
 ```json
@@ -22,7 +22,7 @@
       "Effect": "Allow",
       "Action": "ses:SendEmail",
       "Resource": [
-        "arn:aws:ses:us-east-1:135808972294:identity/CLIENTDOMAIN.com",
+        "arn:aws:ses:us-east-1:135808972294:identity/empowerher-initiative.org",
         "arn:aws:ses:us-east-1:135808972294:configuration-set/my-first-configuration-set"
       ]
     }
@@ -30,7 +30,7 @@
 }
 ```
 
-Replace `CLIENTDOMAIN.com` with the client's domain. The configuration set resource is required because SES checks permission on both the identity and any assigned configuration set.
+Replace `empowerher-initiative.org` with the client's domain. The configuration set resource is required because SES checks permission on both the identity and any assigned configuration set.
 
 ## 3. Create Access Key
 

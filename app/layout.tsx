@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Serif_Display, Plus_Jakarta_Sans } from "next/font/google";
 
 import "./globals.css";
 
@@ -37,14 +37,15 @@ export const metadata: Metadata = {
   },
 };
 
-const fontSans = Geist({
+const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-const fontMono = Geist_Mono({
+const fontSerif = DM_Serif_Display({
+  weight: "400",
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-serif",
 });
 
 export default function RootLayout({
@@ -58,7 +59,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn(
         "antialiased",
-        fontMono.variable,
+        fontSerif.variable,
         "font-sans",
         fontSans.variable
       )}

@@ -80,6 +80,31 @@ const blog = defineCollection({
   },
 });
 
+const hervoice = defineCollection({
+  name: "hervoice",
+  directory: "content/hervoice",
+  include: "**/*.mdx",
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    image: z.string().optional(),
+    date: z.coerce.date(),
+    content: z.string(),
+  }),
+  transform: async (document, context) => {
+    const mdx = await compileMDX(context, document, {
+      remarkPlugins: [remarkGfm],
+      rehypePlugins: [rehypePrettyCode, rehypeAutolinkHeadings, rehypeSlug],
+    });
+    const headings = extractHeadings(document.content);
+    return {
+      ...document,
+      mdx,
+      headings,
+    };
+  },
+});
+
 export default defineConfig({
-  content: [legal, blog],
+  content: [legal, blog, hervoice],
 });

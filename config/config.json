@@ -2,8 +2,8 @@
   "auth": false,
   "payments": false,
   "storage": false,
-  "blog": false,
-  "contact": false,
+  "blog": true,
+  "contact": true,
   "cron": false,
   "email": false
 }

@@ -61,12 +61,12 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="flex min-h-dvh items-center justify-center p-8">
+    <div className="flex min-h-dvh items-center justify-center bg-gradient-to-b from-[#f0f8ff] via-white to-white p-8">
       <Wrapper
         title="Login"
         description="Hey, Enter your details to get sign in to your account"
       >
-        <form onSubmit={form.handleSubmit(onSubmit)} className="my-4 space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="my-6 space-y-5">
           <Controller
             control={form.control}
             name="email"

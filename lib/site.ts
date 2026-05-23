@@ -16,26 +16,26 @@
 
 export const siteConfig = {
   // Site identity
-  name: "YourBrand",
+  name: "EmpowerHer",
   description:
-    "The all-in-one platform that helps you create, launch, and scale your ideas faster than ever before.",
+    "Empowering Afghan girls through storytelling, learning, and action.",
 
   // Contact email (shown on site — navbar, footer, 404)
-  email: "alisamadi0583@gmail.com",
+  email: "info@empowerher-initiative.org",
 
   // Email sending
-  noreplyEmail: "noreply@alisamadii.com",
-  supportEmail: "support@alisamadii.com",
+  noreplyEmail: "noreply@empowerher-initiative.org",
+  supportEmail: "info@empowerher-initiative.org",
 
   // Email template branding
   emailLogoUrl: "https://cdn.alisamadii.com/company/business-logo-black.png",
-  emailPrimaryColor: "#141414",
+  emailPrimaryColor: "#43a9e2",
 
   // Legal entity name (copyright, email signatures)
-  companyName: "AliSamadii LLC",
+  companyName: "EmpowerHer Initiative",
 
   // Production URL — no trailing slash
-  url: "https://alisamadii.com",
+  url: "https://empowerher-initiative.org",
 
   // Open Graph / social preview image
   // → Drop your hero image as public/og-image.png (1200×630 recommended)
@@ -46,13 +46,14 @@ export const siteConfig = {
   // ─────────────────────────────────────────────────────────────────────────
   pages: {
     home: {
-      title: "YourBrand",
+      title: "EmpowerHer",
       description:
-        "The all-in-one platform that helps you create, launch, and scale your ideas faster than ever before.",
+        "Empowering Afghan girls through storytelling, learning, and action.",
     },
     blog: {
       title: "Blog",
-      description: "Thoughts, guides, and updates from the team.",
+      description:
+        "Stories, updates, and insights from the EmpowerHer community.",
     },
     login: {
       title: "Login",
@@ -68,7 +69,55 @@ export const siteConfig = {
     },
     contact: {
       title: "Contact",
-      description: "Get in touch with us.",
+      description: "Get in touch with the EmpowerHer team.",
+    },
+    about: {
+      title: "About Us",
+      description:
+        "Learn about our mission, vision, story, and the team behind EmpowerHer.",
+    },
+    mentorship: {
+      title: "Mentorship Program",
+      description:
+        "Free workshops and mentorship for Afghan girls to build resilience, gain support, and launch impact projects.",
+    },
+    hervoice: {
+      title: "HerVoice",
+      description:
+        "A platform for Afghan girls to share their stories, amplify their voices, and inspire change through creative expression.",
+    },
+    successStories: {
+      title: "Success Stories",
+      description:
+        "Past program outcomes and impact stories from EmpowerHer participants.",
+    },
+    spr: {
+      title: "Student Project Roadmap",
+      description:
+        "A leadership pathway for EmpowerHer graduates to design and lead their own impact-driven online classes.",
+    },
+    getInvolved: {
+      title: "Get Involved",
+      description:
+        "Partner with us or volunteer to support Afghan girls' education and empowerment.",
+    },
+    resources: {
+      title: "Resources",
+      description:
+        "Educational resources, scholarships, and opportunities for Afghan girls.",
+    },
+    afgaf: {
+      title: "AFGAF",
+      description:
+        "Afghan Girls Financial Assistance Fund — our primary sponsor and partner.",
+    },
+    annualReport: {
+      title: "Annual Impact Reports",
+      description: "View and download EmpowerHer's annual impact reports.",
+    },
+    writingContest: {
+      title: "HerVoice 2026 Writing Contest",
+      description: "Submit your story to the HerVoice 2026 Writing Contest.",
     },
   },
 };
