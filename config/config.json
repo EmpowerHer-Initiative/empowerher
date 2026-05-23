@@ -1,9 +1,9 @@
 {
-  "auth": true,
-  "payments": true,
-  "storage": true,
-  "blog": true,
-  "contact": true,
-  "cron": true,
-  "email": true
+  "auth": false,
+  "payments": false,
+  "storage": false,
+  "blog": false,
+  "contact": false,
+  "cron": false,
+  "email": false
 }
