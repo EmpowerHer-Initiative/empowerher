@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useTRPC } from "@/services/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { ArrowUpRight, Check, Mail, MapPin, Send } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+
+import { agency } from "@/lib/agency";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -42,7 +43,6 @@ const socialLinks = [
 
 export const ContactForm = () => {
   const [submitted, setSubmitted] = useState(false);
-  const trpc = useTRPC();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,13 +55,26 @@ export const ContactForm = () => {
     },
   });
 
-  const submit = useMutation(trpc.contact.create.mutationOptions());
+  const submit = useMutation({
+    mutationFn: (values: z.infer<typeof formSchema>) =>
+      agency.contact({
+        name: values.name,
+        email: values.email,
+        subject: values.subject,
+        message: values.message,
+        metadata: values.phone ? { phone: values.phone } : undefined,
+      }),
+  });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     submit.mutate(values, {
-      onSuccess: () => {
-        setSubmitted(true);
-        toast.success("Message sent successfully!");
+      onSuccess: (data) => {
+        if (data.success) {
+          setSubmitted(true);
+          toast.success("Message sent successfully!");
+        } else {
+          toast.error(data.error || "Something went wrong. Please try again.");
+        }
       },
       onError: (error) => {
         toast.error(error.message || "Something went wrong. Please try again.");

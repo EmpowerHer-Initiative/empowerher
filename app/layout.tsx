@@ -5,6 +5,7 @@ import "./globals.css";
 
 import { Suspense } from "react";
 import { TRPCReactProvider } from "@/services/trpc/client";
+import { DevTools } from "@alisamadiillc/devtools";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { siteConfig } from "@/lib/site";
@@ -70,6 +71,7 @@ export default function RootLayout({
             <NuqsAdapter>
               <Suspense fallback={null}>{children}</Suspense>
               <Toaster />
+              <DevTools />
             </NuqsAdapter>
           </ThemeProvider>
         </TRPCReactProvider>
