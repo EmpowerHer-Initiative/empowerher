@@ -160,7 +160,8 @@ export const orders = pgTable("orders", {
 export type EmailTemplateName =
   | "verify-email"
   | "reset-password"
-  | "setup-account";
+  | "setup-account"
+  | "contact-form";
 
 export type EmailLogMetadata = {
   to: string;
