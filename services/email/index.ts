@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import type { EmailTemplateName } from "@/services/db/schema";
 import { log } from "@/services/log";
 import { SES } from "@aws-sdk/client-ses";
 import { render } from "@react-email/render";
@@ -40,6 +41,31 @@ type SendOptions = {
   attachments?: Attachment[];
 };
 
+function extractTemplateInfo(react: ReactElement): {
+  template?: EmailTemplateName;
+  templateProps?: Record<string, string>;
+} {
+  const component = react.type;
+  if (
+    typeof component === "function" &&
+    "templateName" in component &&
+    typeof component.templateName === "string"
+  ) {
+    const { children: _, ...props } = react.props as Record<string, unknown>;
+    const stringProps: Record<string, string> = {};
+    for (const [key, value] of Object.entries(props)) {
+      if (typeof value === "string") {
+        stringProps[key] = value;
+      }
+    }
+    return {
+      template: component.templateName as EmailTemplateName,
+      templateProps: stringProps,
+    };
+  }
+  return {};
+}
+
 async function send({ from, to, subject, react, attachments }: SendOptions) {
   if (!isFeatureEnabled("email")) {
     return { error: "Email service is not enabled" };
@@ -48,6 +74,7 @@ async function send({ from, to, subject, react, attachments }: SendOptions) {
   const html = await render(react);
   const toAddresses = Array.isArray(to) ? to : [to];
   const source = from ?? siteConfig.noreplyEmail;
+  const { template, templateProps } = extractTemplateInfo(react);
 
   try {
     if (attachments?.length) {
@@ -82,7 +109,8 @@ async function send({ from, to, subject, react, attachments }: SendOptions) {
         to: toAddresses.join(", "),
         subject,
         attachmentCount: attachments?.length,
-        html,
+        template,
+        templateProps,
       },
     });
     return { data: true as const };
@@ -98,7 +126,8 @@ async function send({ from, to, subject, react, attachments }: SendOptions) {
         to: toAddresses.join(", "),
         subject,
         attachmentCount: attachments?.length,
-        html,
+        template,
+        templateProps,
       },
       error: errorMessage,
     });
@@ -137,7 +166,7 @@ async function resend({
       type: "email",
       status: "success",
       summary: `[Retry] Email to ${toAddresses.join(", ")}: ${subject}`,
-      metadata: { to: toAddresses.join(", "), subject, html, retry: true },
+      metadata: { to: toAddresses.join(", "), subject, retry: true },
     });
     return { data: true as const };
   } catch (error) {
@@ -148,7 +177,7 @@ async function resend({
       type: "email",
       status: "failed",
       summary: `[Retry] Email to ${toAddresses.join(", ")}: ${subject}`,
-      metadata: { to: toAddresses.join(", "), subject, html, retry: true },
+      metadata: { to: toAddresses.join(", "), subject, retry: true },
       error: errorMessage,
     });
     return { error: errorMessage };

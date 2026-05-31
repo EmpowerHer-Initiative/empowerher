@@ -114,7 +114,7 @@ const ActionCell = ({ log }: { log: LogFromAPI }) => {
   const canRetry =
     log.type === "email" &&
     log.status === "failed" &&
-    !!(log.metadata as EmailLogMetadata)?.html;
+    !!(log.metadata as EmailLogMetadata)?.template;
 
   const deleteLog = useMutation(
     trpc.logs.delete.mutationOptions({

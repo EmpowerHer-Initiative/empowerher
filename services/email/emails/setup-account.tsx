@@ -163,6 +163,8 @@ export default function SetupAccount({
   );
 }
 
+SetupAccount.templateName = "setup-account" as const;
+
 SetupAccount.PreviewProps = {
   setupAccountLink: `${siteConfig.url}/reset-password?token=abc123`,
   customerName: "John Doe",

@@ -1,6 +1,7 @@
 import { db } from "@/services/db/index";
 import { activityLog, type EmailLogMetadata } from "@/services/db/schema";
 import { email } from "@/services/email";
+import { renderTemplate } from "@/services/email/render-template";
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { and, count, desc, eq, ilike, lt, sql } from "drizzle-orm";
@@ -91,17 +92,19 @@ export const logsRouter = createTRPCRouter({
 
     const meta = entry.metadata as EmailLogMetadata;
 
-    if (!meta.html) {
+    if (!meta.template || !meta.templateProps) {
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: "No HTML content stored for this email",
+        message: "No template data stored for this email",
       });
     }
+
+    const html = await renderTemplate(meta.template, meta.templateProps);
 
     const result = await email.resend({
       to: meta.to,
       subject: meta.subject,
-      html: meta.html,
+      html,
     });
 
     if ("error" in result) {
@@ -112,6 +115,31 @@ export const logsRouter = createTRPCRouter({
     }
 
     return { success: true };
+  }),
+
+  renderPreview: adminProcedure.input(z.string()).query(async ({ input }) => {
+    const entry = await db
+      .select()
+      .from(activityLog)
+      .where(eq(activityLog.id, input))
+      .limit(1)
+      .then((r) => r[0]);
+
+    if (!entry || entry.type !== "email") {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "Log entry is not an email",
+      });
+    }
+
+    const meta = entry.metadata as EmailLogMetadata;
+
+    if (!meta.template || !meta.templateProps) {
+      return { html: null };
+    }
+
+    const html = await renderTemplate(meta.template, meta.templateProps);
+    return { html };
   }),
 
   delete: adminProcedure.input(z.string()).mutation(async ({ input }) => {

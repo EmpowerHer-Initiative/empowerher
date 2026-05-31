@@ -43,6 +43,8 @@ export default function VerifyEmail({ verificationCode }: VerifyEmailProps) {
   );
 }
 
+VerifyEmail.templateName = "verify-email" as const;
+
 VerifyEmail.PreviewProps = {
   verificationCode: "596853",
 } satisfies VerifyEmailProps;

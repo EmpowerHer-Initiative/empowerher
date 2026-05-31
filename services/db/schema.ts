@@ -157,11 +157,17 @@ export const orders = pgTable("orders", {
 
 // ── Activity Log ─────────────────────────────────────────────────────────────
 
+export type EmailTemplateName =
+  | "verify-email"
+  | "reset-password"
+  | "setup-account";
+
 export type EmailLogMetadata = {
   to: string;
   subject: string;
   attachmentCount?: number;
-  html?: string;
+  template?: EmailTemplateName;
+  templateProps?: Record<string, string>;
   retry?: boolean;
 };
 

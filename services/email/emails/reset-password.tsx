@@ -57,6 +57,8 @@ export default function ResetPassword({
   );
 }
 
+ResetPassword.templateName = "reset-password" as const;
+
 ResetPassword.PreviewProps = {
   resetPasswordLink: `${siteConfig.url}/reset-password?token=abc123`,
 } satisfies ResetPasswordProps;

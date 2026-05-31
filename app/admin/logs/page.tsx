@@ -148,6 +148,11 @@ const LogsPage = () => {
     enabled: !!selectedLogId,
   });
 
+  const { data: previewData } = useQuery({
+    ...trpc.logs.renderPreview.queryOptions(selectedLogId!),
+    enabled: !!selectedLogId && previewOpen,
+  });
+
   const purgeMutation = useMutation(
     trpc.logs.purge.mutationOptions({
       onSuccess: (data) => {
@@ -385,9 +390,9 @@ const LogsPage = () => {
               )}
             </DialogDescription>
           </DialogHeader>
-          {selectedLog && (selectedLog.metadata as EmailLogMetadata)?.html ? (
+          {selectedLog && previewData?.html ? (
             <iframe
-              srcDoc={(selectedLog.metadata as EmailLogMetadata).html}
+              srcDoc={previewData.html}
               className="h-[500px] w-full rounded border"
               sandbox=""
               title="Email preview"
