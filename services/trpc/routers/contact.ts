@@ -3,12 +3,17 @@ import { headers } from "next/headers";
 import { email } from "@/services/email";
 import ContactFormEmail from "@/services/email/emails/contact-form";
 import { baseProcedure, createTRPCRouter } from "@/services/trpc/init";
+import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { z } from "zod";
 
 import { siteConfig } from "@/lib/site";
 
+const rateLimitMap = new Map<string, number>();
+const RATE_LIMIT_MS = 60_000; // 1 submission per minute per IP
+
 export const contactRouter = createTRPCRouter({
   send: baseProcedure
+    .use(featureGuard("contact"))
     .input(
       z.object({
         name: z.string().min(1).max(200),
@@ -28,6 +33,13 @@ export const contactRouter = createTRPCRouter({
       const userAgent = h.get("user-agent") ?? "Unknown";
       const referer = h.get("referer") ?? undefined;
       const submittedAt = new Date().toISOString();
+
+      // Rate limit by IP
+      const lastSent = rateLimitMap.get(ipAddress);
+      if (lastSent && Date.now() - lastSent < RATE_LIMIT_MS) {
+        throw new Error("Please wait before sending another message.");
+      }
+      rateLimitMap.set(ipAddress, Date.now());
 
       const result = await email.send({
         to: siteConfig.email,
