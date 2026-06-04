@@ -59,6 +59,9 @@ Pages import and render section components only — no data fetching, no inline 
 
 Always reach for an existing shadcn component before writing any custom UI. Never build a raw HTML element when a shadcn primitive covers it.
 
+**Exception — marketing page (`app/(marketing)/page.tsx`):** On the landing page you may use custom `<button>` or `<a>` elements + styled with Tailwind instead of the shadcn `Button` component. This keeps marketing design free from component constraints with
++out modifying the shared `Button` component.
+
 **This project uses Base UI, not Radix UI.** Base UI does not support `asChild`. To render a trigger as a `Button`, use the `render` prop:
 
 ```tsx
@@ -313,17 +316,18 @@ Any module that depends on optional services (auth, payments, email, storage) **
 **Rule:** Use dynamic `await import()` inside the code path that actually needs the module.
 
 ```tsx
+// ✗ wrong — initializes Polar SDK, better-auth, DB at import time
+import { auth } from "@/services/auth/auth";
+
 // ✓ correct — auth module only loads when feature is enabled
 if (isFeatureEnabled("auth")) {
   const { auth } = await import("@/services/auth/auth");
   const session = await auth.api.getSession({ headers });
 }
-
-// ✗ wrong — initializes Polar SDK, better-auth, DB at import time
-import { auth } from "@/services/auth/auth";
 ```
 
 This applies to:
+
 - `services/auth/auth.ts` — initializes Polar SDK + better-auth (both call `new URL()`)
 - `services/payments/` — depends on Polar SDK
 - `services/email/` — depends on AWS SES client
