@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { auth } from "@/services/auth/auth";
 
 export const metadata = {
   title: "Features",
@@ -12,7 +13,6 @@ interface Props {
 }
 
 export default async function FeaturesLayout({ children }: Props) {
-  const { auth } = await import("@/services/auth/auth");
   const session = await auth.api.getSession({
     headers: await headers(),
   });

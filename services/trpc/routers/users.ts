@@ -1,4 +1,5 @@
 import { headers } from "next/headers";
+import { auth } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
 import { user } from "@/services/db/schema";
 import { deleteCustomerByEmail } from "@/services/payments";
@@ -10,8 +11,6 @@ import {
 import { TRPCError } from "@trpc/server";
 import { count, desc, eq, ilike, or } from "drizzle-orm";
 import { z } from "zod";
-
-const getAuth = () => import("@/services/auth/auth").then((m) => m.auth);
 
 export const usersRouter = createTRPCRouter({
   getCurrent: authenticatedProcedure.query(async ({ ctx }) => {
@@ -66,7 +65,6 @@ export const usersRouter = createTRPCRouter({
     .input(z.string().optional())
     .query(async ({ input, ctx }) => {
       const userId = input;
-      const auth = await getAuth();
       const accounts = await (
         await auth.$context
       ).internalAdapter.findAccounts(userId ?? ctx.session.user.id);
@@ -91,7 +89,6 @@ export const usersRouter = createTRPCRouter({
         .strict()
     )
     .mutation(async ({ input, ctx }) => {
-      const auth = await getAuth();
       await auth.api.updateUser({
         headers: await headers(),
         body: { ...input },
@@ -144,7 +141,6 @@ export const usersRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const { userId, newPassword, revokeAllSessions } = input;
 
-      const auth = await getAuth();
       const { status } = await auth.api.setUserPassword({
         body: { newPassword, userId },
         headers: await headers(),

@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
+import { auth } from "@/services/auth/auth";
 
 import { cn } from "@/lib/utils";
 
@@ -10,7 +11,6 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { auth } = await import("@/services/auth/auth");
   const user = await auth.api.getSession({
     headers: await headers(),
     query: {

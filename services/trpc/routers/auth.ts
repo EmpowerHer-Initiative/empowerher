@@ -1,4 +1,5 @@
 import { headers } from "next/headers";
+import { auth } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
 import { session, verification } from "@/services/db/schema";
 import {
@@ -13,15 +14,12 @@ import z from "zod";
 
 import { rateLimit } from "../middleware/rate-limit";
 
-const getAuth = () => import("@/services/auth/auth").then((m) => m.auth);
-
 export const authRouter = createTRPCRouter({
   getSession: authenticatedProcedure.query(async ({ ctx }) => {
     return ctx.session.user;
   }),
 
   listSessions: adminProcedure.input(z.string()).query(async ({ input }) => {
-    const auth = await getAuth();
     const sessions = await auth.api.listUserSessions({
       body: { userId: input },
       headers: await headers(),
