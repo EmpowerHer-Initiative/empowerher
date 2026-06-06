@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
+import { UserControl } from "@/components/user-control";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -69,7 +70,10 @@ export default function RootLayout({
         <TRPCReactProvider>
           <ThemeProvider>
             <NuqsAdapter>
-              <Suspense fallback={null}>{children}</Suspense>
+              <Suspense fallback={null}>
+                <UserControl />
+                {children}
+              </Suspense>
               <Toaster />
               <DevTools />
             </NuqsAdapter>

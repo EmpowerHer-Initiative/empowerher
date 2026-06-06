@@ -25,6 +25,7 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Separator } from "@/components/ui/separator";
+import { CreateUser } from "@/components/admin/users/create-user";
 import { DataTable } from "@/components/data-table";
 import { TabLineAnimate } from "@/components/tab-line-animate";
 
@@ -141,7 +142,7 @@ const UsersPage = () => {
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        {/* <CreateUser /> */}
+        <CreateUser />
       </div>
       <DataTable
         isLoading={isPending}

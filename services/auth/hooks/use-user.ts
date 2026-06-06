@@ -43,4 +43,52 @@ const useRevokeSession = () => {
   );
 };
 
-export { useCurrentUser, useUpdateUser, useRevokeSession };
+const useChangeOwnPassword = () => {
+  const trpc = useTRPC();
+  return useMutation(
+    trpc.users.changeOwnPassword.mutationOptions({
+      onSuccess: () => {
+        queryClient.setQueryData(trpc.users.getCurrent.queryKey(), (old) => {
+          if (!old) return old;
+          return {
+            ...old,
+            user: {
+              ...old.user,
+              metadata: { ...old.user.metadata, mustChangePassword: false },
+            },
+          };
+        });
+      },
+    })
+  );
+};
+
+const useDismissPasswordChange = () => {
+  const trpc = useTRPC();
+  return useMutation(
+    trpc.users.dismissPasswordChange.mutationOptions({
+      onSuccess: () => {
+        queryClient.setQueryData(trpc.users.getCurrent.queryKey(), (old) => {
+          if (!old) return old;
+          const { mustChangePassword, ...rest } = (old.user.metadata ??
+            {}) as Record<string, unknown>;
+          return {
+            ...old,
+            user: {
+              ...old.user,
+              metadata: rest,
+            },
+          };
+        });
+      },
+    })
+  );
+};
+
+export {
+  useCurrentUser,
+  useUpdateUser,
+  useRevokeSession,
+  useChangeOwnPassword,
+  useDismissPasswordChange,
+};

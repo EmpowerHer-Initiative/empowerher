@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { useCreateUser } from "@/services/auth/hooks/use-admin";
+import {
+  useCreateUser,
+  useUpdateAdminUser,
+} from "@/services/auth/hooks/use-admin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -34,7 +37,7 @@ const formSchema = z.object({
   name: z.string().min(1, {
     message: "Name is required",
   }),
-  email: z.string().email({
+  email: z.email({
     message: "Email address is required",
   }),
   password: z.string().min(8, {
@@ -46,7 +49,9 @@ const formSchema = z.object({
 export const CreateUser = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { mutate: createUser, isPending } = useCreateUser();
+  const { mutate: createUser, isPending: isCreating } = useCreateUser();
+  const { mutate: adminUpdate, isPending: isUpdating } = useUpdateAdminUser();
+  const isPending = isCreating || isUpdating;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,9 +65,16 @@ export const CreateUser = () => {
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     createUser(values, {
-      onSuccess: () => {
-        setIsOpen(false);
-        form.reset();
+      onSuccess: (data) => {
+        adminUpdate(
+          { id: data.user.id, metadata: { mustChangePassword: true } },
+          {
+            onSuccess: () => {
+              setIsOpen(false);
+              form.reset();
+            },
+          }
+        );
       },
       onError: (error) => {
         if (error.message.toLowerCase().includes("already exists")) {

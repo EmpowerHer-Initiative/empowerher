@@ -13,6 +13,11 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 
+export interface UserMetadata {
+  mustChangePassword?: boolean;
+  [key: string]: unknown;
+}
+
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
@@ -31,7 +36,7 @@ export const user = pgTable("user", {
   banned: boolean("banned"),
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires"),
-  metadata: jsonb("metadata").default({}),
+  metadata: jsonb("metadata").$type<UserMetadata>().default({}),
 });
 
 export const session = pgTable("session", {

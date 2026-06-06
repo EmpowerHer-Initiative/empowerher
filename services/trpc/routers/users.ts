@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { auth } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
-import { user } from "@/services/db/schema";
+import { account, user, type UserMetadata } from "@/services/db/schema";
 import { deleteCustomerByEmail } from "@/services/payments";
 import {
   adminProcedure,
@@ -9,8 +9,19 @@ import {
   createTRPCRouter,
 } from "@/services/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { count, desc, eq, ilike, or } from "drizzle-orm";
+import { and, count, desc, eq, ilike, or } from "drizzle-orm";
 import { z } from "zod";
+
+async function mergeUserMetadata(userId: string, patch: Partial<UserMetadata>) {
+  const [current] = await db
+    .select({ metadata: user.metadata })
+    .from(user)
+    .where(eq(user.id, userId))
+    .limit(1);
+  const merged = { ...((current?.metadata ?? {}) as UserMetadata), ...patch };
+  await db.update(user).set({ metadata: merged }).where(eq(user.id, userId));
+  return merged;
+}
 
 export const usersRouter = createTRPCRouter({
   getCurrent: authenticatedProcedure.query(async ({ ctx }) => {
@@ -107,13 +118,14 @@ export const usersRouter = createTRPCRouter({
           banReason: z.string().optional(),
           role: z.enum(["user", "admin"]).optional(),
           emailVerified: z.boolean().optional(),
+          metadata: z.record(z.string(), z.unknown()).optional(),
         })
         .refine((data) => Object.keys(data).length > 0, {
           message: "At least one field must be provided for update",
         })
     )
     .mutation(async ({ input }) => {
-      const { id, ...data } = input;
+      const { id, metadata: metadataPatch, ...data } = input;
 
       if (!id) {
         throw new TRPCError({
@@ -122,11 +134,24 @@ export const usersRouter = createTRPCRouter({
         });
       }
 
+      if (metadataPatch) {
+        await mergeUserMetadata(id, metadataPatch);
+      }
+
+      if (Object.keys(data).length > 0) {
+        return db
+          .update(user)
+          .set(data)
+          .where(eq(user.id, id))
+          .returning()
+          .then((result) => result[0]);
+      }
+
       return db
-        .update(user)
-        .set(data)
+        .select()
+        .from(user)
         .where(eq(user.id, id))
-        .returning()
+        .limit(1)
         .then((result) => result[0]);
     }),
 
@@ -168,6 +193,115 @@ export const usersRouter = createTRPCRouter({
       }
 
       return true;
+    }),
+
+  changeOwnPassword: authenticatedProcedure
+    .input(
+      z.object({
+        newPassword: z.string().min(8),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const [currentUser] = await db
+        .select({ metadata: user.metadata })
+        .from(user)
+        .where(eq(user.id, ctx.session.user.id))
+        .limit(1);
+
+      const metadata = (currentUser?.metadata ?? {}) as UserMetadata;
+
+      if (metadata.mustChangePassword !== true) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Password change is not required",
+        });
+      }
+
+      const authCtx = await auth.$context;
+      const hashedPassword = await authCtx.password.hash(input.newPassword);
+
+      const [updated] = await db
+        .update(account)
+        .set({ password: hashedPassword })
+        .where(
+          and(
+            eq(account.userId, ctx.session.user.id),
+            eq(account.providerId, "credential")
+          )
+        )
+        .returning();
+
+      if (!updated) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Failed to change password",
+        });
+      }
+
+      const { mustChangePassword, ...restMeta } = metadata;
+
+      await auth.api.updateUser({
+        headers: await headers(),
+        body: { metadata: restMeta },
+      });
+
+      return true;
+    }),
+
+  dismissPasswordChange: authenticatedProcedure.mutation(async ({ ctx }) => {
+    const [current] = await db
+      .select({ metadata: user.metadata })
+      .from(user)
+      .where(eq(user.id, ctx.session.user.id))
+      .limit(1);
+
+    const { mustChangePassword, ...restMeta } = (current?.metadata ??
+      {}) as UserMetadata;
+
+    await auth.api.updateUser({
+      headers: await headers(),
+      body: { metadata: restMeta },
+    });
+
+    return true;
+  }),
+
+  updateMetadata: adminProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        metadata: z.record(z.string(), z.unknown()),
+      })
+    )
+    .mutation(async ({ input }) => {
+      return mergeUserMetadata(input.userId, input.metadata);
+    }),
+
+  removeMetadataKey: adminProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        key: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const [current] = await db
+        .select({ metadata: user.metadata })
+        .from(user)
+        .where(eq(user.id, input.userId))
+        .limit(1);
+
+      const currentMeta = {
+        ...((current?.metadata ?? {}) as UserMetadata),
+      };
+      delete currentMeta[input.key];
+
+      await db
+        .update(user)
+        .set({ metadata: currentMeta })
+        .where(eq(user.id, input.userId));
+
+      return currentMeta;
     }),
 
   delete: adminProcedure.input(z.string()).mutation(async ({ input, ctx }) => {

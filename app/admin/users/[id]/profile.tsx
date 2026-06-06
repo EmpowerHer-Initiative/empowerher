@@ -4,6 +4,7 @@ import { EmailAddresses } from "@/components/admin/users/email-addresses";
 import { Password } from "@/components/admin/users/password";
 import { PersonalInformation } from "@/components/admin/users/personal-information";
 import { SocialAccounts } from "@/components/admin/users/social-accounts";
+import { UserMetadataCard } from "@/components/admin/users/user-metadata";
 
 export const Profile = () => {
   return (
@@ -46,6 +47,14 @@ export const Profile = () => {
         </CardHeader>
         <CardContent className="px-4 py-2">
           <Devices />
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Metadata</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <UserMetadataCard />
         </CardContent>
       </Card>
     </div>

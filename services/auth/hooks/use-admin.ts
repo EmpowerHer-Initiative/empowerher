@@ -54,4 +54,41 @@ const useUpdateAdminUser = () => {
   );
 };
 
-export { useCreateUser, useUpdateAdminUser };
+const useUpdateMetadata = () => {
+  const trpc = useTRPC();
+  return useMutation(
+    trpc.users.updateMetadata.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: trpc.users.get.pathKey(),
+        });
+        queryClient.invalidateQueries({
+          queryKey: trpc.users.list.pathKey(),
+        });
+      },
+    })
+  );
+};
+
+const useRemoveMetadataKey = () => {
+  const trpc = useTRPC();
+  return useMutation(
+    trpc.users.removeMetadataKey.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: trpc.users.get.pathKey(),
+        });
+        queryClient.invalidateQueries({
+          queryKey: trpc.users.list.pathKey(),
+        });
+      },
+    })
+  );
+};
+
+export {
+  useCreateUser,
+  useUpdateAdminUser,
+  useUpdateMetadata,
+  useRemoveMetadataKey,
+};
