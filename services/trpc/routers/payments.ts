@@ -13,7 +13,6 @@ import {
   baseProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
-import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import type { SubscriptionProrationBehavior } from "@polar-sh/sdk/models/components/subscriptionprorationbehavior.js";
 import { ResourceNotFound } from "@polar-sh/sdk/models/errors/resourcenotfound.js";
 import { TRPCError } from "@trpc/server";
@@ -25,72 +24,69 @@ const getPolarClient = () =>
 
 export const paymentsRouter = createTRPCRouter({
   // ─── Customer State ──────────────────────────────────────────────
-  getCustomerState: authenticatedProcedure
-    .use(featureGuard("payments"))
-    .query(async ({ ctx }) => {
-      const polarClient = await getPolarClient();
-      let customerState;
-      try {
-        customerState = await polarClient.customers.getStateExternal({
-          externalId: ctx.session.user.id,
-        });
-      } catch (err) {
-        if (err instanceof ResourceNotFound) {
-          const paidOrders = await db
-            .select()
-            .from(orders)
-            .where(eq(orders.userId, ctx.session.user.id))
-            .then((rows) => rows.filter((o) => o.status === "paid"));
+  getCustomerState: authenticatedProcedure.query(async ({ ctx }) => {
+    const polarClient = await getPolarClient();
+    let customerState;
+    try {
+      customerState = await polarClient.customers.getStateExternal({
+        externalId: ctx.session.user.id,
+      });
+    } catch (err) {
+      if (err instanceof ResourceNotFound) {
+        const paidOrders = await db
+          .select()
+          .from(orders)
+          .where(eq(orders.userId, ctx.session.user.id))
+          .then((rows) => rows.filter((o) => o.status === "paid"));
 
-          return {
-            activeSubscriptions: [] as never[],
-            paidOrders,
-            isUserHaveAccess: paidOrders.length > 0,
-            currentProductId: null,
-            currentSubscriptionId: null,
-            currentProduct: null,
-          };
-        }
-        throw err;
+        return {
+          activeSubscriptions: [] as never[],
+          paidOrders,
+          isUserHaveAccess: paidOrders.length > 0,
+          currentProductId: null,
+          currentSubscriptionId: null,
+          currentProduct: null,
+        };
       }
+      throw err;
+    }
 
-      const paidOrders = await db
-        .select()
-        .from(orders)
-        .where(eq(orders.userId, ctx.session.user.id))
-        .then((rows) => rows.filter((o) => o.status === "paid"));
+    const paidOrders = await db
+      .select()
+      .from(orders)
+      .where(eq(orders.userId, ctx.session.user.id))
+      .then((rows) => rows.filter((o) => o.status === "paid"));
 
-      const activeSub = customerState.activeSubscriptions?.[0] ?? null;
+    const activeSub = customerState.activeSubscriptions?.[0] ?? null;
 
-      const currentProduct = activeSub
-        ? await db
-            .select()
-            .from(products)
-            .where(eq(products.id, activeSub.productId))
-            .limit(1)
-            .then((result) => result[0] ?? null)
-        : null;
+    const currentProduct = activeSub
+      ? await db
+          .select()
+          .from(products)
+          .where(eq(products.id, activeSub.productId))
+          .limit(1)
+          .then((result) => result[0] ?? null)
+      : null;
 
-      return {
-        ...customerState,
-        paidOrders,
-        isUserHaveAccess:
-          activeSub?.status === "active" ||
-          activeSub?.status === "trialing" ||
-          paidOrders.length > 0,
-        currentProductId: activeSub?.productId ?? null,
-        currentSubscriptionId: activeSub?.id ?? null,
-        currentProduct,
-      };
-    }),
+    return {
+      ...customerState,
+      paidOrders,
+      isUserHaveAccess:
+        activeSub?.status === "active" ||
+        activeSub?.status === "trialing" ||
+        paidOrders.length > 0,
+      currentProductId: activeSub?.productId ?? null,
+      currentSubscriptionId: activeSub?.id ?? null,
+      currentProduct,
+    };
+  }),
 
   // ─── Products ────────────────────────────────────────────────────
-  getProducts: baseProcedure.use(featureGuard("payments")).query(async () => {
+  getProducts: baseProcedure.query(async () => {
     return db.select().from(products).orderBy(asc(products.priceAmount));
   }),
 
   updateProduct: adminProcedure
-    .use(featureGuard("payments"))
     .input(
       z.object({
         id: z.string(),
@@ -121,7 +117,6 @@ export const paymentsRouter = createTRPCRouter({
     }),
 
   deleteProduct: adminProcedure
-    .use(featureGuard("payments"))
     .input(z.string())
     .mutation(async ({ input }) => {
       const [deleted] = await db
@@ -133,7 +128,6 @@ export const paymentsRouter = createTRPCRouter({
 
   // ─── Checkout ────────────────────────────────────────────────────
   createCheckout: authenticatedProcedure
-    .use(featureGuard("payments"))
     .input(
       z.object({
         productId: z.string(),
@@ -181,7 +175,6 @@ export const paymentsRouter = createTRPCRouter({
     }),
 
   getCheckoutSession: baseProcedure
-    .use(featureGuard("payments"))
     .input(z.string())
     .query(async ({ input }) => {
       const polarClient = await getPolarClient();
@@ -190,7 +183,6 @@ export const paymentsRouter = createTRPCRouter({
 
   // ─── Subscriptions ───────────────────────────────────────────────
   getSubscriptions: authenticatedProcedure
-    .use(featureGuard("payments"))
     .input(z.object({ userId: z.string() }))
     .query(async ({ input, ctx }) => {
       if (
@@ -208,7 +200,6 @@ export const paymentsRouter = createTRPCRouter({
     }),
 
   listSubscriptions: authenticatedProcedure
-    .use(featureGuard("payments"))
     .input(z.object({ userId: z.string() }))
     .query(async ({ input, ctx }) => {
       if (
@@ -235,7 +226,6 @@ export const paymentsRouter = createTRPCRouter({
     }),
 
   getSubscriptionDetails: authenticatedProcedure
-    .use(featureGuard("payments"))
     .input(z.object({ subscriptionId: z.string() }))
     .query(async ({ input, ctx }) => {
       const sub = await db
@@ -253,7 +243,6 @@ export const paymentsRouter = createTRPCRouter({
     }),
 
   cancelSubscription: authenticatedProcedure
-    .use(featureGuard("payments"))
     .input(z.object({ subscriptionId: z.string() }))
     .mutation(async ({ input, ctx }) => {
       const sub = await db
@@ -279,7 +268,6 @@ export const paymentsRouter = createTRPCRouter({
     }),
 
   switchPlan: authenticatedProcedure
-    .use(featureGuard("payments"))
     .input(
       z.object({
         subscriptionId: z.string(),
@@ -332,7 +320,6 @@ export const paymentsRouter = createTRPCRouter({
 
   // ─── Orders ──────────────────────────────────────────────────────
   listOrders: authenticatedProcedure
-    .use(featureGuard("payments"))
     .input(z.object({ userId: z.string() }))
     .query(async ({ input, ctx }) => {
       if (
@@ -366,18 +353,15 @@ export const paymentsRouter = createTRPCRouter({
     }),
 
   // ─── Portal ──────────────────────────────────────────────────────
-  generatePortalLink: authenticatedProcedure
-    .use(featureGuard("payments"))
-    .mutation(async ({ ctx }) => {
-      const polarClient = await getPolarClient();
-      return polarClient.customerSessions.create({
-        externalCustomerId: ctx.session.user.id,
-      });
-    }),
+  generatePortalLink: authenticatedProcedure.mutation(async ({ ctx }) => {
+    const polarClient = await getPolarClient();
+    return polarClient.customerSessions.create({
+      externalCustomerId: ctx.session.user.id,
+    });
+  }),
 
   // ─── Customer Deletion ──────────────────────────────────────────
   deleteCustomer: authenticatedProcedure
-    .use(featureGuard("payments"))
     .input(z.string())
     .mutation(async ({ input, ctx }) => {
       if (input !== ctx.session.user.id) {

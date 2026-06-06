@@ -1,28 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { auth } from "@/services/auth/auth";
+import { toNextJsHandler } from "better-auth/next-js";
 
-import { isFeatureEnabled } from "@/config/features";
+const handler = toNextJsHandler(auth);
 
-const disabledHandler = () =>
-  NextResponse.json({ error: "Auth is disabled" }, { status: 404 });
+export const GET = (req: NextRequest) =>
+  handler.GET ? handler.GET(req) : new Response("Not Found", { status: 404 });
 
-async function handleRequest(req: NextRequest) {
-  const { auth } = await import("@/services/auth/auth");
-  const { toNextJsHandler } = await import("better-auth/next-js");
-  const handler = toNextJsHandler(auth);
-  return handler.GET ? handler.GET(req) : disabledHandler();
-}
-
-export const GET = isFeatureEnabled("auth")
-  ? (req: NextRequest) => handleRequest(req)
-  : disabledHandler;
-
-export const POST = isFeatureEnabled("auth")
-  ? (req: NextRequest) => {
-      return import("@/services/auth/auth").then(({ auth }) =>
-        import("better-auth/next-js").then(({ toNextJsHandler }) => {
-          const handler = toNextJsHandler(auth);
-          return handler.POST ? handler.POST(req) : disabledHandler();
-        })
-      );
-    }
-  : disabledHandler;
+export const POST = (req: NextRequest) =>
+  handler.POST ? handler.POST(req) : new Response("Not Found", { status: 404 });

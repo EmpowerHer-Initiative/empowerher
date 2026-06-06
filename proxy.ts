@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { isFeatureEnabled } from "./config/features";
 import { isAuthenticated } from "./services/auth/action";
 
 function clearAuthCookies(response: NextResponse): NextResponse {
@@ -18,14 +17,12 @@ export const proxy = async (request: Request) => {
   const nextRequest = request as NextRequest;
   const { pathname } = nextRequest.nextUrl;
 
-  if (!isFeatureEnabled("auth")) return NextResponse.next();
-
   const betterAuthSession = await isAuthenticated();
 
   const isProtectedRoute =
     pathname.startsWith("/admin") ||
     pathname === "/settings" ||
-    (pathname === "/checkout" && isFeatureEnabled("payments"));
+    pathname === "/checkout";
 
   if (isProtectedRoute && !betterAuthSession) {
     let loginPath = `/login?callbackUrl=${pathname}`;

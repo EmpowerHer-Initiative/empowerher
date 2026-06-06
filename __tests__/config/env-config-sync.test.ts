@@ -4,42 +4,7 @@ import { describe, expect, it } from "vitest";
 
 const ROOT = resolve(__dirname, "../..");
 
-const config: Record<string, unknown> = JSON.parse(
-  readFileSync(resolve(ROOT, "config/config.json"), "utf-8")
-);
-
-// Parse FEATURE_ENV_MAP keys from check-env.ts source
-function getEnvMapKeys(): string[] {
-  const source = readFileSync(resolve(ROOT, "scripts/check-env.ts"), "utf-8");
-  const mapMatch = source.match(/FEATURE_ENV_MAP[^{]*\{([\s\S]*?)^};/m);
-  if (!mapMatch) throw new Error("Could not parse FEATURE_ENV_MAP");
-
-  const keys: string[] = [];
-  const keyRegex = /^\s*(\w+)\s*:/gm;
-  let match;
-  while ((match = keyRegex.exec(mapMatch[1])) !== null) {
-    if (match[1] !== "_always") keys.push(match[1]);
-  }
-  return keys;
-}
-
-// Get top-level config keys (excluding nested object children)
-function getTopLevelConfigKeys(): string[] {
-  return Object.keys(config);
-}
-
-const envMapKeys = getEnvMapKeys();
-const configKeys = getTopLevelConfigKeys();
-
-describe("env ↔ config sync", () => {
-  it("every FEATURE_ENV_MAP key exists in config.json", () => {
-    const missing = envMapKeys.filter((key) => !configKeys.includes(key));
-    expect(
-      missing,
-      `FEATURE_ENV_MAP keys not in config.json: ${missing.join(", ")}`
-    ).toEqual([]);
-  });
-
+describe("env ↔ check-env sync", () => {
   it("every .env.example var is tracked in FEATURE_ENV_MAP", () => {
     const envExample = readFileSync(resolve(ROOT, ".env.example"), "utf-8");
     const envVars = envExample

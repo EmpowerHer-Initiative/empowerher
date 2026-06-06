@@ -1,16 +1,12 @@
 # Module Map
 
-Every optional module is listed here with everything it owns. Use this file when:
-
-- Building a `/client-remove-*` command
-- Setting up a new client and stripping unused modules
-- Cherry-picking template improvements into a client repo
+Every optional module is listed here with everything it owns. To remove a module from a client project, delete its files, remove its router imports from `_app.ts`, remove its env vars from `scripts/check-env.ts`, and uninstall its dependencies.
 
 ---
 
 ## Auth
 
-> Core — only remove if the client needs zero authentication. Config flag: `auth` — also controls settings page visibility.
+> Core — only remove if the client needs zero authentication.
 
 **Files**
 
@@ -44,7 +40,7 @@ Every optional module is listed here with everything it owns. Use this file when
 
 ## Payments
 
-> Optional. Remove for clients who don't sell anything. Config flag: `payments` — also controls products, discounts, and billing UI in settings.
+> Optional. Remove for clients who don't sell anything.
 
 **Files**
 
@@ -108,7 +104,7 @@ Every optional module is listed here with everything it owns. Use this file when
 
 ## Storage (R2)
 
-> Optional. Remove for clients who don't upload files or images. Config flag: `storage`.
+> Optional. Remove for clients who don't upload files or images.
 
 **Files**
 

@@ -1,11 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { notFound, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
-
-import { isFeatureEnabled } from "@/config/features";
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -19,8 +17,6 @@ const formatPrice = (amount: number, currency: string) =>
   }).format(amount / 100);
 
 export default function SuccessPage() {
-  if (!isFeatureEnabled("payments")) notFound();
-
   const searchParams = useSearchParams();
   const checkoutId = searchParams.get("checkout_id");
 

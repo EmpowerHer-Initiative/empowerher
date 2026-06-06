@@ -5,12 +5,11 @@ import {
   baseProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
-import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { asc, eq } from "drizzle-orm";
 import { z } from "zod";
 
 export const productsRouter = createTRPCRouter({
-  list: baseProcedure.use(featureGuard("payments")).query(async () => {
+  list: baseProcedure.query(async () => {
     return db
       .select()
       .from(products)
@@ -18,12 +17,11 @@ export const productsRouter = createTRPCRouter({
       .orderBy(asc(products.priceAmount));
   }),
 
-  listAll: adminProcedure.use(featureGuard("payments")).query(async () => {
+  listAll: adminProcedure.query(async () => {
     return db.select().from(products).orderBy(asc(products.priceAmount));
   }),
 
   update: adminProcedure
-    .use(featureGuard("payments"))
     .input(
       z.object({
         id: z.string(),
@@ -55,14 +53,11 @@ export const productsRouter = createTRPCRouter({
       return updatedProduct;
     }),
 
-  delete: adminProcedure
-    .use(featureGuard("payments"))
-    .input(z.string())
-    .mutation(async ({ input }) => {
-      const [deletedProduct] = await db
-        .delete(products)
-        .where(eq(products.id, input))
-        .returning();
-      return deletedProduct;
-    }),
+  delete: adminProcedure.input(z.string()).mutation(async ({ input }) => {
+    const [deletedProduct] = await db
+      .delete(products)
+      .where(eq(products.id, input))
+      .returning();
+    return deletedProduct;
+  }),
 });

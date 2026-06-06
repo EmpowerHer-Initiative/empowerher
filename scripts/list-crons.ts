@@ -8,18 +8,6 @@ import { resolve } from "node:path";
 
 const ROOT = resolve(import.meta.dirname, "..");
 
-// ─── Check feature flag ────────────────────────────────────────────
-const projectConfig: Record<string, unknown> = JSON.parse(
-  readFileSync(resolve(ROOT, "config/config.json"), "utf-8")
-);
-
-if (!projectConfig.cron) {
-  console.log(
-    `\n  \x1b[43m\x1b[1m\x1b[37m ⚠ SKIPPED \x1b[0m  \x1b[33mcron\x1b[0m is disabled in \x1b[33mconfig/config.json\x1b[0m\n`
-  );
-  process.exit(0);
-}
-
 // ─── ANSI helpers ──────────────────────────────────────────────────
 const c = {
   reset: "\x1b[0m",

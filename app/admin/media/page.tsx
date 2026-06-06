@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { notFound } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
@@ -21,7 +20,6 @@ import {
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 
-import { isFeatureEnabled } from "@/config/features";
 import { cn } from "@/lib/utils";
 
 import {
@@ -53,8 +51,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 
 export default function AdminMediaPage() {
-  if (!isFeatureEnabled("storage")) notFound();
-
   return (
     <div className="container w-full">
       <h1>Media</h1>

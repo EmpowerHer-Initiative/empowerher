@@ -7,36 +7,27 @@ import {
   authenticatedProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
-import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { TRPCError } from "@trpc/server";
 import { count, desc, eq, ilike, or } from "drizzle-orm";
 import { z } from "zod";
 
-import { isFeatureEnabled } from "@/config/features";
-
 const getAuth = () => import("@/services/auth/auth").then((m) => m.auth);
 
 export const usersRouter = createTRPCRouter({
-  getCurrent: authenticatedProcedure
-    .use(featureGuard("auth"))
-    .query(async ({ ctx }) => {
-      return ctx.session;
-    }),
+  getCurrent: authenticatedProcedure.query(async ({ ctx }) => {
+    return ctx.session;
+  }),
 
-  get: adminProcedure
-    .use(featureGuard("auth"))
-    .input(z.string())
-    .query(async ({ input }) => {
-      return db
-        .select()
-        .from(user)
-        .where(eq(user.id, input))
-        .limit(1)
-        .then((result) => result[0]);
-    }),
+  get: adminProcedure.input(z.string()).query(async ({ input }) => {
+    return db
+      .select()
+      .from(user)
+      .where(eq(user.id, input))
+      .limit(1)
+      .then((result) => result[0]);
+  }),
 
   list: adminProcedure
-    .use(featureGuard("auth"))
     .input(
       z.object({
         page: z.number().optional(),
@@ -72,7 +63,6 @@ export const usersRouter = createTRPCRouter({
     }),
 
   listAccounts: authenticatedProcedure
-    .use(featureGuard("auth"))
     .input(z.string().optional())
     .query(async ({ input, ctx }) => {
       const userId = input;
@@ -83,12 +73,11 @@ export const usersRouter = createTRPCRouter({
       return accounts;
     }),
 
-  count: adminProcedure.use(featureGuard("auth")).query(async () => {
+  count: adminProcedure.query(async () => {
     return db.select({ count: count() }).from(user);
   }),
 
   update: authenticatedProcedure
-    .use(featureGuard("auth"))
     .input(
       z
         .object({
@@ -111,7 +100,6 @@ export const usersRouter = createTRPCRouter({
     }),
 
   adminUpdate: adminProcedure
-    .use(featureGuard("auth"))
     .input(
       z
         .object({
@@ -146,7 +134,6 @@ export const usersRouter = createTRPCRouter({
     }),
 
   updatePassword: adminProcedure
-    .use(featureGuard("auth"))
     .input(
       z.object({
         userId: z.string(),
@@ -187,30 +174,27 @@ export const usersRouter = createTRPCRouter({
       return true;
     }),
 
-  delete: adminProcedure
-    .use(featureGuard("auth"))
-    .input(z.string())
-    .mutation(async ({ input, ctx }) => {
-      if (ctx.session.user.id === input) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "You cannot delete your own account",
-        });
-      }
+  delete: adminProcedure.input(z.string()).mutation(async ({ input, ctx }) => {
+    if (ctx.session.user.id === input) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "You cannot delete your own account",
+      });
+    }
 
-      const dbUser = await db
-        .select()
-        .from(user)
-        .where(eq(user.id, input))
-        .limit(1)
-        .then((res) => res[0]);
+    const dbUser = await db
+      .select()
+      .from(user)
+      .where(eq(user.id, input))
+      .limit(1)
+      .then((res) => res[0]);
 
-      if (dbUser?.email && isFeatureEnabled("payments")) {
-        await deleteCustomerByEmail(dbUser.email);
-      }
+    if (dbUser?.email) {
+      await deleteCustomerByEmail(dbUser.email);
+    }
 
-      await db.delete(user).where(eq(user.id, input));
+    await db.delete(user).where(eq(user.id, input));
 
-      return { success: true };
-    }),
+    return { success: true };
+  }),
 });

@@ -7,7 +7,6 @@ import {
   baseProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
-import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import z from "zod";
@@ -17,29 +16,23 @@ import { rateLimit } from "../middleware/rate-limit";
 const getAuth = () => import("@/services/auth/auth").then((m) => m.auth);
 
 export const authRouter = createTRPCRouter({
-  getSession: authenticatedProcedure
-    .use(featureGuard("auth"))
-    .query(async ({ ctx }) => {
-      return ctx.session.user;
-    }),
+  getSession: authenticatedProcedure.query(async ({ ctx }) => {
+    return ctx.session.user;
+  }),
 
-  listSessions: adminProcedure
-    .use(featureGuard("auth"))
-    .input(z.string())
-    .query(async ({ input }) => {
-      const auth = await getAuth();
-      const sessions = await auth.api.listUserSessions({
-        body: { userId: input },
-        headers: await headers(),
-      });
+  listSessions: adminProcedure.input(z.string()).query(async ({ input }) => {
+    const auth = await getAuth();
+    const sessions = await auth.api.listUserSessions({
+      body: { userId: input },
+      headers: await headers(),
+    });
 
-      return sessions.sessions.sort(
-        (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
-      );
-    }),
+    return sessions.sessions.sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+    );
+  }),
 
   validateResetToken: baseProcedure
-    .use(featureGuard("auth"))
     .input(z.object({ token: z.string() }))
     .query(async ({ input }) => {
       const data = await db
@@ -59,7 +52,6 @@ export const authRouter = createTRPCRouter({
     }),
 
   revokeSession: authenticatedProcedure
-    .use(featureGuard("auth"))
     .input(z.string())
     .mutation(async ({ input }) => {
       await db.delete(session).where(eq(session.id, input));

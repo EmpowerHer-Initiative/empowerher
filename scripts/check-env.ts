@@ -8,7 +8,6 @@ const ROOT = resolve(import.meta.dirname, "..");
 // Add a new feature: featureName: ["VAR_1", "VAR_2"]
 // Remove a feature: delete the line
 const FEATURE_ENV_MAP: Record<string, string[]> = {
-  _always: [],
   auth: ["BETTER_AUTH_SECRET", "DATABASE_URL", "NEXT_PUBLIC_API_URL"],
   cron: ["CRON_SECRET"],
   payments: ["POLAR_ACCESS_TOKEN", "POLAR_WEBHOOK_SECRET", "POLAR_SERVER"],
@@ -22,27 +21,11 @@ const FEATURE_ENV_MAP: Record<string, string[]> = {
   email: ["AWS_BUCKET_ORIGIN", "AWS_ACCESS_KEY_VALUE", "AWS_SECRET_KEY_VALUE"],
 };
 
-// ─── Read config ────────────────────────────────────────────────────
-const config: Record<string, unknown> = JSON.parse(
-  readFileSync(resolve(ROOT, "config/config.json"), "utf-8")
-);
+// ─── Collect all required vars ─────────────────────────────────────
+const required = new Set<string>();
 
-function isEnabled(key: string): boolean {
-  const val = config[key];
-  if (typeof val === "boolean") return val;
-  if (typeof val === "object" && val !== null)
-    return (val as Record<string, unknown>).enabled === true;
-  return false;
-}
-
-// ─── Collect required vars ──────────────────────────────────────────
-const required = new Set<string>(FEATURE_ENV_MAP._always);
-
-for (const [feature, vars] of Object.entries(FEATURE_ENV_MAP)) {
-  if (feature === "_always") continue;
-  if (isEnabled(feature)) {
-    vars.forEach((v) => required.add(v));
-  }
+for (const vars of Object.values(FEATURE_ENV_MAP)) {
+  vars.forEach((v) => required.add(v));
 }
 
 // ─── Ensure .env exists ─────────────────────────────────────────────
@@ -79,18 +62,6 @@ for (const key of Object.keys(envFile)) {
   }
 }
 
-// ─── Detect vars for disabled features ─────────────────────────────
-const disabledPresent: { feature: string; key: string }[] = [];
-for (const [feature, vars] of Object.entries(FEATURE_ENV_MAP)) {
-  if (feature === "_always") continue;
-  if (isEnabled(feature)) continue;
-  for (const v of vars) {
-    if (envFile[v]?.trim()) {
-      disabledPresent.push({ feature, key: v });
-    }
-  }
-}
-
 // ─── ANSI helpers ───────────────────────────────────────────────────
 const c = {
   reset: "\x1b[0m",
@@ -108,8 +79,7 @@ const c = {
 
 const log = console.log;
 
-const hasErrors =
-  missing.length > 0 || untracked.length > 0 || disabledPresent.length > 0;
+const hasErrors = missing.length > 0 || untracked.length > 0;
 
 if (!hasErrors) {
   log();
@@ -130,8 +100,7 @@ if (missing.length > 0) {
       Object.entries(FEATURE_ENV_MAP).find(([, vars]) =>
         vars.includes(key)
       )?.[0] ?? "unknown";
-    const label = feature === "_always" ? "core" : feature;
-    (grouped[label] ??= []).push(key);
+    (grouped[feature] ??= []).push(key);
   }
 
   log(
@@ -148,7 +117,7 @@ if (missing.length > 0) {
   }
 
   log(
-    `  ${c.gray}Set these in ${c.yellow}.env${c.gray} or disable the feature in ${c.yellow}config/config.json${c.reset}`
+    `  ${c.gray}Set these in ${c.yellow}.env${c.gray} or remove the feature entry from ${c.yellow}scripts/check-env.ts${c.reset}`
   );
   log();
 }
@@ -167,32 +136,6 @@ if (untracked.length > 0) {
   log();
   log(
     `  ${c.gray}Add these to ${c.yellow}FEATURE_ENV_MAP${c.gray} in ${c.yellow}scripts/check-env.ts${c.gray} or remove from ${c.yellow}.env${c.reset}`
-  );
-  log();
-}
-
-// ─── Disabled-feature vars ─────────────────────────────────────────
-if (disabledPresent.length > 0) {
-  const grouped: Record<string, string[]> = {};
-  for (const { feature, key } of disabledPresent) {
-    (grouped[feature] ??= []).push(key);
-  }
-
-  log(
-    `  ${c.bgRed}${c.bold}${c.white} ✗ UNUSED ${c.reset}  ${c.red}${disabledPresent.length}${c.reset} variable${disabledPresent.length > 1 ? "s" : ""} set for disabled feature${Object.keys(grouped).length > 1 ? "s" : ""}`
-  );
-  log();
-
-  for (const [feature, vars] of Object.entries(grouped)) {
-    log(`  ${c.cyan}${c.bold}${feature}${c.reset}`);
-    for (const v of vars) {
-      log(`  ${c.red}│${c.reset} ${c.dim}✗${c.reset}  ${v}`);
-    }
-    log();
-  }
-
-  log(
-    `  ${c.gray}Remove from ${c.yellow}.env${c.gray} or enable the feature in ${c.yellow}config/config.json${c.reset}`
   );
   log();
 }

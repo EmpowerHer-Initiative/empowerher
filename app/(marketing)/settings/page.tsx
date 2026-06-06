@@ -5,8 +5,6 @@ import { useLogout } from "@/services/auth/hooks/use-functions";
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { toast } from "sonner";
 
-import { FeatureGate } from "@/config/feature-gate";
-
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Accounts } from "@/components/settings/accounts";
@@ -45,13 +43,11 @@ export default function SettingsPage() {
         <h2 className="text-3xl font-semibold capitalize">Accounts</h2>
         <Accounts />
       </div>
-      <FeatureGate feature="payments">
-        <div className="space-y-6">
-          <h2 className="text-3xl font-semibold capitalize">Billing</h2>
-          <BillingSubscriptions />
-          <BillingOrders />
-        </div>
-      </FeatureGate>
+      <div className="space-y-6">
+        <h2 className="text-3xl font-semibold capitalize">Billing</h2>
+        <BillingSubscriptions />
+        <BillingOrders />
+      </div>
       <div className="space-y-6">
         <h2 className="text-3xl font-semibold capitalize">Danger</h2>
         <DangerSettings />

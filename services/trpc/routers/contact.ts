@@ -3,7 +3,6 @@ import { headers } from "next/headers";
 import { email } from "@/services/email";
 import ContactFormEmail from "@/services/email/emails/contact-form";
 import { baseProcedure, createTRPCRouter } from "@/services/trpc/init";
-import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import { z } from "zod";
 
 import { siteConfig } from "@/lib/site";
@@ -13,7 +12,6 @@ const RATE_LIMIT_MS = 60_000; // 1 submission per minute per IP
 
 export const contactRouter = createTRPCRouter({
   send: baseProcedure
-    .use(featureGuard("contact"))
     .input(
       z.object({
         name: z.string().min(1).max(200),

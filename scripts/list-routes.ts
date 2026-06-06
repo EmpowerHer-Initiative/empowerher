@@ -14,14 +14,13 @@ interface Route {
   procedure: string;
   type: "query" | "mutation";
   access: "base" | "authenticated" | "admin";
-  guard: string | null;
 }
 
 function parseRouterFile(filePath: string, routerPrefix: string): Route[] {
   const content = readFileSync(filePath, "utf-8");
   const routes: Route[] = [];
 
-  // Match procedure definitions like: procedureName: baseProcedure.use(featureGuard("key")).query(
+  // Match procedure definitions like: procedureName: baseProcedure.query(
   const procedureRegex =
     /(\w+):\s*(baseProcedure|authenticatedProcedure|adminProcedure)/g;
   let match: RegExpExecArray | null;
@@ -49,10 +48,6 @@ function parseRouterFile(filePath: string, routerPrefix: string): Route[] {
       mutationPos < boundary &&
       (queryPos === -1 || mutationPos < queryPos);
 
-    // Extract feature guard (only within this procedure's boundary)
-    const guardSection = afterMatch.slice(0, boundary);
-    const guardMatch = guardSection.match(/featureGuard\("([^"]+)"\)/);
-
     const access =
       accessType === "adminProcedure"
         ? "admin"
@@ -65,7 +60,6 @@ function parseRouterFile(filePath: string, routerPrefix: string): Route[] {
       procedure: procedureName,
       type: isMutation && !isQuery ? "mutation" : "query",
       access,
-      guard: guardMatch?.[1] ?? null,
     });
   }
 
@@ -144,12 +138,9 @@ for (const [router, procedures] of Object.entries(grouped).sort(([a], [b]) =>
           ? c.blue
           : c.gray;
     const accessLabel = proc.access.padEnd(13);
-    const guardLabel = proc.guard
-      ? `${c.dim}guard:${c.reset} ${proc.guard}`
-      : "";
 
     log(
-      `  ${c.gray}│${c.reset} ${typeColor}${typeLabel}${c.reset}  ${c.white}${proc.procedure.padEnd(22)}${c.reset} ${accessColor}${accessLabel}${c.reset} ${guardLabel}`
+      `  ${c.gray}│${c.reset} ${typeColor}${typeLabel}${c.reset}  ${c.white}${proc.procedure.padEnd(22)}${c.reset} ${accessColor}${accessLabel}${c.reset}`
     );
   }
 

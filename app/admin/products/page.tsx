@@ -1,18 +1,13 @@
 "use client";
 
-import { notFound } from "next/navigation";
 import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
-
-import { isFeatureEnabled } from "@/config/features";
 
 import { DataTable } from "@/components/data-table";
 
 import { paymentColumns } from "@/app/admin/products/columns";
 
 export default function ProductsPage() {
-  if (!isFeatureEnabled("payments")) notFound();
-
   const trpc = useTRPC();
   const { data, isLoading } = useQuery(trpc.products.listAll.queryOptions());
 

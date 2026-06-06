@@ -15,8 +15,6 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { admin, bearer, emailOTP } from "better-auth/plugins";
 
-import { isFeatureEnabled } from "@/config/features";
-
 import { email as emailService } from "../email";
 import ResetPassword from "../email/emails/reset-password";
 import VerifyEmail from "../email/emails/verify-email";
@@ -32,11 +30,9 @@ import {
 
 export const polarClient = new Polar({
   accessToken: process.env.POLAR_ACCESS_TOKEN!,
-  // Use 'sandbox' if you're using the Polar Sandbox environment
-  // Remember that access tokens, products, etc. are completely separated between environments.
-  // Access tokens obtained in Production are for instance not usable in the Sandbox environment.
   server: process.env.POLAR_SERVER as "sandbox" | "production",
 });
+
 export const auth = betterAuth({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000",
   database: drizzleAdapter(db, {
@@ -165,54 +161,49 @@ export const auth = betterAuth({
         }
       },
     }),
-    ...(isFeatureEnabled("payments")
-      ? [
-          polar({
-            client: polarClient,
-            createCustomerOnSignUp: false,
-            use: [
-              portal(),
-              usage(),
-              webhooks({
-                secret: process.env.POLAR_WEBHOOK_SECRET!,
-                onPayload: async (payload) => {
-                  await db.insert(webhookEvents).values({
-                    timestamp: payload.timestamp,
-                    type: payload.type,
-                    payload: payload.data,
-                  });
+    polar({
+      client: polarClient,
+      createCustomerOnSignUp: false,
+      use: [
+        portal(),
+        usage(),
+        webhooks({
+          secret: process.env.POLAR_WEBHOOK_SECRET!,
+          onPayload: async (payload) => {
+            await db.insert(webhookEvents).values({
+              timestamp: payload.timestamp,
+              type: payload.type,
+              payload: payload.data,
+            });
 
-                  if (payload.type === "order.updated") {
-                    await updateOrder(payload.data);
-                  }
-                },
-                onProductCreated: async ({ data }) => {
-                  await createProduct(data);
-                },
-                onProductUpdated: async ({ data }) => {
-                  await updateProduct(data);
-                },
-                onOrderCreated: async ({ data }) => {
-                  await createOrder(data);
-                  // No-op for previousCustomers, which is not defined in this context
-                },
-                onOrderRefunded: async ({ data }) => {
-                  await updateOrder(data);
-                  if (data.subscriptionId) {
-                    await revokeSubscriptionOnRefund(data.subscriptionId);
-                  }
-                },
-                onSubscriptionCreated: async ({ data }) => {
-                  await createSubscription(data);
-                },
-                onSubscriptionUpdated: async ({ data }) => {
-                  await updateSubscription(data);
-                },
-              }),
-            ],
-          }),
-        ]
-      : []),
+            if (payload.type === "order.updated") {
+              await updateOrder(payload.data);
+            }
+          },
+          onProductCreated: async ({ data }) => {
+            await createProduct(data);
+          },
+          onProductUpdated: async ({ data }) => {
+            await updateProduct(data);
+          },
+          onOrderCreated: async ({ data }) => {
+            await createOrder(data);
+          },
+          onOrderRefunded: async ({ data }) => {
+            await updateOrder(data);
+            if (data.subscriptionId) {
+              await revokeSubscriptionOnRefund(data.subscriptionId);
+            }
+          },
+          onSubscriptionCreated: async ({ data }) => {
+            await createSubscription(data);
+          },
+          onSubscriptionUpdated: async ({ data }) => {
+            await updateSubscription(data);
+          },
+        }),
+      ],
+    }),
     nextCookies(),
   ],
 });

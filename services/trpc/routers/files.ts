@@ -11,7 +11,6 @@ import {
   baseProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
-import { featureGuard } from "@/services/trpc/middleware/feature-guard";
 import z from "zod";
 
 import { deleteFile } from "./files-action";
@@ -30,7 +29,6 @@ export const ALLOWED_FOLDERS = ["users", "media"] as const;
 
 export const filesRouter = createTRPCRouter({
   getDownloadUrl: baseProcedure
-    .use(featureGuard("storage"))
     .input(z.object({ key: z.string().min(1) }))
     .query(async ({ input }) => {
       const { signedUrl } = await getDownloadUrl(input.key, SIGNED_URL_EXPIRY);
@@ -38,7 +36,6 @@ export const filesRouter = createTRPCRouter({
     }),
 
   list: adminProcedure
-    .use(featureGuard("storage"))
     .input(
       z.object({
         search: z.string().optional(),
@@ -52,7 +49,6 @@ export const filesRouter = createTRPCRouter({
     }),
 
   getUploadUrl: authenticatedProcedure
-    .use(featureGuard("storage"))
     .input(
       z.object({
         key: z.string().min(1),
@@ -75,7 +71,6 @@ export const filesRouter = createTRPCRouter({
     }),
 
   getPresignedUrl: adminProcedure
-    .use(featureGuard("storage"))
     .input(
       z.object({
         fileName: z.string().min(1),
@@ -102,7 +97,6 @@ export const filesRouter = createTRPCRouter({
     }),
 
   update: authenticatedProcedure
-    .use(featureGuard("storage"))
     .input(
       z.object({
         oldKey: z.string().min(1),
@@ -130,7 +124,6 @@ export const filesRouter = createTRPCRouter({
     }),
 
   delete: authenticatedProcedure
-    .use(featureGuard("storage"))
     .input(z.object({ key: z.string().min(1) }))
     .mutation(async ({ input }) => {
       await deleteFile(input.key);
@@ -138,7 +131,6 @@ export const filesRouter = createTRPCRouter({
     }),
 
   adminDelete: adminProcedure
-    .use(featureGuard("storage"))
     .input(z.string().min(1))
     .mutation(async ({ input: key }) => {
       await deleteObject(key);

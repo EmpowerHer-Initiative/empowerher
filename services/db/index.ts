@@ -1,8 +1,6 @@
 import { drizzle } from "drizzle-orm/neon-http";
 
-import { isFeatureEnabled } from "@/config/features";
-
-if (isFeatureEnabled("auth") && !process.env.DATABASE_URL) {
+if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 

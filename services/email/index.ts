@@ -5,7 +5,6 @@ import { SES } from "@aws-sdk/client-ses";
 import { render } from "@react-email/render";
 import MailComposer from "nodemailer/lib/mail-composer";
 
-import { isFeatureEnabled } from "@/config/features";
 import { siteConfig } from "@/lib/site";
 
 let ses: SES | null = null;
@@ -67,10 +66,6 @@ function extractTemplateInfo(react: ReactElement): {
 }
 
 async function send({ from, to, subject, react, attachments }: SendOptions) {
-  if (!isFeatureEnabled("email")) {
-    return { error: "Email service is not enabled" };
-  }
-
   const html = await render(react);
   const toAddresses = Array.isArray(to) ? to : [to];
   const source = from ?? siteConfig.noreplyEmail;
@@ -146,10 +141,6 @@ async function resend({
   subject: string;
   html: string;
 }) {
-  if (!isFeatureEnabled("email")) {
-    return { error: "Email service is not enabled" };
-  }
-
   const toAddresses = Array.isArray(to) ? to : [to];
   const source = from ?? siteConfig.noreplyEmail;
 

@@ -1,7 +1,5 @@
 import { headers } from "next/headers";
-import { notFound, redirect } from "next/navigation";
-
-import { isFeatureEnabled } from "@/config/features";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Features",
@@ -14,8 +12,6 @@ interface Props {
 }
 
 export default async function FeaturesLayout({ children }: Props) {
-  if (!isFeatureEnabled("payments")) notFound();
-
   const { auth } = await import("@/services/auth/auth");
   const session = await auth.api.getSession({
     headers: await headers(),

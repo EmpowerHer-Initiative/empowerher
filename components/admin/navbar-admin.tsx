@@ -3,27 +3,22 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { isFeatureEnabled, type FeatureKey } from "@/config/features";
 import { cn } from "@/lib/utils";
 
-const links: { label: string; href: string; feature?: FeatureKey }[] = [
+const links: { label: string; href: string }[] = [
   { label: "Overview", href: "/admin" },
   { label: "Users", href: "/admin/users" },
-  { label: "Products", href: "/admin/products", feature: "payments" },
+  { label: "Products", href: "/admin/products" },
   {
     label: "Subscriptions",
     href: "https://dashboard.polar.sh",
-    feature: "payments",
   },
-  { label: "Media", href: "/admin/media", feature: "storage" },
+  { label: "Media", href: "/admin/media" },
   { label: "Logs", href: "/admin/logs" },
 ];
 
 export const NavbarAdmin = () => {
   const pathname = usePathname();
-  const visibleLinks = links.filter(
-    (link) => !link.feature || isFeatureEnabled(link.feature)
-  );
   const isActive = (link: (typeof links)[number]) =>
     link.href === "/admin"
       ? pathname === "/admin"
@@ -31,7 +26,7 @@ export const NavbarAdmin = () => {
 
   return (
     <div className="bg-muted sticky top-0 z-50 w-full border-b px-4">
-      {visibleLinks.map((link) => (
+      {links.map((link) => (
         <Link
           key={link.href}
           href={link.href}

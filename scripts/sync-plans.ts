@@ -9,24 +9,12 @@
  * Run via: pnpm sm → sync-plans
  */
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { Polar } from "@polar-sh/sdk";
 import { config } from "dotenv";
 
 const ROOT = resolve(import.meta.dirname, "..");
-
-// ─── Check feature flag ────────────────────────────────────────────
-const projectConfig: Record<string, unknown> = JSON.parse(
-  readFileSync(resolve(ROOT, "config/config.json"), "utf-8")
-);
-
-if (!projectConfig.payments) {
-  console.log(
-    `\n  \x1b[43m\x1b[1m\x1b[37m ⚠ SKIPPED \x1b[0m  \x1b[33mpayments\x1b[0m is disabled in \x1b[33mconfig/config.json\x1b[0m\n`
-  );
-  process.exit(0);
-}
 
 config({ path: resolve(ROOT, ".env") });
 

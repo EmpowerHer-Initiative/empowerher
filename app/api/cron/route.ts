@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cronJobs } from "@/services/cron";
 
-import { isFeatureEnabled } from "@/config/features";
-
 export async function GET(req: NextRequest) {
-  if (!isFeatureEnabled("cron")) {
-    return NextResponse.json({ error: "Cron is disabled" }, { status: 404 });
-  }
-
   const authHeader = req.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
