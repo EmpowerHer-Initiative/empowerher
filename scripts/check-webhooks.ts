@@ -23,9 +23,9 @@ config({ path: resolve(ROOT, ".env") });
 // ─── Validate env ──────────────────────────────────────────────────
 if (!process.env.POLAR_ACCESS_TOKEN?.trim()) {
   console.log(
-    `\n  \x1b[41m\x1b[1m\x1b[37m ✗ MISSING \x1b[0m  \x1b[31mPOLAR_ACCESS_TOKEN\x1b[0m is not set in \x1b[33m.env\x1b[0m\n`
+    `\n  \x1b[43m\x1b[1m\x1b[37m ⚠ SKIPPED \x1b[0m  \x1b[33mPOLAR_ACCESS_TOKEN\x1b[0m not set — skipping webhook check\n`
   );
-  process.exit(1);
+  process.exit(0);
 }
 
 const polar = new Polar({
