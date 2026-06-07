@@ -4,6 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { Check, Copy, Sparkles } from "lucide-react";
 
+import { cn } from "@/lib/utils";
+
 import {
   Dialog,
   DialogContent,
@@ -41,13 +43,11 @@ export function ImagePlaceholder({
 
   if (src) {
     return (
-      <div className={className}>
-        <div
-          className="relative w-full overflow-hidden rounded-2xl"
-          style={{ aspectRatio }}
-        >
-          <Image src={src} alt={alt} fill className="object-cover" />
-        </div>
+      <div
+        className={cn("relative w-full overflow-hidden rounded-2xl", className)}
+        style={{ aspectRatio }}
+      >
+        <Image src={src} alt={alt} fill className="object-cover" />
       </div>
     );
   }
