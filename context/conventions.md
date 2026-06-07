@@ -313,6 +313,32 @@ Edit `services/db/schema.ts` freely. Never run `pnpm drizzle-kit push` or any ot
 
 `proxy.ts` (middleware) runs on every request. Avoid static imports of heavy modules (auth, Polar SDK, DB) at the top level — use dynamic `await import()` inside the handler to keep cold starts fast.
 
+## Rate limiting
+
+Always use `rateLimit()` from `services/trpc/middleware/rate-limit.ts`. Never build custom rate limiting with `Map` or manual IP parsing.
+
+```tsx
+import { rateLimit } from "../middleware/rate-limit";
+
+// Default: 10 requests per 1 minute window
+await rateLimit();
+
+// String presets (autocomplete): "30s" | "1m" | "2m" | "5m" | "10m" | "15m" | "30m" | "1h"
+await rateLimit(1, "1m");
+await rateLimit(5, "5m");
+
+// Number = seconds
+await rateLimit(3, 90); // 3 requests per 90 seconds
+```
+
+For IP access in email metadata or logging, use `getIp()` from same file:
+
+```tsx
+import { getIp } from "../middleware/rate-limit";
+
+const ipAddress = (await getIp()) ?? "Unknown";
+```
+
 ## Before writing code
 
 1. Read relevant existing files first — never assume what's there
