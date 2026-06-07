@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Check, Copy, Sparkles } from "lucide-react";
 
 import {
@@ -14,14 +15,18 @@ import {
 } from "@/components/ui/dialog";
 
 interface ImagePlaceholderProps {
-  aspectRatio?: string;
+  aspectRatio: string;
   prompt: string;
+  src?: string;
+  alt?: string;
   className?: string;
 }
 
 export function ImagePlaceholder({
-  aspectRatio = "4/3",
+  aspectRatio,
   prompt,
+  src,
+  alt = "",
   className = "",
 }: ImagePlaceholderProps) {
   const [copied, setCopied] = useState(false);
@@ -33,6 +38,19 @@ export function ImagePlaceholder({
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  if (src) {
+    return (
+      <div className={className}>
+        <div
+          className="relative w-full overflow-hidden rounded-2xl"
+          style={{ aspectRatio }}
+        >
+          <Image src={src} alt={alt} fill className="object-cover" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={className}>
