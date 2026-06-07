@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Check, Copy, Sparkles } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -44,10 +43,17 @@ export function ImagePlaceholder({
   if (src) {
     return (
       <div
-        className={cn("relative w-full overflow-hidden rounded-2xl", className)}
+        className={cn(
+          "relative w-full overflow-hidden rounded-2xl bg-red-50",
+          className
+        )}
         style={{ aspectRatio }}
       >
-        <Image src={src} alt={alt} fill className="object-cover" />
+        <img
+          src={src}
+          alt={alt}
+          className="absolute top-0 left-0 h-full w-full object-cover"
+        />
       </div>
     );
   }

@@ -1,22 +1,42 @@
-# Next.js template
+# Agency Template — Client Starter
 
-This is a Next.js template with shadcn/ui.
+## New Project Setup
 
-## Adding components
+### Cloudflare R2 — CORS Policy
 
-To add components to your app, run the following command:
+When creating a new R2 bucket, apply this CORS policy:
 
-```bash
-npx shadcn@latest add button
+```json
+[
+  {
+    "AllowedOrigins": ["http://localhost:3000"],
+    "AllowedMethods": ["GET", "PUT"],
+    "AllowedHeaders": ["Content-Type", "*"]
+  }
+]
 ```
 
-This will place the ui components in the `components` directory.
+> Add production domain to `AllowedOrigins` before deploying.
 
-## Using components
+### AWS SES — IAM Policy
 
-To use the components in your app, import them as follows:
+When creating a new IAM user for SES email sending, attach this policy:
 
-```tsx
-import { Button } from "@/components/ui/button";
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "SendEmailOnly",
+      "Effect": "Allow",
+      "Action": ["ses:SendEmail", "ses:SendRawEmail"],
+      "Resource": [
+        "arn:aws:ses:us-west-2:135808932294:identity/alisamadii.com",
+        "arn:aws:ses:us-west-2:135808932294:configuration-set/my-first-configuration-set"
+      ]
+    }
+  ]
+}
 ```
 
+> Replace `alisamadii.com` with client domain. Update region if different from `us-west-2`.
