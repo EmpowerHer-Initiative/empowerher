@@ -206,8 +206,8 @@ const PartnerForm = ({
           Message <span className="text-primary">*</span>
         </label>
         <p className="text-muted-foreground text-xs">
-          Please tell us briefly about your company/organization and how you can
-          join us as a partner and support our mission.
+          Please tell us briefly about your company/organization and how your
+          company/organization can join us as a partner and support us
         </p>
         <textarea
           id="message"
@@ -321,9 +321,10 @@ export default function PartnerWithUsPage() {
             Partner With Us
           </h1>
           <p className="text-background/70 mt-6 text-base leading-relaxed">
-            EmpowerHer would love to partner with organizations that share its
-            values. Complete the form and a member of our team will be in touch
-            to explore potential opportunities.
+            Organizations and companies aligned with our mission and vision, or
+            those interested in supporting our work, are encouraged to complete
+            the form below. A member of our team will be in touch to explore
+            potential partnership opportunities.
           </p>
 
           {/* Perks */}

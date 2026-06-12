@@ -112,9 +112,10 @@ const OurStory = () => (
         {/* Pull Quote */}
         <blockquote className="border-background/30 my-14 border-l-2 pl-8">
           <p className="text-background font-serif text-2xl leading-snug md:text-3xl">
-            &ldquo;The fall of Kabul marked a turning point — not only for their
-            own lives but for the future of millions of Afghan girls who were
-            suddenly stripped of their basic right to education.&rdquo;
+            &ldquo;The fall of Kabul on August 15, 2021, marked a turning point
+            — not only for their own lives but for the future of millions of
+            Afghan girls who were suddenly stripped of their basic right to
+            education.&rdquo;
           </p>
         </blockquote>
 

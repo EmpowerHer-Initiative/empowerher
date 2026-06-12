@@ -2,7 +2,6 @@
   "auth": false,
   "payments": false,
   "storage": false,
-  "blog": true,
   "contact": true,
   "cron": false,
   "email": false

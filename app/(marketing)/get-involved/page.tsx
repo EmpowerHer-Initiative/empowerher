@@ -36,8 +36,7 @@ const SplitScreen = () => (
         </h2>
         <p className="mt-5 max-w-sm text-base leading-relaxed text-white/70">
           EmpowerHer would love to partner with organizations that share its
-          values. Aligned companies and nonprofits are encouraged to reach out —
-          a member of our team will be in touch to explore opportunities.
+          values. Please leave us a message by clicking the arrow below.
         </p>
         <Link
           href="/get-involved/partner-with-us"
@@ -76,9 +75,9 @@ const SplitScreen = () => (
           Volunteer With Us
         </h2>
         <p className="mt-5 max-w-sm text-base leading-relaxed text-white/70">
-          EmpowerHer welcomes volunteers from around the world. Serve as a
-          lecturer, mentor, assistant, or administrative member and bring your
-          perspective across borders to empower Afghan girls.
+          EmpowerHer accepts volunteers for different roles within our programs.
+          To express your interest, please click the arrow below and send us a
+          message.
         </p>
         <Link
           href="/get-involved/volunteer-with-us"

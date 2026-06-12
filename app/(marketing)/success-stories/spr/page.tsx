@@ -156,7 +156,7 @@ const steps = [
     number: "01",
     title: "Welcome as Assistant",
     description:
-      "Successful candidates are welcomed as Assistants for two workshop cycles. We will match you with any available mentor and their respective workshop.",
+      "Successful candidates are welcomed as Assistants for two workshop cycles. We will match you with any available mentor and his/her respective workshop.",
   },
   {
     number: "02",
@@ -260,7 +260,7 @@ const benefits = [
   },
   {
     icon: Network,
-    title: "Resource & Networking",
+    title: "Resource & Networking Opportunities",
     description:
       "Use EmpowerHer's resources to enhance your skills and connect with a broader network.",
   },
@@ -268,7 +268,7 @@ const benefits = [
     icon: TrendingUp,
     title: "Promotion",
     description:
-      "Based on strong performance and demonstrated leadership, EmpowerHer may offer talented members opportunities for promotion.",
+      "Based on strong workshop performance, dedication, and demonstrated leadership, EmpowerHer may offer talented members opportunities for promotion.",
   },
 ];
 
@@ -314,7 +314,7 @@ const Benefits = () => (
             <p className="text-muted-foreground mt-1.5 text-sm leading-relaxed">
               EmpowerHer does not provide a monthly salary for its staff
               members. All roles within this roadmap are volunteer-based.
-              Participation as an Assistant or Mentor is completely free and no
+              Participation as an Assistant or Mentor is completely free, and no
               monetary compensation is provided.
             </p>
           </div>

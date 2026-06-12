@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
 
@@ -41,16 +41,9 @@ const MentorshipHero = () => (
             href="#workshops"
             className="group bg-background text-foreground hover:bg-background/90 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]"
           >
-            Find Workshop Applications
+            Find Workshop Applications Here
             <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
           </a>
-          <Link
-            href="/sisterhood-sessions"
-            className="text-background/60 hover:text-background/90 inline-flex items-center gap-2 text-sm font-medium transition-colors"
-          >
-            Learn About Sisterhood Sessions
-            <ArrowUpRight className="size-4" />
-          </Link>
         </div>
       </div>
     </div>
@@ -223,14 +216,15 @@ const Opportunities = () => (
           </h3>
           <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
             Graduates may be selected as assistant mentors and eventually lead
-            their own workshops. EmpowerHer identifies promising students and
-            works closely with them to help launch their own initiatives.
+            their own workshops. EmpowerHer identifies a number of promising
+            students and works closely with them to help launch their own
+            initiatives.
           </p>
           <Link
             href="/success-stories/spr"
             className="text-primary hover:text-primary/80 mt-6 inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
           >
-            Student Project Roadmap
+            Student Project Roadmap (SRP)
             <ArrowRight className="size-3.5" />
           </Link>
         </div>
@@ -240,7 +234,7 @@ const Opportunities = () => (
           <h3 className="mt-6 text-xl font-semibold">Publication Access</h3>
           <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
             Students may publish their work through HerVoice and our partner
-            platforms, sharing their stories and voices with a global audience.
+            platforms.
           </p>
           <Link
             href="/hervoice"
@@ -256,8 +250,7 @@ const Opportunities = () => (
           <h3 className="mt-6 text-xl font-semibold">Continued Engagement</h3>
           <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
             Ongoing involvement in projects, events, and the EmpowerHer
-            community — staying connected to a growing network of empowered
-            Afghan girls.
+            community.
           </p>
         </div>
       </div>

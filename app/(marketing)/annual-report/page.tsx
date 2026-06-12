@@ -80,23 +80,24 @@ const ReportCard = () => (
                 voices.
               </p>
               <p>
-                This report documents the outcomes of our two key programs: the{" "}
+                EmpowerHer runs two key programs: the{" "}
                 <Link
                   href="/mentorship"
                   className="text-foreground font-medium underline-offset-2 hover:underline"
                 >
                   Mentorship Program
-                </Link>{" "}
-                — where students receive free mentorship through workshops to
-                develop skills, leadership, and networks — and{" "}
+                </Link>
+                , where students receive a month of free mentorship through
+                workshops to develop skills, leadership, and networks for
+                launching their own impact projects, and{" "}
                 <Link
                   href="/hervoice"
                   className="text-foreground font-medium underline-offset-2 hover:underline"
                 >
                   HerVoice
                 </Link>
-                , which gives girls a platform to share their stories with the
-                world.
+                , which gives girls a platform to share their stories and
+                experiences.
               </p>
             </div>
 

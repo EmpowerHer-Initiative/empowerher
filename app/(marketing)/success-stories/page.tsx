@@ -90,17 +90,18 @@ const PageOfHope = () => (
           <div className="border-background/10 mt-10 space-y-5 border-t pt-10">
             <p className="text-background/75 text-base leading-relaxed">
               The Page of Hope English Online Book Club was established to
-              support Afghan teenagers — particularly girls — who were denied
-              access to formal education. Over 18 months, the program offered
-              more than English instruction; it was a platform for personal
-              growth, leadership, and connection.
+              support Afghan teenagers—particularly girls—who were denied access
+              to formal education. Over the course of 18 months, the program
+              offered more than English instruction; it provided a platform for
+              personal growth, leadership, and connection.
             </p>
             <p className="text-background/75 text-base leading-relaxed">
               Founded by EmpowerHer Co-Founder Mahdi Rahimi and generously
-              sponsored by AGFAF, the club engaged 11 students in weekly virtual
-              sessions. Students took on rotating leadership roles, completed
-              capstone projects, and participated in debates, storytelling, and
-              team-based learning.
+              sponsored by the Afghan Girls Financial Assistance Fund (AGFAF),
+              the club engaged 11 students in weekly virtual sessions. Students
+              took on rotating leadership roles, completed capstone projects,
+              and participated in interactive activities including debates,
+              storytelling, and team-based learning exercises.
             </p>
             <p className="text-background/75 text-base leading-relaxed">
               <span className="text-background font-semibold">
@@ -175,13 +176,16 @@ const EducationalSupport = () => (
               English course for 25 Afghan students, many of whom were girls and
               women unable to attend school or university due to restrictive
               conditions. The program welcomed learners of all ages, including
-              mothers.
+              mothers, and focused on developing foundational skills in reading,
+              writing, grammar, listening, and speaking.
             </p>
             <p className="text-muted-foreground text-base leading-relaxed">
-              Focused on reading, writing, grammar, listening, and speaking, the
-              course wove creative expression into every session. With generous
-              support from AGFAF, internet access was provided monthly so
-              students could attend without interruption.
+              The course emphasized creative expression through writing,
+              classroom discussions, and 12 focused grammar sessions for
+              learning English. With generous support from AGFAF, we were also
+              able to provide monthly internet access to ensure students could
+              attend regularly and fully participate in the virtual classroom
+              environment.
             </p>
             <p className="text-muted-foreground text-base leading-relaxed">
               <span className="text-foreground font-semibold">Timeline:</span>{" "}

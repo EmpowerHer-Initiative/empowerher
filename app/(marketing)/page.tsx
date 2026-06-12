@@ -49,21 +49,25 @@ const Hero = () => {
             Empowering Afghan Girls Since 2024
           </p>
           <h1 className="mt-4 font-serif text-5xl leading-[1.05] text-white md:text-7xl lg:text-8xl">
-            Empowering
+            Empowering Dreams,
             <br />
-            <span className="text-[var(--primary)] italic">Dreams</span>
+            <span className="text-[var(--primary)] italic">
+              Inspiring Futures
+            </span>
           </h1>
-          <p className="mt-6 max-w-md text-base leading-relaxed text-white/70 md:text-lg">
-            Every Afghan girl has a story worth telling and a future worth
-            fighting for. We give them the tools, confidence, and platforms to
-            rise.
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
+            At EmpowerHer, we believe every Afghan girl and woman has a story
+            worth telling and a future worth fighting for. Through mentorship
+            programs and publication opportunities, we help them find the tools,
+            confidence, and platforms they need to raise their voices and become
+            changemakers in their communities and beyond.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Link
               href="/about-us"
               className="group inline-flex items-center gap-3 rounded-full bg-white px-8 py-4 text-sm font-semibold text-black transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-white/90 active:scale-[0.98]"
             >
-              Our Story
+              About Us
               <span className="flex size-7 items-center justify-center rounded-full bg-black/10 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5">
                 <ArrowRight className="size-3.5" />
               </span>
@@ -98,25 +102,57 @@ const Hero = () => {
 /* ─── Marquee Stats Bar — Horizontal scroll strip ──────────────────────────── */
 
 const StatsBar = () => (
-  <section className="border-border/40 bg-primary/[0.03] border-y">
-    <div className="divide-border/40 container grid grid-cols-1 divide-y md:grid-cols-3 md:divide-x md:divide-y-0">
-      {[
-        { value: "1.1M+", label: "girls lost access to education" },
-        { value: "2.5M", label: "Afghan girls currently out of school" },
-        { value: "30%", label: "never attended primary school" },
-      ].map((s) => (
-        <div
-          key={s.value}
-          className="flex items-center gap-6 px-2 py-10 md:justify-center md:px-8"
+  <section className="border-border/40 bg-primary/[0.03] border-y py-20 md:py-28">
+    <div className="container">
+      <div className="max-w-2xl">
+        <h2 className="text-primary font-serif text-3xl leading-tight md:text-5xl">
+          Abandoned Futures: Let Afghan Girls Learn
+        </h2>
+        <p className="text-muted-foreground mt-6 max-w-md text-base leading-relaxed md:text-lg">
+          Since September 2021, all Afghan girls over the age of 12 have been
+          banned from attending school.
+        </p>
+        <a
+          href="https://www.unesco.org/en/articles/let-girls-and-women-afghanistan-learn"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group bg-primary text-primary-foreground hover:shadow-primary/25 mt-8 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
         >
-          <span className="text-primary font-serif text-4xl md:text-5xl">
-            {s.value}
-          </span>
-          <span className="text-muted-foreground max-w-[10rem] text-sm leading-snug">
-            {s.label}
-          </span>
-        </div>
-      ))}
+          More Details
+          <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+        </a>
+      </div>
+
+      <div className="divide-border/40 mt-14 grid grid-cols-1 divide-y md:grid-cols-3 md:divide-x md:divide-y-0">
+        {[
+          {
+            value: "1.1 million",
+            label: "Girls have lost access to formal education.",
+          },
+          {
+            value: "2.5 million",
+            label:
+              "School-aged Afghan girls (80%) are currently out of school.",
+          },
+          {
+            value: "30%",
+            label:
+              "Nearly 30% of Afghan girls have never attended primary school.",
+          },
+        ].map((s) => (
+          <div
+            key={s.value}
+            className="flex flex-col gap-2 px-2 py-8 md:px-8 md:py-2"
+          >
+            <span className="text-primary font-serif text-4xl md:text-5xl">
+              {s.value}
+            </span>
+            <span className="text-muted-foreground max-w-xs text-sm leading-snug">
+              {s.label}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 );
@@ -147,17 +183,51 @@ const Mission = () => {
           }}
         >
           <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-            Our Belief
+            Message From Our Co-Founders
           </p>
           <h2 className="mt-6 font-serif text-3xl leading-[1.25] md:text-5xl lg:text-6xl">
             We see you. We hear you.{" "}
             <span className="text-primary italic">And we are with you.</span>
           </h2>
-          <p className="text-muted-foreground mt-8 max-w-2xl text-base leading-[1.8] md:text-lg">
-            EmpowerHer was born from the hope and strength that you carry within
-            you — even in the darkest of days. Through education, mentorship,
-            and creative expression, we are building a path forward — together.
-          </p>
+          <div className="text-muted-foreground mt-8 max-w-2xl space-y-5 text-base leading-[1.8] md:text-lg">
+            <p>
+              EmpowerHer was born from the hope and strength that you carry
+              within you—even in the darkest of days. You are not forgotten.
+              Your dreams, your voices, your potential—they matter. They are
+              powerful, and they are needed in this world.
+            </p>
+            <p>
+              We know that many of you are facing unimaginable challenges.
+              Barriers to education, threats to your freedom, and a world that
+              too often refuses to see your worth. But we believe in your
+              resilience. And through EmpowerHer, we are building a path
+              forward—together.
+            </p>
+            <p>
+              Our mission is simple: to support you, to uplift you, and to walk
+              beside you. Whether through education, mentorship, leadership
+              workshops, or simply being a voice when yours is silenced, we are
+              here for you.
+            </p>
+            <p>
+              Please don&apos;t give up. There is a growing community—inside and
+              outside Afghanistan—that believes in your power to lead, to learn,
+              and to rise. And we are proud to stand with you.
+            </p>
+          </div>
+          <div className="mt-8">
+            <p className="text-foreground font-semibold">
+              Mahdi Rahimi &amp; Nahid Karimi
+            </p>
+            <p className="text-muted-foreground text-sm">– Co-founders</p>
+          </div>
+          <Link
+            href="/about-us"
+            className="group bg-primary text-primary-foreground hover:shadow-primary/25 mt-8 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
+          >
+            Our Team
+            <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+          </Link>
         </div>
       </div>
     </section>
@@ -183,6 +253,16 @@ const Programs = () => (
           View all programs <ArrowRight className="size-3.5" />
         </Link>
       </div>
+
+      <p className="text-background/60 mt-8 max-w-3xl text-base leading-[1.8]">
+        Our projects are designed to meet Afghan girls where they are—and help
+        them grow into who they&rsquo;re meant to be. Each initiative provides a
+        safe, inclusive space where participants gain the tools, guidance, and
+        community they need to rise. From leadership workshops to storytelling
+        programs, every project builds confidence, sharpens skills, and
+        encourages bold self-expression. Together, we&rsquo;re creating spaces
+        where Afghan girls can learn, lead, and shape their own futures.
+      </p>
 
       <div className="mt-16 grid gap-6 md:grid-cols-5">
         {/* HerVoice — large card */}
@@ -237,8 +317,9 @@ const Programs = () => (
                   Mentorship
                 </h3>
                 <p className="mt-1 text-sm text-white/70">
-                  Free workshops and mentorship to build resilience and launch
-                  impact projects.
+                  EmpowerHer&apos;s core program offers Afghan girls free
+                  workshops and mentorship to build resilience, gain support,
+                  and launch impact projects.
                 </p>
               </div>
             </div>
@@ -314,6 +395,54 @@ const Quotes = () => (
   </section>
 );
 
+/* ─── HerVoice Contest — Highlight band ────────────────────────────────────── */
+
+const HerVoiceContest = () => (
+  <section className="bg-foreground text-background py-28 md:py-40">
+    <div className="container">
+      <div className="mx-auto max-w-3xl text-center">
+        <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+          EmpowerHer Presents
+        </p>
+        <h2 className="mt-6 font-serif text-4xl leading-[1.05] md:text-6xl">
+          HerVoice <span className="text-primary">2026</span>
+          <br />
+          Writing Contest
+        </h2>
+        <p className="text-background/60 mx-auto mt-6 max-w-xl text-base leading-relaxed md:text-lg">
+          Courage, identity, and storytelling — by Afghan girls and women,
+          written from within Afghanistan.
+        </p>
+
+        <div className="mt-12 flex items-center justify-center gap-10 md:gap-16">
+          {[
+            { n: "300+", label: "Submissions" },
+            { n: "3", label: "Honorees" },
+            { n: "5", label: "Cash Winners" },
+          ].map((s) => (
+            <div key={s.label}>
+              <p className="text-primary font-serif text-4xl md:text-5xl">
+                {s.n}
+              </p>
+              <p className="text-background/40 mt-1.5 text-xs tracking-wide">
+                {s.label}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <Link
+          href="/hervoice/winners"
+          className="group bg-background text-foreground mt-12 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
+        >
+          Explore Winning Stories
+          <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+        </Link>
+      </div>
+    </div>
+  </section>
+);
+
 /* ─── Impact Story — Editorial image + text ────────────────────────────────── */
 
 const ImpactStory = () => (
@@ -328,17 +457,25 @@ const ImpactStory = () => (
             EmpowerHer in the News
           </h2>
           <p className="text-muted-foreground mt-6 text-base leading-[1.8]">
-            Our mission to empower Afghan girls has been recognized by local
-            media. EmpowerHer was featured in a Virginia newsletter through our
-            partnership with Rappahannock News, amplifying narratives of
-            resilience and leadership.
+            Our mission to empower Afghan girls has been recognized and
+            celebrated by local media, amplifying the voices of resilience and
+            leadership within our community.
+          </p>
+          <h3 className="mt-8 font-serif text-2xl leading-tight">
+            Featured in Rappahannock News
+          </h3>
+          <p className="text-muted-foreground mt-3 text-base leading-[1.8]">
+            EmpowerHer was featured in a local Virginia newsletter through our
+            former partnership with Rappahannock News. This acknowledgment
+            underscored our mission to empower Afghan girls and amplify their
+            narratives of resilience and leadership within a broader community.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
               href="/hervoice/featured-writings-from-our-partners"
               className="group bg-primary text-primary-foreground hover:shadow-primary/20 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
             >
-              Read Featured Writings
+              Featured Writings from Our Partners
               <ArrowRight className="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5" />
             </Link>
             <Link
@@ -372,7 +509,7 @@ const partners = [
     href: "https://www.nshss.org/",
   },
   {
-    name: "Right to Learn",
+    name: "Right to Learn Afghanistan",
     logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTBRQC7aZcQ1oEZ9sIXj8tePOrDbdN2iaU7v5q",
     href: "https://righttolearn.ca/",
   },
@@ -400,6 +537,16 @@ const partners = [
     name: "Mente Global",
     logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTUekbWeMuHB63DFcWbZp7rAk9VUJPgitsO2Ca",
     href: "https://menteeglobal.org/",
+  },
+  {
+    name: "Inanna",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTIznPr82WufQtTg5yH7OAp0KFlsjbkaYIPZB",
+    href: "https://inanna.ca/",
+  },
+  {
+    name: "Human Media",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT2HJysqLQtJ7K2Z4UcWn3gCXRdBvVoY9Ohil8",
+    href: "https://humanitasmedia.org/",
   },
 ];
 
@@ -464,7 +611,7 @@ const Newsletter = () => (
 
           <div className="mt-10 flex items-center gap-8">
             <div>
-              <p className="text-primary font-serif text-3xl">7+</p>
+              <p className="text-primary font-serif text-3xl">9+</p>
               <p className="text-background/40 mt-1 text-xs">Global Partners</p>
             </div>
             <div className="bg-background/10 h-10 w-px" />
@@ -518,6 +665,7 @@ export default function LandingPage() {
     <>
       <Hero />
       <StatsBar />
+      <HerVoiceContest />
       <Mission />
       <Programs />
       <Quotes />

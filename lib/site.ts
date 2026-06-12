@@ -50,11 +50,6 @@ export const siteConfig = {
       description:
         "Empowering Afghan girls through storytelling, learning, and action.",
     },
-    blog: {
-      title: "Blog",
-      description:
-        "Stories, updates, and insights from the EmpowerHer community.",
-    },
     login: {
       title: "Login",
     },

@@ -134,10 +134,10 @@ const AboutHerVoice = () => (
           </div>
           <div className="text-muted-foreground space-y-5 text-base leading-relaxed">
             <p>
-              HerVoice is EmpowerHer&apos;s creative storytelling platform,
-              where students can publish their original writings and express
-              themselves freely. We believe in the power of words to heal,
-              connect, and drive change.
+              HerVoice is EmpowerHer&apos;s creative storytelling platform where
+              students share original writing and express themselves freely. We
+              believe in the power of words to heal, connect, and inspire
+              change.
             </p>
             <p>
               Many of our students have demonstrated remarkable resilience and

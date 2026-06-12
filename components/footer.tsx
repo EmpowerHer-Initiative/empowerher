@@ -12,9 +12,11 @@ const quickLinks = [
   { label: "About", href: "/about-us" },
   { label: "Mentorship", href: "/mentorship" },
   { label: "HerVoice", href: "/hervoice" },
-  { label: "Stories", href: "/success-stories" },
+  { label: "Success Stories", href: "/success-stories" },
   { label: "Get Involved", href: "/get-involved" },
   { label: "Resources", href: "/resources" },
+  { label: "AGFAF", href: "/afgaf" },
+  { label: "Newsletter", href: "/newsletter" },
   { label: "Contact", href: "/contact" },
 ];
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { allHervoices } from "content-collections";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
@@ -46,7 +47,7 @@ const HerVoiceHero = () => (
               href="#writings"
               className="group bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
             >
-              Read Stories from HerVoice
+              Read Stories from HerVoice Here
               <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
             </a>
             <Link
@@ -138,7 +139,7 @@ const HowToSubmit = () => (
             {
               num: "04",
               title: "Submit",
-              desc: 'Email to hervoice@empowerher-initiative.org with the subject line "Submission to HerVoice".',
+              desc: 'Email to hervoice@empowerher-initiative.org. Subject: "Submission to HerVoice".',
             },
           ].map((step) => (
             <div
@@ -276,197 +277,82 @@ const Eligibility = () => (
 
 /* ─── Writings ─────────────────────────────────────────────────────── */
 
-const featuredWritings = [
-  {
-    title: "Building Windows Where They Built Walls",
-    author: "Nahid Karimi",
-    platform: "NSHSS",
-    image:
-      "https://www.nshss.org/media/vymjdyup/afghan-girl_2025.png?width=640&height=360&v=1dbfa899b327380&format=webp&quality=80",
-    slug: null,
-  },
-  {
-    title:
-      "Leading with Resilience: My Journey as an Afghan Student and Advocate",
-    author: "Mahdi Rahimi",
-    platform: "NSHSS",
-    image:
-      "https://www.nshss.org/media/03nk1qj0/afghan-students-2025.jpg?width=640&height=360&v=1dc107735d0c7e0&format=webp&quality=80",
-    slug: null,
-  },
-  {
-    title: "The Girl from Kabul: A Story of Words and Wounds",
-    author: "Sadaf A",
-    platform: "Amplify Afghan Women",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTCNVteXp0xR3LuJK2fkyDlQSq5OVpmHz6CThE",
-    slug: "the-girl-from-kabul-a-story-of-words-and-wounds",
-  },
-  {
-    title: "If the Taliban Had Never Existed",
-    author: "Sakhydadi",
-    platform: "Amplify Afghan Women",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTVlV0WA82WufQtTg5yH7OAp0KFlsjbkaYIPZ",
-    slug: "if-the-taliban-had-never-existed",
-  },
-  {
-    title: "In another time, I was\u2026",
-    author: "Suhaila N",
-    platform: "Amplify Afghan Women",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTCsBIywp0xR3LuJK2fkyDlQSq5OVpmHz6CThE",
-    slug: "i-hope-i-dont-forget-myself",
-  },
-  {
-    title: "A Bridge Between Two Worlds",
-    author: "Zahra A",
-    platform: "Amplify Afghan Women",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT56kEagAWxDjwpl6zcWuZFSE0gC1TOnBMHdPh",
-    slug: "a-bridge-between-two-worlds",
-  },
-  {
-    title: "How Education and Art Empower Afghan Girls",
-    author: "Sabira Hussaini",
-    platform: "NSHSS",
-    image:
-      "https://www.nshss.org/media/0b1hmzo4/sabira-hussani-art.png?width=640&height=360&v=1dc228d45c7d710&format=webp&quality=80",
-    slug: null,
-  },
-  {
-    title: "What if the Taliban Didn\u2019t Exist?",
-    author: "Farzana A",
-    platform: "Amplify Afghan Women",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT0La06tY1jbZo7DsLPidlGr6Uf2HKquxXJ3CN",
-    slug: null,
-  },
-  {
-    title: "Why does empowering women matter?",
-    author: "Sohaila S",
-    platform: "Amplify Afghan Women",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT38knrnKpPsIbjXnuoAM3O2JygVY8KzGFtD6k",
-    slug: "empowering-woman",
-  },
-  {
-    title: "The Girl with the Borrowed Light",
-    author: "Zarghona N",
-    platform: "Amplify Afghan Women",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT4sck5FSxLP0HVtXjpzDWZR85f7vGSgA1FduQ",
-    slug: null,
-  },
-  {
-    title: "Alkahest",
-    author: "Asma H",
-    platform: "Amplify Afghan Women",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfRmzu73C8OG5vkbyTeNds9rYucAtpJg0PMV7",
-    slug: null,
-  },
-  {
-    title: "Online Education and the Fight for a Future",
-    author: "Haya",
-    platform: "NSHSS",
-    image:
-      "https://www.nshss.org/media/wgxo3nrb/girl-next-to-window.jpg?width=640&height=360&v=1dc32f91f7e03f0&format=webp&quality=80",
-    slug: null,
-  },
-];
+const FeaturedWritings = () => {
+  const stories = allHervoices
+    .filter((s) => !s.contestPlace && !s.hide)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-const platformColors: Record<string, string> = {
-  NSHSS: "bg-primary/10 text-primary border-primary/20",
-  "Amplify Afghan Women": "bg-muted text-muted-foreground border-border/40",
-};
-
-const FeaturedWritings = () => (
-  <section id="writings" className="bg-foreground/[0.02] py-28 md:py-40">
-    <div className="container">
-      <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p className="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
-            Published Stories
-          </p>
-          <h2 className="font-serif text-4xl leading-[1.1] md:text-5xl">
-            Writings
-          </h2>
+  return (
+    <section id="writings" className="bg-foreground/[0.02] py-28 md:py-40">
+      <div className="container">
+        <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+              Published Stories
+            </p>
+            <h2 className="font-serif text-4xl leading-[1.1] md:text-5xl">
+              Writings
+            </h2>
+          </div>
+          <Link
+            href="/hervoice/featured-writings-from-our-partners"
+            className="text-primary hover:text-primary/80 inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
+          >
+            Featured Writings from Our Partners
+            <ArrowRight className="size-3.5" />
+          </Link>
         </div>
-        <Link
-          href="/hervoice/featured-writings-from-our-partners"
-          className="text-primary hover:text-primary/80 inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
-        >
-          View Full Archive
-          <ArrowRight className="size-3.5" />
-        </Link>
-      </div>
 
-      {/* Magazine-style list */}
-      <div className="divide-border/40 divide-y">
-        {featuredWritings.map((writing, i) => {
-          const inner = (
-            <>
+        {/* Magazine-style list */}
+        <div className="divide-border/40 divide-y">
+          {stories.map((story, i) => (
+            <Link
+              key={story._meta.path}
+              href={`/hervoice/${story._meta.path}`}
+              className="group hover:bg-background grid grid-cols-[auto_1fr_auto] items-center gap-5 py-6 transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] sm:grid-cols-[auto_80px_1fr_auto]"
+            >
               <span className="text-muted-foreground/40 shrink-0 font-serif text-sm">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div className="relative hidden aspect-[16/10] overflow-hidden rounded-lg sm:block">
-                <img
-                  src={writing.image}
-                  alt={writing.title}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
-                />
+                {story.image && (
+                  <img
+                    src={story.image}
+                    alt={story.title}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+                  />
+                )}
               </div>
               <div className="min-w-0">
                 <p className="group-hover:text-primary truncate leading-snug font-medium transition-colors duration-300">
-                  &ldquo;{writing.title}&rdquo;
+                  &ldquo;{story.title}&rdquo;
                 </p>
-                <p className="text-muted-foreground mt-1 text-sm">
-                  {writing.author}
-                </p>
+                {story.authorName && (
+                  <p className="text-muted-foreground mt-1 text-sm">
+                    {story.authorName}
+                  </p>
+                )}
               </div>
               <div className="flex shrink-0 items-center gap-2">
-                <span
-                  className={`hidden rounded-full border px-3 py-1 text-xs font-semibold sm:inline-flex ${platformColors[writing.platform] ?? "bg-muted text-muted-foreground border-border/40"}`}
-                >
-                  {writing.platform}
-                </span>
                 <ArrowRight className="text-muted-foreground/30 group-hover:text-primary size-4 transition-all duration-300 group-hover:translate-x-0.5" />
               </div>
-            </>
-          );
-
-          const className =
-            "group grid grid-cols-[auto_1fr_auto] items-center gap-5 py-6 transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-background sm:grid-cols-[auto_80px_1fr_auto]";
-
-          return writing.slug ? (
-            <Link
-              key={i}
-              href={`/hervoice/${writing.slug}`}
-              className={className}
-            >
-              {inner}
             </Link>
-          ) : (
-            <div key={i} className={`${className} opacity-70`}>
-              {inner}
-            </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
 
-      <div className="mt-12 text-center">
-        <Link
-          href="/hervoice/featured-writings-from-our-partners"
-          className="group border-border/60 text-foreground/80 hover:border-primary/30 hover:bg-primary/5 hover:text-foreground inline-flex items-center gap-2.5 rounded-full border px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
-        >
-          View Full List of Writings
-          <ArrowRight className="size-4 transition-transform duration-500 group-hover:translate-x-1" />
-        </Link>
+        <div className="mt-12 text-center">
+          <Link
+            href="/hervoice/featured-writings-from-our-partners"
+            className="group border-border/60 text-foreground/80 hover:border-primary/30 hover:bg-primary/5 hover:text-foreground inline-flex items-center gap-2.5 rounded-full border px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+          >
+            Featured Writings from Our Partners
+            <ArrowRight className="size-4 transition-transform duration-500 group-hover:translate-x-1" />
+          </Link>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 /* ─── Congressional Testimonies ─────────────────────────────────────────────── */
 
@@ -562,11 +448,14 @@ const PartnerSupport = () => (
         <div>
           <p className="text-muted-foreground text-base leading-relaxed">
             EmpowerHer is proud to partner with two respected publication
-            organizations. Through HerVoice and our partners&apos; platforms, we
-            advocate for girls&apos; education, storytelling, and creative
-            expression. Our partners help our members publish their pieces and
-            reach a wider audience across the globe — creating a space where
-            girls can share their stories with the world.
+            organizations: Amplify Afghan Women, and the National Society of
+            High School Scholars (NSHSS). Through HerVoice and our
+            partners&apos; platforms, we aim to advocate for girls&apos;
+            education, storytelling, and creative expression. Our partners help
+            our members publish their pieces on their platforms and reach a
+            wider audience across the globe. With the support of our partners
+            and their communities, we are creating a space where girls can share
+            their stories with the world.
           </p>
 
           <div className="divide-border/40 mt-10 space-y-0 divide-y">
@@ -603,6 +492,36 @@ const PartnerSupport = () => (
   </section>
 );
 
+/* ─── Writing Contest CTA ───────────────────────────────────────────────────── */
+
+const WritingContestCTA = () => (
+  <section className="bg-foreground/[0.02] py-28 md:py-40">
+    <div className="container">
+      <div className="bg-primary text-primary-foreground mx-auto flex max-w-5xl flex-col gap-8 overflow-hidden rounded-[2rem] px-8 py-12 md:flex-row md:items-center md:justify-between md:px-14 md:py-16">
+        <div>
+          <p className="text-primary-foreground/60 text-xs font-semibold tracking-[0.3em] uppercase">
+            Contest Results
+          </p>
+          <h2 className="mt-4 font-serif text-3xl leading-tight md:text-4xl">
+            HerVoice 2026 Writing Contest
+          </h2>
+          <p className="text-primary-foreground/70 mt-4 max-w-lg text-base leading-relaxed">
+            Look at the results of the HerVoice 2026 Writing Contest, including
+            cash prize winners and honorable mentions.
+          </p>
+        </div>
+        <Link
+          href="/hervoice/winners"
+          className="group bg-background text-foreground inline-flex shrink-0 items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
+        >
+          Explore Stories
+          <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+        </Link>
+      </div>
+    </div>
+  </section>
+);
+
 /* ─── Page ──────────────────────────────────────────────────────────────────── */
 
 export default function HerVoicePage() {
@@ -614,6 +533,7 @@ export default function HerVoicePage() {
       <FeaturedWritings />
       <CongressionalTestimonies />
       <PartnerSupport />
+      <WritingContestCTA />
     </>
   );
 }

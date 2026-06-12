@@ -381,9 +381,14 @@ export default function VolunteerWithUsPage() {
             Volunteer With Us
           </h1>
           <p className="text-background/70 mt-6 text-base leading-relaxed">
-            EmpowerHer welcomes volunteers from around the world. Share your
-            expertise and perspective across borders — positions become
-            available as our programs grow.
+            EmpowerHer welcomes volunteers from around the world to contribute
+            to our virtual workshops and programs. Volunteers may support our
+            community and staff in different ways, such as serving as lecturers,
+            mentors, assistants, or administrative members, as positions become
+            available. We encourage volunteers to share perspectives from their
+            countries and backgrounds to foster meaningful cross-cultural
+            learning. We value diverse voices committed to educating and
+            empowering Afghan girls and youth.
           </p>
 
           {/* Roles */}

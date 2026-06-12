@@ -13,7 +13,6 @@ const EXPECTED_GUARDS: Record<string, string[]> = {
     "app/api/[...all]/route.ts",
     "app/admin/layout.tsx",
   ],
-  blog: ["app/(marketing)/blog/layout.tsx"],
   contact: ["app/(marketing)/contact/page.tsx"],
   payments: [
     "app/checkout/page.tsx",

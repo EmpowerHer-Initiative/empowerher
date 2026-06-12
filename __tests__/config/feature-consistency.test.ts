@@ -16,7 +16,6 @@ function getConfigKeys(): string[] {
 // Collect all flags referenced in route + tRPC guard maps
 const ROUTE_GUARDS: Record<string, string[]> = {
   auth: ["app/(auth)/layout.tsx", "app/(marketing)/settings/layout.tsx"],
-  blog: ["app/(marketing)/blog/layout.tsx"],
   contact: ["app/(marketing)/contact/page.tsx"],
   payments: [
     "app/checkout/page.tsx",

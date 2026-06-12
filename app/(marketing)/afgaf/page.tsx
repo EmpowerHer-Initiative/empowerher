@@ -114,13 +114,13 @@ const Gratitude = () => (
         </p>
         <blockquote className="text-background/85 mt-10 font-serif text-2xl leading-[1.4] md:text-3xl">
           &ldquo;EmpowerHer deeply values the unwavering support of the Afghan
-          Girls Financial Assistance Fund. As our primary sponsor and partner,
-          AGFAF has played a pivotal role in making many of our initiatives and
-          programs possible. For nearly two decades, AGFAF has illuminated the
-          path toward a brighter future for countless Afghan girls. As fellow
-          Afghans and an organization aligned with their mission and vision, we
-          extend our heartfelt gratitude for their continued support and belief
-          in our work.&rdquo;
+          Girls Financial Assistance Fund (AGFAF). As our primary sponsor and
+          partner, AGFAF has played a pivotal role in making many of our
+          initiatives and programs possible. For nearly two decades, AGFAF has
+          illuminated the path toward a brighter future for countless Afghan
+          girls. As fellow Afghans and an organization aligned with their
+          mission and vision, we extend our heartfelt gratitude for their
+          continued support and belief in our work.&rdquo;
         </blockquote>
         <div className="bg-background/20 mt-10 h-px w-16" />
         <p className="text-background/60 mt-6 text-sm font-semibold">

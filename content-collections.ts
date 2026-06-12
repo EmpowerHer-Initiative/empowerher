@@ -55,40 +55,22 @@ const legal = defineCollection({
   },
 });
 
-const blog = defineCollection({
-  name: "blog",
-  directory: "content/blog",
-  include: "**/*.md",
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    image: z.string().optional(),
-    date: z.coerce.date(),
-    content: z.string(),
-  }),
-  transform: async (document, context) => {
-    const mdx = await compileMDX(context, document, {
-      remarkPlugins: [remarkGfm],
-      rehypePlugins: [rehypePrettyCode, rehypeAutolinkHeadings, rehypeSlug],
-    });
-    const headings = extractHeadings(document.content);
-    return {
-      ...document,
-      mdx,
-      headings,
-    };
-  },
-});
-
 const hervoice = defineCollection({
   name: "hervoice",
   directory: "content/hervoice",
   include: "**/*.mdx",
   schema: z.object({
     title: z.string(),
-    description: z.string(),
+    description: z.string().optional(),
     image: z.string().optional(),
+    imageCredit: z.string().optional(),
     date: z.coerce.date(),
+    authorName: z.string().optional(),
+    authorBio: z.string().optional(),
+    contestPlace: z.string().optional(),
+    contestPrize: z.string().optional(),
+    messageToWorld: z.string().optional(),
+    hide: z.boolean().optional(),
     content: z.string(),
   }),
   transform: async (document, context) => {
@@ -106,5 +88,5 @@ const hervoice = defineCollection({
 });
 
 export default defineConfig({
-  content: [legal, blog, hervoice],
+  content: [legal, hervoice],
 });

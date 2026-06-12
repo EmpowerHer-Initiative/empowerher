@@ -9,6 +9,7 @@ import { Logo } from "@/components/icons/logo";
 
 const programs = [
   { label: "Mentorship Program", href: "/mentorship" },
+  { label: "Monthly Internet Scholarship (MIS)", href: "/mis" },
   { label: "HerVoice", href: "/hervoice" },
 ];
 
@@ -20,7 +21,7 @@ const successStories = [
 const navLinks = [
   { label: "About", href: "/about-us" },
   { label: "Programs", href: "#", children: programs },
-  { label: "Stories", href: "#", children: successStories },
+  { label: "Success Stories", href: "#", children: successStories },
   { label: "Get Involved", href: "/get-involved" },
   { label: "Resources", href: "/resources" },
   { label: "Contact", href: "/contact" },

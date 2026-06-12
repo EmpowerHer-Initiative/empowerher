@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { allBlogs } from "content-collections";
+import { allHervoices } from "content-collections";
 
 import { siteConfig } from "@/lib/site";
 
@@ -12,19 +12,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${siteConfig.url}/blog`,
+      url: `${siteConfig.url}/hervoice`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },
   ];
 
-  const blogRoutes: MetadataRoute.Sitemap = allBlogs.map((post) => ({
-    url: `${siteConfig.url}/blog/${post._meta.path}`,
+  const hervoiceRoutes: MetadataRoute.Sitemap = allHervoices.map((post) => ({
+    url: `${siteConfig.url}/hervoice/${post._meta.path}`,
     lastModified: new Date(post.date),
     changeFrequency: "monthly",
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...blogRoutes];
+  return [...staticRoutes, ...hervoiceRoutes];
 }
