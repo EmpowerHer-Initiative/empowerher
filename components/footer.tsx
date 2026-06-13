@@ -50,15 +50,17 @@ export const Footer = () => {
         <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-12">
           {/* Brand */}
           <div className="lg:col-span-5">
-            <Link href="/" className="inline-flex items-center gap-2">
+            <Link
+              href="/"
+              className="inline-flex -translate-x-4 items-center gap-2"
+            >
               <img
                 src="https://empowerher-cdn.alisamadii.com/logo.png"
                 alt="EmpowerHer"
-                className="h-9 w-auto object-contain"
+                className="h-30 w-auto object-contain"
               />
-              <span className="font-serif text-xl">EmpowerHer</span>
             </Link>
-            <p className="text-muted-foreground mt-6 max-w-sm text-sm leading-[1.8]">
+            <p className="text-muted-foreground max-w-sm text-sm leading-[1.8]">
               We envision Afghan women as guiding lights in their communities,
               inspiring hope and progress while leading the way to a more
               equitable, inclusive, and sustainable society.
