@@ -76,6 +76,16 @@ export const siteConfig = {
       description:
         "Free workshops and mentorship for Afghan girls to build resilience, gain support, and launch impact projects.",
     },
+    sso: {
+      title: "Sahar Education's Secret Scholars Online Platform (SS0)",
+      description:
+        "EmpowerHer x Sahar Education — a self-paced Math and English learning platform for EmpowerHer members.",
+    },
+    sisterhoodSessions: {
+      title: "Sisterhood Sessions",
+      description:
+        "A supportive and caring space for EmpowerHer students to connect, share ideas, and build friendships.",
+    },
     hervoice: {
       title: "HerVoice",
       description:

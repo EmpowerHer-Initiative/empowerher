@@ -9,34 +9,28 @@
 export const plans = {
   starter: {
     name: "Starter",
-    monthlyProductId: "6c6afb05-cbc5-4a9a-adf5-ff103b653e14",
-    yearlyProductId: "13607049-47e9-4231-b887-6043b8a40ad7",
+    monthlyProductId: "6fb02d2d-31d7-4561-ac41-208a10f22108",
+    yearlyProductId: "48d66e73-44e9-4311-aef2-5bcb51fad0e1",
   },
   pro: {
     name: "Pro",
-    monthlyProductId: "aac5feb4-e2f3-4d25-969e-3003d966d90a",
-    yearlyProductId: "e7f08198-58b7-4878-8627-351cef9ad5b8",
+    monthlyProductId: "c9fc2cd0-bb42-4537-aea2-988b50ede19f",
+    yearlyProductId: "e582ca11-f357-4a0d-a6da-870ae128b463",
   },
-  business: {
-    name: "Business",
-    monthlyProductId: "41657bb1-29f7-402e-9601-244801650b12",
-    yearlyProductId: "fa6ce99e-9006-4033-8842-ad5adf296f4a",
+  enterprise: {
+    name: "Enterprise",
+    monthlyProductId: "5af387bc-4de2-400b-a115-0de99f7846ec",
+    yearlyProductId: "11c4850c-ae5d-4408-9b7c-49e081b5c677",
   },
 } as const satisfies Record<
   string,
   { name: string; monthlyProductId: string; yearlyProductId: string }
 >;
 
-export const oneTimeProducts = {
-  starterKit: {
-    name: "Starter Kit",
-    productId: "150304b7-f404-4bd7-a9cd-a966f855067d",
-  },
-  lifetimeDeal: {
-    name: "Lifetime Deal",
-    productId: "e7e2c213-cce5-4c38-a06b-85f398d06937",
-  },
-} as const satisfies Record<string, { name: string; productId: string }>;
+export const oneTimeProducts = {} as const satisfies Record<
+  string,
+  { name: string; productId: string }
+>;
 
 export type PlanKey = keyof typeof plans;
 export type ProductKey = keyof typeof oneTimeProducts;

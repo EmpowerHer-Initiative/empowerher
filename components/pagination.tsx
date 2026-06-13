@@ -9,6 +9,7 @@ type Props = {
   currentPage: number;
   totalPages: number;
   basePath: string;
+  hash?: string;
 };
 
 const getPageNumbers = (current: number, total: number): (number | "...")[] => {
@@ -29,13 +30,18 @@ const getPageNumbers = (current: number, total: number): (number | "...")[] => {
   return pages;
 };
 
-export const Pagination = ({ currentPage, totalPages, basePath }: Props) => {
+export const Pagination = ({
+  currentPage,
+  totalPages,
+  basePath,
+  hash,
+}: Props) => {
   const pages = getPageNumbers(currentPage, totalPages);
   const hasPrev = currentPage > 1;
   const hasNext = currentPage < totalPages;
 
   const href = (page: number) =>
-    page === 1 ? basePath : `${basePath}?page=${page}`;
+    (page === 1 ? basePath : `${basePath}?page=${page}`) + (hash ?? "");
 
   return (
     <div className="flex items-center justify-center gap-1">

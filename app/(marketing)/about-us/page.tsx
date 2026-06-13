@@ -233,14 +233,17 @@ const executiveTeam = [
     name: "Mahdi Rahimi",
     role: "Co-Founder & Mentor",
     image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTiCpeojEYyVpqbIDknS5OTfuHm1N4G0ctWRE9",
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfgQqh43C8OG5vkbyTeNds9rYucAtpJg0PMV7",
   },
   {
     name: "Nahid Karimi",
     role: "Co-Founder & Mentor",
     image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqvGdhshBYobifLHTavDVU7h0yBGlSc4z8XEQ",
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTPXlWDWYhZvxtB3ycfP5jQXiMRAWOCrnJ2oYe",
   },
+];
+
+const directors = [
   {
     name: "Sara F",
     role: "Mentorship Program Director & Mentor",
@@ -249,7 +252,7 @@ const executiveTeam = [
   },
   {
     name: "Daniel Fletcher",
-    role: "Social Media Director & Lecturer",
+    role: "Social Media Director",
     image:
       "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqlVv7UBYobifLHTavDVU7h0yBGlSc4z8XEQn",
   },
@@ -259,32 +262,32 @@ const executiveTeam = [
     image:
       "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTaIvbdmAtfy8gUMVlFj5QpoO3BkxsndH9Dm2E",
   },
+  {
+    name: "Edna Gebremedhin",
+    role: "Social Media & Outreach Coordinator | Mentor",
+    image:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTatnMPKAtfy8gUMVlFj5QpoO3BkxsndH9Dm2E",
+  },
 ];
 
 const mentorsTeam = [
   {
-    name: "Sabira Hussaini",
-    role: "Creative Arts Mentor",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEM8mxVfRbjSv9fDHMpJXBriOWVtPmoQZNC3q",
-  },
-  {
-    name: "Hania Dziduszko",
-    role: "CELL Mentor",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpRukckqrM0zsm5gThJ2eDxZtjCFUdBGElvb1",
-  },
-  {
     name: "Leena Geloo",
-    role: "CELL Mentor",
+    role: "Cultural Exchange and Language Learning (CELL) Mentor",
     image:
       "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTUhliWsMuHB63DFcWbZp7rAk9VUJPgitsO2Ca",
   },
   {
-    name: "Joel Baca",
-    role: "Lecturer",
+    name: "Sarah Ghaznawi",
+    role: "Resume Building Workshop Mentor",
     image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfssVDy3C8OG5vkbyTeNds9rYucAtpJg0PMV7",
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTKWc50tCVy1oGkRMuS0Lravl9JbQIxWFcNhtq",
+  },
+  {
+    name: "Atifa Annabi",
+    role: "Communication & Public Speaking Workshop Mentor",
+    image:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTLYYVyf6noMe1jZlBSmFX7gAOT28J3hWKaNI0",
   },
   {
     name: "Orly Bloom",
@@ -298,23 +301,55 @@ const mentorsTeam = [
     image:
       "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTbc5Ufv9xopPYBqCUaZOIeEGDyJzvSfLh2M0n",
   },
+  {
+    name: "Lily Jean Loveland",
+    role: "Lecturer",
+    image:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTS7YSk2xH1XUo4r0Hn2pxVOeJj6STiyCaKZ7v",
+  },
 ];
+
+const memberSizes = {
+  lg: {
+    avatar: "h-28 w-28 md:h-36 md:w-36",
+    name: "text-base",
+    role: "text-xs",
+  },
+  md: {
+    avatar: "h-20 w-20 md:h-28 md:w-28",
+    name: "text-sm",
+    role: "text-xs",
+  },
+  sm: {
+    avatar: "h-16 w-16 md:h-20 md:w-20",
+    name: "text-sm",
+    role: "text-xs",
+  },
+} as const;
 
 const TeamMember = ({
   member,
+  size = "md",
 }: {
   member: { name: string; role: string; image: string };
+  size?: keyof typeof memberSizes;
 }) => (
   <div className="group flex flex-col items-center text-center">
-    <div className="border-border/40 group-hover:border-primary/40 group-hover:shadow-primary/10 relative mb-4 h-20 w-20 overflow-hidden rounded-full border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:shadow-lg md:h-24 md:w-24">
+    <div
+      className={`border-border/40 group-hover:border-primary/40 group-hover:shadow-primary/10 relative mb-4 overflow-hidden rounded-full border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:shadow-lg ${memberSizes[size].avatar}`}
+    >
       <img
         src={member.image}
         alt={member.name}
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
       />
     </div>
-    <p className="text-sm leading-tight font-semibold">{member.name}</p>
-    <p className="text-muted-foreground mt-1 text-xs leading-snug">
+    <p className={`leading-tight font-semibold ${memberSizes[size].name}`}>
+      {member.name}
+    </p>
+    <p
+      className={`text-muted-foreground mt-1 leading-snug ${memberSizes[size].role}`}
+    >
       {member.role}
     </p>
   </div>
@@ -340,9 +375,20 @@ const TeamSection = () => (
         <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
           Executive Team
         </p>
-        <div className="flex flex-wrap gap-x-10 gap-y-10 md:gap-x-14">
+        <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 md:gap-x-14">
           {executiveTeam.map((member) => (
-            <TeamMember key={member.name} member={member} />
+            <TeamMember key={member.name} member={member} size="lg" />
+          ))}
+        </div>
+      </div>
+
+      <div className="border-border/40 mb-14 border-t pt-14">
+        <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+          Directors
+        </p>
+        <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 md:gap-x-14">
+          {directors.map((member) => (
+            <TeamMember key={member.name} member={member} size="md" />
           ))}
         </div>
       </div>
@@ -351,9 +397,9 @@ const TeamSection = () => (
         <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
           Mentors & Lecturers
         </p>
-        <div className="flex flex-wrap gap-x-10 gap-y-10 md:gap-x-14">
+        <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 md:gap-x-14">
           {mentorsTeam.map((member) => (
-            <TeamMember key={member.name} member={member} />
+            <TeamMember key={member.name} member={member} size="sm" />
           ))}
         </div>
       </div>

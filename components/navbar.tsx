@@ -7,23 +7,44 @@ import { ChevronDown } from "lucide-react";
 
 import { Logo } from "@/components/icons/logo";
 
-const programs = [
-  { label: "Mentorship Program", href: "/mentorship" },
-  { label: "Monthly Internet Scholarship (MIS)", href: "/mis" },
-  { label: "HerVoice", href: "/hervoice" },
+type NavItem = { label: string; href: string; children?: NavItem[] };
+
+const programs: NavItem[] = [
+  {
+    label: "Mentorship Program",
+    href: "/mentorship",
+    children: [
+      { label: "Monthly Internet Scholarship (MIS)", href: "/mis" },
+      {
+        label: "Sahar Education's Secret Scholars Online Platform (SS0)",
+        href: "/sso",
+      },
+    ],
+  },
+  {
+    label: "HerVoice",
+    href: "/hervoice",
+    children: [
+      {
+        label: "Featured Writings from Our Partners",
+        href: "/hervoice/featured-writings-from-our-partners",
+      },
+    ],
+  },
 ];
 
-const successStories = [
+const successStories: NavItem[] = [
   { label: "All Success Stories", href: "/success-stories" },
   { label: "Student Project Roadmap", href: "/success-stories/spr" },
 ];
 
-const navLinks = [
+const navLinks: NavItem[] = [
   { label: "About", href: "/about-us" },
   { label: "Programs", href: "#", children: programs },
   { label: "Success Stories", href: "#", children: successStories },
   { label: "Get Involved", href: "/get-involved" },
   { label: "Resources", href: "/resources" },
+  { label: "AFGAF", href: "/afgaf" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -55,7 +76,8 @@ export const Navbar = () => {
     setOpenDropdown(null);
   }, [pathname]);
 
-  if (hiddenPaths.some((p) => pathname.startsWith(p))) return null;
+  if (hiddenPaths.some((p) => pathname === p || pathname.startsWith(p + "/")))
+    return null;
 
   const isHome = pathname === "/";
 
@@ -103,7 +125,7 @@ export const Navbar = () => {
           </Link>
 
           {/* Desktop */}
-          <div className="hidden items-center gap-8 lg:flex">
+          <div className="hidden items-center gap-6 lg:flex">
             {navLinks.map((link) => (
               <div
                 key={link.label}
@@ -152,16 +174,36 @@ export const Navbar = () => {
                         : "pointer-events-none translate-y-1 opacity-0"
                     }`}
                   >
-                    <div className="border-border/50 bg-background/95 shadow-dropdown min-w-[200px] rounded-2xl border p-1.5 backdrop-blur-xl">
-                      {link.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className="text-foreground/70 hover:bg-muted/50 hover:text-foreground block rounded-xl px-4 py-2.5 text-sm transition-colors duration-200"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
+                    <div className="border-border/50 bg-background/95 shadow-dropdown min-w-[280px] rounded-2xl border p-1.5 backdrop-blur-xl">
+                      {link.children.map((child) =>
+                        child.children ? (
+                          <div key={child.href}>
+                            <Link
+                              href={child.href}
+                              className="text-foreground hover:bg-muted/50 block rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors duration-200"
+                            >
+                              {child.label}
+                            </Link>
+                            {child.children.map((sub) => (
+                              <Link
+                                key={sub.href}
+                                href={sub.href}
+                                className="text-foreground/60 hover:bg-muted/50 hover:text-foreground block rounded-xl px-4 py-2.5 pl-7 text-[13px] transition-colors duration-200"
+                              >
+                                {sub.label}
+                              </Link>
+                            ))}
+                          </div>
+                        ) : (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            className="text-foreground/70 hover:bg-muted/50 hover:text-foreground block rounded-xl px-4 py-2.5 text-sm transition-colors duration-200"
+                          >
+                            {child.label}
+                          </Link>
+                        )
+                      )}
                     </div>
                   </div>
                 )}
@@ -246,19 +288,39 @@ export const Navbar = () => {
                   <div
                     className={`overflow-hidden transition-all duration-500 ${
                       openDropdown === link.label
-                        ? "max-h-32 pb-4 opacity-100"
+                        ? "max-h-96 pb-4 opacity-100"
                         : "max-h-0 opacity-0"
                     }`}
                   >
-                    {link.children.map((c) => (
-                      <Link
-                        key={c.href}
-                        href={c.href}
-                        className="text-muted-foreground block py-2 pl-4 text-lg"
-                      >
-                        {c.label}
-                      </Link>
-                    ))}
+                    {link.children.map((c) =>
+                      c.children ? (
+                        <div key={c.href}>
+                          <Link
+                            href={c.href}
+                            className="block py-2 pl-4 text-lg font-semibold"
+                          >
+                            {c.label}
+                          </Link>
+                          {c.children.map((sub) => (
+                            <Link
+                              key={sub.href}
+                              href={sub.href}
+                              className="text-muted-foreground block py-1.5 pl-8 text-base"
+                            >
+                              {sub.label}
+                            </Link>
+                          ))}
+                        </div>
+                      ) : (
+                        <Link
+                          key={c.href}
+                          href={c.href}
+                          className="text-muted-foreground block py-2 pl-4 text-lg"
+                        >
+                          {c.label}
+                        </Link>
+                      )
+                    )}
                   </div>
                 </>
               ) : (

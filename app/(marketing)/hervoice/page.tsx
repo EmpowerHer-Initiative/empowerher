@@ -5,6 +5,8 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
 
+import { Pagination } from "@/components/pagination";
+
 export const metadata: Metadata = {
   title: `${siteConfig.pages.hervoice.title} — ${siteConfig.name}`,
   description: siteConfig.pages.hervoice.description,
@@ -15,7 +17,7 @@ export const metadata: Metadata = {
 const HerVoiceHero = () => (
   <section className="py-28 md:py-40">
     <div className="container">
-      <div className="grid gap-12 lg:grid-cols-2 lg:items-end lg:gap-24">
+      <div className="grid gap-12 lg:grid-cols-2 lg:items-start lg:gap-24">
         {/* Left: large editorial title */}
         <div>
           <p className="text-primary mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
@@ -33,14 +35,33 @@ const HerVoiceHero = () => (
           <p className="text-muted-foreground text-lg leading-relaxed md:text-xl">
             HerVoice is EmpowerHer&apos;s creative storytelling platform, where
             students can publish their original writings and express themselves
-            freely.
+            freely. At EmpowerHer, we believe in the power of words to heal,
+            connect, and drive change.
           </p>
-          <p className="text-muted-foreground mt-5 text-base leading-relaxed">
+          <blockquote className="border-primary/20 mt-8 border-l-2 pl-6 font-serif text-xl leading-relaxed italic">
             Many of our students have demonstrated remarkable resilience and
             courage through storytelling, using their voices to share personal
-            truths and inspire others. HerVoice gives them the space to do just
-            that — amplifying their experiences and perspectives in a world that
-            too often silences them.
+            truths and inspire others.
+          </blockquote>
+          <p className="text-muted-foreground mt-8 text-base leading-relaxed">
+            HerVoice gives them the space to do just that&mdash;amplifying their
+            experiences and perspectives in a world that too often silences
+            them.
+          </p>
+          <div className="border-primary/20 bg-primary/[0.04] mt-8 rounded-2xl border p-6">
+            <p className="text-muted-foreground/50 text-xs font-semibold tracking-[0.2em] uppercase">
+              Global Partners
+            </p>
+            <p className="text-muted-foreground mt-3 text-base leading-relaxed">
+              With the support of our partners&mdash;including the National
+              Society of High School Scholars (Atlanta, Georgia), and Amplify
+              Afghan Women (Melbourne, Australia)&mdash;we are proud to bring
+              these stories to a global audience.
+            </p>
+          </div>
+          <p className="mt-8 text-base leading-relaxed font-medium">
+            Through HerVoice, every story becomes a step toward empowerment,
+            visibility, and hope.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
@@ -277,13 +298,25 @@ const Eligibility = () => (
 
 /* ─── Writings ─────────────────────────────────────────────────────── */
 
-const FeaturedWritings = () => {
+const PER_PAGE = 8;
+
+const FeaturedWritings = ({ page }: { page: number }) => {
   const stories = allHervoices
     .filter((s) => !s.contestPlace && !s.hide)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
+  const totalPages = Math.max(1, Math.ceil(stories.length / PER_PAGE));
+  const currentPage = Math.min(page, totalPages);
+  const paginatedStories = stories.slice(
+    (currentPage - 1) * PER_PAGE,
+    currentPage * PER_PAGE
+  );
+
   return (
-    <section id="writings" className="bg-foreground/[0.02] py-28 md:py-40">
+    <section
+      id="writings"
+      className="bg-foreground/[0.02] scroll-mt-20 py-28 md:py-40 lg:scroll-mt-24"
+    >
       <div className="container">
         <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
@@ -305,16 +338,16 @@ const FeaturedWritings = () => {
 
         {/* Magazine-style list */}
         <div className="divide-border/40 divide-y">
-          {stories.map((story, i) => (
+          {paginatedStories.map((story, i) => (
             <Link
               key={story._meta.path}
               href={`/hervoice/${story._meta.path}`}
-              className="group hover:bg-background grid grid-cols-[auto_1fr_auto] items-center gap-5 py-6 transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] sm:grid-cols-[auto_80px_1fr_auto]"
+              className="group hover:bg-background grid grid-cols-[auto_1fr_auto] items-center gap-5 py-8 transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] sm:grid-cols-[auto_180px_1fr_auto] lg:grid-cols-[auto_260px_1fr_auto]"
             >
               <span className="text-muted-foreground/40 shrink-0 font-serif text-sm">
-                {String(i + 1).padStart(2, "0")}
+                {String((currentPage - 1) * PER_PAGE + i + 1).padStart(2, "0")}
               </span>
-              <div className="relative hidden aspect-[16/10] overflow-hidden rounded-lg sm:block">
+              <div className="relative hidden aspect-[16/10] overflow-hidden rounded-xl sm:block">
                 {story.image && (
                   <img
                     src={story.image}
@@ -339,6 +372,17 @@ const FeaturedWritings = () => {
             </Link>
           ))}
         </div>
+
+        {totalPages > 1 && (
+          <div className="mt-12">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              basePath="/hervoice"
+              hash="#writings"
+            />
+          </div>
+        )}
 
         <div className="mt-12 text-center">
           <Link
@@ -524,13 +568,20 @@ const WritingContestCTA = () => (
 
 /* ─── Page ──────────────────────────────────────────────────────────────────── */
 
-export default function HerVoicePage() {
+export default async function HerVoicePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const { page } = await searchParams;
+  const currentPage = Math.max(1, Number(page) || 1);
+
   return (
     <>
       <HerVoiceHero />
       <HowToSubmit />
       <Eligibility />
-      <FeaturedWritings />
+      <FeaturedWritings page={currentPage} />
       <CongressionalTestimonies />
       <PartnerSupport />
       <WritingContestCTA />

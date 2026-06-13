@@ -33,7 +33,7 @@ const MentorshipHero = () => (
           <p className="text-background/70 text-lg leading-relaxed">
             This program aims to provide Afghan girls with the resources,
             opportunities, and networks they need to launch their own impact
-            projects — one story, one action, and one empowered voice at a time.
+            projects.
           </p>
         </div>
         <div className="mt-14 flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -45,6 +45,41 @@ const MentorshipHero = () => (
             <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
           </a>
         </div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ─── Intro ─────────────────────────────────────────────────────────────────── */
+
+const MentorshipIntro = () => (
+  <section className="pt-28 md:pt-40">
+    <div className="container">
+      <div className="mx-auto max-w-3xl space-y-10">
+        <blockquote className="border-primary/20 border-l-2 pl-8 font-serif text-2xl leading-relaxed italic md:text-3xl">
+          Through this platform, EmpowerHer encourages students to think outside
+          the box and view their challenges as sources of resilience&mdash;life
+          lessons that empower them to pursue their goals and dreams.
+        </blockquote>
+        <p className="text-muted-foreground leading-[1.8]">
+          EmpowerHer creates a safe, supportive space where students can discuss
+          their struggles openly, feel heard and seen, and reflect on their
+          experiences.
+        </p>
+        <div className="border-primary/20 bg-primary/[0.04] rounded-2xl border p-8">
+          <p className="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+            Our Impact
+          </p>
+          <p className="text-muted-foreground leading-[1.8]">
+            Whether through launching a project, mentoring a sibling or friend,
+            or simply taking a first step, EmpowerHer helps students
+            grow&mdash;one story, one action, and one empowered voice at a time.
+          </p>
+        </div>
+        <p className="leading-[1.8] font-medium">
+          Join us in empowering the next generation of Afghan leaders and
+          changemakers through our comprehensive mentorship program.
+        </p>
       </div>
     </div>
   </section>
@@ -143,17 +178,37 @@ const WorkshopStructure = () => (
           </div>
         ))}
       </div>
+
+      <div className="mt-14 flex justify-center">
+        <Link
+          href="/sisterhood-sessions"
+          className="group border-border/60 text-foreground/80 hover:border-primary/30 hover:text-foreground inline-flex items-center gap-2.5 rounded-full border px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]"
+        >
+          Learn About Sisterhood Sessions
+          <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+        </Link>
+      </div>
     </div>
   </section>
 );
 
 /* ─── Eligibility ───────────────────────────────────────────────────────────── */
 
-const eligibilityRules = [
+const eligibilityRules: React.ReactNode[] = [
   "Afghan girls residing in Afghanistan and any other Middle Eastern or Central Asian countries are welcome to apply to our programs.",
   "Intermediate or advanced English proficiency is required.",
   "Although there is no age limit to apply to any of EmpowerHer's workshops, our team prefers applicants aged 14 and above.",
-  "Afghan girls residing in Europe or America (any region outside the Middle East and Central Asia) are not eligible to apply to our programs; however, we encourage them to volunteer with us.",
+  <>
+    Afghan girls residing in Europe or America (any region outside the Middle
+    East and Central Asia) are not eligible to apply to our programs; however,
+    we encourage them to volunteer with us through the following link:{" "}
+    <Link
+      href="/get-involved/volunteer-with-us"
+      className="text-primary hover:text-primary/80 underline underline-offset-4"
+    >
+      Volunteer
+    </Link>
+  </>,
   "Men are not eligible to apply to our programs at this time.",
 ];
 
@@ -169,9 +224,8 @@ const Eligibility = () => (
             Who Can Apply
           </h2>
           <p className="text-muted-foreground mt-6 text-base leading-relaxed">
-            EmpowerHer creates a safe, supportive space where students can
-            discuss their struggles openly, feel heard and seen, and reflect on
-            their experiences.
+            Please review the following requirements before applying to any
+            EmpowerHer workshop.
           </p>
         </div>
 
@@ -309,7 +363,10 @@ const workshops = [
 ];
 
 const Workshops = () => (
-  <section id="workshops" className="bg-foreground/[0.02] py-28 md:py-40">
+  <section
+    id="workshops"
+    className="bg-foreground/[0.02] scroll-mt-20 py-28 md:py-40 lg:scroll-mt-24"
+  >
     <div className="container">
       <div className="mb-16 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
@@ -379,6 +436,7 @@ export default function MentorshipPage() {
   return (
     <>
       <MentorshipHero />
+      <MentorshipIntro />
       <WorkshopStructure />
       <Eligibility />
       <Opportunities />

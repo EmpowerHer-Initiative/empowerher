@@ -6,8 +6,6 @@ import { ArrowUpRight, Mail } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
 
-import { Logo } from "@/components/icons/logo";
-
 const quickLinks = [
   { label: "About", href: "/about-us" },
   { label: "Mentorship", href: "/mentorship" },
@@ -43,7 +41,8 @@ const hiddenPaths = [
 export const Footer = () => {
   const pathname = usePathname();
 
-  if (hiddenPaths.some((p) => pathname.startsWith(p))) return null;
+  if (hiddenPaths.some((p) => pathname === p || pathname.startsWith(p + "/")))
+    return null;
 
   return (
     <footer className="border-border/30 border-t">
@@ -52,7 +51,11 @@ export const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-5">
             <Link href="/" className="inline-flex items-center gap-2">
-              <Logo className="size-7" />
+              <img
+                src="https://empowerher-cdn.alisamadii.com/logo.png"
+                alt="EmpowerHer"
+                className="h-9 w-auto object-contain"
+              />
               <span className="font-serif text-xl">EmpowerHer</span>
             </Link>
             <p className="text-muted-foreground mt-6 max-w-sm text-sm leading-[1.8]">

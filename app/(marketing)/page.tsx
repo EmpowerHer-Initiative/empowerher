@@ -105,7 +105,7 @@ const StatsBar = () => (
   <section className="border-border/40 bg-primary/[0.03] border-y py-20 md:py-28">
     <div className="container">
       <div className="max-w-2xl">
-        <h2 className="text-primary font-serif text-3xl leading-tight md:text-5xl">
+        <h2 className="font-serif text-3xl leading-tight md:text-5xl">
           Abandoned Futures: Let Afghan Girls Learn
         </h2>
         <p className="text-muted-foreground mt-6 max-w-md text-base leading-relaxed md:text-lg">
@@ -395,53 +395,260 @@ const Quotes = () => (
   </section>
 );
 
-/* ─── HerVoice Contest — Highlight band ────────────────────────────────────── */
+/* ─── HerVoice Contest — Winners showcase band ─────────────────────────────── */
 
-const HerVoiceContest = () => (
-  <section className="bg-foreground text-background py-28 md:py-40">
-    <div className="container">
-      <div className="mx-auto max-w-3xl text-center">
-        <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-          EmpowerHer Presents
-        </p>
-        <h2 className="mt-6 font-serif text-4xl leading-[1.05] md:text-6xl">
-          HerVoice <span className="text-primary">2026</span>
-          <br />
-          Writing Contest
-        </h2>
-        <p className="text-background/60 mx-auto mt-6 max-w-xl text-base leading-relaxed md:text-lg">
-          Courage, identity, and storytelling — by Afghan girls and women,
-          written from within Afghanistan.
-        </p>
+const CONTEST_WINNERS = [
+  {
+    rank: "1st",
+    prize: "$400",
+    name: "Z.H.",
+    title: "Bread and a Red Apple",
+    quote:
+      "I have turned the basement of my house into a school, a secret school for girls, to teach them everything that is forbidden.",
+    slug: "bread-and-a-red-apple",
+    cover:
+      "bg-[radial-gradient(120%_90%_at_28%_8%,#F0C963_0%,transparent_55%),linear-gradient(160deg,#C9942C_0%,#9A6A18_60%,#7A5212_100%)] text-[#FBF3DD]",
+    ribbon: "bg-gradient-to-b from-[#E0AE3C] to-[#C8902A]",
+    offset: "lg:-ml-6",
+  },
+  {
+    rank: "2nd",
+    prize: "$300",
+    name: "Roqia Qasemi",
+    title: "When Did I Feel That I Am a Strong Girl?",
+    quote:
+      "You close the door, I will reach my dreams through the window. You beat me, I will use my blood as ink for my pen.",
+    slug: "when-did-i-feel-that-i-am-a-strong-girl",
+    cover:
+      "bg-[radial-gradient(120%_90%_at_28%_8%,#5FB6F0_0%,transparent_55%),linear-gradient(160deg,#2C72B6_0%,#194B7E_62%,#123A63_100%)] text-[#EAF3FB]",
+    ribbon: "bg-gradient-to-b from-[#2E9BE6] to-[#1E78C4]",
+    offset: "lg:ml-1.5",
+  },
+  {
+    rank: "3rd",
+    prize: "$200",
+    name: "Nazifa Popal",
+    title: "What I Carried in My Voice",
+    quote:
+      "Every limitation had been, in its own crooked and unasked-for way, a preparation. And I had used all of it.",
+    slug: "what-i-carried-in-my-voice",
+    cover:
+      "bg-[radial-gradient(120%_90%_at_28%_8%,#5C7793_0%,transparent_55%),linear-gradient(160deg,#33445C_0%,#212E42_60%,#18222F_100%)] text-[#E7ECF3]",
+    ribbon: "bg-gradient-to-b from-[#46586F] to-[#33445C]",
+    offset: "lg:ml-9",
+  },
+];
 
-        <div className="mt-12 flex items-center justify-center gap-10 md:gap-16">
-          {[
-            { n: "300+", label: "Submissions" },
-            { n: "3", label: "Honorees" },
-            { n: "5", label: "Cash Winners" },
-          ].map((s) => (
-            <div key={s.label}>
-              <p className="text-primary font-serif text-4xl md:text-5xl">
-                {s.n}
-              </p>
-              <p className="text-background/40 mt-1.5 text-xs tracking-wide">
-                {s.label}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <Link
-          href="/hervoice/winners"
-          className="group bg-background text-foreground mt-12 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
-        >
-          Explore Winning Stories
-          <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
-        </Link>
-      </div>
+const StoryCover = ({
+  title,
+  author,
+  cover,
+}: {
+  title: string;
+  author: string;
+  cover: string;
+}) => (
+  <div
+    className={`relative h-[140px] w-[104px] flex-none overflow-hidden rounded-[5px] shadow-[0_1px_2px_rgba(10,15,25,.25),0_14px_28px_-16px_rgba(10,15,25,.55)] transition-transform duration-[450ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:-translate-y-1 group-hover:-rotate-2 ${cover}`}
+  >
+    <div className="absolute inset-[7px] flex flex-col items-center justify-center gap-[7px] rounded-[2px] border border-white/30 px-2 py-2 text-center">
+      <span className="text-[6.5px] font-bold tracking-[0.22em] uppercase opacity-70">
+        HerVoice &middot; 2026
+      </span>
+      <span className="font-serif text-xs leading-[1.05] font-medium italic">
+        {title}
+      </span>
+      <span className="h-px w-[18px] bg-current opacity-50" />
+      <span className="text-[6.5px] font-semibold tracking-[0.16em] uppercase opacity-60">
+        {author}
+      </span>
     </div>
-  </section>
+    <span className="absolute top-0 bottom-0 left-0 w-[5px] bg-black/20 shadow-[inset_-1px_0_0_rgba(255,255,255,.12)]" />
+  </div>
 );
+
+const ContestSeal = () => (
+  <div className="relative size-32">
+    <svg
+      viewBox="0 0 120 120"
+      aria-hidden="true"
+      className="h-full w-full animate-[spin_26s_linear_infinite]"
+    >
+      <defs>
+        <path
+          id="hv-seal-path"
+          d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"
+        />
+      </defs>
+      <circle
+        cx="60"
+        cy="60"
+        r="56"
+        fill="none"
+        stroke="#E0AE3C"
+        strokeWidth="1.4"
+      />
+      <circle
+        cx="60"
+        cy="60"
+        r="44"
+        fill="none"
+        stroke="#E0AE3C"
+        strokeWidth="1"
+        strokeDasharray="1.5 4.5"
+        opacity="0.8"
+      />
+      <text
+        fill="#E0AE3C"
+        style={{ fontSize: "9.2px", fontWeight: 700, letterSpacing: "3px" }}
+      >
+        <textPath href="#hv-seal-path" startOffset="0">
+          HERVOICE &middot; CELEBRATING WINNERS &middot;{" "}
+        </textPath>
+      </text>
+    </svg>
+    <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+      <p className="font-serif text-[26px] leading-none font-bold">2026</p>
+      <p className="mt-0.5 text-[8.5px] font-bold tracking-[0.2em] text-[#E0AE3C] uppercase">
+        Winners
+      </p>
+    </div>
+  </div>
+);
+
+const HerVoiceContest = () => {
+  const ref = useRef<HTMLElement>(null);
+  const [vis, setVis] = useState(false);
+
+  useEffect(() => {
+    const ob = new IntersectionObserver(
+      ([e]) => e.isIntersecting && setVis(true),
+      { threshold: 0.15 }
+    );
+    if (ref.current) ob.observe(ref.current);
+    return () => ob.disconnect();
+  }, []);
+
+  const rise = (i: number, hover = false) => ({
+    opacity: vis ? 1 : 0,
+    transform: vis ? "translateY(0)" : "translateY(1.5rem)",
+    transition:
+      `opacity 0.8s cubic-bezier(0.2,0.7,0.2,1) ${i * 90}ms, transform 0.8s cubic-bezier(0.2,0.7,0.2,1) ${i * 90}ms` +
+      (hover
+        ? ", translate 0.45s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.45s cubic-bezier(0.2,0.7,0.2,1)"
+        : ""),
+  });
+
+  return (
+    <section
+      ref={ref}
+      className="bg-foreground text-background relative isolate overflow-hidden py-28 md:py-40"
+    >
+      {/* ambient color blobs */}
+      <div className="pointer-events-none absolute -top-40 -right-40 size-[520px] rounded-full bg-[radial-gradient(circle_at_38%_36%,rgba(46,155,230,.12),transparent_62%)]" />
+      <div className="pointer-events-none absolute -bottom-44 -left-32 size-[460px] rounded-full bg-[radial-gradient(circle_at_60%_40%,rgba(224,174,60,.1),transparent_62%)]" />
+
+      <div className="relative container">
+        <div className="grid gap-14 lg:grid-cols-[1fr_1.12fr] lg:items-center lg:gap-10">
+          {/* Left — headline, seal, stats, CTA */}
+          <div>
+            <p
+              className="text-secondary text-xs font-semibold tracking-[0.3em] uppercase"
+              style={rise(0)}
+            >
+              EmpowerHer Presents
+            </p>
+            <h2
+              className="mt-5 font-serif text-4xl leading-[1.02] md:text-6xl"
+              style={rise(1)}
+            >
+              HerVoice <span className="text-primary">2026</span>
+              <br />
+              Writing Contest
+            </h2>
+            <p
+              className="text-background/60 mt-6 max-w-md text-base leading-relaxed md:text-lg"
+              style={rise(2)}
+            >
+              Courage, identity, and storytelling — by Afghan girls and women,
+              written from within Afghanistan.
+            </p>
+
+            <div className="mt-8" style={rise(3)}>
+              <ContestSeal />
+            </div>
+
+            <div className="mt-8 flex gap-8 md:gap-10" style={rise(4)}>
+              {[
+                { n: "300+", label: "Submissions", cls: "text-primary" },
+                { n: "3", label: "Honorees", cls: "text-secondary" },
+                { n: "5", label: "Cash Winners", cls: "text-primary" },
+              ].map((s) => (
+                <div key={s.label}>
+                  <p className={`font-serif text-4xl md:text-5xl ${s.cls}`}>
+                    {s.n}
+                  </p>
+                  <p className="text-background/40 mt-1.5 text-[11px] font-semibold tracking-[0.12em] uppercase">
+                    {s.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10" style={rise(5)}>
+              <Link
+                href="/hervoice/winners"
+                className="group bg-background text-foreground inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.98]"
+              >
+                Explore Winning Stories
+                <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Right — staggered winner cards */}
+          <div className="flex flex-col gap-4">
+            {CONTEST_WINNERS.map((w, i) => (
+              <Link
+                key={w.slug}
+                href={`/hervoice/${w.slug}`}
+                style={rise(3 + i, true)}
+                className={`group bg-background text-foreground grid grid-cols-[104px_1fr] items-center gap-5 rounded-2xl p-[18px] shadow-[0_18px_44px_-30px_rgba(0,0,0,.5)] hover:-translate-x-1.5 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-32px_rgba(0,0,0,.6)] ${w.offset}`}
+              >
+                <StoryCover title={w.title} author={w.name} cover={w.cover} />
+                <div className="min-w-0">
+                  <div className="flex items-baseline justify-between gap-2.5">
+                    <span className="truncate text-lg font-bold">{w.name}</span>
+                    <span className="flex items-center gap-2">
+                      <span
+                        className={`inline-block rounded-md px-2.5 py-1 text-[11px] font-bold tracking-[0.1em] text-white uppercase ${w.ribbon}`}
+                      >
+                        {w.rank}
+                      </span>
+                      <span className="font-serif text-lg font-bold text-[#C8902A]">
+                        {w.prize}
+                      </span>
+                    </span>
+                  </div>
+                  <p className="text-primary mt-0.5 truncate font-serif text-base italic">
+                    {w.title}
+                  </p>
+                  <p className="text-muted-foreground mt-2 line-clamp-3 text-[13px] leading-snug">
+                    &ldquo;{w.quote}&rdquo;
+                  </p>
+                  <span className="mt-2.5 inline-flex items-center gap-1.5 text-[13px] font-bold whitespace-nowrap text-[#C8902A] transition-all duration-500 group-hover:gap-2.5">
+                    Read Preview
+                    <ArrowRight className="size-3.5" />
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 /* ─── Impact Story — Editorial image + text ────────────────────────────────── */
 

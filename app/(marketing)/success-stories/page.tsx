@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Heart } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
 
@@ -260,6 +260,32 @@ const SprPull = () => (
   </section>
 );
 
+/* ─── Closing CTA ───────────────────────────────────────────────────────────── */
+
+const ClosingCTA = () => (
+  <section className="py-28 md:py-40">
+    <div className="container">
+      <div className="mx-auto max-w-2xl text-center">
+        <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+          Be Part of the Next Story
+        </p>
+        <h2 className="mt-5 font-serif text-3xl md:text-5xl">
+          Want to support more stories like this?
+        </h2>
+        <div className="mt-10">
+          <Link
+            href="/get-involved"
+            className="group bg-foreground text-background hover:shadow-foreground/10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
+          >
+            <Heart className="size-4" />
+            Get Involved
+          </Link>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 /* ─── Page ──────────────────────────────────────────────────────────────────── */
 
 export default function SuccessStoriesPage() {
@@ -269,6 +295,7 @@ export default function SuccessStoriesPage() {
       <PageOfHope />
       <EducationalSupport />
       <SprPull />
+      <ClosingCTA />
     </>
   );
 }
