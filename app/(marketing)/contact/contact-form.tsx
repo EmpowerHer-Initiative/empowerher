@@ -22,7 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required").max(200),
-  email: z.string().email("Please enter a valid email"),
+  email: z.email("Please enter a valid email"),
   subject: z.string().min(1, "Subject is required").max(500),
   phone: z.string().max(20).optional().or(z.literal("")),
   message: z
@@ -64,6 +64,7 @@ export const ContactForm = () => {
         toast.success("Message sent successfully!");
       },
       onError: (error) => {
+        console.log(error);
         toast.error(error.message || "Something went wrong. Please try again.");
       },
     });
