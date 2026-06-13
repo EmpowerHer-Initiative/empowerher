@@ -15,13 +15,15 @@ const useCreateUser = () => {
       email: string;
       password: string;
       name: string;
-      role: "user" | "admin";
+      role: "user" | "staff" | "admin";
     }) => {
+      // Better Auth's admin plugin only knows "user" | "admin" — "staff" is
+      // applied afterwards via users.adminUpdate (writes role directly).
       const { data: newUser, error } = await authClient.admin.createUser({
         email, // required
         password, // required
         name, // required
-        role,
+        role: role === "staff" ? "user" : role,
       });
 
       if (error) {

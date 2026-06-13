@@ -72,6 +72,21 @@ export const adminProcedure = authenticatedProcedure.use(
   }
 );
 
+export const staffProcedure = authenticatedProcedure.use(
+  async ({ next, ctx }) => {
+    const role = ctx.session.user.role;
+
+    if (role !== "admin" && role !== "staff") {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "You are not authorized to access this resource",
+      });
+    }
+
+    return next({ ctx });
+  }
+);
+
 export const verificationProcedure = baseProcedure
   .input(z.object({ id: z.string() }))
   .use(async ({ next, input, ctx }) => {

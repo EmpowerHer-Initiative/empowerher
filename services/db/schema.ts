@@ -10,7 +10,9 @@ import {
   pgTable,
   text,
   timestamp,
+  unique,
   uuid,
+  varchar,
 } from "drizzle-orm/pg-core";
 
 export interface UserMetadata {
@@ -166,7 +168,9 @@ export type EmailTemplateName =
   | "verify-email"
   | "reset-password"
   | "setup-account"
-  | "contact-form";
+  | "contact-form"
+  | "reject-student"
+  | "approve-student";
 
 export type EmailLogMetadata = {
   to: string;
@@ -210,3 +214,154 @@ export const webhookEvents = pgTable("webhook_events", {
   createdAt: timestamp("created_at").defaultNow(),
   payload: jsonb("payload").$type<unknown>().notNull(),
 });
+
+// ── Content ──────────────────────────────────────────────────────────────────
+
+export const commentsTable = pgTable("comments", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  from: varchar("from", { length: 255 }).notNull(),
+  blogName: varchar("blog_name", { length: 255 }).notNull(),
+  message: text().notNull(),
+  createdAt: timestamp().notNull().defaultNow(),
+  status: varchar("status", { enum: ["pending", "approved", "rejected"] })
+    .notNull()
+    .default("pending"),
+});
+
+export const teachersTable = pgTable("teachers", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  index: integer().notNull().default(0).unique(),
+  name: varchar("name", { length: 255 }).notNull().unique(),
+  headTitle: varchar("head_title", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }),
+  phone: varchar("phone", { length: 255 }),
+  createdAt: timestamp().notNull().defaultNow(),
+  avatar: varchar("avatar", { length: 255 }),
+  description: text(),
+  role: text("role", { enum: ["mentor", "executive", "lecturer", "director"] })
+    .notNull()
+    .default("mentor"),
+});
+
+export const projectsTable = pgTable("projects", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar("name", { length: 255 }).notNull().unique(),
+  createdAt: timestamp().notNull().defaultNow(),
+  description: text().notNull(),
+  image: varchar("image", { length: 255 }).notNull(),
+  link: varchar("link", { length: 255 }).notNull(),
+  status: varchar("status", { enum: ["pending", "approved", "rejected"] })
+    .notNull()
+    .default("pending"),
+});
+
+export const workshopsTable = pgTable("workshops", {
+  id: uuid("id")
+    .default(sql`gen_random_uuid()`)
+    .primaryKey(),
+  name: varchar("name", { length: 255 }).notNull().unique(),
+  mentors: varchar("mentors", { length: 255 }).array().notNull().default([]),
+  createdAt: timestamp().notNull().defaultNow(),
+  description: text().notNull(),
+  image: varchar("image", { length: 255 }).notNull(),
+  link: varchar("link", { length: 255 }).notNull(),
+  status: varchar("status", { enum: ["pending", "approved", "rejected"] })
+    .notNull()
+    .default("pending"),
+  classCode: varchar("class_code", { length: 255 }).notNull(),
+});
+
+export const studentsTable = pgTable(
+  "students",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    name: varchar("name", { length: 255 }).notNull(),
+    email: varchar("email", { length: 255 }),
+    createdAt: timestamp().notNull().defaultNow(),
+    workshopId: uuid("workshop_id")
+      .references(() => workshopsTable.id)
+      .notNull(),
+    status: varchar("status", { enum: ["pending", "approved"] })
+      .notNull()
+      .default("pending"),
+    emailId: text("email_id"),
+    period: integer().notNull(),
+  },
+  (table) => ({
+    emailPeriodUnique: unique().on(table.email, table.period),
+  })
+);
+
+export const rejectedStudentsTable = pgTable(
+  "rejected_students",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    email: varchar("email", { length: 255 }).notNull(),
+    createdAt: timestamp().notNull().defaultNow(),
+    emailSent: boolean().notNull().default(false),
+    period: integer().notNull(),
+    emailSentAt: timestamp("email_sent_at"),
+    emailId: text("email_id"),
+  },
+  (table) => ({
+    emailPeriodUnique: unique().on(table.email, table.period),
+  })
+);
+
+export const allStudentsTable = pgTable("all_students", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  createdAt: timestamp().notNull().defaultNow(),
+});
+
+export const resourcesTable = pgTable("resources", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar("name").notNull(),
+  createdAt: timestamp().notNull().defaultNow(),
+  description: text().notNull(),
+  image: varchar("image").notNull(),
+  location: varchar("location").notNull(),
+  link: varchar("link").notNull(),
+  deadline: varchar("deadline", { length: 255 }),
+  status: varchar("status", { enum: ["active", "expired", "remote"] })
+    .notNull()
+    .default("active"),
+  type: varchar("type", { length: 255 }),
+});
+
+export const featuredWritingsTable = pgTable("featured_writings", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text().notNull(),
+  image: varchar("image", { length: 255 }).notNull(),
+  link: varchar("link", { length: 255 }).notNull(),
+  from: varchar("from", { length: 255 }).notNull(),
+  createdAt: timestamp().notNull().defaultNow(),
+});
+
+export type Comment = typeof commentsTable.$inferSelect;
+export type InsertComment = typeof commentsTable.$inferInsert;
+
+export type Teacher = typeof teachersTable.$inferSelect;
+export type InsertTeacher = typeof teachersTable.$inferInsert;
+
+export type Project = typeof projectsTable.$inferSelect;
+export type InsertProject = typeof projectsTable.$inferInsert;
+
+export type Workshop = typeof workshopsTable.$inferSelect;
+export type InsertWorkshop = typeof workshopsTable.$inferInsert;
+
+export type Student = typeof studentsTable.$inferSelect;
+export type InsertStudent = typeof studentsTable.$inferInsert;
+
+export type RejectedStudent = typeof rejectedStudentsTable.$inferSelect;
+export type InsertRejectedStudent = typeof rejectedStudentsTable.$inferInsert;
+
+export type AllStudent = typeof allStudentsTable.$inferSelect;
+export type InsertAllStudent = typeof allStudentsTable.$inferInsert;
+
+export type Resource = typeof resourcesTable.$inferSelect;
+export type InsertResource = typeof resourcesTable.$inferInsert;
+
+export type FeaturedWriting = typeof featuredWritingsTable.$inferSelect;
+export type InsertFeaturedWriting = typeof featuredWritingsTable.$inferInsert;

@@ -43,7 +43,7 @@ const formSchema = z.object({
   password: z.string().min(8, {
     message: "Passwords must be 8 characters or more.",
   }),
-  role: z.enum(["user", "admin"]),
+  role: z.enum(["user", "staff", "admin"]),
 });
 
 export const CreateUser = () => {
@@ -67,7 +67,11 @@ export const CreateUser = () => {
     createUser(values, {
       onSuccess: (data) => {
         adminUpdate(
-          { id: data.user.id, metadata: { mustChangePassword: true } },
+          {
+            id: data.user.id,
+            role: values.role,
+            metadata: { mustChangePassword: true },
+          },
           {
             onSuccess: () => {
               setIsOpen(false);
@@ -177,6 +181,7 @@ export const CreateUser = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="user">User</SelectItem>
+                      <SelectItem value="staff">Staff</SelectItem>
                       <SelectItem value="admin">Admin</SelectItem>
                     </SelectContent>
                   </Select>

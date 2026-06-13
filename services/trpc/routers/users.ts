@@ -116,7 +116,7 @@ export const usersRouter = createTRPCRouter({
           image: z.string().optional(),
           banned: z.boolean().optional(),
           banReason: z.string().optional(),
-          role: z.enum(["user", "admin"]).optional(),
+          role: z.enum(["user", "staff", "admin"]).optional(),
           emailVerified: z.boolean().optional(),
           metadata: z.record(z.string(), z.unknown()).optional(),
         })

@@ -19,6 +19,13 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
   name: z.string().min(3, {
@@ -160,6 +167,29 @@ export const PersonalInformation = () => {
             </Field>
           )}
         />
+        <Field>
+          <FieldLabel>Role</FieldLabel>
+          <FieldContent>
+            <Select
+              value={user?.role ?? "user"}
+              onValueChange={(role) => {
+                updateUser.mutate({
+                  id,
+                  role: role as "user" | "staff" | "admin",
+                });
+              }}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="user">User</SelectItem>
+                <SelectItem value="staff">Staff</SelectItem>
+                <SelectItem value="admin">Admin</SelectItem>
+              </SelectContent>
+            </Select>
+          </FieldContent>
+        </Field>
       </form>
     </div>
   );

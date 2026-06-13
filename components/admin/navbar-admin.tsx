@@ -15,6 +15,11 @@ const links: { label: string; href: string }[] = [
   },
   { label: "Media", href: "/admin/media" },
   { label: "Logs", href: "/admin/logs" },
+  { label: "Comments", href: "/admin/comments" },
+  { label: "Resources", href: "/admin/resources" },
+  { label: "Featured Writings", href: "/admin/featured-writings" },
+  { label: "All Students", href: "/admin/all-students" },
+  { label: "Staff Area", href: "/staff" },
 ];
 
 export const NavbarAdmin = () => {
