@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
 import { useLogout } from "@/services/auth/hooks/use-functions";
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
-import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";

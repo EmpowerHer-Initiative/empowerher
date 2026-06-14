@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
-import { auth } from "@/services/auth/auth";
 import { toNextJsHandler } from "better-auth/next-js";
+
+import { auth } from "@/services/auth/auth";
 
 const handler = toNextJsHandler(auth);
 

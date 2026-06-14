@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useCurrentUser, useUpdateUser } from "@/services/auth/hooks/use-user";
 import { toast } from "sonner";
 
 import { useUpload } from "@/hooks/use-upload";
+import { useCurrentUser, useUpdateUser } from "@/services/auth/hooks/use-user";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";

@@ -1,9 +1,10 @@
 "use client";
 
 import { Suspense, useMemo, useState } from "react";
-import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
+
+import { useTRPC } from "@/services/trpc/client";
 
 import {
   InputGroup,

@@ -1,3 +1,7 @@
+import { TRPCError } from "@trpc/server";
+import { count, desc, eq, ilike } from "drizzle-orm";
+import { z } from "zod";
+
 import { db } from "@/services/db/index";
 import {
   allStudentsTable,
@@ -5,9 +9,6 @@ import {
   studentsTable,
 } from "@/services/db/schema";
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
-import { TRPCError } from "@trpc/server";
-import { count, desc, eq, ilike } from "drizzle-orm";
-import { z } from "zod";
 
 // The roster spans three tables (accepted, rejected, newsletter). Expose it as
 // a single deduped union subquery so pagination/search/sort run in Postgres.

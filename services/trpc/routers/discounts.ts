@@ -1,11 +1,12 @@
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+
 import { polarClient } from "@/services/auth/auth";
 import {
   adminProcedure,
   baseProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
-import { TRPCError } from "@trpc/server";
-import { z } from "zod";
 
 export const discountsRouter = createTRPCRouter({
   list: adminProcedure.query(async () => {

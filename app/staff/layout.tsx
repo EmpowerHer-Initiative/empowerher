@@ -1,8 +1,8 @@
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
-import { auth } from "@/services/auth/auth";
 
 import { cn } from "@/lib/utils";
+import { auth } from "@/services/auth/auth";
 
 import { NavbarStaff } from "@/components/staff/navbar-staff";
 import { PeriodProvider } from "@/components/staff/period-context";

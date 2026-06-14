@@ -1,10 +1,11 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeftIcon, Loader, OctagonAlert } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
+
+import { useTRPC } from "@/services/trpc/client";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

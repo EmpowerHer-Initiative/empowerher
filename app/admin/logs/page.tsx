@@ -1,9 +1,6 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
-import type { EmailLogMetadata } from "@/services/db/schema";
-import { queryClient, useTRPC } from "@/services/trpc/client";
-import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { useDebounce } from "@uidotdev/usehooks";
@@ -19,6 +16,9 @@ import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
+import type { EmailLogMetadata } from "@/services/db/schema";
+import { queryClient, useTRPC } from "@/services/trpc/client";
+import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
 import {
   AlertDialog,

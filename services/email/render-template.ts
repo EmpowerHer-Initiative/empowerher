@@ -1,6 +1,7 @@
 import { createElement, type ComponentType } from "react";
-import type { EmailTemplateName } from "@/services/db/schema";
 import { render } from "@react-email/render";
+
+import type { EmailTemplateName } from "@/services/db/schema";
 
 type TemplateComponent = ComponentType<Record<string, string | undefined>>;
 

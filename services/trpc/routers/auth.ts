@@ -1,4 +1,8 @@
 import { headers } from "next/headers";
+import { TRPCError } from "@trpc/server";
+import { eq } from "drizzle-orm";
+import z from "zod";
+
 import { auth } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
 import { session, verification } from "@/services/db/schema";
@@ -8,9 +12,6 @@ import {
   baseProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
-import { TRPCError } from "@trpc/server";
-import { eq } from "drizzle-orm";
-import z from "zod";
 
 import { rateLimit } from "../middleware/rate-limit";
 

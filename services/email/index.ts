@@ -1,11 +1,11 @@
 import type { ReactElement } from "react";
-import type { EmailTemplateName } from "@/services/db/schema";
-import { log } from "@/services/log";
 import { SES } from "@aws-sdk/client-ses";
 import { render } from "@react-email/render";
 import MailComposer from "nodemailer/lib/mail-composer";
 
 import { siteConfig } from "@/lib/site";
+import type { EmailTemplateName } from "@/services/db/schema";
+import { log } from "@/services/log";
 
 let ses: SES | null = null;
 

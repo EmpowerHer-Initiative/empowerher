@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
+
+import { useTRPC } from "@/services/trpc/client";
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";

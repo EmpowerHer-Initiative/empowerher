@@ -1,11 +1,12 @@
 import { useParams } from "next/navigation";
-import { useRevokeSession } from "@/services/auth/hooks/use-user";
-import { useTRPC } from "@/services/trpc/client";
-import { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useQuery } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
 import { MoreHorizontal } from "lucide-react";
 import { UAParser } from "ua-parser-js";
+
+import { useRevokeSession } from "@/services/auth/hooks/use-user";
+import { useTRPC } from "@/services/trpc/client";
+import { RouterOutputs } from "@/services/trpc/routers/_app";
 
 import { Button } from "@/components/ui/button";
 import {

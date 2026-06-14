@@ -1,8 +1,9 @@
 import { useParams } from "next/navigation";
-import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { Mail, MoreHorizontal } from "lucide-react";
+
+import { useTRPC } from "@/services/trpc/client";
 
 import { Button } from "@/components/ui/button";
 import {

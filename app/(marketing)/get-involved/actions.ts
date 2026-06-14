@@ -1,13 +1,13 @@
 "use server";
 
 import { createElement } from "react";
+import { z } from "zod";
+
+import { siteConfig } from "@/lib/site";
 import { email } from "@/services/email";
 import PartnerEmail from "@/services/email/emails/partner-with-us";
 import VolunteerEmail from "@/services/email/emails/volunteer-with-us";
 import { rateLimit } from "@/services/trpc/middleware/rate-limit";
-import { z } from "zod";
-
-import { siteConfig } from "@/lib/site";
 
 type ActionResult = { success: true } | { error: string };
 

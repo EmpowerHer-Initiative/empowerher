@@ -1,4 +1,9 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { addMonths, addYears, format, formatDistanceToNow } from "date-fns";
+import { toast } from "sonner";
+
+import { cn } from "@/lib/utils";
 import { useAccess } from "@/services/auth/hooks/use-access";
 import {
   useCheckout,
@@ -8,11 +13,6 @@ import {
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
-import { useQuery } from "@tanstack/react-query";
-import { addMonths, addYears, format, formatDistanceToNow } from "date-fns";
-import { toast } from "sonner";
-
-import { cn } from "@/lib/utils";
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {

@@ -1,6 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+
 import { authClient } from "@/services/auth/auth-client";
 import {
   useChangeOwnPassword,
@@ -8,10 +13,6 @@ import {
   useDismissPasswordChange,
 } from "@/services/auth/hooks/use-user";
 import type { UserMetadata } from "@/services/db/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {

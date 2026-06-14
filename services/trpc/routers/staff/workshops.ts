@@ -1,3 +1,7 @@
+import { TRPCError } from "@trpc/server";
+import { desc, eq } from "drizzle-orm";
+import { z } from "zod";
+
 import { db } from "@/services/db/index";
 import { workshopsTable } from "@/services/db/schema";
 import {
@@ -5,9 +9,6 @@ import {
   createTRPCRouter,
   staffProcedure,
 } from "@/services/trpc/init";
-import { TRPCError } from "@trpc/server";
-import { desc, eq } from "drizzle-orm";
-import { z } from "zod";
 
 export const staffWorkshopsRouter = createTRPCRouter({
   list: staffProcedure.query(async () => {

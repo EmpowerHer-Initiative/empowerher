@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useIsAdmin } from "@/services/auth/hooks/use-role";
 
 import { cn } from "@/lib/utils";
+import { useIsAdmin } from "@/services/auth/hooks/use-role";
 
 import {
   Select,

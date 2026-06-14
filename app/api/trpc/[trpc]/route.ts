@@ -1,7 +1,8 @@
+import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+
 import { createTRPCContext } from "@/services/trpc/init";
 import { ALLOWED_ORIGINS } from "@/services/trpc/lib/allow-origin";
 import { appRouter } from "@/services/trpc/routers/_app";
-import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 // Get allowed origins from environment variables and defaults
 function getAllowedOrigins(): string[] {

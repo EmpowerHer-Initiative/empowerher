@@ -1,9 +1,9 @@
-import { db } from "@/services/db/index";
-import { verification } from "@/services/db/schema";
 import { eq } from "drizzle-orm";
 import z from "zod";
 
 import { generateId } from "@/lib/utils";
+import { db } from "@/services/db/index";
+import { verification } from "@/services/db/schema";
 
 import { baseProcedure, createTRPCRouter } from "../init";
 

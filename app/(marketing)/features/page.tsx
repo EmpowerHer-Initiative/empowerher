@@ -1,9 +1,10 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
+
 import { useAccess } from "@/services/auth/hooks/use-access";
 import { useCheckout } from "@/services/auth/hooks/use-payments";
 import { useTRPC } from "@/services/trpc/client";
-import { useQuery } from "@tanstack/react-query";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

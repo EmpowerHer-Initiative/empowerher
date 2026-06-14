@@ -21,6 +21,7 @@
     "^@/config/(.*)$",
     "^@/lib/(.*)$",
     "^@/hooks/(.*)$",
+    "^@/services/(.*)$",
     "",
     "^@/components/ui/(.*)$",
     "^@/components/(.*)$",

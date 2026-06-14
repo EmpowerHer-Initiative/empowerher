@@ -1,3 +1,6 @@
+import { asc, eq } from "drizzle-orm";
+import { z } from "zod";
+
 import { db } from "@/services/db/index";
 import { products } from "@/services/db/schema";
 import {
@@ -5,8 +8,6 @@ import {
   baseProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
-import { asc, eq } from "drizzle-orm";
-import { z } from "zod";
 
 export const productsRouter = createTRPCRouter({
   list: baseProcedure.query(async () => {

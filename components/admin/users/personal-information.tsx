@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
-import { queryClient, useTRPC } from "@/services/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
@@ -8,6 +7,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { useUpload } from "@/hooks/use-upload";
+import { queryClient, useTRPC } from "@/services/trpc/client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";

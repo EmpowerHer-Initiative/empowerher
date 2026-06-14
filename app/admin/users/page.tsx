@@ -2,8 +2,6 @@
 
 import { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useTRPC } from "@/services/trpc/client";
-import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useQuery } from "@tanstack/react-query";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { useDebounce } from "@uidotdev/usehooks";
@@ -11,6 +9,8 @@ import { ChevronDown, ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 
 import { cn } from "@/lib/utils";
+import { useTRPC } from "@/services/trpc/client";
+import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
 import { Button } from "@/components/ui/button";
 import {

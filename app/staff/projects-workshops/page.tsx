@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useIsAdmin } from "@/services/auth/hooks/use-role";
-import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
+
+import { useIsAdmin } from "@/services/auth/hooks/use-role";
+import { useTRPC } from "@/services/trpc/client";
 
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/data-table";

@@ -1,11 +1,12 @@
+import { TRPCError } from "@trpc/server";
+import { and, count, desc, eq, ilike, lt, sql } from "drizzle-orm";
+import { z } from "zod";
+
 import { db } from "@/services/db/index";
 import { activityLog, type EmailLogMetadata } from "@/services/db/schema";
 import { email } from "@/services/email";
 import { renderTemplate } from "@/services/email/render-template";
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
-import { TRPCError } from "@trpc/server";
-import { and, count, desc, eq, ilike, lt, sql } from "drizzle-orm";
-import { z } from "zod";
 
 export const logsRouter = createTRPCRouter({
   tableSize: adminProcedure.query(async () => {

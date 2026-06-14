@@ -1,11 +1,11 @@
-import { useResendEmailVerification } from "@/services/auth/hooks/use-functions";
-import { useCurrentUser, useUpdateUser } from "@/services/auth/hooks/use-user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
 import { useNugsVerifyEmail } from "@/hooks/use-nugs";
+import { useResendEmailVerification } from "@/services/auth/hooks/use-functions";
+import { useCurrentUser, useUpdateUser } from "@/services/auth/hooks/use-user";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";

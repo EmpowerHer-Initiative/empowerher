@@ -294,7 +294,7 @@ const Mission = () => {
             We see you. We hear you.{" "}
             <span className="text-primary italic">And we are with you.</span>
           </h2>
-          <div className="text-muted-foreground mx-auto mt-8 max-w-2xl space-y-5 text-center text-base leading-[1.8] md:text-lg">
+          <div className="text-muted-foreground mx-auto mt-8 max-w-2xl space-y-5 text-base leading-[1.8] md:text-lg">
             <p>
               EmpowerHer was born from the hope and strength that you carry
               within you—even in the darkest of days. You are not forgotten.

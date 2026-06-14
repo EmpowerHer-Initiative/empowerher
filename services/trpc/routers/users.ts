@@ -1,4 +1,8 @@
 import { headers } from "next/headers";
+import { TRPCError } from "@trpc/server";
+import { and, count, desc, eq, ilike, or } from "drizzle-orm";
+import { z } from "zod";
+
 import { auth } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
 import { account, user, type UserMetadata } from "@/services/db/schema";
@@ -8,9 +12,6 @@ import {
   authenticatedProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
-import { TRPCError } from "@trpc/server";
-import { and, count, desc, eq, ilike, or } from "drizzle-orm";
-import { z } from "zod";
 
 async function mergeUserMetadata(userId: string, patch: Partial<UserMetadata>) {
   const [current] = await db

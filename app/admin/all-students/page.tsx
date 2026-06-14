@@ -1,8 +1,6 @@
 "use client";
 
 import { Suspense, useEffect, useMemo, useState } from "react";
-import { queryClient, useTRPC } from "@/services/trpc/client";
-import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
@@ -21,6 +19,8 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { cn } from "@/lib/utils";
+import { queryClient, useTRPC } from "@/services/trpc/client";
+import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
 import { Button } from "@/components/ui/button";
 import {

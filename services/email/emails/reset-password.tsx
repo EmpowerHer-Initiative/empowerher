@@ -1,7 +1,7 @@
-import EmailLayout from "@/services/email/components/layout";
 import { Heading, Link, Section, Text } from "@react-email/components";
 
 import { siteConfig } from "@/lib/site";
+import EmailLayout from "@/services/email/components/layout";
 
 interface ResetPasswordProps {
   resetPasswordLink?: string;

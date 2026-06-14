@@ -1,7 +1,8 @@
 import React from "react";
-import { authClient } from "@/services/auth/auth-client";
 import { useQuery } from "@tanstack/react-query";
 import { KeyRound } from "lucide-react";
+
+import { authClient } from "@/services/auth/auth-client";
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";

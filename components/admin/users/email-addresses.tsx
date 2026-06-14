@@ -1,9 +1,10 @@
 import { useParams } from "next/navigation";
-import { useUpdateAdminUser } from "@/services/auth/hooks/use-admin";
-import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { BadgeCheck, BadgeX, Mail, MoreHorizontal } from "lucide-react";
+
+import { useUpdateAdminUser } from "@/services/auth/hooks/use-admin";
+import { useTRPC } from "@/services/trpc/client";
 
 import { Button } from "@/components/ui/button";
 import {

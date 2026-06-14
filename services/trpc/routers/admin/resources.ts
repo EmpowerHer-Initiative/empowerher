@@ -1,8 +1,9 @@
+import { desc, eq } from "drizzle-orm";
+import { z } from "zod";
+
 import { db } from "@/services/db/index";
 import { resourcesTable } from "@/services/db/schema";
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
-import { desc, eq } from "drizzle-orm";
-import { z } from "zod";
 
 export const adminResourcesRouter = createTRPCRouter({
   list: adminProcedure.query(async () => {

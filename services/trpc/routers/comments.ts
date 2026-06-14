@@ -1,8 +1,9 @@
+import { and, desc, eq } from "drizzle-orm";
+import { z } from "zod";
+
 import { db } from "@/services/db/index";
 import { commentsTable } from "@/services/db/schema";
 import { baseProcedure, createTRPCRouter } from "@/services/trpc/init";
-import { and, desc, eq } from "drizzle-orm";
-import { z } from "zod";
 
 import { rateLimit } from "../middleware/rate-limit";
 

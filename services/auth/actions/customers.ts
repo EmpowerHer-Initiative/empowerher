@@ -1,6 +1,7 @@
+import { eq } from "drizzle-orm";
+
 import { db } from "@/services/db/index";
 import { user } from "@/services/db/schema";
-import { eq } from "drizzle-orm";
 
 import { deleteFile } from "../../trpc/routers/files-action";
 

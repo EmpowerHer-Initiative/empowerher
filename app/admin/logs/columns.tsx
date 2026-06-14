@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import type { EmailLogMetadata } from "@/services/db/schema";
-import { queryClient, useTRPC } from "@/services/trpc/client";
-import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useMutation } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatDistanceToNow } from "date-fns";
 import { Copy, MoreHorizontal, RefreshCw, Trash } from "lucide-react";
 import { toast } from "sonner";
+
+import type { EmailLogMetadata } from "@/services/db/schema";
+import { queryClient, useTRPC } from "@/services/trpc/client";
+import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
 import {
   AlertDialog,

@@ -1,9 +1,10 @@
-import { db } from "@/services/db/index";
-import { teachersTable } from "@/services/db/schema";
-import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { asc, eq, sql } from "drizzle-orm";
 import { z } from "zod";
+
+import { db } from "@/services/db/index";
+import { teachersTable } from "@/services/db/schema";
+import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
 
 export const staffTeachersRouter = createTRPCRouter({
   list: adminProcedure.query(async () => {

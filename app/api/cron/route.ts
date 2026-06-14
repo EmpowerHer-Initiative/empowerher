@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { cronJobs } from "@/services/cron";
 
 export async function GET(req: NextRequest) {

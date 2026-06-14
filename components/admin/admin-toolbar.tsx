@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { WrenchIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { useCurrentUser } from "@/services/auth/hooks/use-user";
 
 import { Button } from "@/components/ui/button";
 

@@ -1,8 +1,9 @@
 "use client";
 
-import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
+
+import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
 type AllStudent = RouterOutputs["admin"]["allStudents"]["list"][number];
 

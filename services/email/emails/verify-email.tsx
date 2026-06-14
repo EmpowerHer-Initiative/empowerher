@@ -1,7 +1,7 @@
-import EmailLayout from "@/services/email/components/layout";
 import { Heading, Section, Text } from "@react-email/components";
 
 import { siteConfig } from "@/lib/site";
+import EmailLayout from "@/services/email/components/layout";
 
 interface VerifyEmailProps {
   verificationCode?: string;

@@ -1,10 +1,10 @@
+import { toast } from "sonner";
+
+import { useNugsVerifyEmail } from "@/hooks/use-nugs";
 import {
   useResendEmailVerification,
   useVerifyEmail,
 } from "@/services/auth/hooks/use-functions";
-import { toast } from "sonner";
-
-import { useNugsVerifyEmail } from "@/hooks/use-nugs";
 
 import {
   AlertDialog,

@@ -4,12 +4,11 @@ import { DM_Serif_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 import { Suspense } from "react";
-import { TRPCReactProvider } from "@/services/trpc/client";
-import { DevTools } from "@alisamadiillc/devtools";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { TRPCReactProvider } from "@/services/trpc/client";
 
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -75,7 +74,6 @@ export default function RootLayout({
                 {children}
               </Suspense>
               <Toaster />
-              <DevTools />
             </NuqsAdapter>
           </ThemeProvider>
         </TRPCReactProvider>

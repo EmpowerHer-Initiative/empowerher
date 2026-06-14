@@ -1,10 +1,11 @@
 import { useRouter, useSearchParams } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+
 import { authClient } from "@/services/auth/auth-client";
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import { RouterOutputs } from "@/services/trpc/routers/_app";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
 
 const useSignup = () => {
   const trpc = useTRPC();

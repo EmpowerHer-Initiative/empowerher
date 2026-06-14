@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { Plus, Trash2 } from "lucide-react";
+
 import {
   useRemoveMetadataKey,
   useUpdateMetadata,
 } from "@/services/auth/hooks/use-admin";
 import { useTRPC } from "@/services/trpc/client";
-import { useQuery } from "@tanstack/react-query";
-import { Plus, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

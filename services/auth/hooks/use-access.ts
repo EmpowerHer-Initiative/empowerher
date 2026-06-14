@@ -1,4 +1,3 @@
-import type { paymentsRouter } from "@/services/trpc/routers/payments";
 import type { inferRouterOutputs } from "@trpc/server";
 
 import {
@@ -7,6 +6,7 @@ import {
   type PlanKey,
   type ProductKey,
 } from "@/config/plans";
+import type { paymentsRouter } from "@/services/trpc/routers/payments";
 
 import { useGetCustomerState } from "./use-payments";
 

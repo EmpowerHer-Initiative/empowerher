@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { notFound } from "next/navigation";
-import { useIsAdmin } from "@/services/auth/hooks/use-role";
-import { queryClient, useTRPC } from "@/services/trpc/client";
-import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Mail, Pencil, Phone, Plus, Trash } from "lucide-react";
 import { toast } from "sonner";
+
+import { useIsAdmin } from "@/services/auth/hooks/use-role";
+import { queryClient, useTRPC } from "@/services/trpc/client";
+import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
 import {
   AlertDialog,

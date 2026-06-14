@@ -1,4 +1,11 @@
 import { createElement } from "react";
+import { polar, portal, usage, webhooks } from "@polar-sh/better-auth";
+import { Polar } from "@polar-sh/sdk";
+import { APIError, betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { nextCookies } from "better-auth/next-js";
+import { admin, bearer, emailOTP } from "better-auth/plugins";
+
 import { db } from "@/services/db/index";
 import {
   account,
@@ -8,12 +15,6 @@ import {
   webhookEvents,
 } from "@/services/db/schema";
 import { ALLOWED_ORIGINS } from "@/services/trpc/lib/allow-origin";
-import { polar, portal, usage, webhooks } from "@polar-sh/better-auth";
-import { Polar } from "@polar-sh/sdk";
-import { APIError, betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { nextCookies } from "better-auth/next-js";
-import { admin, bearer, emailOTP } from "better-auth/plugins";
 
 import { email as emailService } from "../email";
 import ResetPassword from "../email/emails/reset-password";

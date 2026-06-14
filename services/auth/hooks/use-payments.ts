@@ -1,7 +1,8 @@
 import { useRouter } from "next/navigation";
-import { queryClient, useTRPC } from "@/services/trpc/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+
+import { queryClient, useTRPC } from "@/services/trpc/client";
 
 import { authClient } from "../auth-client";
 

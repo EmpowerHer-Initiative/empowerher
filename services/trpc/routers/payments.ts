@@ -1,4 +1,10 @@
 import { cookies } from "next/headers";
+import type { SubscriptionProrationBehavior } from "@polar-sh/sdk/models/components/subscriptionprorationbehavior.js";
+import { ResourceNotFound } from "@polar-sh/sdk/models/errors/resourcenotfound.js";
+import { TRPCError } from "@trpc/server";
+import { asc, desc, eq } from "drizzle-orm";
+import { z } from "zod";
+
 import { removeCustomer } from "@/services/auth/actions";
 import { polarClient } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
@@ -14,11 +20,6 @@ import {
   baseProcedure,
   createTRPCRouter,
 } from "@/services/trpc/init";
-import type { SubscriptionProrationBehavior } from "@polar-sh/sdk/models/components/subscriptionprorationbehavior.js";
-import { ResourceNotFound } from "@polar-sh/sdk/models/errors/resourcenotfound.js";
-import { TRPCError } from "@trpc/server";
-import { asc, desc, eq } from "drizzle-orm";
-import { z } from "zod";
 
 export const paymentsRouter = createTRPCRouter({
   // ─── Customer State ──────────────────────────────────────────────

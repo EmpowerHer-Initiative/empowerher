@@ -1,4 +1,8 @@
 import { createElement } from "react";
+import { TRPCError } from "@trpc/server";
+import { and, asc, eq } from "drizzle-orm";
+import { z } from "zod";
+
 import { db } from "@/services/db/index";
 import {
   rejectedStudentsTable,
@@ -8,9 +12,6 @@ import {
 import { email } from "@/services/email";
 import ApproveStudentEmail from "@/services/email/emails/approve-student";
 import { createTRPCRouter, staffProcedure } from "@/services/trpc/init";
-import { TRPCError } from "@trpc/server";
-import { and, asc, eq } from "drizzle-orm";
-import { z } from "zod";
 
 export const staffStudentsRouter = createTRPCRouter({
   list: staffProcedure

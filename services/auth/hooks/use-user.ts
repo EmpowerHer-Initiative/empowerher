@@ -1,5 +1,6 @@
-import { queryClient, useTRPC } from "@/services/trpc/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
+
+import { queryClient, useTRPC } from "@/services/trpc/client";
 
 const useCurrentUser = () => {
   const trpc = useTRPC();

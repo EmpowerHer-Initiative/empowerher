@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { useTRPC } from "@/services/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Ellipsis, Lock } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+
+import { useTRPC } from "@/services/trpc/client";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";

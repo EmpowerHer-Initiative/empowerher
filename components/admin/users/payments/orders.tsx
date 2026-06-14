@@ -1,8 +1,9 @@
 import { useParams } from "next/navigation";
-import { useTRPC } from "@/services/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { Braces } from "lucide-react";
+
+import { useTRPC } from "@/services/trpc/client";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

@@ -1,10 +1,11 @@
 "use client";
 
-import { useTRPC } from "@/services/trpc/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { MessageCircle } from "lucide-react";
 import { toast } from "sonner";
+
+import { useTRPC } from "@/services/trpc/client";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
