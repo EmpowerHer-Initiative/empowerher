@@ -93,60 +93,12 @@ const SplitScreen = () => (
   </section>
 );
 
-/* ─── Why It Matters ─────────────────────────────────────────────────────────── */
-
-const WhyItMatters = () => (
-  <section className="py-28 md:py-40">
-    <div className="container">
-      <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
-        <div>
-          <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-            Why It Matters
-          </p>
-          <h2 className="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
-            Your support reaches girls who have no other path
-          </h2>
-        </div>
-        <div className="text-muted-foreground space-y-6">
-          <p className="text-base leading-relaxed">
-            Since September 2021, Afghan girls over the age of 12 have been
-            banned from attending school. EmpowerHer exists to bridge that gap —
-            through mentorship, workshops, and publication platforms — giving
-            girls the tools to learn, grow, and lead when the world has closed
-            its doors on them.
-          </p>
-          <p className="text-base leading-relaxed">
-            Whether you bring organizational resources or personal expertise,
-            your contribution directly shapes the lives of girls navigating some
-            of the harshest conditions on earth.
-          </p>
-          <div className="border-border grid grid-cols-3 gap-8 border-t pt-8">
-            {[
-              { value: "1.1M", label: "Girls lost access to education" },
-              { value: "2.5M", label: "School-aged girls out of school" },
-              { value: "30%", label: "Never attended primary school" },
-            ].map((stat) => (
-              <div key={stat.value}>
-                <p className="font-serif text-4xl leading-none">{stat.value}</p>
-                <p className="text-muted-foreground mt-2 text-xs">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
 /* ─── Page ─────────────────────────────────────────────────────────────────── */
 
 export default function GetInvolvedPage() {
   return (
     <>
       <SplitScreen />
-      <WhyItMatters />
     </>
   );
 }

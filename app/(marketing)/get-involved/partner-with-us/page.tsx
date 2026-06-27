@@ -2,16 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle,
-  Globe,
-  HandshakeIcon,
-  Loader2,
-  Megaphone,
-  Sparkles,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle, Loader2 } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
 
@@ -34,35 +25,6 @@ const initialState: FormState = {
   organization: "",
   message: "",
 };
-
-/* ─── What partners get ─────────────────────────────────────────────────────── */
-
-const perks = [
-  {
-    icon: Globe,
-    title: "Global Reach",
-    description:
-      "Be recognized on our platform and reach communities across Afghanistan and the diaspora.",
-  },
-  {
-    icon: HandshakeIcon,
-    title: "Co-Creation",
-    description:
-      "Co-create educational programs and workshops directly advancing Afghan girls' access to learning.",
-  },
-  {
-    icon: Megaphone,
-    title: "Social Impact",
-    description:
-      "Amplify your organization's social impact mission with a credible, youth-led initiative.",
-  },
-  {
-    icon: Sparkles,
-    title: "Network Access",
-    description:
-      "Connect with a growing network of changemakers, educators, and advocates worldwide.",
-  },
-];
 
 /* ─── Partner form component ────────────────────────────────────────────────── */
 
@@ -228,7 +190,7 @@ const PartnerForm = ({
       <button
         type="submit"
         disabled={loading}
-        className="group bg-foreground text-background hover:shadow-foreground/10 inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98] disabled:opacity-70"
+        className="group bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98] disabled:opacity-70"
       >
         {loading ? (
           <>
@@ -238,7 +200,7 @@ const PartnerForm = ({
         ) : (
           <>
             Submit Partnership Inquiry
-            <span className="bg-background/10 flex size-6 items-center justify-center rounded-full transition-transform duration-500 group-hover:translate-x-0.5">
+            <span className="bg-primary-foreground/15 flex size-6 items-center justify-center rounded-full transition-transform duration-500 group-hover:translate-x-0.5">
               <ArrowRight className="size-3.5" />
             </span>
           </>
@@ -326,25 +288,6 @@ export default function PartnerWithUsPage() {
             the form below. A member of our team will be in touch to explore
             potential partnership opportunities.
           </p>
-
-          {/* Perks */}
-          <div className="mt-12 space-y-6">
-            {perks.map((perk) => (
-              <div key={perk.title} className="flex gap-4">
-                <div className="border-border bg-foreground/5 mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl border">
-                  <perk.icon className="text-muted-foreground size-4" />
-                </div>
-                <div>
-                  <p className="text-foreground text-sm font-semibold">
-                    {perk.title}
-                  </p>
-                  <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
-                    {perk.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
         <div className="border-border relative mt-16 border-t pt-8">

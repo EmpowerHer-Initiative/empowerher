@@ -5,14 +5,10 @@ import Link from "next/link";
 import {
   ArrowLeft,
   ArrowRight,
-  BookOpen,
   CheckCircle,
   FileText,
   Loader2,
-  Monitor,
-  Palette,
   Upload,
-  Users,
   X,
 } from "lucide-react";
 
@@ -33,35 +29,6 @@ const initialState: FormState = {
   email: "",
   message: "",
 };
-
-/* ─── Volunteer roles ───────────────────────────────────────────────────────── */
-
-const roles = [
-  {
-    icon: BookOpen,
-    title: "Lecturer",
-    description:
-      "Deliver guest sessions on topics in education, leadership, or professional skills.",
-  },
-  {
-    icon: Users,
-    title: "Mentor",
-    description:
-      "Guide students through our 6-week workshop cycles and capstone projects.",
-  },
-  {
-    icon: Palette,
-    title: "Creative Arts",
-    description:
-      "Lead workshops in creative writing, visual arts, or cultural storytelling.",
-  },
-  {
-    icon: Monitor,
-    title: "Tech & Admin",
-    description:
-      "Support our team with technical, communications, or administrative tasks.",
-  },
-];
 
 /* ─── Volunteer form component ─────────────────────────────────────────────── */
 
@@ -173,8 +140,8 @@ const VolunteerForm = ({
       {/* CV Upload */}
       <div className="space-y-2">
         <label className="text-foreground/80 text-sm font-medium">
-          CV / Resume{" "}
-          <span className="text-muted-foreground">(PDF, optional)</span>
+          CV / Resume <span className="text-primary">*</span>{" "}
+          <span className="text-muted-foreground">(PDF)</span>
         </label>
         <div
           onDragOver={onDragOver}
@@ -265,7 +232,7 @@ const VolunteerForm = ({
       <button
         type="submit"
         disabled={loading}
-        className="group bg-foreground text-background hover:shadow-foreground/10 inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98] disabled:opacity-70"
+        className="group bg-primary text-primary-foreground hover:shadow-primary/20 inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98] disabled:opacity-70"
       >
         {loading ? (
           <>
@@ -275,7 +242,7 @@ const VolunteerForm = ({
         ) : (
           <>
             Submit Volunteer Application
-            <span className="bg-background/10 flex size-6 items-center justify-center rounded-full transition-transform duration-500 group-hover:translate-x-0.5">
+            <span className="bg-primary-foreground/15 flex size-6 items-center justify-center rounded-full transition-transform duration-500 group-hover:translate-x-0.5">
               <ArrowRight className="size-3.5" />
             </span>
           </>
@@ -306,6 +273,7 @@ export default function VolunteerWithUsPage() {
       next.email = "Please enter a valid email address";
     }
     if (!form.message.trim()) next.message = "Message is required";
+    if (!cvFile) next.cv = "Resume is required";
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -390,25 +358,6 @@ export default function VolunteerWithUsPage() {
             learning. We value diverse voices committed to educating and
             empowering Afghan girls and youth.
           </p>
-
-          {/* Roles */}
-          <div className="mt-12 space-y-6">
-            {roles.map((role) => (
-              <div key={role.title} className="flex gap-4">
-                <div className="border-border bg-foreground/5 mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl border">
-                  <role.icon className="text-muted-foreground size-4" />
-                </div>
-                <div>
-                  <p className="text-foreground text-sm font-semibold">
-                    {role.title}
-                  </p>
-                  <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
-                    {role.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
 
           <div className="border-border bg-foreground/5 mt-10 rounded-xl border p-5">
             <p className="text-muted-foreground text-xs">

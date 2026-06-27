@@ -21,22 +21,20 @@ const HerVoiceHero = () => (
         {/* Left: large editorial title */}
         <div>
           <p className="text-primary mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
-            Creative Storytelling Platform
+            Publication Platform
           </p>
-          <h1 className="font-serif text-6xl leading-[1.0] md:text-8xl lg:text-9xl">
-            Her
-            <br />
-            Voice
+          <h1 className="font-serif text-5xl leading-[1.0] md:text-7xl lg:text-8xl">
+            HerVoice
           </h1>
         </div>
 
         {/* Right: description + CTA */}
         <div className="lg:pb-4">
           <p className="text-muted-foreground text-lg leading-relaxed md:text-xl">
-            HerVoice is EmpowerHer&apos;s creative storytelling platform, where
-            students can publish their original writings and express themselves
-            freely. At EmpowerHer, we believe in the power of words to heal,
-            connect, and drive change.
+            HerVoice is EmpowerHer&apos;s creative storytelling and publication
+            platform, where students can publish their original writings and
+            express themselves freely. At EmpowerHer, we believe in the power of
+            words to heal, connect, and drive change.
           </p>
           <blockquote className="border-primary/20 mt-8 border-l-2 pl-6 font-serif text-xl leading-relaxed italic">
             Many of our students have demonstrated remarkable resilience and
@@ -73,10 +71,10 @@ const HerVoiceHero = () => (
             </a>
             <Link
               href="/writing-contest"
-              className="text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm font-medium transition-colors"
+              className="group border-primary/40 text-foreground hover:border-primary hover:bg-primary/5 hover:shadow-primary/10 inline-flex items-center gap-2 rounded-full border px-6 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
             >
               2026 Writing Contest
-              <ArrowUpRight className="size-4" />
+              <ArrowUpRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </div>
         </div>
@@ -107,8 +105,8 @@ const HowToSubmit = () => (
           </p>
 
           {/* Guidelines — border-left style like co-founder quotes */}
-          <div className="mt-12 space-y-6">
-            <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+          <div className="mt-12 space-y-5">
+            <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase">
               Important Guidelines
             </p>
             {[
@@ -129,11 +127,16 @@ const HowToSubmit = () => (
                 "All submissions will be reviewed by the EmpowerHer team.",
               ],
             ].map(([label, text]) => (
-              <div key={label} className="border-border border-l-2 pl-5">
-                <p className="text-muted-foreground text-sm font-semibold">
+              <div
+                key={label}
+                className="group border-primary/30 hover:border-primary hover:bg-primary/[0.04] rounded-r-lg border-l-2 py-1.5 pl-5 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:translate-x-1"
+              >
+                <p className="text-foreground group-hover:text-primary text-lg font-semibold transition-colors duration-500">
                   {label}
                 </p>
-                <p className="text-muted-foreground mt-1 text-sm">{text}</p>
+                <p className="text-muted-foreground mt-1 text-base leading-relaxed">
+                  {text}
+                </p>
               </div>
             ))}
           </div>
@@ -167,14 +170,14 @@ const HowToSubmit = () => (
               key={step.num}
               className="flex gap-6 py-8 first:pt-0 last:pb-0"
             >
-              <span className="text-primary font-serif text-4xl md:text-5xl">
+              <span className="text-primary font-serif text-5xl md:text-6xl">
                 {step.num}
               </span>
               <div className="pt-1">
-                <h3 className="text-foreground text-base font-semibold">
+                <h3 className="text-foreground text-lg font-semibold md:text-xl">
                   {step.title}
                 </h3>
-                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+                <p className="text-muted-foreground mt-2 text-base leading-relaxed">
                   {step.desc}
                 </p>
               </div>
@@ -200,14 +203,14 @@ const Eligibility = () => (
           <h2 className="mt-4 font-serif text-3xl leading-tight md:text-5xl">
             Eligibility
           </h2>
-          <p className="text-muted-foreground mt-6 text-base leading-[1.8]">
+          <p className="text-foreground/70 mt-6 text-base leading-[1.8]">
             HerVoice is open exclusively to students who have been accepted into
             EmpowerHer&apos;s Mentorship Program.
           </p>
 
           {/* Priority callout — editorial blockquote style */}
-          <div className="border-primary/20 mt-10 border-l-2 pl-6">
-            <p className="text-muted-foreground/50 text-xs font-semibold tracking-[0.2em] uppercase">
+          <div className="border-primary/30 border-l-primary bg-primary/[0.05] mt-10 rounded-2xl border border-l-4 p-6">
+            <p className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
               Priority Given To
             </p>
             <p className="text-foreground mt-2 text-base">
@@ -219,7 +222,7 @@ const Eligibility = () => (
                 Creative Writing and Storytelling Workshop
               </Link>
             </p>
-            <p className="text-muted-foreground/60 mt-3 text-sm">
+            <p className="text-muted-foreground mt-3 text-sm">
               However, submissions are welcome from all currently enrolled
               participants.
             </p>
@@ -229,7 +232,7 @@ const Eligibility = () => (
           <div className="divide-border/40 mt-12 space-y-0 divide-y">
             <div className="pb-6">
               <h3 className="text-sm font-semibold">Workshop Enrollment</h3>
-              <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+              <p className="text-foreground/70 mt-2 text-sm leading-relaxed">
                 If you are attending{" "}
                 <span className="text-foreground font-medium">any</span>{" "}
                 EmpowerHer workshop, you are eligible to submit your writing.
@@ -237,7 +240,7 @@ const Eligibility = () => (
             </div>
             <div className="pt-6">
               <h3 className="text-sm font-semibold">Submission Process</h3>
-              <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+              <p className="text-foreground/70 mt-2 text-sm leading-relaxed">
                 Email your submission to{" "}
                 <a
                   href="mailto:hervoice@empowerher-initiative.org"
@@ -257,34 +260,34 @@ const Eligibility = () => (
 
         {/* Right — content requirements as large stat-style cards */}
         <div className="flex flex-col justify-center">
-          <p className="text-muted-foreground/50 text-xs font-semibold tracking-[0.3em] uppercase">
+          <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
             Content Requirements
           </p>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
-            <div className="bg-muted/30 overflow-hidden rounded-[2rem] p-8">
+            <div className="border-border/60 bg-muted/60 hover:border-primary/30 overflow-hidden rounded-[2rem] border p-8 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg">
               <p className="text-primary font-serif text-4xl md:text-5xl">
                 900–1000
               </p>
               <p className="mt-3 text-sm font-semibold">Word Count</p>
-              <p className="text-muted-foreground/60 mt-1 text-xs">
+              <p className="text-muted-foreground mt-1 text-xs">
                 12-point font, single-spaced
               </p>
             </div>
-            <div className="bg-muted/30 overflow-hidden rounded-[2rem] p-8">
+            <div className="border-border/60 bg-muted/60 hover:border-primary/30 overflow-hidden rounded-[2rem] border p-8 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg">
               <p className="text-primary font-serif text-4xl md:text-5xl">40</p>
               <p className="mt-3 text-sm font-semibold">Max Poetry Lines</p>
-              <p className="text-muted-foreground/60 mt-1 text-xs">
+              <p className="text-muted-foreground mt-1 text-xs">
                 Poems should not exceed this limit
               </p>
             </div>
           </div>
 
-          {/* Warning — subtle inline */}
-          <div className="mt-6 border-l-2 border-rose-300/50 pl-5">
-            <p className="text-muted-foreground text-sm">
+          {/* Warning — red notice */}
+          <div className="mt-6 rounded-xl border border-l-4 border-red-200 border-l-red-600 bg-red-50 py-4 pr-5 pl-5">
+            <p className="text-foreground/80 text-sm">
               Due to a high volume of submissions, we{" "}
-              <span className="text-foreground font-semibold">
+              <span className="font-semibold text-red-700">
                 cannot accept pieces that exceed the word limit
               </span>
               .
@@ -327,27 +330,17 @@ const FeaturedWritings = ({ page }: { page: number }) => {
               Writings
             </h2>
           </div>
-          <Link
-            href="/hervoice/featured-writings-from-our-partners"
-            className="text-primary hover:text-primary/80 inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
-          >
-            Featured Writings from Our Partners
-            <ArrowRight className="size-3.5" />
-          </Link>
         </div>
 
-        {/* Magazine-style list */}
-        <div className="divide-border/40 divide-y">
+        {/* Editorial card grid */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {paginatedStories.map((story, i) => (
             <Link
               key={story._meta.path}
               href={`/hervoice/${story._meta.path}`}
-              className="group hover:bg-background grid grid-cols-[auto_1fr_auto] items-center gap-5 py-8 transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] sm:grid-cols-[auto_180px_1fr_auto] lg:grid-cols-[auto_260px_1fr_auto]"
+              className="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col overflow-hidden rounded-2xl border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl"
             >
-              <span className="text-muted-foreground/40 shrink-0 font-serif text-sm">
-                {String((currentPage - 1) * PER_PAGE + i + 1).padStart(2, "0")}
-              </span>
-              <div className="relative hidden aspect-[16/10] overflow-hidden rounded-xl sm:block">
+              <div className="bg-muted relative aspect-[16/10] overflow-hidden">
                 {story.image && (
                   <img
                     src={story.image}
@@ -355,19 +348,26 @@ const FeaturedWritings = ({ page }: { page: number }) => {
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
                   />
                 )}
+                <span className="bg-background/90 text-foreground absolute top-4 left-4 rounded-full px-3 py-1 font-serif text-xs backdrop-blur-sm">
+                  {String((currentPage - 1) * PER_PAGE + i + 1).padStart(
+                    2,
+                    "0"
+                  )}
+                </span>
               </div>
-              <div className="min-w-0">
-                <p className="group-hover:text-primary truncate leading-snug font-medium transition-colors duration-300">
+              <div className="flex flex-1 flex-col p-6">
+                <p className="group-hover:text-primary font-serif text-xl leading-snug transition-colors duration-300">
                   &ldquo;{story.title}&rdquo;
                 </p>
                 {story.authorName && (
-                  <p className="text-muted-foreground mt-1 text-sm">
+                  <p className="text-muted-foreground mt-2 text-sm">
                     {story.authorName}
                   </p>
                 )}
-              </div>
-              <div className="flex shrink-0 items-center gap-2">
-                <ArrowRight className="text-muted-foreground/30 group-hover:text-primary size-4 transition-all duration-300 group-hover:translate-x-0.5" />
+                <span className="text-muted-foreground/50 group-hover:text-primary mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-medium transition-colors duration-300">
+                  Read story
+                  <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+                </span>
               </div>
             </Link>
           ))}
@@ -410,6 +410,12 @@ const CongressionalTestimonies = () => (
         <h2 className="text-foreground font-serif text-4xl leading-[1.1] md:text-5xl">
           Congressional Testimonies
         </h2>
+
+        <p className="text-muted-foreground mt-8 max-w-2xl text-base leading-relaxed">
+          These two congressional testimonies were shared for publication by the
+          Afghan Scouts Relief Fund (ASRF) with the EmpowerHer HerVoice
+          Initiative.
+        </p>
 
         {/* Centered blockquote */}
         <div className="border-border my-16 border-l-2 pl-8">
@@ -476,61 +482,81 @@ const CongressionalTestimonies = () => (
 
 /* ─── Partners ──────────────────────────────────────────────────────────────── */
 
+const partnerOrgs = [
+  {
+    name: "Amplify Afghan Women",
+    location: "Melbourne, Australia",
+    href: "https://sites.google.com/view/amplifyafghans/home",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBzmSPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O9",
+  },
+  {
+    name: "National Society of High School Scholars (NSHSS)",
+    location: "Atlanta, Georgia",
+    href: "https://www.nshss.org/",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTjPNmNesfkIRBuYnTVcl8O9LdXP5103pNyJUt",
+  },
+  {
+    name: "Humanitas Media",
+    location: "Minneapolis, Minnesota",
+    href: "https://humanitasmedia.org/",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT2HJysqLQtJ7K2Z4UcWn3gCXRdBvVoY9Ohil8",
+  },
+  {
+    name: "Inanna Publications",
+    location: "Toronto, Canada",
+    href: "https://inanna.ca/",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTIznPr82WufQtTg5yH7OAp0KFlsjbkaYIPZB",
+  },
+];
+
 const PartnerSupport = () => (
   <section className="py-28 md:py-40">
     <div className="container">
-      <div className="grid gap-16 lg:grid-cols-2 lg:gap-32">
-        <div>
-          <p className="text-primary mb-6 text-xs font-semibold tracking-[0.3em] uppercase">
-            Our Partners
-          </p>
-          <h2 className="font-serif text-4xl leading-[1.1] md:text-5xl">
-            Support from Partners
-          </h2>
-        </div>
+      <div className="max-w-3xl">
+        <p className="text-primary mb-6 text-xs font-semibold tracking-[0.3em] uppercase">
+          Our Partners
+        </p>
+        <h2 className="font-serif text-4xl leading-[1.1] md:text-5xl">
+          Support from Partners
+        </h2>
+        <p className="text-foreground/70 mt-8 text-base leading-[1.8] md:text-lg">
+          EmpowerHer is proud to partner with four respected publication
+          organizations: Amplify Afghan Women, the National Society of High
+          School Scholars (NSHSS), Humanitas Media, and Inanna Publications.
+          Through HerVoice and our partners&apos; platforms, we advocate for
+          girls&apos; education, storytelling, and creative expression. Our
+          partners help our students publish their work and reach wider
+          audiences across the globe. With the support of these organizations
+          and their communities, we are creating a space where Afghan girls can
+          share their stories and voices with the world.
+        </p>
+      </div>
 
-        <div>
-          <p className="text-muted-foreground text-base leading-relaxed">
-            EmpowerHer is proud to partner with two respected publication
-            organizations: Amplify Afghan Women, and the National Society of
-            High School Scholars (NSHSS). Through HerVoice and our
-            partners&apos; platforms, we aim to advocate for girls&apos;
-            education, storytelling, and creative expression. Our partners help
-            our members publish their pieces on their platforms and reach a
-            wider audience across the globe. With the support of our partners
-            and their communities, we are creating a space where girls can share
-            their stories with the world.
-          </p>
-
-          <div className="divide-border/40 mt-10 space-y-0 divide-y">
-            <a
-              href="https://sites.google.com/view/amplifyafghans/home"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group hover:text-primary flex items-center justify-between py-5 transition-colors duration-300"
-            >
-              <span className="font-semibold">Amplify Afghan Women</span>
-              <span className="text-muted-foreground group-hover:text-primary flex items-center gap-1.5 text-xs transition-colors duration-300">
-                Melbourne, Australia
-                <ArrowUpRight className="size-4" />
-              </span>
-            </a>
-            <a
-              href="https://www.nshss.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group hover:text-primary flex items-center justify-between py-5 transition-colors duration-300"
-            >
-              <span className="font-semibold">
-                National Society of High School Scholars (NSHSS)
-              </span>
-              <span className="text-muted-foreground group-hover:text-primary flex items-center gap-1.5 text-xs transition-colors duration-300">
-                Atlanta, Georgia
-                <ArrowUpRight className="size-4" />
-              </span>
-            </a>
-          </div>
-        </div>
+      <div className="mt-16 grid gap-5 sm:grid-cols-2">
+        {partnerOrgs.map((p) => (
+          <a
+            key={p.name}
+            href={p.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group border-border/60 bg-background hover:border-primary/40 hover:shadow-primary/5 flex items-center gap-5 rounded-2xl border p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
+          >
+            <div className="border-border/60 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border bg-white p-2">
+              <img
+                src={p.logo}
+                alt={p.name}
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="group-hover:text-primary leading-snug font-semibold transition-colors duration-300">
+                {p.name}
+              </p>
+              <p className="text-muted-foreground mt-1 text-sm">{p.location}</p>
+            </div>
+            <ArrowUpRight className="text-muted-foreground group-hover:text-primary size-5 shrink-0 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+        ))}
       </div>
     </div>
   </section>

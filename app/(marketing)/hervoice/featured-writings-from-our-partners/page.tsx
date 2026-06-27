@@ -4,6 +4,11 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
 
+import { Pagination } from "@/components/pagination";
+
+const PER_PAGE = 4;
+const BASE_PATH = "/hervoice/featured-writings-from-our-partners";
+
 export const metadata: Metadata = {
   title: `Featured Writings from Our Partners — ${siteConfig.name}`,
   description:
@@ -165,9 +170,9 @@ const WritingCard = ({ writing }: { writing: Writing }) => (
     href={writing.link}
     target="_blank"
     rel="noopener noreferrer"
-    className="group border-border/20 grid gap-5 border-b py-8 last:border-0 sm:grid-cols-[160px_1fr] sm:gap-8"
+    className="group border-border/20 grid gap-5 border-b py-8 last:border-0 sm:grid-cols-[320px_1fr] sm:gap-8 lg:grid-cols-[400px_1fr]"
   >
-    <div className="relative aspect-[16/9] overflow-hidden rounded-xl sm:aspect-[4/3]">
+    <div className="relative aspect-[16/9] overflow-hidden rounded-xl">
       <img
         src={writing.image}
         alt={writing.title}
@@ -204,17 +209,27 @@ const WritingCard = ({ writing }: { writing: Writing }) => (
 /* ─── Platform Section ───────────────────────────────────────────────────────── */
 
 const PlatformSection = ({
+  id,
   platform,
   platformUrl,
   description,
   writingsList,
+  currentPage,
+  totalPages,
+  paramName,
+  query,
 }: {
+  id: string;
   platform: string;
   platformUrl: string;
   description: string;
   writingsList: Writing[];
+  currentPage: number;
+  totalPages: number;
+  paramName: string;
+  query: Record<string, string | undefined>;
 }) => (
-  <div>
+  <div id={id} className="scroll-mt-24">
     <div className="mb-2 flex items-center gap-4">
       <span className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
         {platform}
@@ -238,15 +253,47 @@ const PlatformSection = ({
         <WritingCard key={writing.title} writing={writing} />
       ))}
     </div>
+    {totalPages > 1 && (
+      <div className="mt-10">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          basePath={BASE_PATH}
+          paramName={paramName}
+          query={query}
+          hash={`#${id}`}
+        />
+      </div>
+    )}
   </div>
 );
 
 /* ─── Page ───────────────────────────────────────────────────────────────────── */
 
-export default function FeaturedWritingsPage() {
-  const nshssWritings = writings.filter((w) => w.platform === "NSHSS");
-  const amplifyWritings = writings.filter(
-    (w) => w.platform === "Amplify Afghan Women"
+const paginate = (list: Writing[], page: number) => {
+  const totalPages = Math.max(1, Math.ceil(list.length / PER_PAGE));
+  const currentPage = Math.min(Math.max(1, page), totalPages);
+  const items = list.slice(
+    (currentPage - 1) * PER_PAGE,
+    currentPage * PER_PAGE
+  );
+  return { items, currentPage, totalPages };
+};
+
+export default async function FeaturedWritingsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ nshss?: string; amplify?: string }>;
+}) {
+  const params = await searchParams;
+
+  const nshss = paginate(
+    writings.filter((w) => w.platform === "NSHSS"),
+    Number(params.nshss) || 1
+  );
+  const amplify = paginate(
+    writings.filter((w) => w.platform === "Amplify Afghan Women"),
+    Number(params.amplify) || 1
   );
 
   return (
@@ -270,25 +317,10 @@ export default function FeaturedWritingsPage() {
               Featured Writings from Our Partners
             </h1>
             <p className="text-muted-foreground mt-8 max-w-xl text-base leading-relaxed md:text-lg">
-              Afghan girls and women sharing their truths with the world —
-              through the platforms of NSHSS and Amplify Afghan Women.
+              Afghan girls and women sharing their stories, experiences, and
+              perspectives with the world through our network of publication
+              partners.
             </p>
-
-            <div className="border-border/30 mt-12 flex items-center gap-8 border-t pt-8">
-              <div>
-                <p className="font-serif text-4xl">{writings.length}</p>
-                <p className="text-muted-foreground mt-1 text-xs font-semibold tracking-[0.2em] uppercase">
-                  Total Pieces
-                </p>
-              </div>
-              <div className="bg-border/40 h-8 w-px" />
-              <div>
-                <p className="font-serif text-4xl">2</p>
-                <p className="text-muted-foreground mt-1 text-xs font-semibold tracking-[0.2em] uppercase">
-                  Partner Platforms
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -298,56 +330,27 @@ export default function FeaturedWritingsPage() {
         <div className="container">
           <div className="mx-auto max-w-4xl space-y-24">
             <PlatformSection
+              id="nshss"
               platform="National Society of High School Scholars (NSHSS)"
               platformUrl="https://www.nshss.org/"
               description="NSHSS is an international honor society based in Atlanta, Georgia, that publishes student voices and advocates for youth leadership."
-              writingsList={nshssWritings}
+              writingsList={nshss.items}
+              currentPage={nshss.currentPage}
+              totalPages={nshss.totalPages}
+              paramName="nshss"
+              query={{ amplify: params.amplify }}
             />
             <PlatformSection
+              id="amplify"
               platform="Amplify Afghan Women"
               platformUrl="https://sites.google.com/view/amplifyafghans/home"
               description="Based in Melbourne, Australia, Amplify Afghan Women is a publication platform dedicated to amplifying the voices of Afghan women and girls across the world."
-              writingsList={amplifyWritings}
+              writingsList={amplify.items}
+              currentPage={amplify.currentPage}
+              totalPages={amplify.totalPages}
+              paramName="amplify"
+              query={{ nshss: params.nshss }}
             />
-          </div>
-        </div>
-      </section>
-
-      {/* Light footer section */}
-      <section className="bg-muted text-foreground py-28 md:py-40">
-        <div className="container">
-          <div className="max-w-4xl">
-            <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
-              Our Partners
-            </p>
-            <h2 className="text-foreground mt-5 font-serif text-4xl leading-tight md:text-5xl">
-              Stories reaching the world.
-            </h2>
-            <p className="text-muted-foreground mt-6 max-w-xl text-base leading-relaxed">
-              These organizations help Afghan girls share their stories with a
-              global audience. Visit their platforms to read more published
-              work.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <a
-                href="https://www.nshss.org/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group border-border text-foreground hover:bg-foreground/5 inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
-              >
-                Visit NSHSS
-                <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-px group-hover:-translate-y-px" />
-              </a>
-              <a
-                href="https://sites.google.com/view/amplifyafghans/home"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group border-border text-foreground hover:bg-foreground/5 inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
-              >
-                Visit Amplify Afghan Women
-                <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-px group-hover:-translate-y-px" />
-              </a>
-            </div>
           </div>
         </div>
       </section>

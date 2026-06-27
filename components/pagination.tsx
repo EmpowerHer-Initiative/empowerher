@@ -10,6 +10,10 @@ type Props = {
   totalPages: number;
   basePath: string;
   hash?: string;
+  /** Query param this pagination drives (default "page"). */
+  paramName?: string;
+  /** Other query params to preserve in generated links. */
+  query?: Record<string, string | undefined>;
 };
 
 const getPageNumbers = (current: number, total: number): (number | "...")[] => {
@@ -35,13 +39,23 @@ export const Pagination = ({
   totalPages,
   basePath,
   hash,
+  paramName = "page",
+  query = {},
 }: Props) => {
   const pages = getPageNumbers(currentPage, totalPages);
   const hasPrev = currentPage > 1;
   const hasNext = currentPage < totalPages;
 
-  const href = (page: number) =>
-    (page === 1 ? basePath : `${basePath}?page=${page}`) + (hash ?? "");
+  const href = (page: number) => {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(query)) {
+      if (value) params.set(key, value);
+    }
+    if (page <= 1) params.delete(paramName);
+    else params.set(paramName, String(page));
+    const qs = params.toString();
+    return basePath + (qs ? `?${qs}` : "") + (hash ?? "");
+  };
 
   return (
     <div className="flex items-center justify-center gap-1">

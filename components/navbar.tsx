@@ -15,10 +15,7 @@ const programs: NavItem[] = [
     href: "/mentorship",
     children: [
       { label: "Monthly Internet Scholarship (MIS)", href: "/mis" },
-      {
-        label: "Sahar Education's Secret Scholars Online Platform (SS0)",
-        href: "/sso",
-      },
+      { label: "Student Project Roadmap", href: "/success-stories/spr" },
     ],
   },
   {
@@ -35,7 +32,10 @@ const programs: NavItem[] = [
 
 const successStories: NavItem[] = [
   { label: "All Success Stories", href: "/success-stories" },
-  { label: "Student Project Roadmap", href: "/success-stories/spr" },
+  {
+    label: "Sahar Education's Secret Scholars Online Platform (SSO)",
+    href: "/sso",
+  },
 ];
 
 const navLinks: NavItem[] = [

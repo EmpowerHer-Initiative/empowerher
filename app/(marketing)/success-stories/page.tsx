@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Heart } from "lucide-react";
+import {
+  Award,
+  BookOpen,
+  Calendar,
+  ExternalLink,
+  Heart,
+  Star,
+  Users,
+} from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
 
@@ -12,250 +20,272 @@ export const metadata: Metadata = {
 /* ─── Header ────────────────────────────────────────────────────────────────── */
 
 const Header = () => (
-  <section className="py-28 md:py-40">
+  <section className="pt-28 pb-12 md:pt-40 md:pb-16">
     <div className="container">
-      <div className="max-w-3xl">
-        <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-          Real Impact
-        </p>
-        <h1 className="mt-5 font-serif text-5xl leading-[1.05] md:text-6xl lg:text-7xl">
-          Every Girl Is a Story Worth Telling
+      <div className="flex items-center justify-center gap-6">
+        <span className="via-border h-px max-w-[120px] flex-1 bg-gradient-to-r from-transparent to-transparent" />
+        <h1 className="text-center font-serif text-4xl md:text-6xl">
+          Success Stories
         </h1>
-        <p className="text-muted-foreground mt-8 max-w-xl text-base leading-relaxed md:text-lg">
-          These programs ran with limited resources and unlimited determination.
-          Each one changed lives that the world had already decided to leave
-          behind.
+        <span className="via-border h-px max-w-[120px] flex-1 bg-gradient-to-r from-transparent to-transparent" />
+      </div>
+      <p className="text-muted-foreground mx-auto mt-6 max-w-xl text-center text-base leading-relaxed">
+        Each program created meaningful change in the lives of participating
+        girls. These are their stories.
+      </p>
+    </div>
+  </section>
+);
+
+/* ─── Story Card ────────────────────────────────────────────────────────────── */
+
+type Stat = {
+  icon: React.ComponentType<{ className?: string }>;
+  value: string;
+  label: string;
+};
+
+const StatBox = ({ icon: Icon, value, label }: Stat) => (
+  <div className="bg-muted/50 rounded-2xl p-5">
+    <div className="flex items-center gap-2.5">
+      <Icon className="text-primary size-5" />
+      <span className="text-foreground text-base font-semibold">{value}</span>
+    </div>
+    <p className="text-muted-foreground mt-1.5 text-sm">{label}</p>
+  </div>
+);
+
+type StoryCardProps = {
+  logo: string;
+  title: string;
+  subtitle?: string;
+  date?: string;
+  badge?: string;
+  stats?: Stat[];
+  children: React.ReactNode;
+};
+
+const StoryCard = ({
+  logo,
+  title,
+  subtitle,
+  date,
+  badge,
+  stats,
+  children,
+}: StoryCardProps) => (
+  <div className="border-border/60 bg-background mx-auto max-w-4xl rounded-3xl border p-8 shadow-sm md:p-12">
+    {/* Logo */}
+    <div className="border-border/60 size-28 overflow-hidden rounded-2xl border bg-white">
+      <img src={logo} alt={title} className="h-full w-full object-cover" />
+    </div>
+
+    {/* Title + badge */}
+    <div className="mt-8 flex items-start justify-between gap-6">
+      <h2 className="font-serif text-3xl leading-tight md:text-4xl">{title}</h2>
+      {badge && (
+        <span className="bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium">
+          <Star className="size-3.5 fill-current" />
+          {badge}
+        </span>
+      )}
+    </div>
+
+    {subtitle && (
+      <p className="text-muted-foreground mt-3 text-lg italic">{subtitle}</p>
+    )}
+
+    {date && (
+      <div className="text-muted-foreground mt-4 flex items-center gap-2 text-sm">
+        <Calendar className="size-4" />
+        {date}
+      </div>
+    )}
+
+    {/* Stats */}
+    {stats && stats.length > 0 && (
+      <div className="mt-8 grid gap-4 sm:grid-cols-3">
+        {stats.map((s) => (
+          <StatBox key={s.value} {...s} />
+        ))}
+      </div>
+    )}
+
+    {/* Body */}
+    <div className="mt-10 space-y-6">{children}</div>
+  </div>
+);
+
+const QuoteBox = ({ children }: { children: React.ReactNode }) => (
+  <div className="bg-muted/50 border-l-primary rounded-2xl border-l-4 p-6 md:p-8">
+    <p className="text-foreground/80 text-base leading-relaxed">{children}</p>
+  </div>
+);
+
+const ImpactBox = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) => (
+  <div className="bg-muted/50 rounded-2xl p-6 md:p-8">
+    <div className="text-primary flex items-center gap-2.5">
+      <Heart className="size-5" />
+      <p className="text-foreground text-base font-semibold">{title}</p>
+    </div>
+    <p className="text-muted-foreground mt-3 text-base leading-relaxed">
+      {children}
+    </p>
+  </div>
+);
+
+/* ─── Stories ───────────────────────────────────────────────────────────────── */
+
+const Stories = () => (
+  <section className="pb-28 md:pb-40">
+    <div className="container space-y-10">
+      {/* Story 1 — Page of Hope */}
+      <StoryCard
+        logo="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTDSPjOaeh0fiZ3z8JjCWsbc2laUL6tAeqPnMN"
+        title="Page of Hope English Online Book Club"
+        subtitle="A Success Story of Language, Leadership, and Resilience"
+        date="August 2023 – January 2025"
+        badge="Featured Story"
+        stats={[
+          {
+            icon: Users,
+            value: "11 Students",
+            label: "Engaged in weekly sessions",
+          },
+          { icon: BookOpen, value: "18 Months", label: "Program duration" },
+          {
+            icon: Award,
+            value: "100% Success",
+            label: "Advanced to core programs",
+          },
+        ]}
+      >
+        <p className="text-foreground/80 text-base leading-relaxed">
+          The Page of Hope English Online Book Club was established to support
+          Afghan teenagers—particularly girls—who were denied access to formal
+          education. Over the course of 18 months, the program offered more than
+          English instruction; it provided a platform for personal growth,
+          leadership, and connection.
         </p>
-      </div>
-    </div>
-  </section>
-);
+        <QuoteBox>
+          Founded by EmpowerHer Co-Founder Mahdi Rahimi and generously sponsored
+          by the Afghan Girls Financial Assistance Fund (AGFAF), the club
+          engaged 11 students in weekly virtual sessions. Despite difficult
+          circumstances, participants demonstrated exceptional dedication as
+          they explored texts such as <em>Little Women</em> and{" "}
+          <em>Dear Martin</em>, strengthening their reading, writing, speaking,
+          and critical thinking skills.
+        </QuoteBox>
+        <p className="text-foreground/80 text-base leading-relaxed">
+          Students took on rotating leadership roles, completed capstone
+          projects, and participated in interactive activities including
+          debates, storytelling, and team-based learning exercises. By the end
+          of the program, many had transformed into confident and capable
+          communicators.
+        </p>
+        <ImpactBox title="Impact & Legacy">
+          Several participants have since advanced to AGFAF&apos;s core
+          educational programs or taken on mentoring roles within EmpowerHer.
+          Page of Hope stands as a testament to the power of consistent support
+          and the belief that even in the most challenging environments, young
+          people—especially girls—can rise, lead, and thrive.
+        </ImpactBox>
+      </StoryCard>
 
-/* ─── Story 1: Page of Hope ─────────────────────────────────────────────────── */
+      {/* Story 2 — Educational Support */}
+      <StoryCard
+        logo="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTv1o7So50TX8DRt9gfxu6sU74iOHozSwBKGJM"
+        title="Educational Support for Afghans"
+        subtitle="English Language & Creative Expression"
+        date="June 2024 – October 2024"
+        stats={[
+          { icon: Users, value: "25 Students", label: "Learners of all ages" },
+          { icon: BookOpen, value: "4 Months", label: "Program duration" },
+          {
+            icon: Award,
+            value: "12 Sessions",
+            label: "Focused grammar lessons",
+          },
+        ]}
+      >
+        <p className="text-foreground/80 text-base leading-relaxed">
+          From June 2024 through October 2024, Nahid Karimi ran a four-month
+          English course for 25 Afghan students, many of whom were girls and
+          women unable to attend school or university due to restrictive
+          conditions. The program welcomed learners of all ages, including
+          mothers, and focused on developing foundational skills in reading,
+          writing, grammar, listening, and speaking.
+        </p>
+        <QuoteBox>
+          The course emphasized creative expression through writing, classroom
+          discussions, and 12 focused grammar sessions for learning English.
+          With generous support from AGFAF, we were also able to provide monthly
+          internet access to ensure students could attend regularly and fully
+          participate in the virtual classroom environment.
+        </QuoteBox>
+        <ImpactBox title="Timeline & Reach">
+          June 2024 – October 2024. Open to girls and women of all ages,
+          building confidence and foundational English skills across the
+          community.
+        </ImpactBox>
+      </StoryCard>
 
-const PageOfHope = () => (
-  <section className="bg-muted text-foreground">
-    <div className="container py-28 md:py-40">
-      <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
-        {/* Image — left */}
-        <div className="relative">
-          <div className="relative aspect-[3/4] overflow-hidden rounded-3xl">
-            <img
-              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTDSPjOaeh0fiZ3z8JjCWsbc2laUL6tAeqPnMN"
-              alt="Page of Hope English Online Book Club"
-              className="h-full w-full object-cover"
-            />
-          </div>
-          {/* Floating date tag */}
-          <div className="bg-foreground/5 absolute -right-5 -bottom-5 rounded-2xl px-6 py-4">
-            <p className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
-              Aug 2023 – Jan 2025
-            </p>
-          </div>
-        </div>
-
-        {/* Content — right */}
-        <div>
-          <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
-            Program 01
-          </p>
-          <h2 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl">
-            Page of Hope English Online Book Club
-          </h2>
-
-          {/* Stats inline */}
-          <div className="mt-10 flex flex-wrap gap-10">
-            <div>
-              <p className="text-foreground font-serif text-6xl leading-none">
-                11
-              </p>
-              <p className="text-muted-foreground mt-2 text-sm">Students</p>
-            </div>
-            <div>
-              <p className="text-foreground font-serif text-6xl leading-none">
-                18
-              </p>
-              <p className="text-muted-foreground mt-2 text-sm">Months</p>
-            </div>
-            <div>
-              <p className="text-foreground font-serif text-6xl leading-none">
-                100%
-              </p>
-              <p className="text-muted-foreground mt-2 text-sm">
-                Advanced to core programs
-              </p>
-            </div>
-          </div>
-
-          <div className="border-border mt-10 space-y-5 border-t pt-10">
-            <p className="text-muted-foreground text-base leading-relaxed">
-              The Page of Hope English Online Book Club was established to
-              support Afghan teenagers—particularly girls—who were denied access
-              to formal education. Over the course of 18 months, the program
-              offered more than English instruction; it provided a platform for
-              personal growth, leadership, and connection.
-            </p>
-            <p className="text-muted-foreground text-base leading-relaxed">
-              Founded by EmpowerHer Co-Founder Mahdi Rahimi and generously
-              sponsored by the Afghan Girls Financial Assistance Fund (AGFAF),
-              the club engaged 11 students in weekly virtual sessions. Students
-              took on rotating leadership roles, completed capstone projects,
-              and participated in interactive activities including debates,
-              storytelling, and team-based learning exercises.
-            </p>
-            <p className="text-muted-foreground text-base leading-relaxed">
-              <span className="text-foreground font-semibold">
-                Impact &amp; Legacy:
-              </span>{" "}
-              Several participants have since advanced to AGFAF&apos;s core
-              educational programs or taken on mentoring roles within
-              EmpowerHer.
-            </p>
-          </div>
-
-          {/* Highlights */}
-          <div className="mt-8 flex flex-wrap gap-2">
-            {[
-              "Weekly virtual sessions",
-              "Little Women & Dear Martin",
-              "Leadership development",
-              "Capstone projects",
-              "Debates & storytelling",
-              "Mentoring opportunities",
-            ].map((tag) => (
-              <span
-                key={tag}
-                className="border-border text-muted-foreground rounded-full border px-4 py-1.5 text-xs font-medium"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
-/* ─── Story 2: Educational Support ─────────────────────────────────────────── */
-
-const EducationalSupport = () => (
-  <section className="py-28 md:py-40">
-    <div className="container">
-      <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
-        {/* Content — left */}
-        <div className="order-2 lg:order-1">
-          <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-            Program 02
-          </p>
-          <h2 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl">
-            Educational Support for Afghans
-          </h2>
-
-          {/* Stats inline */}
-          <div className="border-border mt-10 flex flex-wrap gap-10 border-b pb-10">
-            <div>
-              <p className="font-serif text-6xl leading-none">25</p>
-              <p className="text-muted-foreground mt-2 text-sm">Students</p>
-            </div>
-            <div>
-              <p className="font-serif text-6xl leading-none">4</p>
-              <p className="text-muted-foreground mt-2 text-sm">Months</p>
-            </div>
-            <div>
-              <p className="font-serif text-6xl leading-none">12</p>
-              <p className="text-muted-foreground mt-2 text-sm">
-                Grammar sessions
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-10 space-y-5">
-            <p className="text-muted-foreground text-base leading-relaxed">
-              From June 2024 through October 2024, EmpowerHer ran a four-month
-              English course for 25 Afghan students, many of whom were girls and
-              women unable to attend school or university due to restrictive
-              conditions. The program welcomed learners of all ages, including
-              mothers, and focused on developing foundational skills in reading,
-              writing, grammar, listening, and speaking.
-            </p>
-            <p className="text-muted-foreground text-base leading-relaxed">
-              The course emphasized creative expression through writing,
-              classroom discussions, and 12 focused grammar sessions for
-              learning English. With generous support from AGFAF, we were also
-              able to provide monthly internet access to ensure students could
-              attend regularly and fully participate in the virtual classroom
-              environment.
-            </p>
-            <p className="text-muted-foreground text-base leading-relaxed">
-              <span className="text-foreground font-semibold">Timeline:</span>{" "}
-              June 2024 – October 2024. Open to girls and women of all ages.
-            </p>
-          </div>
-
-          <div className="mt-10">
-            <Link
-              href="/get-involved"
-              className="group bg-foreground text-background hover:shadow-foreground/10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
-            >
-              Get Involved
-              <span className="bg-background/10 flex size-6 items-center justify-center rounded-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5">
-                <ArrowRight className="size-3.5" />
-              </span>
-            </Link>
-          </div>
-        </div>
-
-        {/* Image — right */}
-        <div className="relative order-1 lg:order-2">
-          <div className="relative aspect-[3/4] overflow-hidden rounded-3xl">
-            <img
-              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTv1o7So50TX8DRt9gfxu6sU74iOHozSwBKGJM"
-              alt="Educational Support for Afghans"
-              className="h-full w-full object-cover"
-            />
-          </div>
-          <div className="border-border bg-background absolute -bottom-5 -left-5 rounded-2xl border px-6 py-4">
-            <p className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
-              Jun – Oct 2024
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
-/* ─── SPR Pull ──────────────────────────────────────────────────────────────── */
-
-const SprPull = () => (
-  <section className="bg-foreground/[0.03] py-28 md:py-40">
-    <div className="container">
-      <div className="flex flex-col items-start gap-8 md:flex-row md:items-end md:justify-between">
-        <div className="max-w-xl">
-          <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-            Leadership Pathway
-          </p>
-          <h2 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl">
-            The Student Project Roadmap
-          </h2>
-          <p className="text-muted-foreground mt-6 text-base leading-relaxed">
-            For graduates ready to lead — design and run your own impact-driven
-            workshop. A structured, five-step journey from Assistant to Mentor.
-          </p>
-        </div>
-        <div className="shrink-0">
-          <Link
-            href="/success-stories/spr"
-            className="group border-border hover:border-foreground inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
+      {/* Story 3 — Sahar SSO */}
+      <StoryCard
+        logo="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT0La8F8o1jbZo7DsLPidlGr6Uf2HKquxXJ3CN"
+        title="Sahar Education's Secret Scholars Online Platform (SSO)"
+        subtitle="EmpowerHer × Sahar Education"
+        stats={[
+          { icon: Users, value: "64 Students", label: "Enrolled learners" },
+          {
+            icon: BookOpen,
+            value: "Math & English",
+            label: "Subjects covered",
+          },
+          { icon: Award, value: "Self-Paced", label: "Fully virtual courses" },
+        ]}
+      >
+        <p className="text-foreground/80 text-base leading-relaxed">
+          EmpowerHer successfully partnered with Sahar Education to provide 64
+          students with access to fully virtual, self-paced Math and English
+          courses. This collaboration expanded educational opportunities for
+          participants and supported their academic growth through flexible,
+          high-quality learning resources.
+        </p>
+        <div className="flex flex-col gap-3 sm:flex-row sm:gap-8">
+          <a
+            href="https://web.learningupgrade.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary inline-flex items-center gap-1.5 text-base font-medium underline underline-offset-4 transition-opacity hover:opacity-80"
           >
-            Learn About the SPR
-            <span className="bg-foreground/5 flex size-6 items-center justify-center rounded-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5">
-              <ArrowRight className="size-3.5" />
-            </span>
-          </Link>
+            Learn more about the platform
+            <ExternalLink className="size-4" />
+          </a>
+          <a
+            href="https://www.sahareducation.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary inline-flex items-center gap-1.5 text-base font-medium underline underline-offset-4 transition-opacity hover:opacity-80"
+          >
+            Sahar Education
+            <ExternalLink className="size-4" />
+          </a>
         </div>
-      </div>
+        <QuoteBox>
+          &ldquo;I applied to the SSO platform to improve my skills and
+          knowledge. English helped me strengthen my language skills through new
+          practical exercises. The platform was easy to use. It was supportive
+          and motivating with useful resources that made learning more
+          accessible.&rdquo;
+        </QuoteBox>
+      </StoryCard>
     </div>
   </section>
 );
@@ -263,7 +293,7 @@ const SprPull = () => (
 /* ─── Closing CTA ───────────────────────────────────────────────────────────── */
 
 const ClosingCTA = () => (
-  <section className="py-28 md:py-40">
+  <section className="pb-28 md:pb-40">
     <div className="container">
       <div className="mx-auto max-w-2xl text-center">
         <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
@@ -275,7 +305,7 @@ const ClosingCTA = () => (
         <div className="mt-10">
           <Link
             href="/get-involved"
-            className="group bg-foreground text-background hover:shadow-foreground/10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
+            className="group bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
           >
             <Heart className="size-4" />
             Get Involved
@@ -292,9 +322,7 @@ export default function SuccessStoriesPage() {
   return (
     <>
       <Header />
-      <PageOfHope />
-      <EducationalSupport />
-      <SprPull />
+      <Stories />
       <ClosingCTA />
     </>
   );

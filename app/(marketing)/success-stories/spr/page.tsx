@@ -51,9 +51,13 @@ const Hero = () => (
           Student Project Roadmap
         </h1>
         <p className="text-background/75 mt-8 max-w-xl text-base leading-relaxed md:text-lg">
-          A structured leadership pathway for EmpowerHer graduates who wish to
-          design and lead their own impact-driven online classes — directly
-          expanding educational access for Afghan girls.
+          The Student Project Roadmap (SRP) is a leadership pathway for
+          EmpowerHer students who have completed their workshops and met
+          eligibility requirements and wish to deepen their practical leadership
+          experience. Through a structured, step-by-step process, students work
+          closely with EmpowerHer&apos;s team to design and lead their own
+          impact-driven online classes, directly advancing EmpowerHer&apos;s
+          mission and expanding educational access for more Afghan girls.
         </p>
       </div>
     </div>
@@ -61,22 +65,6 @@ const Hero = () => (
 );
 
 /* ─── Intro ─────────────────────────────────────────────────────────────────── */
-
-const Intro = () => (
-  <section className="py-28 md:py-40">
-    <div className="container">
-      <div className="mx-auto max-w-2xl">
-        <p className="text-muted-foreground text-base leading-relaxed md:text-lg">
-          Through a step-by-step process, students work closely with
-          EmpowerHer&apos;s team to gain practical teaching experience, design
-          their own curriculum, and ultimately become mentors to the next cohort
-          of Afghan girls. This is not just a program — it is how we grow our
-          own leaders from within.
-        </p>
-      </div>
-    </div>
-  </section>
-);
 
 /* ─── Eligibility ───────────────────────────────────────────────────────────── */
 
@@ -86,27 +74,43 @@ const eligibilityRules = [
   "Students must pass an interview with the Mentorship Program Director assessing skillsets and language proficiency.",
 ];
 
+const ruleAccents = [
+  "from-amber-300 to-amber-500 shadow-amber-500/30",
+  "from-rose-300 to-rose-500 shadow-rose-500/30",
+  "from-emerald-300 to-emerald-500 shadow-emerald-500/30",
+];
+
 const Eligibility = () => (
-  <section className="bg-muted text-foreground py-28 md:py-40">
-    <div className="container">
+  <section className="relative overflow-hidden bg-gradient-to-b from-[#0b1f3a] to-[#13294d] py-28 text-white md:py-40">
+    {/* Soft glow accents */}
+    <div className="pointer-events-none absolute -top-24 -right-24 size-96 rounded-full bg-amber-400/10 blur-3xl" />
+    <div className="pointer-events-none absolute -bottom-24 -left-24 size-96 rounded-full bg-emerald-400/10 blur-3xl" />
+
+    <div className="relative container">
       <div className="mx-auto max-w-2xl">
-        <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+        <p className="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase">
           Requirements
         </p>
         <h2 className="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
           Eligibility Requirements
         </h2>
-        <p className="text-muted-foreground mt-6 text-base leading-relaxed">
+        <p className="mt-6 text-base leading-relaxed text-white/70">
           Before applying, confirm you meet all three criteria below.
         </p>
 
-        <ol className="mt-12 space-y-8">
+        <ol className="mt-12 space-y-5">
           {eligibilityRules.map((rule, i) => (
-            <li key={i} className="flex gap-6">
-              <span className="text-muted-foreground mt-0.5 shrink-0 font-serif text-4xl leading-none">
+            <li
+              key={i}
+              className="animate-fade-up group flex gap-5 rounded-2xl border border-white/10 bg-white/[0.05] p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.09]"
+              style={{ animationDelay: `${i * 140}ms` }}
+            >
+              <span
+                className={`flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${ruleAccents[i % ruleAccents.length]} font-serif text-xl text-[#0b1f3a] shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:-rotate-6`}
+              >
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <p className="text-muted-foreground text-base leading-relaxed">
+              <p className="self-center text-base leading-relaxed text-white/85">
                 {rule}
               </p>
             </li>
@@ -114,18 +118,16 @@ const Eligibility = () => (
         </ol>
 
         {/* How to apply — inline */}
-        <div className="border-border mt-16 border-t pt-12">
-          <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+        <div className="mt-16 border-t border-white/15 pt-12">
+          <p className="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase">
             Application
           </p>
-          <h3 className="text-foreground mt-4 font-serif text-3xl">
-            How to Apply
-          </h3>
-          <p className="text-muted-foreground mt-5 text-base leading-relaxed">
+          <h3 className="mt-4 font-serif text-3xl text-white">How to Apply</h3>
+          <p className="mt-5 text-base leading-relaxed text-white/75">
             Submit an inquiry to{" "}
             <a
               href="mailto:apply@empowerher-initiative.org"
-              className="border-border hover:border-foreground/70 border-b transition-colors"
+              className="font-medium text-amber-300 underline decoration-amber-300/40 underline-offset-4 transition-colors hover:decoration-amber-300"
             >
               apply@empowerher-initiative.org
             </a>
@@ -137,7 +139,7 @@ const Eligibility = () => (
           <div className="mt-8">
             <a
               href="mailto:apply@empowerher-initiative.org"
-              className="group bg-primary text-primary-foreground hover:shadow-primary/20 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
+              className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-[#0b1f3a] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg hover:shadow-white/20 active:scale-[0.98]"
             >
               <Mail className="size-4" />
               Apply via Email
@@ -162,7 +164,7 @@ const steps = [
     number: "02",
     title: "Hands-On Experience",
     description:
-      "Assistants gain hands-on experience supporting new participants and learning how an EmpowerHer workshop operates — including MIS applications, registration, communication, and leading online sessions.",
+      "Assistants gain hands-on experience supporting new participants and learning how an EmpowerHer workshop operates. They will learn about EmpowerHer's internal system, including training on how to check MIS applications, registration applications, communicate effectively, and lead online sessions.",
   },
   {
     number: "03",
@@ -174,7 +176,7 @@ const steps = [
     number: "04",
     title: "Academic Demo Session",
     description:
-      "Assistants conduct a 90-minute Academic Demo Session, mentoring a staff member using their own materials to demonstrate teaching and leadership skills.",
+      "Towards the end of Assistant training and the two month workshop cycle, assistants conduct a one and half hour long Academic Demo Session, mentoring a staff member (with their materials) to demonstrate their teaching and leadership skills.",
   },
   {
     number: "05",
@@ -204,21 +206,21 @@ const StepByStep = () => (
             {steps.map((step, i) => (
               <li
                 key={step.number}
-                className="relative flex gap-8 pb-12 last:pb-0"
+                className="group relative flex gap-8 pb-12 last:pb-0"
               >
                 {/* Circle node */}
-                <div className="border-border bg-background relative z-10 flex size-9 shrink-0 items-center justify-center rounded-full border-2">
-                  <span className="text-muted-foreground text-[10px] font-bold">
+                <div className="border-primary/40 bg-background group-hover:border-primary group-hover:bg-primary group-hover:shadow-primary/25 relative z-10 flex size-9 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:shadow-lg">
+                  <span className="text-primary group-hover:text-primary-foreground text-[10px] font-bold transition-colors duration-500">
                     {step.number}
                   </span>
                 </div>
 
                 {/* Content */}
-                <div className="pt-0.5">
-                  <h3 className="text-lg leading-snug font-semibold">
+                <div className="pt-0.5 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1">
+                  <h3 className="group-hover:text-primary text-lg leading-snug font-semibold transition-colors duration-500">
                     {step.title}
                   </h3>
-                  <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
+                  <p className="text-foreground/70 mt-3 text-sm leading-relaxed">
                     {step.description}
                   </p>
                 </div>
@@ -285,18 +287,18 @@ const Benefits = () => (
       </div>
 
       <div className="mx-auto mt-16 max-w-2xl">
-        <div className="divide-border border-border grid gap-0 divide-y border-y sm:grid-cols-2 sm:divide-x sm:divide-y-0">
-          {benefits.map((benefit, i) => (
+        <div className="grid gap-5 sm:grid-cols-2">
+          {benefits.map((benefit) => (
             <div
               key={benefit.title}
-              className={`flex gap-5 p-8 ${i >= 2 && i < 4 ? "sm:border-border sm:border-t" : ""} ${i >= 4 ? "sm:border-border sm:border-t" : ""}`}
+              className="group border-border/60 bg-background hover:border-primary/30 hover:shadow-primary/5 flex gap-5 rounded-2xl border p-7 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
             >
-              <div className="mt-0.5 shrink-0">
-                <benefit.icon className="text-primary size-5" />
+              <div className="bg-primary/10 text-primary flex size-11 shrink-0 items-center justify-center rounded-xl">
+                <benefit.icon className="size-5" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold">{benefit.title}</h3>
-                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+                <h3 className="text-base font-semibold">{benefit.title}</h3>
+                <p className="text-foreground/70 mt-2 text-sm leading-relaxed">
                   {benefit.description}
                 </p>
               </div>
@@ -307,11 +309,11 @@ const Benefits = () => (
 
       {/* Volunteer note */}
       <div className="mx-auto mt-12 max-w-2xl">
-        <div className="border-border bg-background flex gap-4 rounded-2xl border p-6">
-          <AlertCircle className="text-muted-foreground mt-0.5 size-4 shrink-0" />
+        <div className="flex gap-4 rounded-2xl border border-l-4 border-red-200 border-l-red-600 bg-red-50 p-6">
+          <AlertCircle className="mt-0.5 size-5 shrink-0 text-red-600" />
           <div>
-            <p className="text-sm font-semibold">Important Note</p>
-            <p className="text-muted-foreground mt-1.5 text-sm leading-relaxed">
+            <p className="text-sm font-semibold text-red-800">Important Note</p>
+            <p className="text-foreground/80 mt-1.5 text-sm leading-relaxed">
               EmpowerHer does not provide a monthly salary for its staff
               members. All roles within this roadmap are volunteer-based.
               Participation as an Assistant or Mentor is completely free, and no
@@ -342,7 +344,6 @@ export default function SprPage() {
   return (
     <>
       <Hero />
-      <Intro />
       <Eligibility />
       <StepByStep />
       <Benefits />
