@@ -63,27 +63,27 @@ const Hero = () => (
 /* ─── Coming Soon ────────────────────────────────────────────────────────────── */
 
 const ComingSoon = () => (
-  <section className="bg-foreground text-background py-28 md:py-40">
+  <section className="bg-muted text-foreground py-28 md:py-40">
     <div className="container">
       <div className="mx-auto max-w-3xl">
-        <div className="border-background/15 inline-flex items-center gap-2 rounded-full border px-4 py-1.5">
+        <div className="border-border inline-flex items-center gap-2 rounded-full border px-4 py-1.5">
           <span className="size-1.5 rounded-full bg-amber-400" />
-          <span className="text-background/60 text-xs font-semibold tracking-[0.3em] uppercase">
+          <span className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
             Details Coming Soon
           </span>
         </div>
 
-        <h2 className="text-background mt-8 font-serif text-4xl leading-tight md:text-6xl">
+        <h2 className="text-foreground mt-8 font-serif text-4xl leading-tight md:text-6xl">
           Contest details are being finalized.
         </h2>
 
-        <p className="text-background/60 mt-8 max-w-xl text-base leading-relaxed">
+        <p className="text-muted-foreground mt-8 max-w-xl text-base leading-relaxed">
           We&apos;re putting the finishing touches on the HerVoice 2026 Writing
           Contest. Submission guidelines, themes, deadlines, and prizes will be
           announced shortly. Stay connected — you won&apos;t want to miss it.
         </p>
 
-        <div className="border-background/10 mt-12 grid grid-cols-1 gap-px border sm:grid-cols-3">
+        <div className="border-border mt-12 grid grid-cols-1 gap-px border sm:grid-cols-3">
           {[
             { label: "Theme", value: "To Be Announced" },
             { label: "Deadline", value: "2026" },
@@ -91,12 +91,12 @@ const ComingSoon = () => (
           ].map((item) => (
             <div
               key={item.label}
-              className="bg-background/[0.03] px-8 py-8 backdrop-blur-sm"
+              className="bg-foreground/5 px-8 py-8 backdrop-blur-sm"
             >
-              <p className="text-background/40 text-xs font-semibold tracking-[0.2em] uppercase">
+              <p className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
                 {item.label}
               </p>
-              <p className="text-background/80 mt-3 text-lg font-medium">
+              <p className="text-muted-foreground mt-3 text-lg font-medium">
                 {item.value}
               </p>
             </div>
@@ -106,7 +106,7 @@ const ComingSoon = () => (
         <div className="mt-12 flex flex-wrap gap-4">
           <Link
             href="/contact"
-            className="border-background/20 text-background hover:bg-background/10 inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+            className="border-border text-foreground hover:bg-foreground/5 inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
           >
             Get Notified When It Opens
             <ArrowRight className="size-4" />

@@ -12,25 +12,31 @@ export const metadata: Metadata = {
 /* ─── Hero ──────────────────────────────────────────────────────────────────── */
 
 const MentorshipHero = () => (
-  <section className="bg-foreground text-background py-28 md:py-40">
-    <div className="container">
+  <section className="relative overflow-hidden py-28 md:py-40">
+    <img
+      src="https://cdn.empowerher-initiative.org/mentorship-hero.jpeg"
+      alt=""
+      className="absolute inset-0 h-full w-full object-cover"
+    />
+    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30" />
+    <div className="relative container">
       <div className="mx-auto max-w-4xl">
-        <p className="text-background/40 mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+        <p className="mb-8 text-xs font-semibold tracking-[0.3em] text-white/70 uppercase">
           Core Program
         </p>
-        <h1 className="font-serif text-5xl leading-[1.05] md:text-7xl lg:text-8xl">
+        <h1 className="font-serif text-5xl leading-[1.05] text-white md:text-7xl lg:text-8xl">
           Mentorship
           <br />
           Program
         </h1>
         <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-20">
-          <p className="text-background/70 text-lg leading-relaxed">
+          <p className="text-lg leading-relaxed text-white/75">
             EmpowerHer&apos;s main program is the Mentorship Program, where
             students can apply to one of our workshops and receive free
             mentorship from our dedicated and highly trained mentors and
             lecturers.
           </p>
-          <p className="text-background/70 text-lg leading-relaxed">
+          <p className="text-lg leading-relaxed text-white/75">
             This program aims to provide Afghan girls with the resources,
             opportunities, and networks they need to launch their own impact
             projects.
@@ -39,7 +45,7 @@ const MentorshipHero = () => (
         <div className="mt-14 flex flex-col gap-4 sm:flex-row sm:items-center">
           <a
             href="#workshops"
-            className="group bg-background text-foreground hover:bg-background/90 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]"
+            className="group inline-flex items-center gap-2.5 rounded-full bg-white px-8 py-4 text-sm font-semibold text-black transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-white/90 active:scale-[0.98]"
           >
             Find Workshop Applications Here
             <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
@@ -159,22 +165,25 @@ const WorkshopStructure = () => (
         </p>
       </div>
 
-      {/* Numbered list — large serif numbers */}
-      <div className="divide-border/40 divide-y">
+      {/* Card grid — brand-accented */}
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {workshopStructure.map((item) => (
           <div
             key={item.number}
-            className="group hover:bg-muted/20 flex flex-col gap-4 py-8 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:flex-row md:items-start md:gap-12"
+            className="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 relative flex flex-col overflow-hidden rounded-2xl border p-7 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl"
           >
-            <span className="text-muted-foreground/25 group-hover:text-primary/25 font-serif text-5xl leading-none transition-colors duration-500 md:w-24 md:shrink-0 md:text-6xl">
-              {item.number}
-            </span>
-            <div className="md:pt-2">
-              <h3 className="text-xl font-semibold">{item.title}</h3>
-              <p className="text-muted-foreground mt-2 max-w-2xl text-base leading-relaxed">
-                {item.description}
-              </p>
+            {/* Top accent bar */}
+            <span className="from-primary to-secondary absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-x-100" />
+
+            <div className="flex items-baseline justify-between">
+              <span className="text-primary/30 group-hover:text-primary font-serif text-5xl leading-none transition-colors duration-500">
+                {item.number}
+              </span>
             </div>
+            <h3 className="mt-5 text-lg font-semibold">{item.title}</h3>
+            <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+              {item.description}
+            </p>
           </div>
         ))}
       </div>
@@ -229,13 +238,16 @@ const Eligibility = () => (
           </p>
         </div>
 
-        <div className="divide-border/40 space-y-0 divide-y">
+        <div className="space-y-3">
           {eligibilityRules.map((rule, i) => (
-            <div key={i} className="flex gap-6 py-6">
-              <span className="text-muted-foreground/40 mt-0.5 shrink-0 font-serif text-xl">
+            <div
+              key={i}
+              className="group hover:border-primary/30 hover:bg-primary/[0.04] flex gap-5 rounded-2xl border border-transparent p-5 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+            >
+              <span className="bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground flex size-11 shrink-0 items-center justify-center rounded-full font-serif text-lg transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <p className="text-muted-foreground text-sm leading-relaxed">
+              <p className="text-foreground/80 mt-1 text-sm leading-relaxed">
                 {rule}
               </p>
             </div>
@@ -377,10 +389,6 @@ const Workshops = () => (
             Available Workshops
           </h2>
         </div>
-        <p className="text-muted-foreground max-w-xs text-sm leading-relaxed">
-          All workshops are free. Select the one that fits your interests and
-          register today.
-        </p>
       </div>
 
       {/* Alternating image-left / image-right layout */}
@@ -419,7 +427,7 @@ const Workshops = () => (
                 rel="noopener noreferrer"
                 className="bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex w-fit items-center gap-2 rounded-full px-7 py-3 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
               >
-                Register for Free
+                Apply Here
                 <ExternalLink className="size-3.5" />
               </a>
             </div>

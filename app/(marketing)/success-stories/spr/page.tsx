@@ -87,26 +87,26 @@ const eligibilityRules = [
 ];
 
 const Eligibility = () => (
-  <section className="bg-foreground text-background py-28 md:py-40">
+  <section className="bg-muted text-foreground py-28 md:py-40">
     <div className="container">
       <div className="mx-auto max-w-2xl">
-        <p className="text-background/50 text-xs font-semibold tracking-[0.3em] uppercase">
+        <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
           Requirements
         </p>
         <h2 className="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
           Eligibility Requirements
         </h2>
-        <p className="text-background/65 mt-6 text-base leading-relaxed">
+        <p className="text-muted-foreground mt-6 text-base leading-relaxed">
           Before applying, confirm you meet all three criteria below.
         </p>
 
         <ol className="mt-12 space-y-8">
           {eligibilityRules.map((rule, i) => (
             <li key={i} className="flex gap-6">
-              <span className="text-background/20 mt-0.5 shrink-0 font-serif text-4xl leading-none">
+              <span className="text-muted-foreground mt-0.5 shrink-0 font-serif text-4xl leading-none">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <p className="text-background/75 text-base leading-relaxed">
+              <p className="text-muted-foreground text-base leading-relaxed">
                 {rule}
               </p>
             </li>
@@ -114,18 +114,18 @@ const Eligibility = () => (
         </ol>
 
         {/* How to apply — inline */}
-        <div className="border-background/10 mt-16 border-t pt-12">
-          <p className="text-background/50 text-xs font-semibold tracking-[0.3em] uppercase">
+        <div className="border-border mt-16 border-t pt-12">
+          <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
             Application
           </p>
-          <h3 className="text-background mt-4 font-serif text-3xl">
+          <h3 className="text-foreground mt-4 font-serif text-3xl">
             How to Apply
           </h3>
-          <p className="text-background/75 mt-5 text-base leading-relaxed">
+          <p className="text-muted-foreground mt-5 text-base leading-relaxed">
             Submit an inquiry to{" "}
             <a
               href="mailto:apply@empowerher-initiative.org"
-              className="border-background/30 hover:border-background/70 border-b transition-colors"
+              className="border-border hover:border-foreground/70 border-b transition-colors"
             >
               apply@empowerher-initiative.org
             </a>
@@ -137,7 +137,7 @@ const Eligibility = () => (
           <div className="mt-8">
             <a
               href="mailto:apply@empowerher-initiative.org"
-              className="group bg-background text-foreground hover:shadow-background/20 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
+              className="group bg-primary text-primary-foreground hover:shadow-primary/20 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
             >
               <Mail className="size-4" />
               Apply via Email

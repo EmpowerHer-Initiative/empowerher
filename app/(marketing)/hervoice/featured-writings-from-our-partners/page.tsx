@@ -313,17 +313,17 @@ export default function FeaturedWritingsPage() {
         </div>
       </section>
 
-      {/* Dark footer section */}
-      <section className="bg-foreground text-background py-28 md:py-40">
+      {/* Light footer section */}
+      <section className="bg-muted text-foreground py-28 md:py-40">
         <div className="container">
           <div className="max-w-4xl">
-            <p className="text-background/40 text-xs font-semibold tracking-[0.3em] uppercase">
+            <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
               Our Partners
             </p>
-            <h2 className="text-background mt-5 font-serif text-4xl leading-tight md:text-5xl">
+            <h2 className="text-foreground mt-5 font-serif text-4xl leading-tight md:text-5xl">
               Stories reaching the world.
             </h2>
-            <p className="text-background/60 mt-6 max-w-xl text-base leading-relaxed">
+            <p className="text-muted-foreground mt-6 max-w-xl text-base leading-relaxed">
               These organizations help Afghan girls share their stories with a
               global audience. Visit their platforms to read more published
               work.
@@ -333,7 +333,7 @@ export default function FeaturedWritingsPage() {
                 href="https://www.nshss.org/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group border-background/20 text-background hover:bg-background/10 inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+                className="group border-border text-foreground hover:bg-foreground/5 inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
               >
                 Visit NSHSS
                 <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-px group-hover:-translate-y-px" />
@@ -342,7 +342,7 @@ export default function FeaturedWritingsPage() {
                 href="https://sites.google.com/view/amplifyafghans/home"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group border-background/20 text-background hover:bg-background/10 inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+                className="group border-border text-foreground hover:bg-foreground/5 inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
               >
                 Visit Amplify Afghan Women
                 <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-px group-hover:-translate-y-px" />

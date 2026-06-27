@@ -42,7 +42,6 @@ const navLinks: NavItem[] = [
   { label: "About", href: "/about-us" },
   { label: "Programs", href: "#", children: programs },
   { label: "Success Stories", href: "#", children: successStories },
-  { label: "Get Involved", href: "/get-involved" },
   { label: "Resources", href: "/resources" },
   { label: "AFGAF", href: "/afgaf" },
   { label: "Contact", href: "/contact" },
@@ -83,29 +82,11 @@ export const Navbar = () => {
 
   return (
     <>
-      {/* Banner */}
-      <div className="bg-foreground relative z-50">
-        <div className="container flex items-center justify-center py-2.5">
-          <Link
-            href="/writing-contest"
-            className="group text-background/70 hover:text-background flex items-center gap-3 text-xs font-medium tracking-wide transition-colors"
-          >
-            <span className="bg-primary/20 text-primary rounded px-2 py-0.5 text-[10px] font-bold tracking-[0.15em] uppercase">
-              New
-            </span>
-            HerVoice 2026 Writing Contest
-            <span className="transition-transform duration-300 group-hover:translate-x-0.5">
-              &rarr;
-            </span>
-          </Link>
-        </div>
-      </div>
-
       {/* Nav */}
       <nav
         className={`sticky top-0 z-40 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
           scrolled
-            ? "border-border/30 bg-background/90 border-b backdrop-blur-2xl"
+            ? "border-border/30 bg-background border-b shadow-sm backdrop-blur-2xl"
             : isHome
               ? "bg-transparent"
               : "bg-background"
@@ -115,13 +96,17 @@ export const Navbar = () => {
           <Link
             href="/"
             className={`flex items-center gap-2 transition-colors duration-300 ${
-              scrolled || !isHome || mobileOpen
-                ? "text-foreground"
-                : "text-white"
+              mobileOpen
+                ? "text-primary"
+                : scrolled
+                  ? "text-primary"
+                  : isHome
+                    ? "text-white"
+                    : "text-primary"
             }`}
           >
             <Logo className="size-12" />
-            <span className="font-serif text-xl">EmpowerHer</span>
+            <span className="font-serif text-xl">EmpowerHer Initiative</span>
           </Link>
 
           {/* Desktop */}

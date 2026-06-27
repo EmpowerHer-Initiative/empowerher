@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
+  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   BookOpen,
   Heart,
+  Play,
   Quote,
   Users,
 } from "lucide-react";
@@ -44,11 +46,8 @@ const Hero = () => {
 
       {/* Content overlay */}
       <div className="relative container flex min-h-[100dvh] items-end pt-40 pb-20 md:items-center md:pb-0">
-        <div className="max-w-2xl">
-          <p className="font-serif text-sm tracking-[0.3em] text-white/60 uppercase md:text-base">
-            Empowering Afghan Girls Since 2024
-          </p>
-          <h1 className="mt-4 font-serif text-5xl leading-[1.05] text-white md:text-7xl lg:text-8xl">
+        <div className="max-w-5xl">
+          <h1 className="font-serif text-4xl leading-[1.08] text-white md:text-6xl lg:text-8xl">
             Empowering Dreams,
             <br />
             <span className="text-[var(--primary)] italic">
@@ -72,12 +71,6 @@ const Hero = () => {
                 <ArrowRight className="size-3.5" />
               </span>
             </Link>
-            <Link
-              href="/get-involved"
-              className="inline-flex items-center gap-2 rounded-full border border-white/30 px-8 py-4 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:border-white/60 hover:bg-white/5"
-            >
-              Get Involved
-            </Link>
           </div>
 
           {/* Dots */}
@@ -96,6 +89,55 @@ const Hero = () => {
         </div>
       </div>
     </section>
+  );
+};
+
+/* ─── CountUp — scroll-triggered number animation ──────────────────────────── */
+
+const CountUp = ({
+  to,
+  decimals = 0,
+  prefix = "",
+  suffix = "",
+  duration = 2000,
+}: {
+  to: number;
+  decimals?: number;
+  prefix?: string;
+  suffix?: string;
+  duration?: number;
+}) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [val, setVal] = useState(0);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const ob = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting || started.current) return;
+        started.current = true;
+        let startTs: number | null = null;
+        const tick = (ts: number) => {
+          if (startTs === null) startTs = ts;
+          const p = Math.min((ts - startTs) / duration, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          setVal(to * eased);
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      },
+      { threshold: 0.4 }
+    );
+    if (ref.current) ob.observe(ref.current);
+    return () => ob.disconnect();
+  }, [to, duration]);
+
+  return (
+    <span ref={ref}>
+      {prefix}
+      {val.toFixed(decimals)}
+      {suffix}
+    </span>
   );
 };
 
@@ -126,30 +168,99 @@ const StatsBar = () => (
       <div className="divide-border/40 mt-14 grid grid-cols-1 divide-y md:grid-cols-3 md:divide-x md:divide-y-0">
         {[
           {
-            value: "1.1 million",
+            to: 1.1,
+            decimals: 1,
+            suffix: " million",
             label: "Girls have lost access to formal education.",
           },
           {
-            value: "2.5 million",
+            to: 2.5,
+            decimals: 1,
+            suffix: " million",
             label:
               "School-aged Afghan girls (80%) are currently out of school.",
           },
           {
-            value: "30%",
+            to: 30,
+            decimals: 0,
+            suffix: "%",
             label:
               "Nearly 30% of Afghan girls have never attended primary school.",
           },
         ].map((s) => (
           <div
-            key={s.value}
+            key={s.label}
             className="flex flex-col gap-2 px-2 py-8 md:px-8 md:py-2"
           >
             <span className="text-primary font-serif text-4xl md:text-5xl">
-              {s.value}
+              <CountUp to={s.to} decimals={s.decimals} suffix={s.suffix} />
             </span>
             <span className="text-muted-foreground max-w-xs text-sm leading-snug">
               {s.label}
             </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+/* ─── At a Glance — Impact numbers ─────────────────────────────────────────── */
+
+const AtAGlance = () => (
+  <section className="border-border/40 bg-primary/[0.03] border-y py-20 md:py-28">
+    <div className="container">
+      <div className="max-w-2xl">
+        <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+          By the Numbers
+        </p>
+        <h2 className="mt-4 font-serif text-3xl leading-tight md:text-5xl">
+          EmpowerHer at a Glance
+        </h2>
+      </div>
+
+      <div className="divide-border/40 mt-14 grid grid-cols-1 divide-y sm:grid-cols-2 sm:divide-x lg:grid-cols-4 lg:divide-y-0">
+        {[
+          {
+            to: 500,
+            suffix: "+",
+            label: "Students Mentored",
+          },
+          {
+            to: 9,
+            suffix: "+",
+            label: "Countries Reached",
+            detail:
+              "Afghanistan, Tajikistan, Kazakhstan, Pakistan, Iran, Turkey, India, Bangladesh, Malaysia",
+          },
+          {
+            to: 8,
+            suffix: "+",
+            label: "Countries in Our Global Team",
+            detail:
+              "Afghanistan, Poland, Peru, United States, China, Pakistan, Iran, Bangladesh",
+          },
+          {
+            to: 25,
+            suffix: "+",
+            label: "Provinces of Afghanistan Reached",
+          },
+        ].map((s) => (
+          <div
+            key={s.label}
+            className="flex flex-col gap-2 px-2 py-8 sm:px-8 sm:py-2"
+          >
+            <span className="text-primary font-serif text-4xl md:text-5xl">
+              <CountUp to={s.to} decimals={0} suffix={s.suffix} />
+            </span>
+            <span className="text-foreground text-sm font-medium">
+              {s.label}
+            </span>
+            {s.detail && (
+              <span className="text-muted-foreground text-xs leading-relaxed">
+                {s.detail}
+              </span>
+            )}
           </div>
         ))}
       </div>
@@ -219,11 +330,52 @@ const Mission = () => {
             <p className="text-foreground font-semibold">
               Mahdi Rahimi &amp; Nahid Karimi
             </p>
-            <p className="text-muted-foreground text-sm">– Co-founders</p>
+            <p className="text-muted-foreground text-sm">– Co-Founders</p>
           </div>
+
+          {/* Co-Founder quotes — end of the message, before the CTA */}
+          <div className="mt-16 grid gap-12 md:grid-cols-2 md:gap-8">
+            <div className="border-primary/20 relative border-l-2 pl-8 md:pl-12">
+              <Quote className="bg-background text-primary absolute top-0 -left-3 size-6 rounded-full" />
+              <blockquote className="font-serif text-xl leading-relaxed italic md:text-2xl">
+                &ldquo;For too long, Afghan girls have been written into history
+                as victims. This time, let&apos;s write our own.&rdquo;
+              </blockquote>
+              <div className="mt-6 flex items-center gap-4">
+                <img
+                  src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqvGdhshBYobifLHTavDVU7h0yBGlSc4z8XEQ"
+                  alt="Nahid Karimi"
+                  className="size-12 rounded-full object-cover"
+                />
+                <div>
+                  <p className="text-sm font-semibold">Nahid Karimi</p>
+                  <p className="text-muted-foreground text-xs">Co-Founder</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-secondary/30 relative border-l-2 pl-8 md:pl-12">
+              <Quote className="bg-background text-secondary absolute top-0 -left-3 size-6 rounded-full" />
+              <blockquote className="font-serif text-xl leading-relaxed italic md:text-2xl">
+                &ldquo;WE RISE, WE RISE, WE RISE IN THE FACE OF ADVERSITY&rdquo;
+              </blockquote>
+              <div className="mt-6 flex items-center gap-4">
+                <img
+                  src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTiCpeojEYyVpqbIDknS5OTfuHm1N4G0ctWRE9"
+                  alt="Mahdi Rahimi"
+                  className="size-12 rounded-full object-cover"
+                />
+                <div>
+                  <p className="text-sm font-semibold">Mahdi Rahimi</p>
+                  <p className="text-muted-foreground text-xs">Co-Founder</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <Link
             href="/about-us"
-            className="group bg-primary text-primary-foreground hover:shadow-primary/25 mt-8 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
+            className="group bg-primary text-primary-foreground hover:shadow-primary/25 mt-12 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
           >
             Our Team
             <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
@@ -237,24 +389,24 @@ const Mission = () => {
 /* ─── Programs — Asymmetric Bento Grid ─────────────────────────────────────── */
 
 const Programs = () => (
-  <section className="bg-foreground text-background py-28 md:py-40">
+  <section className="bg-muted text-foreground py-28 md:py-40">
     <div className="container">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="text-background/50 text-xs font-semibold tracking-[0.3em] uppercase">
+          <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
             What We Do
           </p>
           <h2 className="mt-4 font-serif text-3xl md:text-5xl">Our Programs</h2>
         </div>
         <Link
           href="/mentorship"
-          className="text-background/60 hover:text-background inline-flex items-center gap-2 text-sm transition-colors"
+          className="text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors"
         >
           View all programs <ArrowRight className="size-3.5" />
         </Link>
       </div>
 
-      <p className="text-background/60 mt-8 max-w-3xl text-base leading-[1.8]">
+      <p className="text-muted-foreground mt-8 max-w-3xl text-base leading-[1.8]">
         Our projects are designed to meet Afghan girls where they are—and help
         them grow into who they&rsquo;re meant to be. Each initiative provides a
         safe, inclusive space where participants gain the tools, guidance, and
@@ -295,101 +447,33 @@ const Programs = () => (
           </div>
         </Link>
 
-        {/* Right column — stacked */}
-        <div className="flex flex-col gap-6 md:col-span-2">
-          {/* Mentorship */}
-          <Link href="/mentorship" className="group flex-1">
-            <div className="relative h-full min-h-[280px] overflow-hidden rounded-[2rem]">
-              <img
-                src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTztHu6kOQlbZOApif7EkNI4MXGo08zhqH6CwY"
-                alt="Mentorship"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              <div className="absolute right-0 bottom-0 left-0 p-6">
-                <div className="flex items-center gap-2 text-white/60">
-                  <Users className="size-4" />
-                  <span className="text-xs font-medium tracking-[0.2em] uppercase">
-                    Core Program
-                  </span>
-                </div>
-                <h3 className="mt-2 font-serif text-2xl text-white">
-                  Mentorship
-                </h3>
-                <p className="mt-1 text-sm text-white/70">
-                  EmpowerHer&apos;s core program offers Afghan girls free
-                  workshops and mentorship to build resilience, gain support,
-                  and launch impact projects.
-                </p>
+        {/* Mentorship */}
+        <Link href="/mentorship" className="group md:col-span-2">
+          <div className="relative aspect-[4/3] min-h-[360px] overflow-hidden rounded-[2rem] md:aspect-auto md:h-full">
+            <img
+              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTztHu6kOQlbZOApif7EkNI4MXGo08zhqH6CwY"
+              alt="Mentorship"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute right-0 bottom-0 left-0 p-6">
+              <div className="flex items-center gap-2 text-white/60">
+                <Users className="size-4" />
+                <span className="text-xs font-medium tracking-[0.2em] uppercase">
+                  Core Program
+                </span>
               </div>
-            </div>
-          </Link>
-
-          {/* Get Involved CTA */}
-          <Link
-            href="/get-involved"
-            className="group bg-primary hover:bg-primary/90 flex items-center justify-between rounded-[2rem] p-8 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
-          >
-            <div>
-              <p className="text-primary-foreground/60 text-xs font-medium tracking-[0.2em] uppercase">
-                Make a Difference
-              </p>
-              <p className="text-primary-foreground mt-1 font-serif text-xl">
-                Get Involved
+              <h3 className="mt-2 font-serif text-2xl text-white">
+                Mentorship
+              </h3>
+              <p className="mt-1 text-sm text-white/70">
+                EmpowerHer&apos;s core program offers Afghan girls free
+                workshops and mentorship to build resilience, gain support, and
+                launch impact projects.
               </p>
             </div>
-            <span className="bg-primary-foreground/15 flex size-12 items-center justify-center rounded-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1 group-hover:-translate-y-0.5">
-              <ArrowUpRight className="text-primary-foreground size-5" />
-            </span>
-          </Link>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
-/* ─── Co-Founder Quotes — Full-width editorial ─────────────────────────────── */
-
-const Quotes = () => (
-  <section className="py-28 md:py-40">
-    <div className="container">
-      <div className="grid gap-12 md:grid-cols-2 md:gap-8">
-        <div className="border-primary/20 relative border-l-2 pl-8 md:pl-12">
-          <Quote className="bg-background text-primary absolute top-0 -left-3 size-6 rounded-full" />
-          <blockquote className="font-serif text-xl leading-relaxed italic md:text-2xl">
-            &ldquo;For too long, Afghan girls have been written into history as
-            victims. This time, let&apos;s write our own.&rdquo;
-          </blockquote>
-          <div className="mt-6 flex items-center gap-4">
-            <img
-              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqvGdhshBYobifLHTavDVU7h0yBGlSc4z8XEQ"
-              alt="Nahid Karimi"
-              className="size-12 rounded-full object-cover"
-            />
-            <div>
-              <p className="text-sm font-semibold">Nahid Karimi</p>
-              <p className="text-muted-foreground text-xs">Co-Founder</p>
-            </div>
           </div>
-        </div>
-
-        <div className="border-secondary/30 relative border-l-2 pl-8 md:pl-12">
-          <Quote className="bg-background text-secondary absolute top-0 -left-3 size-6 rounded-full" />
-          <blockquote className="font-serif text-xl leading-relaxed italic md:text-2xl">
-            &ldquo;WE RISE, WE RISE, WE RISE IN THE FACE OF ADVERSITY&rdquo;
-          </blockquote>
-          <div className="mt-6 flex items-center gap-4">
-            <img
-              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTiCpeojEYyVpqbIDknS5OTfuHm1N4G0ctWRE9"
-              alt="Mahdi Rahimi"
-              className="size-12 rounded-full object-cover"
-            />
-            <div>
-              <p className="text-sm font-semibold">Mahdi Rahimi</p>
-              <p className="text-muted-foreground text-xs">Co-Founder</p>
-            </div>
-          </div>
-        </div>
+        </Link>
       </div>
     </div>
   </section>
@@ -542,11 +626,11 @@ const HerVoiceContest = () => {
   return (
     <section
       ref={ref}
-      className="bg-foreground text-background relative isolate overflow-hidden py-28 md:py-40"
+      className="relative isolate overflow-hidden bg-[radial-gradient(120%_130%_at_12%_0%,#FFFFFF_0%,#FAF6EE_46%,#F2EADC_100%)] py-28 text-[#1A2230] md:py-40"
     >
       {/* ambient color blobs */}
-      <div className="pointer-events-none absolute -top-40 -right-40 size-[520px] rounded-full bg-[radial-gradient(circle_at_38%_36%,rgba(46,155,230,.12),transparent_62%)]" />
-      <div className="pointer-events-none absolute -bottom-44 -left-32 size-[460px] rounded-full bg-[radial-gradient(circle_at_60%_40%,rgba(224,174,60,.1),transparent_62%)]" />
+      <div className="pointer-events-none absolute -top-40 -right-40 size-[520px] rounded-full bg-[radial-gradient(circle_at_38%_36%,rgba(46,155,230,.16),transparent_62%)]" />
+      <div className="pointer-events-none absolute -bottom-44 -left-32 size-[460px] rounded-full bg-[radial-gradient(circle_at_60%_40%,rgba(224,174,60,.18),transparent_62%)]" />
 
       <div className="relative container">
         <div className="grid gap-14 lg:grid-cols-[1fr_1.12fr] lg:items-center lg:gap-10">
@@ -567,7 +651,7 @@ const HerVoiceContest = () => {
               Writing Contest
             </h2>
             <p
-              className="text-background/60 mt-6 max-w-md text-base leading-relaxed md:text-lg"
+              className="mt-6 max-w-md text-base leading-relaxed text-[#3C4654] md:text-lg"
               style={rise(2)}
             >
               Courage, identity, and storytelling — by Afghan girls and women,
@@ -588,7 +672,7 @@ const HerVoiceContest = () => {
                   <p className={`font-serif text-4xl md:text-5xl ${s.cls}`}>
                     {s.n}
                   </p>
-                  <p className="text-background/40 mt-1.5 text-[11px] font-semibold tracking-[0.12em] uppercase">
+                  <p className="mt-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase">
                     {s.label}
                   </p>
                 </div>
@@ -598,7 +682,7 @@ const HerVoiceContest = () => {
             <div className="mt-10" style={rise(5)}>
               <Link
                 href="/hervoice/winners"
-                className="group bg-background text-foreground inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.98]"
+                className="group bg-primary text-primary-foreground inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.98]"
               >
                 Explore Winning Stories
                 <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
@@ -680,16 +764,17 @@ const ImpactStory = () => (
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
               href="/hervoice/featured-writings-from-our-partners"
-              className="group bg-primary text-primary-foreground hover:shadow-primary/20 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
+              className="group bg-primary text-primary-foreground hover:shadow-primary/20 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
             >
               Featured Writings from Our Partners
               <ArrowRight className="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5" />
             </Link>
             <Link
               href="/success-stories"
-              className="border-border/60 text-foreground/70 hover:border-primary/30 hover:text-foreground inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+              className="group border-border/60 text-foreground/70 hover:border-primary hover:bg-primary/5 hover:text-foreground hover:shadow-primary/10 inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
             >
               Success Stories
+              <ArrowRight className="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5" />
             </Link>
           </div>
         </div>
@@ -698,7 +783,7 @@ const ImpactStory = () => (
             <img
               src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBGUBwPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O"
               alt="EmpowerHer in the news"
-              className="aspect-[4/5] w-full object-cover"
+              className="h-auto w-full object-contain"
             />
           </div>
         </div>
@@ -706,6 +791,131 @@ const ImpactStory = () => (
     </div>
   </section>
 );
+
+/* ─── Media Spotlight — Video carousel ─────────────────────────────────────── */
+
+const mediaFeatures = [
+  {
+    youtubeId: "l5YSKsYqbfY",
+    label: "Podcast",
+    title: "Interview with EmpowerHer Co-Founders",
+    description:
+      "Our co-founders, Nahid Karimi and Mahdi Rahimi, joined the NSHSS Scholars Connect Podcast to share their personal journeys from Afghanistan to the United States and the experiences that inspired them to launch EmpowerHer. In this episode, they discuss the challenges facing Afghan girls under Taliban rule, the role of education and mentorship in creating opportunity, and how young people can transform adversity into meaningful impact and leadership.",
+  },
+];
+
+const MediaSpotlight = () => {
+  const [idx, setIdx] = useState(0);
+  const total = mediaFeatures.length;
+  const next = () => setIdx((i) => (i + 1) % total);
+  const prev = () => setIdx((i) => (i - 1 + total) % total);
+
+  return (
+    <section className="py-28 md:py-40">
+      <div className="container">
+        <div className="flex items-end justify-between gap-6">
+          <div>
+            <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+              Watch &amp; Listen
+            </p>
+            <h2 className="mt-4 font-serif text-3xl leading-tight md:text-4xl">
+              Featured Media
+            </h2>
+          </div>
+          {total > 1 && (
+            <div className="hidden items-center gap-3 md:flex">
+              <button
+                type="button"
+                onClick={prev}
+                aria-label="Previous"
+                className="border-border/60 text-foreground/70 hover:border-primary hover:text-foreground flex size-12 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 active:scale-95"
+              >
+                <ArrowLeft className="size-5" />
+              </button>
+              <button
+                type="button"
+                onClick={next}
+                aria-label="Next"
+                className="border-border/60 text-foreground/70 hover:border-primary hover:text-foreground flex size-12 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 active:scale-95"
+              >
+                <ArrowRight className="size-5" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Carousel viewport */}
+        <div className="relative mt-12 overflow-hidden rounded-[2.5rem]">
+          <div
+            className="flex transition-transform duration-[800ms] ease-[cubic-bezier(0.32,0.72,0,1)]"
+            style={{ transform: `translateX(-${idx * 100}%)` }}
+          >
+            {mediaFeatures.map((m) => (
+              <div key={m.youtubeId} className="w-full shrink-0">
+                <div className="bg-muted/30 grid gap-0 lg:grid-cols-2">
+                  <div className="relative aspect-video lg:aspect-auto lg:min-h-[440px]">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${m.youtubeId}`}
+                      title={m.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="absolute inset-0 h-full w-full"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-center p-8 md:p-14">
+                    <div className="text-primary flex items-center gap-2">
+                      <Play className="size-4 fill-current" />
+                      <span className="text-xs font-medium tracking-[0.2em] uppercase">
+                        {m.label}
+                      </span>
+                    </div>
+                    <h3 className="mt-4 font-serif text-2xl leading-tight md:text-3xl">
+                      {m.title}
+                    </h3>
+                    <p className="text-muted-foreground mt-5 text-base leading-[1.8]">
+                      {m.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Click the right side to advance */}
+          {total > 1 && (
+            <button
+              type="button"
+              onClick={next}
+              aria-label="Next"
+              className="group absolute inset-y-0 right-0 flex w-16 items-center justify-center md:w-24"
+            >
+              <span className="bg-background/80 text-foreground flex size-12 items-center justify-center rounded-full shadow-lg backdrop-blur transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:scale-110">
+                <ArrowRight className="size-5" />
+              </span>
+            </button>
+          )}
+        </div>
+
+        {/* Dots */}
+        {total > 1 && (
+          <div className="mt-8 flex justify-center gap-2">
+            {mediaFeatures.map((m, i) => (
+              <button
+                key={m.youtubeId}
+                type="button"
+                onClick={() => setIdx(i)}
+                aria-label={`Go to slide ${i + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-500 ${
+                  i === idx ? "bg-primary w-8" : "bg-border w-2.5"
+                }`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
 
 /* ─── Partners — Minimal logo strip ────────────────────────────────────────── */
 
@@ -771,7 +981,7 @@ const Partners = () => (
             target="_blank"
             rel="noopener noreferrer"
             title={p.name}
-            className="opacity-50 grayscale transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:opacity-100 hover:grayscale-0"
+            className="group block transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1.5 hover:scale-105"
           >
             <img
               src={p.logo}
@@ -788,20 +998,20 @@ const Partners = () => (
 /* ─── Newsletter — Rich CTA section ────────────────────────────────────────── */
 
 const Newsletter = () => (
-  <section className="bg-foreground text-background relative overflow-hidden py-28 md:py-40">
+  <section className="bg-muted text-foreground relative overflow-hidden py-28 md:py-40">
     {/* Decorative elements */}
-    <div className="bg-primary/[0.07] pointer-events-none absolute -top-32 -left-32 size-96 rounded-full blur-3xl" />
-    <div className="bg-secondary/[0.05] pointer-events-none absolute -right-24 -bottom-24 size-80 rounded-full blur-3xl" />
-    <div className="border-background/[0.03] pointer-events-none absolute top-1/2 left-1/2 size-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
-    <div className="border-background/[0.05] pointer-events-none absolute top-1/2 left-1/2 size-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
+    <div className="bg-primary/[0.08] pointer-events-none absolute -top-32 -left-32 size-96 rounded-full blur-3xl" />
+    <div className="bg-secondary/[0.08] pointer-events-none absolute -right-24 -bottom-24 size-80 rounded-full blur-3xl" />
+    <div className="border-foreground/[0.04] pointer-events-none absolute top-1/2 left-1/2 size-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
+    <div className="border-foreground/[0.04] pointer-events-none absolute top-1/2 left-1/2 size-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
 
     <div className="relative container">
       <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
         {/* Left — messaging */}
         <div>
-          <div className="border-background/10 bg-background/5 inline-flex items-center gap-2 rounded-full border px-4 py-1.5">
+          <div className="border-border bg-card inline-flex items-center gap-2 rounded-full border px-4 py-1.5">
             <Heart className="text-primary size-3.5" />
-            <span className="text-background/60 text-[10px] font-semibold tracking-[0.2em] uppercase">
+            <span className="text-muted-foreground text-[10px] font-semibold tracking-[0.2em] uppercase">
               Stay Connected
             </span>
           </div>
@@ -810,44 +1020,45 @@ const Newsletter = () => (
             <br />
             <span className="text-primary italic">Community</span>
           </h2>
-          <p className="text-background/50 mt-6 max-w-md text-base leading-[1.8]">
+          <p className="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]">
             Get updates on our programs, success stories, and ways to support
             Afghan girls&apos; education. Be part of a growing movement for
             change.
           </p>
 
-          <div className="mt-10 flex items-center gap-8">
+          {/* <div className="mt-10 flex items-center gap-8">
             <div>
               <p className="text-primary font-serif text-3xl">9+</p>
-              <p className="text-background/40 mt-1 text-xs">Global Partners</p>
+              <p className="text-muted-foreground mt-1 text-xs">
+                Global Partners
+              </p>
             </div>
-            <div className="bg-background/10 h-10 w-px" />
+            <div className="bg-border h-10 w-px" />
             <div>
               <p className="text-primary font-serif text-3xl">5</p>
-              <p className="text-background/40 mt-1 text-xs">
+              <p className="text-muted-foreground mt-1 text-xs">
                 Active Workshops
               </p>
             </div>
-            <div className="bg-background/10 h-10 w-px" />
+            <div className="bg-border h-10 w-px" />
             <div>
               <p className="text-primary font-serif text-3xl">100%</p>
-              <p className="text-background/40 mt-1 text-xs">Free Programs</p>
+              <p className="text-muted-foreground mt-1 text-xs">Free Programs</p>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Right — form card */}
-        <div className="border-background/10 bg-background/[0.04] rounded-3xl border p-8 backdrop-blur-sm md:p-10">
+        <div className="border-border bg-card rounded-3xl border p-8 shadow-sm md:p-10">
           <h3 className="font-serif text-2xl">Subscribe to Our Newsletter</h3>
-          <p className="text-background/50 mt-3 text-sm leading-relaxed">
-            Join hundreds of supporters. We send monthly updates — no spam,
-            ever.
+          <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
+            Join hundreds of supporters and community members.
           </p>
           <form className="mt-8 space-y-4" onSubmit={(e) => e.preventDefault()}>
             <input
               type="email"
               placeholder="Your email address"
-              className="border-background/10 bg-background/5 text-background placeholder:text-background/30 focus:border-primary/40 focus:bg-background/10 w-full rounded-xl border px-5 py-3.5 text-sm transition-all duration-300 outline-none"
+              className="border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-primary/40 w-full rounded-xl border px-5 py-3.5 text-sm transition-all duration-300 outline-none"
             />
             <button
               type="submit"
@@ -856,7 +1067,7 @@ const Newsletter = () => (
               Subscribe
             </button>
           </form>
-          <p className="text-background/30 mt-4 text-center text-xs">
+          <p className="text-muted-foreground mt-4 text-center text-xs">
             We respect your privacy. Unsubscribe anytime.
           </p>
         </div>
@@ -873,10 +1084,11 @@ export default function LandingPage() {
       <Hero />
       <StatsBar />
       <HerVoiceContest />
+      <AtAGlance />
       <Mission />
       <Programs />
-      <Quotes />
       <ImpactStory />
+      <MediaSpotlight />
       <Partners />
       <Newsletter />
     </>

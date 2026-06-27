@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ExternalLink, Info } from "lucide-react";
+import { AlertTriangle, ExternalLink } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
 
@@ -23,11 +23,12 @@ export default function MISPage() {
           </h1>
 
           <p className="text-muted-foreground mt-8 text-lg leading-relaxed">
-            EmpowerHer provides monthly internet scholarships to thirty-five
-            members to help them participate in our programs. We understand the
-            financial challenges girls face in Afghanistan and how difficult it
-            can be to access reliable internet. That&apos;s why we&apos;re proud
-            to offer this financial support.
+            EmpowerHer provides Monthly Internet Scholarships (MIS) to all
+            students who need them most, helping them participate fully in our
+            programs. We understand the financial challenges many girls face in
+            Afghanistan and how difficult it can be to access reliable internet.
+            That&apos;s why we&apos;re proud to offer this financial support and
+            ensure that access to learning is not limited by financial barriers.
           </p>
 
           <p className="text-muted-foreground mt-6 text-base leading-[1.8]">
@@ -40,9 +41,9 @@ export default function MISPage() {
           </p>
 
           {/* Advisory callout */}
-          <div className="border-primary/20 bg-primary/[0.04] mt-10 flex items-start gap-4 rounded-2xl border p-6">
-            <Info className="text-primary mt-0.5 size-5 shrink-0" />
-            <p className="text-foreground/80 text-base leading-relaxed">
+          <div className="mt-10 flex items-start gap-4 rounded-2xl border border-amber-400/50 bg-amber-50 p-6">
+            <AlertTriangle className="mt-0.5 size-5 shrink-0 text-amber-600" />
+            <p className="text-base leading-relaxed text-amber-900">
               Please be advised that EmpowerHer provides MIS exclusively to
               students formally accepted into its programs. This support is not
               available to individuals outside EmpowerHer or to those currently

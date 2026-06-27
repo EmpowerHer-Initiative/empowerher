@@ -295,7 +295,7 @@ export default function PartnerWithUsPage() {
   return (
     <div className="min-h-screen lg:flex">
       {/* ── Left panel — brand messaging ─────────────────────────────────────── */}
-      <div className="bg-foreground text-background relative flex flex-col justify-between overflow-hidden px-10 py-16 md:px-14 lg:w-[45%] lg:px-16 lg:py-24">
+      <div className="bg-muted text-foreground relative flex flex-col justify-between overflow-hidden px-10 py-16 md:px-14 lg:w-[45%] lg:px-16 lg:py-24">
         {/* Background image subtle overlay */}
         <div className="absolute inset-0 opacity-10">
           <img
@@ -308,19 +308,19 @@ export default function PartnerWithUsPage() {
         <div className="relative">
           <Link
             href="/get-involved"
-            className="group text-background/50 hover:text-background mb-12 inline-flex items-center gap-2 text-sm font-medium transition-colors"
+            className="group text-muted-foreground hover:text-foreground mb-12 inline-flex items-center gap-2 text-sm font-medium transition-colors"
           >
             <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
             Back
           </Link>
 
-          <p className="text-background/40 text-xs font-semibold tracking-[0.3em] uppercase">
+          <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
             Organizations &amp; Companies
           </p>
           <h1 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl">
             Partner With Us
           </h1>
-          <p className="text-background/70 mt-6 text-base leading-relaxed">
+          <p className="text-muted-foreground mt-6 text-base leading-relaxed">
             Organizations and companies aligned with our mission and vision, or
             those interested in supporting our work, are encouraged to complete
             the form below. A member of our team will be in touch to explore
@@ -331,14 +331,14 @@ export default function PartnerWithUsPage() {
           <div className="mt-12 space-y-6">
             {perks.map((perk) => (
               <div key={perk.title} className="flex gap-4">
-                <div className="border-background/15 bg-background/10 mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl border">
-                  <perk.icon className="text-background/70 size-4" />
+                <div className="border-border bg-foreground/5 mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl border">
+                  <perk.icon className="text-muted-foreground size-4" />
                 </div>
                 <div>
-                  <p className="text-background text-sm font-semibold">
+                  <p className="text-foreground text-sm font-semibold">
                     {perk.title}
                   </p>
-                  <p className="text-background/60 mt-1 text-sm leading-relaxed">
+                  <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
                     {perk.description}
                   </p>
                 </div>
@@ -347,12 +347,12 @@ export default function PartnerWithUsPage() {
           </div>
         </div>
 
-        <div className="border-background/10 relative mt-16 border-t pt-8">
-          <p className="text-background/40 text-xs">
+        <div className="border-border relative mt-16 border-t pt-8">
+          <p className="text-muted-foreground text-xs">
             Questions?{" "}
             <a
               href={`mailto:${siteConfig.email}`}
-              className="text-background/60 underline-offset-2 hover:underline"
+              className="text-muted-foreground underline-offset-2 hover:underline"
             >
               {siteConfig.email}
             </a>

@@ -46,13 +46,13 @@ const AboutHero = () => (
 const MissionVision = () => (
   <section className="py-28 md:py-40">
     <div className="container">
-      <div className="grid gap-16 lg:grid-cols-2 lg:gap-32">
-        <div>
-          <p className="text-primary mb-6 text-xs font-semibold tracking-[0.3em] uppercase">
-            Our Mission
+      <div className="grid gap-6 md:gap-8 lg:grid-cols-2">
+        <div className="group border-border/60 bg-muted/30 hover:border-primary/30 rounded-[2rem] border p-10 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl md:p-14">
+          <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+            What Drives Us
           </p>
-          <h2 className="font-serif text-3xl leading-[1.2] md:text-4xl lg:text-5xl">
-            Beacons of hope in the darkest of times
+          <h2 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl lg:text-6xl">
+            Our Mission
           </h2>
           <p className="text-muted-foreground mt-8 text-base leading-relaxed md:text-lg">
             EmpowerHer focuses on equipping Afghan women to become beacons of
@@ -64,12 +64,12 @@ const MissionVision = () => (
           </p>
         </div>
 
-        <div className="lg:pt-16">
-          <p className="text-muted-foreground mb-6 text-xs font-semibold tracking-[0.3em] uppercase">
-            Our Vision
+        <div className="group border-border/60 bg-muted text-foreground hover:border-primary/40 rounded-[2rem] border p-10 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl md:p-14">
+          <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+            Where We&apos;re Headed
           </p>
-          <h2 className="font-serif text-3xl leading-[1.2] md:text-4xl lg:text-5xl">
-            Guiding lights for an equitable society
+          <h2 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl lg:text-6xl">
+            Our Vision
           </h2>
           <p className="text-muted-foreground mt-8 text-base leading-relaxed md:text-lg">
             We envision Afghan women as guiding lights in their communities,
@@ -85,19 +85,19 @@ const MissionVision = () => (
 /* ─── Story ─────────────────────────────────────────────────────────────────── */
 
 const OurStory = () => (
-  <section className="bg-foreground text-background py-28 md:py-40">
+  <section className="bg-muted text-foreground py-28 md:py-40">
     <div className="container">
       <div className="mx-auto max-w-3xl">
-        <p className="text-background/40 mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+        <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
           How We Started
         </p>
 
-        <div className="text-background/75 space-y-7 text-lg leading-relaxed">
+        <div className="text-muted-foreground space-y-7 text-lg leading-relaxed">
           <p>
             EmpowerHer was born out of the lived experiences of its Co-Founders,{" "}
-            <span className="text-background font-semibold">Mahdi Rahimi</span>{" "}
+            <span className="text-foreground font-semibold">Mahdi Rahimi</span>{" "}
             and{" "}
-            <span className="text-background font-semibold">Nahid Karimi</span>,
+            <span className="text-foreground font-semibold">Nahid Karimi</span>,
             both of whom were raised in Kabul, Afghanistan.
           </p>
           <p>
@@ -110,8 +110,8 @@ const OurStory = () => (
         </div>
 
         {/* Pull Quote */}
-        <blockquote className="border-background/30 my-14 border-l-2 pl-8">
-          <p className="text-background font-serif text-2xl leading-snug md:text-3xl">
+        <blockquote className="border-border my-14 border-l-2 pl-8">
+          <p className="text-foreground font-serif text-2xl leading-snug md:text-3xl">
             &ldquo;The fall of Kabul on August 15, 2021, marked a turning point
             — not only for their own lives but for the future of millions of
             Afghan girls who were suddenly stripped of their basic right to
@@ -119,7 +119,7 @@ const OurStory = () => (
           </p>
         </blockquote>
 
-        <div className="text-background/75 space-y-7 text-lg leading-relaxed">
+        <div className="text-muted-foreground space-y-7 text-lg leading-relaxed">
           <p>
             With schools closed to girls over the age of 12 and women
             increasingly pushed out of public life, Mahdi and Nahid knew silence
@@ -205,7 +205,7 @@ const WhatWeDo = () => (
             }`}
           >
             <div className="md:w-1/4">
-              <span className="text-muted-foreground/20 group-hover:text-primary/20 font-serif text-6xl transition-colors duration-500 md:text-8xl">
+              <span className="text-primary/30 group-hover:text-primary/60 font-serif text-6xl transition-colors duration-500 md:text-8xl">
                 {item.index}
               </span>
             </div>
@@ -311,16 +311,19 @@ const mentorsTeam = [
 
 const memberSizes = {
   lg: {
+    width: "w-40 md:w-48",
     avatar: "h-28 w-28 md:h-36 md:w-36",
     name: "text-base",
     role: "text-xs",
   },
   md: {
+    width: "w-32 md:w-40",
     avatar: "h-20 w-20 md:h-28 md:w-28",
     name: "text-sm",
     role: "text-xs",
   },
   sm: {
+    width: "w-28 md:w-32",
     avatar: "h-16 w-16 md:h-20 md:w-20",
     name: "text-sm",
     role: "text-xs",
@@ -334,15 +337,20 @@ const TeamMember = ({
   member: { name: string; role: string; image: string };
   size?: keyof typeof memberSizes;
 }) => (
-  <div className="group flex flex-col items-center text-center">
+  <div
+    className={`group flex flex-col items-center text-center ${memberSizes[size].width}`}
+  >
+    {/* Brand-color frame */}
     <div
-      className={`border-border/40 group-hover:border-primary/40 group-hover:shadow-primary/10 relative mb-4 overflow-hidden rounded-full border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:shadow-lg ${memberSizes[size].avatar}`}
+      className={`from-primary to-secondary group-hover:shadow-primary/25 mb-4 rounded-full bg-gradient-to-br p-[3px] shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:shadow-lg ${memberSizes[size].avatar}`}
     >
-      <img
-        src={member.image}
-        alt={member.name}
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
-      />
+      <div className="bg-background relative h-full w-full overflow-hidden rounded-full p-[2px]">
+        <img
+          src={member.image}
+          alt={member.name}
+          className="h-full w-full rounded-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+        />
+      </div>
     </div>
     <p className={`leading-tight font-semibold ${memberSizes[size].name}`}>
       {member.name}
@@ -366,8 +374,8 @@ const TeamSection = () => (
           Our Team
         </h2>
         <p className="text-muted-foreground mt-4 max-w-lg">
-          Founded and led by Afghan youth who understand the struggles of their
-          own people.
+          Founded and led by a diverse team committed to expanding access to
+          education across borders.
         </p>
       </div>
 
@@ -375,7 +383,7 @@ const TeamSection = () => (
         <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
           Executive Team
         </p>
-        <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 md:gap-x-14">
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-10">
           {executiveTeam.map((member) => (
             <TeamMember key={member.name} member={member} size="lg" />
           ))}
@@ -386,7 +394,7 @@ const TeamSection = () => (
         <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
           Directors
         </p>
-        <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 md:gap-x-14">
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-10">
           {directors.map((member) => (
             <TeamMember key={member.name} member={member} size="md" />
           ))}
@@ -397,11 +405,89 @@ const TeamSection = () => (
         <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
           Mentors & Lecturers
         </p>
-        <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 md:gap-x-14">
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-10">
           {mentorsTeam.map((member) => (
             <TeamMember key={member.name} member={member} size="sm" />
           ))}
         </div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ─── Partners — Minimal logo strip ────────────────────────────────────────── */
+
+const partners = [
+  {
+    name: "NSHSS",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTjPNmNesfkIRBuYnTVcl8O9LdXP5103pNyJUt",
+    href: "https://www.nshss.org/",
+  },
+  {
+    name: "Right to Learn Afghanistan",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTBRQC7aZcQ1oEZ9sIXj8tePOrDbdN2iaU7v5q",
+    href: "https://righttolearn.ca/",
+  },
+  {
+    name: "AGFAF",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpavV7aqrM0zsm5gThJ2eDxZtjCFUdBGElvb1",
+    href: "https://agfaf.org/",
+  },
+  {
+    name: "Amplify Afghan Women",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBzmSPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O9",
+    href: "https://sites.google.com/view/amplifyafghans/home",
+  },
+  {
+    name: "Sahar Education",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT0La8F8o1jbZo7DsLPidlGr6Uf2HKquxXJ3CN",
+    href: "https://www.sahareducation.org/",
+  },
+  {
+    name: "Girls Opportunity Alliance",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTVVN0CQ82WufQtTg5yH7OAp0KFlsjbkaYIPZ",
+    href: "https://www.obama.org/programs/girls-opportunity-alliance/",
+  },
+  {
+    name: "Mente Global",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTUekbWeMuHB63DFcWbZp7rAk9VUJPgitsO2Ca",
+    href: "https://menteeglobal.org/",
+  },
+  {
+    name: "Inanna",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTIznPr82WufQtTg5yH7OAp0KFlsjbkaYIPZB",
+    href: "https://inanna.ca/",
+  },
+  {
+    name: "Human Media",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT2HJysqLQtJ7K2Z4UcWn3gCXRdBvVoY9Ohil8",
+    href: "https://humanitasmedia.org/",
+  },
+];
+
+const Partners = () => (
+  <section className="py-28 md:py-32">
+    <div className="container">
+      <p className="text-muted-foreground text-center text-xs font-semibold tracking-[0.3em] uppercase">
+        Trusted Partners & Supporters
+      </p>
+      <div className="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16">
+        {partners.map((p) => (
+          <a
+            key={p.name}
+            href={p.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={p.name}
+            className="group block transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1.5 hover:scale-105"
+          >
+            <img
+              src={p.logo}
+              alt={p.name}
+              className="h-16 w-auto object-contain md:h-24"
+            />
+          </a>
+        ))}
       </div>
     </div>
   </section>
@@ -454,6 +540,7 @@ export default function AboutPage() {
       <OurStory />
       <WhatWeDo />
       <TeamSection />
+      <Partners />
       <AboutCTA />
     </>
   );

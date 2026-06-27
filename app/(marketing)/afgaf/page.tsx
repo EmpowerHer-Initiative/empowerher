@@ -106,13 +106,13 @@ const Spotlight = () => (
 /* ─── Gratitude ──────────────────────────────────────────────────────────────── */
 
 const Gratitude = () => (
-  <section className="bg-foreground text-background py-28 md:py-40">
+  <section className="bg-muted text-foreground py-28 md:py-40">
     <div className="container">
       <div className="mx-auto max-w-3xl">
-        <p className="text-background/40 text-xs font-semibold tracking-[0.3em] uppercase">
+        <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
           From EmpowerHer
         </p>
-        <blockquote className="text-background/85 mt-10 font-serif text-2xl leading-[1.4] md:text-3xl">
+        <blockquote className="text-muted-foreground mt-10 font-serif text-2xl leading-[1.4] md:text-3xl">
           &ldquo;EmpowerHer deeply values the unwavering support of the Afghan
           Girls Financial Assistance Fund (AGFAF). As our primary sponsor and
           partner, AGFAF has played a pivotal role in making many of our
@@ -122,8 +122,8 @@ const Gratitude = () => (
           mission and vision, we extend our heartfelt gratitude for their
           continued support and belief in our work.&rdquo;
         </blockquote>
-        <div className="bg-background/20 mt-10 h-px w-16" />
-        <p className="text-background/60 mt-6 text-sm font-semibold">
+        <div className="bg-foreground/5 mt-10 h-px w-16" />
+        <p className="text-muted-foreground mt-6 text-sm font-semibold">
           EmpowerHer Team
         </p>
       </div>

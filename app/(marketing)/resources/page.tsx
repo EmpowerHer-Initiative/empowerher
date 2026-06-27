@@ -294,16 +294,16 @@ const ResourceList = () => (
 /* ─── Footer Note ────────────────────────────────────────────────────────────── */
 
 const FooterNote = () => (
-  <section className="bg-foreground text-background py-28 md:py-40">
+  <section className="bg-muted text-foreground py-28 md:py-40">
     <div className="container">
       <div className="max-w-3xl">
-        <p className="text-background/40 text-xs font-semibold tracking-[0.3em] uppercase">
+        <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
           Know a resource?
         </p>
         <h2 className="mt-5 font-serif text-4xl leading-tight md:text-5xl">
           Help us grow this list.
         </h2>
-        <p className="text-background/60 mt-6 max-w-xl text-base leading-relaxed">
+        <p className="text-muted-foreground mt-6 max-w-xl text-base leading-relaxed">
           If you know of an educational resource, scholarship, or program that
           supports Afghan girls and women, we&apos;d love to hear about it.
           Reach out and help us connect more girls with the opportunities they
@@ -311,7 +311,7 @@ const FooterNote = () => (
         </p>
         <a
           href={`mailto:${siteConfig.email}`}
-          className="text-background mt-8 inline-flex items-center gap-2 text-sm font-medium transition-opacity duration-300 hover:opacity-70"
+          className="text-foreground mt-8 inline-flex items-center gap-2 text-sm font-medium transition-opacity duration-300 hover:opacity-70"
         >
           {siteConfig.email}
           <ArrowUpRight className="size-4" />

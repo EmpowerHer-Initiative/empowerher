@@ -122,16 +122,16 @@ const ReportCard = () => (
 /* ─── Commitment ─────────────────────────────────────────────────────────────── */
 
 const Commitment = () => (
-  <section className="bg-foreground text-background py-28 md:py-40">
+  <section className="bg-muted text-foreground py-28 md:py-40">
     <div className="container">
       <div className="max-w-3xl">
-        <p className="text-background/40 text-xs font-semibold tracking-[0.3em] uppercase">
+        <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
           Our Commitment
         </p>
         <h2 className="mt-5 font-serif text-4xl leading-tight md:text-5xl">
           Accountability is part of our mission.
         </h2>
-        <p className="text-background/60 mt-8 max-w-xl text-base leading-relaxed">
+        <p className="text-muted-foreground mt-8 max-w-xl text-base leading-relaxed">
           As a youth-led initiative operating on trust and community support, we
           believe radical transparency is not optional — it is essential. Our
           annual reports capture not just our wins but our learnings, ensuring
@@ -141,13 +141,13 @@ const Commitment = () => (
         <div className="mt-10 flex flex-wrap gap-4">
           <Link
             href="/about-us"
-            className="border-background/20 text-background hover:bg-background/10 inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+            className="border-border text-foreground hover:bg-foreground/5 inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
           >
             About EmpowerHer
           </Link>
           <Link
             href="/get-involved"
-            className="text-background/60 hover:text-background inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+            className="text-muted-foreground hover:text-foreground inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
           >
             Get Involved
             <ArrowRight className="size-4" />

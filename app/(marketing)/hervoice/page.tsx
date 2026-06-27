@@ -88,12 +88,12 @@ const HerVoiceHero = () => (
 /* ─── How to Submit ─────────────────────────────────────────────────────────── */
 
 const HowToSubmit = () => (
-  <section className="bg-foreground text-background py-28 md:py-40">
+  <section className="bg-muted text-foreground py-28 md:py-40">
     <div className="container">
       <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
         {/* Left — editorial heading */}
         <div>
-          <p className="text-background/40 text-xs font-semibold tracking-[0.3em] uppercase">
+          <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
             Submission Guide
           </p>
           <h2 className="mt-4 font-serif text-3xl leading-tight md:text-5xl">
@@ -101,14 +101,14 @@ const HowToSubmit = () => (
             <br />
             <span className="text-primary italic">Your Story</span>
           </h2>
-          <p className="text-background/50 mt-6 max-w-md text-base leading-[1.8]">
+          <p className="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]">
             Every submission is a step toward being heard. Follow these four
             steps to share your voice with the world through HerVoice.
           </p>
 
           {/* Guidelines — border-left style like co-founder quotes */}
           <div className="mt-12 space-y-6">
-            <p className="text-background/30 text-xs font-semibold tracking-[0.3em] uppercase">
+            <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
               Important Guidelines
             </p>
             {[
@@ -129,18 +129,18 @@ const HowToSubmit = () => (
                 "All submissions will be reviewed by the EmpowerHer team.",
               ],
             ].map(([label, text]) => (
-              <div key={label} className="border-background/10 border-l-2 pl-5">
-                <p className="text-background/80 text-sm font-semibold">
+              <div key={label} className="border-border border-l-2 pl-5">
+                <p className="text-muted-foreground text-sm font-semibold">
                   {label}
                 </p>
-                <p className="text-background/40 mt-1 text-sm">{text}</p>
+                <p className="text-muted-foreground mt-1 text-sm">{text}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Right — numbered steps in a vertical list */}
-        <div className="divide-background/10 space-y-0 divide-y">
+        <div className="divide-border space-y-0 divide-y">
           {[
             {
               num: "01",
@@ -171,10 +171,10 @@ const HowToSubmit = () => (
                 {step.num}
               </span>
               <div className="pt-1">
-                <h3 className="text-background/90 text-base font-semibold">
+                <h3 className="text-foreground text-base font-semibold">
                   {step.title}
                 </h3>
-                <p className="text-background/45 mt-2 text-sm leading-relaxed">
+                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
                   {step.desc}
                 </p>
               </div>
@@ -401,19 +401,19 @@ const FeaturedWritings = ({ page }: { page: number }) => {
 /* ─── Congressional Testimonies ─────────────────────────────────────────────── */
 
 const CongressionalTestimonies = () => (
-  <section className="bg-foreground text-background py-28 md:py-40">
+  <section className="bg-muted text-foreground py-28 md:py-40">
     <div className="container">
       <div className="mx-auto max-w-4xl">
-        <p className="text-background/40 mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+        <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
           Amplifying Voices
         </p>
-        <h2 className="text-background font-serif text-4xl leading-[1.1] md:text-5xl">
+        <h2 className="text-foreground font-serif text-4xl leading-[1.1] md:text-5xl">
           Congressional Testimonies
         </h2>
 
         {/* Centered blockquote */}
-        <div className="border-background/20 my-16 border-l-2 pl-8">
-          <p className="text-background/80 font-serif text-xl leading-relaxed md:text-2xl">
+        <div className="border-border my-16 border-l-2 pl-8">
+          <p className="text-muted-foreground font-serif text-xl leading-relaxed md:text-2xl">
             &ldquo;These testimonies are representative of the passion of so
             many Afghan women to share their powerful experiences and their
             drive to become their best selves and contribute in their own unique
@@ -421,12 +421,12 @@ const CongressionalTestimonies = () => (
             their amazing pursuits, they serve as an inspiration to many of
             their peers who want to navigate their own path to success.&rdquo;
           </p>
-          <p className="text-background/40 mt-6 text-xs font-semibold tracking-[0.3em] uppercase">
+          <p className="text-muted-foreground mt-6 text-xs font-semibold tracking-[0.3em] uppercase">
             — Afghan Scouts Relief Fund (ASRF)
           </p>
         </div>
 
-        <p className="text-background/50 mb-10 text-sm">
+        <p className="text-muted-foreground mb-10 text-sm">
           Coming from a country where their very existence is dehumanized, and
           their human rights are not recognized, their resilience in the face of
           adversity should be a message to the whole world that we must support
@@ -447,7 +447,7 @@ const CongressionalTestimonies = () => (
               />
               Your browser does not support the video tag.
             </video>
-            <p className="text-background/40 mt-3 text-xs font-semibold tracking-[0.2em] uppercase">
+            <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-[0.2em] uppercase">
               Congressional Testimony — Part 1
             </p>
           </div>
@@ -464,7 +464,7 @@ const CongressionalTestimonies = () => (
               />
               Your browser does not support the video tag.
             </video>
-            <p className="text-background/40 mt-3 text-xs font-semibold tracking-[0.2em] uppercase">
+            <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-[0.2em] uppercase">
               Congressional Testimony — Part 2
             </p>
           </div>

@@ -34,7 +34,7 @@ const Header = () => (
 /* ─── Story 1: Page of Hope ─────────────────────────────────────────────────── */
 
 const PageOfHope = () => (
-  <section className="bg-foreground text-background">
+  <section className="bg-muted text-foreground">
     <div className="container py-28 md:py-40">
       <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
         {/* Image — left */}
@@ -47,7 +47,7 @@ const PageOfHope = () => (
             />
           </div>
           {/* Floating date tag */}
-          <div className="bg-background absolute -right-5 -bottom-5 rounded-2xl px-6 py-4">
+          <div className="bg-foreground/5 absolute -right-5 -bottom-5 rounded-2xl px-6 py-4">
             <p className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
               Aug 2023 – Jan 2025
             </p>
@@ -56,7 +56,7 @@ const PageOfHope = () => (
 
         {/* Content — right */}
         <div>
-          <p className="text-background/50 text-xs font-semibold tracking-[0.3em] uppercase">
+          <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
             Program 01
           </p>
           <h2 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl">
@@ -66,36 +66,36 @@ const PageOfHope = () => (
           {/* Stats inline */}
           <div className="mt-10 flex flex-wrap gap-10">
             <div>
-              <p className="text-background font-serif text-6xl leading-none">
+              <p className="text-foreground font-serif text-6xl leading-none">
                 11
               </p>
-              <p className="text-background/60 mt-2 text-sm">Students</p>
+              <p className="text-muted-foreground mt-2 text-sm">Students</p>
             </div>
             <div>
-              <p className="text-background font-serif text-6xl leading-none">
+              <p className="text-foreground font-serif text-6xl leading-none">
                 18
               </p>
-              <p className="text-background/60 mt-2 text-sm">Months</p>
+              <p className="text-muted-foreground mt-2 text-sm">Months</p>
             </div>
             <div>
-              <p className="text-background font-serif text-6xl leading-none">
+              <p className="text-foreground font-serif text-6xl leading-none">
                 100%
               </p>
-              <p className="text-background/60 mt-2 text-sm">
+              <p className="text-muted-foreground mt-2 text-sm">
                 Advanced to core programs
               </p>
             </div>
           </div>
 
-          <div className="border-background/10 mt-10 space-y-5 border-t pt-10">
-            <p className="text-background/75 text-base leading-relaxed">
+          <div className="border-border mt-10 space-y-5 border-t pt-10">
+            <p className="text-muted-foreground text-base leading-relaxed">
               The Page of Hope English Online Book Club was established to
               support Afghan teenagers—particularly girls—who were denied access
               to formal education. Over the course of 18 months, the program
               offered more than English instruction; it provided a platform for
               personal growth, leadership, and connection.
             </p>
-            <p className="text-background/75 text-base leading-relaxed">
+            <p className="text-muted-foreground text-base leading-relaxed">
               Founded by EmpowerHer Co-Founder Mahdi Rahimi and generously
               sponsored by the Afghan Girls Financial Assistance Fund (AGFAF),
               the club engaged 11 students in weekly virtual sessions. Students
@@ -103,8 +103,8 @@ const PageOfHope = () => (
               and participated in interactive activities including debates,
               storytelling, and team-based learning exercises.
             </p>
-            <p className="text-background/75 text-base leading-relaxed">
-              <span className="text-background font-semibold">
+            <p className="text-muted-foreground text-base leading-relaxed">
+              <span className="text-foreground font-semibold">
                 Impact &amp; Legacy:
               </span>{" "}
               Several participants have since advanced to AGFAF&apos;s core
@@ -125,7 +125,7 @@ const PageOfHope = () => (
             ].map((tag) => (
               <span
                 key={tag}
-                className="border-background/20 text-background/60 rounded-full border px-4 py-1.5 text-xs font-medium"
+                className="border-border text-muted-foreground rounded-full border px-4 py-1.5 text-xs font-medium"
               >
                 {tag}
               </span>
