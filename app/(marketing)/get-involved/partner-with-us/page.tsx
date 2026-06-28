@@ -8,6 +8,8 @@ import { siteConfig } from "@/lib/site";
 
 import { Reveal } from "@/components/reveal";
 
+import { submitPartner } from "../actions";
+
 /* ─── Form state ─────────────────────────────────────────────────────────────── */
 
 type FormState = {
@@ -219,6 +221,7 @@ export default function PartnerWithUsPage() {
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const validate = (): boolean => {
     const next: Partial<FormState> = {};
@@ -249,10 +252,22 @@ export default function PartnerWithUsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
     if (!validate()) return;
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
+    const result = await submitPartner({
+      firstName: form.firstName,
+      lastName: form.lastName,
+      businessEmail: form.businessEmail,
+      position: form.position,
+      organization: form.organization,
+      message: form.message,
+    });
     setLoading(false);
+    if ("error" in result) {
+      setSubmitError(result.error);
+      return;
+    }
     setSubmitted(true);
   };
 
@@ -349,6 +364,9 @@ export default function PartnerWithUsPage() {
                   onChange={handleChange}
                   onSubmit={handleSubmit}
                 />
+                {submitError && (
+                  <p className="text-destructive mt-4 text-sm">{submitError}</p>
+                )}
               </div>
             </div>
           </Reveal>

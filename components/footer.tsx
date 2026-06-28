@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight } from "lucide-react";
+import { FileText } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
 
@@ -58,17 +58,14 @@ export const Footer = () => {
   return (
     <footer className="border-border/30 border-t">
       <div className="container py-20 md:py-28">
-        <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-12">
-          {/* Brand */}
-          <div className="lg:col-span-5">
-            <Link
-              href="/"
-              className="inline-flex -translate-x-4 items-center justify-center gap-2"
-            >
+        <div className="flex flex-col items-start justify-between gap-12 md:flex-row">
+          {/* Left: Brand */}
+          <div className="flex flex-col">
+            <Link href="/" className="inline-flex">
               <img
                 src="https://empowerher-cdn.alisamadii.com/logo.png"
                 alt="EmpowerHer"
-                className="h-45 w-auto object-contain"
+                className="w-40 -translate-x-6 object-contain md:w-54"
               />
             </Link>
             <p className="text-muted-foreground max-w-sm text-sm leading-[1.8]">
@@ -76,74 +73,65 @@ export const Footer = () => {
               inspiring hope and progress while leading the way to a more
               equitable, inclusive, and sustainable society.
             </p>
-
-            <p className="text-muted-foreground mt-6 text-sm">
-              Email:{" "}
-              <a
-                href={`mailto:${siteConfig.email}`}
-                className="hover:text-foreground transition-colors"
-              >
-                {siteConfig.email}
-              </a>
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="text-foreground/70 hover:text-foreground mt-4 text-sm transition-colors"
+            >
+              Email: {siteConfig.email}
+            </a>
+            <p className="text-muted-foreground mt-4 text-sm font-medium">
+              EST. 2024
             </p>
+            <p className="text-muted-foreground text-sm">
+              United States of America
+            </p>
+          </div>
 
-            <div className="mt-6 space-y-0.5">
-              <p className="text-muted-foreground text-sm font-medium">
-                EST. 2024
-              </p>
-              <p className="text-muted-foreground text-sm">
-                United States of America
-              </p>
+          {/* Right: Pages + Follow Us */}
+          <div className="flex flex-col items-start gap-12 sm:flex-row sm:gap-20">
+            {/* Pages */}
+            <div>
+              <p className="mb-4 text-lg font-bold">Pages</p>
+              <ul className="space-y-2">
+                {quickLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-foreground/60 hover:text-foreground text-sm transition-colors duration-300"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
 
-          {/* Pages */}
-          <div className="lg:col-span-3">
-            <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
-              Pages
-            </p>
-            <ul className="mt-6 space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-foreground/60 hover:text-foreground text-sm transition-colors duration-300"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact + Social */}
-          <div className="lg:col-span-4">
-            <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
-              Connect
-            </p>
-            <ul className="mt-6 space-y-3">
-              {socialLinks.map((s) => (
-                <li key={s.label}>
+            {/* Follow Us */}
+            <div className="flex flex-col items-start">
+              <p className="mb-4 text-lg font-bold">Follow Us</p>
+              <div className="flex gap-4">
+                {socialLinks.map((s) => (
                   <a
                     href={s.href}
+                    key={s.label}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-foreground/60 hover:text-foreground group inline-flex items-center gap-2.5 text-sm transition-colors"
+                    aria-label={s.label}
+                    className="text-foreground/70 hover:text-foreground transition-colors"
                   >
-                    <s.icon className="size-4" />
-                    {s.label}
-                    <ArrowUpRight className="size-3 opacity-60 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <s.icon className="size-6" />
                   </a>
-                </li>
-              ))}
-            </ul>
+                ))}
+              </div>
 
-            <Link
-              href="/annual-report"
-              className="text-primary hover:text-primary/80 mt-6 inline-flex items-center gap-2 text-xs font-medium transition-colors"
-            >
-              Annual Impact Report &rarr;
-            </Link>
+              <Link
+                href="/annual-report"
+                className="bg-secondary text-secondary-foreground mt-5 inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium duration-300 will-change-transform hover:scale-105 active:scale-95"
+              >
+                <FileText className="mr-2 size-4" />
+                Annual Impact Report
+              </Link>
+            </div>
           </div>
         </div>
 

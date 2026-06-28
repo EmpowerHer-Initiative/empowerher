@@ -16,6 +16,8 @@ import { siteConfig } from "@/lib/site";
 
 import { Reveal } from "@/components/reveal";
 
+import { submitVolunteer } from "../actions";
+
 /* ─── Form state ─────────────────────────────────────────────────────────────── */
 
 type FormState = {
@@ -263,6 +265,7 @@ export default function VolunteerWithUsPage() {
   const [dragging, setDragging] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const validate = (): boolean => {
@@ -315,10 +318,23 @@ export default function VolunteerWithUsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
     if (!validate()) return;
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
+
+    const data = new FormData();
+    data.append("firstName", form.firstName);
+    data.append("lastName", form.lastName);
+    data.append("email", form.email);
+    data.append("message", form.message);
+    if (cvFile) data.append("cv", cvFile);
+
+    const result = await submitVolunteer(data);
     setLoading(false);
+    if ("error" in result) {
+      setSubmitError(result.error);
+      return;
+    }
     setSubmitted(true);
   };
 
@@ -453,6 +469,9 @@ export default function VolunteerWithUsPage() {
                   onRemoveFile={handleRemoveFile}
                   onSubmit={handleSubmit}
                 />
+                {submitError && (
+                  <p className="text-destructive mt-4 text-sm">{submitError}</p>
+                )}
               </div>
             </Reveal>
           </div>

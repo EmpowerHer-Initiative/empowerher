@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useMutation } from "@tanstack/react-query";
@@ -21,7 +22,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 type RejectedStudent =
   RouterOutputs["staff"]["rejectedStudents"]["list"][number];
@@ -48,6 +49,20 @@ export const columns: ColumnDef<RejectedStudent>[] = [
         </Badge>
       ) : (
         <Badge variant="outline">Not sent</Badge>
+      ),
+  },
+  {
+    header: "View email",
+    cell: ({ row }) =>
+      row.original.emailSent ? (
+        <Link
+          href={`/admin/logs?search=${encodeURIComponent(row.original.email)}`}
+          className={buttonVariants({ variant: "outline", size: "sm" })}
+        >
+          View email
+        </Link>
+      ) : (
+        <span className="text-muted-foreground text-sm">N/A</span>
       ),
   },
   {

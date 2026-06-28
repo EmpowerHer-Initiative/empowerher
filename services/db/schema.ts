@@ -170,7 +170,10 @@ export type EmailTemplateName =
   | "setup-account"
   | "contact-form"
   | "reject-student"
-  | "approve-student";
+  | "approve-student"
+  | "partner-with-us"
+  | "volunteer-with-us"
+  | "reminders";
 
 export type EmailLogMetadata = {
   to: string;

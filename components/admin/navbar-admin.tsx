@@ -6,14 +6,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const links: { label: string; href: string }[] = [
-  { label: "Overview", href: "/admin" },
   { label: "Users", href: "/admin/users" },
-  { label: "Products", href: "/admin/products" },
-  {
-    label: "Subscriptions",
-    href: "https://dashboard.polar.sh",
-  },
-  { label: "Media", href: "/admin/media" },
   { label: "Logs", href: "/admin/logs" },
   { label: "Comments", href: "/admin/comments" },
   { label: "Resources", href: "/admin/resources" },
@@ -25,9 +18,7 @@ const links: { label: string; href: string }[] = [
 export const NavbarAdmin = () => {
   const pathname = usePathname();
   const isActive = (link: (typeof links)[number]) =>
-    link.href === "/admin"
-      ? pathname === "/admin"
-      : pathname.startsWith(link.href);
+    pathname.startsWith(link.href);
 
   return (
     <div className="bg-muted sticky top-0 z-50 w-full border-b px-4">

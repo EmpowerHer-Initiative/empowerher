@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -8,6 +9,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Pencil, Star, Trash } from "lucide-react";
 import { toast } from "sonner";
+
+import { cn } from "@/lib/utils";
 
 import {
   AlertDialog,
@@ -21,7 +24,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -72,10 +75,39 @@ export const columns: ColumnDef<Student>[] = [
     cell: ({ row }) => <StatusCell student={row.original} />,
   },
   {
+    header: "Email",
+    cell: ({ row }) =>
+      row.original.emailId ? (
+        <Link
+          href={`/admin/logs?search=${encodeURIComponent(row.original.email ?? "")}`}
+          className={buttonVariants({ variant: "outline", size: "sm" })}
+        >
+          View email
+        </Link>
+      ) : (
+        <span className="text-muted-foreground text-sm">N/A</span>
+      ),
+  },
+  {
     id: "actions",
     cell: ({ row }) => <ActionCell student={row.original} />,
   },
 ];
+
+const BATCH_COLORS = [
+  "bg-blue-500 text-white",
+  "bg-green-500 text-white",
+  "bg-yellow-500 text-black",
+  "bg-red-500 text-white",
+  "bg-purple-500 text-white",
+];
+
+const colorFor = (key: string) => {
+  let hash = 0;
+  for (let i = 0; i < key.length; i++)
+    hash = (hash * 31 + key.charCodeAt(i)) | 0;
+  return BATCH_COLORS[Math.abs(hash) % BATCH_COLORS.length];
+};
 
 const WorkshopCell = ({ workshopId }: { workshopId: string }) => {
   const trpc = useTRPC();
@@ -85,7 +117,13 @@ const WorkshopCell = ({ workshopId }: { workshopId: string }) => {
 
   const workshop = workshops?.find((item) => item.id === workshopId);
 
-  return <Badge variant="outline">{workshop?.name ?? "—"}</Badge>;
+  if (!workshop) return <Badge variant="outline">—</Badge>;
+
+  return (
+    <Badge className={cn(colorFor(workshop.name || workshopId))}>
+      {workshop.name}
+    </Badge>
+  );
 };
 
 const StatusCell = ({ student }: { student: Student }) => {

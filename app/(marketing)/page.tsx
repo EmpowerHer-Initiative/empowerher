@@ -288,7 +288,7 @@ const Mission = () => {
             We see you. We hear you.{" "}
             <span className="text-primary italic">And we are with you.</span>
           </h2>
-          <div className="text-muted-foreground mt-8 max-w-2xl space-y-5 text-base leading-[1.8] md:text-lg">
+          <div className="text-muted-foreground mx-auto mt-8 max-w-2xl space-y-5 text-center text-base leading-[1.8] md:text-lg">
             <p>
               EmpowerHer was born from the hope and strength that you carry
               within you—even in the darkest of days. You are not forgotten.
@@ -314,7 +314,7 @@ const Mission = () => {
               and to rise. And we are proud to stand with you.
             </p>
           </div>
-          <div className="mt-8">
+          <div className="mt-8 text-right">
             <p className="text-foreground font-semibold">
               Mahdi Rahimi &amp; Nahid Karimi
             </p>
@@ -412,9 +412,9 @@ const Programs = () => (
       </Reveal>
 
       <Reveal asChild delay={160}>
-        <div className="mt-16 grid gap-6 md:grid-cols-5">
+        <div className="mt-16 grid gap-6 md:grid-cols-2">
           {/* HerVoice — large card */}
-          <Link href="/hervoice" className="group md:col-span-3">
+          <Link href="/hervoice" className="group">
             <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] md:aspect-auto md:h-full">
               <img
                 src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEK40ctbfRbjSv9fDHMpJXBriOWVtPmoQZNC3"
@@ -444,7 +444,7 @@ const Programs = () => (
           </Link>
 
           {/* Mentorship */}
-          <Link href="/mentorship" className="group md:col-span-2">
+          <Link href="/mentorship" className="group">
             <div className="relative aspect-[4/3] min-h-[360px] overflow-hidden rounded-[2rem] md:aspect-auto md:h-full">
               <img
                 src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTztHu6kOQlbZOApif7EkNI4MXGo08zhqH6CwY"
