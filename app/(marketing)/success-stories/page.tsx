@@ -77,7 +77,11 @@ const StoryCard = ({
   <div className="border-border/60 bg-background mx-auto max-w-4xl rounded-3xl border p-8 shadow-sm md:p-12">
     {/* Logo */}
     <div className="border-border/60 size-28 overflow-hidden rounded-2xl border bg-white">
-      <img src={logo} alt={title} className="h-full w-full object-cover" />
+      <img
+        src={logo}
+        alt={title}
+        className="h-full w-full object-contain px-2"
+      />
     </div>
 
     {/* Title + badge */}

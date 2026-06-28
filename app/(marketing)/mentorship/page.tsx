@@ -274,9 +274,9 @@ const Opportunities = () => (
         </h2>
       </div>
 
-      <div className="border-border/40 bg-border/40 grid gap-px overflow-hidden rounded-2xl border md:grid-cols-3">
-        <div className="bg-background p-10">
-          <p className="text-primary/20 font-serif text-5xl">01</p>
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors">
+          <p className="text-primary/40 font-serif text-5xl">01</p>
           <h3 className="mt-6 text-xl font-semibold">
             Leadership Opportunities
           </h3>
@@ -295,8 +295,8 @@ const Opportunities = () => (
           </Link>
         </div>
 
-        <div className="bg-background p-10">
-          <p className="text-primary/20 font-serif text-5xl">02</p>
+        <div className="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors">
+          <p className="text-primary/40 font-serif text-5xl">02</p>
           <h3 className="mt-6 text-xl font-semibold">Publication Access</h3>
           <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
             Students may publish their work through HerVoice and our partner
@@ -311,8 +311,8 @@ const Opportunities = () => (
           </Link>
         </div>
 
-        <div className="bg-background p-10">
-          <p className="text-primary/20 font-serif text-5xl">03</p>
+        <div className="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors">
+          <p className="text-primary/40 font-serif text-5xl">03</p>
           <h3 className="mt-6 text-xl font-semibold">Continued Engagement</h3>
           <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
             Ongoing involvement in projects, events, and the EmpowerHer
@@ -320,6 +320,11 @@ const Opportunities = () => (
           </p>
         </div>
       </div>
+
+      <p className="text-muted-foreground mt-10 text-sm leading-relaxed">
+        Additional information will be shared during our virtual sessions by
+        EmpowerHer mentors.
+      </p>
     </div>
   </section>
 );
