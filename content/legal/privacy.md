@@ -1,60 +1,59 @@
 ---
 title: Privacy
-description: This Privacy Policy describes how we collect, use, and protect your information when you use our Services, including when you sign in with Google or other third-party providers.
+description: This Privacy Policy describes how EmpowerHer collects, uses, and protects participant information across its programs, workshops, publications, and platforms.
 ---
 
-**Last updated: February 7, 2026**
+**Last updated: June 28, 2026**
 
-{/* UPDATE PER CLIENT: Replace company name and domains below */}
-AliSamadii.LLC ("we," "our," or "us") operates the websites alisamadii.com, motion.alisamadii.com, docs.alisamadii.com, and packages.alisamadii.com (the "Services"). This Privacy Policy describes how we collect, use, and protect your information when you use our Services, including when you sign in with Google or other third-party providers.
+EmpowerHer is committed to protecting the privacy of the Afghan women and girls who participate in its programs. This Privacy Policy describes the information we collect, how we use it, and the choices and protections available to participants across our programs, workshops, publication platforms, scholarships, events, and initiatives.
 
 ## Information We Collect
 
-We may collect information that you provide directly (e.g., when you contact us or create an account) and information we obtain when you use our Services:
+EmpowerHer may collect information including:
 
-- **Account information:** If you sign in with Google or another provider, we receive your name, email address, and profile picture (or other profile data made available by the provider) to create and manage your account.
-- **Usage data:** We may collect information about how you use our Services (e.g., pages visited, features used).
-- **Device and log data:** We may collect IP address, browser type, and similar technical information.
+- Names
+- Email addresses
+- Application materials
+- Educational information
+- Workshop participation records
+- Submitted writings and creative works
 
 ## How We Use Your Information
 
-We use the information we collect to:
+Information collected may be used for:
 
-- Provide, maintain, and improve our Services
-- Authenticate you and manage your account
-- Send you service-related communications (e.g., password reset, security notices)
-- Respond to your requests and support you
-- Comply with legal obligations and protect our rights
+- Program administration
+- Workshop coordination
+- Scholarship review
+- Publication opportunities
+- Communication regarding EmpowerHer activities
 
-We do not sell your personal information to third parties.
+## Confidentiality
 
-## Cookies and Similar Technologies
+EmpowerHer will protect participant information and will not share personal data with third parties without consent, except when necessary for program administration or improvement of program operations. EmpowerHer is not responsible for unauthorized disclosure, sharing, or misuse of program materials or participant information by third parties or participants.
 
-We use cookies and similar technologies to keep you signed in, remember your preferences, and understand how our Services are used. You can control cookies through your browser settings.
+Participants should avoid sharing sensitive personal information during public workshops, events, or publications.
 
-## Third-Party Services
+## Media and Publication Consent
 
-Our Services may use third-party services (e.g., Google for sign-in, analytics, hosting). Those services have their own privacy policies governing how they collect and use data. We encourage you to review Google's Privacy Policy when you use "Sign in with Google."
+By participating in EmpowerHer programs and voluntarily submitting written work, photographs, or creative projects, participants grant EmpowerHer permission to:
+
+- Publish submitted work on EmpowerHer platforms.
+- Share participant achievements and success stories.
+- Promote EmpowerHer programs through websites, newsletters, reports, and social media.
 
 ## Data Retention and Security
 
-We retain your information for as long as your account is active or as needed to provide the Services and fulfill the purposes described in this policy. We implement reasonable measures to protect your data; no method of transmission or storage is 100% secure.
+EmpowerHer implements reasonable safeguards to protect participant data and retains information only as long as necessary for program administration and reporting purposes.
 
-## Your Rights
+## Modifications
 
-Depending on your location, you may have rights to access, correct, or delete your personal information, or to object to or restrict certain processing. To exercise these rights or ask questions about your data, contact us at the email below.
-
-## Children's Privacy
-
-Our Services are not directed to children under 13. We do not knowingly collect personal information from children under 13.
-
-## Changes to This Policy
-
-We may update this Privacy Policy from time to time. We will post the updated policy on this page and update the "Last updated" date. Continued use of the Services after changes constitutes acceptance of the updated policy.
+- EmpowerHer reserves the right to modify this Privacy Policy at any time. Updated policies will be posted on official EmpowerHer platforms.
+- Continued participation in EmpowerHer programs constitutes acceptance of this policy.
 
 ## Contact Us
 
 If you have questions about this Privacy Policy or our practices, contact us at:
 
-**AliSamadii.LLC**  
-Email: [a@alisamadii.com](mailto:a@alisamadii.com)
+**EmpowerHer Initiative**  
+Email: [info@empowerher-initiative.org](mailto:info@empowerher-initiative.org)

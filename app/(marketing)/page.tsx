@@ -13,6 +13,8 @@ import {
   Users,
 } from "lucide-react";
 
+import { Reveal } from "@/components/reveal";
+
 /* ─── Cinematic Hero — Full-width editorial split ──────────────────────────── */
 
 const Hero = () => {
@@ -146,24 +148,26 @@ const CountUp = ({
 const StatsBar = () => (
   <section className="border-border/40 bg-primary/[0.03] border-y py-20 md:py-28">
     <div className="container">
-      <div className="max-w-2xl">
-        <h2 className="font-serif text-3xl leading-tight md:text-5xl">
-          Abandoned Futures: Let Afghan Girls Learn
-        </h2>
-        <p className="text-muted-foreground mt-6 max-w-md text-base leading-relaxed md:text-lg">
-          Since September 2021, all Afghan girls over the age of 12 have been
-          banned from attending school.
-        </p>
-        <a
-          href="https://www.unesco.org/en/articles/let-girls-and-women-afghanistan-learn"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group bg-primary text-primary-foreground hover:shadow-primary/25 mt-8 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
-        >
-          More Details
-          <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
-        </a>
-      </div>
+      <Reveal asChild>
+        <div className="max-w-2xl">
+          <h2 className="font-serif text-3xl leading-tight md:text-5xl">
+            Abandoned Futures: Let Afghan Girls Learn
+          </h2>
+          <p className="text-muted-foreground mt-6 max-w-md text-base leading-relaxed md:text-lg">
+            Since September 2021, all Afghan girls over the age of 12 have been
+            banned from attending school.
+          </p>
+          <a
+            href="https://www.unesco.org/en/articles/let-girls-and-women-afghanistan-learn"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group bg-primary text-primary-foreground hover:shadow-primary/25 mt-8 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
+          >
+            More Details
+            <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+          </a>
+        </div>
+      </Reveal>
 
       <div className="divide-border/40 mt-14 grid grid-cols-1 divide-y md:grid-cols-3 md:divide-x md:divide-y-0">
         {[
@@ -210,14 +214,16 @@ const StatsBar = () => (
 const AtAGlance = () => (
   <section className="border-border/40 bg-primary/[0.03] border-y py-20 md:py-28">
     <div className="container">
-      <div className="max-w-2xl">
-        <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-          By the Numbers
-        </p>
-        <h2 className="mt-4 font-serif text-3xl leading-tight md:text-5xl">
-          EmpowerHer at a Glance
-        </h2>
-      </div>
+      <Reveal asChild>
+        <div className="max-w-2xl">
+          <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+            By the Numbers
+          </p>
+          <h2 className="mt-4 font-serif text-3xl leading-tight md:text-5xl">
+            EmpowerHer at a Glance
+          </h2>
+        </div>
+      </Reveal>
 
       <div className="divide-border/40 mt-14 grid grid-cols-1 divide-y sm:grid-cols-2 sm:divide-x lg:grid-cols-4 lg:divide-y-0">
         {[
@@ -271,28 +277,10 @@ const AtAGlance = () => (
 /* ─── Mission Statement — Editorial typography ─────────────────────────────── */
 
 const Mission = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [vis, setVis] = useState(false);
-
-  useEffect(() => {
-    const ob = new IntersectionObserver(
-      ([e]) => e.isIntersecting && setVis(true),
-      { threshold: 0.15 }
-    );
-    if (ref.current) ob.observe(ref.current);
-    return () => ob.disconnect();
-  }, []);
-
   return (
-    <section ref={ref} className="py-28 md:py-40">
+    <section className="py-28 md:py-40">
       <div className="container">
-        <div
-          className="mx-auto max-w-4xl transition-all duration-[1.2s] ease-[cubic-bezier(0.32,0.72,0,1)]"
-          style={{
-            opacity: vis ? 1 : 0,
-            transform: vis ? "translateY(0)" : "translateY(3rem)",
-          }}
-        >
+        <Reveal className="mx-auto max-w-4xl">
           <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
             Message From Our Co-Founders
           </p>
@@ -380,7 +368,7 @@ const Mission = () => {
             Our Team
             <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
           </Link>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -391,90 +379,99 @@ const Mission = () => {
 const Programs = () => (
   <section className="bg-muted text-foreground py-28 md:py-40">
     <div className="container">
-      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
-            What We Do
-          </p>
-          <h2 className="mt-4 font-serif text-3xl md:text-5xl">Our Programs</h2>
+      <Reveal asChild>
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+              What We Do
+            </p>
+            <h2 className="mt-4 font-serif text-3xl md:text-5xl">
+              Our Programs
+            </h2>
+          </div>
+          <Link
+            href="/mentorship"
+            className="text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors"
+          >
+            View all programs <ArrowRight className="size-3.5" />
+          </Link>
         </div>
-        <Link
-          href="/mentorship"
-          className="text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors"
-        >
-          View all programs <ArrowRight className="size-3.5" />
-        </Link>
-      </div>
+      </Reveal>
 
-      <p className="text-muted-foreground mt-8 max-w-3xl text-base leading-[1.8]">
-        Our projects are designed to meet Afghan girls where they are—and help
-        them grow into who they&rsquo;re meant to be. Each initiative provides a
-        safe, inclusive space where participants gain the tools, guidance, and
-        community they need to rise. From leadership workshops to storytelling
-        programs, every project builds confidence, sharpens skills, and
-        encourages bold self-expression. Together, we&rsquo;re creating spaces
-        where Afghan girls can learn, lead, and shape their own futures.
-      </p>
+      <Reveal asChild delay={80}>
+        <p className="text-muted-foreground mt-8 max-w-3xl text-base leading-[1.8]">
+          Our projects are designed to meet Afghan girls where they are—and help
+          them grow into who they&rsquo;re meant to be. Each initiative provides
+          a safe, inclusive space where participants gain the tools, guidance,
+          and community they need to rise. From leadership workshops to
+          storytelling programs, every project builds confidence, sharpens
+          skills, and encourages bold self-expression. Together, we&rsquo;re
+          creating spaces where Afghan girls can learn, lead, and shape their
+          own futures.
+        </p>
+      </Reveal>
 
-      <div className="mt-16 grid gap-6 md:grid-cols-5">
-        {/* HerVoice — large card */}
-        <Link href="/hervoice" className="group md:col-span-3">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] md:aspect-auto md:h-full">
-            <img
-              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEK40ctbfRbjSv9fDHMpJXBriOWVtPmoQZNC3"
-              alt="HerVoice"
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            <div className="absolute right-0 bottom-0 left-0 p-8">
-              <div className="flex items-center gap-2 text-white/60">
-                <BookOpen className="size-4" />
-                <span className="text-xs font-medium tracking-[0.2em] uppercase">
-                  Storytelling Platform
+      <Reveal asChild delay={160}>
+        <div className="mt-16 grid gap-6 md:grid-cols-5">
+          {/* HerVoice — large card */}
+          <Link href="/hervoice" className="group md:col-span-3">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] md:aspect-auto md:h-full">
+              <img
+                src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEK40ctbfRbjSv9fDHMpJXBriOWVtPmoQZNC3"
+                alt="HerVoice"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute right-0 bottom-0 left-0 p-8">
+                <div className="flex items-center gap-2 text-white/60">
+                  <BookOpen className="size-4" />
+                  <span className="text-xs font-medium tracking-[0.2em] uppercase">
+                    Storytelling Platform
+                  </span>
+                </div>
+                <h3 className="mt-2 font-serif text-3xl text-white md:text-4xl">
+                  HerVoice
+                </h3>
+                <p className="mt-2 max-w-md text-sm text-white/70">
+                  A platform for Afghan girls to share their stories, amplify
+                  their voices, and inspire change through creative expression.
+                </p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-white/80 transition-all duration-500 group-hover:gap-2.5">
+                  Explore <ArrowUpRight className="size-3.5" />
                 </span>
               </div>
-              <h3 className="mt-2 font-serif text-3xl text-white md:text-4xl">
-                HerVoice
-              </h3>
-              <p className="mt-2 max-w-md text-sm text-white/70">
-                A platform for Afghan girls to share their stories, amplify
-                their voices, and inspire change through creative expression.
-              </p>
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-white/80 transition-all duration-500 group-hover:gap-2.5">
-                Explore <ArrowUpRight className="size-3.5" />
-              </span>
             </div>
-          </div>
-        </Link>
+          </Link>
 
-        {/* Mentorship */}
-        <Link href="/mentorship" className="group md:col-span-2">
-          <div className="relative aspect-[4/3] min-h-[360px] overflow-hidden rounded-[2rem] md:aspect-auto md:h-full">
-            <img
-              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTztHu6kOQlbZOApif7EkNI4MXGo08zhqH6CwY"
-              alt="Mentorship"
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            <div className="absolute right-0 bottom-0 left-0 p-6">
-              <div className="flex items-center gap-2 text-white/60">
-                <Users className="size-4" />
-                <span className="text-xs font-medium tracking-[0.2em] uppercase">
-                  Core Program
-                </span>
+          {/* Mentorship */}
+          <Link href="/mentorship" className="group md:col-span-2">
+            <div className="relative aspect-[4/3] min-h-[360px] overflow-hidden rounded-[2rem] md:aspect-auto md:h-full">
+              <img
+                src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTztHu6kOQlbZOApif7EkNI4MXGo08zhqH6CwY"
+                alt="Mentorship"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute right-0 bottom-0 left-0 p-6">
+                <div className="flex items-center gap-2 text-white/60">
+                  <Users className="size-4" />
+                  <span className="text-xs font-medium tracking-[0.2em] uppercase">
+                    Core Program
+                  </span>
+                </div>
+                <h3 className="mt-2 font-serif text-2xl text-white">
+                  Mentorship
+                </h3>
+                <p className="mt-1 text-sm text-white/70">
+                  EmpowerHer&apos;s core program offers Afghan girls free
+                  workshops and mentorship to build resilience, gain support,
+                  and launch impact projects.
+                </p>
               </div>
-              <h3 className="mt-2 font-serif text-2xl text-white">
-                Mentorship
-              </h3>
-              <p className="mt-1 text-sm text-white/70">
-                EmpowerHer&apos;s core program offers Afghan girls free
-                workshops and mentorship to build resilience, gain support, and
-                launch impact projects.
-              </p>
             </div>
-          </div>
-        </Link>
-      </div>
+          </Link>
+        </div>
+      </Reveal>
     </div>
   </section>
 );
@@ -740,53 +737,58 @@ const ImpactStory = () => (
   <section className="bg-muted/30 py-28 md:py-40">
     <div className="container">
       <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-        <div className="order-2 lg:order-1">
-          <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-            Media Coverage
-          </p>
-          <h2 className="mt-4 font-serif text-3xl leading-tight md:text-4xl">
-            EmpowerHer in the News
-          </h2>
-          <p className="text-muted-foreground mt-6 text-base leading-[1.8]">
-            Our mission to empower Afghan girls has been recognized and
-            celebrated by local media, amplifying the voices of resilience and
-            leadership within our community.
-          </p>
-          <h3 className="mt-8 font-serif text-2xl leading-tight">
-            Featured in Rappahannock News
-          </h3>
-          <p className="text-muted-foreground mt-3 text-base leading-[1.8]">
-            EmpowerHer was featured in a local Virginia newsletter through our
-            former partnership with Rappahannock News. This acknowledgment
-            underscored our mission to empower Afghan girls and amplify their
-            narratives of resilience and leadership within a broader community.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Link
-              href="/hervoice/featured-writings-from-our-partners"
-              className="group bg-primary text-primary-foreground hover:shadow-primary/20 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
-            >
-              Featured Writings from Our Partners
-              <ArrowRight className="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5" />
-            </Link>
-            <Link
-              href="/success-stories"
-              className="group border-border/60 text-foreground/70 hover:border-primary hover:bg-primary/5 hover:text-foreground hover:shadow-primary/10 inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
-            >
-              Success Stories
-              <ArrowRight className="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5" />
-            </Link>
+        <Reveal asChild>
+          <div className="order-2 lg:order-1">
+            <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+              Media Coverage
+            </p>
+            <h2 className="mt-4 font-serif text-3xl leading-tight md:text-4xl">
+              EmpowerHer in the News
+            </h2>
+            <p className="text-muted-foreground mt-6 text-base leading-[1.8]">
+              Our mission to empower Afghan girls has been recognized and
+              celebrated by local media, amplifying the voices of resilience and
+              leadership within our community.
+            </p>
+            <h3 className="mt-8 font-serif text-2xl leading-tight">
+              Featured in Rappahannock News
+            </h3>
+            <p className="text-muted-foreground mt-3 text-base leading-[1.8]">
+              EmpowerHer was featured in a local Virginia newsletter through our
+              former partnership with Rappahannock News. This acknowledgment
+              underscored our mission to empower Afghan girls and amplify their
+              narratives of resilience and leadership within a broader
+              community.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link
+                href="/hervoice/featured-writings-from-our-partners"
+                className="group bg-primary text-primary-foreground hover:shadow-primary/20 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
+              >
+                Featured Writings from Our Partners
+                <ArrowRight className="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5" />
+              </Link>
+              <Link
+                href="/success-stories"
+                className="group border-border/60 text-foreground/70 hover:border-primary hover:bg-primary/5 hover:text-foreground hover:shadow-primary/10 inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
+              >
+                Success Stories
+                <ArrowRight className="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5" />
+              </Link>
+            </div>
           </div>
-        </div>
-        <div className="order-1 lg:order-2">
-          <div className="relative overflow-hidden rounded-[2.5rem]">
-            <img
-              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBGUBwPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O"
-              alt="EmpowerHer in the news"
-              className="h-auto w-full object-contain"
-            />
+        </Reveal>
+        <Reveal asChild delay={120}>
+          <div className="order-1 lg:order-2">
+            <div className="relative overflow-hidden rounded-[2.5rem]">
+              <img
+                src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBGUBwPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O"
+                alt="EmpowerHer in the news"
+                className="h-auto w-full object-contain"
+              />
+            </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </div>
   </section>
@@ -813,88 +815,92 @@ const MediaSpotlight = () => {
   return (
     <section className="py-28 md:py-40">
       <div className="container">
-        <div className="flex items-end justify-between gap-6">
-          <div>
-            <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-              Watch &amp; Listen
-            </p>
-            <h2 className="mt-4 font-serif text-3xl leading-tight md:text-4xl">
-              Featured Media
-            </h2>
+        <Reveal asChild>
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+                Watch &amp; Listen
+              </p>
+              <h2 className="mt-4 font-serif text-3xl leading-tight md:text-4xl">
+                Featured Media
+              </h2>
+            </div>
+            {total > 1 && (
+              <div className="hidden items-center gap-3 md:flex">
+                <button
+                  type="button"
+                  onClick={prev}
+                  aria-label="Previous"
+                  className="border-border/60 text-foreground/70 hover:border-primary hover:text-foreground flex size-12 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 active:scale-95"
+                >
+                  <ArrowLeft className="size-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={next}
+                  aria-label="Next"
+                  className="border-border/60 text-foreground/70 hover:border-primary hover:text-foreground flex size-12 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 active:scale-95"
+                >
+                  <ArrowRight className="size-5" />
+                </button>
+              </div>
+            )}
           </div>
-          {total > 1 && (
-            <div className="hidden items-center gap-3 md:flex">
-              <button
-                type="button"
-                onClick={prev}
-                aria-label="Previous"
-                className="border-border/60 text-foreground/70 hover:border-primary hover:text-foreground flex size-12 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 active:scale-95"
-              >
-                <ArrowLeft className="size-5" />
-              </button>
+        </Reveal>
+
+        {/* Carousel viewport */}
+        <Reveal asChild delay={120}>
+          <div className="relative mt-12 overflow-hidden rounded-[2.5rem]">
+            <div
+              className="flex transition-transform duration-[800ms] ease-[cubic-bezier(0.32,0.72,0,1)]"
+              style={{ transform: `translateX(-${idx * 100}%)` }}
+            >
+              {mediaFeatures.map((m) => (
+                <div key={m.youtubeId} className="w-full shrink-0">
+                  <div className="bg-muted/30 grid gap-0 lg:grid-cols-2">
+                    <div className="relative aspect-video lg:aspect-auto lg:min-h-[440px]">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${m.youtubeId}`}
+                        title={m.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        className="absolute inset-0 h-full w-full"
+                      />
+                    </div>
+                    <div className="flex flex-col justify-center p-8 md:p-14">
+                      <div className="text-primary flex items-center gap-2">
+                        <Play className="size-4 fill-current" />
+                        <span className="text-xs font-medium tracking-[0.2em] uppercase">
+                          {m.label}
+                        </span>
+                      </div>
+                      <h3 className="mt-4 font-serif text-2xl leading-tight md:text-3xl">
+                        {m.title}
+                      </h3>
+                      <p className="text-muted-foreground mt-5 text-base leading-[1.8]">
+                        {m.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Click the right side to advance */}
+            {total > 1 && (
               <button
                 type="button"
                 onClick={next}
                 aria-label="Next"
-                className="border-border/60 text-foreground/70 hover:border-primary hover:text-foreground flex size-12 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 active:scale-95"
+                className="group absolute inset-y-0 right-0 flex w-16 items-center justify-center md:w-24"
               >
-                <ArrowRight className="size-5" />
+                <span className="bg-background/80 text-foreground flex size-12 items-center justify-center rounded-full shadow-lg backdrop-blur transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:scale-110">
+                  <ArrowRight className="size-5" />
+                </span>
               </button>
-            </div>
-          )}
-        </div>
-
-        {/* Carousel viewport */}
-        <div className="relative mt-12 overflow-hidden rounded-[2.5rem]">
-          <div
-            className="flex transition-transform duration-[800ms] ease-[cubic-bezier(0.32,0.72,0,1)]"
-            style={{ transform: `translateX(-${idx * 100}%)` }}
-          >
-            {mediaFeatures.map((m) => (
-              <div key={m.youtubeId} className="w-full shrink-0">
-                <div className="bg-muted/30 grid gap-0 lg:grid-cols-2">
-                  <div className="relative aspect-video lg:aspect-auto lg:min-h-[440px]">
-                    <iframe
-                      src={`https://www.youtube.com/embed/${m.youtubeId}`}
-                      title={m.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                      className="absolute inset-0 h-full w-full"
-                    />
-                  </div>
-                  <div className="flex flex-col justify-center p-8 md:p-14">
-                    <div className="text-primary flex items-center gap-2">
-                      <Play className="size-4 fill-current" />
-                      <span className="text-xs font-medium tracking-[0.2em] uppercase">
-                        {m.label}
-                      </span>
-                    </div>
-                    <h3 className="mt-4 font-serif text-2xl leading-tight md:text-3xl">
-                      {m.title}
-                    </h3>
-                    <p className="text-muted-foreground mt-5 text-base leading-[1.8]">
-                      {m.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
+            )}
           </div>
-
-          {/* Click the right side to advance */}
-          {total > 1 && (
-            <button
-              type="button"
-              onClick={next}
-              aria-label="Next"
-              className="group absolute inset-y-0 right-0 flex w-16 items-center justify-center md:w-24"
-            >
-              <span className="bg-background/80 text-foreground flex size-12 items-center justify-center rounded-full shadow-lg backdrop-blur transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:scale-110">
-                <ArrowRight className="size-5" />
-              </span>
-            </button>
-          )}
-        </div>
+        </Reveal>
 
         {/* Dots */}
         {total > 1 && (
@@ -970,27 +976,31 @@ const partners = [
 const Partners = () => (
   <section className="py-28 md:py-32">
     <div className="container">
-      <p className="text-muted-foreground text-center text-xs font-semibold tracking-[0.3em] uppercase">
-        Trusted Partners & Supporters
-      </p>
-      <div className="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16">
-        {partners.map((p) => (
-          <a
-            key={p.name}
-            href={p.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={p.name}
-            className="group block transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1.5 hover:scale-105"
-          >
-            <img
-              src={p.logo}
-              alt={p.name}
-              className="h-16 w-auto object-contain md:h-24"
-            />
-          </a>
-        ))}
-      </div>
+      <Reveal asChild>
+        <p className="text-muted-foreground text-center text-xs font-semibold tracking-[0.3em] uppercase">
+          Trusted Partners & Supporters
+        </p>
+      </Reveal>
+      <Reveal asChild delay={80}>
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16">
+          {partners.map((p) => (
+            <a
+              key={p.name}
+              href={p.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={p.name}
+              className="group block transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1.5 hover:scale-105"
+            >
+              <img
+                src={p.logo}
+                alt={p.name}
+                className="h-16 w-auto object-contain md:h-24"
+              />
+            </a>
+          ))}
+        </div>
+      </Reveal>
     </div>
   </section>
 );
@@ -1008,25 +1018,26 @@ const Newsletter = () => (
     <div className="relative container">
       <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
         {/* Left — messaging */}
-        <div>
-          <div className="border-border bg-card inline-flex items-center gap-2 rounded-full border px-4 py-1.5">
-            <Heart className="text-primary size-3.5" />
-            <span className="text-muted-foreground text-[10px] font-semibold tracking-[0.2em] uppercase">
-              Stay Connected
-            </span>
-          </div>
-          <h2 className="mt-6 font-serif text-4xl leading-tight md:text-5xl">
-            Join Our
-            <br />
-            <span className="text-primary italic">Community</span>
-          </h2>
-          <p className="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]">
-            Get updates on our programs, success stories, and ways to support
-            Afghan girls&apos; education. Be part of a growing movement for
-            change.
-          </p>
+        <Reveal asChild>
+          <div>
+            <div className="border-border bg-card inline-flex items-center gap-2 rounded-full border px-4 py-1.5">
+              <Heart className="text-primary size-3.5" />
+              <span className="text-muted-foreground text-[10px] font-semibold tracking-[0.2em] uppercase">
+                Stay Connected
+              </span>
+            </div>
+            <h2 className="mt-6 font-serif text-4xl leading-tight md:text-5xl">
+              Join Our
+              <br />
+              <span className="text-primary italic">Community</span>
+            </h2>
+            <p className="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]">
+              Get updates on our programs, success stories, and ways to support
+              Afghan girls&apos; education. Be part of a growing movement for
+              change.
+            </p>
 
-          {/* <div className="mt-10 flex items-center gap-8">
+            {/* <div className="mt-10 flex items-center gap-8">
             <div>
               <p className="text-primary font-serif text-3xl">9+</p>
               <p className="text-muted-foreground mt-1 text-xs">
@@ -1046,31 +1057,37 @@ const Newsletter = () => (
               <p className="text-muted-foreground mt-1 text-xs">Free Programs</p>
             </div>
           </div> */}
-        </div>
+          </div>
+        </Reveal>
 
         {/* Right — form card */}
-        <div className="border-border bg-card rounded-3xl border p-8 shadow-sm md:p-10">
-          <h3 className="font-serif text-2xl">Subscribe to Our Newsletter</h3>
-          <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
-            Join hundreds of supporters and community members.
-          </p>
-          <form className="mt-8 space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-primary/40 w-full rounded-xl border px-5 py-3.5 text-sm transition-all duration-300 outline-none"
-            />
-            <button
-              type="submit"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 w-full rounded-xl py-3.5 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]"
+        <Reveal asChild delay={120}>
+          <div className="border-border bg-card rounded-3xl border p-8 shadow-sm md:p-10">
+            <h3 className="font-serif text-2xl">Subscribe to Our Newsletter</h3>
+            <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
+              Join hundreds of supporters and community members.
+            </p>
+            <form
+              className="mt-8 space-y-4"
+              onSubmit={(e) => e.preventDefault()}
             >
-              Subscribe
-            </button>
-          </form>
-          <p className="text-muted-foreground mt-4 text-center text-xs">
-            We respect your privacy. Unsubscribe anytime.
-          </p>
-        </div>
+              <input
+                type="email"
+                placeholder="Your email address"
+                className="border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-primary/40 w-full rounded-xl border px-5 py-3.5 text-sm transition-all duration-300 outline-none"
+              />
+              <button
+                type="submit"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 w-full rounded-xl py-3.5 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]"
+              >
+                Subscribe
+              </button>
+            </form>
+            <p className="text-muted-foreground mt-4 text-center text-xs">
+              We respect your privacy. Unsubscribe anytime.
+            </p>
+          </div>
+        </Reveal>
       </div>
     </div>
   </section>

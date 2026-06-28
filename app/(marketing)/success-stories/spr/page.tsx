@@ -15,6 +15,8 @@ import {
 
 import { siteConfig } from "@/lib/site";
 
+import { Reveal } from "@/components/reveal";
+
 export const metadata: Metadata = {
   title: `${siteConfig.pages.spr.title} — ${siteConfig.name}`,
   description: siteConfig.pages.spr.description,
@@ -35,31 +37,36 @@ const Hero = () => (
     </div>
 
     <div className="relative container py-28 md:py-40">
-      <Link
-        href="/success-stories"
-        className="group text-background/60 hover:text-background mb-10 inline-flex items-center gap-2 text-sm font-medium transition-colors"
-      >
-        <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
-        Back to Success Stories
-      </Link>
+      <Reveal>
+        <Link
+          href="/success-stories"
+          className="group text-background/60 hover:text-background mb-10 inline-flex items-center gap-2 text-sm font-medium transition-colors"
+        >
+          <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
+          Back to Success Stories
+        </Link>
+      </Reveal>
 
-      <div className="max-w-2xl">
-        <p className="text-background/50 text-xs font-semibold tracking-[0.3em] uppercase">
-          Leadership Pathway
-        </p>
-        <h1 className="text-background mt-5 font-serif text-5xl leading-[1.05] md:text-6xl lg:text-7xl">
-          Student Project Roadmap
-        </h1>
-        <p className="text-background/75 mt-8 max-w-xl text-base leading-relaxed md:text-lg">
-          The Student Project Roadmap (SRP) is a leadership pathway for
-          EmpowerHer students who have completed their workshops and met
-          eligibility requirements and wish to deepen their practical leadership
-          experience. Through a structured, step-by-step process, students work
-          closely with EmpowerHer&apos;s team to design and lead their own
-          impact-driven online classes, directly advancing EmpowerHer&apos;s
-          mission and expanding educational access for more Afghan girls.
-        </p>
-      </div>
+      <Reveal asChild delay={120}>
+        <div className="max-w-2xl">
+          <p className="text-background/50 text-xs font-semibold tracking-[0.3em] uppercase">
+            Leadership Pathway
+          </p>
+          <h1 className="text-background mt-5 font-serif text-5xl leading-[1.05] md:text-6xl lg:text-7xl">
+            Student Project Roadmap
+          </h1>
+          <p className="text-background/75 mt-8 max-w-xl text-base leading-relaxed md:text-lg">
+            The Student Project Roadmap (SRP) is a leadership pathway for
+            EmpowerHer students who have completed their workshops and met
+            eligibility requirements and wish to deepen their practical
+            leadership experience. Through a structured, step-by-step process,
+            students work closely with EmpowerHer&apos;s team to design and lead
+            their own impact-driven online classes, directly advancing
+            EmpowerHer&apos;s mission and expanding educational access for more
+            Afghan girls.
+          </p>
+        </div>
+      </Reveal>
     </div>
   </section>
 );
@@ -88,15 +95,17 @@ const Eligibility = () => (
 
     <div className="relative container">
       <div className="mx-auto max-w-2xl">
-        <p className="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase">
-          Requirements
-        </p>
-        <h2 className="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
-          Eligibility Requirements
-        </h2>
-        <p className="mt-6 text-base leading-relaxed text-white/70">
-          Before applying, confirm you meet all three criteria below.
-        </p>
+        <Reveal>
+          <p className="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase">
+            Requirements
+          </p>
+          <h2 className="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+            Eligibility Requirements
+          </h2>
+          <p className="mt-6 text-base leading-relaxed text-white/70">
+            Before applying, confirm you meet all three criteria below.
+          </p>
+        </Reveal>
 
         <ol className="mt-12 space-y-5">
           {eligibilityRules.map((rule, i) => (
@@ -118,34 +127,38 @@ const Eligibility = () => (
         </ol>
 
         {/* How to apply — inline */}
-        <div className="mt-16 border-t border-white/15 pt-12">
-          <p className="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase">
-            Application
-          </p>
-          <h3 className="mt-4 font-serif text-3xl text-white">How to Apply</h3>
-          <p className="mt-5 text-base leading-relaxed text-white/75">
-            Submit an inquiry to{" "}
-            <a
-              href="mailto:apply@empowerher-initiative.org"
-              className="font-medium text-amber-300 underline decoration-amber-300/40 underline-offset-4 transition-colors hover:decoration-amber-300"
-            >
-              apply@empowerher-initiative.org
-            </a>
-            . Include your full name, the two EmpowerHer workshops you have
-            attended, and your reasons for wanting to join this roadmap. Once
-            received, the Mentorship Program Director will schedule an interview
-            shortly.
-          </p>
-          <div className="mt-8">
-            <a
-              href="mailto:apply@empowerher-initiative.org"
-              className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-[#0b1f3a] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg hover:shadow-white/20 active:scale-[0.98]"
-            >
-              <Mail className="size-4" />
-              Apply via Email
-            </a>
+        <Reveal asChild>
+          <div className="mt-16 border-t border-white/15 pt-12">
+            <p className="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase">
+              Application
+            </p>
+            <h3 className="mt-4 font-serif text-3xl text-white">
+              How to Apply
+            </h3>
+            <p className="mt-5 text-base leading-relaxed text-white/75">
+              Submit an inquiry to{" "}
+              <a
+                href="mailto:apply@empowerher-initiative.org"
+                className="font-medium text-amber-300 underline decoration-amber-300/40 underline-offset-4 transition-colors hover:decoration-amber-300"
+              >
+                apply@empowerher-initiative.org
+              </a>
+              . Include your full name, the two EmpowerHer workshops you have
+              attended, and your reasons for wanting to join this roadmap. Once
+              received, the Mentorship Program Director will schedule an
+              interview shortly.
+            </p>
+            <div className="mt-8">
+              <a
+                href="mailto:apply@empowerher-initiative.org"
+                className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-[#0b1f3a] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg hover:shadow-white/20 active:scale-[0.98]"
+              >
+                <Mail className="size-4" />
+                Apply via Email
+              </a>
+            </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </div>
   </section>
@@ -190,44 +203,48 @@ const StepByStep = () => (
   <section className="py-28 md:py-40">
     <div className="container">
       <div className="mx-auto max-w-2xl">
-        <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-          The Process
-        </p>
-        <h2 className="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
-          Step by Step Guide
-        </h2>
+        <Reveal>
+          <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+            The Process
+          </p>
+          <h2 className="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+            Step by Step Guide
+          </h2>
+        </Reveal>
 
         {/* Vertical timeline */}
-        <div className="relative mt-16">
-          {/* Connecting line */}
-          <div className="bg-border absolute top-4 bottom-4 left-[1.125rem] w-px" />
+        <Reveal asChild delay={100}>
+          <div className="relative mt-16">
+            {/* Connecting line */}
+            <div className="bg-border absolute top-4 bottom-4 left-[1.125rem] w-px" />
 
-          <ol className="space-y-0">
-            {steps.map((step, i) => (
-              <li
-                key={step.number}
-                className="group relative flex gap-8 pb-12 last:pb-0"
-              >
-                {/* Circle node */}
-                <div className="border-primary/40 bg-background group-hover:border-primary group-hover:bg-primary group-hover:shadow-primary/25 relative z-10 flex size-9 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:shadow-lg">
-                  <span className="text-primary group-hover:text-primary-foreground text-[10px] font-bold transition-colors duration-500">
-                    {step.number}
-                  </span>
-                </div>
+            <ol className="space-y-0">
+              {steps.map((step) => (
+                <li
+                  key={step.number}
+                  className="group relative flex gap-8 pb-12 last:pb-0"
+                >
+                  {/* Circle node */}
+                  <div className="border-primary/40 bg-background group-hover:border-primary group-hover:bg-primary group-hover:shadow-primary/25 relative z-10 flex size-9 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:shadow-lg">
+                    <span className="text-primary group-hover:text-primary-foreground text-[10px] font-bold transition-colors duration-500">
+                      {step.number}
+                    </span>
+                  </div>
 
-                {/* Content */}
-                <div className="pt-0.5 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1">
-                  <h3 className="group-hover:text-primary text-lg leading-snug font-semibold transition-colors duration-500">
-                    {step.title}
-                  </h3>
-                  <p className="text-foreground/70 mt-3 text-sm leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
+                  {/* Content */}
+                  <div className="pt-0.5 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1">
+                    <h3 className="group-hover:text-primary text-lg leading-snug font-semibold transition-colors duration-500">
+                      {step.title}
+                    </h3>
+                    <p className="text-foreground/70 mt-3 text-sm leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Reveal>
       </div>
     </div>
   </section>
@@ -277,63 +294,73 @@ const benefits = [
 const Benefits = () => (
   <section className="bg-foreground/[0.03] py-28 md:py-40">
     <div className="container">
-      <div className="mx-auto max-w-2xl">
-        <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-          What You Gain
-        </p>
-        <h2 className="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
-          Roadmap Benefits
-        </h2>
-      </div>
+      <Reveal asChild>
+        <div className="mx-auto max-w-2xl">
+          <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+            What You Gain
+          </p>
+          <h2 className="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+            Roadmap Benefits
+          </h2>
+        </div>
+      </Reveal>
 
       <div className="mx-auto mt-16 max-w-2xl">
-        <div className="grid gap-5 sm:grid-cols-2">
-          {benefits.map((benefit) => (
-            <div
-              key={benefit.title}
-              className="group border-border/60 bg-background hover:border-primary/30 hover:shadow-primary/5 flex gap-5 rounded-2xl border p-7 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="bg-primary/10 text-primary flex size-11 shrink-0 items-center justify-center rounded-xl">
-                <benefit.icon className="size-5" />
+        <Reveal asChild delay={80}>
+          <div className="grid gap-5 sm:grid-cols-2">
+            {benefits.map((benefit) => (
+              <div
+                key={benefit.title}
+                className="group border-border/60 bg-background hover:border-primary/30 hover:shadow-primary/5 flex gap-5 rounded-2xl border p-7 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div className="bg-primary/10 text-primary flex size-11 shrink-0 items-center justify-center rounded-xl">
+                  <benefit.icon className="size-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-semibold">{benefit.title}</h3>
+                  <p className="text-foreground/70 mt-2 text-sm leading-relaxed">
+                    {benefit.description}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-base font-semibold">{benefit.title}</h3>
-                <p className="text-foreground/70 mt-2 text-sm leading-relaxed">
-                  {benefit.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </Reveal>
       </div>
 
       {/* Volunteer note */}
-      <div className="mx-auto mt-12 max-w-2xl">
-        <div className="flex gap-4 rounded-2xl border border-l-4 border-red-200 border-l-red-600 bg-red-50 p-6">
-          <AlertCircle className="mt-0.5 size-5 shrink-0 text-red-600" />
-          <div>
-            <p className="text-sm font-semibold text-red-800">Important Note</p>
-            <p className="text-foreground/80 mt-1.5 text-sm leading-relaxed">
-              EmpowerHer does not provide a monthly salary for its staff
-              members. All roles within this roadmap are volunteer-based.
-              Participation as an Assistant or Mentor is completely free, and no
-              monetary compensation is provided.
-            </p>
+      <Reveal asChild>
+        <div className="mx-auto mt-12 max-w-2xl">
+          <div className="flex gap-4 rounded-2xl border border-l-4 border-red-200 border-l-red-600 bg-red-50 p-6">
+            <AlertCircle className="mt-0.5 size-5 shrink-0 text-red-600" />
+            <div>
+              <p className="text-sm font-semibold text-red-800">
+                Important Note
+              </p>
+              <p className="text-foreground/80 mt-1.5 text-sm leading-relaxed">
+                EmpowerHer does not provide a monthly salary for its staff
+                members. All roles within this roadmap are volunteer-based.
+                Participation as an Assistant or Mentor is completely free, and
+                no monetary compensation is provided.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </Reveal>
 
-      <div className="mx-auto mt-10 max-w-2xl text-center">
-        <a
-          href="mailto:apply@empowerher-initiative.org"
-          className="group bg-foreground text-background hover:shadow-foreground/10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
-        >
-          Apply Now
-          <span className="bg-background/10 flex size-6 items-center justify-center rounded-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5">
-            <ArrowRight className="size-3.5" />
-          </span>
-        </a>
-      </div>
+      <Reveal asChild delay={80}>
+        <div className="mx-auto mt-10 max-w-2xl text-center">
+          <a
+            href="mailto:apply@empowerher-initiative.org"
+            className="group bg-foreground text-background hover:shadow-foreground/10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
+          >
+            Apply Now
+            <span className="bg-background/10 flex size-6 items-center justify-center rounded-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5">
+              <ArrowRight className="size-3.5" />
+            </span>
+          </a>
+        </div>
+      </Reveal>
     </div>
   </section>
 );

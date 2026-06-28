@@ -14,6 +14,8 @@ import {
 
 import { siteConfig } from "@/lib/site";
 
+import { Reveal } from "@/components/reveal";
+
 /* ─── Form state ─────────────────────────────────────────────────────────────── */
 
 type FormState = {
@@ -334,99 +336,125 @@ export default function VolunteerWithUsPage() {
         </div>
 
         <div className="relative">
-          <Link
-            href="/get-involved"
-            className="group text-muted-foreground hover:text-foreground mb-12 inline-flex items-center gap-2 text-sm font-medium transition-colors"
-          >
-            <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
-            Back
-          </Link>
+          <Reveal>
+            <Link
+              href="/get-involved"
+              className="group text-muted-foreground hover:text-foreground mb-12 inline-flex items-center gap-2 text-sm font-medium transition-colors"
+            >
+              <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
+              Back
+            </Link>
+          </Reveal>
 
-          <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
-            Open to All
-          </p>
-          <h1 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl">
-            Volunteer With Us
-          </h1>
-          <p className="text-muted-foreground mt-6 text-base leading-relaxed">
-            EmpowerHer welcomes volunteers from around the world to contribute
-            to our virtual workshops and programs. Volunteers may support our
-            community and staff in different ways, such as serving as lecturers,
-            mentors, assistants, or administrative members, as positions become
-            available. We encourage volunteers to share perspectives from their
-            countries and backgrounds to foster meaningful cross-cultural
-            learning. We value diverse voices committed to educating and
-            empowering Afghan girls and youth.
-          </p>
+          <Reveal asChild delay={80}>
+            <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+              Open to All
+            </p>
+          </Reveal>
+          <Reveal asChild delay={160}>
+            <h1 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl">
+              Volunteer With Us
+            </h1>
+          </Reveal>
+          <Reveal asChild delay={240}>
+            <p className="text-muted-foreground mt-6 text-base leading-relaxed">
+              EmpowerHer welcomes volunteers from around the world to contribute
+              to our virtual workshops and programs. Volunteers may support our
+              community and staff in different ways, such as serving as
+              lecturers, mentors, assistants, or administrative members, as
+              positions become available. We encourage volunteers to share
+              perspectives from their countries and backgrounds to foster
+              meaningful cross-cultural learning. We value diverse voices
+              committed to educating and empowering Afghan girls and youth.
+            </p>
+          </Reveal>
 
-          <div className="border-border bg-foreground/5 mt-10 rounded-xl border p-5">
+          <Reveal asChild delay={320}>
+            <div className="border-border bg-foreground/5 mt-10 rounded-xl border p-5">
+              <p className="text-muted-foreground text-xs">
+                Afghan girls outside the Middle East and Central Asia are
+                especially encouraged to volunteer with us.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+
+        <Reveal asChild>
+          <div className="border-border relative mt-16 border-t pt-8">
             <p className="text-muted-foreground text-xs">
-              Afghan girls outside the Middle East and Central Asia are
-              especially encouraged to volunteer with us.
+              Questions?{" "}
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="text-muted-foreground underline-offset-2 hover:underline"
+              >
+                {siteConfig.email}
+              </a>
             </p>
           </div>
-        </div>
-
-        <div className="border-border relative mt-16 border-t pt-8">
-          <p className="text-muted-foreground text-xs">
-            Questions?{" "}
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="text-muted-foreground underline-offset-2 hover:underline"
-            >
-              {siteConfig.email}
-            </a>
-          </p>
-        </div>
+        </Reveal>
       </div>
 
       {/* ── Right panel — form ───────────────────────────────────────────────── */}
       <div className="flex flex-1 flex-col justify-center px-8 py-16 md:px-14 lg:px-16 lg:py-24">
         {submitted ? (
           <div className="mx-auto max-w-md text-center">
-            <div className="border-primary/20 bg-primary/5 mx-auto mb-6 flex size-20 items-center justify-center rounded-full border">
-              <CheckCircle className="text-primary size-10" />
-            </div>
-            <h2 className="font-serif text-3xl">Application Received</h2>
-            <p className="text-muted-foreground mt-4 text-base leading-relaxed">
-              Thank you for your interest in volunteering with EmpowerHer. Our
-              team will review your application and reach out soon.
-            </p>
+            <Reveal asChild>
+              <div className="border-primary/20 bg-primary/5 mx-auto mb-6 flex size-20 items-center justify-center rounded-full border">
+                <CheckCircle className="text-primary size-10" />
+              </div>
+            </Reveal>
+            <Reveal asChild delay={80}>
+              <h2 className="font-serif text-3xl">Application Received</h2>
+            </Reveal>
+            <Reveal asChild delay={160}>
+              <p className="text-muted-foreground mt-4 text-base leading-relaxed">
+                Thank you for your interest in volunteering with EmpowerHer. Our
+                team will review your application and reach out soon.
+              </p>
+            </Reveal>
           </div>
         ) : (
           <div className="mx-auto w-full max-w-lg">
-            <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-              Volunteer Application
-            </p>
-            <h2 className="mt-4 font-serif text-3xl md:text-4xl">
-              Join our volunteer community
-            </h2>
-            <p className="text-muted-foreground mt-3 text-sm">
-              Tell us about yourself and how you&apos;d like to contribute. All
-              fields marked <span className="text-primary">*</span> are
-              required.
-            </p>
+            <Reveal asChild>
+              <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+                Volunteer Application
+              </p>
+            </Reveal>
+            <Reveal asChild delay={80}>
+              <h2 className="mt-4 font-serif text-3xl md:text-4xl">
+                Join our volunteer community
+              </h2>
+            </Reveal>
+            <Reveal asChild delay={160}>
+              <p className="text-muted-foreground mt-3 text-sm">
+                Tell us about yourself and how you&apos;d like to contribute.
+                All fields marked <span className="text-primary">*</span> are
+                required.
+              </p>
+            </Reveal>
 
-            <div className="mt-10">
-              <VolunteerForm
-                form={form}
-                errors={errors}
-                cvFile={cvFile}
-                dragging={dragging}
-                loading={loading}
-                fileInputRef={fileInputRef}
-                onChange={handleChange}
-                onFile={handleFile}
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  setDragging(true);
-                }}
-                onDragLeave={() => setDragging(false)}
-                onDrop={handleDrop}
-                onRemoveFile={handleRemoveFile}
-                onSubmit={handleSubmit}
-              />
-            </div>
+            <Reveal asChild delay={240}>
+              <div className="mt-10">
+                <VolunteerForm
+                  form={form}
+                  errors={errors}
+                  cvFile={cvFile}
+                  dragging={dragging}
+                  loading={loading}
+                  fileInputRef={fileInputRef}
+                  onChange={handleChange}
+                  onFile={handleFile}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setDragging(true);
+                  }}
+                  onDragLeave={() => setDragging(false)}
+                  onDrop={handleDrop}
+                  onRemoveFile={handleRemoveFile}
+                  onSubmit={handleSubmit}
+                />
+              </div>
+            </Reveal>
           </div>
         )}
       </div>

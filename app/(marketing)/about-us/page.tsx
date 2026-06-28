@@ -4,6 +4,8 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
 
+import { Reveal } from "@/components/reveal";
+
 export const metadata: Metadata = {
   title: `${siteConfig.pages.about.title} — ${siteConfig.name}`,
   description: siteConfig.pages.about.description,
@@ -23,19 +25,25 @@ const AboutHero = () => (
 
     <div className="relative flex h-full flex-col justify-end pb-20 md:pb-28">
       <div className="container">
-        <p className="mb-5 text-xs font-semibold tracking-[0.3em] text-white/60 uppercase">
-          Our Story
-        </p>
-        <h1 className="max-w-3xl font-serif text-5xl leading-[1.05] text-white md:text-7xl lg:text-8xl">
-          Born from lived experience.
-          <br />
-          Built for Afghan women.
-        </h1>
-        <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
-          A movement dedicated to equipping Afghan women with resilience,
-          creativity, and leadership to shine as sources of inspiration — even
-          in the face of adversity.
-        </p>
+        <Reveal asChild>
+          <p className="mb-5 text-xs font-semibold tracking-[0.3em] text-white/60 uppercase">
+            Our Story
+          </p>
+        </Reveal>
+        <Reveal asChild delay={80}>
+          <h1 className="max-w-3xl font-serif text-5xl leading-[1.05] text-white md:text-7xl lg:text-8xl">
+            Born from lived experience.
+            <br />
+            Built for Afghan women.
+          </h1>
+        </Reveal>
+        <Reveal asChild delay={160}>
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
+            A movement dedicated to equipping Afghan women with resilience,
+            creativity, and leadership to shine as sources of inspiration — even
+            in the face of adversity.
+          </p>
+        </Reveal>
       </div>
     </div>
   </section>
@@ -47,36 +55,40 @@ const MissionVision = () => (
   <section className="py-28 md:py-40">
     <div className="container">
       <div className="grid gap-6 md:gap-8 lg:grid-cols-2">
-        <div className="group border-border/60 bg-muted/30 hover:border-primary/30 rounded-[2rem] border p-10 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl md:p-14">
-          <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-            What Drives Us
-          </p>
-          <h2 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl lg:text-6xl">
-            Our Mission
-          </h2>
-          <p className="text-muted-foreground mt-8 text-base leading-relaxed md:text-lg">
-            EmpowerHer focuses on equipping Afghan women to become beacons of
-            hope in the darkest of times when the shadows of the Taliban seek to
-            stifle the voices of Afghan women. By nurturing resilience,
-            creativity, and leadership, we strive to empower them to shine as
-            sources of inspiration and strength, uplifting their communities
-            even in the face of adversity.
-          </p>
-        </div>
+        <Reveal asChild>
+          <div className="group border-border/60 bg-muted/30 hover:border-primary/30 rounded-[2rem] border p-10 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl md:p-14">
+            <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+              What Drives Us
+            </p>
+            <h2 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl lg:text-6xl">
+              Our Mission
+            </h2>
+            <p className="text-muted-foreground mt-8 text-base leading-relaxed md:text-lg">
+              EmpowerHer focuses on equipping Afghan women to become beacons of
+              hope in the darkest of times when the shadows of the Taliban seek
+              to stifle the voices of Afghan women. By nurturing resilience,
+              creativity, and leadership, we strive to empower them to shine as
+              sources of inspiration and strength, uplifting their communities
+              even in the face of adversity.
+            </p>
+          </div>
+        </Reveal>
 
-        <div className="group border-border/60 bg-muted text-foreground hover:border-primary/40 rounded-[2rem] border p-10 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl md:p-14">
-          <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-            Where We&apos;re Headed
-          </p>
-          <h2 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl lg:text-6xl">
-            Our Vision
-          </h2>
-          <p className="text-muted-foreground mt-8 text-base leading-relaxed md:text-lg">
-            We envision Afghan women as guiding lights in their communities,
-            inspiring hope and progress while leading the way to a more
-            equitable, inclusive, and sustainable society.
-          </p>
-        </div>
+        <Reveal asChild delay={120}>
+          <div className="group border-border/60 bg-muted text-foreground hover:border-primary/40 rounded-[2rem] border p-10 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl md:p-14">
+            <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+              Where We&apos;re Headed
+            </p>
+            <h2 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl lg:text-6xl">
+              Our Vision
+            </h2>
+            <p className="text-muted-foreground mt-8 text-base leading-relaxed md:text-lg">
+              We envision Afghan women as guiding lights in their communities,
+              inspiring hope and progress while leading the way to a more
+              equitable, inclusive, and sustainable society.
+            </p>
+          </div>
+        </Reveal>
       </div>
     </div>
   </section>
@@ -88,61 +100,74 @@ const OurStory = () => (
   <section className="bg-muted text-foreground py-28 md:py-40">
     <div className="container">
       <div className="mx-auto max-w-3xl">
-        <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
-          How We Started
-        </p>
+        <Reveal asChild>
+          <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+            How We Started
+          </p>
+        </Reveal>
 
-        <div className="text-muted-foreground space-y-7 text-lg leading-relaxed">
-          <p>
-            EmpowerHer was born out of the lived experiences of its Co-Founders,{" "}
-            <span className="text-foreground font-semibold">Mahdi Rahimi</span>{" "}
-            and{" "}
-            <span className="text-foreground font-semibold">Nahid Karimi</span>,
-            both of whom were raised in Kabul, Afghanistan.
-          </p>
-          <p>
-            Growing up, they witnessed firsthand the deep-rooted inequalities
-            and daily struggles Afghan communities — particularly women and
-            girls — face. From societal restrictions to systemic educational
-            barriers, the challenges were immense, but the desire to create
-            change was even greater.
-          </p>
-        </div>
+        <Reveal asChild delay={80}>
+          <div className="text-muted-foreground space-y-7 text-lg leading-relaxed">
+            <p>
+              EmpowerHer was born out of the lived experiences of its
+              Co-Founders,{" "}
+              <span className="text-foreground font-semibold">
+                Mahdi Rahimi
+              </span>{" "}
+              and{" "}
+              <span className="text-foreground font-semibold">
+                Nahid Karimi
+              </span>
+              , both of whom were raised in Kabul, Afghanistan.
+            </p>
+            <p>
+              Growing up, they witnessed firsthand the deep-rooted inequalities
+              and daily struggles Afghan communities — particularly women and
+              girls — face. From societal restrictions to systemic educational
+              barriers, the challenges were immense, but the desire to create
+              change was even greater.
+            </p>
+          </div>
+        </Reveal>
 
         {/* Pull Quote */}
-        <blockquote className="border-border my-14 border-l-2 pl-8">
-          <p className="text-foreground font-serif text-2xl leading-snug md:text-3xl">
-            &ldquo;The fall of Kabul on August 15, 2021, marked a turning point
-            — not only for their own lives but for the future of millions of
-            Afghan girls who were suddenly stripped of their basic right to
-            education.&rdquo;
-          </p>
-        </blockquote>
+        <Reveal asChild delay={160}>
+          <blockquote className="border-border my-14 border-l-2 pl-8">
+            <p className="text-foreground font-serif text-2xl leading-snug md:text-3xl">
+              &ldquo;The fall of Kabul on August 15, 2021, marked a turning
+              point — not only for their own lives but for the future of
+              millions of Afghan girls who were suddenly stripped of their basic
+              right to education.&rdquo;
+            </p>
+          </blockquote>
+        </Reveal>
 
-        <div className="text-muted-foreground space-y-7 text-lg leading-relaxed">
-          <p>
-            With schools closed to girls over the age of 12 and women
-            increasingly pushed out of public life, Mahdi and Nahid knew silence
-            was not an option.
-          </p>
-          <p>
-            After resettling in the United States, they immediately began
-            organizing virtual programs aimed at supporting Afghan youth — both
-            men and women — inside Afghanistan and across the diaspora. These
-            early efforts, though impactful, were limited in scope and duration.
-            They reached small groups and operated with minimal resources, yet
-            they revealed something powerful: the need was urgent, and the
-            demand was growing.
-          </p>
-          <p>
-            It was from this realization that EmpowerHer emerged — not just as a
-            project, but as a movement. A more comprehensive, organized, and
-            sustainable platform was needed to continue this work on a larger
-            scale. Founded and led by Afghan youth who understand the struggles
-            of their own people, EmpowerHer stands today as a symbol of
-            resilience, hope, and empowerment.
-          </p>
-        </div>
+        <Reveal asChild delay={80}>
+          <div className="text-muted-foreground space-y-7 text-lg leading-relaxed">
+            <p>
+              With schools closed to girls over the age of 12 and women
+              increasingly pushed out of public life, Mahdi and Nahid knew
+              silence was not an option.
+            </p>
+            <p>
+              After resettling in the United States, they immediately began
+              organizing virtual programs aimed at supporting Afghan youth —
+              both men and women — inside Afghanistan and across the diaspora.
+              These early efforts, though impactful, were limited in scope and
+              duration. They reached small groups and operated with minimal
+              resources, yet they revealed something powerful: the need was
+              urgent, and the demand was growing.
+            </p>
+            <p>
+              It was from this realization that EmpowerHer emerged — not just as
+              a project, but as a movement. A more comprehensive, organized, and
+              sustainable platform was needed to continue this work on a larger
+              scale. Founded and led by Afghan youth who understand the
+              struggles of their own people, EmpowerHer stands today as a symbol
+              of resilience, hope, and empowerment.
+            </p>
+          </div>
+        </Reveal>
       </div>
     </div>
   </section>
@@ -181,45 +206,50 @@ const WhatWeDo = () => (
   <section className="py-28 md:py-40">
     <div className="container">
       <div className="mb-20 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p className="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
-            Our Work
+        <Reveal asChild>
+          <div>
+            <p className="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+              Our Work
+            </p>
+            <h2 className="font-serif text-4xl leading-[1.1] md:text-5xl">
+              What We Do
+            </h2>
+          </div>
+        </Reveal>
+        <Reveal asChild delay={80}>
+          <p className="text-muted-foreground max-w-sm text-sm leading-relaxed md:text-right">
+            Four interconnected pillars that work together to create lasting
+            change for Afghan women.
           </p>
-          <h2 className="font-serif text-4xl leading-[1.1] md:text-5xl">
-            What We Do
-          </h2>
-        </div>
-        <p className="text-muted-foreground max-w-sm text-sm leading-relaxed md:text-right">
-          Four interconnected pillars that work together to create lasting
-          change for Afghan women.
-        </p>
+        </Reveal>
       </div>
 
       {/* Alternating full-width blocks */}
       <div className="divide-border/40 divide-y">
         {whatWeDo.map((item, i) => (
-          <div
-            key={item.index}
-            className={`group hover:bg-muted/30 flex flex-col gap-8 py-10 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:flex-row md:items-center md:gap-0 ${
-              i % 2 !== 0 ? "md:flex-row-reverse" : ""
-            }`}
-          >
-            <div className="md:w-1/4">
-              <span className="text-primary/30 group-hover:text-primary/60 font-serif text-6xl transition-colors duration-500 md:text-8xl">
-                {item.index}
-              </span>
-            </div>
+          <Reveal asChild key={item.index} delay={i * 80}>
             <div
-              className={`md:w-3/4 ${i % 2 !== 0 ? "md:pr-16" : "md:pl-16"}`}
+              className={`group hover:bg-muted/30 flex flex-col gap-8 py-10 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:flex-row md:items-center md:gap-0 ${
+                i % 2 !== 0 ? "md:flex-row-reverse" : ""
+              }`}
             >
-              <h3 className="text-2xl font-semibold md:text-3xl">
-                {item.title}
-              </h3>
-              <p className="text-muted-foreground mt-4 max-w-2xl text-base leading-relaxed">
-                {item.description}
-              </p>
+              <div className="md:w-1/4">
+                <span className="text-primary/30 group-hover:text-primary/60 font-serif text-6xl transition-colors duration-500 md:text-8xl">
+                  {item.index}
+                </span>
+              </div>
+              <div
+                className={`md:w-3/4 ${i % 2 !== 0 ? "md:pr-16" : "md:pl-16"}`}
+              >
+                <h3 className="text-2xl font-semibold md:text-3xl">
+                  {item.title}
+                </h3>
+                <p className="text-muted-foreground mt-4 max-w-2xl text-base leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </div>
@@ -366,51 +396,59 @@ const TeamMember = ({
 const TeamSection = () => (
   <section className="bg-foreground/[0.02] py-28 md:py-40">
     <div className="container">
-      <div className="mb-16">
-        <p className="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
-          The People Behind It
-        </p>
-        <h2 className="font-serif text-4xl leading-[1.1] md:text-5xl">
-          Our Team
-        </h2>
-        <p className="text-muted-foreground mt-4 max-w-lg">
-          Founded and led by a diverse team committed to expanding access to
-          education across borders.
-        </p>
-      </div>
-
-      <div className="mb-14">
-        <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
-          Executive Team
-        </p>
-        <div className="flex flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-10">
-          {executiveTeam.map((member) => (
-            <TeamMember key={member.name} member={member} size="lg" />
-          ))}
+      <Reveal asChild>
+        <div className="mb-16">
+          <p className="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+            The People Behind It
+          </p>
+          <h2 className="font-serif text-4xl leading-[1.1] md:text-5xl">
+            Our Team
+          </h2>
+          <p className="text-muted-foreground mt-4 max-w-lg">
+            Founded and led by a diverse team committed to expanding access to
+            education across borders.
+          </p>
         </div>
-      </div>
+      </Reveal>
 
-      <div className="border-border/40 mb-14 border-t pt-14">
-        <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
-          Directors
-        </p>
-        <div className="flex flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-10">
-          {directors.map((member) => (
-            <TeamMember key={member.name} member={member} size="md" />
-          ))}
+      <Reveal asChild>
+        <div className="mb-14">
+          <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+            Executive Team
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-10">
+            {executiveTeam.map((member) => (
+              <TeamMember key={member.name} member={member} size="lg" />
+            ))}
+          </div>
         </div>
-      </div>
+      </Reveal>
 
-      <div className="border-border/40 border-t pt-14">
-        <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
-          Mentors & Lecturers
-        </p>
-        <div className="flex flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-10">
-          {mentorsTeam.map((member) => (
-            <TeamMember key={member.name} member={member} size="sm" />
-          ))}
+      <Reveal asChild>
+        <div className="border-border/40 mb-14 border-t pt-14">
+          <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+            Directors
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-10">
+            {directors.map((member) => (
+              <TeamMember key={member.name} member={member} size="md" />
+            ))}
+          </div>
         </div>
-      </div>
+      </Reveal>
+
+      <Reveal asChild>
+        <div className="border-border/40 border-t pt-14">
+          <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+            Mentors & Lecturers
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-10">
+            {mentorsTeam.map((member) => (
+              <TeamMember key={member.name} member={member} size="sm" />
+            ))}
+          </div>
+        </div>
+      </Reveal>
     </div>
   </section>
 );
@@ -468,10 +506,15 @@ const partners = [
 const Partners = () => (
   <section className="py-28 md:py-32">
     <div className="container">
-      <p className="text-muted-foreground text-center text-xs font-semibold tracking-[0.3em] uppercase">
-        Trusted Partners & Supporters
-      </p>
-      <div className="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16">
+      <Reveal asChild>
+        <p className="text-muted-foreground text-center text-xs font-semibold tracking-[0.3em] uppercase">
+          Trusted Partners & Supporters
+        </p>
+      </Reveal>
+      <Reveal
+        delay={80}
+        className="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16"
+      >
         {partners.map((p) => (
           <a
             key={p.name}
@@ -488,7 +531,7 @@ const Partners = () => (
             />
           </a>
         ))}
-      </div>
+      </Reveal>
     </div>
   </section>
 );
@@ -499,32 +542,36 @@ const AboutCTA = () => (
   <section className="py-28 md:py-40">
     <div className="container">
       <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p className="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
-            Take Action
-          </p>
-          <h2 className="font-serif text-4xl leading-[1.1] md:text-5xl lg:text-6xl">
-            Join the
-            <br />
-            Movement
-          </h2>
-        </div>
-        <div className="flex flex-col gap-4 sm:flex-row md:items-center">
-          <Link
-            href="/get-involved"
-            className="group bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
-          >
-            Get Involved
-            <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
-          </Link>
-          <Link
-            href="/mentorship"
-            className="border-border/60 text-foreground/80 hover:border-foreground/30 hover:text-foreground inline-flex items-center gap-2 rounded-full border px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
-          >
-            Explore Programs
-            <ArrowUpRight className="size-4" />
-          </Link>
-        </div>
+        <Reveal asChild>
+          <div>
+            <p className="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+              Take Action
+            </p>
+            <h2 className="font-serif text-4xl leading-[1.1] md:text-5xl lg:text-6xl">
+              Join the
+              <br />
+              Movement
+            </h2>
+          </div>
+        </Reveal>
+        <Reveal asChild delay={120}>
+          <div className="flex flex-col gap-4 sm:flex-row md:items-center">
+            <Link
+              href="/get-involved"
+              className="group bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
+            >
+              Get Involved
+              <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              href="/mentorship"
+              className="border-border/60 text-foreground/80 hover:border-foreground/30 hover:text-foreground inline-flex items-center gap-2 rounded-full border px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+            >
+              Explore Programs
+              <ArrowUpRight className="size-4" />
+            </Link>
+          </div>
+        </Reveal>
       </div>
     </div>
   </section>

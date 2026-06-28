@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, Mail } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
+
+import { Facebook, Instagram, LinkedIn } from "@/components/icons";
 
 const quickLinks = [
   { label: "About", href: "/about-us" },
@@ -19,11 +21,20 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { label: "Facebook", href: "https://www.facebook.com/share/157naMfgkw" },
-  { label: "Instagram", href: "https://www.instagram.com/_empowerher_org" },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/share/157naMfgkw",
+    icon: Facebook,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/_empowerher_org",
+    icon: Instagram,
+  },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/company/empowerher-org/",
+    icon: LinkedIn,
   },
 ];
 
@@ -52,12 +63,12 @@ export const Footer = () => {
           <div className="lg:col-span-5">
             <Link
               href="/"
-              className="inline-flex -translate-x-4 items-center gap-2"
+              className="inline-flex -translate-x-4 items-center justify-center gap-2"
             >
               <img
                 src="https://empowerher-cdn.alisamadii.com/logo.png"
                 alt="EmpowerHer"
-                className="h-30 w-auto object-contain"
+                className="h-45 w-auto object-contain"
               />
             </Link>
             <p className="text-muted-foreground max-w-sm text-sm leading-[1.8]">
@@ -65,6 +76,25 @@ export const Footer = () => {
               inspiring hope and progress while leading the way to a more
               equitable, inclusive, and sustainable society.
             </p>
+
+            <p className="text-muted-foreground mt-6 text-sm">
+              Email:{" "}
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="hover:text-foreground transition-colors"
+              >
+                {siteConfig.email}
+              </a>
+            </p>
+
+            <div className="mt-6 space-y-0.5">
+              <p className="text-muted-foreground text-sm font-medium">
+                EST. 2024
+              </p>
+              <p className="text-muted-foreground text-sm">
+                United States of America
+              </p>
+            </div>
           </div>
 
           {/* Pages */}
@@ -92,36 +122,21 @@ export const Footer = () => {
               Connect
             </p>
             <ul className="mt-6 space-y-3">
-              <li>
-                <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="text-foreground/60 hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors"
-                >
-                  <Mail className="size-3.5" />
-                  {siteConfig.email}
-                </a>
-              </li>
               {socialLinks.map((s) => (
                 <li key={s.label}>
                   <a
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-foreground/60 hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors"
+                    className="text-foreground/60 hover:text-foreground group inline-flex items-center gap-2.5 text-sm transition-colors"
                   >
+                    <s.icon className="size-4" />
                     {s.label}
-                    <ArrowUpRight className="size-3" />
+                    <ArrowUpRight className="size-3 opacity-60 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                 </li>
               ))}
             </ul>
-
-            <div className="mt-8 space-y-2">
-              <p className="text-muted-foreground text-xs">Est. 2024</p>
-              <p className="text-muted-foreground text-xs">
-                United States of America
-              </p>
-            </div>
 
             <Link
               href="/annual-report"
@@ -140,13 +155,13 @@ export const Footer = () => {
           </p>
           <div className="flex gap-6">
             <Link
-              href="/legal/privacy"
+              href="/privacy"
               className="text-muted-foreground hover:text-foreground text-xs transition-colors"
             >
               Privacy
             </Link>
             <Link
-              href="/legal/terms"
+              href="/terms"
               className="text-muted-foreground hover:text-foreground text-xs transition-colors"
             >
               Terms

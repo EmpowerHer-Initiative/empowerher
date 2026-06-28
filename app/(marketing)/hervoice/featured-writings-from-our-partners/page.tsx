@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { siteConfig } from "@/lib/site";
 
 import { Pagination } from "@/components/pagination";
+import { Reveal } from "@/components/reveal";
 
 const PER_PAGE = 4;
 const BASE_PATH = "/hervoice/featured-writings-from-our-partners";
@@ -165,45 +166,55 @@ const writings: Writing[] = [
 
 /* ─── Writing Card ──────────────────────────────────────────────────────────── */
 
-const WritingCard = ({ writing }: { writing: Writing }) => (
-  <a
-    href={writing.link}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="group border-border/20 grid gap-5 border-b py-8 last:border-0 sm:grid-cols-[320px_1fr] sm:gap-8 lg:grid-cols-[400px_1fr]"
-  >
-    <div className="relative aspect-[16/9] overflow-hidden rounded-xl">
-      <img
-        src={writing.image}
-        alt={writing.title}
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
-      />
-    </div>
-    <div className="flex flex-col justify-center">
-      <div className="flex items-center gap-3">
-        <span
-          className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold tracking-[0.1em] uppercase ${
-            writing.platform === "NSHSS"
-              ? "bg-primary/10 text-primary"
-              : "bg-secondary/20 text-secondary-foreground"
-          }`}
-        >
-          {writing.platform}
-        </span>
-        <span className="text-muted-foreground text-xs">{writing.author}</span>
+const WritingCard = ({
+  writing,
+  index = 0,
+}: {
+  writing: Writing;
+  index?: number;
+}) => (
+  <Reveal asChild delay={Math.min(index, 3) * 80}>
+    <a
+      href={writing.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group border-border/20 grid gap-5 border-b py-8 last:border-0 sm:grid-cols-[320px_1fr] sm:gap-8 lg:grid-cols-[400px_1fr]"
+    >
+      <div className="relative aspect-[16/9] overflow-hidden rounded-xl">
+        <img
+          src={writing.image}
+          alt={writing.title}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+        />
       </div>
-      <h3 className="group-hover:text-primary mt-2 text-base leading-snug font-semibold transition-colors duration-300">
-        &ldquo;{writing.title}&rdquo;
-      </h3>
-      <p className="text-muted-foreground mt-2 line-clamp-2 text-sm leading-relaxed">
-        {writing.description}
-      </p>
-      <span className="text-primary mt-3 inline-flex items-center gap-1.5 text-xs font-medium opacity-0 transition-all duration-300 group-hover:opacity-100">
-        Read on {writing.platform}
-        <ArrowUpRight className="size-3" />
-      </span>
-    </div>
-  </a>
+      <div className="flex flex-col justify-center">
+        <div className="flex items-center gap-3">
+          <span
+            className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold tracking-[0.1em] uppercase ${
+              writing.platform === "NSHSS"
+                ? "bg-primary/10 text-primary"
+                : "bg-secondary/20 text-secondary-foreground"
+            }`}
+          >
+            {writing.platform}
+          </span>
+          <span className="text-muted-foreground text-xs">
+            {writing.author}
+          </span>
+        </div>
+        <h3 className="group-hover:text-primary mt-2 text-base leading-snug font-semibold transition-colors duration-300">
+          &ldquo;{writing.title}&rdquo;
+        </h3>
+        <p className="text-muted-foreground mt-2 line-clamp-2 text-sm leading-relaxed">
+          {writing.description}
+        </p>
+        <span className="text-primary mt-3 inline-flex items-center gap-1.5 text-xs font-medium opacity-0 transition-all duration-300 group-hover:opacity-100">
+          Read on {writing.platform}
+          <ArrowUpRight className="size-3" />
+        </span>
+      </div>
+    </a>
+  </Reveal>
 );
 
 /* ─── Platform Section ───────────────────────────────────────────────────────── */
@@ -230,27 +241,31 @@ const PlatformSection = ({
   query: Record<string, string | undefined>;
 }) => (
   <div id={id} className="scroll-mt-24">
-    <div className="mb-2 flex items-center gap-4">
-      <span className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
-        {platform}
-      </span>
-      <div className="bg-border/30 h-px flex-1" />
-      <a
-        href={platformUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group text-muted-foreground/50 hover:text-primary inline-flex items-center gap-1 text-xs transition-colors duration-300"
-      >
-        Visit
-        <ArrowUpRight className="size-3 transition-transform duration-300 group-hover:translate-x-px group-hover:-translate-y-px" />
-      </a>
-    </div>
-    <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
-      {description}
-    </p>
+    <Reveal asChild>
+      <div className="mb-2 flex items-center gap-4">
+        <span className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+          {platform}
+        </span>
+        <div className="bg-border/30 h-px flex-1" />
+        <a
+          href={platformUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group text-muted-foreground/50 hover:text-primary inline-flex items-center gap-1 text-xs transition-colors duration-300"
+        >
+          Visit
+          <ArrowUpRight className="size-3 transition-transform duration-300 group-hover:translate-x-px group-hover:-translate-y-px" />
+        </a>
+      </div>
+    </Reveal>
+    <Reveal asChild delay={80}>
+      <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
+        {description}
+      </p>
+    </Reveal>
     <div>
-      {writingsList.map((writing) => (
-        <WritingCard key={writing.title} writing={writing} />
+      {writingsList.map((writing, i) => (
+        <WritingCard key={writing.title} writing={writing} index={i} />
       ))}
     </div>
     {totalPages > 1 && (
@@ -302,25 +317,33 @@ export default async function FeaturedWritingsPage({
       <section className="py-28 md:py-40">
         <div className="container">
           <div className="max-w-4xl">
-            <Link
-              href="/hervoice"
-              className="group text-muted-foreground hover:text-foreground mb-10 inline-flex items-center gap-2 text-sm font-medium transition-colors duration-300"
-            >
-              <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
-              Back to HerVoice
-            </Link>
+            <Reveal>
+              <Link
+                href="/hervoice"
+                className="group text-muted-foreground hover:text-foreground mb-10 inline-flex items-center gap-2 text-sm font-medium transition-colors duration-300"
+              >
+                <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
+                Back to HerVoice
+              </Link>
+            </Reveal>
 
-            <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
-              Published Stories
-            </p>
-            <h1 className="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl">
-              Featured Writings from Our Partners
-            </h1>
-            <p className="text-muted-foreground mt-8 max-w-xl text-base leading-relaxed md:text-lg">
-              Afghan girls and women sharing their stories, experiences, and
-              perspectives with the world through our network of publication
-              partners.
-            </p>
+            <Reveal asChild delay={80}>
+              <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+                Published Stories
+              </p>
+            </Reveal>
+            <Reveal asChild delay={160}>
+              <h1 className="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl">
+                Featured Writings from Our Partners
+              </h1>
+            </Reveal>
+            <Reveal asChild delay={240}>
+              <p className="text-muted-foreground mt-8 max-w-xl text-base leading-relaxed md:text-lg">
+                Afghan girls and women sharing their stories, experiences, and
+                perspectives with the world through our network of publication
+                partners.
+              </p>
+            </Reveal>
           </div>
         </div>
       </section>

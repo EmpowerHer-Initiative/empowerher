@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXContent } from "@content-collections/mdx/react";
 import { allHervoices } from "content-collections";
 import { format } from "date-fns";
-import { ArrowLeft } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
+
+import { AuthorCard } from "@/components/hervoice/author-card";
+import { BackButton } from "@/components/hervoice/back-button";
+import { CommentsSection } from "@/components/hervoice/comments-section";
 
 /* ─── MDX Components ───────────────────────────────────────────────────────── */
 
@@ -104,13 +106,7 @@ export default async function HerVoicePostPage({ params }: Props) {
       <section className="py-28 md:py-40">
         <div className="container">
           <div className="mx-auto max-w-3xl">
-            <Link
-              href="/hervoice"
-              className="group text-muted-foreground hover:text-foreground mb-10 inline-flex items-center gap-2 text-sm font-medium transition-colors duration-300"
-            >
-              <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
-              Back to HerVoice
-            </Link>
+            <BackButton />
 
             <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
               HerVoice
@@ -121,9 +117,21 @@ export default async function HerVoicePostPage({ params }: Props) {
             <p className="text-muted-foreground mt-6 text-base leading-relaxed md:text-lg">
               {post.description}
             </p>
-            <p className="text-muted-foreground/60 mt-6 text-sm">
-              {format(post.date, "MMMM d, yyyy")}
-            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
+              <p className="text-muted-foreground/60 text-sm">
+                {format(post.date, "MMMM d, yyyy")}
+              </p>
+              {post.authorName && (
+                <AuthorCard
+                  authorName={post.authorName}
+                  authorBio={post.authorBio}
+                  authorPosition={post.authorPosition}
+                  authorInstagram={post.authorInstagram}
+                  authorFacebook={post.authorFacebook}
+                  authorLinkedin={post.authorLinkedin}
+                />
+              )}
+            </div>
           </div>
         </div>
       </section>
@@ -132,12 +140,24 @@ export default async function HerVoicePostPage({ params }: Props) {
       {post.image && (
         <section className="pb-16">
           <div className="container">
-            <div className="mx-auto max-w-4xl overflow-hidden rounded-3xl">
-              <img
-                src={post.image}
-                alt={post.title}
-                className="aspect-[2/1] w-full object-cover"
-              />
+            <div className="mx-auto max-w-4xl">
+              <div className="overflow-hidden rounded-3xl">
+                <img
+                  src={post.image}
+                  alt={post.imageAlt ?? post.title}
+                  className="aspect-[2/1] w-full object-cover"
+                />
+              </div>
+              {post.imageAlt && (
+                <p className="text-muted-foreground/70 mt-3 text-center text-sm italic">
+                  {post.imageAlt}
+                </p>
+              )}
+              {post.imageCredit && (
+                <p className="text-muted-foreground/50 mt-1 text-center text-xs">
+                  {post.imageCredit}
+                </p>
+              )}
             </div>
           </div>
         </section>
@@ -146,8 +166,11 @@ export default async function HerVoicePostPage({ params }: Props) {
       {/* Content */}
       <section className="pb-28 md:pb-40">
         <div className="container">
-          <div className="prose-theme prose mx-auto max-w-3xl text-base leading-[1.9]">
-            <MDXContent code={post.mdx} components={mdxComponents} />
+          <div className="mx-auto max-w-3xl">
+            <div className="prose-theme prose text-base leading-[1.9]">
+              <MDXContent code={post.mdx} components={mdxComponents} />
+            </div>
+            <CommentsSection slug={post._meta.path} />
           </div>
         </div>
       </section>

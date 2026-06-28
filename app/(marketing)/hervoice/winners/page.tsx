@@ -11,6 +11,7 @@ import {
   Seal,
   Stat,
 } from "@/components/hervoice/shared";
+import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
   title: `HerVoice 2026 Writing Contest Winners — ${siteConfig.name}`,
@@ -154,37 +155,41 @@ export default function WinnersPage() {
           </h2>
 
           {/* Top 3 — larger cards */}
-          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-            {cashWinners.slice(0, 3).map((w) => (
-              <WinnerCard
-                key={w.slug}
-                rank={w.rank}
-                ribbon={w.ribbon}
-                prize={w.prize}
-                title={w.story?.title || ""}
-                author={w.story?.authorName || ""}
-                image={w.story?.image || ""}
-                slug={w.slug}
-                large
-              />
-            ))}
-          </div>
+          <Reveal asChild>
+            <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+              {cashWinners.slice(0, 3).map((w) => (
+                <WinnerCard
+                  key={w.slug}
+                  rank={w.rank}
+                  ribbon={w.ribbon}
+                  prize={w.prize}
+                  title={w.story?.title || ""}
+                  author={w.story?.authorName || ""}
+                  image={w.story?.image || ""}
+                  slug={w.slug}
+                  large
+                />
+              ))}
+            </div>
+          </Reveal>
 
           {/* 4th & 5th — smaller cards */}
-          <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2">
-            {cashWinners.slice(3).map((w) => (
-              <WinnerCard
-                key={w.slug}
-                rank={w.rank}
-                ribbon={w.ribbon}
-                prize={w.prize}
-                title={w.story?.title || ""}
-                author={w.story?.authorName || ""}
-                image={w.story?.image || ""}
-                slug={w.slug}
-              />
-            ))}
-          </div>
+          <Reveal asChild delay={80}>
+            <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2">
+              {cashWinners.slice(3).map((w) => (
+                <WinnerCard
+                  key={w.slug}
+                  rank={w.rank}
+                  ribbon={w.ribbon}
+                  prize={w.prize}
+                  title={w.story?.title || ""}
+                  author={w.story?.authorName || ""}
+                  image={w.story?.image || ""}
+                  slug={w.slug}
+                />
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -195,35 +200,37 @@ export default function WinnersPage() {
             Writings from Honorable Mention Winners
           </h2>
 
-          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-            {honorables.map(
-              (story) =>
-                story && (
-                  <Link
-                    key={story._meta.path}
-                    href={`/hervoice/${story._meta.path}`}
-                    className="group relative overflow-hidden rounded-2xl border border-[#ECE3D2] bg-white shadow-[0_12px_32px_-16px_rgba(26,34,48,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_-18px_rgba(26,34,48,.45)]"
-                  >
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <img
-                        src={story.image}
-                        alt={story.title}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                    </div>
-                    <div className="p-5">
-                      <h3 className="font-[family-name:var(--hv-display)] text-lg font-bold text-[var(--hv-ink)]">
-                        {story.title}
-                      </h3>
-                      <p className="mt-1 text-sm text-[var(--hv-ink3)]">
-                        by {story.authorName}
-                      </p>
-                    </div>
-                  </Link>
-                )
-            )}
-          </div>
+          <Reveal asChild>
+            <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+              {honorables.map(
+                (story) =>
+                  story && (
+                    <Link
+                      key={story._meta.path}
+                      href={`/hervoice/${story._meta.path}`}
+                      className="group relative overflow-hidden rounded-2xl border border-[#ECE3D2] bg-white shadow-[0_12px_32px_-16px_rgba(26,34,48,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_-18px_rgba(26,34,48,.45)]"
+                    >
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <img
+                          src={story.image}
+                          alt={story.title}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                      </div>
+                      <div className="p-5">
+                        <h3 className="font-[family-name:var(--hv-display)] text-lg font-bold text-[var(--hv-ink)]">
+                          {story.title}
+                        </h3>
+                        <p className="mt-1 text-sm text-[var(--hv-ink3)]">
+                          by {story.authorName}
+                        </p>
+                      </div>
+                    </Link>
+                  )
+              )}
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -268,7 +275,9 @@ export default function WinnersPage() {
       </section>
 
       {/* ── SECTION 5: CTA Banner ── */}
-      <HerVoiceCTA />
+      <Reveal>
+        <HerVoiceCTA />
+      </Reveal>
     </div>
   );
 }

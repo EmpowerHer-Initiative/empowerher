@@ -6,6 +6,8 @@ import { ArrowLeft, ArrowRight, CheckCircle, Loader2 } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
 
+import { Reveal } from "@/components/reveal";
+
 /* ─── Form state ─────────────────────────────────────────────────────────────── */
 
 type FormState = {
@@ -267,78 +269,89 @@ export default function PartnerWithUsPage() {
           />
         </div>
 
-        <div className="relative">
-          <Link
-            href="/get-involved"
-            className="group text-muted-foreground hover:text-foreground mb-12 inline-flex items-center gap-2 text-sm font-medium transition-colors"
-          >
-            <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
-            Back
-          </Link>
-
-          <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
-            Organizations &amp; Companies
-          </p>
-          <h1 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl">
-            Partner With Us
-          </h1>
-          <p className="text-muted-foreground mt-6 text-base leading-relaxed">
-            Organizations and companies aligned with our mission and vision, or
-            those interested in supporting our work, are encouraged to complete
-            the form below. A member of our team will be in touch to explore
-            potential partnership opportunities.
-          </p>
-        </div>
-
-        <div className="border-border relative mt-16 border-t pt-8">
-          <p className="text-muted-foreground text-xs">
-            Questions?{" "}
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="text-muted-foreground underline-offset-2 hover:underline"
+        <Reveal asChild>
+          <div className="relative">
+            <Link
+              href="/get-involved"
+              className="group text-muted-foreground hover:text-foreground mb-12 inline-flex items-center gap-2 text-sm font-medium transition-colors"
             >
-              {siteConfig.email}
-            </a>
-          </p>
-        </div>
+              <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
+              Back
+            </Link>
+
+            <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+              Organizations &amp; Companies
+            </p>
+            <h1 className="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl">
+              Partner With Us
+            </h1>
+            <p className="text-muted-foreground mt-6 text-base leading-relaxed">
+              Organizations and companies aligned with our mission and vision,
+              or those interested in supporting our work, are encouraged to
+              complete the form below. A member of our team will be in touch to
+              explore potential partnership opportunities.
+            </p>
+          </div>
+        </Reveal>
+
+        <Reveal asChild delay={120}>
+          <div className="border-border relative mt-16 border-t pt-8">
+            <p className="text-muted-foreground text-xs">
+              Questions?{" "}
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="text-muted-foreground underline-offset-2 hover:underline"
+              >
+                {siteConfig.email}
+              </a>
+            </p>
+          </div>
+        </Reveal>
       </div>
 
       {/* ── Right panel — form ───────────────────────────────────────────────── */}
       <div className="flex flex-1 flex-col justify-center px-8 py-16 md:px-14 lg:px-16 lg:py-24">
         {submitted ? (
-          <div className="mx-auto max-w-md text-center">
-            <div className="border-primary/20 bg-primary/5 mx-auto mb-6 flex size-20 items-center justify-center rounded-full border">
-              <CheckCircle className="text-primary size-10" />
+          <Reveal asChild>
+            <div className="mx-auto max-w-md text-center">
+              <div className="border-primary/20 bg-primary/5 mx-auto mb-6 flex size-20 items-center justify-center rounded-full border">
+                <CheckCircle className="text-primary size-10" />
+              </div>
+              <h2 className="font-serif text-3xl">
+                Thank You for Reaching Out
+              </h2>
+              <p className="text-muted-foreground mt-4 text-base leading-relaxed">
+                We&apos;ve received your partnership inquiry. A member of our
+                team will be in touch shortly to explore how we can work
+                together.
+              </p>
             </div>
-            <h2 className="font-serif text-3xl">Thank You for Reaching Out</h2>
-            <p className="text-muted-foreground mt-4 text-base leading-relaxed">
-              We&apos;ve received your partnership inquiry. A member of our team
-              will be in touch shortly to explore how we can work together.
-            </p>
-          </div>
+          </Reveal>
         ) : (
-          <div className="mx-auto w-full max-w-lg">
-            <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-              Partnership Inquiry
-            </p>
-            <h2 className="mt-4 font-serif text-3xl md:text-4xl">
-              Tell us about your organization
-            </h2>
-            <p className="text-muted-foreground mt-3 text-sm">
-              All fields marked with <span className="text-primary">*</span> are
-              required.
-            </p>
+          <Reveal asChild>
+            <div className="mx-auto w-full max-w-lg">
+              <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+                Partnership Inquiry
+              </p>
+              <h2 className="mt-4 font-serif text-3xl md:text-4xl">
+                Tell us about your organization
+              </h2>
+              <p className="text-muted-foreground mt-3 text-sm">
+                All fields marked with <span className="text-primary">*</span>{" "}
+                are required.
+              </p>
 
-            <div className="mt-10">
-              <PartnerForm
-                form={form}
-                errors={errors}
-                loading={loading}
-                onChange={handleChange}
-                onSubmit={handleSubmit}
-              />
+              <div className="mt-10">
+                <PartnerForm
+                  form={form}
+                  errors={errors}
+                  loading={loading}
+                  onChange={handleChange}
+                  onSubmit={handleSubmit}
+                />
+              </div>
             </div>
-          </div>
+          </Reveal>
         )}
       </div>
     </div>
