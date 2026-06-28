@@ -225,7 +225,7 @@ const AtAGlance = () => (
         </div>
       </Reveal>
 
-      <div className="divide-border/40 mt-14 grid grid-cols-1 divide-y sm:grid-cols-2 sm:divide-x lg:grid-cols-4 lg:divide-y-0">
+      <div className="divide-border/40 mt-14 grid grid-cols-1 divide-y sm:grid-cols-2 sm:divide-x lg:grid-cols-5 lg:divide-y-0">
         {[
           {
             to: 500,
@@ -250,6 +250,12 @@ const AtAGlance = () => (
             to: 25,
             suffix: "+",
             label: "Provinces of Afghanistan Reached",
+          },
+          {
+            to: 50,
+            suffix: "+",
+            label: "Student Publications",
+            detail: "Published through HerVoice",
           },
         ].map((s) => (
           <div
