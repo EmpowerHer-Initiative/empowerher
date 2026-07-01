@@ -1,45 +1,76 @@
-import { Heading, Section, Text } from "@react-email/components";
+import {
+  Body,
+  Container,
+  Head,
+  Html,
+  Img,
+  Preview,
+  Section,
+  Tailwind,
+  Text,
+} from "@react-email/components";
 
-import { siteConfig } from "@/lib/site";
-import EmailLayout from "@/services/email/components/layout";
+import { EmailFooter } from "../components/email-footer";
 
 interface VerifyEmailProps {
   verificationCode?: string;
 }
 
-export default function VerifyEmail({ verificationCode }: VerifyEmailProps) {
+export default function VerifyEmail({
+  verificationCode = "",
+}: VerifyEmailProps) {
   return (
-    <EmailLayout preview={`${siteConfig.name} — Verify your email`}>
-      <Heading
-        className="mt-0 mb-4 text-xl font-bold"
-        style={{ color: "#111111" }}
-      >
-        Verify your email
-      </Heading>
-      <Text className="mb-6 text-base leading-6 text-gray-600">
-        Enter this code to verify your email address.
-      </Text>
+    <Html>
+      <Head />
+      <Tailwind>
+        <Body className="bg-gray-50 py-2.5">
+          <Preview>Verify your EmpowerHer email address</Preview>
+          <Container className="border border-gray-100 bg-white p-11">
+            <Img
+              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTbc5Ufv9xopPYBqCUaZOIeEGDyJzvSfLh2M0n"
+              width="80"
+              alt="EmpowerHer Logo"
+            />
+            <Section>
+              <Text className="mb-6 font-sans text-2xl font-bold text-gray-900">
+                Verify your email
+              </Text>
 
-      <Section
-        className="mb-6 p-6 text-center"
-        style={{
-          backgroundColor: "#f5f5f5",
-          borderRadius: "6px",
-        }}
-      >
-        <Text
-          className="my-0 font-mono text-3xl font-bold"
-          style={{ color: "#111111", letterSpacing: "0.15em" }}
-        >
-          {verificationCode}
-        </Text>
-      </Section>
+              <Text className="mb-4 font-sans text-base leading-7 text-gray-700">
+                Enter the code below to verify your email address and finish
+                setting up your account.
+              </Text>
 
-      <Text className="m-0 text-sm text-gray-400">
-        This code expires in 10 minutes. If you didn&apos;t request this, you
-        can safely ignore this email.
-      </Text>
-    </EmailLayout>
+              <div className="mb-6 rounded-lg bg-blue-50 p-6 text-center">
+                <Text
+                  className="my-0 font-mono text-3xl font-bold text-gray-900"
+                  style={{ letterSpacing: "0.15em" }}
+                >
+                  {verificationCode}
+                </Text>
+              </div>
+
+              <Text className="mb-4 font-sans text-base leading-7 text-gray-700">
+                This code expires in 10 minutes. If you didn&apos;t request
+                this, you can safely ignore this email.
+              </Text>
+
+              <Text className="mb-4 font-sans text-base leading-7 text-gray-700">
+                This is an automated email. Please do not reply.
+              </Text>
+
+              <Text className="font-sans text-base leading-7 text-gray-700">
+                Best,
+                <br />
+                EmpowerHer Team
+              </Text>
+
+              <EmailFooter customMessage="This is an automated verification email from EmpowerHer." />
+            </Section>
+          </Container>
+        </Body>
+      </Tailwind>
+    </Html>
   );
 }
 

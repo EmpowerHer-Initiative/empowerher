@@ -1,64 +1,91 @@
-import { Heading, Link, Section, Text } from "@react-email/components";
+import {
+  Body,
+  Container,
+  Head,
+  Html,
+  Img,
+  Link,
+  Preview,
+  Section,
+  Tailwind,
+  Text,
+} from "@react-email/components";
 
-import { siteConfig } from "@/lib/site";
-import EmailLayout from "@/services/email/components/layout";
+import { EmailFooter } from "../components/email-footer";
 
 interface ResetPasswordProps {
   resetPasswordLink?: string;
 }
 
 export default function ResetPassword({
-  resetPasswordLink,
+  resetPasswordLink = "",
 }: ResetPasswordProps) {
   return (
-    <EmailLayout preview={`${siteConfig.name} — Reset your password`}>
-      <Heading
-        className="mt-0 mb-4 text-xl font-bold"
-        style={{ color: "#111111" }}
-      >
-        Reset your password
-      </Heading>
-      <Text className="mb-6 text-base leading-6 text-gray-600">
-        Click the button below to reset your password.
-      </Text>
+    <Html>
+      <Head />
+      <Tailwind>
+        <Body className="bg-gray-50 py-2.5">
+          <Preview>Reset your EmpowerHer password</Preview>
+          <Container className="border border-gray-100 bg-white p-11">
+            <Img
+              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTbc5Ufv9xopPYBqCUaZOIeEGDyJzvSfLh2M0n"
+              width="80"
+              alt="EmpowerHer Logo"
+            />
+            <Section>
+              <Text className="mb-6 font-sans text-2xl font-bold text-gray-900">
+                Reset your password
+              </Text>
 
-      <Section className="mb-6 text-center">
-        <Link
-          href={resetPasswordLink}
-          className="inline-block px-8 py-3 text-sm font-semibold no-underline"
-          style={{
-            backgroundColor: siteConfig.emailPrimaryColor,
-            borderRadius: "6px",
-            color: "#ffffff",
-          }}
-        >
-          Reset Password
-        </Link>
-      </Section>
+              <Text className="mb-4 font-sans text-base leading-7 text-gray-700">
+                We received a request to reset your password. Click the button
+                below to choose a new one.
+              </Text>
 
-      <Text className="mb-4 text-sm text-gray-400">
-        This link expires in 1 hour. If you didn&apos;t request this, you can
-        safely ignore this email.
-      </Text>
+              <div className="mb-6 text-center">
+                <Link
+                  href={resetPasswordLink}
+                  className="inline-block rounded-lg bg-blue-600 px-8 py-3 font-sans text-base font-semibold text-white no-underline"
+                >
+                  Reset Password
+                </Link>
+              </div>
 
-      <Text className="mb-1 text-xs text-gray-400">
-        If the button doesn&apos;t work, copy and paste this link:
-      </Text>
-      <Text
-        className="m-0 p-3 text-xs break-all text-gray-400"
-        style={{
-          backgroundColor: "#f5f5f5",
-          borderRadius: "6px",
-        }}
-      >
-        {resetPasswordLink}
-      </Text>
-    </EmailLayout>
+              <Text className="mb-4 font-sans text-base leading-7 text-gray-700">
+                This link expires in 1 hour. If you didn&apos;t request a
+                password reset, you can safely ignore this email.
+              </Text>
+
+              <Text className="mb-2 font-sans text-sm text-gray-600">
+                If the button doesn&apos;t work, copy and paste this link into
+                your browser:
+              </Text>
+              <Text className="mb-4 rounded-lg bg-gray-50 p-4 font-sans text-sm break-all text-blue-600">
+                {resetPasswordLink}
+              </Text>
+
+              <Text className="mb-4 font-sans text-base leading-7 text-gray-700">
+                This is an automated email. Please do not reply.
+              </Text>
+
+              <Text className="font-sans text-base leading-7 text-gray-700">
+                Best,
+                <br />
+                EmpowerHer Team
+              </Text>
+
+              <EmailFooter customMessage="This is an automated password reset email from EmpowerHer." />
+            </Section>
+          </Container>
+        </Body>
+      </Tailwind>
+    </Html>
   );
 }
 
 ResetPassword.templateName = "reset-password" as const;
 
 ResetPassword.PreviewProps = {
-  resetPasswordLink: `${siteConfig.url}/reset-password?token=abc123`,
+  resetPasswordLink:
+    "https://www.empowerher-initiative.org/reset-password?token=abc123",
 } satisfies ResetPasswordProps;

@@ -68,36 +68,36 @@ const ReportCard = () => (
 
               <div className="text-muted-foreground mt-8 space-y-4 text-base leading-relaxed">
                 <p>
-                  EmpowerHer is a youth-led initiative founded by Nahid Karimi
-                  and Mahdi Rahimi in the United States, dedicated to equipping
-                  Afghan girls and women with the tools, confidence, and
-                  opportunities to create meaningful change.
+                  EmpowerHer is dedicated to equipping Afghan girls and women
+                  with the tools, confidence, and opportunities to create
+                  meaningful and lasting change.
                 </p>
                 <p>
-                  Through creative arts, storytelling, education, leadership,
-                  and cultural exchange, EmpowerHer provides safe spaces for
-                  girls to express themselves, preserve their histories, and
-                  amplify their voices.
+                  Through creative arts, storytelling, education, leadership
+                  development, and cultural exchange, the organization provides
+                  supportive spaces where participants can express themselves,
+                  preserve their lived experiences, and amplify their voices.
                 </p>
                 <p>
-                  EmpowerHer runs two key programs: the{" "}
+                  The initiative operates through two core programs: the{" "}
                   <Link
                     href="/mentorship"
                     className="text-foreground font-medium underline-offset-2 hover:underline"
                   >
                     Mentorship Program
                   </Link>
-                  , where students receive a month of free mentorship through
-                  workshops to develop skills, leadership, and networks for
-                  launching their own impact projects, and{" "}
+                  , a structured six-week cycle of workshops designed to develop
+                  leadership skills, strengthen capacity, and support
+                  participants in designing and advancing impact-driven
+                  projects; and{" "}
                   <Link
                     href="/hervoice"
                     className="text-foreground font-medium underline-offset-2 hover:underline"
                   >
                     HerVoice
                   </Link>
-                  , which gives girls a platform to share their stories and
-                  experiences.
+                  , a storytelling platform that publishes and elevates the
+                  voices and lived experiences of Afghan girls and women.
                 </p>
               </div>
 
@@ -174,7 +174,7 @@ export default function AnnualReportPage() {
     <>
       <Header />
       <ReportCard />
-      <Commitment />
+      {/* <Commitment /> */}
     </>
   );
 }

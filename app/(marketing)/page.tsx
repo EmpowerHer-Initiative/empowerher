@@ -337,7 +337,7 @@ const Mission = () => {
               </blockquote>
               <div className="mt-6 flex items-center gap-4">
                 <img
-                  src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqvGdhshBYobifLHTavDVU7h0yBGlSc4z8XEQ"
+                  src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTPXlWDWYhZvxtB3ycfP5jQXiMRAWOCrnJ2oYe"
                   alt="Nahid Karimi"
                   className="size-12 rounded-full object-cover"
                 />
@@ -355,7 +355,7 @@ const Mission = () => {
               </blockquote>
               <div className="mt-6 flex items-center gap-4">
                 <img
-                  src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTiCpeojEYyVpqbIDknS5OTfuHm1N4G0ctWRE9"
+                  src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfgQqh43C8OG5vkbyTeNds9rYucAtpJg0PMV7"
                   alt="Mahdi Rahimi"
                   className="size-12 rounded-full object-cover"
                 />
@@ -473,6 +473,9 @@ const Programs = () => (
                   workshops and mentorship to build resilience, gain support,
                   and launch impact projects.
                 </p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-white/80 transition-all duration-500 group-hover:gap-2.5">
+                  Explore <ArrowUpRight className="size-3.5" />
+                </span>
               </div>
             </div>
           </Link>

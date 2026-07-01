@@ -19,7 +19,7 @@
 
 - [Resources](/resources)
 
-- [AFGAF](/afgaf)
+- [AGFAF](/afgaf)
 
 **Banner:** [HerVoice 2026 Writing Contest →](/writing-contest) (gradient amber/rose)
 
@@ -472,6 +472,7 @@ Students who wish to participate in this roadmap can submit an inquiry via email
 EmpowerHer would love to partner with organizations that share its values. Organizations and companies aligned with our mission and vision, or those interested in supporting our work, are encouraged to complete the form below. A member of our team will be in touch to explore potential partnership opportunities.
 
 **Partner Form Fields:**
+
 - First Name
 - Last Name
 - Business Email Address
@@ -489,6 +490,7 @@ EmpowerHer would love to partner with organizations that share its values. Organ
 EmpowerHer welcomes volunteers from around the world to contribute to our virtual workshops and programs. Volunteers may support our community and staff in different ways, such as serving as lecturers, mentors, assistants, or administrative members, as positions become available. We encourage volunteers to share perspectives from their countries and backgrounds to foster meaningful cross-cultural learning. We value diverse voices committed to educating and empowering Afghan girls and youth.
 
 **Volunteer Form Fields:**
+
 - First Name
 - Last Name
 - Email Address
@@ -549,7 +551,7 @@ EmpowerHer welcomes volunteers from around the world to contribute to our virtua
 
 ---
 
-# AFGAF Page
+# AGFAF Page
 
 ## Afghan Girls Financial Assistance Fund (AGFAF)
 
@@ -600,6 +602,7 @@ We envision Afghan women as guiding lights in their communities, inspiring hope 
 **Location:** United States of America
 
 **Social Links:**
+
 - [Facebook](https://www.facebook.com/share/157naMfgkw)
 - [Instagram](https://www.instagram.com/_empowerher_org)
 - [LinkedIn](https://www.linkedin.com/company/empowerher-org/)

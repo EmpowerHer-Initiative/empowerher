@@ -36,7 +36,7 @@
 | Student Project Roadmap (SPR) | Leadership pathway for graduates                                                                |
 | Get Involved                  | Partner with us / Volunteer with us — two forms                                                 |
 | Resources                     | External educational resources and scholarship links                                            |
-| AFGAF                         | Partner spotlight — Afghan Girls Financial Assistance Fund                                      |
+| AGFAF                         | Partner spotlight — Afghan Girls Financial Assistance Fund                                      |
 | Annual Impact Reports         | Downloadable annual report                                                                      |
 | Writing Contest               | HerVoice 2026 Writing Contest                                                                   |
 | Contact                       | Contact form (existing template page)                                                           |

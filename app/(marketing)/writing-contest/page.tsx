@@ -449,9 +449,14 @@ const Awards = () => (
         </Reveal>
 
         {/* Prizes */}
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
           {prizes.map((prize, i) => (
-            <Reveal asChild key={prize.place} delay={i * 80}>
+            <Reveal
+              asChild
+              key={prize.place}
+              delay={i * 80}
+              className={`lg:col-span-2 ${i === 3 ? "lg:col-start-2" : ""}`}
+            >
               <div className="border-border/60 bg-background flex flex-col items-center rounded-3xl border p-8 text-center shadow-sm">
                 <div
                   className={`flex size-20 items-center justify-center rounded-full ${prize.accent}`}

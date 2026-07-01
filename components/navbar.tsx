@@ -41,9 +41,9 @@ const successStories: NavItem[] = [
 const navLinks: NavItem[] = [
   { label: "About", href: "/about-us" },
   { label: "Programs", href: "#", children: programs },
-  { label: "Success Stories", href: "#", children: successStories },
+  { label: "Success Stories", href: "/success-stories" },
   { label: "Resources", href: "/resources" },
-  { label: "AFGAF", href: "/afgaf" },
+  { label: "AGFAF", href: "/agfaf" },
   { label: "Contact", href: "/contact" },
 ];
 

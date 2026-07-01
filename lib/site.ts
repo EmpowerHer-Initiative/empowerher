@@ -112,7 +112,7 @@ export const siteConfig = {
         "Educational resources, scholarships, and opportunities for Afghan girls.",
     },
     afgaf: {
-      title: "AFGAF",
+      title: "AGFAF",
       description:
         "Afghan Girls Financial Assistance Fund — our primary sponsor and partner.",
     },
