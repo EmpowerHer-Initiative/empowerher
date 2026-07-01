@@ -21,15 +21,11 @@ export const proxy = async (request: Request) => {
 
   const isProtectedRoute =
     pathname.startsWith("/admin") ||
-    pathname === "/settings" ||
-    pathname === "/checkout";
+    pathname.startsWith("/staff") ||
+    pathname === "/settings";
 
   if (isProtectedRoute && !betterAuthSession) {
-    let loginPath = `/login?callbackUrl=${pathname}`;
-    if (pathname === "/checkout") {
-      const productId = nextRequest.nextUrl.searchParams.get("productId");
-      if (productId) loginPath += `&productId=${productId}`;
-    }
+    const loginPath = `/login?callbackUrl=${pathname}`;
     return NextResponse.redirect(new URL(loginPath, nextRequest.url));
   }
 

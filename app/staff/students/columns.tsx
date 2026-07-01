@@ -80,7 +80,7 @@ export const columns: ColumnDef<Student>[] = [
       row.original.emailId ? (
         <Link
           href={`/admin/logs?search=${encodeURIComponent(row.original.email ?? "")}`}
-          className={buttonVariants({ variant: "outline", size: "sm" })}
+          className={buttonVariants({ size: "sm" })}
         >
           View email
         </Link>
@@ -94,21 +94,6 @@ export const columns: ColumnDef<Student>[] = [
   },
 ];
 
-const BATCH_COLORS = [
-  "bg-blue-500 text-white",
-  "bg-green-500 text-white",
-  "bg-yellow-500 text-black",
-  "bg-red-500 text-white",
-  "bg-purple-500 text-white",
-];
-
-const colorFor = (key: string) => {
-  let hash = 0;
-  for (let i = 0; i < key.length; i++)
-    hash = (hash * 31 + key.charCodeAt(i)) | 0;
-  return BATCH_COLORS[Math.abs(hash) % BATCH_COLORS.length];
-};
-
 const WorkshopCell = ({ workshopId }: { workshopId: string }) => {
   const trpc = useTRPC();
   const { data: workshops } = useQuery(
@@ -120,7 +105,15 @@ const WorkshopCell = ({ workshopId }: { workshopId: string }) => {
   if (!workshop) return <Badge variant="outline">—</Badge>;
 
   return (
-    <Badge className={cn(colorFor(workshop.name || workshopId))}>
+    <Badge
+      className={cn(
+        workshop?.name.toLowerCase().startsWith("leadership") && "bg-blue-500",
+        workshop?.name.toLowerCase().startsWith("writing") && "bg-green-500",
+        workshop?.name.toLowerCase().startsWith("cultural") && "bg-yellow-500",
+        workshop?.name.toLowerCase().startsWith("creative") && "bg-red-500",
+        workshop?.name.toLowerCase().startsWith("html") && "bg-purple-500"
+      )}
+    >
       {workshop.name}
     </Badge>
   );

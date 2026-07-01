@@ -233,12 +233,8 @@ const useVerifyEmail = (options?: { onSuccess?: () => void }) => {
         options.onSuccess();
       } else {
         const callbackUrl = searchParams.get("callbackUrl") ?? "/";
-        const productId = searchParams.get("productId");
-        const destination = productId
-          ? `/checkout?productId=${productId}`
-          : callbackUrl;
         setTimeout(() => {
-          router.push(destination);
+          router.push(callbackUrl);
         }, 2000);
       }
     },
@@ -276,7 +272,6 @@ const useResendEmailVerification = () => {
  * @returns UseMutationResult for logout operation
  */
 const useLogout = () => {
-  const trpc = useTRPC();
   const router = useRouter();
 
   return useMutation({
@@ -290,15 +285,8 @@ const useLogout = () => {
       return data;
     },
     onSuccess: () => {
-      // Reset all queries except the "products" queries
-      const allQueries = queryClient.getQueryCache().getAll();
       router.refresh();
-      allQueries.forEach((query) => {
-        const queryKey = query.queryKey;
-        // Check if the top-level key is "products"
-        if (!queryKey || queryKey === trpc.products.listAll.queryKey()) return;
-        queryClient.resetQueries({ queryKey });
-      });
+      queryClient.clear();
     },
   });
 };

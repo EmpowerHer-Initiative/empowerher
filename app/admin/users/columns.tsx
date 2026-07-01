@@ -266,6 +266,9 @@ const ActionCell = ({ user }: { user: UserFromAPI }) => {
               onClick={() =>
                 deleteAccount.mutate(user.id, {
                   onSuccess: () => setDeleteOpen(false),
+                  onError: (error) => {
+                    toast.error(error.message || "Failed to delete user");
+                  },
                 })
               }
             >

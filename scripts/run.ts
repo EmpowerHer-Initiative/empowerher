@@ -1,6 +1,5 @@
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
-import { createInterface } from "node:readline";
 
 const SCRIPTS_DIR = import.meta.dirname;
 const ROOT = resolve(SCRIPTS_DIR, "..");
@@ -8,10 +7,7 @@ const ROOT = resolve(SCRIPTS_DIR, "..");
 // ─── Script registry ──────────────────────────────────────────────
 const scripts = [
   { name: "check-env", desc: "Validate required env vars by feature flag" },
-  { name: "check-webhooks", desc: "Sync Polar webhook endpoints" },
   { name: "check-email", desc: "AWS SES email health check" },
-  { name: "sync-plans", desc: "Generate config/plans.ts from Polar" },
-  { name: "seed-products", desc: "Create test products in Polar" },
   { name: "list-routes", desc: "Show all tRPC routes" },
   { name: "list-crons", desc: "Show cron jobs from vercel.json" },
 ];
@@ -45,37 +41,14 @@ function render() {
   console.log(`\n${c.gray}  ↑/↓ move · Enter run · q quit${c.reset}`);
 }
 
-function promptMode(): Promise<string[]> {
-  return new Promise((res) => {
-    process.stdout.write(
-      `\n  ${c.bold}Mode:${c.reset} ${c.dim}(r)eport${c.reset} / ${c.dim}(f)ix${c.reset} `
-    );
-    const rl = createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
-    rl.once("line", (answer) => {
-      rl.close();
-      res(answer.trim().toLowerCase() === "f" ? ["--fix"] : []);
-    });
-  });
-}
-
-async function runScript(name: string) {
+function runScript(name: string) {
   process.stdout.write("\x1b[2J\x1b[H");
   process.stdin.setRawMode(false);
   process.stdin.pause();
 
-  let args: string[] = [];
-  if (name === "check-webhooks") {
-    args = await promptMode();
-  }
-
   const file = resolve(SCRIPTS_DIR, `${name}.ts`);
-  console.log(
-    `${c.bold}▶ ${name}${args.length ? ` ${args.join(" ")}` : ""}${c.reset}\n`
-  );
-  const result = spawnSync("tsx", [file, ...args], {
+  console.log(`${c.bold}▶ ${name}${c.reset}\n`);
+  const result = spawnSync("tsx", [file], {
     cwd: ROOT,
     stdio: "inherit",
   });

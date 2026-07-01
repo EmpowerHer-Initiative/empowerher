@@ -1,1 +1,0 @@
-export { removeCustomer } from "./customers";

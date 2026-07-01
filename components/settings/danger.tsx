@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
+import { authClient } from "@/services/auth/auth-client";
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
-import { queryClient, useTRPC } from "@/services/trpc/client";
+import { queryClient } from "@/services/trpc/client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -34,21 +35,24 @@ export const DangerSettings = () => {
   const user = useCurrentUser();
 
   const router = useRouter();
-  const deleteAccount = useMutation(
-    useTRPC().payments.deleteCustomer.mutationOptions({
-      onSuccess: () => {
-        router.push("/account-deleted");
-        router.refresh();
+  const deleteAccount = useMutation({
+    mutationFn: async () => {
+      const { data, error } = await authClient.deleteUser();
+      if (error) throw new Error(error.message || error.statusText);
+      return data;
+    },
+    onSuccess: () => {
+      router.push("/account-deleted");
+      router.refresh();
 
-        // Clear all queries
-        queryClient.clear();
+      // Clear all queries
+      queryClient.clear();
 
-        // Delete all local storage and session storage items
-        localStorage.clear();
-        sessionStorage.clear();
-      },
-    })
-  );
+      // Delete all local storage and session storage items
+      localStorage.clear();
+      sessionStorage.clear();
+    },
+  });
 
   if (user.isPending) {
     return (
@@ -72,26 +76,10 @@ export const DangerSettings = () => {
 
           <ul className="space-y-3 text-sm">
             <li>
-              <p className="font-medium">Active Subscriptions</p>
-              <p className="text-muted-foreground">
-                Any active subscriptions will be automatically paused/cancelled
-                in our payment system
-              </p>
-            </li>
-
-            <li>
               <p className="font-medium">Account Data</p>
               <p className="text-muted-foreground">
                 Your profile, settings, and all personal data will be
                 permanently deleted from our database
-              </p>
-            </li>
-
-            <li>
-              <p className="font-medium">Purchase History</p>
-              <p className="text-muted-foreground">
-                Your order history and purchase records will not be removed from
-                our system, but you can still access them via email receipts
               </p>
             </li>
 
@@ -129,12 +117,7 @@ export const DangerSettings = () => {
                   variant="destructive"
                   disabled={inputValue !== "DELETE" || deleteAccount.isPending}
                   onClick={() => {
-                    const userId = user.data?.user.id;
-                    if (!userId) {
-                      toast.error("Unable to delete account: user not found");
-                      return;
-                    }
-                    deleteAccount.mutate(userId, {
+                    deleteAccount.mutate(undefined, {
                       onError: (error) => {
                         toast.error(error.message);
                       },

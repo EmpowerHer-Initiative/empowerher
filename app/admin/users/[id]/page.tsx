@@ -3,23 +3,15 @@
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeftIcon, Loader, OctagonAlert } from "lucide-react";
-import { parseAsString, useQueryState } from "nuqs";
 
 import { useTRPC } from "@/services/trpc/client";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { TabLineAnimate } from "@/components/tab-line-animate";
 
-import { Payments } from "./payments";
 import { Profile } from "./profile";
 
 export default function EachOrganization() {
-  const [activeTab, setActiveTab] = useQueryState(
-    "tab",
-    parseAsString.withDefault("profile")
-  );
-
   const { id } = useParams<{ id: string }>();
 
   const trpc = useTRPC();
@@ -50,16 +42,6 @@ export default function EachOrganization() {
           <p className="text-muted-foreground text-xs">{user?.email}</p>
         </div>
       </div>
-      <TabLineAnimate
-        tabs={[
-          { label: "Profile", value: "profile" },
-          { label: "Payments", value: "payments" },
-        ]}
-        tab={activeTab}
-        setTab={setActiveTab}
-        className="mb-4"
-      />
-
       {user?.banned && (
         <Alert variant="destructive" className="mb-4">
           <OctagonAlert />
@@ -82,10 +64,7 @@ export default function EachOrganization() {
           <Loader className="size-6 animate-spin" />
         </div>
       ) : (
-        <>
-          {activeTab.toLowerCase() === "profile" && <Profile />}
-          {activeTab.toLowerCase() === "payments" && <Payments />}
-        </>
+        <Profile />
       )}
     </div>
   );

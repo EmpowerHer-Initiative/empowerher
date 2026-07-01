@@ -9,8 +9,6 @@ import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Accounts } from "@/components/settings/accounts";
-import { BillingOrders } from "@/components/settings/billing/orders";
-import { BillingSubscriptions } from "@/components/settings/billing/subscriptions";
 import { DangerSettings } from "@/components/settings/danger";
 import { GeneralAvatar } from "@/components/settings/general/avatar";
 import { EmailName } from "@/components/settings/general/email-name";
@@ -43,11 +41,6 @@ export default function SettingsPage() {
       <div className="space-y-6">
         <h2 className="text-3xl font-semibold capitalize">Accounts</h2>
         <Accounts />
-      </div>
-      <div className="space-y-6">
-        <h2 className="text-3xl font-semibold capitalize">Billing</h2>
-        <BillingSubscriptions />
-        <BillingOrders />
       </div>
       <div className="space-y-6">
         <h2 className="text-3xl font-semibold capitalize">Danger</h2>

@@ -38,11 +38,7 @@ export const SignupForm = () => {
   const router = useRouter();
   const { isOpen, setIsOpen, setEmail } = useNugsVerifyEmail();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
-  const productId = searchParams.get("productId");
-  const destination = productId
-    ? `/checkout?productId=${productId}`
-    : callbackUrl;
+  const destination = searchParams.get("callbackUrl") ?? "/";
   const { data: user } = useCurrentUser();
 
   useEffect(() => {
@@ -176,11 +172,9 @@ export const SignupForm = () => {
           Already have an account?{" "}
           <Link
             href={
-              productId
-                ? `/login?callbackUrl=/checkout&productId=${productId}`
-                : callbackUrl !== "/"
-                  ? `/login?callbackUrl=${callbackUrl}`
-                  : "/login"
+              destination !== "/"
+                ? `/login?callbackUrl=${destination}`
+                : "/login"
             }
             className="text-primary underline"
           >

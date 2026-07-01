@@ -44,8 +44,6 @@ const hiddenPaths = [
   "/reset-password",
   "/admin",
   "/settings",
-  "/checkout",
-  "/success",
   "/account-deleted",
 ];
 

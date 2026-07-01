@@ -5,11 +5,9 @@ import { adminRouter } from "./admin/_index";
 import { authRouter } from "./auth";
 import { commentsRouter } from "./comments";
 import { contactRouter } from "./contact";
-import { discountsRouter } from "./discounts";
 import { filesRouter } from "./files";
 import { logsRouter } from "./logs";
-import { paymentsRouter } from "./payments";
-import { productsRouter } from "./products";
+import { newsletterRouter } from "./newsletter";
 import { staffRouter } from "./staff/_index";
 import { usersRouter } from "./users";
 import { verificationRouter } from "./verification";
@@ -19,11 +17,9 @@ export const appRouter = createTRPCRouter({
   contact: contactRouter,
   comments: commentsRouter,
   users: usersRouter,
-  products: productsRouter,
-  discounts: discountsRouter,
-  payments: paymentsRouter,
   files: filesRouter,
   logs: logsRouter,
+  newsletter: newsletterRouter,
   verification: verificationRouter,
   admin: adminRouter,
   staff: staffRouter,

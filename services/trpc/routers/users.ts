@@ -6,7 +6,6 @@ import { z } from "zod";
 import { auth } from "@/services/auth/auth";
 import { db } from "@/services/db/index";
 import { account, user, type UserMetadata } from "@/services/db/schema";
-import { deleteCustomerByEmail } from "@/services/payments";
 import {
   adminProcedure,
   authenticatedProcedure,
@@ -311,17 +310,6 @@ export const usersRouter = createTRPCRouter({
         code: "BAD_REQUEST",
         message: "You cannot delete your own account",
       });
-    }
-
-    const dbUser = await db
-      .select()
-      .from(user)
-      .where(eq(user.id, input))
-      .limit(1)
-      .then((res) => res[0]);
-
-    if (dbUser?.email) {
-      await deleteCustomerByEmail(dbUser.email);
     }
 
     await db.delete(user).where(eq(user.id, input));

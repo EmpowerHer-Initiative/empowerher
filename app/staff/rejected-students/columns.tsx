@@ -58,7 +58,7 @@ export const columns: ColumnDef<RejectedStudent>[] = [
       row.original.emailSent ? (
         <Link
           href={`/admin/logs?search=${encodeURIComponent(row.original.email)}`}
-          className={buttonVariants({ variant: "outline", size: "sm" })}
+          className={buttonVariants({ size: "sm" })}
         >
           View email
         </Link>

@@ -28,11 +28,7 @@ const formSchema = z.object({
 export const LoginForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
-  const productId = searchParams.get("productId");
-  const destination = productId
-    ? `/checkout?productId=${productId}`
-    : callbackUrl;
+  const destination = searchParams.get("callbackUrl") ?? "/";
 
   const { data: user } = useCurrentUser();
 
@@ -128,11 +124,9 @@ export const LoginForm = () => {
           Don&apos;t have an account?{" "}
           <Link
             href={
-              productId
-                ? `/signup?callbackUrl=/checkout&productId=${productId}`
-                : callbackUrl !== "/"
-                  ? `/signup?callbackUrl=${callbackUrl}`
-                  : "/signup"
+              destination !== "/"
+                ? `/signup?callbackUrl=${destination}`
+                : "/signup"
             }
             className="text-primary underline"
           >

@@ -38,42 +38,6 @@ Every optional module is listed here with everything it owns. To remove a module
 
 ---
 
-## Payments
-
-> Optional. Remove for clients who don't sell anything.
-
-**Files**
-
-- `services/trpc/routers/billing.ts` — checkout, subscriptions, invoices, customer
-- `services/trpc/routers/products.ts` — product catalog CRUD
-- `services/trpc/routers/discounts.ts` — promotion code verification
-- `app/checkout/page.tsx`
-- `app/success/page.tsx`
-- `app/admin/products/page.tsx`
-- `app/admin/products/columns.tsx`
-- `components/settings/billing/`
-
-**Schema tables** (`services/db/schema.ts`)
-
-- `products`, `subscription`, `invoices`, `webhookEvents`
-
-**Touches**
-
-- `services/auth/auth.ts` — Polar plugin registration
-- `services/auth/auth-action.ts` — webhook sync handlers
-- `services/auth/hooks/use-payments.ts`
-- `services/trpc/routers/_app.ts` — `billingRouter`, `productsRouter` imports
-
-**Env vars**
-
-- `POLAR_ACCESS_TOKEN`, `POLAR_WEBHOOK_SECRET`, `POLAR_SERVER`
-
-**Dependencies**
-
-- `@polar-sh/better-auth`, `@polar-sh/sdk`
-
----
-
 ## Blog / Posts
 
 > Optional. Remove for clients who don't need a blog or content section.

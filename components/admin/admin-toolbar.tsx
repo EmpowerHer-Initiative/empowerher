@@ -9,13 +9,7 @@ import { useCurrentUser } from "@/services/auth/hooks/use-user";
 
 import { Button } from "@/components/ui/button";
 
-const HIDDEN_PATHS = [
-  "/login",
-  "/signup",
-  "/reset-password",
-  "/checkout",
-  "/success",
-];
+const HIDDEN_PATHS = ["/login", "/signup", "/reset-password"];
 
 export const AdminToolbar = () => {
   const { data: session } = useCurrentUser();
