@@ -19,7 +19,6 @@ const links: { label: string; href: string; adminOnly?: boolean }[] = [
   { label: "Accepted Students", href: "/staff/students" },
   { label: "Rejected Students", href: "/staff/rejected-students" },
   { label: "Staffs", href: "/staff/staffs", adminOnly: true },
-  { label: "Projects & Workshops", href: "/staff/projects-workshops" },
 ];
 
 export const NavbarStaff = () => {

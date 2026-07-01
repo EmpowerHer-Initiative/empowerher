@@ -89,9 +89,9 @@ export const NewsletterDialog = () => {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <img
-              src={siteConfig.emailLogoUrl}
+              src="https://empowerher-cdn.alisamadii.com/logo.png"
               alt={siteConfig.name}
-              className="size-10 rounded-full"
+              className="size-12 object-contain"
             />
             <div className="flex-1">
               <h3 className="text-foreground text-lg font-semibold">
@@ -115,6 +115,7 @@ export const NewsletterDialog = () => {
                       aria-invalid={fieldState.invalid}
                       type="email"
                       placeholder="Enter your email"
+                      size="lg"
                       className="w-full"
                     />
                   </FieldContent>
@@ -126,6 +127,7 @@ export const NewsletterDialog = () => {
             />
             <Button
               type="submit"
+              size="lg"
               className="w-full"
               disabled={form.formState.isSubmitting}
             >

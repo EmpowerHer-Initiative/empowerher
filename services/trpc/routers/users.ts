@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { TRPCError } from "@trpc/server";
-import { and, count, desc, eq, ilike, or } from "drizzle-orm";
+import { and, count, desc, eq, ilike, or, sql } from "drizzle-orm";
 import { z } from "zod";
 
 import { auth } from "@/services/auth/auth";
@@ -42,7 +42,9 @@ export const usersRouter = createTRPCRouter({
       z.object({
         page: z.number().optional(),
         limit: z.number().optional(),
-        sortBy: z.enum(["email", "created", "banned"]).optional(),
+        sortBy: z
+          .enum(["email", "created", "banned", "admin", "staff"])
+          .optional(),
         search: z.string().optional(),
       })
     )
@@ -60,7 +62,13 @@ export const usersRouter = createTRPCRouter({
             ? desc(user.email)
             : sortBy === "banned"
               ? desc(user.banned)
-              : desc(user.createdAt)
+              : sortBy === "admin"
+                ? desc(sql`case when ${user.role} = 'admin' then 1 else 0 end`)
+                : sortBy === "staff"
+                  ? desc(
+                      sql`case when ${user.role} = 'staff' then 1 else 0 end`
+                    )
+                  : desc(user.createdAt)
         )
         .where(
           search

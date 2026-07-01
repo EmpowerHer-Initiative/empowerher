@@ -2,19 +2,20 @@
 
 import { Suspense, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 
 import { useTRPC } from "@/services/trpc/client";
 
+import { Button } from "@/components/ui/button";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { DataTable } from "@/components/data-table";
+import { Skeleton } from "@/components/ui/skeleton";
 import { TabLineAnimate } from "@/components/tab-line-animate";
 
-import { columns } from "./columns";
+import { CommentCard } from "./comment-card";
 
 const tabs = [
   { label: "All", value: "all" },
@@ -26,9 +27,12 @@ const tabs = [
 type StatusFilter = (typeof tabs)[number]["value"];
 type CommentStatus = "pending" | "approved" | "rejected";
 
+const PAGE_SIZE = 12;
+
 const CommentsPage = () => {
   const [tab, setTab] = useState<StatusFilter>("all");
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
 
   const trpc = useTRPC();
   const {
@@ -53,16 +57,34 @@ const CommentsPage = () => {
     );
   }, [comments, search]);
 
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  // Clamp during render so a shrinking result set never leaves us on a dead page.
+  const currentPage = Math.min(Math.max(1, page), totalPages);
+  const paged = filtered.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+
+  const changeTab = (value: StatusFilter) => {
+    setTab(value);
+    setPage(1);
+  };
+
+  const changeSearch = (value: string) => {
+    setSearch(value);
+    setPage(1);
+  };
+
   return (
     <div className="container">
       <h1>Comments</h1>
       <TabLineAnimate
         tabs={tabs.map((item) => ({ label: item.label, value: item.value }))}
         tab={tab}
-        setTab={(value) => setTab(value as StatusFilter)}
+        setTab={(value) => changeTab(value as StatusFilter)}
         className="mb-8"
       />
-      <div className="mb-4 flex items-center gap-2">
+      <div className="mb-6 flex items-center gap-2">
         <InputGroup className="w-full max-w-64">
           <InputGroupAddon>
             <Search />
@@ -70,16 +92,60 @@ const CommentsPage = () => {
           <InputGroupInput
             placeholder="Search comments"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => changeSearch(e.target.value)}
           />
         </InputGroup>
       </div>
-      <DataTable
-        isLoading={isPending}
-        columns={columns}
-        data={filtered}
-        error={error}
-      />
+
+      {error ? (
+        <div className="text-destructive py-16 text-center text-sm">
+          {error.message || "Failed to load comments"}
+        </div>
+      ) : isPending ? (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Skeleton key={i} className="h-44 w-full rounded-xl" />
+          ))}
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="text-muted-foreground py-16 text-center text-sm">
+          No comments found.
+        </div>
+      ) : (
+        <>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {paged.map((comment) => (
+              <CommentCard key={comment.id} comment={comment} />
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <div className="mt-8 flex items-center justify-center gap-4">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={currentPage === 1}
+                onClick={() => setPage(currentPage - 1)}
+              >
+                <ChevronLeft />
+                Previous
+              </Button>
+              <span className="text-muted-foreground text-sm">
+                Page {currentPage} of {totalPages}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={currentPage === totalPages}
+                onClick={() => setPage(currentPage + 1)}
+              >
+                Next
+                <ChevronRight />
+              </Button>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };

@@ -5,7 +5,14 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { format, parseISO } from "date-fns";
-import { Ban, CircleUserRound, MoreHorizontal, Trash } from "lucide-react";
+import {
+  BadgeCheck,
+  Ban,
+  CircleUserRound,
+  Crown,
+  MoreHorizontal,
+  Trash,
+} from "lucide-react";
 import { toast } from "sonner";
 
 import { useUpdateAdminUser } from "@/services/auth/hooks/use-admin";
@@ -59,7 +66,7 @@ export const columns: ColumnDef<UserFromAPI>[] = [
   {
     header: "User",
     cell: ({ row }) => (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <Avatar className="size-10">
           <AvatarImage src={row.original.image ?? ""} />
           <AvatarFallback>{row.original.name?.charAt(0)}</AvatarFallback>
@@ -68,12 +75,17 @@ export const columns: ColumnDef<UserFromAPI>[] = [
           <div className="font-medium">{row.original.name}</div>
           <div className="text-muted-foreground">{row.original.email}</div>
         </div>
-        <div className="ml-auto text-xs text-red-600">
-          {row.original.banned && <Ban size={14} />}
+        <div className="ml-auto flex items-center gap-2">
+          {row.original.role === "admin" && (
+            <Crown size={22} className="shrink-0 text-yellow-500" />
+          )}
+          {row.original.role === "staff" && (
+            <BadgeCheck size={22} className="text-primary shrink-0" />
+          )}
+          {row.original.banned && (
+            <Ban size={16} className="shrink-0 text-red-600" />
+          )}
         </div>
-        {/* {row.original.role === "admin" && (
-          <UserStar size={16} className="text-yellow-500" />
-        )} */}
       </div>
     ),
   },
@@ -105,8 +117,12 @@ const ActionCell = ({ user }: { user: UserFromAPI }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [banOpen, setBanOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [staffOpen, setStaffOpen] = useState(false);
   const { data: currentUser } = useCurrentUser();
   const updateAdminUser = useUpdateAdminUser();
+
+  const isAdmin = user.role === "admin";
+  const isStaff = user.role === "staff";
   const deleteAccount = useMutation(
     trpc.users.delete.mutationOptions({
       onSuccess: () => {
@@ -147,6 +163,17 @@ const ActionCell = ({ user }: { user: UserFromAPI }) => {
             >
               <CircleUserRound /> View profile
             </DropdownMenuItem>
+            {!isAdmin && (
+              <DropdownMenuItem
+                onClick={() => {
+                  setStaffOpen(true);
+                  setIsOpen(false);
+                }}
+              >
+                <BadgeCheck />{" "}
+                {isStaff ? "Remove staff role" : "Make staff member"}
+              </DropdownMenuItem>
+            )}
             <DropdownMenuSeparator />
             {/* <DropdownMenuItem
               variant="destructive"
@@ -273,6 +300,48 @@ const ActionCell = ({ user }: { user: UserFromAPI }) => {
               }
             >
               Delete user
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={staffOpen} onOpenChange={setStaffOpen}>
+        <AlertDialogContent size="sm" onClick={(e) => e.stopPropagation()}>
+          <AlertDialogHeader>
+            <AlertDialogMedia>
+              <BadgeCheck />
+            </AlertDialogMedia>
+            <AlertDialogTitle>
+              {isStaff ? "Remove staff role" : "Make staff member"}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {isStaff
+                ? `Remove ${user.name}'s staff access? They will lose access to the staff area.`
+                : `Make ${user.name} a staff member? They will gain access to the staff area.`}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              disabled={updateAdminUser.isPending}
+              onClick={() =>
+                updateAdminUser.mutate(
+                  { id: user.id, role: isStaff ? "user" : "staff" },
+                  {
+                    onSuccess: () => {
+                      toast.success(
+                        isStaff ? "Staff role removed" : "User is now staff"
+                      );
+                      setStaffOpen(false);
+                    },
+                    onError: (error) => {
+                      toast.error(error.message || "Failed to update role");
+                    },
+                  }
+                )
+              }
+            >
+              {isStaff ? "Remove staff" : "Make staff"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
