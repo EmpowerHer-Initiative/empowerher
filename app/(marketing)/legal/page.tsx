@@ -89,7 +89,7 @@ export default function LegalPage() {
           </Reveal>
 
           <div className="border-border/30 text-muted-foreground border-t pt-10 text-xs">
-            Last updated: {new Date().getFullYear()}. Questions? Email{" "}
+            Last updated: 2026. Questions? Email{" "}
             <a
               href={`mailto:${siteConfig.email}`}
               className="text-foreground underline-offset-4 hover:underline"
