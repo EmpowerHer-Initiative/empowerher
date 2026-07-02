@@ -128,6 +128,9 @@ const ActionCell = ({ log }: { log: LogFromAPI }) => {
           queryKey: trpc.logs.count.pathKey(),
         });
       },
+      onError: (error) => {
+        toast.error(error.message || "Failed to delete log entry");
+      },
     })
   );
 

@@ -64,8 +64,6 @@ const useSignin = () => {
         password: values.password,
       });
 
-      console.log(response);
-
       if (response.error) {
         throw new Error(response.error.message || response.error.statusText);
       }

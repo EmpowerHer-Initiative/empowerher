@@ -1,17 +1,10 @@
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { Mail, MoreHorizontal } from "lucide-react";
+import { Mail } from "lucide-react";
 
 import { useTRPC } from "@/services/trpc/client";
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 export const SocialAccounts = () => {
@@ -45,25 +38,8 @@ export const SocialAccounts = () => {
                 </span>
                 {/* <span className="inline-block bg-foreground size-1 rounded-full"></span> */}
               </TableCell>
-              <TableCell className="text-xs">
+              <TableCell className="text-right text-xs">
                 added {format(account.createdAt, "MMM d, yyyy")}
-              </TableCell>
-              <TableCell className="flex items-center justify-end text-xs">
-                <DropdownMenu>
-                  <DropdownMenuTrigger
-                    render={
-                      <Button variant="ghost" size="icon">
-                        <MoreHorizontal size={16} />
-                      </Button>
-                    }
-                  />
-                  <DropdownMenuContent align="end" className="w-60">
-                    {/* TODO: implement removal */}
-                    <DropdownMenuItem variant="destructive">
-                      Remove account
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
               </TableCell>
             </TableRow>
           ))}

@@ -56,7 +56,7 @@ const Hero = () => (
             Student Project Roadmap
           </h1>
           <p className="text-background/75 mt-8 max-w-xl text-base leading-relaxed md:text-lg">
-            The Student Project Roadmap (SRP) is a leadership pathway for
+            The Student Project Roadmap (SPR) is a leadership pathway for
             EmpowerHer students who have completed their workshops and met
             eligibility requirements and wish to deepen their practical
             leadership experience. Through a structured, step-by-step process,
@@ -109,20 +109,18 @@ const Eligibility = () => (
 
         <ol className="mt-12 space-y-5">
           {eligibilityRules.map((rule, i) => (
-            <li
-              key={i}
-              className="animate-fade-up group flex gap-5 rounded-2xl border border-white/10 bg-white/[0.05] p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.09]"
-              style={{ animationDelay: `${i * 140}ms` }}
-            >
-              <span
-                className={`flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${ruleAccents[i % ruleAccents.length]} font-serif text-xl text-[#0b1f3a] shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:-rotate-6`}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <p className="self-center text-base leading-relaxed text-white/85">
-                {rule}
-              </p>
-            </li>
+            <Reveal asChild key={i} delay={i * 140}>
+              <li className="group flex gap-5 rounded-2xl border border-white/10 bg-white/[0.05] p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.09]">
+                <span
+                  className={`flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${ruleAccents[i % ruleAccents.length]} font-serif text-xl text-[#0b1f3a] shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:-rotate-6`}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <p className="self-center text-base leading-relaxed text-white/85">
+                  {rule}
+                </p>
+              </li>
+            </Reveal>
           ))}
         </ol>
 

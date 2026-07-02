@@ -1,9 +1,10 @@
 import { headers } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { auth } from "@/services/auth/auth";
 
+import { AccessDenied } from "@/components/access-denied";
 import { NavbarStaff } from "@/components/staff/navbar-staff";
 import { PeriodProvider } from "@/components/staff/period-context";
 import { PeriodSwitcher } from "@/components/staff/period-switcher";
@@ -25,7 +26,7 @@ export default async function StaffLayout({
   }
 
   if (user.user.role !== "admin" && user.user.role !== "staff") {
-    notFound();
+    return <AccessDenied area="staff" role={user.user.role} />;
   }
 
   return (

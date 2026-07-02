@@ -1,9 +1,10 @@
 import { headers } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { auth } from "@/services/auth/auth";
 
+import { AccessDenied } from "@/components/access-denied";
 import { NavbarAdmin } from "@/components/admin/navbar-admin";
 
 export default async function AdminLayout({
@@ -23,7 +24,7 @@ export default async function AdminLayout({
   }
 
   if (user.user.role !== "admin") {
-    notFound();
+    return <AccessDenied area="admin" role={user.user.role} />;
   }
 
   return (

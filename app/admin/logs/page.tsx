@@ -161,6 +161,9 @@ const LogsPage = () => {
         queryClient.invalidateQueries({ queryKey: trpc.logs.count.pathKey() });
         setPurgeOpen(false);
       },
+      onError: (error) => {
+        toast.error(error.message || "Failed to purge logs");
+      },
     })
   );
 

@@ -9,6 +9,7 @@ import { siteConfig } from "@/lib/site";
 import { AuthorCard } from "@/components/hervoice/author-card";
 import { BackButton } from "@/components/hervoice/back-button";
 import { CommentsSection } from "@/components/hervoice/comments-section";
+import { Reveal } from "@/components/reveal";
 
 /* ─── MDX Components ───────────────────────────────────────────────────────── */
 
@@ -105,34 +106,36 @@ export default async function HerVoicePostPage({ params }: Props) {
       {/* Hero */}
       <section className="py-28 md:py-40">
         <div className="container">
-          <div className="mx-auto max-w-3xl">
-            <BackButton />
+          <Reveal asChild>
+            <div className="mx-auto max-w-3xl">
+              <BackButton />
 
-            <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-              HerVoice
-            </p>
-            <h1 className="mt-5 font-serif text-4xl leading-[1.15] md:text-5xl lg:text-6xl">
-              {post.title}
-            </h1>
-            <p className="text-muted-foreground mt-6 text-base leading-relaxed md:text-lg">
-              {post.description}
-            </p>
-            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
-              <p className="text-muted-foreground/60 text-sm">
-                {format(post.date, "MMMM d, yyyy")}
+              <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+                HerVoice
               </p>
-              {post.authorName && (
-                <AuthorCard
-                  authorName={post.authorName}
-                  authorBio={post.authorBio}
-                  authorPosition={post.authorPosition}
-                  authorInstagram={post.authorInstagram}
-                  authorFacebook={post.authorFacebook}
-                  authorLinkedin={post.authorLinkedin}
-                />
-              )}
+              <h1 className="mt-5 font-serif text-4xl leading-[1.15] md:text-5xl lg:text-6xl">
+                {post.title}
+              </h1>
+              <p className="text-muted-foreground mt-6 text-base leading-relaxed md:text-lg">
+                {post.description}
+              </p>
+              <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
+                <p className="text-muted-foreground/60 text-sm">
+                  {format(post.date, "MMMM d, yyyy")}
+                </p>
+                {post.authorName && (
+                  <AuthorCard
+                    authorName={post.authorName}
+                    authorBio={post.authorBio}
+                    authorPosition={post.authorPosition}
+                    authorInstagram={post.authorInstagram}
+                    authorFacebook={post.authorFacebook}
+                    authorLinkedin={post.authorLinkedin}
+                  />
+                )}
+              </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -140,25 +143,27 @@ export default async function HerVoicePostPage({ params }: Props) {
       {post.image && (
         <section className="pb-16">
           <div className="container">
-            <div className="mx-auto max-w-4xl">
-              <div className="overflow-hidden rounded-3xl">
-                <img
-                  src={post.image}
-                  alt={post.imageAlt ?? post.title}
-                  className="aspect-[2/1] w-full object-cover"
-                />
+            <Reveal asChild>
+              <div className="mx-auto max-w-4xl">
+                <div className="overflow-hidden rounded-3xl">
+                  <img
+                    src={post.image}
+                    alt={post.imageAlt ?? post.title}
+                    className="aspect-[2/1] w-full object-cover"
+                  />
+                </div>
+                {post.imageAlt && (
+                  <p className="text-muted-foreground/70 mt-3 text-center text-sm italic">
+                    {post.imageAlt}
+                  </p>
+                )}
+                {post.imageCredit && (
+                  <p className="text-muted-foreground/50 mt-1 text-center text-xs">
+                    {post.imageCredit}
+                  </p>
+                )}
               </div>
-              {post.imageAlt && (
-                <p className="text-muted-foreground/70 mt-3 text-center text-sm italic">
-                  {post.imageAlt}
-                </p>
-              )}
-              {post.imageCredit && (
-                <p className="text-muted-foreground/50 mt-1 text-center text-xs">
-                  {post.imageCredit}
-                </p>
-              )}
-            </div>
+            </Reveal>
           </div>
         </section>
       )}
@@ -167,9 +172,11 @@ export default async function HerVoicePostPage({ params }: Props) {
       <section className="pb-28 md:pb-40">
         <div className="container">
           <div className="mx-auto max-w-3xl">
-            <div className="prose-theme prose text-base leading-[1.9]">
-              <MDXContent code={post.mdx} components={mdxComponents} />
-            </div>
+            <Reveal asChild>
+              <div className="prose-theme prose text-base leading-[1.9]">
+                <MDXContent code={post.mdx} components={mdxComponents} />
+              </div>
+            </Reveal>
             <CommentsSection slug={`/hervoice/${post._meta.path}`} />
           </div>
         </div>

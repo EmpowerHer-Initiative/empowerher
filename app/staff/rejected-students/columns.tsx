@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { Trash } from "lucide-react";
 import { toast } from "sonner";
 
+import { useIsAdmin } from "@/services/auth/hooks/use-role";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
@@ -54,23 +55,38 @@ export const columns: ColumnDef<RejectedStudent>[] = [
   },
   {
     header: "View email",
-    cell: ({ row }) =>
-      row.original.emailSent ? (
-        <Link
-          href={`/admin/logs?search=${encodeURIComponent(row.original.email)}`}
-          className={buttonVariants({ size: "sm" })}
-        >
-          View email
-        </Link>
-      ) : (
-        <span className="text-muted-foreground text-sm">N/A</span>
-      ),
+    cell: ({ row }) => <EmailCell rejectedStudent={row.original} />,
   },
   {
     id: "actions",
     cell: ({ row }) => <ActionCell rejectedStudent={row.original} />,
   },
 ];
+
+const EmailCell = ({
+  rejectedStudent,
+}: {
+  rejectedStudent: RejectedStudent;
+}) => {
+  const { isAdmin } = useIsAdmin();
+
+  if (!rejectedStudent.emailSent) {
+    return <span className="text-muted-foreground text-sm">N/A</span>;
+  }
+
+  if (!isAdmin) {
+    return <span className="text-sm">{rejectedStudent.email}</span>;
+  }
+
+  return (
+    <Link
+      href={`/admin/logs?search=${encodeURIComponent(rejectedStudent.email)}`}
+      className={buttonVariants({ size: "sm" })}
+    >
+      View email
+    </Link>
+  );
+};
 
 const ActionCell = ({
   rejectedStudent,

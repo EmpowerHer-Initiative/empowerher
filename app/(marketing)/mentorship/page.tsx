@@ -325,7 +325,7 @@ const Opportunities = () => (
               href="/success-stories/spr"
               className="text-primary hover:text-primary/80 mt-6 inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
             >
-              Student Project Roadmap (SRP)
+              Student Project Roadmap (SPR)
               <ArrowRight className="size-3.5" />
             </Link>
           </div>

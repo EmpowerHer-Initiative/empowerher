@@ -20,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import { Reveal } from "@/components/reveal";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required").max(200),
@@ -118,235 +119,240 @@ export const ContactForm = () => {
       <div className="container">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
           {/* Left — Contact Info */}
-          <div>
-            <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-              Contact
-            </p>
-            <h1 className="mt-4 font-serif text-4xl leading-tight md:text-5xl">
-              Get in Touch
-            </h1>
-            <p className="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]">
-              Have a question about EmpowerHer or any of our programs? Fill out
-              the form and we&apos;ll get back to you as soon as possible.
-            </p>
-
-            <div className="mt-12 space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-full">
-                  <Mail className="text-primary size-4" />
-                </div>
-                <div>
-                  <p className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
-                    Email
-                  </p>
-                  <a
-                    href="mailto:info@empowerher-initiative.org"
-                    className="text-foreground hover:text-primary mt-1 text-sm transition-colors"
-                  >
-                    info@empowerher-initiative.org
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-full">
-                  <MapPin className="text-primary size-4" />
-                </div>
-                <div>
-                  <p className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
-                    Location
-                  </p>
-                  <p className="text-foreground mt-1 text-sm">
-                    United States of America
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="border-border/30 mt-12 border-t pt-8">
-              <p className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
-                Follow Us
+          <Reveal asChild>
+            <div>
+              <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+                Contact
               </p>
-              <div className="mt-4 flex items-center gap-3">
-                {socialLinks.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={s.label}
-                    className="border-border/60 text-foreground/70 hover:border-primary hover:bg-primary hover:text-primary-foreground flex size-11 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5"
-                  >
-                    <s.icon className="size-5" />
-                  </a>
-                ))}
+              <h1 className="mt-4 font-serif text-4xl leading-tight md:text-5xl">
+                Get in Touch
+              </h1>
+              <p className="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]">
+                Have a question about EmpowerHer or any of our programs? Fill
+                out the form and we&apos;ll get back to you as soon as possible.
+              </p>
+
+              <div className="mt-12 space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-full">
+                    <Mail className="text-primary size-4" />
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
+                      Email
+                    </p>
+                    <a
+                      href="mailto:info@empowerher-initiative.org"
+                      className="text-foreground hover:text-primary mt-1 text-sm transition-colors"
+                    >
+                      info@empowerher-initiative.org
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-full">
+                    <MapPin className="text-primary size-4" />
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
+                      Location
+                    </p>
+                    <p className="text-foreground mt-1 text-sm">
+                      United States of America
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-border/30 mt-12 border-t pt-8">
+                <p className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
+                  Follow Us
+                </p>
+                <div className="mt-4 flex items-center gap-3">
+                  {socialLinks.map((s) => (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.label}
+                      className="border-border/60 text-foreground/70 hover:border-primary hover:bg-primary hover:text-primary-foreground flex size-11 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5"
+                    >
+                      <s.icon className="size-5" />
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* Right — Form */}
-          <div>
-            {submitted ? (
-              <div className="border-border/30 flex h-full flex-col items-center justify-center space-y-6 rounded-3xl border p-12 text-center">
-                <div className="bg-primary/10 flex size-16 items-center justify-center rounded-full">
-                  <Check className="text-primary size-7" />
+          <Reveal asChild delay={120}>
+            <div>
+              {submitted ? (
+                <div className="border-border/30 flex h-full flex-col items-center justify-center space-y-6 rounded-3xl border p-12 text-center">
+                  <div className="bg-primary/10 flex size-16 items-center justify-center rounded-full">
+                    <Check className="text-primary size-7" />
+                  </div>
+                  <div className="space-y-2">
+                    <h2 className="font-serif text-2xl">Message Sent</h2>
+                    <p className="text-muted-foreground text-sm">
+                      Thank you for reaching out. We&apos;ll get back to you
+                      soon.
+                    </p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setSubmitted(false);
+                      form.reset();
+                    }}
+                  >
+                    Send another message
+                  </Button>
                 </div>
-                <div className="space-y-2">
-                  <h2 className="font-serif text-2xl">Message Sent</h2>
-                  <p className="text-muted-foreground text-sm">
-                    Thank you for reaching out. We&apos;ll get back to you soon.
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setSubmitted(false);
-                    form.reset();
-                  }}
+              ) : (
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-5"
                 >
-                  Send another message
-                </Button>
-              </div>
-            ) : (
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-5"
-              >
-                <Controller
-                  control={form.control}
-                  name="name"
-                  render={({ field, fieldState }) => (
-                    <Field aria-invalid={fieldState.invalid}>
-                      <FieldLabel>Name</FieldLabel>
-                      <FieldContent>
-                        <Input
-                          {...field}
-                          aria-invalid={fieldState.invalid}
-                          placeholder="Your name"
-                          size="lg"
+                  <Controller
+                    control={form.control}
+                    name="name"
+                    render={({ field, fieldState }) => (
+                      <Field aria-invalid={fieldState.invalid}>
+                        <FieldLabel>Name</FieldLabel>
+                        <FieldContent>
+                          <Input
+                            {...field}
+                            aria-invalid={fieldState.invalid}
+                            placeholder="Your name"
+                            size="lg"
+                          />
+                        </FieldContent>
+                        <FieldError
+                          errors={
+                            fieldState.error ? [fieldState.error] : undefined
+                          }
                         />
-                      </FieldContent>
-                      <FieldError
-                        errors={
-                          fieldState.error ? [fieldState.error] : undefined
-                        }
-                      />
-                    </Field>
-                  )}
-                />
-                <Controller
-                  control={form.control}
-                  name="email"
-                  render={({ field, fieldState }) => (
-                    <Field aria-invalid={fieldState.invalid}>
-                      <FieldLabel>Email</FieldLabel>
-                      <FieldContent>
-                        <Input
-                          {...field}
-                          aria-invalid={fieldState.invalid}
-                          placeholder="you@example.com"
-                          type="email"
-                          size="lg"
+                      </Field>
+                    )}
+                  />
+                  <Controller
+                    control={form.control}
+                    name="email"
+                    render={({ field, fieldState }) => (
+                      <Field aria-invalid={fieldState.invalid}>
+                        <FieldLabel>Email</FieldLabel>
+                        <FieldContent>
+                          <Input
+                            {...field}
+                            aria-invalid={fieldState.invalid}
+                            placeholder="you@example.com"
+                            type="email"
+                            size="lg"
+                          />
+                        </FieldContent>
+                        <FieldError
+                          errors={
+                            fieldState.error ? [fieldState.error] : undefined
+                          }
                         />
-                      </FieldContent>
-                      <FieldError
-                        errors={
-                          fieldState.error ? [fieldState.error] : undefined
-                        }
-                      />
-                    </Field>
-                  )}
-                />
-                <Controller
-                  control={form.control}
-                  name="subject"
-                  render={({ field, fieldState }) => (
-                    <Field aria-invalid={fieldState.invalid}>
-                      <FieldLabel>Subject</FieldLabel>
-                      <FieldContent>
-                        <Input
-                          {...field}
-                          aria-invalid={fieldState.invalid}
-                          placeholder="What is this about?"
-                          size="lg"
+                      </Field>
+                    )}
+                  />
+                  <Controller
+                    control={form.control}
+                    name="subject"
+                    render={({ field, fieldState }) => (
+                      <Field aria-invalid={fieldState.invalid}>
+                        <FieldLabel>Subject</FieldLabel>
+                        <FieldContent>
+                          <Input
+                            {...field}
+                            aria-invalid={fieldState.invalid}
+                            placeholder="What is this about?"
+                            size="lg"
+                          />
+                        </FieldContent>
+                        <FieldError
+                          errors={
+                            fieldState.error ? [fieldState.error] : undefined
+                          }
                         />
-                      </FieldContent>
-                      <FieldError
-                        errors={
-                          fieldState.error ? [fieldState.error] : undefined
-                        }
-                      />
-                    </Field>
-                  )}
-                />
-                <Controller
-                  control={form.control}
-                  name="phone"
-                  render={({ field, fieldState }) => (
-                    <Field aria-invalid={fieldState.invalid}>
-                      <FieldLabel>
-                        Phone{" "}
-                        <span className="text-muted-foreground font-normal">
-                          (optional)
-                        </span>
-                      </FieldLabel>
-                      <FieldContent>
-                        <Input
-                          {...field}
-                          aria-invalid={fieldState.invalid}
-                          placeholder="+1 (555) 123-4567"
-                          type="tel"
-                          size="lg"
+                      </Field>
+                    )}
+                  />
+                  <Controller
+                    control={form.control}
+                    name="phone"
+                    render={({ field, fieldState }) => (
+                      <Field aria-invalid={fieldState.invalid}>
+                        <FieldLabel>
+                          Phone{" "}
+                          <span className="text-muted-foreground font-normal">
+                            (optional)
+                          </span>
+                        </FieldLabel>
+                        <FieldContent>
+                          <Input
+                            {...field}
+                            aria-invalid={fieldState.invalid}
+                            placeholder="+1 (555) 123-4567"
+                            type="tel"
+                            size="lg"
+                          />
+                        </FieldContent>
+                        <FieldError
+                          errors={
+                            fieldState.error ? [fieldState.error] : undefined
+                          }
                         />
-                      </FieldContent>
-                      <FieldError
-                        errors={
-                          fieldState.error ? [fieldState.error] : undefined
-                        }
-                      />
-                    </Field>
-                  )}
-                />
-                <Controller
-                  control={form.control}
-                  name="message"
-                  render={({ field, fieldState }) => (
-                    <Field aria-invalid={fieldState.invalid}>
-                      <FieldLabel>Message</FieldLabel>
-                      <FieldContent>
-                        <Textarea
-                          {...field}
-                          aria-invalid={fieldState.invalid}
-                          placeholder="Tell us what's on your mind..."
-                          rows={5}
+                      </Field>
+                    )}
+                  />
+                  <Controller
+                    control={form.control}
+                    name="message"
+                    render={({ field, fieldState }) => (
+                      <Field aria-invalid={fieldState.invalid}>
+                        <FieldLabel>Message</FieldLabel>
+                        <FieldContent>
+                          <Textarea
+                            {...field}
+                            aria-invalid={fieldState.invalid}
+                            placeholder="Tell us what's on your mind..."
+                            rows={5}
+                          />
+                        </FieldContent>
+                        <FieldError
+                          errors={
+                            fieldState.error ? [fieldState.error] : undefined
+                          }
                         />
-                      </FieldContent>
-                      <FieldError
-                        errors={
-                          fieldState.error ? [fieldState.error] : undefined
-                        }
-                      />
-                    </Field>
-                  )}
-                />
-                <Button
-                  type="submit"
-                  className="w-full"
-                  size="lg"
-                  disabled={submit.isPending}
-                >
-                  {submit.isPending ? (
-                    <Spinner />
-                  ) : (
-                    <>
-                      Send Message
-                      <Send className="ml-2 size-4" />
-                    </>
-                  )}
-                </Button>
-              </form>
-            )}
-          </div>
+                      </Field>
+                    )}
+                  />
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    size="lg"
+                    disabled={submit.isPending}
+                  >
+                    {submit.isPending ? (
+                      <Spinner />
+                    ) : (
+                      <>
+                        Send Message
+                        <Send className="ml-2 size-4" />
+                      </>
+                    )}
+                  </Button>
+                </form>
+              )}
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

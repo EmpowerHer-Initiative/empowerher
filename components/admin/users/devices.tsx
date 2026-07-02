@@ -1,13 +1,25 @@
+import { useState } from "react";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
-import { MoreHorizontal } from "lucide-react";
+import { LogOut, MoreHorizontal } from "lucide-react";
 import { UAParser } from "ua-parser-js";
 
 import { useRevokeSession } from "@/services/auth/hooks/use-user";
 import { useTRPC } from "@/services/trpc/client";
 import { RouterOutputs } from "@/services/trpc/routers/_app";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -58,6 +70,7 @@ function EachSessions({
   const parser = new UAParser();
   const result = parser.setUA(session.userAgent ?? "").getResult();
 
+  const [revokeOpen, setRevokeOpen] = useState(false);
   const revokeSession = useRevokeSession();
 
   return (
@@ -86,12 +99,41 @@ function EachSessions({
           <DropdownMenuContent align="end" className="w-60">
             <DropdownMenuItem
               variant="destructive"
-              onClick={() => revokeSession.mutate(session.id)}
+              onClick={() => setRevokeOpen(true)}
             >
               Revoke
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        <AlertDialog open={revokeOpen} onOpenChange={setRevokeOpen}>
+          <AlertDialogContent size="sm">
+            <AlertDialogHeader>
+              <AlertDialogMedia>
+                <LogOut />
+              </AlertDialogMedia>
+              <AlertDialogTitle>Revoke session</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to revoke this session? The device will be
+                signed out.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                variant="destructive"
+                disabled={revokeSession.isPending}
+                onClick={() =>
+                  revokeSession.mutate(session.id, {
+                    onSuccess: () => setRevokeOpen(false),
+                  })
+                }
+              >
+                Revoke
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </TableCell>
     </TableRow>
   );

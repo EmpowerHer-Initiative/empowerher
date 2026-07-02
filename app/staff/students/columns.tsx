@@ -14,6 +14,7 @@ import {
   startOfToday,
 } from "@/lib/approval-due-date";
 import { cn } from "@/lib/utils";
+import { useIsAdmin } from "@/services/auth/hooks/use-role";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
@@ -86,23 +87,34 @@ export const columns: ColumnDef<Student>[] = [
   },
   {
     header: "Email",
-    cell: ({ row }) =>
-      row.original.emailId ? (
-        <Link
-          href={`/admin/logs?search=${encodeURIComponent(row.original.email ?? "")}`}
-          className={buttonVariants({ size: "sm" })}
-        >
-          View email
-        </Link>
-      ) : (
-        <span className="text-muted-foreground text-sm">N/A</span>
-      ),
+    cell: ({ row }) => <EmailCell student={row.original} />,
   },
   {
     id: "actions",
     cell: ({ row }) => <ActionCell student={row.original} />,
   },
 ];
+
+const EmailCell = ({ student }: { student: Student }) => {
+  const { isAdmin } = useIsAdmin();
+
+  if (!student.emailId) {
+    return <span className="text-muted-foreground text-sm">N/A</span>;
+  }
+
+  if (!isAdmin) {
+    return <span className="text-sm">{student.email}</span>;
+  }
+
+  return (
+    <Link
+      href={`/admin/logs?search=${encodeURIComponent(student.email ?? "")}`}
+      className={buttonVariants({ size: "sm" })}
+    >
+      View email
+    </Link>
+  );
+};
 
 const WorkshopCell = ({ workshopId }: { workshopId: string }) => {
   const trpc = useTRPC();

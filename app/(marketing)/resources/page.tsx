@@ -97,13 +97,23 @@ const ResourceList = ({ resources }: { resources: Resource[] }) => (
             </span>
           </p>
         </Reveal>
-        <div className="space-y-6">
-          {resources.map((resource) => (
-            <Reveal key={resource.id}>
-              <ResourceCard resource={resource} />
-            </Reveal>
-          ))}
-        </div>
+        {resources.length === 0 ? (
+          <Reveal asChild>
+            <div className="border-border/40 rounded-3xl border border-dashed py-20 text-center">
+              <p className="text-muted-foreground text-base">
+                No resources available yet.
+              </p>
+            </div>
+          </Reveal>
+        ) : (
+          <div className="space-y-6">
+            {resources.map((resource) => (
+              <Reveal key={resource.id}>
+                <ResourceCard resource={resource} />
+              </Reveal>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   </section>

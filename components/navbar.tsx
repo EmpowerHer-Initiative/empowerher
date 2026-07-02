@@ -30,14 +30,6 @@ const programs: NavItem[] = [
   },
 ];
 
-const successStories: NavItem[] = [
-  { label: "All Success Stories", href: "/success-stories" },
-  {
-    label: "Sahar Education's Secret Scholars Online Platform (SSO)",
-    href: "/sso",
-  },
-];
-
 const navLinks: NavItem[] = [
   { label: "About", href: "/about-us" },
   { label: "Programs", href: "#", children: programs },

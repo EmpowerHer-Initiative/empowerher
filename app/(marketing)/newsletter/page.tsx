@@ -1,16 +1,54 @@
 "use client";
 
 import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { CheckCircle, Send } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { useTRPC } from "@/services/trpc/client";
 
 import { Reveal } from "@/components/reveal";
+
+const newsletterSchema = z.object({
+  email: z.email("Please enter a valid email address"),
+});
+
+type NewsletterFormData = z.infer<typeof newsletterSchema>;
 
 export default function NewsletterPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitted(true);
+  const form = useForm<NewsletterFormData>({
+    resolver: zodResolver(newsletterSchema),
+    defaultValues: { email: "" },
+  });
+
+  const trpc = useTRPC();
+  const subscribe = useMutation(trpc.newsletter.subscribe.mutationOptions());
+
+  const onSubmit = async (data: NewsletterFormData) => {
+    try {
+      const result = await subscribe.mutateAsync({ email: data.email });
+
+      if (result.alreadySubscribed) {
+        form.setError("email", {
+          message: "You are already subscribed to the newsletter",
+        });
+        return;
+      }
+
+      setIsSubmitted(true);
+      form.reset();
+    } catch (error) {
+      form.setError("email", {
+        message:
+          error instanceof Error
+            ? error.message
+            : "Failed to subscribe to newsletter",
+      });
+    }
   };
 
   return (
@@ -43,7 +81,11 @@ export default function NewsletterPage() {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={onSubmit} className="space-y-4">
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    noValidate
+                    className="space-y-4"
+                  >
                     <div>
                       <label
                         htmlFor="newsletter-email"
@@ -54,17 +96,26 @@ export default function NewsletterPage() {
                       <input
                         id="newsletter-email"
                         type="email"
-                        required
                         placeholder="Enter your email address"
-                        className="border-border bg-muted/30 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/40 mt-2 w-full rounded-xl border px-5 py-3.5 text-sm transition-all duration-300 outline-none"
+                        disabled={form.formState.isSubmitting}
+                        className="border-border bg-muted/30 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/40 mt-2 w-full rounded-xl border px-5 py-3.5 text-sm transition-all duration-300 outline-none disabled:opacity-60"
+                        {...form.register("email")}
                       />
+                      {form.formState.errors.email && (
+                        <p className="text-destructive mt-2 text-xs">
+                          {form.formState.errors.email.message}
+                        </p>
+                      )}
                     </div>
                     <button
                       type="submit"
-                      className="group bg-primary text-primary-foreground hover:bg-primary/90 inline-flex w-full items-center justify-center gap-2.5 rounded-xl py-3.5 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]"
+                      disabled={form.formState.isSubmitting}
+                      className="group bg-primary text-primary-foreground hover:bg-primary/90 inline-flex w-full items-center justify-center gap-2.5 rounded-xl py-3.5 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] disabled:opacity-60"
                     >
                       <Send className="size-4" />
-                      Subscribe
+                      {form.formState.isSubmitting
+                        ? "Subscribing…"
+                        : "Subscribe"}
                     </button>
                   </form>
                 )}

@@ -150,9 +150,11 @@ export default function WinnersPage() {
       {/* ── SECTION 2: Cash Prize Winners ── */}
       <section className="bg-white px-6 py-16 md:py-24">
         <div className="mx-auto max-w-6xl">
-          <h2 className="hv-rise text-center font-[family-name:var(--hv-display)] text-3xl font-bold tracking-tight md:text-4xl">
-            Writings from Cash Prize Winners
-          </h2>
+          <Reveal asChild>
+            <h2 className="text-center font-[family-name:var(--hv-display)] text-3xl font-bold tracking-tight md:text-4xl">
+              Writings from Cash Prize Winners
+            </h2>
+          </Reveal>
 
           {/* Top 3 — larger cards */}
           <Reveal asChild>
@@ -196,9 +198,11 @@ export default function WinnersPage() {
       {/* ── SECTION 3: Honorable Mentions ── */}
       <section className="bg-[var(--hv-paper)] px-6 py-16 md:py-24">
         <div className="mx-auto max-w-5xl">
-          <h2 className="hv-rise text-center font-[family-name:var(--hv-display)] text-3xl font-bold tracking-tight md:text-4xl">
-            Writings from Honorable Mention Winners
-          </h2>
+          <Reveal asChild>
+            <h2 className="text-center font-[family-name:var(--hv-display)] text-3xl font-bold tracking-tight md:text-4xl">
+              Writings from Honorable Mention Winners
+            </h2>
+          </Reveal>
 
           <Reveal asChild>
             <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -237,38 +241,39 @@ export default function WinnersPage() {
       {/* ── SECTION 4: Judge Testimonials ── */}
       <section className="bg-white px-6 py-16 md:py-24">
         <div className="mx-auto max-w-5xl">
-          <h2 className="hv-rise text-center font-[family-name:var(--hv-display)] text-3xl font-bold tracking-tight md:text-4xl">
-            What Our Judges Felt Reading These Stories
-          </h2>
+          <Reveal asChild>
+            <h2 className="text-center font-[family-name:var(--hv-display)] text-3xl font-bold tracking-tight md:text-4xl">
+              What Our Judges Felt Reading These Stories
+            </h2>
+          </Reveal>
 
           <div className="mt-14 space-y-10">
-            {JUDGES.map((judge) => (
-              <div
-                key={judge.name}
-                className="hv-rise flex flex-col gap-8 rounded-2xl border border-[#ECE3D2] bg-[var(--hv-paper)] p-8 md:flex-row md:p-10"
-              >
-                <img
-                  src={judge.image}
-                  alt={judge.name}
-                  className="h-40 w-40 shrink-0 self-center rounded-2xl border-2 border-[var(--hv-gold)]/40 object-cover md:self-start"
-                />
-                <div className="flex-1">
-                  <blockquote className="font-[family-name:var(--hv-serif-i)] text-[17px] leading-relaxed text-[var(--hv-ink2)] italic">
-                    &ldquo;{judge.quote}&rdquo;
-                  </blockquote>
-                  <div className="mt-6">
-                    <div className="h-px w-full bg-[var(--hv-gold)]/30" />
-                    <div className="mt-4">
-                      <p className="font-[family-name:var(--hv-display)] text-sm font-bold text-[var(--hv-ink)]">
-                        {judge.name}
-                      </p>
-                      <p className="mt-0.5 text-xs leading-snug text-[var(--hv-ink3)]">
-                        {judge.title}
-                      </p>
+            {JUDGES.map((judge, i) => (
+              <Reveal asChild key={judge.name} delay={i * 100}>
+                <div className="flex flex-col gap-8 rounded-2xl border border-[#ECE3D2] bg-[var(--hv-paper)] p-8 md:flex-row md:p-10">
+                  <img
+                    src={judge.image}
+                    alt={judge.name}
+                    className="h-40 w-40 shrink-0 self-center rounded-2xl border-2 border-[var(--hv-gold)]/40 object-cover md:self-start"
+                  />
+                  <div className="flex-1">
+                    <blockquote className="font-[family-name:var(--hv-serif-i)] text-[17px] leading-relaxed text-[var(--hv-ink2)] italic">
+                      &ldquo;{judge.quote}&rdquo;
+                    </blockquote>
+                    <div className="mt-6">
+                      <div className="h-px w-full bg-[var(--hv-gold)]/30" />
+                      <div className="mt-4">
+                        <p className="font-[family-name:var(--hv-display)] text-sm font-bold text-[var(--hv-ink)]">
+                          {judge.name}
+                        </p>
+                        <p className="mt-0.5 text-xs leading-snug text-[var(--hv-ink3)]">
+                          {judge.title}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>

@@ -50,6 +50,7 @@ export const CommentCard = ({ comment }: { comment: Comment }) => {
         queryClient.invalidateQueries({
           queryKey: trpc.admin.comments.list.pathKey(),
         });
+        toast.success("Status updated");
       },
       onError: (error) => {
         toast.error(error.message || "Failed to update status");
@@ -118,7 +119,7 @@ export const CommentCard = ({ comment }: { comment: Comment }) => {
 
       <CardFooter className="mt-2 flex items-center justify-between gap-2 border-t px-4 py-3">
         <Link
-          href={comment.blogName}
+          href={`/hervoice/${comment.blogName}`}
           target="_blank"
           className="text-muted-foreground hover:text-foreground flex min-w-0 items-center gap-1 text-xs transition-colors"
         >

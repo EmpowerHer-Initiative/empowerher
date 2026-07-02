@@ -10,7 +10,7 @@ import { useUpload } from "@/hooks/use-upload";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Field,
   FieldContent,
@@ -91,6 +91,7 @@ export const PersonalInformation = () => {
           form.reset({
             name: values.name,
           });
+          toast.success("Name updated");
         },
       }
     );
@@ -167,6 +168,15 @@ export const PersonalInformation = () => {
             </Field>
           )}
         />
+        <div className="flex justify-end">
+          <Button
+            type="submit"
+            size="sm"
+            disabled={updateUser.isPending || !form.formState.isDirty}
+          >
+            Save
+          </Button>
+        </div>
         <Field>
           <FieldLabel>Role</FieldLabel>
           <FieldContent>

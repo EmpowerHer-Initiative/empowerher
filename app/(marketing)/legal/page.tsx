@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 
 import { siteConfig } from "@/lib/site";
 
+import { Reveal } from "@/components/reveal";
+
 export const metadata: Metadata = {
   title: `Terms & Privacy — ${siteConfig.name}`,
   description:
@@ -44,41 +46,47 @@ export default function LegalPage() {
       {/* Hero */}
       <section className="py-28 md:py-40">
         <div className="container">
-          <div className="max-w-4xl">
-            <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
-              Legal
-            </p>
-            <h1 className="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl">
-              Terms <span className="text-primary italic">&amp;</span> Privacy
-            </h1>
-            <p className="text-muted-foreground mt-6 max-w-xl text-lg leading-relaxed">
-              How we operate, what we expect, and how we protect the information
-              you share with the EmpowerHer Initiative.
-            </p>
-          </div>
+          <Reveal asChild>
+            <div className="max-w-4xl">
+              <p className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+                Legal
+              </p>
+              <h1 className="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl">
+                Terms <span className="text-primary italic">&amp;</span> Privacy
+              </h1>
+              <p className="text-muted-foreground mt-6 max-w-xl text-lg leading-relaxed">
+                How we operate, what we expect, and how we protect the
+                information you share with the EmpowerHer Initiative.
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* Body */}
       <div className="container pb-32">
         <div className="mx-auto max-w-5xl">
-          <Article id="terms" eyebrow="Part One" title="Terms of Use">
-            <p>
-              {/* TODO: Replace with the drafted Terms of Use copy. */}
-              Terms of Use content coming soon. This section will outline the
-              rules and conditions for using the EmpowerHer website, programs,
-              and services.
-            </p>
-          </Article>
+          <Reveal>
+            <Article id="terms" eyebrow="Part One" title="Terms of Use">
+              <p>
+                {/* TODO: Replace with the drafted Terms of Use copy. */}
+                Terms of Use content coming soon. This section will outline the
+                rules and conditions for using the EmpowerHer website, programs,
+                and services.
+              </p>
+            </Article>
+          </Reveal>
 
-          <Article id="privacy" eyebrow="Part Two" title="Privacy Policy">
-            <p>
-              {/* TODO: Replace with the drafted Privacy Policy copy. */}
-              Privacy Policy content coming soon. This section will describe
-              what information we collect, how we use it, and the choices you
-              have over your data.
-            </p>
-          </Article>
+          <Reveal>
+            <Article id="privacy" eyebrow="Part Two" title="Privacy Policy">
+              <p>
+                {/* TODO: Replace with the drafted Privacy Policy copy. */}
+                Privacy Policy content coming soon. This section will describe
+                what information we collect, how we use it, and the choices you
+                have over your data.
+              </p>
+            </Article>
+          </Reveal>
 
           <div className="border-border/30 text-muted-foreground border-t pt-10 text-xs">
             Last updated: {new Date().getFullYear()}. Questions? Email{" "}

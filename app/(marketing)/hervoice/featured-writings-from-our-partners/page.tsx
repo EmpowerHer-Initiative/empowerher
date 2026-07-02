@@ -198,21 +198,29 @@ export default async function FeaturedWritingsPage({
       <section className="py-28 md:py-40">
         <div className="container">
           <div className="mx-auto max-w-4xl space-y-24">
-            {groups.map(({ id, platform, items, currentPage, totalPages }) => (
-              <PlatformSection
-                key={id}
-                id={id}
-                platform={platform}
-                writingsList={items}
-                currentPage={currentPage}
-                totalPages={totalPages}
-                query={Object.fromEntries(
-                  groups
-                    .filter((other) => other.id !== id)
-                    .map((other) => [other.id, params[other.id]])
-                )}
-              />
-            ))}
+            {groups.length === 0 ? (
+              <Reveal asChild>
+                <p className="text-muted-foreground py-16 text-center text-base">
+                  No featured writings yet.
+                </p>
+              </Reveal>
+            ) : (
+              groups.map(({ id, platform, items, currentPage, totalPages }) => (
+                <PlatformSection
+                  key={id}
+                  id={id}
+                  platform={platform}
+                  writingsList={items}
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  query={Object.fromEntries(
+                    groups
+                      .filter((other) => other.id !== id)
+                      .map((other) => [other.id, params[other.id]])
+                  )}
+                />
+              ))
+            )}
           </div>
         </div>
       </section>

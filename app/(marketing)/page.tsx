@@ -613,33 +613,8 @@ const ContestSeal = () => (
 );
 
 const HerVoiceContest = () => {
-  const ref = useRef<HTMLElement>(null);
-  const [vis, setVis] = useState(false);
-
-  useEffect(() => {
-    const ob = new IntersectionObserver(
-      ([e]) => e.isIntersecting && setVis(true),
-      { threshold: 0.15 }
-    );
-    if (ref.current) ob.observe(ref.current);
-    return () => ob.disconnect();
-  }, []);
-
-  const rise = (i: number, hover = false) => ({
-    opacity: vis ? 1 : 0,
-    transform: vis ? "translateY(0)" : "translateY(1.5rem)",
-    transition:
-      `opacity 0.8s cubic-bezier(0.2,0.7,0.2,1) ${i * 90}ms, transform 0.8s cubic-bezier(0.2,0.7,0.2,1) ${i * 90}ms` +
-      (hover
-        ? ", translate 0.45s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.45s cubic-bezier(0.2,0.7,0.2,1)"
-        : ""),
-  });
-
   return (
-    <section
-      ref={ref}
-      className="relative isolate overflow-hidden bg-[radial-gradient(120%_130%_at_12%_0%,#FFFFFF_0%,#FAF6EE_46%,#F2EADC_100%)] py-28 text-[#1A2230] md:py-40"
-    >
+    <section className="relative isolate overflow-hidden bg-[radial-gradient(120%_130%_at_12%_0%,#FFFFFF_0%,#FAF6EE_46%,#F2EADC_100%)] py-28 text-[#1A2230] md:py-40">
       {/* ambient color blobs */}
       <div className="pointer-events-none absolute -top-40 -right-40 size-[520px] rounded-full bg-[radial-gradient(circle_at_38%_36%,rgba(46,155,230,.16),transparent_62%)]" />
       <div className="pointer-events-none absolute -bottom-44 -left-32 size-[460px] rounded-full bg-[radial-gradient(circle_at_60%_40%,rgba(224,174,60,.18),transparent_62%)]" />
@@ -648,96 +623,101 @@ const HerVoiceContest = () => {
         <div className="grid gap-14 lg:grid-cols-[1fr_1.12fr] lg:items-center lg:gap-10">
           {/* Left — headline, seal, stats, CTA */}
           <div>
-            <p
-              className="text-secondary text-xs font-semibold tracking-[0.3em] uppercase"
-              style={rise(0)}
-            >
-              EmpowerHer Presents
-            </p>
-            <h2
-              className="mt-5 font-serif text-4xl leading-[1.02] md:text-6xl"
-              style={rise(1)}
-            >
-              HerVoice <span className="text-primary">2026</span>
-              <br />
-              Writing Contest
-            </h2>
-            <p
-              className="mt-6 max-w-md text-base leading-relaxed text-[#3C4654] md:text-lg"
-              style={rise(2)}
-            >
-              Courage, identity, and storytelling — by Afghan girls and women,
-              written from within Afghanistan.
-            </p>
+            <Reveal asChild>
+              <p className="text-secondary text-xs font-semibold tracking-[0.3em] uppercase">
+                EmpowerHer Presents
+              </p>
+            </Reveal>
+            <Reveal asChild delay={90}>
+              <h2 className="mt-5 font-serif text-4xl leading-[1.02] md:text-6xl">
+                HerVoice <span className="text-primary">2026</span>
+                <br />
+                Writing Contest
+              </h2>
+            </Reveal>
+            <Reveal asChild delay={180}>
+              <p className="mt-6 max-w-md text-base leading-relaxed text-[#3C4654] md:text-lg">
+                Courage, identity, and storytelling — by Afghan girls and women,
+                written from within Afghanistan.
+              </p>
+            </Reveal>
 
-            <div className="mt-8" style={rise(3)}>
-              <ContestSeal />
-            </div>
+            <Reveal asChild delay={270}>
+              <div className="mt-8">
+                <ContestSeal />
+              </div>
+            </Reveal>
 
-            <div className="mt-8 flex gap-8 md:gap-10" style={rise(4)}>
-              {[
-                { n: "300+", label: "Submissions", cls: "text-primary" },
-                { n: "3", label: "Honorees", cls: "text-secondary" },
-                { n: "5", label: "Cash Winners", cls: "text-primary" },
-              ].map((s) => (
-                <div key={s.label}>
-                  <p className={`font-serif text-4xl md:text-5xl ${s.cls}`}>
-                    {s.n}
-                  </p>
-                  <p className="mt-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase">
-                    {s.label}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <Reveal asChild delay={360}>
+              <div className="mt-8 flex gap-8 md:gap-10">
+                {[
+                  { n: "300+", label: "Submissions", cls: "text-primary" },
+                  { n: "3", label: "Honorees", cls: "text-secondary" },
+                  { n: "5", label: "Cash Winners", cls: "text-primary" },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <p className={`font-serif text-4xl md:text-5xl ${s.cls}`}>
+                      {s.n}
+                    </p>
+                    <p className="mt-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase">
+                      {s.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
 
-            <div className="mt-10" style={rise(5)}>
-              <Link
-                href="/hervoice/winners"
-                className="group bg-primary text-primary-foreground inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.98]"
-              >
-                Explore Winning Stories
-                <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
-              </Link>
-            </div>
+            <Reveal asChild delay={450}>
+              <div className="mt-10">
+                <Link
+                  href="/hervoice/winners"
+                  className="group bg-primary text-primary-foreground inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.98]"
+                >
+                  Explore Winning Stories
+                  <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+                </Link>
+              </div>
+            </Reveal>
           </div>
 
           {/* Right — staggered winner cards */}
           <div className="flex flex-col gap-4">
             {CONTEST_WINNERS.map((w, i) => (
-              <Link
-                key={w.slug}
-                href={`/hervoice/${w.slug}`}
-                style={rise(3 + i, true)}
-                className={`group bg-background text-foreground grid grid-cols-[104px_1fr] items-center gap-5 rounded-2xl p-[18px] shadow-[0_18px_44px_-30px_rgba(0,0,0,.5)] hover:-translate-x-1.5 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-32px_rgba(0,0,0,.6)] ${w.offset}`}
-              >
-                <StoryCover title={w.title} author={w.name} cover={w.cover} />
-                <div className="min-w-0">
-                  <div className="flex items-baseline justify-between gap-2.5">
-                    <span className="truncate text-lg font-bold">{w.name}</span>
-                    <span className="flex items-center gap-2">
-                      <span
-                        className={`inline-block rounded-md px-2.5 py-1 text-[11px] font-bold tracking-[0.1em] text-white uppercase ${w.ribbon}`}
-                      >
-                        {w.rank}
+              <Reveal asChild key={w.slug} delay={270 + i * 90}>
+                <Link
+                  href={`/hervoice/${w.slug}`}
+                  className={`group bg-background text-foreground grid grid-cols-[104px_1fr] items-center gap-5 rounded-2xl p-[18px] shadow-[0_18px_44px_-30px_rgba(0,0,0,.5)] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-x-1.5 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-32px_rgba(0,0,0,.6)] ${w.offset}`}
+                >
+                  <StoryCover title={w.title} author={w.name} cover={w.cover} />
+                  <div className="min-w-0">
+                    <div className="flex items-baseline justify-between gap-2.5">
+                      <span className="truncate text-lg font-bold">
+                        {w.name}
                       </span>
-                      <span className="font-serif text-lg font-bold text-[#C8902A]">
-                        {w.prize}
+                      <span className="flex items-center gap-2">
+                        <span
+                          className={`inline-block rounded-md px-2.5 py-1 text-[11px] font-bold tracking-[0.1em] text-white uppercase ${w.ribbon}`}
+                        >
+                          {w.rank}
+                        </span>
+                        <span className="font-serif text-lg font-bold text-[#C8902A]">
+                          {w.prize}
+                        </span>
                       </span>
+                    </div>
+                    <p className="text-primary mt-0.5 truncate font-serif text-base italic">
+                      {w.title}
+                    </p>
+                    <p className="text-muted-foreground mt-2 line-clamp-3 text-[13px] leading-snug">
+                      &ldquo;{w.quote}&rdquo;
+                    </p>
+                    <span className="mt-2.5 inline-flex items-center gap-1.5 text-[13px] font-bold whitespace-nowrap text-[#C8902A] transition-all duration-500 group-hover:gap-2.5">
+                      Read Preview
+                      <ArrowRight className="size-3.5" />
                     </span>
                   </div>
-                  <p className="text-primary mt-0.5 truncate font-serif text-base italic">
-                    {w.title}
-                  </p>
-                  <p className="text-muted-foreground mt-2 line-clamp-3 text-[13px] leading-snug">
-                    &ldquo;{w.quote}&rdquo;
-                  </p>
-                  <span className="mt-2.5 inline-flex items-center gap-1.5 text-[13px] font-bold whitespace-nowrap text-[#C8902A] transition-all duration-500 group-hover:gap-2.5">
-                    Read Preview
-                    <ArrowRight className="size-3.5" />
-                  </span>
-                </div>
-              </Link>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </div>
