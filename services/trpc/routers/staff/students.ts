@@ -3,6 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { and, asc, eq } from "drizzle-orm";
 import { z } from "zod";
 
+import { siteConfig } from "@/lib/site";
 import { db } from "@/services/db/index";
 import {
   rejectedStudentsTable,
@@ -141,6 +142,7 @@ export const staffStudentsRouter = createTRPCRouter({
       }
 
       const result = await email.send({
+        from: siteConfig.applyEmail,
         to: student.email,
         subject: `Congratulations! You've been accepted into EmpowerHer's ${student.workshopName}`,
         react: createElement(ApproveStudentEmail, {

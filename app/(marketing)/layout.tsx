@@ -1,4 +1,4 @@
-import { AdminToolbar } from "@/components/admin/admin-toolbar";
+// import { AdminToolbar } from "@/components/admin/admin-toolbar";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { NewsletterDialog } from "@/components/newsletter-dialog";
@@ -14,7 +14,7 @@ export default function MarketingLayout({
       {children}
       <Footer />
       <NewsletterDialog />
-      <AdminToolbar />
+      {/* <AdminToolbar /> */}
     </>
   );
 }

@@ -172,7 +172,12 @@ const Content = ({
                     className="w-full"
                     aria-invalid={fieldState.invalid}
                   >
-                    <SelectValue placeholder="Select a workshop" />
+                    <SelectValue placeholder="Select a workshop">
+                      {(value) =>
+                        workshops?.find((workshop) => workshop.id === value)
+                          ?.name
+                      }
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {workshops?.map((workshop) => (

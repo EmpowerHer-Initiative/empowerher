@@ -170,7 +170,7 @@ export default async function HerVoicePostPage({ params }: Props) {
             <div className="prose-theme prose text-base leading-[1.9]">
               <MDXContent code={post.mdx} components={mdxComponents} />
             </div>
-            <CommentsSection slug={post._meta.path} />
+            <CommentsSection slug={`/hervoice/${post._meta.path}`} />
           </div>
         </div>
       </section>

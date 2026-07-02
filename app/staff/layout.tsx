@@ -6,6 +6,7 @@ import { auth } from "@/services/auth/auth";
 
 import { NavbarStaff } from "@/components/staff/navbar-staff";
 import { PeriodProvider } from "@/components/staff/period-context";
+import { PeriodSwitcher } from "@/components/staff/period-switcher";
 
 export default async function StaffLayout({
   children,
@@ -37,6 +38,7 @@ export default async function StaffLayout({
       <PeriodProvider>
         <NavbarStaff />
         {children}
+        <PeriodSwitcher />
       </PeriodProvider>
     </div>
   );

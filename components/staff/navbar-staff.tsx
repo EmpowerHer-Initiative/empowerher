@@ -6,24 +6,14 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useIsAdmin } from "@/services/auth/hooks/use-role";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { PERIODS, usePeriod } from "@/components/staff/period-context";
-
 const links: { label: string; href: string; adminOnly?: boolean }[] = [
   { label: "Accepted Students", href: "/staff/students" },
   { label: "Rejected Students", href: "/staff/rejected-students" },
-  { label: "Staffs", href: "/staff/staffs", adminOnly: true },
+  // Staffs page hidden from nav (route + code kept): /staff/staffs
 ];
 
 export const NavbarStaff = () => {
   const pathname = usePathname();
-  const { period, setPeriod } = usePeriod();
   const { isAdmin } = useIsAdmin();
 
   return (
@@ -53,21 +43,6 @@ export const NavbarStaff = () => {
           </Link>
         )}
       </div>
-      <Select
-        value={String(period)}
-        onValueChange={(value) => setPeriod(Number(value))}
-      >
-        <SelectTrigger size="sm" className="ml-auto w-32">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {PERIODS.map((item) => (
-            <SelectItem key={item} value={String(item)}>
-              Period {item}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
     </div>
   );
 };

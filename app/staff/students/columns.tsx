@@ -5,9 +5,14 @@ import Link from "next/link";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { Pencil, Star, Trash } from "lucide-react";
+import { CalendarIcon, Pencil, Star, Trash } from "lucide-react";
 import { toast } from "sonner";
 
+import {
+  getStoredDueDate,
+  setStoredDueDate,
+  startOfToday,
+} from "@/lib/approval-due-date";
 import { cn } from "@/lib/utils";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
@@ -25,6 +30,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Dialog,
   DialogContent,
@@ -33,7 +39,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -179,7 +189,7 @@ const ApproveContent = ({
   onClose: () => void;
 }) => {
   const trpc = useTRPC();
-  const [dueDate, setDueDate] = useState("");
+  const [date, setDate] = useState<Date | undefined>(getStoredDueDate);
 
   const sendApprovalEmail = useMutation(
     trpc.staff.students.sendApprovalEmail.mutationOptions({
@@ -205,23 +215,46 @@ const ApproveContent = ({
           will be sent to {student.email}.
         </DialogDescription>
       </DialogHeader>
-      <Input
-        placeholder="Invitation due date (e.g. May 10, 2026)"
-        value={dueDate}
-        onChange={(e) => setDueDate(e.target.value)}
-      />
+      <Popover>
+        <PopoverTrigger
+          render={
+            <Button
+              variant="outline"
+              className="w-full justify-start font-normal"
+            />
+          }
+        >
+          <CalendarIcon />
+          {date ? (
+            format(date, "MMMM d, yyyy")
+          ) : (
+            <span className="text-muted-foreground">Pick a due date</span>
+          )}
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            disabled={{ before: startOfToday() }}
+            autoFocus
+          />
+        </PopoverContent>
+      </Popover>
       <DialogFooter>
         <Button variant="outline" onClick={onClose}>
           Cancel
         </Button>
         <Button
-          disabled={!dueDate.trim() || sendApprovalEmail.isPending}
-          onClick={() =>
+          disabled={!date || sendApprovalEmail.isPending}
+          onClick={() => {
+            if (!date) return;
+            setStoredDueDate(date);
             sendApprovalEmail.mutate({
               id: student.id,
-              dueDate: dueDate.trim(),
-            })
-          }
+              dueDate: format(date, "MMMM d, yyyy"),
+            });
+          }}
         >
           {sendApprovalEmail.isPending && <Spinner />}
           Approve & send email

@@ -26,6 +26,8 @@ export const siteConfig = {
   // Email sending
   noreplyEmail: "noreply@empowerher-initiative.org",
   supportEmail: "info@empowerher-initiative.org",
+  // Sender for student application emails (accept/reject)
+  applyEmail: "EmpowerHer Mentorship Program <apply@empowerher-initiative.org>",
 
   // Email template branding
   emailLogoUrl: "https://cdn.alisamadii.com/company/business-logo-black.png",

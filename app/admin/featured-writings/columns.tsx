@@ -29,8 +29,22 @@ type FeaturedWriting =
 
 export const columns: ColumnDef<FeaturedWriting>[] = [
   {
+    header: "Cover",
+    cell: ({ row }) => (
+      <img
+        src={row.original.image}
+        alt={row.original.title}
+        className="bg-muted h-12 w-20 shrink-0 rounded-md border object-cover"
+      />
+    ),
+  },
+  {
     header: "Title",
-    cell: ({ row }) => <div className="font-medium">{row.original.title}</div>,
+    cell: ({ row }) => (
+      <div className="max-w-[16rem] truncate font-medium">
+        {row.original.title}
+      </div>
+    ),
   },
   {
     header: "Author",
@@ -41,7 +55,7 @@ export const columns: ColumnDef<FeaturedWriting>[] = [
   {
     header: "Description",
     cell: ({ row }) => (
-      <div className="line-clamp-1 max-w-sm text-sm">
+      <div className="text-muted-foreground line-clamp-2 max-w-sm text-sm whitespace-normal">
         {row.original.description}
       </div>
     ),

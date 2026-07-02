@@ -29,8 +29,22 @@ type Resource = RouterOutputs["admin"]["resources"]["list"][number];
 
 export const columns: ColumnDef<Resource>[] = [
   {
+    header: "Logo",
+    cell: ({ row }) => (
+      <img
+        src={row.original.image}
+        alt={row.original.name}
+        className="h-12 w-20 shrink-0 rounded-md border bg-white object-contain p-1"
+      />
+    ),
+  },
+  {
     header: "Name",
-    cell: ({ row }) => <div className="font-medium">{row.original.name}</div>,
+    cell: ({ row }) => (
+      <div className="max-w-[16rem] truncate font-medium">
+        {row.original.name}
+      </div>
+    ),
   },
   {
     header: "Location",
