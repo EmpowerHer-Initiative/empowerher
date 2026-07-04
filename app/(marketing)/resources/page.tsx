@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ArrowUpRight, ExternalLink, MapPin } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
+import { cn } from "@/lib/utils";
 import type { Resource } from "@/services/db/schema";
 import { caller } from "@/services/trpc/server";
 
@@ -11,6 +13,8 @@ export const metadata: Metadata = {
   title: `${siteConfig.pages.resources.title} — ${siteConfig.name}`,
   description: siteConfig.pages.resources.description,
 };
+
+const PAGE_SIZE = 10;
 
 /* ─── Resource Card ──────────────────────────────────────────────────────────── */
 
@@ -85,19 +89,108 @@ const Header = () => (
 
 /* ─── Resource List ──────────────────────────────────────────────────────────── */
 
-const ResourceList = ({ resources }: { resources: Resource[] }) => (
+/* ─── Pagination ─────────────────────────────────────────────────────────────── */
+
+// Builds a compact page list with ellipsis: 1 … 4 5 [6] 7 8 … 20
+const buildPages = (current: number, total: number): (number | "…")[] => {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+
+  const pages = new Set<number>([1, total, current]);
+  for (let i = 1; i <= 1; i++) {
+    if (current - i > 1) pages.add(current - i);
+    if (current + i < total) pages.add(current + i);
+  }
+
+  const sorted = [...pages].sort((a, b) => a - b);
+  const result: (number | "…")[] = [];
+  let prev = 0;
+  for (const p of sorted) {
+    if (p - prev > 1) result.push("…");
+    result.push(p);
+    prev = p;
+  }
+  return result;
+};
+
+const Pagination = ({ current, total }: { current: number; total: number }) => {
+  if (total <= 1) return null;
+
+  const href = (page: number) => (page === 1 ? "?" : `?page=${page}`);
+  const pages = buildPages(current, total);
+
+  const arrow =
+    "inline-flex size-11 items-center justify-center rounded-full border border-border/40 text-sm transition-colors hover:border-primary/30 aria-disabled:pointer-events-none aria-disabled:opacity-40";
+
+  return (
+    <nav
+      aria-label="Pagination"
+      className="mt-16 flex items-center justify-center gap-2"
+    >
+      <Link
+        href={href(current - 1)}
+        aria-disabled={current === 1}
+        className={arrow}
+      >
+        <ArrowUpRight className="size-4 -rotate-[135deg]" />
+      </Link>
+
+      {pages.map((page, i) =>
+        page === "…" ? (
+          <span
+            key={`gap-${i}`}
+            className="text-muted-foreground inline-flex size-11 items-center justify-center text-sm"
+          >
+            …
+          </span>
+        ) : (
+          <Link
+            key={page}
+            href={href(page)}
+            aria-current={page === current ? "page" : undefined}
+            className={cn(
+              "inline-flex size-11 items-center justify-center rounded-full border text-sm font-medium transition-colors",
+              page === current
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border/40 hover:border-primary/30"
+            )}
+          >
+            {page}
+          </Link>
+        )
+      )}
+
+      <Link
+        href={href(current + 1)}
+        aria-disabled={current === total}
+        className={arrow}
+      >
+        <ArrowUpRight className="size-4 rotate-45" />
+      </Link>
+    </nav>
+  );
+};
+
+const ResourceList = ({
+  resources,
+  total,
+  page,
+  totalPages,
+}: {
+  resources: Resource[];
+  total: number;
+  page: number;
+  totalPages: number;
+}) => (
   <section className="pb-28 md:pb-40">
     <div className="container">
       <div className="mx-auto max-w-5xl">
         <Reveal asChild>
           <p className="text-muted-foreground mb-8 text-sm">
             Number of Resources found:{" "}
-            <span className="text-foreground font-semibold">
-              {resources.length}
-            </span>
+            <span className="text-foreground font-semibold">{total}</span>
           </p>
         </Reveal>
-        {resources.length === 0 ? (
+        {total === 0 ? (
           <Reveal asChild>
             <div className="border-border/40 rounded-3xl border border-dashed py-20 text-center">
               <p className="text-muted-foreground text-base">
@@ -106,13 +199,16 @@ const ResourceList = ({ resources }: { resources: Resource[] }) => (
             </div>
           </Reveal>
         ) : (
-          <div className="space-y-6">
-            {resources.map((resource) => (
-              <Reveal key={resource.id}>
-                <ResourceCard resource={resource} />
-              </Reveal>
-            ))}
-          </div>
+          <>
+            <div className="space-y-6">
+              {resources.map((resource) => (
+                <Reveal key={resource.id}>
+                  <ResourceCard resource={resource} />
+                </Reveal>
+              ))}
+            </div>
+            <Pagination current={page} total={totalPages} />
+          </>
         )}
       </div>
     </div>
@@ -159,13 +255,29 @@ const FooterNote = () => (
 
 /* ─── Page ─────────────────────────────────────────────────────────────────── */
 
-export default async function ResourcesPage() {
+export default async function ResourcesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   const resources = await caller.resources.list();
+  const { page: pageParam } = await searchParams;
+
+  const total = resources.length;
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const page = Math.min(Math.max(1, Number(pageParam) || 1), totalPages);
+
+  const paginated = resources.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <>
       <Header />
-      <ResourceList resources={resources} />
+      <ResourceList
+        resources={paginated}
+        total={total}
+        page={page}
+        totalPages={totalPages}
+      />
       <FooterNote />
     </>
   );

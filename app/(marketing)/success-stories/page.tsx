@@ -126,9 +126,18 @@ const StoryCard = ({
   </div>
 );
 
-const QuoteBox = ({ children }: { children: React.ReactNode }) => (
+const QuoteBox = ({
+  children,
+  author,
+}: {
+  children: React.ReactNode;
+  author?: string;
+}) => (
   <div className="bg-muted/50 border-l-primary rounded-2xl border-l-4 p-6 md:p-8">
     <p className="text-foreground/80 text-base leading-relaxed">{children}</p>
+    {author && (
+      <p className="text-foreground mt-4 text-sm font-semibold">— {author}</p>
+    )}
   </div>
 );
 
@@ -302,7 +311,7 @@ const Stories = () => (
               <ExternalLink className="size-4" />
             </a>
           </div>
-          <QuoteBox>
+          <QuoteBox author="Z.M.">
             &ldquo;I applied to the SSO platform to improve my skills and
             knowledge. English helped me strengthen my language skills through
             new practical exercises. The platform was easy to use. It was

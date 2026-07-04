@@ -22,6 +22,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -42,6 +43,7 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Spinner } from "@/components/ui/spinner";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DataTable } from "@/components/data-table";
 import { usePeriod } from "@/components/staff/period-context";
 
@@ -52,8 +54,11 @@ type RejectedStudent =
 
 const SEND_LIMIT = 20;
 
+type Tab = "new" | "sent";
+
 export default function RejectedStudentsPage() {
   const [search, setSearch] = useState("");
+  const [tab, setTab] = useState<Tab>("new");
   const [addOpen, setAddOpen] = useState(false);
   const [sendOpen, setSendOpen] = useState(false);
 
@@ -65,23 +70,49 @@ export default function RejectedStudentsPage() {
     error,
   } = useQuery(trpc.staff.rejectedStudents.list.queryOptions({ period }));
 
-  const filtered = useMemo(() => {
-    if (!rejectedStudents) return [];
-    if (!search) return rejectedStudents;
-    const query = search.toLowerCase();
-    return rejectedStudents.filter((student) =>
-      student.email.toLowerCase().includes(query)
-    );
-  }, [rejectedStudents, search]);
-
   const unsent = useMemo(
     () => rejectedStudents?.filter((student) => !student.emailSent) ?? [],
     [rejectedStudents]
   );
 
+  const stats = useMemo(() => {
+    const total = rejectedStudents?.length ?? 0;
+    const sent = total - unsent.length;
+    return { total, sent, notSent: unsent.length };
+  }, [rejectedStudents, unsent]);
+
+  const filtered = useMemo(() => {
+    if (!rejectedStudents) return [];
+    const query = search.toLowerCase();
+    return rejectedStudents.filter(
+      (student) =>
+        (tab === "sent" ? student.emailSent : !student.emailSent) &&
+        (!query || student.email.toLowerCase().includes(query))
+    );
+  }, [rejectedStudents, search, tab]);
+
   return (
     <div className="container">
       <h1>Rejected Students — Period {period}</h1>
+
+      <div className="mb-6 grid gap-4 sm:grid-cols-3">
+        <StatCard
+          label="Total Students"
+          value={stats.total}
+          accent="border-l-blue-500"
+        />
+        <StatCard
+          label="Email Sent"
+          value={stats.sent}
+          accent="border-l-green-500"
+        />
+        <StatCard
+          label="Email Not Sent"
+          value={stats.notSent}
+          accent="border-l-orange-500"
+        />
+      </div>
+
       <div className="mb-4 flex items-center gap-2">
         <InputGroup className="w-full max-w-48">
           <InputGroupAddon>
@@ -105,6 +136,18 @@ export default function RejectedStudentsPage() {
           <Plus /> Add
         </Button>
       </div>
+
+      <Tabs
+        value={tab}
+        onValueChange={(value) => setTab(value as Tab)}
+        className="mb-4"
+      >
+        <TabsList>
+          <TabsTrigger value="new">New ({stats.notSent})</TabsTrigger>
+          <TabsTrigger value="sent">Email Sent ({stats.sent})</TabsTrigger>
+        </TabsList>
+      </Tabs>
+
       <DataTable
         isLoading={isPending}
         columns={columns}
@@ -128,6 +171,23 @@ export default function RejectedStudentsPage() {
     </div>
   );
 }
+
+const StatCard = ({
+  label,
+  value,
+  accent,
+}: {
+  label: string;
+  value: number;
+  accent: string;
+}) => (
+  <Card className={`border-l-4 ${accent}`}>
+    <CardContent>
+      <p className="text-muted-foreground text-sm">{label}</p>
+      <p className="mt-1 text-2xl font-semibold">{value}</p>
+    </CardContent>
+  </Card>
+);
 
 const addFormSchema = z.object({
   email: z.email({ message: "A valid email is required" }),
