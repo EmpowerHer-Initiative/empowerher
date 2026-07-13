@@ -1,5 +1,5 @@
 import { cacheLife } from "next/cache";
-import { asc } from "drizzle-orm";
+import { desc } from "drizzle-orm";
 
 import { db } from "@/services/db/index";
 import { resourcesTable } from "@/services/db/schema";
@@ -10,6 +10,9 @@ export const resourcesRouter = createTRPCRouter({
     "use cache";
     cacheLife("hours");
 
-    return db.select().from(resourcesTable).orderBy(asc(resourcesTable.id));
+    return db
+      .select()
+      .from(resourcesTable)
+      .orderBy(desc(resourcesTable.createdAt));
   }),
 });

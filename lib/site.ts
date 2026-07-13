@@ -18,7 +18,7 @@ export const siteConfig = {
   // Site identity
   name: "EmpowerHer",
   description:
-    "Empowering Afghan girls through storytelling, learning, and action.",
+    "A nonprofit organization empowering Afghan women and girls across the Middle East and Central Asia through mentorship, leadership development, educational support, storytelling, publication, and community engagement.",
 
   // Contact email (shown on site — navbar, footer, 404)
   email: "info@empowerher-initiative.org",

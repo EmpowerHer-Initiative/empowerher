@@ -273,6 +273,9 @@ const executiveTeam = [
   },
 ];
 
+const LOGO_PLACEHOLDER =
+  "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT8waekQlgkEDp7B3XRvCJzMmyWOSiao4I6cq9";
+
 const directors = [
   {
     name: "Sara F",
@@ -293,10 +296,16 @@ const directors = [
       "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTaIvbdmAtfy8gUMVlFj5QpoO3BkxsndH9Dm2E",
   },
   {
-    name: "Edna Gebremedhin",
-    role: "Social Media & Outreach Coordinator | Mentor",
+    name: "Sarah Ghaznawi",
+    role: "Mentorship Program Assistant | Mentor",
     image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTatnMPKAtfy8gUMVlFj5QpoO3BkxsndH9Dm2E",
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTKWc50tCVy1oGkRMuS0Lravl9JbQIxWFcNhtq",
+  },
+  {
+    name: "Humaira Joya",
+    role: "Social Media & Outreach Coordinator",
+    image:
+      "https://cdn.empowerher-initiative.org/1783563233797-humaira-joya.jpeg",
   },
 ];
 
@@ -308,28 +317,10 @@ const mentorsTeam = [
       "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTUhliWsMuHB63DFcWbZp7rAk9VUJPgitsO2Ca",
   },
   {
-    name: "Sarah Ghaznawi",
-    role: "Resume Building Workshop Mentor",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTKWc50tCVy1oGkRMuS0Lravl9JbQIxWFcNhtq",
-  },
-  {
-    name: "Atifa Annabi",
-    role: "Communication & Public Speaking Workshop Mentor",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTLYYVyf6noMe1jZlBSmFX7gAOT28J3hWKaNI0",
-  },
-  {
     name: "Orly Bloom",
     role: "Lecturer",
     image:
       "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTWSJkk9XFwogO1GlqLJaX2yrjpNUsTDBdMI0C",
-  },
-  {
-    name: "Leo Martinez",
-    role: "Lecturer",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTbc5Ufv9xopPYBqCUaZOIeEGDyJzvSfLh2M0n",
   },
   {
     name: "Lily Jean Loveland",
@@ -337,61 +328,94 @@ const mentorsTeam = [
     image:
       "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTS7YSk2xH1XUo4r0Hn2pxVOeJj6STiyCaKZ7v",
   },
+  {
+    name: "Erin Borthwick",
+    role: "Lecturer",
+    image: LOGO_PLACEHOLDER,
+  },
+  {
+    name: "Asma Hassaney",
+    role: "Communication & Public Speaking (CPS) Workshop Mentor",
+    image: LOGO_PLACEHOLDER,
+  },
+  {
+    name: "Basira Joya",
+    role: "Resume Building and Personal Statement (RBPS) Workshop Mentor",
+    image: LOGO_PLACEHOLDER,
+  },
+  {
+    name: "Qudsia Mobariz",
+    role: "Creative Arts Workshop Mentor",
+    image: LOGO_PLACEHOLDER,
+  },
+  {
+    name: "Edna Gebremedhin",
+    role: "Cultural Exchange and Language Learning (CELL) Workshop Mentor",
+    image:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTatnMPKAtfy8gUMVlFj5QpoO3BkxsndH9Dm2E",
+  },
 ];
 
 const memberSizes = {
   lg: {
-    width: "w-40 md:w-48",
-    avatar: "h-28 w-28 md:h-36 md:w-36",
-    name: "text-base",
-    role: "text-xs",
+    name: "text-lg md:text-xl",
+    role: "mt-1.5 text-sm",
+    pad: "px-3 pt-4 pb-5",
   },
   md: {
-    width: "w-32 md:w-40",
-    avatar: "h-20 w-20 md:h-28 md:w-28",
-    name: "text-sm",
-    role: "text-xs",
+    name: "text-base",
+    role: "mt-1 text-xs line-clamp-2",
+    pad: "px-2 pt-3 pb-4",
   },
   sm: {
-    width: "w-28 md:w-32",
-    avatar: "h-16 w-16 md:h-20 md:w-20",
     name: "text-sm",
-    role: "text-xs",
+    role: "mt-1 text-xs line-clamp-2",
+    pad: "px-2 pt-3 pb-4",
   },
 } as const;
 
 const TeamMember = ({
   member,
+  index,
   size = "md",
 }: {
   member: { name: string; role: string; image: string };
+  index: number;
   size?: keyof typeof memberSizes;
-}) => (
-  <div
-    className={`group flex flex-col items-center text-center ${memberSizes[size].width}`}
-  >
-    {/* Brand-color frame */}
+}) => {
+  const tint =
+    index % 2 === 0
+      ? "bg-primary/10 hover:shadow-primary/15"
+      : "bg-secondary/25 hover:shadow-secondary/25";
+
+  return (
     <div
-      className={`from-primary to-secondary group-hover:shadow-primary/25 mb-4 rounded-full bg-gradient-to-br p-[3px] shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:shadow-lg ${memberSizes[size].avatar}`}
+      className={`group flex flex-col rounded-3xl p-2.5 text-center shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1.5 hover:shadow-lg ${tint}`}
     >
-      <div className="bg-background relative h-full w-full overflow-hidden rounded-full p-[2px]">
+      <div className="aspect-square w-full overflow-hidden rounded-2xl">
         <img
           src={member.image}
           alt={member.name}
-          className="h-full w-full rounded-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+          className={`h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-[1.03] ${
+            member.image === LOGO_PLACEHOLDER
+              ? "bg-background object-cover"
+              : "object-cover"
+          }`}
         />
       </div>
+      <div className={memberSizes[size].pad}>
+        <p className={`leading-tight font-semibold ${memberSizes[size].name}`}>
+          {member.name}
+        </p>
+        <p
+          className={`text-muted-foreground leading-snug ${memberSizes[size].role}`}
+        >
+          {member.role}
+        </p>
+      </div>
     </div>
-    <p className={`leading-tight font-semibold ${memberSizes[size].name}`}>
-      {member.name}
-    </p>
-    <p
-      className={`text-muted-foreground mt-1 leading-snug ${memberSizes[size].role}`}
-    >
-      {member.role}
-    </p>
-  </div>
-);
+  );
+};
 
 const TeamSection = () => (
   <section className="bg-foreground/[0.02] py-28 md:py-40">
@@ -416,9 +440,14 @@ const TeamSection = () => (
           <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
             Executive Team
           </p>
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-10">
-            {executiveTeam.map((member) => (
-              <TeamMember key={member.name} member={member} size="lg" />
+          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2">
+            {executiveTeam.map((member, index) => (
+              <TeamMember
+                key={member.name}
+                member={member}
+                index={index}
+                size="lg"
+              />
             ))}
           </div>
         </div>
@@ -429,9 +458,14 @@ const TeamSection = () => (
           <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
             Directors
           </p>
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-10">
-            {directors.map((member) => (
-              <TeamMember key={member.name} member={member} size="md" />
+          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
+            {directors.map((member, index) => (
+              <TeamMember
+                key={member.name}
+                member={member}
+                index={index}
+                size="md"
+              />
             ))}
           </div>
         </div>
@@ -442,9 +476,14 @@ const TeamSection = () => (
           <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
             Mentors & Lecturers
           </p>
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-10">
-            {mentorsTeam.map((member) => (
-              <TeamMember key={member.name} member={member} size="sm" />
+          <div className="mx-auto grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+            {mentorsTeam.map((member, index) => (
+              <TeamMember
+                key={member.name}
+                member={member}
+                index={index}
+                size="sm"
+              />
             ))}
           </div>
         </div>
