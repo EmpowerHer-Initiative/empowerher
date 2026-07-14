@@ -67,7 +67,7 @@ export default function RootLayout({
     >
       <body>
         <TRPCReactProvider>
-          <ThemeProvider>
+          <ThemeProvider defaultTheme="light">
             <NuqsAdapter>
               <Suspense fallback={null}>
                 <UserControl />
