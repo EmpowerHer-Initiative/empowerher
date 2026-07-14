@@ -89,7 +89,7 @@ export const NewsletterDialog = () => {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <img
-              src="https://empowerher-cdn.alisamadii.com/logo.png"
+              src="https://cdn.empowerher-initiative.org/logo.png"
               alt={siteConfig.name}
               className="size-12 object-contain"
             />

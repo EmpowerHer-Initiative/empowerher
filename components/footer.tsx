@@ -61,7 +61,7 @@ export const Footer = () => {
           <div className="flex flex-col">
             <Link href="/" className="inline-flex">
               <img
-                src="https://empowerher-cdn.alisamadii.com/logo.png"
+                src="https://cdn.empowerher-initiative.org/logo.png"
                 alt="EmpowerHer"
                 className="w-40 -translate-x-6 object-contain md:w-54"
               />

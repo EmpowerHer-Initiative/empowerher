@@ -12,7 +12,7 @@ export const Wrapper = ({ title, description, children }: WrapperProps) => {
       <div className="mb-8">
         <Link href="/" className="inline-flex justify-center">
           <img
-            src="https://empowerher-cdn.alisamadii.com/logo.png"
+            src="https://cdn.empowerher-initiative.org/logo.png"
             alt="EmpowerHer"
             className="w-48 text-[#43a9e2] transition-opacity duration-200 hover:opacity-80"
           />
