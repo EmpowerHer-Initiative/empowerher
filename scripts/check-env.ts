@@ -18,6 +18,7 @@ const FEATURE_ENV_MAP: Record<string, string[]> = {
     "R2_PUBLIC_URL",
   ],
   email: ["AWS_BUCKET_ORIGIN", "AWS_ACCESS_KEY_VALUE", "AWS_SECRET_KEY_VALUE"],
+  agencyApi: ["NEXT_PUBLIC_AGENCY_API_KEY"],
 };
 
 // ─── Collect all required vars ─────────────────────────────────────

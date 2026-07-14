@@ -12,7 +12,7 @@ const links: { label: string; href: string }[] = [
   { label: "Resources", href: "/admin/resources" },
   { label: "Featured Writings", href: "/admin/featured-writings" },
   { label: "All Students", href: "/admin/all-students" },
-  { label: "Projects & Workshops", href: "/admin/projects-workshops" },
+  { label: "Workshops", href: "/admin/workshops" },
   { label: "Media", href: "/admin/media" },
   { label: "Staff Area", href: "/staff" },
 ];

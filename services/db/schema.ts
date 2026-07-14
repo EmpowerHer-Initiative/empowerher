@@ -157,18 +157,6 @@ export const teachersTable = pgTable("teachers", {
     .default("mentor"),
 });
 
-export const projectsTable = pgTable("projects", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar("name", { length: 255 }).notNull().unique(),
-  createdAt: timestamp().notNull().defaultNow(),
-  description: text().notNull(),
-  image: varchar("image", { length: 255 }).notNull(),
-  link: varchar("link", { length: 255 }).notNull(),
-  status: varchar("status", { enum: ["pending", "approved", "rejected"] })
-    .notNull()
-    .default("pending"),
-});
-
 export const workshopsTable = pgTable("workshops", {
   id: uuid("id")
     .default(sql`gen_random_uuid()`)
@@ -258,9 +246,6 @@ export type InsertComment = typeof commentsTable.$inferInsert;
 
 export type Teacher = typeof teachersTable.$inferSelect;
 export type InsertTeacher = typeof teachersTable.$inferInsert;
-
-export type Project = typeof projectsTable.$inferSelect;
-export type InsertProject = typeof projectsTable.$inferInsert;
 
 export type Workshop = typeof workshopsTable.$inferSelect;
 export type InsertWorkshop = typeof workshopsTable.$inferInsert;

@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@alisamadiillc/agency-api':
+        specifier: ^0.1.3
+        version: 0.1.3
       '@aws-sdk/client-s3':
         specifier: ^3.1036.0
         version: 3.1036.0
@@ -257,6 +260,10 @@ importers:
         version: 4.1.5(@opentelemetry/api@1.9.0)(@types/node@25.6.0)(msw@2.13.4(@types/node@25.6.0)(typescript@6.0.3))(vite@8.0.9(@types/node@25.6.0)(esbuild@0.25.12)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
 packages:
+
+  '@alisamadiillc/agency-api@0.1.3':
+    resolution: {integrity: sha512-hC0QHco8+bB0M8KVmiW+9E0ImEA8DnQmEqAy2b+aGqjaP5h/u5+0bHOl+S4dQFZQbJpvWWMgXFXlI0NkpY7Yiw==}
+    engines: {node: '>=18'}
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -7026,6 +7033,8 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
 snapshots:
+
+  '@alisamadiillc/agency-api@0.1.3': {}
 
   '@alloc/quick-lru@5.2.0': {}
 
