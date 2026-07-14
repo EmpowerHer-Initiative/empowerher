@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { notFound } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Mail, Pencil, Phone, Plus, Trash } from "lucide-react";
+import { Reorder } from "motion/react";
 import { toast } from "sonner";
 
-import { useIsAdmin } from "@/services/auth/hooks/use-role";
+import { agency } from "@/lib/agency-api";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
@@ -34,15 +34,42 @@ type Teacher = RouterOutputs["staff"]["teachers"]["list"][number];
 export default function StaffsPage() {
   const [addOpen, setAddOpen] = useState(false);
 
-  const { isAdmin, isPending: isRolePending } = useIsAdmin();
   const trpc = useTRPC();
   const { data: teachers, isPending } = useQuery(
-    trpc.staff.teachers.list.queryOptions(undefined, { enabled: isAdmin })
+    trpc.staff.teachers.list.queryOptions()
   );
 
-  if (!isRolePending && !isAdmin) {
-    notFound();
+  // Local drag order, re-synced whenever the server list changes
+  const [ordered, setOrdered] = useState<Teacher[]>([]);
+  const [prevTeachers, setPrevTeachers] = useState(teachers);
+  if (teachers !== prevTeachers) {
+    setPrevTeachers(teachers);
+    setOrdered(teachers ?? []);
   }
+
+  const reorderTeachers = useMutation(
+    trpc.staff.teachers.reorder.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: trpc.staff.teachers.list.pathKey(),
+        });
+      },
+      onError: (error) => {
+        toast.error(error.message || "Failed to reorder staff");
+        // Revert to the server order
+        queryClient.invalidateQueries({
+          queryKey: trpc.staff.teachers.list.pathKey(),
+        });
+      },
+    })
+  );
+
+  const commitOrder = () => {
+    const unchanged =
+      teachers && ordered.every((teacher, i) => teacher.id === teachers[i]?.id);
+    if (unchanged) return;
+    reorderTeachers.mutate(ordered.map((teacher) => teacher.id));
+  };
 
   return (
     <div className="container">
@@ -52,19 +79,31 @@ export default function StaffsPage() {
           <Plus /> Add Staff
         </Button>
       </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {isPending
-          ? Array.from({ length: 6 }).map((_, index) => (
-              <Skeleton key={index} className="h-40 w-full" />
-            ))
-          : teachers?.map((teacher) => (
-              <TeacherCard
-                key={teacher.id}
-                teacher={teacher}
-                isAdmin={isAdmin}
-              />
-            ))}
-      </div>
+      {isPending ? (
+        <div className="flex flex-col gap-4">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <Skeleton key={index} className="h-40 w-full" />
+          ))}
+        </div>
+      ) : (
+        <Reorder.Group
+          axis="y"
+          values={ordered}
+          onReorder={setOrdered}
+          className="flex flex-col gap-4"
+        >
+          {ordered.map((teacher) => (
+            <Reorder.Item
+              key={teacher.id}
+              value={teacher}
+              onDragEnd={commitOrder}
+              className="cursor-grab active:cursor-grabbing"
+            >
+              <TeacherCard teacher={teacher} />
+            </Reorder.Item>
+          ))}
+        </Reorder.Group>
+      )}
       {!isPending && teachers?.length === 0 && (
         <p className="text-muted-foreground text-sm">No staff members yet.</p>
       )}
@@ -73,13 +112,7 @@ export default function StaffsPage() {
   );
 }
 
-const TeacherCard = ({
-  teacher,
-  isAdmin,
-}: {
-  teacher: Teacher;
-  isAdmin: boolean;
-}) => {
+const TeacherCard = ({ teacher }: { teacher: Teacher }) => {
   const trpc = useTRPC();
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -87,6 +120,10 @@ const TeacherCard = ({
   const deleteTeacher = useMutation(
     trpc.staff.teachers.delete.mutationOptions({
       onSuccess: () => {
+        // Row is gone — remove its avatar from storage (best-effort)
+        if (teacher.avatar) {
+          void agency.uploads.delete({ key: teacher.avatar });
+        }
         queryClient.invalidateQueries({
           queryKey: trpc.staff.teachers.list.pathKey(),
         });
@@ -133,24 +170,18 @@ const TeacherCard = ({
             </span>
           )}
         </div>
-        {isAdmin && (
-          <div className="flex justify-end gap-1">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setEditOpen(true)}
-            >
-              <Pencil />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setDeleteOpen(true)}
-            >
-              <Trash />
-            </Button>
-          </div>
-        )}
+        <div className="flex justify-end gap-1">
+          <Button variant="ghost" size="icon" onClick={() => setEditOpen(true)}>
+            <Pencil />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setDeleteOpen(true)}
+          >
+            <Trash />
+          </Button>
+        </div>
       </CardContent>
 
       <TeacherForm

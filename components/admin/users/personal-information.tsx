@@ -1,4 +1,3 @@
-import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -6,11 +5,9 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { useUpload } from "@/hooks/use-upload";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldContent,
@@ -18,7 +15,6 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -34,21 +30,6 @@ const formSchema = z.object({
 });
 
 export const PersonalInformation = () => {
-  const [newAvatar, setNewAvatar] = useState<File | null>(null);
-
-  const avatarObjectUrl = useMemo(
-    () => (newAvatar ? URL.createObjectURL(newAvatar) : null),
-    [newAvatar]
-  );
-
-  useEffect(() => {
-    return () => {
-      if (avatarObjectUrl) URL.revokeObjectURL(avatarObjectUrl);
-    };
-  }, [avatarObjectUrl]);
-
-  const { upload } = useUpload();
-
   const { id } = useParams<{ id: string }>();
   const trpc = useTRPC();
   const { data: user } = useQuery(
@@ -99,57 +80,9 @@ export const PersonalInformation = () => {
 
   return (
     <div>
-      <div className="flex items-center gap-4">
-        <Avatar className="size-16">
-          <AvatarImage src={avatarObjectUrl ?? user?.image ?? ""} />
-          <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
-        </Avatar>
-        <div className="space-y-1">
-          <Label
-            className={buttonVariants({
-              variant: "outline",
-              size: "sm",
-              className: "px-2",
-            })}
-          >
-            <input
-              type="file"
-              onChange={async (e) => {
-                if (e.target.files?.[0]) {
-                  setNewAvatar(e.target.files[0]);
-                  try {
-                    const result = await upload(e.target.files[0], {
-                      folder: "users",
-                      key: id,
-                    });
-                    if (result) {
-                      updateUser.mutate({
-                        id,
-                        image: result?.publicUrl + `?${Date.now()}`,
-                      });
-                    }
-                  } catch (error) {
-                    toast.error("Failed to upload avatar", {
-                      description:
-                        error instanceof Error
-                          ? error.message
-                          : "Unknown error",
-                    });
-                  }
-                }
-              }}
-              className="sr-only"
-            />
-            Add avatar
-          </Label>
-          <p className="text-muted-foreground text-xs">
-            Recommend size 1:1, up to 2mb
-          </p>
-        </div>
-      </div>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="mt-6 flex flex-col gap-4"
+        className="flex flex-col gap-4"
       >
         <Controller
           control={form.control}

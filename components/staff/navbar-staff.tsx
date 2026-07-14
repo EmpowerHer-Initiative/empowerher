@@ -9,7 +9,6 @@ import { useIsAdmin } from "@/services/auth/hooks/use-role";
 const links: { label: string; href: string; adminOnly?: boolean }[] = [
   { label: "Accepted Students", href: "/staff/students" },
   { label: "Rejected Students", href: "/staff/rejected-students" },
-  // Staffs page hidden from nav (route + code kept): /staff/staffs
 ];
 
 export const NavbarStaff = () => {

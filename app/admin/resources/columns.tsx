@@ -6,6 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ExternalLink, Pencil, Trash } from "lucide-react";
 import { toast } from "sonner";
 
+import { agency } from "@/lib/agency-api";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
@@ -100,6 +101,10 @@ const ActionCell = ({ resource }: { resource: Resource }) => {
   const deleteResource = useMutation(
     trpc.admin.resources.delete.mutationOptions({
       onSuccess: () => {
+        // Row is gone — remove its image from storage (best-effort)
+        if (resource.image) {
+          void agency.uploads.delete({ key: resource.image });
+        }
         queryClient.invalidateQueries({
           queryKey: trpc.admin.resources.list.pathKey(),
         });

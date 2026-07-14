@@ -6,6 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ExternalLink, Pencil, Trash } from "lucide-react";
 import { toast } from "sonner";
 
+import { agency } from "@/lib/agency-api";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
@@ -87,6 +88,10 @@ const ActionCell = ({ writing }: { writing: FeaturedWriting }) => {
   const deleteWriting = useMutation(
     trpc.admin.featuredWritings.delete.mutationOptions({
       onSuccess: () => {
+        // Row is gone — remove its image from storage (best-effort)
+        if (writing.image) {
+          void agency.uploads.delete({ key: writing.image });
+        }
         queryClient.invalidateQueries({
           queryKey: trpc.admin.featuredWritings.list.pathKey(),
         });

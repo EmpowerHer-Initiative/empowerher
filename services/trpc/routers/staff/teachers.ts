@@ -8,26 +8,12 @@ import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
 
 export const staffTeachersRouter = createTRPCRouter({
   list: adminProcedure.query(async () => {
-    // Custom order: executive > director > mentor > lecturer
-    return db
-      .select()
-      .from(teachersTable)
-      .orderBy(
-        sql`CASE
-          WHEN ${teachersTable.role} = 'executive' THEN 1
-          WHEN ${teachersTable.role} = 'director' THEN 2
-          WHEN ${teachersTable.role} = 'mentor' THEN 3
-          WHEN ${teachersTable.role} = 'lecturer' THEN 4
-          ELSE 5
-        END`,
-        asc(teachersTable.index)
-      );
+    return db.select().from(teachersTable).orderBy(asc(teachersTable.index));
   }),
 
   create: adminProcedure
     .input(
       z.object({
-        index: z.number().int(),
         name: z.string().min(1).max(255),
         headTitle: z.string().min(1).max(255),
         email: z.email().max(255).optional().or(z.literal("")),
@@ -41,9 +27,20 @@ export const staffTeachersRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
+        // New members go to the end of the list
+        const [{ nextIndex }] = await db
+          .select({
+            nextIndex: sql<number>`coalesce(max(${teachersTable.index}), -1) + 1`,
+          })
+          .from(teachersTable);
+
         const [teacher] = await db
           .insert(teachersTable)
-          .values({ ...input, email: input.email || undefined })
+          .values({
+            ...input,
+            index: nextIndex,
+            email: input.email || undefined,
+          })
           .returning();
         return teacher;
       } catch (error) {
@@ -57,12 +54,32 @@ export const staffTeachersRouter = createTRPCRouter({
       }
     }),
 
+  reorder: adminProcedure
+    .input(z.array(z.number().int()).min(1))
+    .mutation(async ({ input }) => {
+      // Two-phase update: index has a unique constraint, so park all rows on
+      // negative values first, then assign the final positions. Sequential
+      // (not a transaction) — the neon-http driver doesn't support them.
+      for (const [position, id] of input.entries()) {
+        await db
+          .update(teachersTable)
+          .set({ index: -(position + 1) })
+          .where(eq(teachersTable.id, id));
+      }
+      for (const [position, id] of input.entries()) {
+        await db
+          .update(teachersTable)
+          .set({ index: position })
+          .where(eq(teachersTable.id, id));
+      }
+      return { success: true };
+    }),
+
   update: adminProcedure
     .input(
       z
         .object({
           id: z.number().int(),
-          index: z.number().int().optional(),
           name: z.string().min(1).max(255).optional(),
           headTitle: z.string().min(1).max(255).optional(),
           email: z.email().max(255).optional().or(z.literal("")),

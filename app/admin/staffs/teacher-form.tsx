@@ -1,11 +1,13 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import { agency } from "@/lib/agency-api";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
@@ -39,7 +41,6 @@ type Teacher = RouterOutputs["staff"]["teachers"]["list"][number];
 const roles = ["mentor", "executive", "lecturer", "director"] as const;
 
 const formSchema = z.object({
-  index: z.number().int(),
   name: z.string().min(1, { message: "Name is required" }),
   headTitle: z.string().min(1, { message: "Title is required" }),
   email: z.email().optional().or(z.literal("")),
@@ -86,10 +87,25 @@ const Content = ({
   );
   const isPending = createTeacher.isPending || updateTeacher.isPending;
 
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  // Public URL of an avatar uploaded in this dialog session, not yet saved
+  const pendingUploadRef = useRef<string | null>(null);
+  const savedRef = useRef(false);
+
+  // Dialog closed without saving (cancel, esc, overlay) — remove the
+  // unsaved upload from storage so no orphaned files are left behind
+  useEffect(() => {
+    return () => {
+      if (!savedRef.current && pendingUploadRef.current) {
+        void agency.uploads.delete({ key: pendingUploadRef.current });
+      }
+    };
+  }, []);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      index: teacher?.index ?? 0,
       name: teacher?.name ?? "",
       headTitle: teacher?.headTitle ?? "",
       email: teacher?.email ?? "",
@@ -100,9 +116,39 @@ const Content = ({
     },
   });
 
+  const handleAvatarUpload = async (file: File) => {
+    setIsUploading(true);
+    const { data, error } = await agency.uploads.upload(file, {
+      path: "staffs",
+      naming: "uuid",
+    });
+    setIsUploading(false);
+
+    if (error) {
+      toast.error(error.message || "Upload failed");
+      return;
+    }
+
+    // Replaced an earlier unsaved upload — remove it from storage
+    if (pendingUploadRef.current) {
+      void agency.uploads.delete({ key: pendingUploadRef.current });
+    }
+    pendingUploadRef.current = data.publicUrl;
+    form.setValue("avatar", data.publicUrl, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  };
+
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     const options = {
       onSuccess: () => {
+        savedRef.current = true;
+        pendingUploadRef.current = null;
+        // Saved with a new avatar — remove the previous one from storage
+        if (teacher?.avatar && teacher.avatar !== values.avatar) {
+          void agency.uploads.delete({ key: teacher.avatar });
+        }
         queryClient.invalidateQueries({
           queryKey: trpc.staff.teachers.list.pathKey(),
         });
@@ -127,49 +173,27 @@ const Content = ({
         <DialogTitle>{teacher ? "Edit Staff" : "Add Staff"}</DialogTitle>
       </DialogHeader>
       <form
+        // eslint-disable-next-line react-hooks/refs -- refs are read in onSuccess (event time), not during render
         onSubmit={form.handleSubmit(handleSubmit)}
         className="flex w-full flex-col gap-4"
       >
-        <div className="grid grid-cols-2 gap-4">
-          <Controller
-            control={form.control}
-            name="name"
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>Name</FieldLabel>
-                <FieldContent>
-                  <Input
-                    {...field}
-                    placeholder="Full name"
-                    aria-invalid={fieldState.invalid}
-                  />
-                  <FieldError errors={[fieldState.error]} />
-                </FieldContent>
-              </Field>
-            )}
-          />
-          <Controller
-            control={form.control}
-            name="index"
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>Order</FieldLabel>
-                <FieldContent>
-                  <Input
-                    name={field.name}
-                    ref={field.ref}
-                    onBlur={field.onBlur}
-                    value={field.value}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                    type="number"
-                    aria-invalid={fieldState.invalid}
-                  />
-                  <FieldError errors={[fieldState.error]} />
-                </FieldContent>
-              </Field>
-            )}
-          />
-        </div>
+        <Controller
+          control={form.control}
+          name="name"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel>Name</FieldLabel>
+              <FieldContent>
+                <Input
+                  {...field}
+                  placeholder="Full name"
+                  aria-invalid={fieldState.invalid}
+                />
+                <FieldError errors={[fieldState.error]} />
+              </FieldContent>
+            </Field>
+          )}
+        />
         <Controller
           control={form.control}
           name="headTitle"
@@ -229,12 +253,36 @@ const Content = ({
           name="avatar"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Avatar URL</FieldLabel>
+              <FieldLabel>Avatar</FieldLabel>
               <FieldContent>
-                <Input
-                  {...field}
-                  placeholder="https://… (upload via Admin → Media)"
-                  aria-invalid={fieldState.invalid}
+                <div className="flex items-center gap-3">
+                  {field.value && (
+                    <img
+                      src={field.value}
+                      alt="Avatar"
+                      className="size-16 shrink-0 rounded-full border object-cover"
+                    />
+                  )}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={isUploading || isPending}
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    {isUploading && <Spinner />}
+                    {field.value ? "Change avatar" : "Upload avatar"}
+                  </Button>
+                </div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) void handleAvatarUpload(file);
+                    e.target.value = "";
+                  }}
                 />
                 <FieldError errors={[fieldState.error]} />
               </FieldContent>
@@ -295,11 +343,11 @@ const Content = ({
             type="button"
             variant="outline"
             onClick={onClose}
-            disabled={isPending}
+            disabled={isPending || isUploading}
           >
             Cancel
           </Button>
-          <Button type="submit" disabled={isPending}>
+          <Button type="submit" disabled={isPending || isUploading}>
             {isPending && <Spinner />}
             {teacher ? "Save changes" : "Add staff"}
           </Button>
