@@ -36,6 +36,9 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },
+  icons: {
+    icon: "https://cdn.empowerher-initiative.org/logo.png",
+  },
 };
 
 const fontSans = Plus_Jakarta_Sans({
