@@ -63,7 +63,7 @@ export const NewsletterDialog = () => {
   return (
     <div
       className={cn(
-        "bg-background shadow-300 fixed right-4 bottom-4 z-50 w-full max-w-md rounded-xl border p-6 backdrop-blur-sm transition-all duration-300",
+        "bg-background shadow-300 fixed right-4 bottom-4 z-50 w-full max-w-96 rounded-xl border p-6 backdrop-blur-sm transition-all duration-300 sm:max-w-md",
         "motion-opacity-in-0 motion-translate-y-in-[100px] motion-blur-in-[4px] motion-delay-2000"
       )}
     >

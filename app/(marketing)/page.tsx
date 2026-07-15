@@ -457,7 +457,7 @@ const Programs = () => (
 
           {/* Mentorship */}
           <Link href="/mentorship" className="group">
-            <div className="relative aspect-[4/3] min-h-[360px] overflow-hidden rounded-[2rem] md:aspect-auto md:h-full">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] md:aspect-auto md:h-full md:min-h-[360px]">
               <img
                 src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTztHu6kOQlbZOApif7EkNI4MXGo08zhqH6CwY"
                 alt="Mentorship"
