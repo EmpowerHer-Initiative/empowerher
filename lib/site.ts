@@ -16,7 +16,7 @@
 
 export const siteConfig = {
   // Site identity
-  name: "EmpowerHer",
+  name: "EmpowerHer Initiative",
   description:
     "A nonprofit organization empowering Afghan women and girls across the Middle East and Central Asia through mentorship, leadership development, educational support, storytelling, publication, and community engagement.",
 
