@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { count, desc, eq, ilike } from "drizzle-orm";
+import { count, desc, eq, ilike, isNotNull, sql } from "drizzle-orm";
 import { z } from "zod";
 
 import { db } from "@/services/db/index";
@@ -10,19 +10,24 @@ import {
 } from "@/services/db/schema";
 import { adminProcedure, createTRPCRouter } from "@/services/trpc/init";
 
-// The roster spans three tables (accepted, rejected, newsletter). Expose it as
-// a single deduped union subquery so pagination/search/sort run in Postgres.
-const unionSubquery = () =>
-  db
+// The roster spans three tables (accepted, rejected, newsletter). The same
+// email can appear in several of them (and across periods) with different
+// createdAt values and casing, so a plain UNION still yields duplicate rows.
+// Normalize emails and group to one row per email, keeping the latest date.
+const unionSubquery = () => {
+  const rows = db
     .select({
-      email: studentsTable.email,
+      email: sql<string>`lower(trim(${studentsTable.email}))`.as("email"),
       createdAt: studentsTable.createdAt,
     })
     .from(studentsTable)
+    .where(isNotNull(studentsTable.email))
     .union(
       db
         .select({
-          email: rejectedStudentsTable.email,
+          email: sql<string>`lower(trim(${rejectedStudentsTable.email}))`.as(
+            "email"
+          ),
           createdAt: rejectedStudentsTable.createdAt,
         })
         .from(rejectedStudentsTable)
@@ -30,12 +35,26 @@ const unionSubquery = () =>
     .union(
       db
         .select({
-          email: allStudentsTable.email,
+          email: sql<string>`lower(trim(${allStudentsTable.email}))`.as(
+            "email"
+          ),
           createdAt: allStudentsTable.createdAt,
         })
         .from(allStudentsTable)
     )
+    .as("all_students_rows");
+
+  return db
+    .select({
+      email: rows.email,
+      createdAt: sql`max(${rows.createdAt})`
+        .mapWith(allStudentsTable.createdAt)
+        .as("created_at"),
+    })
+    .from(rows)
+    .groupBy(rows.email)
     .as("all_students_union");
+};
 
 export const adminAllStudentsRouter = createTRPCRouter({
   list: adminProcedure
