@@ -331,7 +331,8 @@ const mentorsTeam = [
   {
     name: "Erin Borthwick",
     role: "Lecturer",
-    image: LOGO_PLACEHOLDER,
+    image:
+      "https://cdn.empowerher-initiative.org/staffs/6169d024-00b9-440e-bf24-bc4f5c9f499e.jpeg",
   },
   {
     name: "Asma Hassaney",
