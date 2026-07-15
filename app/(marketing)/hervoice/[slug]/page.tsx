@@ -177,6 +177,47 @@ export default async function HerVoicePostPage({ params }: Props) {
                 <MDXContent code={post.mdx} components={mdxComponents} />
               </div>
             </Reveal>
+
+            {post.messageToWorld && (
+              <Reveal asChild>
+                <div className="border-primary/20 bg-card mt-16 rounded-3xl border p-8 md:p-10">
+                  <p className="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+                    A Message to The World
+                  </p>
+                  {post.messageToWorld.startsWith("http") ? (
+                    <div className="mt-6">
+                      <div className="overflow-hidden rounded-2xl">
+                        <video
+                          className="w-full"
+                          controls
+                          preload="metadata"
+                          poster="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqvTKsUwBYobifLHTavDVU7h0yBGlSc4z8XEQ"
+                        >
+                          <source src={post.messageToWorld} type="video/mp4" />
+                        </video>
+                      </div>
+                      {post.authorName && (
+                        <p className="text-muted-foreground/70 mt-4 text-center text-sm italic">
+                          A message from {post.authorName} to the world
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <>
+                      <blockquote className="mt-6 font-serif text-lg leading-relaxed italic md:text-xl">
+                        &ldquo;{post.messageToWorld}&rdquo;
+                      </blockquote>
+                      {post.authorName && (
+                        <p className="text-primary mt-4 text-right text-sm font-semibold tracking-wide">
+                          — {post.authorName}
+                        </p>
+                      )}
+                    </>
+                  )}
+                </div>
+              </Reveal>
+            )}
+
             <CommentsSection slug={`/hervoice/${post._meta.path}`} />
           </div>
         </div>
