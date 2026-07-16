@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -7,11 +8,9 @@ import { auth } from "@/services/auth/auth";
 import { AccessDenied } from "@/components/access-denied";
 import { NavbarAdmin } from "@/components/admin/navbar-admin";
 
-export default async function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import AdminLoading from "./loading";
+
+async function AdminGuard({ children }: { children: React.ReactNode }) {
   const user = await auth.api.getSession({
     headers: await headers(),
     query: {
@@ -27,6 +26,14 @@ export default async function AdminLayout({
     return <AccessDenied area="admin" role={user.user.role} />;
   }
 
+  return children;
+}
+
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div
       className={cn(
@@ -35,7 +42,9 @@ export default async function AdminLayout({
       )}
     >
       <NavbarAdmin />
-      {children}
+      <Suspense fallback={<AdminLoading />}>
+        <AdminGuard>{children}</AdminGuard>
+      </Suspense>
     </div>
   );
 }
