@@ -41,7 +41,7 @@ export const siteConfig = {
 
   // Open Graph / social preview image
   // → Drop your hero image as public/og-image.png (1200×630 recommended)
-  ogImage: "/og-image.png",
+  ogImage: "https://cdn.empowerher-initiative.org/image-banner.png",
 
   // ─────────────────────────────────────────────────────────────────────────
   // Per-page metadata
