@@ -1,9 +1,12 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
+import { caller } from "@/services/trpc/server";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
@@ -258,104 +261,8 @@ const WhatWeDo = () => (
 
 /* ─── Team ──────────────────────────────────────────────────────────────────── */
 
-const executiveTeam = [
-  {
-    name: "Mahdi Rahimi",
-    role: "Co-Founder & Mentor",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfgQqh43C8OG5vkbyTeNds9rYucAtpJg0PMV7",
-  },
-  {
-    name: "Nahid Karimi",
-    role: "Co-Founder & Mentor",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTPXlWDWYhZvxtB3ycfP5jQXiMRAWOCrnJ2oYe",
-  },
-];
-
 const LOGO_PLACEHOLDER =
   "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT8waekQlgkEDp7B3XRvCJzMmyWOSiao4I6cq9";
-
-const directors = [
-  {
-    name: "Sara F",
-    role: "Mentorship Program Director & Mentor",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT8waekQlgkEDp7B3XRvCJzMmyWOSiao4I6cq9",
-  },
-  {
-    name: "Daniel Fletcher",
-    role: "Social Media Director",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqlVv7UBYobifLHTavDVU7h0yBGlSc4z8XEQn",
-  },
-  {
-    name: "Ali Reza Samadi",
-    role: "IT & Systems Manager",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTaIvbdmAtfy8gUMVlFj5QpoO3BkxsndH9Dm2E",
-  },
-  {
-    name: "Sarah Ghaznawi",
-    role: "Mentorship Program Assistant | Mentor",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTKWc50tCVy1oGkRMuS0Lravl9JbQIxWFcNhtq",
-  },
-  {
-    name: "Humaira Joya",
-    role: "Social Media & Outreach Coordinator",
-    image:
-      "https://cdn.empowerher-initiative.org/1783563233797-humaira-joya.jpeg",
-  },
-];
-
-const mentorsTeam = [
-  {
-    name: "Leena Geloo",
-    role: "Cultural Exchange and Language Learning (CELL) Mentor",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTUhliWsMuHB63DFcWbZp7rAk9VUJPgitsO2Ca",
-  },
-  {
-    name: "Orly Bloom",
-    role: "Lecturer",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTWSJkk9XFwogO1GlqLJaX2yrjpNUsTDBdMI0C",
-  },
-  {
-    name: "Lily Jean Loveland",
-    role: "Lecturer",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTS7YSk2xH1XUo4r0Hn2pxVOeJj6STiyCaKZ7v",
-  },
-  {
-    name: "Erin Borthwick",
-    role: "Lecturer",
-    image:
-      "https://cdn.empowerher-initiative.org/staffs/6169d024-00b9-440e-bf24-bc4f5c9f499e.jpeg",
-  },
-  {
-    name: "Asma Hassaney",
-    role: "Communication & Public Speaking (CPS) Workshop Mentor",
-    image: LOGO_PLACEHOLDER,
-  },
-  {
-    name: "Basira Joya",
-    role: "Resume Building and Personal Statement (RBPS) Workshop Mentor",
-    image: LOGO_PLACEHOLDER,
-  },
-  {
-    name: "Qudsia Mobariz",
-    role: "Creative Arts Workshop Mentor",
-    image: LOGO_PLACEHOLDER,
-  },
-  {
-    name: "Edna Gebremedhin",
-    role: "Cultural Exchange and Language Learning (CELL) Workshop Mentor",
-    image:
-      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTatnMPKAtfy8gUMVlFj5QpoO3BkxsndH9Dm2E",
-  },
-];
 
 const memberSizes = {
   lg: {
@@ -418,77 +325,146 @@ const TeamMember = ({
   );
 };
 
-const TeamSection = () => (
+const TeamSection = async () => {
+  const teachers = await caller.teachers.list();
+
+  const toMember = (teacher: (typeof teachers)[number]) => ({
+    name: teacher.name,
+    role: teacher.headTitle,
+    image: teacher.avatar || LOGO_PLACEHOLDER,
+  });
+
+  const executiveTeam = teachers
+    .filter((t) => t.role === "executive")
+    .map(toMember);
+  const directors = teachers.filter((t) => t.role === "director").map(toMember);
+  const mentorsTeam = teachers
+    .filter((t) => t.role === "mentor" || t.role === "lecturer")
+    .map(toMember);
+
+  return (
+    <section className="bg-foreground/[0.02] py-28 md:py-40">
+      <div className="container">
+        <Reveal asChild>
+          <div className="mb-16">
+            <p className="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+              The People Behind It
+            </p>
+            <h2 className="font-serif text-4xl leading-[1.1] md:text-5xl">
+              Our Team
+            </h2>
+            <p className="text-muted-foreground mt-4 max-w-lg">
+              Founded and led by a diverse team committed to expanding access to
+              education across borders.
+            </p>
+          </div>
+        </Reveal>
+
+        {executiveTeam.length > 0 && (
+          <Reveal asChild>
+            <div className="mb-14">
+              <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+                Executive Team
+              </p>
+              <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2">
+                {executiveTeam.map((member, index) => (
+                  <TeamMember
+                    key={member.name}
+                    member={member}
+                    index={index}
+                    size="lg"
+                  />
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        )}
+
+        {directors.length > 0 && (
+          <Reveal asChild>
+            <div className="border-border/40 mb-14 border-t pt-14">
+              <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+                Directors
+              </p>
+              <div className="mx-auto grid max-w-6xl grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
+                {directors.map((member, index) => (
+                  <TeamMember
+                    key={member.name}
+                    member={member}
+                    index={index}
+                    size="md"
+                  />
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        )}
+
+        {mentorsTeam.length > 0 && (
+          <Reveal asChild>
+            <div className="border-border/40 border-t pt-14">
+              <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+                Mentors & Lecturers
+              </p>
+              <div className="mx-auto grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                {mentorsTeam.map((member, index) => (
+                  <TeamMember
+                    key={member.name}
+                    member={member}
+                    index={index}
+                    size="sm"
+                  />
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        )}
+      </div>
+    </section>
+  );
+};
+
+const TeamSectionSkeleton = () => (
   <section className="bg-foreground/[0.02] py-28 md:py-40">
     <div className="container">
-      <Reveal asChild>
-        <div className="mb-16">
-          <p className="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
-            The People Behind It
-          </p>
-          <h2 className="font-serif text-4xl leading-[1.1] md:text-5xl">
-            Our Team
-          </h2>
-          <p className="text-muted-foreground mt-4 max-w-lg">
-            Founded and led by a diverse team committed to expanding access to
-            education across borders.
-          </p>
+      <div className="mb-16">
+        <Skeleton className="mb-4 h-3 w-44" />
+        <Skeleton className="h-10 w-56 md:h-12" />
+        <div className="mt-4 max-w-lg space-y-2">
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-2/3" />
         </div>
-      </Reveal>
+      </div>
 
-      <Reveal asChild>
-        <div className="mb-14">
-          <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
-            Executive Team
-          </p>
-          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2">
-            {executiveTeam.map((member, index) => (
-              <TeamMember
-                key={member.name}
-                member={member}
-                index={index}
-                size="lg"
-              />
-            ))}
-          </div>
+      <div className="mb-14">
+        <Skeleton className="mb-8 h-3 w-32" />
+        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2">
+          {Array.from({ length: 2 }).map((_, i) => (
+            <div key={i} className="rounded-3xl p-2.5">
+              <Skeleton className="aspect-square w-full rounded-2xl" />
+              <div className="px-3 pt-4 pb-5">
+                <Skeleton className="mx-auto h-5 w-32" />
+                <Skeleton className="mx-auto mt-2 h-3.5 w-40" />
+              </div>
+            </div>
+          ))}
         </div>
-      </Reveal>
+      </div>
 
-      <Reveal asChild>
-        <div className="border-border/40 mb-14 border-t pt-14">
-          <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
-            Directors
-          </p>
-          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
-            {directors.map((member, index) => (
-              <TeamMember
-                key={member.name}
-                member={member}
-                index={index}
-                size="md"
-              />
-            ))}
-          </div>
+      <div className="border-border/40 border-t pt-14">
+        <Skeleton className="mb-8 h-3 w-24" />
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="rounded-3xl p-2.5">
+              <Skeleton className="aspect-square w-full rounded-2xl" />
+              <div className="px-2 pt-3 pb-4">
+                <Skeleton className="mx-auto h-4 w-24" />
+                <Skeleton className="mx-auto mt-2 h-3 w-28" />
+              </div>
+            </div>
+          ))}
         </div>
-      </Reveal>
-
-      <Reveal asChild>
-        <div className="border-border/40 border-t pt-14">
-          <p className="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
-            Mentors & Lecturers
-          </p>
-          <div className="mx-auto grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-            {mentorsTeam.map((member, index) => (
-              <TeamMember
-                key={member.name}
-                member={member}
-                index={index}
-                size="sm"
-              />
-            ))}
-          </div>
-        </div>
-      </Reveal>
+      </div>
     </div>
   </section>
 );
@@ -626,7 +602,9 @@ export default function AboutPage() {
       <MissionVision />
       <OurStory />
       <WhatWeDo />
-      <TeamSection />
+      <Suspense fallback={<TeamSectionSkeleton />}>
+        <TeamSection />
+      </Suspense>
       <Partners />
       <AboutCTA />
     </>

@@ -1,3 +1,4 @@
+import { revalidateTag } from "next/cache";
 import { TRPCError } from "@trpc/server";
 import { asc, eq, sql } from "drizzle-orm";
 import { z } from "zod";
@@ -42,6 +43,7 @@ export const staffTeachersRouter = createTRPCRouter({
             email: input.email || undefined,
           })
           .returning();
+        revalidateTag("teachers", { expire: 0 });
         return teacher;
       } catch (error) {
         if (String(error).toLowerCase().includes("duplicate key")) {
@@ -72,6 +74,7 @@ export const staffTeachersRouter = createTRPCRouter({
           .set({ index: position })
           .where(eq(teachersTable.id, id));
       }
+      revalidateTag("teachers", { expire: 0 });
       return { success: true };
     }),
 
@@ -98,12 +101,13 @@ export const staffTeachersRouter = createTRPCRouter({
       const { id, ...data } = input;
 
       try {
-        return await db
+        const [teacher] = await db
           .update(teachersTable)
           .set({ ...data, email: data.email || undefined })
           .where(eq(teachersTable.id, id))
-          .returning()
-          .then((result) => result[0]);
+          .returning();
+        revalidateTag("teachers", { expire: 0 });
+        return teacher;
       } catch (error) {
         if (String(error).toLowerCase().includes("duplicate key")) {
           throw new TRPCError({
@@ -117,6 +121,7 @@ export const staffTeachersRouter = createTRPCRouter({
 
   delete: adminProcedure.input(z.number().int()).mutation(async ({ input }) => {
     await db.delete(teachersTable).where(eq(teachersTable.id, input));
+    revalidateTag("teachers", { expire: 0 });
     return { success: true };
   }),
 });

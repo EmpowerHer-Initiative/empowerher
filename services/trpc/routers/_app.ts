@@ -11,6 +11,7 @@ import { logsRouter } from "./logs";
 import { newsletterRouter } from "./newsletter";
 import { resourcesRouter } from "./resources";
 import { staffRouter } from "./staff/_index";
+import { teachersRouter } from "./teachers";
 import { usersRouter } from "./users";
 import { verificationRouter } from "./verification";
 import { workshopsRouter } from "./workshops";
@@ -25,6 +26,7 @@ export const appRouter = createTRPCRouter({
   newsletter: newsletterRouter,
   verification: verificationRouter,
   resources: resourcesRouter,
+  teachers: teachersRouter,
   workshops: workshopsRouter,
   featuredWritings: featuredWritingsRouter,
   admin: adminRouter,
