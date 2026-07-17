@@ -231,6 +231,15 @@ export const resourcesTable = pgTable("resources", {
   type: varchar("type", { length: 255 }),
 });
 
+export const partnersTable = pgTable("partners", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  index: integer().notNull().default(0).unique(),
+  name: varchar("name", { length: 255 }).notNull(),
+  image: varchar("image", { length: 255 }).notNull(),
+  link: varchar("link", { length: 255 }).notNull(),
+  createdAt: timestamp().notNull().defaultNow(),
+});
+
 export const featuredWritingsTable = pgTable("featured_writings", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   title: varchar("title", { length: 255 }).notNull(),
@@ -260,6 +269,9 @@ export type AllStudent = typeof allStudentsTable.$inferSelect;
 export type InsertAllStudent = typeof allStudentsTable.$inferInsert;
 
 export type Resource = typeof resourcesTable.$inferSelect;
+
+export type Partner = typeof partnersTable.$inferSelect;
+export type InsertPartner = typeof partnersTable.$inferInsert;
 export type InsertResource = typeof resourcesTable.$inferInsert;
 
 export type FeaturedWriting = typeof featuredWritingsTable.$inferSelect;

@@ -1,4 +1,4 @@
-import { cacheLife } from "next/cache";
+import { cacheLife, cacheTag } from "next/cache";
 import { desc, eq } from "drizzle-orm";
 
 import { db } from "@/services/db/index";
@@ -8,7 +8,8 @@ import { baseProcedure, createTRPCRouter } from "@/services/trpc/init";
 export const workshopsRouter = createTRPCRouter({
   list: baseProcedure.query(async () => {
     "use cache";
-    cacheLife("hours");
+    cacheLife("max");
+    cacheTag("workshops");
 
     return db
       .select()

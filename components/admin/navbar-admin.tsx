@@ -14,6 +14,7 @@ const links: { label: string; href: string }[] = [
   { label: "All Students", href: "/admin/all-students" },
   { label: "Staffs", href: "/admin/staffs" },
   { label: "Workshops", href: "/admin/workshops" },
+  { label: "Partners", href: "/admin/partners" },
   { label: "Media", href: "/admin/media" },
   { label: "Staff Area", href: "/staff" },
 ];

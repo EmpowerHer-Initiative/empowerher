@@ -1,3 +1,4 @@
+import { revalidateTag } from "next/cache";
 import { TRPCError } from "@trpc/server";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
@@ -36,6 +37,7 @@ export const staffWorkshopsRouter = createTRPCRouter({
           .insert(workshopsTable)
           .values(input)
           .returning();
+        revalidateTag("workshops", { expire: 0 });
         return workshop;
       } catch (error) {
         if (String(error).toLowerCase().includes("duplicate key")) {
@@ -69,12 +71,13 @@ export const staffWorkshopsRouter = createTRPCRouter({
       const { id, ...data } = input;
 
       try {
-        return await db
+        const [workshop] = await db
           .update(workshopsTable)
           .set(data)
           .where(eq(workshopsTable.id, id))
-          .returning()
-          .then((result) => result[0]);
+          .returning();
+        revalidateTag("workshops", { expire: 0 });
+        return workshop;
       } catch (error) {
         if (String(error).toLowerCase().includes("duplicate key")) {
           throw new TRPCError({
@@ -88,6 +91,7 @@ export const staffWorkshopsRouter = createTRPCRouter({
 
   delete: adminProcedure.input(z.uuid()).mutation(async ({ input }) => {
     await db.delete(workshopsTable).where(eq(workshopsTable.id, input));
+    revalidateTag("workshops", { expire: 0 });
     return { success: true };
   }),
 });

@@ -1,11 +1,12 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
-import type { Workshop } from "@/services/db/schema";
 import { caller } from "@/services/trpc/server";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
@@ -371,7 +372,9 @@ const Opportunities = () => (
 
 /* ─── Workshops ─────────────────────────────────────────────────────────────── */
 
-const Workshops = ({ workshops }: { workshops: Workshop[] }) => {
+const Workshops = async () => {
+  const workshops = await caller.workshops.list();
+
   if (workshops.length === 0) return null;
 
   return (
@@ -444,11 +447,44 @@ const Workshops = ({ workshops }: { workshops: Workshop[] }) => {
   );
 };
 
+const WorkshopsSkeleton = () => (
+  <section className="bg-foreground/[0.02] py-28 md:py-40">
+    <div className="container">
+      <div className="mb-16">
+        <Skeleton className="mb-4 h-3 w-24" />
+        <Skeleton className="h-10 w-80 md:h-12" />
+      </div>
+      <div className="space-y-6">
+        {Array.from({ length: 2 }).map((_, i) => (
+          <div
+            key={i}
+            className={`border-border/40 flex flex-col overflow-hidden rounded-3xl border md:flex-row ${
+              i % 2 !== 0 ? "md:flex-row-reverse" : ""
+            }`}
+          >
+            <Skeleton className="aspect-video rounded-none md:aspect-auto md:min-h-80 md:w-2/5 md:shrink-0" />
+            <div className="flex flex-1 flex-col justify-center gap-6 p-8 md:p-12 lg:p-14">
+              <div>
+                <Skeleton className="mb-3 h-3 w-40" />
+                <Skeleton className="h-8 w-2/3" />
+                <div className="mt-4 space-y-2.5">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-11/12" />
+                  <Skeleton className="h-4 w-3/4" />
+                </div>
+              </div>
+              <Skeleton className="h-11 w-36 rounded-full" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 /* ─── Page ──────────────────────────────────────────────────────────────────── */
 
-export default async function MentorshipPage() {
-  const workshops = await caller.workshops.list();
-
+export default function MentorshipPage() {
   return (
     <>
       <MentorshipHero />
@@ -456,7 +492,9 @@ export default async function MentorshipPage() {
       <WorkshopStructure />
       <Eligibility />
       <Opportunities />
-      <Workshops workshops={workshops} />
+      <Suspense fallback={<WorkshopsSkeleton />}>
+        <Workshops />
+      </Suspense>
     </>
   );
 }

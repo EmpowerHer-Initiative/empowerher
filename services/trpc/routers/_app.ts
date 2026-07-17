@@ -9,6 +9,7 @@ import { featuredWritingsRouter } from "./featured-writings";
 import { filesRouter } from "./files";
 import { logsRouter } from "./logs";
 import { newsletterRouter } from "./newsletter";
+import { partnersRouter } from "./partners";
 import { resourcesRouter } from "./resources";
 import { staffRouter } from "./staff/_index";
 import { teachersRouter } from "./teachers";
@@ -25,6 +26,7 @@ export const appRouter = createTRPCRouter({
   logs: logsRouter,
   newsletter: newsletterRouter,
   verification: verificationRouter,
+  partners: partnersRouter,
   resources: resourcesRouter,
   teachers: teachersRouter,
   workshops: workshopsRouter,

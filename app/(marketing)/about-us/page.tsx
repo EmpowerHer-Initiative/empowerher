@@ -7,6 +7,10 @@ import { siteConfig } from "@/lib/site";
 import { caller } from "@/services/trpc/server";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  PartnersSection,
+  PartnersSkeleton,
+} from "@/components/partners-section";
 import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
@@ -471,86 +475,10 @@ const TeamSectionSkeleton = () => (
 
 /* ─── Partners — Minimal logo strip ────────────────────────────────────────── */
 
-const partners = [
-  {
-    name: "NSHSS",
-    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTjPNmNesfkIRBuYnTVcl8O9LdXP5103pNyJUt",
-    href: "https://www.nshss.org/",
-  },
-  {
-    name: "Right to Learn Afghanistan",
-    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTBRQC7aZcQ1oEZ9sIXj8tePOrDbdN2iaU7v5q",
-    href: "https://righttolearn.ca/",
-  },
-  {
-    name: "AGFAF",
-    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpavV7aqrM0zsm5gThJ2eDxZtjCFUdBGElvb1",
-    href: "https://agfaf.org/",
-  },
-  {
-    name: "Amplify Afghan Women",
-    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBzmSPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O9",
-    href: "https://sites.google.com/view/amplifyafghans/home",
-  },
-  {
-    name: "Sahar Education",
-    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT0La8F8o1jbZo7DsLPidlGr6Uf2HKquxXJ3CN",
-    href: "https://www.sahareducation.org/",
-  },
-  {
-    name: "Girls Opportunity Alliance",
-    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTVVN0CQ82WufQtTg5yH7OAp0KFlsjbkaYIPZ",
-    href: "https://www.obama.org/programs/girls-opportunity-alliance/",
-  },
-  {
-    name: "Mente Global",
-    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTUekbWeMuHB63DFcWbZp7rAk9VUJPgitsO2Ca",
-    href: "https://menteeglobal.org/",
-  },
-  {
-    name: "Inanna",
-    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTIznPr82WufQtTg5yH7OAp0KFlsjbkaYIPZB",
-    href: "https://inanna.ca/",
-  },
-  {
-    name: "Human Media",
-    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT2HJysqLQtJ7K2Z4UcWn3gCXRdBvVoY9Ohil8",
-    href: "https://humanitasmedia.org/",
-  },
-];
-
-const Partners = () => (
-  <section className="py-28 md:py-32">
-    <div className="container">
-      <Reveal asChild>
-        <p className="text-muted-foreground text-center text-xs font-semibold tracking-[0.3em] uppercase">
-          Trusted Partners & Supporters
-        </p>
-      </Reveal>
-      <Reveal
-        delay={80}
-        className="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16"
-      >
-        {partners.map((p) => (
-          <a
-            key={p.name}
-            href={p.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={p.name}
-            className="group block transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1.5 hover:scale-105"
-          >
-            <img
-              src={p.logo}
-              alt={p.name}
-              className="h-16 w-auto object-contain md:h-24"
-            />
-          </a>
-        ))}
-      </Reveal>
-    </div>
-  </section>
-);
+const Partners = async () => {
+  const partners = await caller.partners.list();
+  return <PartnersSection partners={partners} />;
+};
 
 /* ─── CTA ───────────────────────────────────────────────────────────────────── */
 
@@ -605,7 +533,9 @@ export default function AboutPage() {
       <Suspense fallback={<TeamSectionSkeleton />}>
         <TeamSection />
       </Suspense>
-      <Partners />
+      <Suspense fallback={<PartnersSkeleton />}>
+        <Partners />
+      </Suspense>
       <AboutCTA />
     </>
   );
