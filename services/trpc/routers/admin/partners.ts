@@ -1,4 +1,3 @@
-import { revalidateTag } from "next/cache";
 import { asc, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 
@@ -31,7 +30,6 @@ export const adminPartnersRouter = createTRPCRouter({
         .insert(partnersTable)
         .values({ ...input, index: nextIndex })
         .returning();
-      revalidateTag("partners", { expire: 0 });
       return partner;
     }),
 
@@ -53,7 +51,6 @@ export const adminPartnersRouter = createTRPCRouter({
           .set({ index: position })
           .where(eq(partnersTable.id, id));
       }
-      revalidateTag("partners", { expire: 0 });
       return { success: true };
     }),
 
@@ -78,13 +75,11 @@ export const adminPartnersRouter = createTRPCRouter({
         .set(data)
         .where(eq(partnersTable.id, id))
         .returning();
-      revalidateTag("partners", { expire: 0 });
       return partner;
     }),
 
   delete: adminProcedure.input(z.number().int()).mutation(async ({ input }) => {
     await db.delete(partnersTable).where(eq(partnersTable.id, input));
-    revalidateTag("partners", { expire: 0 });
     return { success: true };
   }),
 });

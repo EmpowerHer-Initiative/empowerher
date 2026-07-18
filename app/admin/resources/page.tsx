@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 
+import { CACHE_TAGS } from "@/services/cache/tags";
 import { useTRPC } from "@/services/trpc/client";
 
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { RevalidateButton } from "@/components/admin/revalidate-button";
 import { DataTable } from "@/components/data-table";
 
 import { columns } from "./columns";
@@ -54,9 +56,17 @@ export default function ResourcesPage() {
             <SelectItem value="oldest">Oldest first</SelectItem>
           </SelectContent>
         </Select>
-        <Button className="ml-auto" onClick={() => setAddOpen(true)}>
-          <Plus /> Add Resource
-        </Button>
+        <div className="ml-auto flex items-center gap-2">
+          <RevalidateButton
+            tag={CACHE_TAGS.resources}
+            label="Publish"
+            description="Update the live pages"
+            subject="resources"
+          />
+          <Button onClick={() => setAddOpen(true)}>
+            <Plus /> Add Resource
+          </Button>
+        </div>
       </div>
       <DataTable
         isLoading={isPending}

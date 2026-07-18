@@ -1,4 +1,3 @@
-import { revalidateTag } from "next/cache";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
 
@@ -32,7 +31,6 @@ export const adminResourcesRouter = createTRPCRouter({
         .insert(resourcesTable)
         .values(input)
         .returning();
-      revalidateTag("resources", { expire: 0 });
       return resource;
     }),
 
@@ -62,13 +60,11 @@ export const adminResourcesRouter = createTRPCRouter({
         .set(data)
         .where(eq(resourcesTable.id, id))
         .returning();
-      revalidateTag("resources", { expire: 0 });
       return resource;
     }),
 
   delete: adminProcedure.input(z.number().int()).mutation(async ({ input }) => {
     await db.delete(resourcesTable).where(eq(resourcesTable.id, input));
-    revalidateTag("resources", { expire: 0 });
     return { success: true };
   }),
 });

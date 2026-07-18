@@ -7,6 +7,7 @@ import { Reorder } from "motion/react";
 import { toast } from "sonner";
 
 import { agency } from "@/lib/agency-api";
+import { CACHE_TAGS } from "@/services/cache/tags";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
@@ -26,6 +27,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { RevalidateButton } from "@/components/admin/revalidate-button";
 
 import { TeacherForm } from "./teacher-form";
 
@@ -74,8 +76,14 @@ export default function StaffsPage() {
   return (
     <div className="container">
       <h1>Staffs</h1>
-      <div className="mb-4 flex">
-        <Button className="ml-auto" onClick={() => setAddOpen(true)}>
+      <div className="mb-4 flex items-center justify-end gap-2">
+        <RevalidateButton
+          tag={CACHE_TAGS.teachers}
+          label="Publish"
+          description="Update the live About page"
+          subject="staff members"
+        />
+        <Button onClick={() => setAddOpen(true)}>
           <Plus /> Add Staff
         </Button>
       </div>

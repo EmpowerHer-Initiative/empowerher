@@ -5,9 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 
 import { useIsAdmin } from "@/services/auth/hooks/use-role";
+import { CACHE_TAGS } from "@/services/cache/tags";
 import { useTRPC } from "@/services/trpc/client";
 
 import { Button } from "@/components/ui/button";
+import { RevalidateButton } from "@/components/admin/revalidate-button";
 import { DataTable } from "@/components/data-table";
 
 import { workshopColumns } from "./columns";
@@ -26,9 +28,17 @@ export default function WorkshopsPage() {
         <div className="mb-4 flex items-center justify-between">
           <h1 className="mb-0!">Workshops</h1>
           {isAdmin && (
-            <Button onClick={() => setAddWorkshopOpen(true)}>
-              <Plus /> Add Workshop
-            </Button>
+            <div className="flex items-center gap-2">
+              <RevalidateButton
+                tag={CACHE_TAGS.workshops}
+                label="Publish"
+                description="Update the live pages"
+                subject="workshops"
+              />
+              <Button onClick={() => setAddWorkshopOpen(true)}>
+                <Plus /> Add Workshop
+              </Button>
+            </div>
           )}
         </div>
         <DataTable
