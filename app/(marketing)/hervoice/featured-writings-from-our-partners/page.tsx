@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
 import type { FeaturedWriting } from "@/services/db/schema";
 import { caller } from "@/services/trpc/server";
 
-import { Pagination } from "@/components/pagination";
+import { PlatformSection } from "@/components/marketing/hervoice-featured-writings/platform-section";
 import { Reveal } from "@/components/reveal";
 
 const PER_PAGE = 4;
-const BASE_PATH = "/hervoice/featured-writings-from-our-partners";
 
 export const metadata: Metadata = {
   title: `Featured Writings from Our Partners — ${siteConfig.name}`,
@@ -23,103 +22,6 @@ const slugify = (value: string) =>
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
-
-/* ─── Writing Card ──────────────────────────────────────────────────────────── */
-
-const WritingCard = ({
-  writing,
-  platform,
-  index = 0,
-}: {
-  writing: FeaturedWriting;
-  platform: string;
-  index?: number;
-}) => (
-  <Reveal asChild delay={Math.min(index, 3) * 80}>
-    <a
-      href={writing.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group border-border/20 grid gap-5 border-b py-8 last:border-0 sm:grid-cols-[320px_1fr] sm:gap-8 lg:grid-cols-[400px_1fr]"
-    >
-      <div className="relative aspect-[16/9] overflow-hidden rounded-xl">
-        <img
-          src={writing.image}
-          alt={writing.title}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
-        />
-      </div>
-      <div className="flex flex-col justify-center">
-        <span className="bg-primary/10 text-primary w-fit rounded-full px-2.5 py-0.5 text-[10px] font-semibold tracking-[0.1em] uppercase">
-          {platform}
-        </span>
-        <h3 className="group-hover:text-primary mt-2 text-base leading-snug font-semibold transition-colors duration-300">
-          &ldquo;{writing.title}&rdquo;
-        </h3>
-        <p className="text-muted-foreground mt-2 line-clamp-2 text-sm leading-relaxed">
-          {writing.description}
-        </p>
-        <span className="text-primary mt-3 inline-flex items-center gap-1.5 text-xs font-medium opacity-0 transition-all duration-300 group-hover:opacity-100">
-          Read more
-          <ArrowUpRight className="size-3" />
-        </span>
-      </div>
-    </a>
-  </Reveal>
-);
-
-/* ─── Platform Section ───────────────────────────────────────────────────────── */
-
-const PlatformSection = ({
-  id,
-  platform,
-  writingsList,
-  currentPage,
-  totalPages,
-  query,
-}: {
-  id: string;
-  platform: string;
-  writingsList: FeaturedWriting[];
-  currentPage: number;
-  totalPages: number;
-  query: Record<string, string | undefined>;
-}) => (
-  <div id={id} className="scroll-mt-24">
-    <Reveal asChild>
-      <div className="mb-6 flex items-center gap-4">
-        <span className="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
-          {platform}
-        </span>
-        <div className="bg-border/30 h-px flex-1" />
-      </div>
-    </Reveal>
-    <div>
-      {writingsList.map((writing, i) => (
-        <WritingCard
-          key={writing.id}
-          writing={writing}
-          platform={platform}
-          index={i}
-        />
-      ))}
-    </div>
-    {totalPages > 1 && (
-      <div className="mt-10">
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          basePath={BASE_PATH}
-          paramName={id}
-          query={query}
-          hash={`#${id}`}
-        />
-      </div>
-    )}
-  </div>
-);
-
-/* ─── Page ───────────────────────────────────────────────────────────────────── */
 
 const paginate = (list: FeaturedWriting[], page: number) => {
   const totalPages = Math.max(1, Math.ceil(list.length / PER_PAGE));

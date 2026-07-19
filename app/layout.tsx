@@ -12,7 +12,6 @@ import { TRPCReactProvider } from "@/services/trpc/client";
 
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
-import { UserControl } from "@/components/user-control";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -72,10 +71,7 @@ export default function RootLayout({
         <TRPCReactProvider>
           <ThemeProvider defaultTheme="light">
             <NuqsAdapter>
-              <Suspense fallback={null}>
-                <UserControl />
-                {children}
-              </Suspense>
+              <Suspense fallback={null}>{children}</Suspense>
               <Toaster />
             </NuqsAdapter>
           </ThemeProvider>

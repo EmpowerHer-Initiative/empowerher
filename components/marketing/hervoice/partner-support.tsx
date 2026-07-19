@@ -1,0 +1,89 @@
+import { ArrowUpRight } from "lucide-react";
+
+import { Reveal } from "@/components/reveal";
+
+const partnerOrgs = [
+  {
+    name: "Amplify Afghan Women",
+    location: "Melbourne, Australia",
+    href: "https://sites.google.com/view/amplifyafghans/home",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBzmSPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O9",
+  },
+  {
+    name: "National Society of High School Scholars (NSHSS)",
+    location: "Atlanta, Georgia",
+    href: "https://www.nshss.org/",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTjPNmNesfkIRBuYnTVcl8O9LdXP5103pNyJUt",
+  },
+  {
+    name: "Humanitas Media",
+    location: "Minneapolis, Minnesota",
+    href: "https://humanitasmedia.org/",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT2HJysqLQtJ7K2Z4UcWn3gCXRdBvVoY9Ohil8",
+  },
+  {
+    name: "Inanna Publications",
+    location: "Toronto, Canada",
+    href: "https://inanna.ca/",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTIznPr82WufQtTg5yH7OAp0KFlsjbkaYIPZB",
+  },
+];
+
+export const PartnerSupport = () => (
+  <section className="py-28 md:py-40">
+    <div className="container">
+      <Reveal asChild>
+        <div className="max-w-3xl">
+          <p className="text-primary mb-6 text-xs font-semibold tracking-[0.3em] uppercase">
+            Our Partners
+          </p>
+          <h2 className="font-serif text-4xl leading-[1.1] md:text-5xl">
+            Support from Partners
+          </h2>
+          <p className="text-foreground/70 mt-8 text-base leading-[1.8] md:text-lg">
+            EmpowerHer is proud to partner with four respected publication
+            organizations: Amplify Afghan Women, the National Society of High
+            School Scholars (NSHSS), Humanitas Media, and Inanna Publications.
+            Through HerVoice and our partners&apos; platforms, we advocate for
+            girls&apos; education, storytelling, and creative expression. Our
+            partners help our students publish their work and reach wider
+            audiences across the globe. With the support of these organizations
+            and their communities, we are creating a space where Afghan girls
+            can share their stories and voices with the world.
+          </p>
+        </div>
+      </Reveal>
+
+      <Reveal asChild delay={120}>
+        <div className="mt-16 grid gap-5 sm:grid-cols-2">
+          {partnerOrgs.map((p) => (
+            <a
+              key={p.name}
+              href={p.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group border-border/60 bg-background hover:border-primary/40 hover:shadow-primary/5 flex items-center gap-5 rounded-2xl border p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
+            >
+              <div className="border-border/60 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border bg-white p-2">
+                <img
+                  src={p.logo}
+                  alt={p.name}
+                  className="h-full w-full object-contain"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="group-hover:text-primary leading-snug font-semibold transition-colors duration-300">
+                  {p.name}
+                </p>
+                <p className="text-muted-foreground mt-1 text-sm">
+                  {p.location}
+                </p>
+              </div>
+              <ArrowUpRight className="text-muted-foreground group-hover:text-primary size-5 shrink-0 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          ))}
+        </div>
+      </Reveal>
+    </div>
+  </section>
+);

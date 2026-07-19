@@ -8,6 +8,7 @@ import { AccessDenied } from "@/components/access-denied";
 import { NavbarStaff } from "@/components/staff/navbar-staff";
 import { PeriodProvider } from "@/components/staff/period-context";
 import { PeriodSwitcher } from "@/components/staff/period-switcher";
+import { UserControl } from "@/components/user-control";
 
 export default async function StaffLayout({
   children,
@@ -37,6 +38,7 @@ export default async function StaffLayout({
       )}
     >
       <PeriodProvider>
+        <UserControl />
         <NavbarStaff />
         {children}
         <PeriodSwitcher />

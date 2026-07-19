@@ -7,6 +7,7 @@ import { auth } from "@/services/auth/auth";
 
 import { AccessDenied } from "@/components/access-denied";
 import { NavbarAdmin } from "@/components/admin/navbar-admin";
+import { UserControl } from "@/components/user-control";
 
 import AdminLoading from "./loading";
 
@@ -26,7 +27,12 @@ async function AdminGuard({ children }: { children: React.ReactNode }) {
     return <AccessDenied area="admin" role={user.user.role} />;
   }
 
-  return children;
+  return (
+    <>
+      <UserControl />
+      {children}
+    </>
+  );
 }
 
 export default function AdminLayout({
