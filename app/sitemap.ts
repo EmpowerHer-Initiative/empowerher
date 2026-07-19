@@ -2,8 +2,9 @@ import type { MetadataRoute } from "next";
 import { allHervoices } from "content-collections";
 
 import { siteConfig } from "@/lib/site";
+import { caller } from "@/services/trpc/server";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: siteConfig.url,
@@ -19,9 +20,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const hervoiceRoutes: MetadataRoute.Sitemap = allHervoices.map((post) => ({
-    url: `${siteConfig.url}/hervoice/${post._meta.path}`,
-    lastModified: new Date(post.date),
+  const dbStories = await caller.hervoice.list();
+  const stories = [
+    ...dbStories.map((s) => ({ slug: s.slug, date: s.createdAt })),
+    ...allHervoices.map((p) => ({ slug: p._meta.path, date: p.date })),
+  ];
+
+  const hervoiceRoutes: MetadataRoute.Sitemap = stories.map((s) => ({
+    url: `${siteConfig.url}/hervoice/${s.slug}`,
+    lastModified: new Date(s.date),
     changeFrequency: "monthly",
     priority: 0.6,
   }));

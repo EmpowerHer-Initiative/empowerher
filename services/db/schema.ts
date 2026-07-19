@@ -250,6 +250,28 @@ export const featuredWritingsTable = pgTable("featured_writings", {
   createdAt: timestamp().notNull().defaultNow(),
 });
 
+// Regular (non-contest) HerVoice stories. Contest winners stay file-based in
+// content/hervoice/winners and are never stored here.
+export const hervoiceTable = pgTable("hervoice", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text(),
+  content: text().notNull(), // markdown body
+  image: varchar("image", { length: 255 }),
+  imageAlt: varchar("image_alt", { length: 255 }),
+  imageCredit: text("image_credit"),
+  authorName: varchar("author_name", { length: 255 }),
+  authorBio: text("author_bio"),
+  authorPosition: varchar("author_position", { length: 255 }),
+  authorInstagram: varchar("author_instagram", { length: 255 }),
+  authorFacebook: varchar("author_facebook", { length: 255 }),
+  authorLinkedin: varchar("author_linkedin", { length: 255 }),
+  messageToWorld: text("message_to_world"),
+  hide: boolean().notNull().default(false),
+  createdAt: timestamp().notNull().defaultNow(),
+});
+
 export type Comment = typeof commentsTable.$inferSelect;
 export type InsertComment = typeof commentsTable.$inferInsert;
 
@@ -276,3 +298,6 @@ export type InsertResource = typeof resourcesTable.$inferInsert;
 
 export type FeaturedWriting = typeof featuredWritingsTable.$inferSelect;
 export type InsertFeaturedWriting = typeof featuredWritingsTable.$inferInsert;
+
+export type HerVoice = typeof hervoiceTable.$inferSelect;
+export type InsertHerVoice = typeof hervoiceTable.$inferInsert;

@@ -57,7 +57,8 @@ const legal = defineCollection({
 
 const hervoice = defineCollection({
   name: "hervoice",
-  directory: "content/hervoice",
+  // Only contest winners remain file-based; regular stories live in the DB.
+  directory: "content/hervoice/winners",
   include: "**/*.mdx",
   schema: z.object({
     title: z.string(),

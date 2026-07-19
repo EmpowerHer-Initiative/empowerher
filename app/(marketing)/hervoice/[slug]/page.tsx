@@ -5,13 +5,15 @@ import { allHervoices } from "content-collections";
 import { format } from "date-fns";
 
 import { siteConfig } from "@/lib/site";
+import { caller } from "@/services/trpc/server";
 
 import { AuthorCard } from "@/components/hervoice/author-card";
 import { BackButton } from "@/components/hervoice/back-button";
 import { CommentsSection } from "@/components/hervoice/comments-section";
+import { StoryMarkdown } from "@/components/hervoice/markdown";
 import { Reveal } from "@/components/reveal";
 
-/* ─── MDX Components ───────────────────────────────────────────────────────── */
+/* ─── MDX Components (winners only) ─────────────────────────────────────────── */
 
 function PoemWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -61,21 +63,53 @@ function MdxImage({ src, alt }: { src: string; alt?: string }) {
 
 const mdxComponents = { PoemWrapper, Poem, Image: MdxImage };
 
+/* ─── Data loading ──────────────────────────────────────────────────────────── */
+
+type Story = {
+  title: string;
+  description?: string | null;
+  image?: string | null;
+  imageAlt?: string | null;
+  imageCredit?: string | null;
+  date: Date;
+  authorName?: string | null;
+  authorBio?: string | null;
+  authorPosition?: string | null;
+  authorInstagram?: string | null;
+  authorFacebook?: string | null;
+  authorLinkedin?: string | null;
+  messageToWorld?: string | null;
+  slug: string;
+  /** DB stories carry markdown; winner stories carry compiled MDX. */
+  content?: string;
+  mdx?: string;
+};
+
+async function loadStory(slug: string): Promise<Story | null> {
+  const dbStory = await caller.hervoice.bySlug(slug);
+  if (dbStory) return { ...dbStory, date: dbStory.createdAt };
+
+  const winner = allHervoices.find((p) => p._meta.path === slug);
+  if (winner) return { ...winner, slug: winner._meta.path };
+
+  return null;
+}
+
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = allHervoices.find((p) => p._meta.path === slug);
+  const post = await loadStory(slug);
   if (!post) return {};
 
   return {
     title: post.title,
-    description: post.description,
+    description: post.description ?? undefined,
     openGraph: {
       title: post.title,
-      description: post.description,
+      description: post.description ?? undefined,
       type: "article",
       url: `${siteConfig.url}/hervoice/${slug}`,
       images: post.image
@@ -85,19 +119,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       title: post.title,
-      description: post.description,
+      description: post.description ?? undefined,
       images: post.image ? [post.image] : [siteConfig.ogImage],
     },
   };
 }
 
-export function generateStaticParams() {
-  return allHervoices.map((post) => ({ slug: post._meta.path }));
+export async function generateStaticParams() {
+  const dbStories = await caller.hervoice.list();
+  const slugs = new Set<string>([
+    ...dbStories.map((s) => s.slug),
+    ...allHervoices.map((p) => p._meta.path),
+  ]);
+  return [...slugs].map((slug) => ({ slug }));
 }
 
 export default async function HerVoicePostPage({ params }: Props) {
   const { slug } = await params;
-  const post = allHervoices.find((p) => p._meta.path === slug);
+  const post = await loadStory(slug);
 
   if (!post) return notFound();
 
@@ -121,16 +160,16 @@ export default async function HerVoicePostPage({ params }: Props) {
               </p>
               <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
                 <p className="text-muted-foreground/60 text-sm">
-                  {format(post.date, "MMMM d, yyyy")}
+                  {format(new Date(post.date), "MMMM d, yyyy")}
                 </p>
                 {post.authorName && (
                   <AuthorCard
                     authorName={post.authorName}
-                    authorBio={post.authorBio}
-                    authorPosition={post.authorPosition}
-                    authorInstagram={post.authorInstagram}
-                    authorFacebook={post.authorFacebook}
-                    authorLinkedin={post.authorLinkedin}
+                    authorBio={post.authorBio ?? undefined}
+                    authorPosition={post.authorPosition ?? undefined}
+                    authorInstagram={post.authorInstagram ?? undefined}
+                    authorFacebook={post.authorFacebook ?? undefined}
+                    authorLinkedin={post.authorLinkedin ?? undefined}
                   />
                 )}
               </div>
@@ -172,10 +211,14 @@ export default async function HerVoicePostPage({ params }: Props) {
       <section className="pb-28 md:pb-40">
         <div className="container">
           <div className="mx-auto max-w-3xl">
-            <Reveal asChild>
-              <div className="prose-theme prose text-base leading-[1.9]">
-                <MDXContent code={post.mdx} components={mdxComponents} />
-              </div>
+            <Reveal asChild threshold={0.01}>
+              {post.mdx ? (
+                <div className="prose-theme prose text-base leading-[1.9]">
+                  <MDXContent code={post.mdx} components={mdxComponents} />
+                </div>
+              ) : (
+                <StoryMarkdown content={post.content ?? ""} />
+              )}
             </Reveal>
 
             {post.messageToWorld && (
@@ -218,7 +261,7 @@ export default async function HerVoicePostPage({ params }: Props) {
               </Reveal>
             )}
 
-            <CommentsSection slug={`/hervoice/${post._meta.path}`} />
+            <CommentsSection slug={`/hervoice/${post.slug}`} />
           </div>
         </div>
       </section>

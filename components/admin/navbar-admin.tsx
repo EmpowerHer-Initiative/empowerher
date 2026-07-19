@@ -10,6 +10,7 @@ const links: { label: string; href: string }[] = [
   { label: "Logs", href: "/admin/logs" },
   { label: "Comments", href: "/admin/comments" },
   { label: "Resources", href: "/admin/resources" },
+  { label: "HerVoice", href: "/admin/hervoice" },
   { label: "Featured Writings", href: "/admin/featured-writings" },
   { label: "All Students", href: "/admin/all-students" },
   { label: "Staffs", href: "/admin/staffs" },

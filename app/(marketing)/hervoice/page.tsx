@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { allHervoices } from "content-collections";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
+import { caller } from "@/services/trpc/server";
 
 import { Pagination } from "@/components/pagination";
 import { Reveal } from "@/components/reveal";
@@ -318,10 +318,14 @@ const Eligibility = () => (
 
 const PER_PAGE = 6;
 
-const FeaturedWritings = ({ page }: { page: number }) => {
-  const stories = allHervoices
-    .filter((s) => !s.contestPlace && !s.hide)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+const FeaturedWritings = async ({ page }: { page: number }) => {
+  const all = await caller.hervoice.list();
+  const stories = all
+    .filter((s) => !s.hide)
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
 
   const totalPages = Math.max(1, Math.ceil(stories.length / PER_PAGE));
   const currentPage = Math.min(page, totalPages);
@@ -354,8 +358,8 @@ const FeaturedWritings = ({ page }: { page: number }) => {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {paginatedStories.map((story, i) => (
               <Link
-                key={story._meta.path}
-                href={`/hervoice/${story._meta.path}`}
+                key={story.slug}
+                href={`/hervoice/${story.slug}`}
                 className="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col overflow-hidden rounded-2xl border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="bg-muted relative aspect-[16/10] overflow-hidden">
