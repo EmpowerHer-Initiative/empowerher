@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { allHervoices } from "content-collections";
 
 import { siteConfig } from "@/lib/site";
-import { caller } from "@/services/trpc/server";
+import { getHervoiceStories } from "@/services/trpc/routers/hervoice";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -20,7 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const dbStories = await caller.hervoice.list();
+  const dbStories = await getHervoiceStories();
   const stories = [
     ...dbStories.map((s) => ({ slug: s.slug, date: s.createdAt })),
     ...allHervoices.map((p) => ({ slug: p._meta.path, date: p.date })),

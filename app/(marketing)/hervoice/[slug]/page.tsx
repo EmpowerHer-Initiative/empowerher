@@ -5,7 +5,10 @@ import { allHervoices } from "content-collections";
 import { format } from "date-fns";
 
 import { siteConfig } from "@/lib/site";
-import { caller } from "@/services/trpc/server";
+import {
+  getHervoiceBySlug,
+  getHervoiceStories,
+} from "@/services/trpc/routers/hervoice";
 
 import { AuthorCard } from "@/components/hervoice/author-card";
 import { BackButton } from "@/components/hervoice/back-button";
@@ -86,7 +89,7 @@ type Story = {
 };
 
 async function loadStory(slug: string): Promise<Story | null> {
-  const dbStory = await caller.hervoice.bySlug(slug);
+  const dbStory = await getHervoiceBySlug(slug);
   if (dbStory) return { ...dbStory, date: dbStory.createdAt };
 
   const winner = allHervoices.find((p) => p._meta.path === slug);
@@ -126,7 +129,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const dbStories = await caller.hervoice.list();
+  const dbStories = await getHervoiceStories();
   const slugs = new Set<string>([
     ...dbStories.map((s) => s.slug),
     ...allHervoices.map((p) => p._meta.path),

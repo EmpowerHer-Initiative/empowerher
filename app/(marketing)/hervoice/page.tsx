@@ -1,10 +1,12 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { siteConfig } from "@/lib/site";
-import { caller } from "@/services/trpc/server";
+import { getHervoiceStories } from "@/services/trpc/routers/hervoice";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { Pagination } from "@/components/pagination";
 import { Reveal } from "@/components/reveal";
 
@@ -318,8 +320,37 @@ const Eligibility = () => (
 
 const PER_PAGE = 6;
 
+const WritingsSkeleton = () => (
+  <section
+    id="writings"
+    className="bg-foreground/[0.02] scroll-mt-20 py-28 md:py-40 lg:scroll-mt-24"
+  >
+    <div className="container">
+      <div className="mb-14">
+        <Skeleton className="mb-4 h-3 w-32" />
+        <Skeleton className="h-12 w-48" />
+      </div>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: PER_PAGE }).map((_, i) => (
+          <div
+            key={i}
+            className="border-border/40 bg-background flex flex-col overflow-hidden rounded-2xl border"
+          >
+            <Skeleton className="aspect-[16/10] w-full rounded-none" />
+            <div className="flex flex-1 flex-col gap-3 p-6">
+              <Skeleton className="h-6 w-3/4" />
+              <Skeleton className="h-4 w-1/3" />
+              <Skeleton className="mt-6 h-4 w-24" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 const FeaturedWritings = async ({ page }: { page: number }) => {
-  const all = await caller.hervoice.list();
+  const all = await getHervoiceStories();
   const stories = all
     .filter((s) => !s.hide)
     .sort(
@@ -653,7 +684,9 @@ export default async function HerVoicePage({
       <HerVoiceHero />
       <HowToSubmit />
       <Eligibility />
-      <FeaturedWritings page={currentPage} />
+      <Suspense fallback={<WritingsSkeleton />}>
+        <FeaturedWritings page={currentPage} />
+      </Suspense>
       <CongressionalTestimonies />
       <PartnerSupport />
       <WritingContestCTA />
