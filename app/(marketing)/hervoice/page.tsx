@@ -7,8 +7,9 @@ import { getHervoiceStories } from "@/lib/cache/hervoice";
 import { siteConfig } from "@/lib/site";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { Pagination } from "@/components/pagination";
 import { Reveal } from "@/components/reveal";
+
+import { WritingsPager } from "./writings-pager";
 
 export const metadata: Metadata = {
   title: `${siteConfig.pages.hervoice.title} — ${siteConfig.name}`,
@@ -349,21 +350,20 @@ const WritingsSkeleton = () => (
   </section>
 );
 
-const FeaturedWritings = async ({ page }: { page: number }) => {
+const FeaturedWritings = async () => {
   const all = await getHervoiceStories();
   const stories = all
     .filter((s) => !s.hide)
     .sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
-
-  const totalPages = Math.max(1, Math.ceil(stories.length / PER_PAGE));
-  const currentPage = Math.min(page, totalPages);
-  const paginatedStories = stories.slice(
-    (currentPage - 1) * PER_PAGE,
-    currentPage * PER_PAGE
-  );
+    )
+    .map((s) => ({
+      slug: s.slug,
+      title: s.title,
+      image: s.image,
+      authorName: s.authorName,
+    }));
 
   return (
     <section
@@ -384,59 +384,8 @@ const FeaturedWritings = async ({ page }: { page: number }) => {
           </div>
         </Reveal>
 
-        {/* Editorial card grid */}
-        <Reveal asChild delay={80}>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {paginatedStories.map((story, i) => (
-              <Link
-                key={story.slug}
-                href={`/hervoice/${story.slug}`}
-                className="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col overflow-hidden rounded-2xl border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl"
-              >
-                <div className="bg-muted relative aspect-[16/10] overflow-hidden">
-                  {story.image && (
-                    <img
-                      src={story.image}
-                      alt={story.title}
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
-                    />
-                  )}
-                  <span className="bg-background/90 text-foreground absolute top-4 left-4 rounded-full px-3 py-1 font-serif text-xs backdrop-blur-sm">
-                    {String((currentPage - 1) * PER_PAGE + i + 1).padStart(
-                      2,
-                      "0"
-                    )}
-                  </span>
-                </div>
-                <div className="flex flex-1 flex-col p-6">
-                  <p className="group-hover:text-primary font-serif text-xl leading-snug transition-colors duration-300">
-                    &ldquo;{story.title}&rdquo;
-                  </p>
-                  {story.authorName && (
-                    <p className="text-muted-foreground mt-2 text-sm">
-                      {story.authorName}
-                    </p>
-                  )}
-                  <span className="text-muted-foreground/50 group-hover:text-primary mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-medium transition-colors duration-300">
-                    Read story
-                    <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </Reveal>
-
-        {totalPages > 1 && (
-          <div className="mt-12">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              basePath="/hervoice"
-              hash="#writings"
-            />
-          </div>
-        )}
+        {/* Editorial card grid — pagination handled client-side */}
+        <WritingsPager stories={stories} />
 
         <Reveal asChild>
           <div className="mt-12 text-center">
@@ -671,21 +620,14 @@ const WritingContestCTA = () => (
 
 /* ─── Page ──────────────────────────────────────────────────────────────────── */
 
-export default async function HerVoicePage({
-  searchParams,
-}: {
-  searchParams: Promise<{ page?: string }>;
-}) {
-  const { page } = await searchParams;
-  const currentPage = Math.max(1, Number(page) || 1);
-
+export default function HerVoicePage() {
   return (
     <>
       <HerVoiceHero />
       <HowToSubmit />
       <Eligibility />
       <Suspense fallback={<WritingsSkeleton />}>
-        <FeaturedWritings page={currentPage} />
+        <FeaturedWritings />
       </Suspense>
       <CongressionalTestimonies />
       <PartnerSupport />
