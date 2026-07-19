@@ -4,11 +4,8 @@ import { MDXContent } from "@content-collections/mdx/react";
 import { allHervoices } from "content-collections";
 import { format } from "date-fns";
 
+import { getHervoiceStories } from "@/lib/cache/hervoice";
 import { siteConfig } from "@/lib/site";
-import {
-  getHervoiceBySlug,
-  getHervoiceStories,
-} from "@/services/trpc/routers/hervoice";
 
 import { AuthorCard } from "@/components/hervoice/author-card";
 import { BackButton } from "@/components/hervoice/back-button";
@@ -89,7 +86,8 @@ type Story = {
 };
 
 async function loadStory(slug: string): Promise<Story | null> {
-  const dbStory = await getHervoiceBySlug(slug);
+  const stories = await getHervoiceStories();
+  const dbStory = stories.find((s) => s.slug === slug);
   if (dbStory) return { ...dbStory, date: dbStory.createdAt };
 
   const winner = allHervoices.find((p) => p._meta.path === slug);

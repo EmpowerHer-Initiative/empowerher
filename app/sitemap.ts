@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
 import { allHervoices } from "content-collections";
 
+import { getHervoiceStories } from "@/lib/cache/hervoice";
 import { siteConfig } from "@/lib/site";
-import { getHervoiceStories } from "@/services/trpc/routers/hervoice";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [

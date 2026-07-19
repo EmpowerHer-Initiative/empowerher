@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
+import { getHervoiceStories } from "@/lib/cache/hervoice";
 import { siteConfig } from "@/lib/site";
-import { getHervoiceStories } from "@/services/trpc/routers/hervoice";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { Pagination } from "@/components/pagination";
