@@ -7,19 +7,36 @@
     "heading": "Empowering Dreams,",
     "bodyText": "At EmpowerHer, we believe every Afghan girl and woman has a story worth telling and a future worth fighting for. Through mentorship programs and publication opportunities, we help them find the tools, confidence, and platforms they need to raise their voices and become changemakers in their communities and beyond.",
     "images": [
-      { "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTN5bpAvcOGaUAyKX1dPWs9RnojYZeu4JbiQHv" },
-      { "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTvX8bHR050TX8DRt9gfxu6sU74iOHozSwBKGJ" },
-      { "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfCWhJzn3C8OG5vkbyTeNds9rYucAtpJg0PMV" },
-      { "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTQRqW7Y9a2imSKVTAuXrJU9NxI0LRsOFlgdvw" }
+      {
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTN5bpAvcOGaUAyKX1dPWs9RnojYZeu4JbiQHv"
+      },
+      {
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTvX8bHR050TX8DRt9gfxu6sU74iOHozSwBKGJ"
+      },
+      {
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfCWhJzn3C8OG5vkbyTeNds9rYucAtpJg0PMV"
+      },
+      {
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTQRqW7Y9a2imSKVTAuXrJU9NxI0LRsOFlgdvw"
+      }
     ]
   },
   "statsBar": {
     "heading": "Abandoned Futures: Let Afghan Girls Learn",
     "bodyText": "Since September 2021, all Afghan girls over the age of 12 have been banned from attending school.",
     "stats": [
-      { "number": "1.1 million", "label": "Girls have lost access to formal education." },
-      { "number": "2.5 million", "label": "School-aged Afghan girls (80%) are currently out of school." },
-      { "number": "30%", "label": "Nearly 30% of Afghan girls have never attended primary school." }
+      {
+        "number": "1.1 million",
+        "label": "Girls have lost access to formal education."
+      },
+      {
+        "number": "2.5 million",
+        "label": "School-aged Afghan girls (80%) are currently out of school."
+      },
+      {
+        "number": "30%",
+        "label": "Nearly 30% of Afghan girls have never attended primary school."
+      }
     ]
   },
   "herVoiceContest": {
@@ -61,10 +78,22 @@
     "heading": "EmpowerHer at a Glance",
     "stats": [
       { "number": "500+", "label": "Students Mentored" },
-      { "number": "9+", "label": "Countries Reached", "detail": "Afghanistan, Tajikistan, Kazakhstan, Pakistan, Iran, Turkey, India, Bangladesh, Malaysia" },
-      { "number": "8+", "label": "Countries in Our Global Team", "detail": "Afghanistan, Poland, Peru, United States, China, Pakistan, Iran, Bangladesh" },
+      {
+        "number": "9+",
+        "label": "Countries Reached",
+        "detail": "Afghanistan, Tajikistan, Kazakhstan, Pakistan, Iran, Turkey, India, Bangladesh, Malaysia"
+      },
+      {
+        "number": "8+",
+        "label": "Countries in Our Global Team",
+        "detail": "Afghanistan, Poland, Peru, United States, China, Pakistan, Iran, Bangladesh"
+      },
       { "number": "25+", "label": "Provinces of Afghanistan Reached" },
-      { "number": "50+", "label": "Student Publications", "detail": "Published through HerVoice" }
+      {
+        "number": "50+",
+        "label": "Student Publications",
+        "detail": "Published through HerVoice"
+      }
     ]
   },
   "mission": {
