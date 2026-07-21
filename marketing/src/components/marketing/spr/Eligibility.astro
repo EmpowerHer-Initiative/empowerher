@@ -1,0 +1,94 @@
+---
+// Ports the Eligibility section from app/(marketing)/success-stories/spr/page.tsx
+import Mail from "../../icons/Mail.astro";
+import Reveal from "../home/Reveal.astro";
+
+interface HowToApply {
+  eyebrow: string;
+  title: string;
+  bodyBefore: string;
+  bodyAfter: string;
+}
+interface Props {
+  eyebrow: string;
+  heading: string;
+  subtitle: string;
+  items: string[];
+  howToApply: HowToApply;
+}
+const { eyebrow, heading, subtitle, items, howToApply } = Astro.props;
+
+const ruleAccents = [
+  "from-amber-300 to-amber-500 shadow-amber-500/30",
+  "from-rose-300 to-rose-500 shadow-rose-500/30",
+  "from-emerald-300 to-emerald-500 shadow-emerald-500/30",
+];
+---
+<section class="relative overflow-hidden bg-gradient-to-b from-[#0b1f3a] to-[#13294d] py-28 text-white md:py-40">
+  {/* Soft glow accents */}
+  <div class="pointer-events-none absolute -top-24 -right-24 size-96 rounded-full bg-amber-400/10 blur-3xl"></div>
+  <div class="pointer-events-none absolute -bottom-24 -left-24 size-96 rounded-full bg-emerald-400/10 blur-3xl"></div>
+
+  <div class="relative container">
+    <div class="mx-auto max-w-2xl">
+      <Reveal>
+        <p class="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase">
+          {eyebrow}
+        </p>
+        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+          {heading}
+        </h2>
+        <p class="mt-6 text-base leading-relaxed text-white/70">
+          {subtitle}
+        </p>
+      </Reveal>
+
+      <ol class="mt-12 space-y-5">
+        {items.map((rule, i) => (
+          <Reveal
+            class="group flex gap-5 rounded-2xl border border-white/10 bg-white/[0.05] p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.09]"
+            delay={i * 140}
+          >
+            <span
+              class={`flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${ruleAccents[i % ruleAccents.length]} font-serif text-xl text-[#0b1f3a] shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:-rotate-6`}
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <p class="self-center text-base leading-relaxed text-white/85">
+              {rule}
+            </p>
+          </Reveal>
+        ))}
+      </ol>
+
+      {/* How to apply — inline */}
+      <Reveal class="mt-16 border-t border-white/15 pt-12">
+        <p class="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase">
+          {howToApply.eyebrow}
+        </p>
+        <h3 class="mt-4 font-serif text-3xl text-white">
+          {howToApply.title}
+        </h3>
+        <p class="mt-5 text-base leading-relaxed text-white/75">
+          {howToApply.bodyBefore}{" "}
+          <a
+            href="mailto:apply@empowerher-initiative.org"
+            class="font-medium text-amber-300 underline decoration-amber-300/40 underline-offset-4 transition-colors hover:decoration-amber-300"
+          >
+            apply@empowerher-initiative.org
+          </a>
+          {howToApply.bodyAfter}
+        </p>
+        <div class="mt-8">
+          <a
+            href="mailto:apply@empowerher-initiative.org"
+            class="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-[#0b1f3a] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg hover:shadow-white/20 active:scale-[0.98]"
+          >
+            <Mail class="size-4" />
+            Apply via Email
+          </a>
+        </div>
+      </Reveal>
+    </div>
+  </div>
+</section>

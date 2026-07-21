@@ -1,0 +1,155 @@
+{
+  "seo": {
+    "title": "EmpowerHer Initiative",
+    "description": "A nonprofit organization empowering Afghan women and girls across the Middle East and Central Asia through mentorship, leadership development, educational support, storytelling, publication, and community engagement."
+  },
+  "hero": {
+    "heading": "Empowering Dreams,",
+    "bodyText": "At EmpowerHer, we believe every Afghan girl and woman has a story worth telling and a future worth fighting for. Through mentorship programs and publication opportunities, we help them find the tools, confidence, and platforms they need to raise their voices and become changemakers in their communities and beyond.",
+    "images": [
+      { "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTN5bpAvcOGaUAyKX1dPWs9RnojYZeu4JbiQHv" },
+      { "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTvX8bHR050TX8DRt9gfxu6sU74iOHozSwBKGJ" },
+      { "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfCWhJzn3C8OG5vkbyTeNds9rYucAtpJg0PMV" },
+      { "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTQRqW7Y9a2imSKVTAuXrJU9NxI0LRsOFlgdvw" }
+    ]
+  },
+  "statsBar": {
+    "heading": "Abandoned Futures: Let Afghan Girls Learn",
+    "bodyText": "Since September 2021, all Afghan girls over the age of 12 have been banned from attending school.",
+    "stats": [
+      { "number": "1.1 million", "label": "Girls have lost access to formal education." },
+      { "number": "2.5 million", "label": "School-aged Afghan girls (80%) are currently out of school." },
+      { "number": "30%", "label": "Nearly 30% of Afghan girls have never attended primary school." }
+    ]
+  },
+  "herVoiceContest": {
+    "eyebrow": "EmpowerHer Presents",
+    "heading": "HerVoice",
+    "headingSub": "Writing Contest",
+    "bodyText": "Courage, identity, and storytelling — by Afghan girls and women, written from within Afghanistan.",
+    "stats": [
+      { "value": "300+", "label": "Submissions" },
+      { "value": "3", "label": "Honorees" },
+      { "value": "5", "label": "Cash Winners" }
+    ],
+    "winners": [
+      {
+        "rank": "1st",
+        "prize": "$400",
+        "name": "Z.H.",
+        "title": "Bread and a Red Apple",
+        "quote": "I have turned the basement of my house into a school, a secret school for girls, to teach them everything that is forbidden."
+      },
+      {
+        "rank": "2nd",
+        "prize": "$300",
+        "name": "Roqia Qasemi",
+        "title": "When Did I Feel That I Am a Strong Girl?",
+        "quote": "You close the door, I will reach my dreams through the window. You beat me, I will use my blood as ink for my pen."
+      },
+      {
+        "rank": "3rd",
+        "prize": "$200",
+        "name": "Nazifa Popal",
+        "title": "What I Carried in My Voice",
+        "quote": "Every limitation had been, in its own crooked and unasked-for way, a preparation. And I had used all of it."
+      }
+    ]
+  },
+  "atAGlance": {
+    "eyebrow": "By the Numbers",
+    "heading": "EmpowerHer at a Glance",
+    "stats": [
+      { "number": "500+", "label": "Students Mentored" },
+      { "number": "9+", "label": "Countries Reached", "detail": "Afghanistan, Tajikistan, Kazakhstan, Pakistan, Iran, Turkey, India, Bangladesh, Malaysia" },
+      { "number": "8+", "label": "Countries in Our Global Team", "detail": "Afghanistan, Poland, Peru, United States, China, Pakistan, Iran, Bangladesh" },
+      { "number": "25+", "label": "Provinces of Afghanistan Reached" },
+      { "number": "50+", "label": "Student Publications", "detail": "Published through HerVoice" }
+    ]
+  },
+  "mission": {
+    "eyebrow": "Message From Our Co-Founders",
+    "heading": "We see you. We hear you.",
+    "paragraphs": [
+      "EmpowerHer was born from the hope and strength that you carry within you—even in the darkest of days. You are not forgotten. Your dreams, your voices, your potential—they matter. They are powerful, and they are needed in this world.",
+      "We know that many of you are facing unimaginable challenges. Barriers to education, threats to your freedom, and a world that too often refuses to see your worth. But we believe in your resilience. And through EmpowerHer, we are building a path forward—together.",
+      "Our mission is simple: to support you, to uplift you, and to walk beside you. Whether through education, mentorship, leadership workshops, or simply being a voice when yours is silenced, we are here for you.",
+      "Please don't give up. There is a growing community—inside and outside Afghanistan—that believes in your power to lead, to learn, and to rise. And we are proud to stand with you."
+    ],
+    "signatureName": "Mahdi Rahimi & Nahid Karimi",
+    "signatureRole": "– Co-Founders",
+    "quotes": [
+      {
+        "text": "For too long, Afghan girls have been written into history as victims. This time, let's write our own.",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTPXlWDWYhZvxtB3ycfP5jQXiMRAWOCrnJ2oYe",
+        "name": "Nahid Karimi",
+        "role": "Co-Founder"
+      },
+      {
+        "text": "WE RISE, WE RISE, WE RISE IN THE FACE OF ADVERSITY",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfgQqh43C8OG5vkbyTeNds9rYucAtpJg0PMV7",
+        "name": "Mahdi Rahimi",
+        "role": "Co-Founder"
+      }
+    ]
+  },
+  "programs": {
+    "eyebrow": "What We Do",
+    "heading": "Our Programs",
+    "bodyText": "Our projects are designed to meet Afghan girls where they are—and help them grow into who they're meant to be. Each initiative provides a safe, inclusive space where participants gain the tools, guidance, and community they need to rise. From leadership workshops to storytelling programs, every project builds confidence, sharpens skills, and encourages bold self-expression. Together, we're creating spaces where Afghan girls can learn, lead, and shape their own futures.",
+    "cards": [
+      {
+        "label": "Storytelling Platform",
+        "title": "HerVoice",
+        "description": "A platform for Afghan girls to share their stories, amplify their voices, and inspire change through creative expression.",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEK40ctbfRbjSv9fDHMpJXBriOWVtPmoQZNC3",
+        "alt": "HerVoice"
+      },
+      {
+        "label": "Core Program",
+        "title": "Mentorship",
+        "description": "EmpowerHer's core program offers Afghan girls free workshops and mentorship to build resilience, gain support, and launch impact projects.",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTztHu6kOQlbZOApif7EkNI4MXGo08zhqH6CwY",
+        "alt": "Mentorship"
+      }
+    ]
+  },
+  "impactStory": {
+    "eyebrow": "Media Coverage",
+    "heading": "EmpowerHer in the News",
+    "bodyText": "Our mission to empower Afghan girls has been recognized and celebrated by local media, amplifying the voices of resilience and leadership within our community.",
+    "subheading": "Featured in Rappahannock News",
+    "subheadingBody": "EmpowerHer was featured in a local Virginia newsletter through our former partnership with Rappahannock News. This acknowledgment underscored our mission to empower Afghan girls and amplify their narratives of resilience and leadership within a broader community.",
+    "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBGUBwPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O",
+    "imageAlt": "EmpowerHer in the news"
+  },
+  "mediaSpotlight": {
+    "eyebrow": "Watch & Listen",
+    "heading": "Featured Media",
+    "features": [
+      {
+        "youtubeId": "l5YSKsYqbfY",
+        "label": "Podcast",
+        "title": "Interview with EmpowerHer Co-Founders",
+        "description": "Our co-founders, Nahid Karimi and Mahdi Rahimi, joined the NSHSS Scholars Connect Podcast to share their personal journeys from Afghanistan to the United States and the experiences that inspired them to launch EmpowerHer. In this episode, they discuss the challenges facing Afghan girls under Taliban rule, the role of education and mentorship in creating opportunity, and how young people can transform adversity into meaningful impact and leadership."
+      }
+    ]
+  },
+  "partners": {
+    "eyebrow": "Trusted Partners & Supporters",
+    "partners": [
+      {
+        "name": "Afghan Girls Financial Assistance Fund",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpavV7aqrM0zsm5gThJ2eDxZtjCFUdBGElvb1"
+      }
+    ]
+  },
+  "newsletter": {
+    "badge": "Stay Connected",
+    "heading": "Join Our",
+    "bodyText": "Get updates on our programs, success stories, and ways to support Afghan girls' education. Be part of a growing movement for change.",
+    "cardTitle": "Subscribe to Our Newsletter",
+    "cardBody": "Join hundreds of supporters and community members.",
+    "footnote": "We respect your privacy. Unsubscribe anytime."
+  }
+}

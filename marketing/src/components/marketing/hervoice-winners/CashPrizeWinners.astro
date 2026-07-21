@@ -1,0 +1,107 @@
+---
+// Ports components/marketing/hervoice-winners/cash-prize-winners.tsx
+import Reveal from "../home/Reveal.astro";
+
+interface Winner {
+  rank: string;
+  prize: string;
+  name: string;
+  title: string;
+  image: string;
+  slug: string;
+}
+interface Props {
+  title: string;
+  winners: Winner[];
+}
+const { title, winners } = Astro.props;
+
+// Ribbon gradient styling stays hardcoded and is zipped to winners by index.
+const RIBBON_BG = {
+  g: "bg-[linear-gradient(180deg,#E0AE3C,#C8902A)]",
+  b: "bg-[linear-gradient(180deg,#2E9BE6,#1E78C4)]",
+  s: "bg-[linear-gradient(180deg,#46586F,#33445C)]",
+  t: "bg-[linear-gradient(180deg,#2A9D8F,#1F7A6E)]",
+  p: "bg-[linear-gradient(180deg,#7C5CBF,#5E3FA0)]",
+} as const;
+const RIBBON_KEYS = ["g", "b", "s", "t", "p"] as const;
+
+const cashWinners = winners.map((w, i) => ({ ...w, ribbon: RIBBON_KEYS[i] }));
+const topThree = cashWinners.slice(0, 3);
+const bottomTwo = cashWinners.slice(3);
+---
+<section class="bg-white px-6 py-16 md:py-24">
+  <div class="mx-auto max-w-6xl">
+    <Reveal>
+      <h2 class="text-center font-serif text-3xl font-bold tracking-tight md:text-4xl">
+        {title}
+      </h2>
+    </Reveal>
+
+    {/* Top 3 — larger cards */}
+    <Reveal>
+      <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+        {topThree.map((w) => (
+          <a
+            href={`/hervoice/${w.slug}`}
+            class="group relative overflow-hidden rounded-2xl border border-[#ECE3D2] bg-white shadow-[0_12px_32px_-16px_rgba(26,34,48,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_-18px_rgba(26,34,48,.45)]"
+          >
+            <div class="relative aspect-[4/3] overflow-hidden">
+              <img
+                src={w.image}
+                alt={w.title}
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+            </div>
+            <div class="p-5">
+              <div class="flex items-center gap-2">
+                <span class={`inline-block rounded-md px-2.5 py-1 font-serif text-[11px] font-bold tracking-[0.1em] text-white ${RIBBON_BG[w.ribbon]}`}>
+                  {w.rank}
+                </span>
+                <span class="font-serif text-sm font-bold text-[#C8902A]">{w.prize}</span>
+              </div>
+              <h3 class="mt-2 font-serif text-xl font-bold text-[#1A2230]">{w.title}</h3>
+              <p class="mt-1 text-sm text-[#6B7686]">by {w.name}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </Reveal>
+
+    {/* 4th & 5th — smaller cards */}
+    <Reveal delay={80}>
+      <div class="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2">
+        {bottomTwo.map((w) => (
+          <a
+            href={`/hervoice/${w.slug}`}
+            class="group relative overflow-hidden rounded-2xl border border-[#ECE3D2] bg-white shadow-[0_12px_32px_-16px_rgba(26,34,48,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_-18px_rgba(26,34,48,.45)]"
+          >
+            <div class="relative aspect-[3/2] overflow-hidden">
+              <img
+                src={w.image}
+                alt={w.title}
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+            </div>
+            <div class="p-5">
+              <div class="flex items-center gap-2">
+                <span class={`inline-block rounded-md px-2.5 py-1 font-serif text-[11px] font-bold tracking-[0.1em] text-white ${RIBBON_BG[w.ribbon]}`}>
+                  {w.rank}
+                </span>
+                <span class="font-serif text-sm font-bold text-[#C8902A]">{w.prize}</span>
+              </div>
+              <h3 class="mt-2 font-serif text-lg font-bold text-[#1A2230]">{w.title}</h3>
+              <p class="mt-1 text-sm text-[#6B7686]">by {w.name}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </Reveal>
+  </div>
+</section>

@@ -1,0 +1,72 @@
+---
+// Ports components/marketing/hervoice/partner-support.tsx
+import ArrowUpRight from "../../icons/ArrowUpRight.astro";
+import Reveal from "../home/Reveal.astro";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  partners: { name: string; location: string; logo: string }[];
+}
+const { eyebrow, heading, description, partners } = Astro.props;
+
+// Routing (external partner URLs) stays in code, zipped by index with the
+// editable name/location/logo content from the CMS.
+const partnerHrefs = [
+  "https://sites.google.com/view/amplifyafghans/home",
+  "https://www.nshss.org/",
+  "https://humanitasmedia.org/",
+  "https://inanna.ca/",
+];
+
+const partnerOrgs = partners.map((p, i) => ({
+  ...p,
+  href: partnerHrefs[i] ?? "#",
+}));
+---
+<section class="py-28 md:py-40">
+  <div class="container">
+    <Reveal class="max-w-3xl">
+      <p class="text-primary mb-6 text-xs font-semibold tracking-[0.3em] uppercase">
+        {eyebrow}
+      </p>
+      <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">
+        {heading}
+      </h2>
+      <p class="text-foreground/70 mt-8 text-base leading-[1.8] md:text-lg">
+        {description}
+      </p>
+    </Reveal>
+
+    <Reveal class="mt-16 grid gap-5 sm:grid-cols-2" delay={120}>
+      {partnerOrgs.map((p) => (
+        <a
+          href={p.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group border-border/60 bg-background hover:border-primary/40 hover:shadow-primary/5 flex items-center gap-5 rounded-2xl border p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
+        >
+          <div class="border-border/60 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border bg-white p-2">
+            <img
+              src={p.logo}
+              alt={p.name}
+              loading="lazy"
+              decoding="async"
+              class="h-full w-full object-contain"
+            />
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="group-hover:text-primary leading-snug font-semibold transition-colors duration-300">
+              {p.name}
+            </p>
+            <p class="text-muted-foreground mt-1 text-sm">
+              {p.location}
+            </p>
+          </div>
+          <ArrowUpRight class="text-muted-foreground group-hover:text-primary size-5 shrink-0 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </a>
+      ))}
+    </Reveal>
+  </div>
+</section>

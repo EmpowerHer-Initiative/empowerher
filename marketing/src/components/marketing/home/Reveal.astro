@@ -1,0 +1,44 @@
+---
+// Scroll-reveal wrapper. Ports components/reveal.tsx from the Next.js app.
+// Fades + rises 48px into view via IntersectionObserver. Astro is MPA, so it
+// animates on every page load (identical to the source's hard-refresh case).
+interface Props {
+  class?: string;
+  delay?: number;
+  distance?: number;
+  threshold?: number;
+}
+const { class: className, delay = 0, distance = 48, threshold = 0.15 } = Astro.props;
+const style = `opacity:0;transform:translateY(${distance}px);transition:opacity 1.2s cubic-bezier(0.32,0.72,0,1),transform 1.2s cubic-bezier(0.32,0.72,0,1);transition-delay:${delay}ms;will-change:opacity,transform;`;
+---
+<div class={className} data-reveal data-threshold={threshold} style={style}>
+  <slot />
+</div>
+
+<script>
+  const reveal = (el: HTMLElement) => {
+    el.style.opacity = "1";
+    el.style.transform = "translateY(0)";
+  };
+  function initReveal() {
+    const els = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    els.forEach((el) => {
+      if (el.dataset.revealed) return;
+      el.dataset.revealed = "1";
+      const threshold = parseFloat(el.dataset.threshold || "0.15");
+      const ob = new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting) {
+            reveal(el);
+            ob.disconnect();
+          }
+        },
+        { threshold }
+      );
+      // Already in view on load (e.g. hero region) → observer fires immediately.
+      ob.observe(el);
+    });
+  }
+  // Fires on first load AND after every view-transition navigation.
+  document.addEventListener("astro:page-load", initReveal);
+</script>

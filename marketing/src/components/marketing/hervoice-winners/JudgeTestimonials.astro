@@ -1,0 +1,54 @@
+---
+// Ports components/marketing/hervoice-winners/judge-testimonials.tsx
+// --hv-serif-i -> font-serif italic.
+import Reveal from "../home/Reveal.astro";
+
+interface Judge {
+  name: string;
+  title: string;
+  quote: string;
+  image: string;
+}
+interface Props {
+  title: string;
+  judges: Judge[];
+}
+const { title, judges } = Astro.props;
+---
+<section class="bg-white px-6 py-16 md:py-24">
+  <div class="mx-auto max-w-5xl">
+    <Reveal>
+      <h2 class="text-center font-serif text-3xl font-bold tracking-tight md:text-4xl">
+        {title}
+      </h2>
+    </Reveal>
+
+    <div class="mt-14 space-y-10">
+      {judges.map((judge, i) => (
+        <Reveal delay={i * 100}>
+          <div class="flex flex-col gap-8 rounded-2xl border border-[#ECE3D2] bg-[#FAF6EE] p-8 md:flex-row md:p-10">
+            <img
+              src={judge.image}
+              alt={judge.name}
+              loading="lazy"
+              decoding="async"
+              class="h-40 w-40 shrink-0 self-center rounded-2xl border-2 border-[#E0AE3C]/40 object-cover md:self-start"
+            />
+            <div class="flex-1">
+              <blockquote class="font-serif text-[17px] leading-relaxed text-[#3C4654] italic">
+                &ldquo;{judge.quote}&rdquo;
+              </blockquote>
+              <div class="mt-6">
+                <div class="h-px w-full bg-[#E0AE3C]/30"></div>
+                <div class="mt-4">
+                  <p class="font-serif text-sm font-bold text-[#1A2230]">{judge.name}</p>
+                  <p class="mt-0.5 text-xs leading-snug text-[#6B7686]">{judge.title}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,94 @@
+---
+// Ports app/(marketing)/get-involved/volunteer-with-us/page.tsx (visual-only, default form state)
+import ArrowLeft from "../../icons/ArrowLeft.astro";
+import Reveal from "../home/Reveal.astro";
+import VolunteerForm from "./VolunteerForm.astro";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  body: string;
+  note: string;
+  questions: string;
+}
+const { eyebrow, heading, body, note, questions } = Astro.props;
+
+const email = "info@empowerher-initiative.org";
+---
+<div class="min-h-screen lg:flex">
+  {/* ── Left panel — brand messaging ─────────────────────────────────────── */}
+  <div class="bg-muted text-foreground relative flex flex-col justify-between overflow-hidden px-10 py-16 md:px-14 lg:w-[45%] lg:px-16 lg:py-24">
+    {/* Background image subtle overlay */}
+    <div class="absolute inset-0 opacity-10">
+      <img
+        src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTDe1RCWh0fiZ3z8JjCWsbc2laUL6tAeqPnMNS"
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        class="h-full w-full object-cover"
+      />
+    </div>
+
+    <div class="relative">
+      <Reveal>
+        <a
+          href="/get-involved"
+          class="group text-muted-foreground hover:text-foreground mb-12 inline-flex items-center gap-2 text-sm font-medium transition-colors"
+        >
+          <ArrowLeft class="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
+          Back
+        </a>
+      </Reveal>
+
+      <Reveal delay={80} class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+        {eyebrow}
+      </Reveal>
+      <Reveal delay={160} class="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl">
+        {heading}
+      </Reveal>
+      <Reveal delay={240} class="text-muted-foreground mt-6 text-base leading-relaxed">
+        {body}
+      </Reveal>
+
+      <Reveal delay={320} class="border-border bg-foreground/5 mt-10 rounded-xl border p-5">
+        <p class="text-muted-foreground text-xs">
+          {note}
+        </p>
+      </Reveal>
+    </div>
+
+    <Reveal class="border-border relative mt-16 border-t pt-8">
+      <p class="text-muted-foreground text-xs">
+        {questions}{" "}
+        <a
+          href={`mailto:${email}`}
+          class="text-muted-foreground underline-offset-2 hover:underline"
+        >
+          {email}
+        </a>
+      </p>
+    </Reveal>
+  </div>
+
+  {/* ── Right panel — form ───────────────────────────────────────────────── */}
+  <div class="flex flex-1 flex-col justify-center px-8 py-16 md:px-14 lg:px-16 lg:py-24">
+    <div class="mx-auto w-full max-w-lg">
+      <Reveal class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        Volunteer Application
+      </Reveal>
+      <Reveal delay={80} class="mt-4 font-serif text-3xl md:text-4xl">
+        Join our volunteer community
+      </Reveal>
+      <Reveal delay={160} class="text-muted-foreground mt-3 text-sm">
+        Tell us about yourself and how you'd like to contribute.
+        All fields marked <span class="text-primary">*</span> are
+        required.
+      </Reveal>
+
+      <Reveal delay={240} class="mt-10">
+        <VolunteerForm />
+      </Reveal>
+    </div>
+  </div>
+</div>

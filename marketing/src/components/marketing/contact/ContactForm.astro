@@ -1,0 +1,180 @@
+---
+// Ports app/(marketing)/contact/contact-form.tsx
+// Form is visual-only — submission backend (tRPC contact.send), validation
+// wiring, and the submitted success swap are deferred until the Astro project
+// has an API. Inputs/Textarea/Button reproduce the shadcn primitive styles 1:1.
+import Mail from "../../icons/Mail.astro";
+import MapPin from "../../icons/MapPin.astro";
+import Send from "../../icons/Send.astro";
+import Facebook from "../../icons/Facebook.astro";
+import LinkedIn from "../../icons/LinkedIn.astro";
+import Instagram from "../../icons/Instagram.astro";
+import Reveal from "../home/Reveal.astro";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  email: { label: string; value: string };
+  location: { label: string; value: string };
+  followUsTitle: string;
+}
+
+const { eyebrow, heading, intro, email, location, followUsTitle } =
+  Astro.props;
+
+const socialLinks = [
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/share/157naMfgkw",
+    Icon: Facebook,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/empowerher-org/",
+    Icon: LinkedIn,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/_empowerher_org",
+    Icon: Instagram,
+  },
+];
+
+const inputClass =
+  "border-input file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 disabled:bg-input/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 w-full min-w-0 border bg-transparent px-2.5 transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-3 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 md:text-sm h-auto rounded-md py-2 text-base";
+---
+<section class="py-28 md:py-40">
+  <div class="container">
+    <div class="grid gap-16 lg:grid-cols-2 lg:gap-24">
+      {/* Left — Contact Info */}
+      <Reveal>
+        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+          {eyebrow}
+        </p>
+        <h1 class="mt-4 font-serif text-4xl leading-tight md:text-5xl">
+          {heading}
+        </h1>
+        <p class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]">
+          {intro}
+        </p>
+
+        <div class="mt-12 space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-full">
+              <Mail class="text-primary size-4" />
+            </div>
+            <div>
+              <p class="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
+                {email.label}
+              </p>
+              <a
+                href="mailto:info@empowerher-initiative.org"
+                class="text-foreground hover:text-primary mt-1 text-sm transition-colors"
+              >
+                {email.value}
+              </a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-full">
+              <MapPin class="text-primary size-4" />
+            </div>
+            <div>
+              <p class="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
+                {location.label}
+              </p>
+              <p class="text-foreground mt-1 text-sm">
+                {location.value}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-border/30 mt-12 border-t pt-8">
+          <p class="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
+            {followUsTitle}
+          </p>
+          <div class="mt-4 flex items-center gap-3">
+            {
+              socialLinks.map((s) => (
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  class="border-border/60 text-foreground/70 hover:border-primary hover:bg-primary hover:text-primary-foreground flex size-11 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5"
+                >
+                  <s.Icon class="size-5" />
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </Reveal>
+
+      {/* Right — Form */}
+      <Reveal delay={120}>
+        <form class="space-y-5" novalidate>
+          <div role="group" class="group/field flex w-full flex-col gap-2">
+            <label class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none">
+              Name
+            </label>
+            <div class="flex flex-1 flex-col gap-0.5 leading-snug">
+              <input type="text" placeholder="Your name" class={inputClass} />
+            </div>
+          </div>
+
+          <div role="group" class="group/field flex w-full flex-col gap-2">
+            <label class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none">
+              Email
+            </label>
+            <div class="flex flex-1 flex-col gap-0.5 leading-snug">
+              <input type="email" placeholder="you@example.com" class={inputClass} />
+            </div>
+          </div>
+
+          <div role="group" class="group/field flex w-full flex-col gap-2">
+            <label class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none">
+              Subject
+            </label>
+            <div class="flex flex-1 flex-col gap-0.5 leading-snug">
+              <input type="text" placeholder="What is this about?" class={inputClass} />
+            </div>
+          </div>
+
+          <div role="group" class="group/field flex w-full flex-col gap-2">
+            <label class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none">
+              Phone <span class="text-muted-foreground font-normal">(optional)</span>
+            </label>
+            <div class="flex flex-1 flex-col gap-0.5 leading-snug">
+              <input type="tel" placeholder="+1 (555) 123-4567" class={inputClass} />
+            </div>
+          </div>
+
+          <div role="group" class="group/field flex w-full flex-col gap-2">
+            <label class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none">
+              Message
+            </label>
+            <div class="flex flex-1 flex-col gap-0.5 leading-snug">
+              <textarea
+                placeholder="Tell us what's on your mind..."
+                rows="5"
+                class="border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 disabled:bg-input/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 flex field-sizing-content min-h-16 w-full rounded-lg border bg-transparent px-2.5 py-2 text-base transition-colors outline-none focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 md:text-sm"
+              ></textarea>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="group/button inline-flex w-full shrink-0 items-center justify-center gap-1.5 rounded-lg border border-transparent bg-clip-padding px-4 text-base font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px active:scale-95 disabled:pointer-events-none disabled:opacity-50 md:px-6 h-10 bg-primary text-primary-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+          >
+            Send Message
+            <Send class="ml-2 size-4" />
+          </button>
+        </form>
+      </Reveal>
+    </div>
+  </div>
+</section>

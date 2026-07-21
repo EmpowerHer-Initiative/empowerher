@@ -1,0 +1,43 @@
+---
+// Ports components/marketing/home/at-a-glance.tsx
+import Reveal from "./Reveal.astro";
+import CountUp from "./CountUp.astro";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  stats: { number: string; label: string; detail?: string }[];
+}
+const { eyebrow, heading, stats: rawStats } = Astro.props;
+
+function parseNumber(number: string) {
+  const m = number.match(/^([\d.]+)(.*)$/);
+  const numeric = m ? m[1] : number;
+  const suffix = m ? m[2] : "";
+  const dot = numeric.indexOf(".");
+  const decimals = dot === -1 ? 0 : numeric.length - dot - 1;
+  return { to: parseFloat(numeric), decimals, suffix };
+}
+
+const stats = rawStats.map((s) => ({ ...parseNumber(s.number), label: s.label, detail: s.detail }));
+---
+<section class="border-border/40 bg-primary/[0.03] border-y py-20 md:py-28">
+  <div class="container">
+    <Reveal class="max-w-2xl">
+      <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">{eyebrow}</p>
+      <h2 class="mt-4 font-serif text-3xl leading-tight md:text-5xl">{heading}</h2>
+    </Reveal>
+
+    <div class="divide-border/40 mt-14 grid grid-cols-1 divide-y sm:grid-cols-2 sm:divide-x lg:grid-cols-5 lg:divide-y-0">
+      {stats.map((s) => (
+        <div class="flex flex-col gap-2 px-2 py-8 sm:px-8 sm:py-2">
+          <span class="text-primary font-serif text-4xl md:text-5xl">
+            <CountUp to={s.to} decimals={s.decimals} suffix={s.suffix} />
+          </span>
+          <span class="text-foreground text-sm font-medium">{s.label}</span>
+          {s.detail && <span class="text-muted-foreground text-xs leading-relaxed">{s.detail}</span>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

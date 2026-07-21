@@ -1,0 +1,177 @@
+{
+  "seo": {
+    "title": "HerVoice — EmpowerHer Initiative",
+    "description": "HerVoice is EmpowerHer's creative storytelling and publication platform, where students publish their original writings and express themselves freely."
+  },
+  "hero": {
+    "eyebrow": "Publication Platform",
+    "heading": "HerVoice",
+    "description": "HerVoice is EmpowerHer's creative storytelling and publication platform, where students can publish their original writings and express themselves freely. At EmpowerHer, we believe in the power of words to heal, connect, and drive change.",
+    "quote": "Many of our students have demonstrated remarkable resilience and courage through storytelling, using their voices to share personal truths and inspire others.",
+    "descriptionAfter": "HerVoice gives them the space to do just that—amplifying their experiences and perspectives in a world that too often silences them.",
+    "partnersEyebrow": "Global Partners",
+    "partnersText": "With the support of our partners—including the National Society of High School Scholars (Atlanta, Georgia), and Amplify Afghan Women (Melbourne, Australia)—we are proud to bring these stories to a global audience.",
+    "closing": "Through HerVoice, every story becomes a step toward empowerment, visibility, and hope."
+  },
+  "howToSubmit": {
+    "eyebrow": "Submission Guide",
+    "heading": "How to Submit",
+    "headingAccent": "Your Story",
+    "description": "Every submission is a step toward being heard. Follow these four steps to share your voice with the world through HerVoice.",
+    "guidelinesTitle": "Important Guidelines",
+    "guidelines": [
+      {
+        "label": "Content Quality",
+        "text": "Write from the heart with honest reflection on your personal journey."
+      },
+      {
+        "label": "Image Required",
+        "text": "Include a relevant image that connects to your story."
+      },
+      {
+        "label": "No Hate Speech",
+        "text": "Submissions with inappropriate content will not be published."
+      },
+      {
+        "label": "Review Process",
+        "text": "All submissions will be reviewed by the EmpowerHer team."
+      }
+    ],
+    "steps": [
+      {
+        "num": "01",
+        "title": "Write Your Story",
+        "desc": "Write from the heart, reflecting honestly on your personal journey, challenges, and experiences."
+      },
+      {
+        "num": "02",
+        "title": "Review & Edit",
+        "desc": "Carefully review your piece for grammar, spelling, and clarity. Rough drafts may be rejected."
+      },
+      {
+        "num": "03",
+        "title": "Prepare Materials",
+        "desc": "Include your story and a relevant image (REQUIRED). Insert the image or share a link."
+      },
+      {
+        "num": "04",
+        "title": "Submit",
+        "desc": "Email to hervoice@empowerher-initiative.org. Subject: \"Submission to HerVoice\"."
+      }
+    ]
+  },
+  "eligibility": {
+    "eyebrow": "Requirements",
+    "heading": "Eligibility",
+    "description": "HerVoice is open exclusively to students who have been accepted into EmpowerHer's Mentorship Program.",
+    "priorityEyebrow": "Priority Given To",
+    "priorityNote": "However, submissions are welcome from all currently enrolled participants.",
+    "requirementsEyebrow": "Content Requirements",
+    "requirements": [
+      {
+        "value": "900–1000",
+        "label": "Word Count",
+        "note": "12-point font, single-spaced"
+      },
+      {
+        "value": "40",
+        "label": "Max Poetry Lines",
+        "note": "Poems should not exceed this limit"
+      }
+    ]
+  },
+  "featuredWritings": {
+    "eyebrow": "Published Stories",
+    "heading": "Writings",
+    "stories": [
+      {
+        "slug": "bread-and-a-red-apple",
+        "title": "Bread and a Red Apple",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTN5bpAvcOGaUAyKX1dPWs9RnojYZeu4JbiQHv",
+        "authorName": "Z.H."
+      },
+      {
+        "slug": "when-did-i-feel-that-i-am-a-strong-girl",
+        "title": "When Did I Feel That I Am a Strong Girl?",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTvX8bHR050TX8DRt9gfxu6sU74iOHozSwBKGJ",
+        "authorName": "Roqia Qasemi"
+      },
+      {
+        "slug": "what-i-carried-in-my-voice",
+        "title": "What I Carried in My Voice",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfCWhJzn3C8OG5vkbyTeNds9rYucAtpJg0PMV",
+        "authorName": "Nazifa Popal"
+      },
+      {
+        "slug": "the-window-i-opened",
+        "title": "The Window I Opened",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTQRqW7Y9a2imSKVTAuXrJU9NxI0LRsOFlgdvw",
+        "authorName": "Sadia Ahmadi"
+      },
+      {
+        "slug": "letters-to-my-younger-self",
+        "title": "Letters to My Younger Self",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT4ggEVZxLP0HVtXjpzDWZR85f7vGSgA1FduQY",
+        "authorName": "Farida Noor"
+      },
+      {
+        "slug": "the-classroom-under-the-stairs",
+        "title": "The Classroom Under the Stairs",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTawihdJkAtfy8gUMVlFj5QpoO3BkxsndH9Dm2",
+        "authorName": "Marwa Rahimi"
+      }
+    ]
+  },
+  "congressionalTestimonies": {
+    "eyebrow": "Amplifying Voices",
+    "heading": "Congressional Testimonies",
+    "intro": "These two congressional testimonies were shared for publication by the Afghan Scouts Relief Fund (ASRF) with the EmpowerHer HerVoice Initiative.",
+    "quote": "These testimonies are representative of the passion of so many Afghan women to share their powerful experiences and their drive to become their best selves and contribute in their own unique ways to society. By sharing the obstacles they have overcome and their amazing pursuits, they serve as an inspiration to many of their peers who want to navigate their own path to success.",
+    "quoteAttribution": "— Afghan Scouts Relief Fund (ASRF)",
+    "note": "Coming from a country where their very existence is dehumanized, and their human rights are not recognized, their resilience in the face of adversity should be a message to the whole world that we must support the future of Afghan women in every possible way.",
+    "videos": [
+      {
+        "poster": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT4ggEVZxLP0HVtXjpzDWZR85f7vGSgA1FduQY",
+        "src": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTFAaVBPi81Sgch3ByG9m45xzoRfbnkKwIXpZO",
+        "label": "Congressional Testimony — Part 1"
+      },
+      {
+        "poster": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTawihdJkAtfy8gUMVlFj5QpoO3BkxsndH9Dm2",
+        "src": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT1BPtxl2QzEuUaBX9YLlpwGm6Z8oisI4dSv7k",
+        "label": "Congressional Testimony — Part 2"
+      }
+    ]
+  },
+  "partnerSupport": {
+    "eyebrow": "Our Partners",
+    "heading": "Support from Partners",
+    "description": "EmpowerHer is proud to partner with four respected publication organizations: Amplify Afghan Women, the National Society of High School Scholars (NSHSS), Humanitas Media, and Inanna Publications. Through HerVoice and our partners' platforms, we advocate for girls' education, storytelling, and creative expression. Our partners help our students publish their work and reach wider audiences across the globe. With the support of these organizations and their communities, we are creating a space where Afghan girls can share their stories and voices with the world.",
+    "partners": [
+      {
+        "name": "Amplify Afghan Women",
+        "location": "Melbourne, Australia",
+        "logo": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBzmSPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O9"
+      },
+      {
+        "name": "National Society of High School Scholars (NSHSS)",
+        "location": "Atlanta, Georgia",
+        "logo": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTjPNmNesfkIRBuYnTVcl8O9LdXP5103pNyJUt"
+      },
+      {
+        "name": "Humanitas Media",
+        "location": "Minneapolis, Minnesota",
+        "logo": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT2HJysqLQtJ7K2Z4UcWn3gCXRdBvVoY9Ohil8"
+      },
+      {
+        "name": "Inanna Publications",
+        "location": "Toronto, Canada",
+        "logo": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTIznPr82WufQtTg5yH7OAp0KFlsjbkaYIPZB"
+      }
+    ]
+  },
+  "writingContestCTA": {
+    "eyebrow": "Contest Results",
+    "heading": "HerVoice 2026 Writing Contest",
+    "description": "Look at the results of the HerVoice 2026 Writing Contest, including cash prize winners and honorable mentions."
+  }
+}

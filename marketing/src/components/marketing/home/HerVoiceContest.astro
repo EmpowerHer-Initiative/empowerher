@@ -1,0 +1,131 @@
+---
+// Ports components/marketing/home/hervoice-contest.tsx
+import ArrowRight from "../../icons/ArrowRight.astro";
+import Reveal from "./Reveal.astro";
+import ContestSeal from "./ContestSeal.astro";
+import StoryCover from "./StoryCover.astro";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  headingSub: string;
+  bodyText: string;
+  stats: { value: string; label: string }[];
+  winners: { rank: string; prize: string; name: string; title: string; quote: string }[];
+}
+const { eyebrow, heading, headingSub, bodyText, stats, winners } = Astro.props;
+
+const WINNER_STYLES = [
+  {
+    slug: "bread-and-a-red-apple",
+    cover:
+      "bg-[radial-gradient(120%_90%_at_28%_8%,#F0C963_0%,transparent_55%),linear-gradient(160deg,#C9942C_0%,#9A6A18_60%,#7A5212_100%)] text-[#FBF3DD]",
+    ribbon: "bg-gradient-to-b from-[#E0AE3C] to-[#C8902A]",
+    offset: "lg:-ml-6",
+  },
+  {
+    slug: "when-did-i-feel-that-i-am-a-strong-girl",
+    cover:
+      "bg-[radial-gradient(120%_90%_at_28%_8%,#5FB6F0_0%,transparent_55%),linear-gradient(160deg,#2C72B6_0%,#194B7E_62%,#123A63_100%)] text-[#EAF3FB]",
+    ribbon: "bg-gradient-to-b from-[#2E9BE6] to-[#1E78C4]",
+    offset: "lg:ml-1.5",
+  },
+  {
+    slug: "what-i-carried-in-my-voice",
+    cover:
+      "bg-[radial-gradient(120%_90%_at_28%_8%,#5C7793_0%,transparent_55%),linear-gradient(160deg,#33445C_0%,#212E42_60%,#18222F_100%)] text-[#E7ECF3]",
+    ribbon: "bg-gradient-to-b from-[#46586F] to-[#33445C]",
+    offset: "lg:ml-9",
+  },
+];
+const CONTEST_WINNERS = winners.map((w, i) => ({ ...w, ...WINNER_STYLES[i] }));
+---
+<section class="relative isolate overflow-hidden bg-[radial-gradient(120%_130%_at_12%_0%,#FFFFFF_0%,#FAF6EE_46%,#F2EADC_100%)] py-28 text-[#1A2230] md:py-40">
+  <div class="pointer-events-none absolute -top-40 -right-40 size-[520px] rounded-full bg-[radial-gradient(circle_at_38%_36%,rgba(46,155,230,.16),transparent_62%)]"></div>
+  <div class="pointer-events-none absolute -bottom-44 -left-32 size-[460px] rounded-full bg-[radial-gradient(circle_at_60%_40%,rgba(224,174,60,.18),transparent_62%)]"></div>
+
+  <div class="relative container">
+    <div class="grid gap-14 lg:grid-cols-[1fr_1.12fr] lg:items-center lg:gap-10">
+      <div>
+        <Reveal>
+          <p class="text-secondary text-xs font-semibold tracking-[0.3em] uppercase">{eyebrow}</p>
+        </Reveal>
+        <Reveal delay={90}>
+          <h2 class="mt-5 font-serif text-4xl leading-[1.02] md:text-6xl">
+            {heading} <span class="text-primary">2026</span>
+            <br />
+            {headingSub}
+          </h2>
+        </Reveal>
+        <Reveal delay={180}>
+          <p class="mt-6 max-w-md text-base leading-relaxed text-[#3C4654] md:text-lg">
+            {bodyText}
+          </p>
+        </Reveal>
+
+        <Reveal delay={270}>
+          <div class="mt-8">
+            <ContestSeal />
+          </div>
+        </Reveal>
+
+        <Reveal delay={360}>
+          <div class="mt-8 flex gap-8 md:gap-10">
+            <div>
+              <p class="font-serif text-4xl md:text-5xl text-primary">{stats[0].value}</p>
+              <p class="mt-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase">{stats[0].label}</p>
+            </div>
+            <div>
+              <p class="font-serif text-4xl md:text-5xl text-secondary">{stats[1].value}</p>
+              <p class="mt-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase">{stats[1].label}</p>
+            </div>
+            <div>
+              <p class="font-serif text-4xl md:text-5xl text-primary">{stats[2].value}</p>
+              <p class="mt-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase">{stats[2].label}</p>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={450}>
+          <div class="mt-10">
+            <a
+              href="/hervoice/winners"
+              class="group bg-primary text-primary-foreground inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.98]"
+            >
+              Explore Winning Stories
+              <ArrowRight class="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+            </a>
+          </div>
+        </Reveal>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        {CONTEST_WINNERS.map((w, i) => (
+          <Reveal delay={270 + i * 90}>
+            <a
+              href={`/hervoice/${w.slug}`}
+              class={`group bg-background text-foreground grid grid-cols-[104px_1fr] items-center gap-5 rounded-2xl p-[18px] shadow-[0_18px_44px_-30px_rgba(0,0,0,.5)] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-x-1.5 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-32px_rgba(0,0,0,.6)] ${w.offset}`}
+            >
+              <StoryCover title={w.title} author={w.name} cover={w.cover} />
+              <div class="min-w-0">
+                <div class="flex items-baseline justify-between gap-2.5">
+                  <span class="truncate text-lg font-bold">{w.name}</span>
+                  <span class="flex items-center gap-2">
+                    <span class={`inline-block rounded-md px-2.5 py-1 text-[11px] font-bold tracking-[0.1em] text-white uppercase ${w.ribbon}`}>{w.rank}</span>
+                    <span class="font-serif text-lg font-bold text-[#C8902A]">{w.prize}</span>
+                  </span>
+                </div>
+                <p class="text-primary mt-0.5 truncate font-serif text-base italic">{w.title}</p>
+                <p class="text-muted-foreground mt-2 line-clamp-3 text-[13px] leading-snug">&ldquo;{w.quote}&rdquo;</p>
+                <span class="mt-2.5 inline-flex items-center gap-1.5 text-[13px] font-bold whitespace-nowrap text-[#C8902A] transition-all duration-500 group-hover:gap-2.5">
+                  Read Preview
+                  <ArrowRight class="size-3.5" />
+                </span>
+              </div>
+            </a>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

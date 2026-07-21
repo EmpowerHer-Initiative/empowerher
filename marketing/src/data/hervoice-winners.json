@@ -1,0 +1,113 @@
+{
+  "seo": {
+    "title": "HerVoice 2026 Writing Contest Winners — EmpowerHer Initiative",
+    "description": "Results of the HerVoice 2026 Writing Contest, including cash prize winners and honorable mentions."
+  },
+  "hero": {
+    "headingLead": "HerVoice",
+    "headingYear": "2026",
+    "headingTail": "Writing Contest",
+    "bodyText": "HerVoice is EmpowerHer's creative publication platform, dedicated to amplifying and documenting the voices, stories, and ideas of Afghan girls through original writing. We believe in the power of storytelling to inspire, heal, connect communities, and create meaningful change.",
+    "stats": [
+      { "value": "300+", "label": "Submissions" },
+      { "value": "21+", "label": "Provinces across Afghanistan" },
+      { "value": "5", "label": "Cash Winners" },
+      { "value": "3", "label": "Honorees" }
+    ]
+  },
+  "cashPrizeWinners": {
+    "title": "Writings from Cash Prize Winners",
+    "winners": [
+      {
+        "rank": "1ST",
+        "prize": "$400",
+        "name": "Z.H.",
+        "title": "Bread and a Red Apple",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPThZYuVWymYWNaVI2CGjn5RkZbu3BUS0i97AMX",
+        "slug": "bread-and-a-red-apple"
+      },
+      {
+        "rank": "2ND",
+        "prize": "$300",
+        "name": "Roqia Qasemi",
+        "title": "When did I feel that I am a strong girl?",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTCB4oDy6p0xR3LuJK2fkyDlQSq5OVpmHz6CTh",
+        "slug": "when-did-i-feel-that-i-am-a-strong-girl"
+      },
+      {
+        "rank": "3RD",
+        "prize": "$200",
+        "name": "Nazifa Popal",
+        "title": "What I Carried in My Voice",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5qlkrZWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3",
+        "slug": "what-i-carried-in-my-voice"
+      },
+      {
+        "rank": "4TH",
+        "prize": "$150",
+        "name": "Samreen Makhfi",
+        "title": "Confession in the shadow",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTd2PyGnq0CAlsFIfYUDjLkbMy5eOzoTwZ6x1p",
+        "slug": "confession-in-the-shadow"
+      },
+      {
+        "rank": "5TH",
+        "prize": "$50",
+        "name": "Zarifa Gulabzada",
+        "title": "A Story from the Window of a Mud House",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqjUgW9BYobifLHTavDVU7h0yBGlSc4z8XEQn",
+        "slug": "a-story-from-the-window-of-a-mud-house"
+      }
+    ]
+  },
+  "honorableMentions": {
+    "title": "Writings from Honorable Mention Winners",
+    "mentions": [
+      {
+        "name": "Khadija Mohammadi",
+        "title": "The Girl Who Studied in the Dark",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5IuYoRWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3",
+        "slug": "the-girl-who-studied-in-the-dark"
+      },
+      {
+        "name": "Mohadisa Bazel",
+        "title": "Running Towards Freedom",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT6gmlzi49jfnexowH4rdvO7pcMmglFtNsyY50",
+        "slug": "running-towards-freedom"
+      },
+      {
+        "name": "Spogmai Sharifi",
+        "title": "The Day I Said No",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpZTtiPVqrM0zsm5gThJ2eDxZtjCFUdBGElvb",
+        "slug": "the-day-i-said-no"
+      }
+    ]
+  },
+  "judgeTestimonials": {
+    "title": "What Our Judges Felt Reading These Stories",
+    "judges": [
+      {
+        "name": "Dr. Ellen Leggett",
+        "title": "Professor of Psychology and Founding Director of Applied Psychology Master’s Program (Retired), University of Southern California",
+        "quote": "It was an honor to read about and bear witness to the incredibly moving stories told by these writers. Many of us aspire to be courageous and to overcome adversity in our lives, and the writings of these Afghan women teach us all a humbling lesson. With elegant beauty and wisdom, the inspirational stories recounted by these writers demonstrate strength of character, love of learning, and the best of human persistence and resilience in the face of pain. A reverberating question stays with me: What feats would these remarkable women accomplish in a world that welcomed them? And the world does need them. Let their voices teach you.",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5RG1ajWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3"
+      },
+      {
+        "name": "Dr. Susan M. Blaustein",
+        "title": "Instructor, Columbia University, Founder/Board Chair, WomenStrong International",
+        "quote": "My immediate impression, when reading the submissions, was that this body of work has been produced by an extraordinarily talented, capable, bold, and determined group of young women. I was deeply moved by their courage, grit, and refusal to be restrained in shadow and silence. These are young women who, like all young women and girls everywhere, have dreams, rights, and hopes for their futures, yet in far too many cruel places on earth, those dreams and rights are denied. I am honored to have worked closely with Afghan women and girls over the past seven years as they have repeatedly faced and overcome seemingly insurmountable challenges. We must continue to raise awareness of, and refuse to tolerate, this tremendous injustice, which threatens the future and promise of Afghanistan and stands in clear violation of the rights of women and girls.",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnlKrZzPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O"
+      },
+      {
+        "name": "Dr. Sonia Palmieri",
+        "title": "Associate Professor, Department of Pacific Affairs, Australian National University",
+        "quote": "I was incredibly moved by the stories of bravery, confidence, tragedy and injustice shared by the Afghan artists. As an academic, creative writing is something I admire, perhaps in part because it is so difficult for me. But the huge response to the EmpowerHer writing competition shows that there is a wealth of creativity among Afghan women, and that writing can be a powerful way to process a range of both conflicting and complementary emotions — sadness, rage, frustration, joy. Certainly, the entrants wanted to share a profound sense of injustice at the hands of the Taliban. They did this with strong, pictorial clarity. Yet this was always underpinned by narratives of resilience and hope. Afghan women’s refusal of defeat in such conditions will change the world.",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTK2M6BgCVy1oGkRMuS0Lravl9JbQIxWFcNhtq"
+      }
+    ]
+  },
+  "herVoiceCta": {
+    "heading": "Explore HerVoice Initiative",
+    "bodyText": "Discover student writing, voices, and stories published through the HerVoice platform."
+  }
+}

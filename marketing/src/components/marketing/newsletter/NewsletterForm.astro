@@ -1,0 +1,77 @@
+---
+// Ports components/marketing/newsletter/newsletter-form.tsx
+// Form is visual-only — submission backend (tRPC newsletter.subscribe) and the
+// isSubmitted success swap are deferred until the Astro project has an API.
+import Send from "../../icons/Send.astro";
+import Reveal from "../home/Reveal.astro";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
+  image: { url: string; alt: string };
+  overlay: { heading: string; text: string };
+}
+
+const { eyebrow, heading, subheading, image, overlay } = Astro.props;
+---
+<section class="py-28 md:py-40">
+  <div class="container">
+    <div class="border-border/50 mx-auto grid max-w-5xl overflow-hidden rounded-3xl border md:grid-cols-2">
+      <Reveal class="flex flex-col justify-center p-8 md:p-12">
+        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+          {eyebrow}
+        </p>
+        <h1 class="mt-4 font-serif text-3xl leading-tight md:text-4xl">
+          {heading}
+        </h1>
+        <p class="text-muted-foreground mt-4 text-base leading-relaxed">
+          {subheading}
+        </p>
+
+        <div class="mt-8">
+          <form class="space-y-4" novalidate>
+            <div>
+              <label
+                for="newsletter-email"
+                class="text-foreground/80 text-sm font-medium"
+              >
+                Email Address
+              </label>
+              <input
+                id="newsletter-email"
+                type="email"
+                placeholder="Enter your email address"
+                class="border-border bg-muted/30 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/40 mt-2 w-full rounded-xl border px-5 py-3.5 text-sm transition-all duration-300 outline-none disabled:opacity-60"
+              />
+            </div>
+            <button
+              type="submit"
+              class="group bg-primary text-primary-foreground hover:bg-primary/90 inline-flex w-full items-center justify-center gap-2.5 rounded-xl py-3.5 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] disabled:opacity-60"
+            >
+              <Send class="size-4" />
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </Reveal>
+
+      <div class="relative order-first min-h-72 md:order-last">
+        <img
+          src={image.url}
+          alt={image.alt}
+          class="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <Reveal class="absolute right-6 bottom-6 left-6 text-white" delay={120}>
+          <h3 class="mb-2 font-serif text-2xl">{overlay.heading}</h3>
+          <p class="text-sm leading-relaxed text-white/85">
+            {overlay.text}
+          </p>
+        </Reveal>
+      </div>
+    </div>
+  </div>
+</section>

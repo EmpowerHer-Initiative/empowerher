@@ -1,0 +1,17 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../../components/marketing/spr/Hero.astro";
+import Eligibility from "../../components/marketing/spr/Eligibility.astro";
+import StepByStep from "../../components/marketing/spr/StepByStep.astro";
+import Benefits from "../../components/marketing/spr/Benefits.astro";
+import data from "../../data/spr.json";
+
+const { seo, hero, eligibility, stepByStep, benefits } = data;
+---
+
+<Layout title={seo.title} description={seo.description}>
+  <Hero {...hero} />
+  <Eligibility {...eligibility} />
+  <StepByStep {...stepByStep} />
+  <Benefits {...benefits} />
+</Layout>

@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/marketing/home/Hero.astro";
+import StatsBar from "../components/marketing/home/StatsBar.astro";
+import HerVoiceContest from "../components/marketing/home/HerVoiceContest.astro";
+import AtAGlance from "../components/marketing/home/AtAGlance.astro";
+import Mission from "../components/marketing/home/Mission.astro";
+import Programs from "../components/marketing/home/Programs.astro";
+import ImpactStory from "../components/marketing/home/ImpactStory.astro";
+import MediaSpotlight from "../components/marketing/home/MediaSpotlight.astro";
+import Partners from "../components/marketing/home/Partners.astro";
+import Newsletter from "../components/marketing/home/Newsletter.astro";
+import content from "../data/home.json";
+---
+
+<Layout title={content.seo.title} description={content.seo.description}>
+  <Hero {...content.hero} />
+  <StatsBar {...content.statsBar} />
+  <HerVoiceContest {...content.herVoiceContest} />
+  <AtAGlance {...content.atAGlance} />
+  <Mission {...content.mission} />
+  <Programs {...content.programs} />
+  <ImpactStory {...content.impactStory} />
+  <MediaSpotlight {...content.mediaSpotlight} />
+  <Partners {...content.partners} />
+  <Newsletter {...content.newsletter} />
+</Layout>

@@ -1,0 +1,67 @@
+---
+// Ports the StoryCard from components/marketing/success-stories/_shared.tsx
+import Star from "../../icons/Star.astro";
+import Calendar from "../../icons/Calendar.astro";
+import StatBox from "./StatBox.astro";
+
+interface Stat {
+  icon: string;
+  value: string;
+  label: string;
+}
+interface Props {
+  logo: string;
+  title: string;
+  subtitle?: string;
+  date?: string;
+  badge?: string;
+  stats?: Stat[];
+}
+const { logo, title, subtitle, date, badge, stats } = Astro.props;
+---
+<div class="border-border/60 bg-background mx-auto max-w-4xl rounded-3xl border p-8 shadow-sm md:p-12">
+  {/* Logo */}
+  <div class="border-border/60 size-28 overflow-hidden rounded-2xl border bg-white">
+    <img
+      src={logo}
+      alt={title}
+      class="h-full w-full object-contain px-2"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+
+  {/* Title + badge */}
+  <div class="mt-8 flex items-start justify-between gap-6">
+    <h2 class="font-serif text-3xl leading-tight md:text-4xl">{title}</h2>
+    {badge && (
+      <span class="bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium">
+        <Star class="size-3.5 fill-current" />
+        {badge}
+      </span>
+    )}
+  </div>
+
+  {subtitle && (
+    <p class="text-muted-foreground mt-3 text-lg italic">{subtitle}</p>
+  )}
+
+  {date && (
+    <div class="text-muted-foreground mt-4 flex items-center gap-2 text-sm">
+      <Calendar class="size-4" />
+      {date}
+    </div>
+  )}
+
+  {/* Stats */}
+  {stats && stats.length > 0 && (
+    <div class="mt-8 grid gap-4 sm:grid-cols-3">
+      {stats.map((s) => (
+        <StatBox icon={s.icon} value={s.value} label={s.label} />
+      ))}
+    </div>
+  )}
+
+  {/* Body */}
+  <div class="mt-10 space-y-6"><slot /></div>
+</div>

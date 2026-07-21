@@ -1,0 +1,125 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --background: oklch(0.99 0.002 240);
+  --foreground: oklch(0.17 0.02 250);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.17 0.02 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.17 0.02 250);
+  --primary: oklch(0.65 0.14 230);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.78 0.12 100);
+  --secondary-foreground: oklch(0.25 0.04 100);
+  --muted: oklch(0.96 0.01 240);
+  --muted-foreground: oklch(0.5 0.02 250);
+  --accent: oklch(0.93 0.04 100);
+  --accent-foreground: oklch(0.25 0.04 100);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.91 0.01 240);
+  --input: oklch(0.91 0.01 240);
+  --ring: oklch(0.65 0.14 230);
+  --radius: 1rem;
+}
+
+@theme inline {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "DM Serif Display", ui-serif, Georgia, serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 0 0 1px rgba(9, 9, 11, 0.07),
+    0 0.7px 0.9px -1px rgba(9, 9, 11, 0.08), 0 3px 4px -2px rgba(9, 9, 11, 0.14);
+  --shadow-dropdown: 0 0 0 1px rgba(25, 28, 33, 0.08),
+    0 16px 36px -6px color-mix(in srgb, black calc(0.07 * 100%), transparent),
+    0 6px 16px -2px color-mix(in srgb, black calc(0.2 * 100%), transparent);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  *:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--color-ring) 50%, transparent);
+    outline-offset: 2px;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+@utility container {
+  width: 100%;
+  max-width: 1248px;
+  padding-inline: 1rem;
+  margin-inline: auto;
+}
+
+@utility prose-theme {
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-lead: var(--foreground);
+  --tw-prose-links: var(--foreground);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--foreground);
+  --tw-prose-bullets: var(--foreground);
+  --tw-prose-hr: var(--foreground);
+  --tw-prose-quotes: var(--foreground);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.32, 0.72, 0, 1) both;
+}

@@ -1,0 +1,13 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/marketing/annual-report/Header.astro";
+import ReportCard from "../components/marketing/annual-report/ReportCard.astro";
+import content from "../data/annual-report.json";
+
+const { seo, header, reportCard } = content;
+---
+
+<Layout title={seo.title} description={seo.description}>
+  <Header {...header} />
+  <ReportCard {...reportCard} />
+</Layout>

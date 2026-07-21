@@ -1,0 +1,51 @@
+---
+// Ports the Hero section from app/(marketing)/success-stories/spr/page.tsx
+import ArrowLeft from "../../icons/ArrowLeft.astro";
+import Reveal from "../home/Reveal.astro";
+
+interface Props {
+  backText?: string;
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  image: { src: string; alt: string };
+}
+const { backText, eyebrow, heading, intro, image } = Astro.props;
+---
+<section class="relative overflow-hidden">
+  {/* Full-bleed image behind */}
+  <div class="absolute inset-0">
+    <img
+      src={image.src}
+      alt={image.alt}
+      fetchpriority="high"
+      decoding="async"
+      class="h-full w-full object-cover"
+    />
+    <div class="bg-foreground/70 absolute inset-0"></div>
+  </div>
+
+  <div class="relative container py-28 md:py-40">
+    <Reveal>
+      <a
+        href="/success-stories"
+        class="group text-background/60 hover:text-background mb-10 inline-flex items-center gap-2 text-sm font-medium transition-colors"
+      >
+        <ArrowLeft class="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
+        {backText}
+      </a>
+    </Reveal>
+
+    <Reveal class="max-w-2xl" delay={120}>
+      <p class="text-background/50 text-xs font-semibold tracking-[0.3em] uppercase">
+        {eyebrow}
+      </p>
+      <h1 class="text-background mt-5 font-serif text-5xl leading-[1.05] md:text-6xl lg:text-7xl">
+        {heading}
+      </h1>
+      <p class="text-background/75 mt-8 max-w-xl text-base leading-relaxed md:text-lg">
+        {intro}
+      </p>
+    </Reveal>
+  </div>
+</section>

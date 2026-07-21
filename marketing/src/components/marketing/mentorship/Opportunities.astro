@@ -1,0 +1,81 @@
+---
+// Ports components/marketing/mentorship/opportunities.tsx
+import ArrowRight from "../../icons/ArrowRight.astro";
+import Reveal from "../home/Reveal.astro";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  titleLine2: string;
+  items: { title: string; description: string }[];
+  note: string;
+}
+
+const { eyebrow, title, titleLine2, items, note } = Astro.props;
+---
+<section class="py-28 md:py-40">
+  <div class="container">
+    <Reveal>
+      <div class="mb-16">
+        <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+          {eyebrow}
+        </p>
+        <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">
+          {title}
+          <br />
+          {titleLine2}
+        </h2>
+      </div>
+    </Reveal>
+
+    <Reveal delay={160}>
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors">
+          <p class="text-primary/40 font-serif text-5xl">01</p>
+          <h3 class="mt-6 text-xl font-semibold">
+            {items[0].title}
+          </h3>
+          <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
+            {items[0].description}
+          </p>
+          <a
+            href="/success-stories/spr"
+            class="text-primary hover:text-primary/80 mt-6 inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
+          >
+            Student Project Roadmap (SPR)
+            <ArrowRight class="size-3.5" />
+          </a>
+        </div>
+
+        <div class="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors">
+          <p class="text-primary/40 font-serif text-5xl">02</p>
+          <h3 class="mt-6 text-xl font-semibold">{items[1].title}</h3>
+          <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
+            {items[1].description}
+          </p>
+          <a
+            href="/hervoice"
+            class="text-primary hover:text-primary/80 mt-6 inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
+          >
+            Explore HerVoice
+            <ArrowRight class="size-3.5" />
+          </a>
+        </div>
+
+        <div class="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors">
+          <p class="text-primary/40 font-serif text-5xl">03</p>
+          <h3 class="mt-6 text-xl font-semibold">{items[2].title}</h3>
+          <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
+            {items[2].description}
+          </p>
+        </div>
+      </div>
+    </Reveal>
+
+    <Reveal delay={240}>
+      <p class="text-muted-foreground mt-10 text-sm leading-relaxed">
+        {note}
+      </p>
+    </Reveal>
+  </div>
+</section>

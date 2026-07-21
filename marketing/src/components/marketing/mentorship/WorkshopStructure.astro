@@ -1,0 +1,71 @@
+---
+// Ports components/marketing/mentorship/workshop-structure.tsx
+import ArrowRight from "../../icons/ArrowRight.astro";
+import Reveal from "../home/Reveal.astro";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  items: { title: string; description: string }[];
+}
+
+const { eyebrow, title, description, items } = Astro.props;
+---
+<section class="py-28 md:py-40">
+  <div class="container">
+    <div class="mb-16 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <Reveal>
+        <div>
+          <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+            {eyebrow}
+          </p>
+          <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">
+            {title}
+          </h2>
+        </div>
+      </Reveal>
+      <Reveal delay={80}>
+        <p class="text-muted-foreground max-w-xs text-sm leading-relaxed">
+          {description}
+        </p>
+      </Reveal>
+    </div>
+
+    {/* Card grid — brand-accented */}
+    <Reveal delay={160}>
+      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {items.map((item, i) => (
+          <div
+            class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 relative flex flex-col overflow-hidden rounded-2xl border p-7 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl"
+          >
+            {/* Top accent bar */}
+            <span class="from-primary to-secondary absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-x-100"></span>
+
+            <div class="flex items-baseline justify-between">
+              <span class="text-primary/30 group-hover:text-primary font-serif text-5xl leading-none transition-colors duration-500">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+            </div>
+            <h3 class="mt-5 text-lg font-semibold">{item.title}</h3>
+            <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
+              {item.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </Reveal>
+
+    <Reveal delay={240}>
+      <div class="mt-14 flex justify-center">
+        <a
+          href="/sisterhood-sessions"
+          class="group border-border/60 text-foreground/80 hover:border-primary/30 hover:text-foreground inline-flex items-center gap-2.5 rounded-full border px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]"
+        >
+          Learn About Sisterhood Sessions
+          <ArrowRight class="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+        </a>
+      </div>
+    </Reveal>
+  </div>
+</section>

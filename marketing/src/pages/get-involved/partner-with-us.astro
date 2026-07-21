@@ -1,0 +1,13 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PartnerContact from "../../components/marketing/get-involved/PartnerContact.astro";
+import data from "../../data/get-involved-partner.json";
+---
+<Layout title={data.seo.title} description={data.seo.description}>
+  <PartnerContact
+    eyebrow={data.eyebrow}
+    heading={data.heading}
+    body={data.body}
+    questions={data.questions}
+  />
+</Layout>

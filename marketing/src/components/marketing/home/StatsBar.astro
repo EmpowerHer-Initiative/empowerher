@@ -1,0 +1,56 @@
+---
+// Ports components/marketing/home/stats-bar.tsx
+import ArrowRight from "../../icons/ArrowRight.astro";
+import Reveal from "./Reveal.astro";
+import CountUp from "./CountUp.astro";
+
+interface Props {
+  heading: string;
+  bodyText: string;
+  stats: { number: string; label: string }[];
+}
+const { heading, bodyText, stats: rawStats } = Astro.props;
+
+function parseNumber(number: string) {
+  const m = number.match(/^([\d.]+)(.*)$/);
+  const numeric = m ? m[1] : number;
+  const suffix = m ? m[2] : "";
+  const dot = numeric.indexOf(".");
+  const decimals = dot === -1 ? 0 : numeric.length - dot - 1;
+  return { to: parseFloat(numeric), decimals, suffix };
+}
+
+const stats = rawStats.map((s) => ({ ...parseNumber(s.number), label: s.label }));
+---
+<section class="border-border/40 bg-primary/[0.03] border-y py-20 md:py-28">
+  <div class="container">
+    <Reveal class="max-w-2xl">
+      <h2 class="font-serif text-3xl leading-tight md:text-5xl">
+        {heading}
+      </h2>
+      <p class="text-muted-foreground mt-6 max-w-md text-base leading-relaxed md:text-lg">
+        {bodyText}
+      </p>
+      <a
+        href="https://www.unesco.org/en/articles/let-girls-and-women-afghanistan-learn"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group bg-primary text-primary-foreground hover:shadow-primary/25 mt-8 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
+      >
+        More Details
+        <ArrowRight class="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+      </a>
+    </Reveal>
+
+    <div class="divide-border/40 mt-14 grid grid-cols-1 divide-y md:grid-cols-3 md:divide-x md:divide-y-0">
+      {stats.map((s) => (
+        <div class="flex flex-col gap-2 px-2 py-8 md:px-8 md:py-2">
+          <span class="text-primary font-serif text-4xl md:text-5xl">
+            <CountUp to={s.to} decimals={s.decimals} suffix={s.suffix} />
+          </span>
+          <span class="text-muted-foreground max-w-xs text-sm leading-snug">{s.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

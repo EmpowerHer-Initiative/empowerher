@@ -1,0 +1,89 @@
+---
+// Ports components/marketing/home/hero.tsx
+import ArrowRight from "../../icons/ArrowRight.astro";
+
+interface Props {
+  heading: string;
+  bodyText: string;
+  images: { image: string }[];
+}
+const { heading, bodyText, images: imageList } = Astro.props;
+const images = imageList.map((i) => i.image);
+---
+<section class="relative min-h-[100dvh] overflow-hidden" data-hero>
+  {images.map((src, i) => (
+    <img
+      src={src}
+      alt=""
+      data-hero-img
+      loading={i === 0 ? "eager" : "lazy"}
+      fetchpriority={i === 0 ? "high" : undefined}
+      decoding="async"
+      class={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1.8s] ease-[cubic-bezier(0.32,0.72,0,1)] ${i === 0 ? "opacity-100" : "opacity-0"}`}
+    />
+  ))}
+  <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20"></div>
+
+  <div class="relative container flex min-h-[100dvh] items-end pt-40 pb-20 md:items-center md:pb-0">
+    <div class="max-w-5xl">
+      <h1 class="font-serif text-4xl leading-[1.08] text-white md:text-6xl lg:text-8xl">
+        {heading}
+        <br />
+        <span class="text-[var(--primary)] italic">Inspiring Futures</span>
+      </h1>
+      <p class="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
+        {bodyText}
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a
+          href="/about-us"
+          class="group inline-flex items-center gap-3 rounded-full bg-white px-8 py-4 text-sm font-semibold text-black transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-white/90 active:scale-[0.98]"
+        >
+          About Us
+          <span class="flex size-7 items-center justify-center rounded-full bg-black/10 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5">
+            <ArrowRight class="size-3.5" />
+          </span>
+        </a>
+      </div>
+
+      <div class="mt-12 flex gap-2" data-hero-dots>
+        {images.map((_, i) => (
+          <button
+            data-hero-dot
+            aria-label={`Image ${i + 1}`}
+            class={`h-[3px] rounded-full transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] ${i === 0 ? "w-10 bg-white" : "w-4 bg-white/30"}`}
+          ></button>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  let heroTimer: ReturnType<typeof setInterval> | undefined;
+  function initHero() {
+    // Clear any interval left over from a previous page (view-transition nav).
+    if (heroTimer) clearInterval(heroTimer);
+    const hero = document.querySelector<HTMLElement>("[data-hero]");
+    if (!hero) return;
+    const imgs = Array.from(hero.querySelectorAll<HTMLElement>("[data-hero-img]"));
+    const dots = Array.from(hero.querySelectorAll<HTMLElement>("[data-hero-dot]"));
+    let idx = 0;
+    const set = (n: number) => {
+      idx = n;
+      imgs.forEach((img, i) => {
+        img.classList.toggle("opacity-100", i === idx);
+        img.classList.toggle("opacity-0", i !== idx);
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle("w-10", i === idx);
+        d.classList.toggle("bg-white", i === idx);
+        d.classList.toggle("w-4", i !== idx);
+        d.classList.toggle("bg-white/30", i !== idx);
+      });
+    };
+    dots.forEach((d, i) => d.addEventListener("click", () => set(i)));
+    heroTimer = setInterval(() => set((idx + 1) % imgs.length), 6000);
+  }
+  document.addEventListener("astro:page-load", initHero);
+</script>

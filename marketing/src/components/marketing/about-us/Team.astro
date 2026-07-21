@@ -1,0 +1,83 @@
+---
+// Ports components/marketing/about-us/team.tsx
+import Reveal from "../home/Reveal.astro";
+import TeamMember from "./TeamMember.astro";
+
+interface Member {
+  name: string;
+  role: string;
+  image: string;
+}
+interface Group {
+  label: string;
+  members: Member[];
+}
+interface Props {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  groups: Group[];
+}
+const { eyebrow, heading, intro, groups } = Astro.props;
+const [executiveTeam, directors, mentorsTeam] = groups;
+---
+<section class="bg-foreground/[0.02] py-28 md:py-40">
+  <div class="container">
+    <Reveal>
+      <div class="mb-16">
+        <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+          {eyebrow}
+        </p>
+        <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">{heading}</h2>
+        <p class="text-muted-foreground mt-4 max-w-lg">
+          {intro}
+        </p>
+      </div>
+    </Reveal>
+
+    {executiveTeam.members.length > 0 && (
+      <Reveal>
+        <div class="mb-14">
+          <p class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+            {executiveTeam.label}
+          </p>
+          <div class="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2">
+            {executiveTeam.members.map((member, index) => (
+              <TeamMember member={member} index={index} size="lg" />
+            ))}
+          </div>
+        </div>
+      </Reveal>
+    )}
+
+    {directors.members.length > 0 && (
+      <Reveal>
+        <div class="border-border/40 mb-14 border-t pt-14">
+          <p class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+            {directors.label}
+          </p>
+          <div class="mx-auto grid max-w-6xl grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
+            {directors.members.map((member, index) => (
+              <TeamMember member={member} index={index} size="md" />
+            ))}
+          </div>
+        </div>
+      </Reveal>
+    )}
+
+    {mentorsTeam.members.length > 0 && (
+      <Reveal>
+        <div class="border-border/40 border-t pt-14">
+          <p class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+            {mentorsTeam.label}
+          </p>
+          <div class="mx-auto grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+            {mentorsTeam.members.map((member, index) => (
+              <TeamMember member={member} index={index} size="sm" />
+            ))}
+          </div>
+        </div>
+      </Reveal>
+    )}
+  </div>
+</section>

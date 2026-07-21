@@ -1,0 +1,68 @@
+---
+// Ports app/(marketing)/hervoice/featured-writings-from-our-partners/page.tsx
+// The source reads caller.featuredWritings.list() and groups by `from`; here the
+// content is read from src/data/hervoice-featured-writings.json and grouped the
+// same way. Pagination (4 per group) runs client-side in PlatformSection.astro.
+import Layout from "../../layouts/Layout.astro";
+import Reveal from "../../components/marketing/home/Reveal.astro";
+import Header from "../../components/marketing/hervoice-featured-writings/Header.astro";
+import PlatformSection from "../../components/marketing/hervoice-featured-writings/PlatformSection.astro";
+import content from "../../data/hervoice-featured-writings.json";
+
+interface Writing {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+  from: string;
+}
+
+const { seo, header, writings } = content as {
+  seo: { title: string; description: string };
+  header: { eyebrow?: string; heading: string; lede: string };
+  writings: Writing[];
+};
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+const grouped = writings.reduce<Record<string, Writing[]>>((acc, writing) => {
+  (acc[writing.from] ??= []).push(writing);
+  return acc;
+}, {});
+
+const groups = Object.entries(grouped).map(([platform, list]) => ({
+  id: slugify(platform),
+  platform,
+  items: list,
+}));
+---
+<Layout title={seo.title} description={seo.description}>
+  <Header
+    eyebrow={header.eyebrow}
+    heading={header.heading}
+    lede={header.lede}
+  />
+
+  <section class="py-28 md:py-40">
+    <div class="container">
+      <div class="mx-auto max-w-4xl space-y-24">
+        {groups.length === 0 ? (
+          <Reveal>
+            <p class="text-muted-foreground py-16 text-center text-base">
+              No featured writings yet.
+            </p>
+          </Reveal>
+        ) : (
+          groups.map(({ id, platform, items }) => (
+            <PlatformSection id={id} platform={platform} writings={items} />
+          ))
+        )}
+      </div>
+    </div>
+  </section>
+</Layout>

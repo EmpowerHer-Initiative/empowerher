@@ -1,0 +1,129 @@
+{
+  "seo": {
+    "title": "Resources — EmpowerHer Initiative",
+    "description": "Educational resources, scholarships, and opportunities for Afghan girls."
+  },
+  "header": {
+    "eyebrow": "Education & Opportunities",
+    "heading": "Resources",
+    "intro": "A curated collection of educational programs, scholarships, and opportunities for Afghan girls and women — vetted by our team and organized to help you find the right path forward."
+  },
+  "resources": [
+    {
+      "id": 1,
+      "name": "Afghan Girls Financial Assistance Fund",
+      "location": "Remote — Global",
+      "description": "Full and partial scholarships for Afghan girls pursuing secondary and higher education abroad. Covers tuition, housing, and mentorship for the duration of the program.",
+      "link": "https://www.agfaf.org",
+      "image": "https://logo.clearbit.com/agfaf.org"
+    },
+    {
+      "id": 2,
+      "name": "Malala Fund — Education Champion Network",
+      "location": "Remote — Global",
+      "description": "Grants and advocacy support for local educators and activists working to secure 12 years of free, safe, quality education for every girl.",
+      "link": "https://malala.org",
+      "image": "https://logo.clearbit.com/malala.org"
+    },
+    {
+      "id": 3,
+      "name": "SOLA — School of Leadership Afghanistan",
+      "location": "Rwanda (Relocated)",
+      "description": "Afghanistan's first and only boarding school for girls, now operating in exile. Provides a rigorous college-preparatory education and a pathway to universities worldwide.",
+      "link": "https://sola-afghanistan.org",
+      "image": "https://logo.clearbit.com/sola-afghanistan.org"
+    },
+    {
+      "id": 4,
+      "name": "Coursera for Refugees",
+      "location": "Remote — Online",
+      "description": "Free access to thousands of online courses and professional certificates for displaced learners, including Afghan women rebuilding their education from anywhere.",
+      "link": "https://www.coursera.org/social-impact",
+      "image": "https://logo.clearbit.com/coursera.org"
+    },
+    {
+      "id": 5,
+      "name": "Kiron Open Higher Education",
+      "location": "Remote — Online",
+      "description": "A flexible online study program designed for refugees, offering accredited pathways into partner universities and career-focused skill tracks at no cost.",
+      "link": "https://kiron.ngo",
+      "image": "https://logo.clearbit.com/kiron.ngo"
+    },
+    {
+      "id": 6,
+      "name": "Rumie — Learn Anything, Free",
+      "location": "Remote — Mobile",
+      "description": "Bite-sized, mobile-first micro-learning built for low-bandwidth environments. Ideal for girls learning at home where formal schooling is out of reach.",
+      "link": "https://www.rumie.org",
+      "image": "https://logo.clearbit.com/rumie.org"
+    },
+    {
+      "id": 7,
+      "name": "Asian University for Women",
+      "location": "Chittagong, Bangladesh",
+      "description": "A liberal arts university dedicated to educating women from across Asia, with dedicated scholarship pathways and pathway programs for Afghan students.",
+      "link": "https://asian-university.org",
+      "image": "https://logo.clearbit.com/asian-university.org"
+    },
+    {
+      "id": 8,
+      "name": "Women for Afghan Women",
+      "location": "New York, USA",
+      "description": "Community-based education, vocational training, and legal support services for Afghan women and girls in the diaspora and inside Afghanistan.",
+      "link": "https://womenforafghanwomen.org",
+      "image": "https://logo.clearbit.com/womenforafghanwomen.org"
+    },
+    {
+      "id": 9,
+      "name": "Khan Academy",
+      "location": "Remote — Online",
+      "description": "A free, world-class education for anyone, anywhere. Self-paced lessons in math, science, and the humanities, available in multiple languages including Dari.",
+      "link": "https://www.khanacademy.org",
+      "image": "https://logo.clearbit.com/khanacademy.org"
+    },
+    {
+      "id": 10,
+      "name": "Scholarships for Afghan Women — DAAD",
+      "location": "Germany",
+      "description": "The German Academic Exchange Service offers fully funded master's and doctoral scholarships, with special consideration for at-risk Afghan scholars.",
+      "link": "https://www.daad.de",
+      "image": "https://logo.clearbit.com/daad.de"
+    },
+    {
+      "id": 11,
+      "name": "Code to Inspire",
+      "location": "Herat, Afghanistan / Remote",
+      "description": "The first coding school for girls in Afghanistan, teaching software development and graphic design so young women can earn an income working remotely.",
+      "link": "https://codetoinspire.org",
+      "image": "https://logo.clearbit.com/codetoinspire.org"
+    },
+    {
+      "id": 12,
+      "name": "UNHCR DAFI Scholarship Programme",
+      "location": "Remote — Global",
+      "description": "University scholarships for refugee students funded by the German government and administered by UNHCR, covering tuition and living costs.",
+      "link": "https://www.unhcr.org/dafi-scholarships.html",
+      "image": "https://logo.clearbit.com/unhcr.org"
+    },
+    {
+      "id": 13,
+      "name": "Girl Rising",
+      "location": "Remote — Global",
+      "description": "Storytelling-driven curricula and community programs that use the power of girls' own stories to change the way the world values girls and their education.",
+      "link": "https://girlrising.org",
+      "image": "https://logo.clearbit.com/girlrising.org"
+    },
+    {
+      "id": 14,
+      "name": "The Asfari Foundation",
+      "location": "London, UK",
+      "description": "Scholarships and civil-society grants supporting young people from the Middle East and wider region to access higher education and leadership opportunities.",
+      "link": "https://www.asfarifoundation.org.uk",
+      "image": "https://logo.clearbit.com/asfarifoundation.org.uk"
+    }
+  ],
+  "footerNote": {
+    "text": "If you know of an educational resource, scholarship, or program that supports Afghan girls and women, we'd love to hear about it. Reach out and help us connect more girls with the opportunities they deserve.",
+    "email": "info@empowerher-initiative.org"
+  }
+}

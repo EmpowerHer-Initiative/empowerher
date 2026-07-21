@@ -1,0 +1,47 @@
+---
+// Ports components/marketing/about-us/cta.tsx
+import ArrowRight from "../../icons/ArrowRight.astro";
+import ArrowUpRight from "../../icons/ArrowUpRight.astro";
+import Reveal from "../home/Reveal.astro";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+}
+const { eyebrow, heading } = Astro.props;
+---
+<section class="py-28 md:py-40">
+  <div class="container">
+    <div class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+      <Reveal>
+        <div>
+          <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+            {eyebrow}
+          </p>
+          <h2
+            class="font-serif text-4xl leading-[1.1] md:text-5xl lg:text-6xl"
+            set:html={heading}
+          />
+        </div>
+      </Reveal>
+      <Reveal delay={120}>
+        <div class="flex flex-col gap-4 sm:flex-row md:items-center">
+          <a
+            href="/get-involved"
+            class="group bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
+          >
+            Get Involved
+            <ArrowRight class="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+          </a>
+          <a
+            href="/mentorship"
+            class="border-border/60 text-foreground/80 hover:border-foreground/30 hover:text-foreground inline-flex items-center gap-2 rounded-full border px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+          >
+            Explore Programs
+            <ArrowUpRight class="size-4" />
+          </a>
+        </div>
+      </Reveal>
+    </div>
+  </div>
+</section>

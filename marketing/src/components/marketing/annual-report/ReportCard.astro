@@ -1,0 +1,78 @@
+---
+// Ports components/marketing/annual-report/report-card.tsx
+import ArrowRight from "../../icons/ArrowRight.astro";
+import Download from "../../icons/Download.astro";
+import Reveal from "../home/Reveal.astro";
+
+interface Props {
+  year?: string;
+  title: string;
+  description: string[];
+}
+const { year, title, description } = Astro.props;
+---
+<section class="py-28 md:py-40">
+  <div class="container">
+    <div class="mx-auto max-w-4xl">
+      {/* Year badge */}
+      <Reveal>
+        <div class="mb-10 flex items-center gap-4">
+          <div class="bg-border/30 h-px flex-1"></div>
+          <span class="border-border/40 text-muted-foreground rounded-full border px-4 py-1.5 text-xs font-semibold tracking-[0.2em] uppercase">
+            {year}
+          </span>
+          <div class="bg-border/30 h-px flex-1"></div>
+        </div>
+      </Reveal>
+
+      <div class="">
+        {/* Content */}
+        <Reveal delay={160}>
+          <div class="pt-2">
+            <h2 class="font-serif text-4xl leading-tight md:text-5xl">
+              {title}
+            </h2>
+
+            <div class="text-muted-foreground mt-8 space-y-4 text-base leading-relaxed">
+              {description.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+              <p>
+                The initiative operates through two core programs: the{" "}
+                <a
+                  href="/mentorship"
+                  class="text-foreground font-medium underline-offset-2 hover:underline"
+                >
+                  Mentorship Program
+                </a>
+                , a structured six-week cycle of workshops designed to develop
+                leadership skills, strengthen capacity, and support participants
+                in designing and advancing impact-driven projects; and{" "}
+                <a
+                  href="/hervoice"
+                  class="text-foreground font-medium underline-offset-2 hover:underline"
+                >
+                  HerVoice
+                </a>
+                , a storytelling platform that publishes and elevates the voices
+                and lived experiences of Afghan girls and women.
+              </p>
+            </div>
+
+            <div class="border-border/30 mt-10 border-t pt-10">
+              <a
+                href="#"
+                download
+                class="group bg-foreground text-background inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:opacity-80 active:scale-[0.98]"
+              >
+                <Download class="size-4" />
+                Download PDF
+                <ArrowRight class="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </a>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  </div>
+</section>

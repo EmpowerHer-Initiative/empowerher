@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/marketing/mentorship/Hero.astro";
+import Intro from "../components/marketing/mentorship/Intro.astro";
+import WorkshopStructure from "../components/marketing/mentorship/WorkshopStructure.astro";
+import Eligibility from "../components/marketing/mentorship/Eligibility.astro";
+import Opportunities from "../components/marketing/mentorship/Opportunities.astro";
+import Workshops from "../components/marketing/mentorship/Workshops.astro";
+import data from "../data/mentorship.json";
+---
+
+<Layout title={data.seo.title} description={data.seo.description}>
+  <Hero {...data.hero} />
+  <Intro {...data.intro} />
+  <WorkshopStructure {...data.workshopStructure} />
+  <Eligibility {...data.eligibility} />
+  <Opportunities {...data.opportunities} />
+  <Workshops {...data.workshops} />
+</Layout>

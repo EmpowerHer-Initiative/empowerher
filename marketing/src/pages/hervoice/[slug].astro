@@ -1,0 +1,241 @@
+---
+// Ports app/(marketing)/hervoice/[slug]/page.tsx (mock content only).
+// Source reads DB/MDX stories; here stories come from Pages CMS
+// (src/data/hervoice-stories.json) and getStaticPaths() builds one page per
+// entry. Slugs must include the ones the home contest cards + featured-writings
+// grid link to.
+import Layout from "../../layouts/Layout.astro";
+import ArrowLeft from "../../components/icons/ArrowLeft.astro";
+import Instagram from "../../components/icons/Instagram.astro";
+import Facebook from "../../components/icons/Facebook.astro";
+import LinkedIn from "../../components/icons/LinkedIn.astro";
+import storyData from "../../data/hervoice-stories.json";
+
+const DEFAULT_AVATAR =
+  "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTK53dXUCVy1oGkRMuS0Lravl9JbQIxWFcNhtq";
+
+type Block =
+  | { type: "p"; text: string }
+  | { type: "poem"; lines: { value: string; translation?: string }[] };
+
+type Story = {
+  slug: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt?: string;
+  imageCredit?: string;
+  date: string;
+  authorName: string;
+  authorBio?: string;
+  authorPosition?: string;
+  authorInstagram?: string;
+  authorFacebook?: string;
+  authorLinkedin?: string;
+  messageToWorld?: string;
+  content: Block[];
+};
+
+export function getStaticPaths() {
+  return (storyData.stories as unknown as Story[]).map((s) => ({
+    params: { slug: s.slug },
+    props: { post: s },
+  }));
+}
+
+const { post } = Astro.props as { post: Story };
+
+const socials = post
+  ? [
+      { href: post.authorLinkedin, Icon: LinkedIn, label: "LinkedIn" },
+      { href: post.authorInstagram, Icon: Instagram, label: "Instagram" },
+      { href: post.authorFacebook, Icon: Facebook, label: "Facebook" },
+    ].filter((s) => s.href)
+  : [];
+
+const initial = post ? post.authorName.trim().charAt(0).toUpperCase() : "";
+---
+{post && (
+  <Layout title={post.title} description={post.description}>
+    {/* Hero */}
+    <section class="py-28 md:py-40">
+      <div class="container">
+        <div class="mx-auto max-w-3xl">
+          {/* Back button */}
+          <button
+            type="button"
+            data-back
+            class="group text-muted-foreground hover:text-foreground mb-10 inline-flex items-center gap-2 text-sm font-medium transition-colors duration-300"
+          >
+            <ArrowLeft class="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
+            Back to HerVoice
+          </button>
+
+          <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+            HerVoice
+          </p>
+          <h1 class="mt-5 font-serif text-4xl leading-[1.15] md:text-5xl lg:text-6xl">
+            {post.title}
+          </h1>
+          <p class="text-muted-foreground mt-6 text-base leading-relaxed md:text-lg">
+            {post.description}
+          </p>
+          <div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
+            <p class="text-muted-foreground/60 text-sm">{post.date}</p>
+
+            {/* Author card — popover reveals on hover */}
+            <div class="group/author relative">
+              <button
+                type="button"
+                class="border-border bg-background hover:bg-muted inline-flex items-center gap-2 rounded-full border py-1.5 pr-4 pl-1.5 text-sm font-medium transition-colors"
+              >
+                <span class="relative flex size-7 shrink-0 overflow-hidden rounded-full">
+                  <img
+                    src={DEFAULT_AVATAR}
+                    alt={post.authorName}
+                    class="aspect-square h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span class="bg-primary/10 text-primary absolute inset-0 -z-10 flex items-center justify-center text-xs font-semibold">
+                    {initial}
+                  </span>
+                </span>
+                {post.authorName}
+              </button>
+
+              <div class="bg-popover text-popover-foreground pointer-events-none absolute top-full left-0 z-50 mt-2 w-80 origin-top-left translate-y-1 rounded-md border p-4 opacity-0 shadow-md transition-all duration-200 group-hover/author:pointer-events-auto group-hover/author:translate-y-0 group-hover/author:opacity-100">
+                <div class="mb-3 flex items-center gap-3">
+                  <span class="relative flex size-10 shrink-0 overflow-hidden rounded-full">
+                    <img
+                      src={DEFAULT_AVATAR}
+                      alt={post.authorName}
+                      class="aspect-square h-full w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <span class="bg-primary/10 text-primary absolute inset-0 -z-10 flex items-center justify-center font-semibold">
+                      {initial}
+                    </span>
+                  </span>
+                  <div class="-space-y-0.5">
+                    <p class="text-foreground font-semibold">{post.authorName}</p>
+                    {post.authorPosition && (
+                      <p class="text-muted-foreground text-xs">
+                        {post.authorPosition}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {post.authorBio && (
+                  <p class="text-muted-foreground text-[13px] leading-relaxed">
+                    {post.authorBio}
+                  </p>
+                )}
+
+                {socials.length > 0 && (
+                  <div class="mt-3 flex items-center gap-3">
+                    {socials.map(({ href, Icon, label }) => (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={label}
+                        class="text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <Icon class="size-4" />
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Cover image */}
+    <section class="pb-16">
+      <div class="container">
+        <div class="mx-auto max-w-4xl">
+          <div class="overflow-hidden rounded-3xl">
+            <img
+              src={post.image}
+              alt={post.imageAlt ?? post.title}
+              class="aspect-[2/1] w-full object-cover"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </div>
+          {post.imageAlt && (
+            <p class="text-muted-foreground/70 mt-3 text-center text-sm italic">
+              {post.imageAlt}
+            </p>
+          )}
+          {post.imageCredit && (
+            <p class="text-muted-foreground/50 mt-1 text-center text-xs">
+              {post.imageCredit}
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+
+    {/* Content */}
+    <section class="pb-28 md:pb-40">
+      <div class="container">
+        <div class="mx-auto max-w-3xl">
+          <div class="text-foreground space-y-7 text-base leading-[1.9]">
+            {post.content.map((block) =>
+              block.type === "poem" ? (
+                <blockquote class="border-primary/20 text-foreground my-10 space-y-1 border-l-2 pl-6 md:pl-8">
+                  {block.lines.map((line) => (
+                    <p class="font-serif text-lg leading-relaxed md:text-xl">
+                      <span>{line.value}</span>
+                      {line.translation && (
+                        <span class="text-muted-foreground/60 ml-3 text-sm italic">
+                          {line.translation}
+                        </span>
+                      )}
+                    </p>
+                  ))}
+                </blockquote>
+              ) : (
+                <p>{block.text}</p>
+              )
+            )}
+          </div>
+
+          {post.messageToWorld && (
+            <div class="border-primary/20 bg-card mt-16 rounded-3xl border p-8 md:p-10">
+              <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+                A Message to The World
+              </p>
+              <blockquote class="mt-6 font-serif text-lg leading-relaxed italic md:text-xl">
+                &ldquo;{post.messageToWorld}&rdquo;
+              </blockquote>
+              <p class="text-primary mt-4 text-right text-sm font-semibold tracking-wide">
+                — {post.authorName}
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  </Layout>
+)}
+
+<script>
+  // Delegated so it works after view-transition navigations without re-binding.
+  if (!(window as any).__backBound) {
+    (window as any).__backBound = true;
+    document.addEventListener("click", (e) => {
+      if (!(e.target as HTMLElement).closest("[data-back]")) return;
+      if (window.history.length > 1) window.history.back();
+      else window.location.href = "/hervoice";
+    });
+  }
+</script>

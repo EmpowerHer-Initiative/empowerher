@@ -1,0 +1,14 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import VolunteerContact from "../../components/marketing/get-involved/VolunteerContact.astro";
+import data from "../../data/get-involved-volunteer.json";
+---
+<Layout title={data.seo.title} description={data.seo.description}>
+  <VolunteerContact
+    eyebrow={data.eyebrow}
+    heading={data.heading}
+    body={data.body}
+    note={data.note}
+    questions={data.questions}
+  />
+</Layout>

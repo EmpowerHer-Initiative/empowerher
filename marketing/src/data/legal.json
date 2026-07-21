@@ -1,0 +1,35 @@
+{
+  "seo": {
+    "title": "Terms & Privacy — EmpowerHer Initiative",
+    "description": "The terms of use and privacy policy for the EmpowerHer Initiative."
+  },
+  "hero": {
+    "eyebrow": "Legal",
+    "headingLead": "Terms",
+    "headingTrail": "Privacy",
+    "body": "How we operate, what we expect, and how we protect the information you share with the EmpowerHer Initiative."
+  },
+  "body": {
+    "parts": [
+      {
+        "eyebrow": "Part One",
+        "title": "Terms of Use",
+        "paragraphs": [
+          "Terms of Use content coming soon. This section will outline the rules and conditions for using the EmpowerHer website, programs, and services."
+        ]
+      },
+      {
+        "eyebrow": "Part Two",
+        "title": "Privacy Policy",
+        "paragraphs": [
+          "Privacy Policy content coming soon. This section will describe what information we collect, how we use it, and the choices you have over your data."
+        ]
+      }
+    ],
+    "footer": {
+      "updated": "Last updated: 2026.",
+      "contactPrompt": "Questions? Email",
+      "email": "info@empowerher-initiative.org"
+    }
+  }
+}

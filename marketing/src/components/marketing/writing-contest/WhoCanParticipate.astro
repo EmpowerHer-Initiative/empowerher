@@ -1,0 +1,36 @@
+---
+// Ports components/marketing/writing-contest/who-can-participate.tsx
+import Reveal from "../home/Reveal.astro";
+import CheckCircle2 from "../../icons/CheckCircle2.astro";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  items: string[];
+}
+const { eyebrow, title, items } = Astro.props;
+---
+<section class="py-28 md:py-40">
+  <div class="container">
+    <div class="mx-auto max-w-4xl">
+      <Reveal>
+        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+          {eyebrow}
+        </p>
+        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+          {title}
+        </h2>
+      </Reveal>
+      <div class="mt-12 grid gap-4">
+        {items.map((item, i) => (
+          <Reveal class="border-border/60 bg-background flex items-start gap-4 rounded-2xl border p-6 shadow-sm" delay={i * 80}>
+            <CheckCircle2 class="text-primary mt-0.5 size-6 shrink-0" />
+            <p class="text-foreground/80 text-base leading-relaxed">
+              {item}
+            </p>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

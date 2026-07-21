@@ -1,0 +1,99 @@
+---
+// Ports components/marketing/get-involved/split-screen.tsx
+import ArrowRight from "../../icons/ArrowRight.astro";
+import Reveal from "../home/Reveal.astro";
+
+interface Panel {
+  eyebrow: string;
+  heading: string;
+  body: string;
+  image: string;
+  imageAlt: string;
+}
+interface Props {
+  partner: Panel;
+  volunteer: Panel;
+}
+const { partner, volunteer } = Astro.props;
+---
+<section class="flex min-h-screen flex-col lg:flex-row">
+  {/* Partner — left half */}
+  <div class="group relative flex min-h-[60vh] flex-1 flex-col justify-end overflow-hidden lg:min-h-screen">
+    {/* Background image */}
+    <div class="absolute inset-0">
+      <img
+        src={partner.image}
+        alt={partner.imageAlt}
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        class="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+      />
+      {/* Dark gradient overlay */}
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10"></div>
+    </div>
+
+    {/* Content */}
+    <Reveal class="relative px-10 pt-32 pb-16 md:px-14 md:pb-20 lg:px-16 lg:pb-24">
+      <p class="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase">
+        {partner.eyebrow}
+      </p>
+      <h2 class="mt-4 font-serif text-4xl leading-[1.1] text-white md:text-5xl">
+        {partner.heading}
+      </h2>
+      <p class="mt-5 max-w-sm text-base leading-relaxed text-white/70">
+        {partner.body}
+      </p>
+      <a
+        href="/get-involved/partner-with-us"
+        class="group/btn mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-black transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-white/90 hover:shadow-xl hover:shadow-black/20 active:scale-[0.98]"
+      >
+        Become a Partner
+        <span class="flex size-6 items-center justify-center rounded-full bg-black/10 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover/btn:translate-x-0.5">
+          <ArrowRight class="size-3.5" />
+        </span>
+      </a>
+    </Reveal>
+  </div>
+
+  {/* Divider line on desktop */}
+  <div class="hidden w-px bg-white/10 lg:block"></div>
+
+  {/* Volunteer — right half */}
+  <div class="group relative flex min-h-[60vh] flex-1 flex-col justify-end overflow-hidden lg:min-h-screen">
+    {/* Background image */}
+    <div class="absolute inset-0">
+      <img
+        src={volunteer.image}
+        alt={volunteer.imageAlt}
+        loading="lazy"
+        decoding="async"
+        class="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+      />
+      {/* Dark gradient overlay */}
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10"></div>
+    </div>
+
+    {/* Content */}
+    <Reveal delay={120} class="relative px-10 pt-32 pb-16 md:px-14 md:pb-20 lg:px-16 lg:pb-24">
+      <p class="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase">
+        {volunteer.eyebrow}
+      </p>
+      <h2 class="mt-4 font-serif text-4xl leading-[1.1] text-white md:text-5xl">
+        {volunteer.heading}
+      </h2>
+      <p class="mt-5 max-w-sm text-base leading-relaxed text-white/70">
+        {volunteer.body}
+      </p>
+      <a
+        href="/get-involved/volunteer-with-us"
+        class="group/btn mt-8 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-3.5 text-sm font-medium text-white backdrop-blur-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-white/20 hover:shadow-xl hover:shadow-black/20 active:scale-[0.98]"
+      >
+        Start Volunteering
+        <span class="flex size-6 items-center justify-center rounded-full bg-white/10 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover/btn:translate-x-0.5">
+          <ArrowRight class="size-3.5" />
+        </span>
+      </a>
+    </Reveal>
+  </div>
+</section>

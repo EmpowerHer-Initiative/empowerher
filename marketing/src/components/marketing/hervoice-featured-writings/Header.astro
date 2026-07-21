@@ -1,0 +1,45 @@
+---
+// Ports the header <section> of app/(marketing)/hervoice/featured-writings-from-our-partners/page.tsx
+import Reveal from "../home/Reveal.astro";
+import ArrowLeft from "../../icons/ArrowLeft.astro";
+
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  lede: string;
+}
+const { eyebrow, heading, lede } = Astro.props;
+---
+<section class="py-28 md:py-40">
+  <div class="container">
+    <div class="max-w-4xl">
+      <Reveal>
+        <a
+          href="/hervoice"
+          class="group text-muted-foreground hover:text-foreground mb-10 inline-flex items-center gap-2 text-sm font-medium transition-colors duration-300"
+        >
+          <ArrowLeft class="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
+          Back to HerVoice
+        </a>
+      </Reveal>
+
+      {eyebrow && (
+        <Reveal delay={80}>
+          <p class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+            {eyebrow}
+          </p>
+        </Reveal>
+      )}
+      <Reveal delay={160}>
+        <h1 class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl">
+          {heading}
+        </h1>
+      </Reveal>
+      <Reveal delay={240}>
+        <p class="text-muted-foreground mt-8 max-w-xl text-base leading-relaxed md:text-lg">
+          {lede}
+        </p>
+      </Reveal>
+    </div>
+  </div>
+</section>

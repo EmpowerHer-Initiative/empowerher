@@ -1,0 +1,31 @@
+---
+// Ports app/(marketing)/hervoice/winners/page.tsx
+import Layout from "../../layouts/Layout.astro";
+import Reveal from "../../components/marketing/home/Reveal.astro";
+import Hero from "../../components/marketing/hervoice-winners/Hero.astro";
+import CashPrizeWinners from "../../components/marketing/hervoice-winners/CashPrizeWinners.astro";
+import HonorableMentions from "../../components/marketing/hervoice-winners/HonorableMentions.astro";
+import JudgeTestimonials from "../../components/marketing/hervoice-winners/JudgeTestimonials.astro";
+import HerVoiceCTA from "../../components/marketing/hervoice-winners/HerVoiceCTA.astro";
+import data from "../../data/hervoice-winners.json";
+---
+<Layout title={data.seo.title} description={data.seo.description}>
+  <div class="text-[#1A2230] antialiased">
+    {/* ── SECTION 1: Hero ── */}
+    <Hero {...data.hero} />
+
+    {/* ── SECTION 2: Cash Prize Winners ── */}
+    <CashPrizeWinners {...data.cashPrizeWinners} />
+
+    {/* ── SECTION 3: Honorable Mentions ── */}
+    <HonorableMentions {...data.honorableMentions} />
+
+    {/* ── SECTION 4: Judge Testimonials ── */}
+    <JudgeTestimonials {...data.judgeTestimonials} />
+
+    {/* ── SECTION 5: CTA Banner ── */}
+    <Reveal>
+      <HerVoiceCTA {...data.herVoiceCta} />
+    </Reveal>
+  </div>
+</Layout>

@@ -1,0 +1,56 @@
+---
+// Ports components/marketing/home/media-spotlight.tsx
+// Single feature → nav arrows and dots are hidden (source hides them when total === 1).
+import Play from "../../icons/Play.astro";
+import Reveal from "./Reveal.astro";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  features: { youtubeId: string; label: string; title: string; description: string }[];
+}
+const { eyebrow, heading, features: mediaFeatures } = Astro.props;
+---
+<section class="py-28 md:py-40">
+  <div class="container">
+    <Reveal>
+      <div class="flex items-end justify-between gap-6">
+        <div>
+          <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">{eyebrow}</p>
+          <h2 class="mt-4 font-serif text-3xl leading-tight md:text-4xl">{heading}</h2>
+        </div>
+      </div>
+    </Reveal>
+
+    <Reveal delay={120}>
+      <div class="relative mt-12 overflow-hidden rounded-[2.5rem]">
+        <div class="flex transition-transform duration-[800ms] ease-[cubic-bezier(0.32,0.72,0,1)]" style="transform:translateX(0)">
+          {mediaFeatures.map((m) => (
+            <div class="w-full shrink-0">
+              <div class="bg-muted/30 grid gap-0 lg:grid-cols-2">
+                <div class="relative aspect-video lg:aspect-auto lg:min-h-[440px]">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${m.youtubeId}`}
+                    title={m.title}
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                    class="absolute inset-0 h-full w-full"
+                  ></iframe>
+                </div>
+                <div class="flex flex-col justify-center p-8 md:p-14">
+                  <div class="text-primary flex items-center gap-2">
+                    <Play class="size-4 fill-current" />
+                    <span class="text-xs font-medium tracking-[0.2em] uppercase">{m.label}</span>
+                  </div>
+                  <h3 class="mt-4 font-serif text-2xl leading-tight md:text-3xl">{m.title}</h3>
+                  <p class="text-muted-foreground mt-5 text-base leading-[1.8]">{m.description}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Reveal>
+  </div>
+</section>

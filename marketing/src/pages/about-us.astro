@@ -1,0 +1,21 @@
+---
+import Layout from "../layouts/Layout.astro";
+import aboutUs from "../data/about-us.json";
+import Hero from "../components/marketing/about-us/Hero.astro";
+import MissionVision from "../components/marketing/about-us/MissionVision.astro";
+import OurStory from "../components/marketing/about-us/OurStory.astro";
+import WhatWeDo from "../components/marketing/about-us/WhatWeDo.astro";
+import Team from "../components/marketing/about-us/Team.astro";
+import Partners from "../components/marketing/about-us/Partners.astro";
+import CTA from "../components/marketing/about-us/CTA.astro";
+---
+
+<Layout title={aboutUs.seo.title} description={aboutUs.seo.description}>
+  <Hero {...aboutUs.hero} />
+  <MissionVision cards={aboutUs.missionVision.cards} />
+  <OurStory {...aboutUs.ourStory} />
+  <WhatWeDo {...aboutUs.whatWeDo} />
+  <Team {...aboutUs.team} />
+  <Partners {...aboutUs.partners} />
+  <CTA {...aboutUs.cta} />
+</Layout>

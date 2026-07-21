@@ -1,0 +1,13 @@
+---
+// Ports the ImpactBox from components/marketing/success-stories/_shared.tsx
+import Heart from "../../icons/Heart.astro";
+
+const { title } = Astro.props;
+---
+<div class="bg-muted/50 rounded-2xl p-6 md:p-8">
+  <div class="text-primary flex items-center gap-2.5">
+    <Heart class="size-5" />
+    <p class="text-foreground text-base font-semibold">{title}</p>
+  </div>
+  <p class="text-muted-foreground mt-3 text-base leading-relaxed"><slot /></p>
+</div>

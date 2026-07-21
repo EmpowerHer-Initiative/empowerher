@@ -1,0 +1,244 @@
+---
+// Ports components/navbar.tsx. Home page: transparent over the hero, solidifies
+// on scroll. Desktop dropdowns are CSS hover; mobile menu + scroll state are JS.
+import Logo from "./icons/Logo.astro";
+import ChevronDown from "./icons/ChevronDown.astro";
+
+const programs = [
+  {
+    label: "Mentorship Program",
+    href: "/mentorship",
+    children: [
+      { label: "Monthly Internet Scholarship (MIS)", href: "/mis" },
+      { label: "Student Project Roadmap", href: "/success-stories/spr" },
+    ],
+  },
+  {
+    label: "HerVoice",
+    href: "/hervoice",
+    children: [
+      { label: "Featured Writings from Our Partners", href: "/hervoice/featured-writings-from-our-partners" },
+    ],
+  },
+];
+
+const navLinks = [
+  { label: "About", href: "/about-us" },
+  { label: "Programs", href: "#", children: programs },
+  { label: "Success Stories", href: "/success-stories" },
+  { label: "Resources", href: "/resources" },
+  { label: "AGFAF", href: "/agfaf" },
+  { label: "Contact", href: "/contact" },
+];
+
+const isHome = Astro.url.pathname === "/";
+---
+<nav id="site-nav" transition:persist="site-nav" class:list={["site-nav", { home: isHome }]} data-state={isHome ? "top" : "scrolled"}>
+  <div class="container flex h-16 items-center justify-between lg:h-20">
+    <a href="/" class="nav-brand flex items-center gap-2 transition-colors duration-300">
+      <Logo class="size-12" />
+      <span class="font-serif text-xl">EmpowerHer Initiative</span>
+    </a>
+
+    <div class="hidden items-center gap-6 lg:flex">
+      {navLinks.map((link) => (
+        <div class="group relative">
+          {link.children ? (
+            <button class="nav-link flex items-center gap-1 text-[13px] font-medium transition-colors duration-300">
+              {link.label}
+              <ChevronDown class="size-3 transition-transform duration-300 group-hover:rotate-180" />
+            </button>
+          ) : (
+            <a href={link.href} class="nav-link text-[13px] font-medium transition-colors duration-300">{link.label}</a>
+          )}
+
+          {link.children && (
+            <div class="dropdown absolute top-full left-1/2 z-50 pt-4 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)]">
+              <div class="border-border/50 bg-background/95 shadow-dropdown min-w-[280px] rounded-2xl border p-1.5 backdrop-blur-xl">
+                {link.children.map((child) => (
+                  child.children ? (
+                    <div>
+                      <a href={child.href} class="text-foreground hover:bg-muted/50 block rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors duration-200">{child.label}</a>
+                      {child.children.map((sub) => (
+                        <a href={sub.href} class="text-foreground/60 hover:bg-muted/50 hover:text-foreground block rounded-xl px-4 py-2.5 pl-7 text-[13px] transition-colors duration-200">{sub.label}</a>
+                      ))}
+                    </div>
+                  ) : (
+                    <a href={child.href} class="text-foreground/70 hover:bg-muted/50 hover:text-foreground block rounded-xl px-4 py-2.5 text-sm transition-colors duration-200">{child.label}</a>
+                  )
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <a href="/get-involved" class="nav-cta hidden rounded-full px-6 py-2.5 text-[13px] font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97] lg:inline-flex">
+      Get Involved
+    </a>
+
+    <button id="nav-toggle" class="relative z-50 flex size-10 flex-col items-center justify-center gap-1.5 lg:hidden" aria-label="Menu">
+      <span class="bar bar-1 h-[1.5px] w-5 rounded-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"></span>
+      <span class="bar bar-2 h-[1.5px] w-5 rounded-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"></span>
+    </button>
+  </div>
+</nav>
+
+<div id="mobile-menu" transition:persist="mobile-menu" class="bg-background fixed inset-0 z-30 transition-all duration-[600ms] ease-[cubic-bezier(0.32,0.72,0,1)] lg:hidden">
+  <div class="container flex h-full flex-col justify-center">
+    {navLinks.map((link, i) => (
+      <div class="m-item border-border/20 border-b transition-all duration-700" style={`transition-delay:${80 + i * 40}ms`}>
+        {link.children ? (
+          <>
+            <button class="m-sub-toggle flex w-full items-center justify-between py-5 text-2xl font-bold">
+              {link.label}
+              <ChevronDown class="m-chevron size-5 transition-transform duration-300" />
+            </button>
+            <div class="m-sub overflow-hidden transition-all duration-500">
+              {link.children.map((c) => (
+                c.children ? (
+                  <div>
+                    <a href={c.href} class="block py-2 pl-4 text-lg font-semibold">{c.label}</a>
+                    {c.children.map((sub) => (
+                      <a href={sub.href} class="text-muted-foreground block py-1.5 pl-8 text-base">{sub.label}</a>
+                    ))}
+                  </div>
+                ) : (
+                  <a href={c.href} class="text-muted-foreground block py-2 pl-4 text-lg">{c.label}</a>
+                )
+              ))}
+            </div>
+          </>
+        ) : (
+          <a href={link.href} class="block py-5 text-2xl font-bold">{link.label}</a>
+        )}
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .site-nav[data-state="top"] {
+    background: transparent;
+  }
+  .site-nav[data-state="top"].home {
+    margin-bottom: -4rem;
+  }
+  @media (min-width: 1024px) {
+    .site-nav[data-state="top"].home {
+      margin-bottom: -5rem;
+    }
+  }
+  .site-nav[data-state="scrolled"] {
+    background: var(--color-background);
+    border-bottom: 1px solid color-mix(in oklab, var(--color-border) 30%, transparent);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+  }
+
+  /* Brand */
+  .site-nav[data-state="top"] .nav-brand { color: #fff; }
+  .site-nav[data-state="scrolled"] .nav-brand,
+  .site-nav.menu-open .nav-brand { color: var(--color-primary); }
+
+  /* Nav links / triggers */
+  .site-nav[data-state="top"] .nav-link { color: color-mix(in oklab, #fff 70%, transparent); }
+  .site-nav[data-state="top"] .nav-link:hover { color: #fff; }
+  .site-nav[data-state="scrolled"] .nav-link { color: color-mix(in oklab, var(--color-foreground) 60%, transparent); }
+  .site-nav[data-state="scrolled"] .nav-link:hover { color: var(--color-foreground); }
+
+  /* Dropdown panel */
+  .dropdown { opacity: 0; transform: translate(-50%, 0.25rem); pointer-events: none; }
+  .group:hover .dropdown { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+
+  /* CTA */
+  .site-nav[data-state="top"] .nav-cta { background: #fff; color: #000; }
+  .site-nav[data-state="top"] .nav-cta:hover { background: color-mix(in oklab, #fff 90%, transparent); }
+  .site-nav[data-state="scrolled"] .nav-cta { background: var(--color-primary); color: var(--color-primary-foreground); }
+  .site-nav[data-state="scrolled"] .nav-cta:hover { background: color-mix(in oklab, var(--color-primary) 90%, transparent); }
+
+  /* Hamburger bars */
+  .site-nav[data-state="top"] .bar { background: #fff; }
+  .site-nav[data-state="scrolled"] .bar,
+  .site-nav.menu-open .bar { background: var(--color-foreground); }
+  .site-nav.menu-open .bar-1 { transform: translateY(4px) rotate(45deg); }
+  .site-nav.menu-open .bar-2 { transform: translateY(-2px) rotate(-45deg); }
+
+  /* Mobile overlay */
+  #mobile-menu { opacity: 0; pointer-events: none; }
+  #mobile-menu.open { opacity: 1; pointer-events: auto; }
+  .m-item { opacity: 0; transform: translateY(1rem); }
+  #mobile-menu.open .m-item { opacity: 1; transform: translateY(0); }
+  .m-sub { max-height: 0; opacity: 0; }
+  .m-item.expanded .m-sub { max-height: 24rem; opacity: 1; padding-bottom: 1rem; }
+  .m-item.expanded .m-chevron { transform: rotate(180deg); }
+</style>
+
+<script>
+  // The nav + mobile menu are transition:persist elements — a single instance
+  // that survives view-transition navigations (like a Next.js layout). So click
+  // handling is bound ONCE via delegation on document (never swapped), while
+  // per-page state (home transparency, scroll, closing the menu) re-syncs on
+  // every astro:page-load.
+  const w = window as any;
+
+  if (!w.__navBound) {
+    w.__navBound = true;
+    document.addEventListener("click", (e) => {
+      const t = e.target as HTMLElement;
+
+      if (t.closest("#nav-toggle")) {
+        const menu = document.getElementById("mobile-menu");
+        const nav = document.getElementById("site-nav");
+        const open = menu?.classList.toggle("open");
+        nav?.classList.toggle("menu-open", !!open);
+        return;
+      }
+
+      if (t.closest(".m-sub-toggle")) {
+        t.closest(".m-item")?.classList.toggle("expanded");
+        return;
+      }
+
+      // Link inside the mobile menu → let it close (exit animation plays while
+      // the view transition swaps the page underneath the persisted overlay).
+      if (t.closest("#mobile-menu a")) {
+        document.getElementById("mobile-menu")?.classList.remove("open");
+        document.getElementById("site-nav")?.classList.remove("menu-open");
+      }
+    });
+  }
+
+  function syncNav() {
+    const nav = document.getElementById("site-nav");
+    if (!nav) return;
+    const isHome = location.pathname === "/";
+    nav.classList.toggle("home", isHome);
+
+    const apply = () => {
+      nav.dataset.state = isHome && window.scrollY <= 20 ? "top" : "scrolled";
+    };
+    // Rebind the scroll listener without stacking duplicates on the persisted node.
+    if (w.__navScroll) window.removeEventListener("scroll", w.__navScroll);
+    w.__navScroll = apply;
+    window.addEventListener("scroll", apply, { passive: true });
+    apply();
+
+    // Reset the mobile menu closed after each navigation.
+    document.getElementById("mobile-menu")?.classList.remove("open");
+    nav.classList.remove("menu-open");
+    document
+      .querySelectorAll(".m-item.expanded")
+      .forEach((el) => el.classList.remove("expanded"));
+  }
+
+  document.addEventListener("astro:page-load", syncNav);
+</script>

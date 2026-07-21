@@ -1,0 +1,126 @@
+{
+  "seo": {
+    "title": "Mentorship Program — EmpowerHer Initiative",
+    "description": "Free workshops and mentorship for Afghan girls to build resilience, gain support, and launch impact projects."
+  },
+  "hero": {
+    "eyebrow": "Core Program",
+    "title": "Mentorship",
+    "titleLine2": "Program",
+    "image": "https://cdn.empowerher-initiative.org/mentorship-hero.jpeg",
+    "imageAlt": "",
+    "paragraphs": [
+      "EmpowerHer's main program is the Mentorship Program, where students can apply to one of our workshops and receive free mentorship from our dedicated and highly trained mentors and lecturers.",
+      "This program aims to provide Afghan girls with the resources, opportunities, and networks they need to launch their own impact projects."
+    ]
+  },
+  "intro": {
+    "quote": "Through this platform, EmpowerHer encourages students to think outside the box and view their challenges as sources of resilience—life lessons that empower them to pursue their goals and dreams.",
+    "paragraph": "EmpowerHer creates a safe, supportive space where students can discuss their struggles openly, feel heard and seen, and reflect on their experiences.",
+    "impactLabel": "Our Impact",
+    "impactText": "Whether through launching a project, mentoring a sibling or friend, or simply taking a first step, EmpowerHer helps students grow—one story, one action, and one empowered voice at a time.",
+    "closing": "Join us in empowering the next generation of Afghan leaders and changemakers through our comprehensive mentorship program."
+  },
+  "workshopStructure": {
+    "eyebrow": "How It Works",
+    "title": "Workshop Structure",
+    "description": "Every detail is designed to maximize learning, connection, and empowerment.",
+    "items": [
+      {
+        "title": "Cycle Duration",
+        "description": "Each workshop runs in 6-week cycles (about 1.5 months)."
+      },
+      {
+        "title": "Sessions per Week",
+        "description": "Workshops meet twice weekly — on Saturdays and Sundays."
+      },
+      {
+        "title": "Session Length",
+        "description": "Each session is 2 hours long."
+      },
+      {
+        "title": "Saturday Sessions",
+        "description": "Led by assigned mentors. Focused on skill-building, presentations, and guided activities."
+      },
+      {
+        "title": "Sunday Sessions",
+        "description": "Dedicated to guest speaker presentations, group discussions, lecturers, and Q&A. Covers themes related to empowerment, leadership, storytelling, and resilience."
+      },
+      {
+        "title": "Workshop Format",
+        "description": "Fully virtual via Google Meet. Materials including assignments and other activities are posted through separate Google Classrooms."
+      },
+      {
+        "title": "Participant Limit",
+        "description": "Each workshop accepts 16 participants to ensure personalized attention."
+      },
+      {
+        "title": "Mentorship Style",
+        "description": "Collaborative and discussion-based, encouraging peer support and active participation. Mentors guide students through both personal reflection and project development."
+      },
+      {
+        "title": "Project-Based Learning",
+        "description": "Participants complete capstone or final projects such as creative writing, art, real-world projects, impact proposals, or cultural presentations reflecting what they have learned."
+      }
+    ]
+  },
+  "eligibility": {
+    "eyebrow": "Requirements",
+    "title": "Who Can Apply",
+    "description": "Please review the following requirements before applying to any EmpowerHer workshop.",
+    "rules": [
+      "Afghan girls residing in Afghanistan and any other Middle Eastern or Central Asian countries are welcome to apply to our programs.",
+      "Intermediate or advanced English proficiency is required.",
+      "Although there is no age limit to apply to any of EmpowerHer's workshops, our team prefers applicants aged 14 and above.",
+      "Afghan girls residing in Europe or America (any region outside the Middle East and Central Asia) are not eligible to apply to our programs; however, we encourage them to volunteer with us through the following link: <a href=\"/get-involved/volunteer-with-us\" class=\"text-primary hover:text-primary/80 underline underline-offset-4\">Volunteer</a>",
+      "Men are not eligible to apply to our programs at this time."
+    ]
+  },
+  "opportunities": {
+    "eyebrow": "After Completion",
+    "title": "Opportunities After",
+    "titleLine2": "Completing Programs",
+    "items": [
+      {
+        "title": "Leadership Opportunities",
+        "description": "Graduates may be selected as assistant mentors and eventually lead their own workshops. EmpowerHer identifies a number of promising students and works closely with them to help launch their own initiatives."
+      },
+      {
+        "title": "Publication Access",
+        "description": "Students may publish their work through HerVoice and our partner platforms."
+      },
+      {
+        "title": "Continued Engagement",
+        "description": "Ongoing involvement in projects, events, and the EmpowerHer community."
+      }
+    ],
+    "note": "Additional information will be shared during our virtual sessions by EmpowerHer mentors."
+  },
+  "workshops": {
+    "eyebrow": "Apply Now",
+    "title": "Available Workshops",
+    "items": [
+      {
+        "name": "Creative Writing & Storytelling",
+        "mentors": ["Fatima Ahmadi", "Zahra Noori"],
+        "description": "A six-week journey into personal narrative, poetry, and essay writing. Participants learn to shape their lived experiences into powerful stories and publish their work through HerVoice.",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEK40ctbfRbjSv9fDHMpJXBriOWVtPmoQZNC3",
+        "link": "https://forms.gle/example-creative-writing"
+      },
+      {
+        "name": "Leadership & Impact Projects",
+        "mentors": ["Maryam Rahimi"],
+        "description": "Designed for aspiring changemakers, this workshop guides students through identifying a community challenge, drafting an impact proposal, and building the confidence to lead their own initiatives.",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTztHu6kOQlbZOApif7EkNI4MXGo08zhqH6CwY",
+        "link": "https://forms.gle/example-leadership"
+      },
+      {
+        "name": "Digital Skills & Confidence",
+        "mentors": ["Sana Karimi", "Nadia Hosseini"],
+        "description": "From presentation design to public speaking, this workshop equips participants with the practical digital and communication skills they need to share their voice and thrive in virtual spaces.",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfCWhJzn3C8OG5vkbyTeNds9rYucAtpJg0PMV",
+        "link": "https://forms.gle/example-digital-skills"
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "seo": {
+    "title": "Contact",
+    "description": "Get in touch with the EmpowerHer team."
+  },
+  "eyebrow": "Contact",
+  "heading": "Get in Touch",
+  "intro": "Have a question about EmpowerHer or any of our programs? Fill out the form and we'll get back to you as soon as possible.",
+  "email": {
+    "label": "Email",
+    "value": "info@empowerher-initiative.org"
+  },
+  "location": {
+    "label": "Location",
+    "value": "United States of America"
+  },
+  "followUsTitle": "Follow Us"
+}

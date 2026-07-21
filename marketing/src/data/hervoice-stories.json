@@ -1,0 +1,177 @@
+{
+  "stories": [
+    {
+      "slug": "bread-and-a-red-apple",
+      "title": "Bread and a Red Apple",
+      "description": "A secret school in a basement, a shared loaf, and a single red apple — how the smallest acts of defiance keep a girl's future alive.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTN5bpAvcOGaUAyKX1dPWs9RnojYZeu4JbiQHv",
+      "imageAlt": "Sunlight falling across a worn wooden classroom floor",
+      "imageCredit": "Photograph courtesy of EmpowerHer",
+      "date": "March 4, 2026",
+      "authorName": "Z.H.",
+      "authorPosition": "1st Place — HerVoice 2026 Writing Contest",
+      "authorBio": "A student writing from within Afghanistan who runs a secret school for girls in the basement of her home.",
+      "messageToWorld": "Do not look away from us. Every closed door you help us open is a life that gets to begin again.",
+      "content": [
+        {
+          "type": "p",
+          "text": "I have turned the basement of my house into a school, a secret school for girls, to teach them everything that is forbidden. We come down the narrow stairs one at a time, so the neighbours do not count us, and we sit on cushions in a circle around a single lamp."
+        },
+        {
+          "type": "p",
+          "text": "There is never enough of anything. Not enough paper, not enough light, not enough hours before someone's mother calls her home. So we share. One girl brings bread wrapped in a cloth, another brings a red apple, and we cut it into pieces so small that everyone gets to taste it."
+        },
+        {
+          "type": "poem",
+          "lines": [
+            { "value": "You take the school,", "translation": "they said" },
+            { "value": "I will build one in the ground." },
+            { "value": "You take the light,", "translation": "they said" },
+            { "value": "I will read by memory." }
+          ]
+        },
+        {
+          "type": "p",
+          "text": "When the lesson ends, the girls climb back into the daylight as if nothing happened. But I know what happened. A sentence was learned. A name was written. A future was kept warm, like bread, until the day it can be eaten in the open."
+        }
+      ]
+    },
+    {
+      "slug": "when-did-i-feel-that-i-am-a-strong-girl",
+      "title": "When Did I Feel That I Am a Strong Girl?",
+      "description": "The exact moment courage became a decision — and the price of refusing to be made small.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTvX8bHR050TX8DRt9gfxu6sU74iOHozSwBKGJ",
+      "imageAlt": "A window with light breaking through a curtain",
+      "date": "March 4, 2026",
+      "authorName": "Roqia Qasemi",
+      "authorPosition": "2nd Place — HerVoice 2026 Writing Contest",
+      "authorBio": "A young writer who found her strength in the smallest windows of possibility.",
+      "messageToWorld": "Strength is not the absence of fear. It is what you do while your hands are still shaking.",
+      "content": [
+        {
+          "type": "p",
+          "text": "I did not feel strong on the day I was praised. I felt strong on the day I was told to stop, and I did not stop. Strength did not arrive like a sunrise. It arrived like a decision, quietly, when no one was watching."
+        },
+        {
+          "type": "poem",
+          "lines": [
+            { "value": "You close the door," },
+            { "value": "I will reach my dreams through the window." },
+            { "value": "You beat me," },
+            { "value": "I will use my blood as ink for my pen." }
+          ]
+        },
+        {
+          "type": "p",
+          "text": "I learned that a girl can be soft and unbreakable at once. That she can weep in the evening and return to her books in the morning. That the word 'no', spoken to her, does not have to become the last word."
+        },
+        {
+          "type": "p",
+          "text": "When did I feel that I am a strong girl? On the day I understood that they could take everything from around me, but not the voice inside me — and that the voice, once found, does not go quiet again."
+        }
+      ]
+    },
+    {
+      "slug": "what-i-carried-in-my-voice",
+      "title": "What I Carried in My Voice",
+      "description": "Every limitation, reframed as preparation — a reckoning with the years that tried to silence her.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfCWhJzn3C8OG5vkbyTeNds9rYucAtpJg0PMV",
+      "imageAlt": "Hands holding an open notebook",
+      "date": "March 4, 2026",
+      "authorName": "Nazifa Popal",
+      "authorPosition": "3rd Place — HerVoice 2026 Writing Contest",
+      "authorBio": "A storyteller who turned every closed road into a reason to keep writing.",
+      "messageToWorld": "Nothing they took was wasted. I used all of it, and I am still using it.",
+      "content": [
+        {
+          "type": "p",
+          "text": "For a long time I believed my life was a list of things I was not allowed to do. Then, one morning, I read the list backwards and saw something else: a training. Every limitation had been, in its own crooked and unasked-for way, a preparation. And I had used all of it."
+        },
+        {
+          "type": "p",
+          "text": "The years that tried to make me small had, without meaning to, taught me how to make a home out of very little. How to keep a thought alive with no paper. How to memorise a poem so completely that no one could confiscate it."
+        },
+        {
+          "type": "p",
+          "text": "What I carried in my voice was not anger, though anger would have been fair. It was an inventory of everything they could not reach. And when I finally spoke, I did not sound broken. I sounded prepared."
+        }
+      ]
+    },
+    {
+      "slug": "the-window-i-opened",
+      "title": "The Window I Opened",
+      "description": "When the doors were shut, a single window became a whole horizon.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTQRqW7Y9a2imSKVTAuXrJU9NxI0LRsOFlgdvw",
+      "imageAlt": "Morning light through an open window",
+      "date": "February 20, 2026",
+      "authorName": "Sadia Ahmadi",
+      "authorPosition": "HerVoice Contributor",
+      "authorBio": "A mentorship student writing about the small openings that let the future in.",
+      "content": [
+        {
+          "type": "p",
+          "text": "The doors of my school closed in a single afternoon. No announcement, no goodbye, only a lock and a silence that lasted for months. I stood in front of that building until I understood that it would not open for me."
+        },
+        {
+          "type": "p",
+          "text": "So I went home and I opened a window instead. A borrowed phone, a weak signal, a teacher's voice arriving in pieces — this became my classroom. It was smaller than a door, but a window is enough if you are willing to climb."
+        },
+        {
+          "type": "p",
+          "text": "I have learned to distrust the word 'impossible'. It is usually just a door, and I have made my peace with windows."
+        }
+      ]
+    },
+    {
+      "slug": "letters-to-my-younger-self",
+      "title": "Letters to My Younger Self",
+      "description": "What I would tell the girl I used to be, now that I know how the story bends.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT4ggEVZxLP0HVtXjpzDWZR85f7vGSgA1FduQY",
+      "imageAlt": "A stack of handwritten letters",
+      "date": "February 12, 2026",
+      "authorName": "Farida Noor",
+      "authorPosition": "HerVoice Contributor",
+      "authorBio": "A writer collecting the advice she wishes someone had handed her earlier.",
+      "messageToWorld": "Be patient with the girl you were. She was doing the best she could with a map no one had finished drawing.",
+      "content": [
+        {
+          "type": "p",
+          "text": "Dear younger self, you are going to be told that your voice is too loud. Keep it exactly as loud as it is. The people who ask you to lower it are not the people you are writing for."
+        },
+        {
+          "type": "p",
+          "text": "You will lose things — a school, a city, a version of the future you had already decorated in your mind. You will grieve them honestly, and then you will build again, and the second thing you build will be stronger because you know how it feels to lose the first."
+        },
+        {
+          "type": "p",
+          "text": "One day a stranger will read something you wrote and feel less alone. You will never meet her, but she is the reason. Write for her, even now, especially now."
+        }
+      ]
+    },
+    {
+      "slug": "the-classroom-under-the-stairs",
+      "title": "The Classroom Under the Stairs",
+      "description": "A hidden corner, a handful of students, and a lesson that refused to end.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTawihdJkAtfy8gUMVlFj5QpoO3BkxsndH9Dm2",
+      "imageAlt": "A dim staircase leading down to a small room",
+      "date": "January 30, 2026",
+      "authorName": "Marwa Rahimi",
+      "authorPosition": "HerVoice Contributor",
+      "authorBio": "A young teacher documenting the quiet rebellion of an ordinary classroom.",
+      "content": [
+        {
+          "type": "p",
+          "text": "There is a space under our stairs that was meant for brooms and forgotten shoes. We swept it out, laid down a rug, and called it a classroom. Six girls fit if we sit close, and we always sit close."
+        },
+        {
+          "type": "p",
+          "text": "We keep our books in a bag that hangs on a nail, ready to disappear. We have learned to lower our voices at the sound of the gate. But we have not learned to stop, and we do not intend to."
+        },
+        {
+          "type": "p",
+          "text": "Someone once asked me if a classroom under the stairs is a real school. I told her: a school is not a building. It is a promise between people who refuse to be uneducated. Ours just happens to have a low ceiling."
+        }
+      ]
+    }
+  ]
+}

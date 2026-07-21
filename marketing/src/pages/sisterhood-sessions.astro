@@ -1,0 +1,17 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/marketing/sisterhood-sessions/Header.astro";
+import WhyTheyMatter from "../components/marketing/sisterhood-sessions/WhyTheyMatter.astro";
+import Community from "../components/marketing/sisterhood-sessions/Community.astro";
+import SessionFormat from "../components/marketing/sisterhood-sessions/SessionFormat.astro";
+import content from "../data/sisterhood-sessions.json";
+
+const { seo, header, whyTheyMatter, community, sessionFormat } = content;
+---
+
+<Layout title={seo.title} description={seo.description}>
+  <Header {...header} />
+  <WhyTheyMatter {...whyTheyMatter} />
+  <Community {...community} />
+  <SessionFormat {...sessionFormat} />
+</Layout>

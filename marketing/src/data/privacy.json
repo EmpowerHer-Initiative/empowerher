@@ -1,0 +1,48 @@
+{
+  "seo": {
+    "title": "Privacy — EmpowerHer Initiative",
+    "description": "This Privacy Policy describes how EmpowerHer collects, uses, and protects participant information across its programs, workshops, publications, and platforms."
+  },
+  "title": "Privacy",
+  "description": "This Privacy Policy describes how EmpowerHer collects, uses, and protects participant information across its programs, workshops, publications, and platforms.",
+  "updated": "Last updated: Placeholder Date, 20XX",
+  "body": {
+    "sections": [
+      {
+        "paragraphs": [
+          "This is placeholder privacy copy provided for layout purposes only. The text below is generic lorem-style legal filler and does not represent the actual privacy practices of any organization. Replace every section with reviewed policy language before publishing."
+        ]
+      },
+      {
+        "heading": "Information We Collect",
+        "paragraphs": [
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. We may collect placeholder categories of information when you interact with our sample services, including the following mock examples:"
+        ],
+        "items": [
+          "Sample names and contact details",
+          "Placeholder application materials",
+          "Mock participation records",
+          "Illustrative submitted works"
+        ]
+      },
+      {
+        "heading": "How We Use Information",
+        "paragraphs": [
+          "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Any information described here is used solely to demonstrate the visual layout of this document and carries no operational meaning."
+        ]
+      },
+      {
+        "heading": "Confidentiality",
+        "paragraphs": [
+          "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. This placeholder clause stands in for a real confidentiality commitment and should be replaced."
+        ]
+      },
+      {
+        "heading": "Your Choices",
+        "paragraphs": [
+          "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore. Contact details, opt-out mechanisms, and data-request procedures would appear here in a finalized policy."
+        ]
+      }
+    ]
+  }
+}

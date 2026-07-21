@@ -1,0 +1,68 @@
+---
+import Reveal from "../home/Reveal.astro";
+import AlertTriangle from "../../icons/AlertTriangle.astro";
+import ExternalLink from "../../icons/ExternalLink.astro";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  body: string[];
+  advisory: string;
+}
+
+const { eyebrow, heading, body, advisory } = Astro.props;
+---
+<section class="py-28 md:py-40">
+  <div class="container">
+    <div class="mx-auto max-w-3xl">
+      {/* Header */}
+      <Reveal>
+        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+          {eyebrow}
+        </p>
+      </Reveal>
+      <Reveal delay={80}>
+        <h1 class="mt-5 font-serif text-4xl leading-[1.1] md:text-6xl">
+          {heading}
+        </h1>
+      </Reveal>
+
+      <Reveal delay={160}>
+        <p class="text-muted-foreground mt-8 text-lg leading-relaxed">
+          {body[0]}
+        </p>
+      </Reveal>
+
+      <Reveal delay={240}>
+        <p class="text-muted-foreground mt-6 text-base leading-[1.8]">
+          {body[1]}
+        </p>
+      </Reveal>
+
+      {/* Advisory callout */}
+      <Reveal delay={280}>
+        <div class="mt-10 flex items-start gap-4 rounded-2xl border border-amber-400/50 bg-amber-50 p-6">
+          <AlertTriangle class="mt-0.5 size-5 shrink-0 text-amber-600" />
+          <p class="text-base leading-relaxed text-amber-900">
+            {advisory}
+          </p>
+        </div>
+      </Reveal>
+
+      {/* CTA */}
+      <Reveal delay={300}>
+        <div class="mt-10">
+          <a
+            href="https://forms.gle/SwLAo5a5tNfn73rh6"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
+          >
+            MIS Application
+            <ExternalLink class="size-4" />
+          </a>
+        </div>
+      </Reveal>
+    </div>
+  </div>
+</section>

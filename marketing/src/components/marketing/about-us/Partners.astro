@@ -1,0 +1,38 @@
+---
+// Ports components/marketing/about-us/partners.tsx (renders components/partners-section.tsx).
+// AGFAF is EmpowerHer's primary sponsor. Partner link is a fixed internal route.
+import Reveal from "../home/Reveal.astro";
+
+interface Props {
+  eyebrow: string;
+  items: { name: string; image: string }[];
+}
+const { eyebrow, items } = Astro.props;
+const link = "/agfaf";
+---
+{items.length > 0 && (
+  <section class="py-28 md:py-32">
+    <div class="container">
+      <Reveal>
+        <p class="text-muted-foreground text-center text-xs font-semibold tracking-[0.3em] uppercase">
+          {eyebrow}
+        </p>
+      </Reveal>
+      <Reveal delay={80}>
+        <div class="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16">
+          {items.map((p) => (
+            <a
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={p.name}
+              class="group block transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1.5 hover:scale-105"
+            >
+              <img src={p.image} alt={p.name} loading="lazy" decoding="async" class="h-16 w-auto object-contain md:h-24" />
+            </a>
+          ))}
+        </div>
+      </Reveal>
+    </div>
+  </section>
+)}

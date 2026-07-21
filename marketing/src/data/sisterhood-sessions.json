@@ -1,0 +1,46 @@
+{
+  "seo": {
+    "title": "Sisterhood Sessions — EmpowerHer Initiative",
+    "description": "A supportive and caring space for EmpowerHer students to connect, share ideas, and build friendships."
+  },
+  "header": {
+    "eyebrow": "Community & Connection",
+    "heading": "Sisterhood Sessions",
+    "body": "Sisterhood Sessions are designed to provide a supportive and caring space for all EmpowerHer students enrolled in the mentorship program. These sessions allow students to connect with one another, share their ideas, build friendships, and offer constructive feedback on EmpowerHer programs."
+  },
+  "whyTheyMatter": {
+    "eyebrow": "The Purpose",
+    "heading": "Why Sisterhood Sessions Matter",
+    "body": "Sisterhood Sessions were created in response to the loss of hope many girls and women in Afghanistan are experiencing due to restrictions on education and opportunity. EmpowerHer aims to provide not only educational support but also a space where students feel encouraged, heard, and valued.",
+    "quote": "During these sessions, EmpowerHer assistants support students with both personal challenges and workshop-related concerns. The conversations are designed to foster confidence, resilience, and hope as students continue advocating for their right to education and a better future."
+  },
+  "community": {
+    "eyebrow": "Belonging",
+    "heading": "A Safe and Supportive Community",
+    "body": "The purpose of Sisterhood Sessions is to help students build long-lasting relationships and create a safe space where they can openly share their thoughts, experiences, and life stories. Many of our students rarely have environments where they feel truly heard, respected, and supported.",
+    "listIntro": "Through open conversations and peer connection, students can:",
+    "benefits": [
+      "Express their thoughts and experiences",
+      "Discuss challenges they face in their daily lives",
+      "Support and encourage one another",
+      "Strengthen their sense of community"
+    ],
+    "closing": "These sessions help students develop stronger emotional well-being and a deeper sense of belonging within the EmpowerHer community."
+  },
+  "sessionFormat": {
+    "eyebrow": "The Details",
+    "heading": "Session Format",
+    "cards": [
+      {
+        "title": "When They Take Place",
+        "body": "Sisterhood Sessions take place at the end of each workshop session on Saturdays and Sundays."
+      },
+      {
+        "title": "Session Duration",
+        "highlight": "30 min",
+        "body": "Each Sisterhood Session lasts 30 minutes, providing dedicated time for connection and conversation."
+      }
+    ],
+    "closing": "These sessions ensure that every workshop not only focuses on learning and skill development but also prioritizes community, connection, and emotional support. By creating time for reflection and conversation, Sisterhood Sessions help students strengthen their relationships with one another and feel supported throughout their EmpowerHer journey."
+  }
+}

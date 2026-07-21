@@ -1,0 +1,61 @@
+---
+// Ports components/marketing/hervoice-featured-writings/writing-card.tsx
+// Source wraps the <a> in <Reveal asChild>, so the reveal styles live directly
+// on the anchor. Extra data-* hooks drive the client-side pagination in
+// PlatformSection.astro.
+import ArrowUpRight from "../../icons/ArrowUpRight.astro";
+
+interface Writing {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+}
+interface Props {
+  writing: Writing;
+  platform: string;
+  index?: number;
+  page: number;
+}
+const { writing, platform, index = 0, page } = Astro.props;
+const delay = Math.min(index, 3) * 80;
+const style = `opacity:0;transform:translateY(48px);transition:opacity 1.2s cubic-bezier(0.32,0.72,0,1),transform 1.2s cubic-bezier(0.32,0.72,0,1);transition-delay:${delay}ms;will-change:opacity,transform;`;
+---
+<a
+  href={writing.link}
+  target="_blank"
+  rel="noopener noreferrer"
+  data-reveal
+  data-threshold="0.15"
+  data-writing-card
+  data-page={page}
+  hidden={page !== 1}
+  style={style}
+  class="group border-border/20 grid gap-5 border-b py-8 last:border-0 sm:grid-cols-[320px_1fr] sm:gap-8 lg:grid-cols-[400px_1fr]"
+>
+  <div class="relative aspect-[16/9] overflow-hidden rounded-xl">
+    <img
+      src={writing.image}
+      alt={writing.title}
+      loading="lazy"
+      decoding="async"
+      class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+    />
+  </div>
+  <div class="flex flex-col justify-center">
+    <span class="bg-primary/10 text-primary w-fit rounded-full px-2.5 py-0.5 text-[10px] font-semibold tracking-[0.1em] uppercase">
+      {platform}
+    </span>
+    <h3 class="group-hover:text-primary mt-2 text-base leading-snug font-semibold transition-colors duration-300">
+      &ldquo;{writing.title}&rdquo;
+    </h3>
+    <p class="text-muted-foreground mt-2 line-clamp-2 text-sm leading-relaxed">
+      {writing.description}
+    </p>
+    <span class="text-primary mt-3 inline-flex items-center gap-1.5 text-xs font-medium opacity-0 transition-all duration-300 group-hover:opacity-100">
+      Read more
+      <ArrowUpRight class="size-3" />
+    </span>
+  </div>
+</a>

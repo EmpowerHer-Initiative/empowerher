@@ -1,0 +1,46 @@
+---
+// Ports components/marketing/about-us/hero.tsx
+import Reveal from "../home/Reveal.astro";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  body: string;
+  image: string;
+  imageAlt: string;
+}
+const { eyebrow, heading, body, image, imageAlt } = Astro.props;
+---
+<section class="relative h-[90vh] min-h-[600px] overflow-hidden">
+  <img
+    src={image}
+    alt={imageAlt}
+    loading="eager"
+    fetchpriority="high"
+    decoding="async"
+    class="absolute inset-0 h-full w-full object-cover"
+  />
+  <!-- Gradient overlay -->
+  <div class="from-foreground/90 via-foreground/40 to-foreground/10 absolute inset-0 bg-gradient-to-t"></div>
+
+  <div class="relative flex h-full flex-col justify-end pb-20 md:pb-28">
+    <div class="container">
+      <Reveal>
+        <p class="mb-5 text-xs font-semibold tracking-[0.3em] text-white/60 uppercase">
+          {eyebrow}
+        </p>
+      </Reveal>
+      <Reveal delay={80}>
+        <h1
+          class="max-w-3xl font-serif text-5xl leading-[1.05] text-white md:text-7xl lg:text-8xl"
+          set:html={heading}
+        />
+      </Reveal>
+      <Reveal delay={160}>
+        <p class="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
+          {body}
+        </p>
+      </Reveal>
+    </div>
+  </div>
+</section>

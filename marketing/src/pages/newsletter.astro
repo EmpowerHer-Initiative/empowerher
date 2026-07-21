@@ -1,0 +1,17 @@
+---
+import Layout from "../layouts/Layout.astro";
+import NewsletterForm from "../components/marketing/newsletter/NewsletterForm.astro";
+import content from "../data/newsletter.json";
+
+const { seo, eyebrow, heading, subheading, image, overlay } = content;
+---
+
+<Layout title={seo.title} description={seo.description}>
+  <NewsletterForm
+    eyebrow={eyebrow}
+    heading={heading}
+    subheading={subheading}
+    image={image}
+    overlay={overlay}
+  />
+</Layout>

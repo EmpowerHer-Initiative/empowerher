@@ -1,0 +1,92 @@
+{
+  "seo": {
+    "title": "Student Project Roadmap — EmpowerHer Initiative",
+    "description": "A leadership pathway for EmpowerHer graduates to design and lead their own impact-driven online classes."
+  },
+  "hero": {
+    "backText": "Back to Success Stories",
+    "eyebrow": "Leadership Pathway",
+    "heading": "Student Project Roadmap",
+    "intro": "The Student Project Roadmap (SPR) is a leadership pathway for EmpowerHer students who have completed their workshops and met eligibility requirements and wish to deepen their practical leadership experience. Through a structured, step-by-step process, students work closely with EmpowerHer's team to design and lead their own impact-driven online classes, directly advancing EmpowerHer's mission and expanding educational access for more Afghan girls.",
+    "image": {
+      "src": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqmNmG6BYobifLHTavDVU7h0yBGlSc4z8XEQn",
+      "alt": ""
+    }
+  },
+  "eligibility": {
+    "eyebrow": "Requirements",
+    "heading": "Eligibility Requirements",
+    "subtitle": "Before applying, confirm you meet all three criteria below.",
+    "items": [
+      "Students must successfully complete and obtain Certificates of Completion for two consecutive workshops.",
+      "Students must be actively engaged in the two workshops they attended and punctual with all assigned work, including discussions, projects, assignments, and other mentorship materials.",
+      "Students must pass an interview with the Mentorship Program Director assessing skillsets and language proficiency."
+    ],
+    "howToApply": {
+      "eyebrow": "Application",
+      "title": "How to Apply",
+      "bodyBefore": "Submit an inquiry to",
+      "bodyAfter": ". Include your full name, the two EmpowerHer workshops you have attended, and your reasons for wanting to join this roadmap. Once received, the Mentorship Program Director will schedule an interview shortly."
+    }
+  },
+  "stepByStep": {
+    "eyebrow": "The Process",
+    "heading": "Step by Step Guide",
+    "steps": [
+      {
+        "title": "Welcome as Assistant",
+        "description": "Successful candidates are welcomed as Assistants for two workshop cycles. We will match you with any available mentor and his/her respective workshop."
+      },
+      {
+        "title": "Hands-On Experience",
+        "description": "Assistants gain hands-on experience supporting new participants and learning how an EmpowerHer workshop operates. They will learn about EmpowerHer's internal system, including training on how to check MIS applications, registration applications, communicate effectively, and lead online sessions."
+      },
+      {
+        "title": "Design Your Workshop",
+        "description": "During these two workshop cycles, assistants design their own online workshops and prepare mentorship materials. All materials are subject to approval from EmpowerHer's Mentorship Program Director."
+      },
+      {
+        "title": "Academic Demo Session",
+        "description": "Towards the end of Assistant training and the two month workshop cycle, assistants conduct a one and half hour long Academic Demo Session, mentoring a staff member (with their materials) to demonstrate their teaching and leadership skills."
+      },
+      {
+        "title": "Promoted to Mentor",
+        "description": "After successfully completing the demo, Assistants are promoted to Mentor positions, officially joining the EmpowerHer Mentorship Program and mentoring many more Afghan girls."
+      }
+    ]
+  },
+  "benefits": {
+    "eyebrow": "What You Gain",
+    "heading": "Roadmap Benefits",
+    "items": [
+      {
+        "title": "Hands-On Leadership Experience",
+        "description": "Gain practical skills in leading online classes and mentoring peers."
+      },
+      {
+        "title": "Professional Development",
+        "description": "Learn how a nonprofit operates and develop communication, project management, and organizational skills."
+      },
+      {
+        "title": "Direct Impact",
+        "description": "Expand educational access for Afghan girls through student-led initiatives."
+      },
+      {
+        "title": "Mentorship & Guidance",
+        "description": "Receive structured support and feedback from EmpowerHer's experienced team throughout the roadmap."
+      },
+      {
+        "title": "Resource & Networking Opportunities",
+        "description": "Use EmpowerHer's resources to enhance your skills and connect with a broader network."
+      },
+      {
+        "title": "Promotion",
+        "description": "Based on strong workshop performance, dedication, and demonstrated leadership, EmpowerHer may offer talented members opportunities for promotion."
+      }
+    ],
+    "importantNote": {
+      "title": "Important Note",
+      "body": "EmpowerHer does not provide a monthly salary for its staff members. All roles within this roadmap are volunteer-based. Participation as an Assistant or Mentor is completely free, and no monetary compensation is provided."
+    }
+  }
+}

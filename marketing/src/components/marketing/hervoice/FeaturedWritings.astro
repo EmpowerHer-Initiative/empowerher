@@ -1,0 +1,90 @@
+---
+// Ports components/marketing/hervoice/featured-writings.tsx (+ writings-pager.tsx grid).
+// The source section is DB-fed (getHervoiceStories); here the stories are mocked
+// inline. Slugs match the hardcoded map in src/pages/hervoice/[slug].astro so every
+// card resolves. Six stories = one page, so no pagination controls render.
+import ArrowRight from "../../icons/ArrowRight.astro";
+import Reveal from "../home/Reveal.astro";
+
+type WritingCard = {
+  slug: string;
+  title: string;
+  image: string | null;
+  authorName: string | null;
+};
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  stories: WritingCard[];
+}
+const { eyebrow, heading, stories } = Astro.props;
+---
+<section
+  id="writings"
+  class="bg-foreground/[0.02] scroll-mt-20 py-28 md:py-40 lg:scroll-mt-24"
+>
+  <div class="container">
+    <Reveal class="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+          {eyebrow}
+        </p>
+        <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">
+          {heading}
+        </h2>
+      </div>
+    </Reveal>
+
+    {/* Editorial card grid */}
+    <Reveal delay={80}>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {stories.map((story, i) => (
+          <a
+            href={`/hervoice/${story.slug}`}
+            class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col overflow-hidden rounded-2xl border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl"
+          >
+            <div class="bg-muted relative aspect-[16/10] overflow-hidden">
+              {story.image && (
+                <img
+                  src={story.image}
+                  alt={story.title}
+                  loading="lazy"
+                  decoding="async"
+                  class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+                />
+              )}
+              <span class="bg-background/90 text-foreground absolute top-4 left-4 rounded-full px-3 py-1 font-serif text-xs backdrop-blur-sm">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <p class="group-hover:text-primary font-serif text-xl leading-snug transition-colors duration-300">
+                &ldquo;{story.title}&rdquo;
+              </p>
+              {story.authorName && (
+                <p class="text-muted-foreground mt-2 text-sm">
+                  {story.authorName}
+                </p>
+              )}
+              <span class="text-muted-foreground/50 group-hover:text-primary mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-medium transition-colors duration-300">
+                Read story
+                <ArrowRight class="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </Reveal>
+
+    <Reveal class="mt-12 text-center">
+      <a
+        href="/hervoice/featured-writings-from-our-partners"
+        class="group border-border/60 text-foreground/80 hover:border-primary/30 hover:bg-primary/5 hover:text-foreground inline-flex items-center gap-2.5 rounded-full border px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+      >
+        Featured Writings from Our Partners
+        <ArrowRight class="size-4 transition-transform duration-500 group-hover:translate-x-1" />
+      </a>
+    </Reveal>
+  </div>
+</section>

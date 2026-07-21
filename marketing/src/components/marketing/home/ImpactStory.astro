@@ -1,0 +1,60 @@
+---
+// Ports components/marketing/home/impact-story.tsx
+import ArrowRight from "../../icons/ArrowRight.astro";
+import Reveal from "./Reveal.astro";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  bodyText: string;
+  subheading: string;
+  subheadingBody: string;
+  image: string;
+  imageAlt: string;
+}
+const { eyebrow, heading, bodyText, subheading, subheadingBody, image, imageAlt } = Astro.props;
+---
+<section class="bg-muted/30 py-28 md:py-40">
+  <div class="container">
+    <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <Reveal class="order-2 lg:order-1">
+        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">{eyebrow}</p>
+        <h2 class="mt-4 font-serif text-3xl leading-tight md:text-4xl">{heading}</h2>
+        <p class="text-muted-foreground mt-6 text-base leading-[1.8]">
+          {bodyText}
+        </p>
+        <h3 class="mt-8 font-serif text-2xl leading-tight">{subheading}</h3>
+        <p class="text-muted-foreground mt-3 text-base leading-[1.8]">
+          {subheadingBody}
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a
+            href="/hervoice/featured-writings-from-our-partners"
+            class="group bg-primary text-primary-foreground hover:shadow-primary/20 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
+          >
+            Featured Writings from Our Partners
+            <ArrowRight class="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5" />
+          </a>
+          <a
+            href="/success-stories"
+            class="group border-border/60 text-foreground/70 hover:border-primary hover:bg-primary/5 hover:text-foreground hover:shadow-primary/10 inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
+          >
+            Success Stories
+            <ArrowRight class="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5" />
+          </a>
+        </div>
+      </Reveal>
+      <Reveal class="order-1 lg:order-2" delay={120}>
+        <div class="relative overflow-hidden rounded-[2.5rem]">
+          <img
+            src={image}
+            alt={imageAlt}
+            loading="lazy"
+            decoding="async"
+            class="h-auto w-full object-contain"
+          />
+        </div>
+      </Reveal>
+    </div>
+  </div>
+</section>

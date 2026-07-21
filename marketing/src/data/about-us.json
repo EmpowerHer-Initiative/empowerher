@@ -1,0 +1,157 @@
+{
+  "seo": {
+    "title": "About Us — EmpowerHer Initiative",
+    "description": "Learn about our mission, vision, story, and the team behind EmpowerHer."
+  },
+  "hero": {
+    "eyebrow": "Our Story",
+    "heading": "Born from lived experience.<br />Built for Afghan women.",
+    "body": "A movement dedicated to equipping Afghan women with resilience, creativity, and leadership to shine as sources of inspiration — even in the face of adversity.",
+    "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTrO039TyJ9E7UkRP3K1djBMpWoJuiOHs42atf",
+    "imageAlt": "About EmpowerHer"
+  },
+  "missionVision": {
+    "cards": [
+      {
+        "eyebrow": "What Drives Us",
+        "heading": "Our Mission",
+        "body": "EmpowerHer focuses on equipping Afghan women to become beacons of hope in the darkest of times when the shadows of the Taliban seek to stifle the voices of Afghan women. By nurturing resilience, creativity, and leadership, we strive to empower them to shine as sources of inspiration and strength, uplifting their communities even in the face of adversity."
+      },
+      {
+        "eyebrow": "Where We’re Headed",
+        "heading": "Our Vision",
+        "body": "We envision Afghan women as guiding lights in their communities, inspiring hope and progress while leading the way to a more equitable, inclusive, and sustainable society."
+      }
+    ]
+  },
+  "ourStory": {
+    "eyebrow": "How We Started",
+    "bodyBefore": [
+      "EmpowerHer was born out of the lived experiences of its Co-Founders, <span class=\"text-foreground font-semibold\">Mahdi Rahimi</span> and <span class=\"text-foreground font-semibold\">Nahid Karimi</span>, both of whom were raised in Kabul, Afghanistan.",
+      "Growing up, they witnessed firsthand the deep-rooted inequalities and daily struggles Afghan communities — particularly women and girls — face. From societal restrictions to systemic educational barriers, the challenges were immense, but the desire to create change was even greater."
+    ],
+    "pullQuote": "“The fall of Kabul on August 15, 2021, marked a turning point — not only for their own lives but for the future of millions of Afghan girls who were suddenly stripped of their basic right to education.”",
+    "bodyAfter": [
+      "With schools closed to girls over the age of 12 and women increasingly pushed out of public life, Mahdi and Nahid knew silence was not an option.",
+      "After resettling in the United States, they immediately began organizing virtual programs aimed at supporting Afghan youth — both men and women — inside Afghanistan and across the diaspora. These early efforts, though impactful, were limited in scope and duration. They reached small groups and operated with minimal resources, yet they revealed something powerful: the need was urgent, and the demand was growing.",
+      "It was from this realization that EmpowerHer emerged — not just as a project, but as a movement. A more comprehensive, organized, and sustainable platform was needed to continue this work on a larger scale. Founded and led by Afghan youth who understand the struggles of their own people, EmpowerHer stands today as a symbol of resilience, hope, and empowerment."
+    ]
+  },
+  "whatWeDo": {
+    "eyebrow": "Our Work",
+    "heading": "What We Do",
+    "intro": "Four interconnected pillars that work together to create lasting change for Afghan women.",
+    "pillars": [
+      {
+        "index": "01",
+        "title": "Advocacy",
+        "description": "We amplify the voices of Afghan women and girls through storytelling, leadership training, and global engagement. Our initiatives empower them to speak out, share their experiences, and inspire meaningful change toward justice and equal opportunity."
+      },
+      {
+        "index": "02",
+        "title": "Education & Leadership",
+        "description": "Through skill-based workshops focused on leadership, personal development, communication, and decision-making, we equip Afghan girls with the confidence and tools to lead their communities with strength and purpose."
+      },
+      {
+        "index": "03",
+        "title": "Creative Expression",
+        "description": "We empower Afghan girls to reclaim their voices through writing, storytelling, and the arts. Our programs provide platforms for creative expression as a powerful form of resistance and healing, helping them share their lived experiences with the world."
+      },
+      {
+        "index": "04",
+        "title": "Community Engagement",
+        "description": "Our graduates and members can access EmpowerHer's resources and engage with our vibrant community. We support them in creating impactful initiatives both within and outside Afghanistan through virtual and in-person programs."
+      }
+    ]
+  },
+  "team": {
+    "eyebrow": "The People Behind It",
+    "heading": "Our Team",
+    "intro": "Founded and led by a diverse team committed to expanding access to education across borders.",
+    "groups": [
+      {
+        "label": "Executive Team",
+        "members": [
+          {
+            "name": "Mahdi Rahimi",
+            "role": "Co-Founder & Mentor",
+            "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTiCpeojEYyVpqbIDknS5OTfuHm1N4G0ctWRE9"
+          },
+          {
+            "name": "Nahid Karimi",
+            "role": "Co-Founder & Mentor",
+            "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqvGdhshBYobifLHTavDVU7h0yBGlSc4z8XEQ"
+          }
+        ]
+      },
+      {
+        "label": "Directors",
+        "members": [
+          {
+            "name": "Sara F",
+            "role": "Mentorship Program Director & Mentor",
+            "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT8waekQlgkEDp7B3XRvCJzMmyWOSiao4I6cq9"
+          },
+          {
+            "name": "Daniel Fletcher",
+            "role": "Social Media Director & Lecturer",
+            "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqlVv7UBYobifLHTavDVU7h0yBGlSc4z8XEQn"
+          },
+          {
+            "name": "Ali Reza Samadi",
+            "role": "IT & Systems Manager",
+            "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTaIvbdmAtfy8gUMVlFj5QpoO3BkxsndH9Dm2E"
+          }
+        ]
+      },
+      {
+        "label": "Mentors & Lecturers",
+        "members": [
+          {
+            "name": "Sabira Hussaini",
+            "role": "Creative Arts Mentor",
+            "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEM8mxVfRbjSv9fDHMpJXBriOWVtPmoQZNC3q"
+          },
+          {
+            "name": "Hania Dziduszko",
+            "role": "CELL Mentor",
+            "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpRukckqrM0zsm5gThJ2eDxZtjCFUdBGElvb1"
+          },
+          {
+            "name": "Leena Geloo",
+            "role": "CELL Mentor",
+            "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTUhliWsMuHB63DFcWbZp7rAk9VUJPgitsO2Ca"
+          },
+          {
+            "name": "Joel Baca",
+            "role": "Lecturer",
+            "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfssVDy3C8OG5vkbyTeNds9rYucAtpJg0PMV7"
+          },
+          {
+            "name": "Orly Bloom",
+            "role": "Lecturer",
+            "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTWSJkk9XFwogO1GlqLJaX2yrjpNUsTDBdMI0C"
+          },
+          {
+            "name": "Leo Martinez",
+            "role": "Lecturer",
+            "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTbc5Ufv9xopPYBqCUaZOIeEGDyJzvSfLh2M0n"
+          }
+        ]
+      }
+    ]
+  },
+  "partners": {
+    "eyebrow": "Trusted Partners & Supporters",
+    "items": [
+      {
+        "name": "Afghan Girls Financial Assistance Fund",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpavV7aqrM0zsm5gThJ2eDxZtjCFUdBGElvb1"
+      }
+    ]
+  },
+  "cta": {
+    "eyebrow": "Take Action",
+    "heading": "Join the<br />Movement"
+  }
+}

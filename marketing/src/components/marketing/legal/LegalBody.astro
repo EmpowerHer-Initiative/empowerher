@@ -1,0 +1,46 @@
+---
+// Ports components/marketing/legal/legal-body.tsx.
+import Reveal from "../home/Reveal.astro";
+import Article from "./Article.astro";
+
+interface Part {
+  eyebrow: string;
+  title: string;
+  paragraphs: string[];
+}
+interface Props {
+  parts: Part[];
+  footer: {
+    updated: string;
+    contactPrompt: string;
+    email: string;
+  };
+}
+const { parts, footer } = Astro.props;
+
+const sectionIds = ["terms", "privacy"];
+---
+<div class="container pb-32">
+  <div class="mx-auto max-w-5xl">
+    {parts.map((part, i) => (
+      <Reveal>
+        <Article id={sectionIds[i]} eyebrow={part.eyebrow} title={part.title}>
+          {part.paragraphs.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </Article>
+      </Reveal>
+    ))}
+
+    <div class="border-border/30 text-muted-foreground border-t pt-10 text-xs">
+      {footer.updated} {footer.contactPrompt}{" "}
+      <a
+        href={`mailto:${footer.email}`}
+        class="text-foreground underline-offset-4 hover:underline"
+      >
+        {footer.email}
+      </a>
+      .
+    </div>
+  </div>
+</div>

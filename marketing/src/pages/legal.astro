@@ -1,0 +1,37 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/marketing/legal/Hero.astro";
+import LegalBody from "../components/marketing/legal/LegalBody.astro";
+import content from "../data/legal.json";
+
+interface Part {
+  eyebrow: string;
+  title: string;
+  paragraphs: string[];
+}
+
+const { seo, hero, body } = content as {
+  seo: { title: string; description: string };
+  hero: {
+    eyebrow: string;
+    headingLead: string;
+    headingTrail: string;
+    body: string;
+  };
+  body: {
+    parts: Part[];
+    footer: { updated: string; contactPrompt: string; email: string };
+  };
+};
+---
+<Layout title={seo.title} description={seo.description}>
+  <main>
+    <Hero
+      eyebrow={hero.eyebrow}
+      headingLead={hero.headingLead}
+      headingTrail={hero.headingTrail}
+      body={hero.body}
+    />
+    <LegalBody parts={body.parts} footer={body.footer} />
+  </main>
+</Layout>

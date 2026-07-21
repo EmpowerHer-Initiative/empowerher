@@ -1,0 +1,21 @@
+---
+// Ports app/(marketing)/hervoice/page.tsx
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../../components/marketing/hervoice/Hero.astro";
+import HowToSubmit from "../../components/marketing/hervoice/HowToSubmit.astro";
+import Eligibility from "../../components/marketing/hervoice/Eligibility.astro";
+import FeaturedWritings from "../../components/marketing/hervoice/FeaturedWritings.astro";
+import CongressionalTestimonies from "../../components/marketing/hervoice/CongressionalTestimonies.astro";
+import PartnerSupport from "../../components/marketing/hervoice/PartnerSupport.astro";
+import WritingContestCTA from "../../components/marketing/hervoice/WritingContestCTA.astro";
+import content from "../../data/hervoice.json";
+---
+<Layout title={content.seo.title} description={content.seo.description}>
+  <Hero {...content.hero} />
+  <HowToSubmit {...content.howToSubmit} />
+  <Eligibility {...content.eligibility} />
+  <FeaturedWritings {...content.featuredWritings} />
+  <CongressionalTestimonies {...content.congressionalTestimonies} />
+  <PartnerSupport {...content.partnerSupport} />
+  <WritingContestCTA {...content.writingContestCTA} />
+</Layout>

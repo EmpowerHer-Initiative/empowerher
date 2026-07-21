@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SplitScreen from "../../components/marketing/get-involved/SplitScreen.astro";
+import data from "../../data/get-involved.json";
+---
+<Layout title={data.seo.title} description={data.seo.description}>
+  <SplitScreen
+    partner={data.splitScreen.partner}
+    volunteer={data.splitScreen.volunteer}
+  />
+</Layout>

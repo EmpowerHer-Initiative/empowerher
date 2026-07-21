@@ -1,0 +1,58 @@
+---
+// Ports components/marketing/about-us/what-we-do.tsx
+import Reveal from "../home/Reveal.astro";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  pillars: { index: string; title: string; description: string }[];
+}
+const { eyebrow, heading, intro, pillars } = Astro.props;
+---
+<section class="py-28 md:py-40">
+  <div class="container">
+    <div class="mb-20 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <Reveal>
+        <div>
+          <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+            {eyebrow}
+          </p>
+          <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">
+            {heading}
+          </h2>
+        </div>
+      </Reveal>
+      <Reveal delay={80}>
+        <p class="text-muted-foreground max-w-sm text-sm leading-relaxed md:text-right">
+          {intro}
+        </p>
+      </Reveal>
+    </div>
+
+    <!-- Alternating full-width blocks -->
+    <div class="divide-border/40 divide-y">
+      {pillars.map((item, i) => (
+        <Reveal delay={i * 80}>
+          <div
+            class={`group hover:bg-muted/30 flex flex-col gap-8 py-10 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:flex-row md:items-center md:gap-0 ${
+              i % 2 !== 0 ? "md:flex-row-reverse" : ""
+            }`}
+          >
+            <div class="md:w-1/4">
+              <span class="text-primary/30 group-hover:text-primary/60 font-serif text-6xl transition-colors duration-500 md:text-8xl">
+                {item.index}
+              </span>
+            </div>
+            <div class={`md:w-3/4 ${i % 2 !== 0 ? "md:pr-16" : "md:pl-16"}`}>
+              <h3 class="text-2xl font-semibold md:text-3xl">{item.title}</h3>
+              <p class="text-muted-foreground mt-4 max-w-2xl text-base leading-relaxed">
+                {item.description}
+              </p>
+            </div>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,14 @@
+---
+import Layout from "../layouts/Layout.astro";
+import AgfafContent from "../components/marketing/agfaf/AgfafContent.astro";
+import agfaf from "../data/agfaf.json";
+---
+
+<Layout title={agfaf.seo.title} description={agfaf.seo.description}>
+  <AgfafContent
+    logo={agfaf.logo}
+    title={agfaf.title}
+    description={agfaf.description}
+    gratitude={agfaf.gratitude}
+  />
+</Layout>

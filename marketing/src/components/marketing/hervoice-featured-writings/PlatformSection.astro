@@ -1,0 +1,164 @@
+---
+// Ports components/marketing/hervoice-featured-writings/platform-section.tsx
+// + components/pagination.tsx. The Next.js page paginates via ?<id>= search
+// params (4 per page); this static Astro port keeps every card in the DOM and
+// swaps pages client-side so the listing stays fully static.
+import Reveal from "../home/Reveal.astro";
+import ChevronLeft from "../../icons/ChevronLeft.astro";
+import ChevronRight from "../../icons/ChevronRight.astro";
+import WritingCard from "./WritingCard.astro";
+
+interface Writing {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+}
+interface Props {
+  id: string;
+  platform: string;
+  writings: Writing[];
+}
+const { id, platform, writings } = Astro.props;
+
+const PER_PAGE = 4;
+const totalPages = Math.max(1, Math.ceil(writings.length / PER_PAGE));
+
+// Page buttons are rendered once and toggled client-side, so list them all
+// (matches the source's <=7-page branch; mock data never exceeds that).
+const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+const btnBase =
+  "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent text-sm font-medium whitespace-nowrap transition-all outline-none select-none active:translate-y-px active:scale-95 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0";
+const ghost = "hover:bg-muted hover:text-foreground dark:hover:bg-muted/50";
+const outline =
+  "border-border bg-background hover:bg-muted hover:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50";
+const iconSize = "size-8 [&_svg]:size-4";
+const smSize =
+  "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] [&_svg]:size-3.5";
+---
+<div id={id} class="scroll-mt-24" data-writing-group>
+  <Reveal>
+    <div class="mb-6 flex items-center gap-4">
+      <span class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+        {platform}
+      </span>
+      <div class="bg-border/30 h-px flex-1"></div>
+    </div>
+  </Reveal>
+  <div>
+    {writings.map((writing, i) => (
+      <WritingCard
+        writing={writing}
+        platform={platform}
+        index={i % PER_PAGE}
+        page={Math.floor(i / PER_PAGE) + 1}
+      />
+    ))}
+  </div>
+  {totalPages > 1 && (
+    <div class="mt-10">
+      <div class="flex items-center justify-center gap-1">
+        <button
+          type="button"
+          data-prev
+          disabled
+          class={`${btnBase} ${ghost} ${iconSize}`}
+        >
+          <ChevronLeft />
+        </button>
+
+        {pages.map((page) => (
+          <button
+            type="button"
+            data-page-btn={page}
+            class={`${btnBase} ${smSize} min-w-7`}
+          >
+            {page}
+          </button>
+        ))}
+
+        <button
+          type="button"
+          data-next
+          class={`${btnBase} ${ghost} ${iconSize}`}
+        >
+          <ChevronRight />
+        </button>
+      </div>
+    </div>
+  )}
+</div>
+
+<script>
+  const PER_PAGE = 4;
+  const GHOST = ["hover:bg-muted", "hover:text-foreground", "dark:hover:bg-muted/50"];
+  const OUTLINE = [
+    "border-border",
+    "bg-background",
+    "hover:bg-muted",
+    "hover:text-foreground",
+    "dark:border-input",
+    "dark:bg-input/30",
+    "dark:hover:bg-input/50",
+  ];
+
+  function initPlatformPager() {
+  document.querySelectorAll<HTMLElement>("[data-writing-group]").forEach((group) => {
+    if (group.dataset.init) return;
+    group.dataset.init = "1";
+    const cards = Array.from(
+      group.querySelectorAll<HTMLElement>("[data-writing-card]")
+    );
+    const pageBtns = Array.from(
+      group.querySelectorAll<HTMLButtonElement>("[data-page-btn]")
+    );
+    const prev = group.querySelector<HTMLButtonElement>("[data-prev]");
+    const next = group.querySelector<HTMLButtonElement>("[data-next]");
+    if (!pageBtns.length) return;
+
+    const total = Math.max(1, Math.ceil(cards.length / PER_PAGE));
+    let current = 1;
+
+    const setVariant = (btn: HTMLButtonElement, active: boolean) => {
+      btn.classList.remove(...GHOST, ...OUTLINE);
+      btn.classList.add(...(active ? OUTLINE : GHOST));
+      btn.classList.toggle("pointer-events-none", active);
+    };
+
+    const render = (animate: boolean) => {
+      cards.forEach((card, i) => {
+        const onPage = Math.floor(i / PER_PAGE) + 1 === current;
+        card.hidden = !onPage;
+        if (onPage && animate) {
+          requestAnimationFrame(() => {
+            card.style.opacity = "1";
+            card.style.transform = "translateY(0)";
+          });
+        }
+      });
+      pageBtns.forEach((btn) =>
+        setVariant(btn, Number(btn.dataset.pageBtn) === current)
+      );
+      if (prev) prev.disabled = current === 1;
+      if (next) next.disabled = current === total;
+    };
+
+    const go = (page: number) => {
+      current = Math.min(Math.max(1, page), total);
+      render(true);
+      group.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    pageBtns.forEach((btn) =>
+      btn.addEventListener("click", () => go(Number(btn.dataset.pageBtn)))
+    );
+    prev?.addEventListener("click", () => go(current - 1));
+    next?.addEventListener("click", () => go(current + 1));
+
+    render(false);
+  });
+  }
+  document.addEventListener("astro:page-load", initPlatformPager);
+</script>

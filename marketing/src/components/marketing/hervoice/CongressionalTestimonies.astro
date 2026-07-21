@@ -1,0 +1,71 @@
+---
+// Ports components/marketing/hervoice/congressional-testimonies.tsx
+import Reveal from "../home/Reveal.astro";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  quote: string;
+  quoteAttribution: string;
+  note: string;
+  videos: { poster: string; src: string; label: string }[];
+}
+const { eyebrow, heading, intro, quote, quoteAttribution, note, videos } =
+  Astro.props;
+---
+<section class="bg-muted text-foreground py-28 md:py-40">
+  <div class="container">
+    <div class="mx-auto max-w-4xl">
+      <Reveal>
+        <p class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+          {eyebrow}
+        </p>
+      </Reveal>
+      <Reveal delay={80}>
+        <h2 class="text-foreground font-serif text-4xl leading-[1.1] md:text-5xl">
+          {heading}
+        </h2>
+      </Reveal>
+
+      <Reveal delay={160}>
+        <p class="text-muted-foreground mt-8 max-w-2xl text-base leading-relaxed">
+          {intro}
+        </p>
+      </Reveal>
+
+      {/* Centered blockquote */}
+      <Reveal class="border-border my-16 border-l-2 pl-8">
+        <p class="text-muted-foreground font-serif text-xl leading-relaxed md:text-2xl">
+          &ldquo;{quote}&rdquo;
+        </p>
+        <p class="text-muted-foreground mt-6 text-xs font-semibold tracking-[0.3em] uppercase">
+          {quoteAttribution}
+        </p>
+      </Reveal>
+
+      <Reveal delay={80}>
+        <p class="text-muted-foreground mb-10 text-sm">
+          {note}
+        </p>
+      </Reveal>
+
+      {/* Videos */}
+      <Reveal delay={160}>
+        <div class="grid gap-6 md:grid-cols-2">
+          {videos.map((video) => (
+            <div class="overflow-hidden rounded-2xl">
+              <video controls poster={video.poster} class="w-full">
+                <source src={video.src} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <p class="text-muted-foreground mt-3 text-xs font-semibold tracking-[0.2em] uppercase">
+                {video.label}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Reveal>
+    </div>
+  </div>
+</section>
