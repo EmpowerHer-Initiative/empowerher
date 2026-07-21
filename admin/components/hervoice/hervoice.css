@@ -1,0 +1,163 @@
+/* hervoice.css — companion styles for <HerVoiceHero />.
+ * Import it once (the component already does: `import "./hervoice.css"`).
+ * Holds brand tokens, the entrance keyframe, and the StoryCover primitive
+ * (layered gradients + grain need real CSS — everything else is Tailwind).
+ *
+ * Fonts — load these once (e.g. in app/layout.js via next/font, or a <link>):
+ *   Archivo, Hanken Grotesk, Newsreader
+ *   https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap
+ */
+:root {
+  --hv-blue: #2E9BE6;
+  --hv-blue2: #1E78C4;
+  --hv-gold: #E0AE3C;
+  --hv-gold2: #C8902A;
+  --hv-gold-deep: #9A6E1C;
+  --hv-paper: #FAF6EE;
+  --hv-paper2: #F2EADC;
+  --hv-ink: #1A2230;
+  --hv-ink2: #3C4654;
+  --hv-ink3: #6B7686;
+  /* override these to point at your next/font variables if you use next/font */
+  --hv-display: "Archivo", system-ui, sans-serif;
+  --hv-sans: "Hanken Grotesk", system-ui, sans-serif;
+  --hv-serif-i: "Newsreader", Georgia, serif;
+}
+
+/* entrance (CSS-only, runs on mount — keeps the component server-renderable) */
+@keyframes hvRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px)
+  }
+
+  to {
+    opacity: 1;
+    transform: none
+  }
+}
+
+.hv-rise {
+  opacity: 0;
+  animation: hvRise .7s cubic-bezier(.2, .7, .2, 1) both
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .hv-rise {
+    animation: none;
+    opacity: 1
+  }
+}
+
+/* ---- StoryCover: typeset literary "cover" thumbnail ---- */
+.cover {
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  flex: none;
+  box-shadow: 0 1px 2px rgba(10, 15, 25, .25), 0 14px 28px -16px rgba(10, 15, 25, .55);
+  transition: transform .45s cubic-bezier(.2, .7, .2, 1), box-shadow .45s
+}
+
+.cover--sm {
+  width: 78px;
+  height: 104px
+}
+
+.cover--md {
+  width: 104px;
+  height: 140px
+}
+
+.cover--lg {
+  width: 158px;
+  height: 212px
+}
+
+.cover__frame {
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(255, 255, 255, .32);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 9px;
+  gap: 7px
+}
+
+.cover__kicker {
+  font-size: 6.5px;
+  letter-spacing: .22em;
+  font-weight: 700;
+  opacity: .72;
+  text-transform: uppercase
+}
+
+.cover__title {
+  font-family: var(--hv-serif-i);
+  font-style: italic;
+  line-height: 1.05;
+  font-size: 12px;
+  font-weight: 500
+}
+
+.cover--sm .cover__title {
+  font-size: 10.5px
+}
+
+.cover--lg .cover__title {
+  font-size: 19px
+}
+
+.cover__rule {
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+  opacity: .5
+}
+
+.cover__author {
+  font-size: 6.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  opacity: .66;
+  font-weight: 600
+}
+
+.cover__spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 5px;
+  background: rgba(0, 0, 0, .18);
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, .12)
+}
+
+.cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: .5;
+  background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 3px)
+}
+
+.cover--gold {
+  background: radial-gradient(120% 90% at 28% 8%, #F0C963 0%, transparent 55%), linear-gradient(160deg, #C9942C 0%, #9A6A18 60%, #7A5212 100%);
+  color: #FBF3DD
+}
+
+.cover--blue {
+  background: radial-gradient(120% 90% at 28% 8%, #5FB6F0 0%, transparent 55%), linear-gradient(160deg, #2C72B6 0%, #194B7E 62%, #123A63 100%);
+  color: #EAF3FB
+}
+
+.cover--slate {
+  background: radial-gradient(120% 90% at 28% 8%, #5C7793 0%, transparent 55%), linear-gradient(160deg, #33445C 0%, #212E42 60%, #18222F 100%);
+  color: #E7ECF3
+}
