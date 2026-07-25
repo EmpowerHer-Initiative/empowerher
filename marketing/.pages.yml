@@ -4,7 +4,7 @@ media:
 
 settings:
   # Live URL of this site. Enables the CMS live-preview panel.
-  baseUrl: http://localhost:4327
+  baseUrl: http://localhost:4321
   preview:
     # Route per content entry. Default is `/` for `home`, otherwise `/<name>`.
     # Only entries whose route differs from that default need an override here.
