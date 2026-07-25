@@ -3,468 +3,387 @@ media:
   output: /media
 
 content:
-  - name: home
-    label: Home
-    type: file
-    path: src/data/home.json
-    format: json
+- name: home
+  label: Home
+  type: file
+  path: src/data/home.json
+  format: json
+  fields:
+  - name: seo
+    label: SEO
+    type: object
     fields:
-      - name: seo
-        label: SEO
-        type: object
-        fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - name: hero
-        label: Hero
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string }
-          - { name: bodyText, label: Body text, type: text }
-          - name: images
-            label: Images
-            type: object
-            list: true
-            fields:
-              - { name: image, label: Image, type: image }
-      - name: statsBar
-        label: Stats bar
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string }
-          - { name: bodyText, label: Body text, type: text }
-          - name: stats
-            label: Stats
-            type: object
-            list: true
-            fields:
-              - { name: number, label: Number, type: string }
-              - { name: label, label: Label, type: string }
-      - name: herVoiceContest
-        label: HerVoice contest
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: headingSub, label: Heading (line 2), type: string }
-          - { name: bodyText, label: Body text, type: text }
-          - name: stats
-            label: Stats
-            type: object
-            list: true
-            fields:
-              - { name: value, label: Value, type: string }
-              - { name: label, label: Label, type: string }
-          - name: winners
-            label: Winners
-            type: object
-            list: true
-            fields:
-              - { name: rank, label: Rank, type: string }
-              - { name: prize, label: Prize, type: string }
-              - { name: name, label: Name, type: string }
-              - { name: title, label: Title, type: string }
-              - { name: quote, label: Quote, type: text }
-      - name: atAGlance
-        label: At a glance
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - name: stats
-            label: Stats
-            type: object
-            list: true
-            fields:
-              - { name: number, label: Number, type: string }
-              - { name: label, label: Label, type: string }
-              - { name: detail, label: Detail, type: text }
-      - name: mission
-        label: Mission
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: paragraphs, label: Paragraphs, type: text, list: true }
-          - { name: signatureName, label: Signature name, type: string }
-          - { name: signatureRole, label: Signature role, type: string }
-          - name: quotes
-            label: Quotes
-            type: object
-            list: true
-            fields:
-              - { name: text, label: Text, type: text }
-              - { name: image, label: Image, type: image }
-              - { name: name, label: Name, type: string }
-              - { name: role, label: Role, type: string }
-      - name: programs
-        label: Programs
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: bodyText, label: Body text, type: text }
-          - name: cards
-            label: Cards
-            type: object
-            list: true
-            fields:
-              - { name: label, label: Label, type: string }
-              - { name: title, label: Title, type: string }
-              - { name: description, label: Description, type: text }
-              - { name: image, label: Image, type: image }
-              - { name: alt, label: Alt text, type: string }
-      - name: impactStory
-        label: Impact story
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: bodyText, label: Body text, type: text }
-          - { name: subheading, label: Subheading, type: string }
-          - { name: subheadingBody, label: Subheading body, type: text }
-          - { name: image, label: Image, type: image }
-          - { name: imageAlt, label: Image alt text, type: string }
-      - name: mediaSpotlight
-        label: Media spotlight
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - name: features
-            label: Features
-            type: object
-            list: true
-            fields:
-              - { name: youtubeId, label: YouTube ID, type: string }
-              - { name: label, label: Label, type: string }
-              - { name: title, label: Title, type: string }
-              - { name: description, label: Description, type: text }
-      - name: partners
-        label: Partners
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - name: partners
-            label: Partners
-            type: object
-            list: true
-            fields:
-              - { name: name, label: Name, type: string }
-              - { name: image, label: Image, type: image }
-      - name: newsletter
-        label: Newsletter
-        type: object
-        fields:
-          - { name: badge, label: Badge, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: bodyText, label: Body text, type: text }
-          - { name: cardTitle, label: Card title, type: string }
-          - { name: cardBody, label: Card body, type: text }
-          - { name: footnote, label: Footnote, type: string }
-
-  - name: about-us
-    label: About
-    type: file
-    path: src/data/about-us.json
-    format: json
+    - {name: title, label: Title, type: string}
+    - {name: description, label: Description, type: text}
+  - name: hero
+    label: Hero
+    type: object
     fields:
-      - name: seo
-        label: SEO
-        type: object
-        fields:
-          - { name: title, label: Title, type: string, required: true }
-          - { name: description, label: Description, type: text }
-      - name: hero
-        label: Hero
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: text }
-          - { name: body, label: Body, type: text }
-          - { name: image, label: Image, type: image }
-          - { name: imageAlt, label: Image alt, type: string }
-      - name: missionVision
-        label: Mission & Vision
-        type: object
-        fields:
-          - name: cards
-            label: Cards
-            type: object
-            list: true
-            fields:
-              - { name: eyebrow, label: Eyebrow, type: string }
-              - { name: heading, label: Heading, type: string }
-              - { name: body, label: Body, type: text }
-      - name: ourStory
-        label: Our Story
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: bodyBefore, label: Body (before quote), type: text, list: true }
-          - { name: pullQuote, label: Pull quote, type: text }
-          - { name: bodyAfter, label: Body (after quote), type: text, list: true }
-      - name: whatWeDo
-        label: What We Do
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: intro, label: Intro, type: text }
-          - name: pillars
-            label: Pillars
-            type: object
-            list: true
-            fields:
-              - { name: index, label: Index, type: string }
-              - { name: title, label: Title, type: string }
-              - { name: description, label: Description, type: text }
-      - name: team
-        label: Team
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: intro, label: Intro, type: text }
-          - name: groups
-            label: Groups
-            type: object
-            list: true
-            fields:
-              - { name: label, label: Label, type: string }
-              - name: members
-                label: Members
-                type: object
-                list: true
-                fields:
-                  - { name: name, label: Name, type: string }
-                  - { name: role, label: Role, type: string }
-                  - { name: image, label: Image, type: image }
-      - name: partners
-        label: Partners
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - name: items
-            label: Items
-            type: object
-            list: true
-            fields:
-              - { name: name, label: Name, type: string }
-              - { name: image, label: Image, type: image }
-      - name: cta
-        label: CTA
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: text }
-
-  - name: mentorship
-    label: Mentorship
-    type: file
-    path: src/data/mentorship.json
-    format: json
+    - {name: heading, label: Heading, type: string}
+    - {name: bodyText, label: Body text, type: text}
+    - name: images
+      label: Images
+      type: object
+      list: true
+      fields:
+      - {name: image, label: Image, type: image}
+  - name: statsBar
+    label: Stats bar
+    type: object
     fields:
-      - name: seo
-        label: SEO
-        type: object
-        fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - name: hero
-        label: Hero
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: title, label: Title, type: string }
-          - { name: titleLine2, label: Title line 2, type: string }
-          - { name: image, label: Image, type: image }
-          - { name: imageAlt, label: Image alt, type: string }
-          - { name: paragraphs, label: Paragraphs, type: text, list: true }
-      - name: intro
-        label: Intro
-        type: object
-        fields:
-          - { name: quote, label: Quote, type: text }
-          - { name: paragraph, label: Paragraph, type: text }
-          - { name: impactLabel, label: Impact label, type: string }
-          - { name: impactText, label: Impact text, type: text }
-          - { name: closing, label: Closing, type: text }
-      - name: workshopStructure
-        label: Workshop structure
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-          - name: items
-            label: Items
-            type: object
-            list: true
-            fields:
-              - { name: title, label: Title, type: string }
-              - { name: description, label: Description, type: text }
-      - name: eligibility
-        label: Eligibility
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-          - { name: rules, label: Rules, type: text, list: true }
-      - name: opportunities
-        label: Opportunities
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: title, label: Title, type: string }
-          - { name: titleLine2, label: Title line 2, type: string }
-          - name: items
-            label: Items
-            type: object
-            list: true
-            fields:
-              - { name: title, label: Title, type: string }
-              - { name: description, label: Description, type: text }
-          - { name: note, label: Note, type: text }
-      - name: workshops
-        label: Workshops
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: title, label: Title, type: string }
-          - name: items
-            label: Items
-            type: object
-            list: true
-            fields:
-              - { name: name, label: Name, type: string }
-              - { name: mentors, label: Mentors, type: string, list: true }
-              - { name: description, label: Description, type: text }
-              - { name: image, label: Image, type: image }
-              - { name: link, label: Application link, type: string }
+    - {name: heading, label: Heading, type: string}
+    - {name: bodyText, label: Body text, type: text}
+    - name: stats
+      label: Stats
+      type: object
+      list: true
+      fields:
+      - {name: number, label: Number, type: string}
+      - {name: label, label: Label, type: string}
+  - name: herVoiceContest
+    label: HerVoice contest
+    type: object
+    fields:
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: string}
+    - {name: headingSub, label: Heading (line 2), type: string}
+    - {name: bodyText, label: Body text, type: text}
+    - name: stats
+      label: Stats
+      type: object
+      list: true
+      fields:
+      - {name: value, label: Value, type: string}
+      - {name: label, label: Label, type: string}
+    - name: winners
+      label: Winners
+      type: object
+      list: true
+      fields:
+      - {name: rank, label: Rank, type: string}
+      - {name: prize, label: Prize, type: string}
+      - {name: name, label: Name, type: string}
+      - {name: title, label: Title, type: string}
+      - {name: quote, label: Quote, type: text}
+  - name: atAGlance
+    label: At a glance
+    type: object
+    fields:
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: string}
+    - name: stats
+      label: Stats
+      type: object
+      list: true
+      fields:
+      - {name: number, label: Number, type: string}
+      - {name: label, label: Label, type: string}
+      - {name: detail, label: Detail, type: text}
+  - name: mission
+    label: Mission
+    type: object
+    fields:
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: string}
+    - {name: paragraphs, label: Paragraphs, type: text, list: true}
+    - {name: signatureName, label: Signature name, type: string}
+    - {name: signatureRole, label: Signature role, type: string}
+    - name: quotes
+      label: Quotes
+      type: object
+      list: true
+      fields:
+      - {name: text, label: Text, type: text}
+      - {name: image, label: Image, type: image}
+      - {name: name, label: Name, type: string}
+      - {name: role, label: Role, type: string}
+  - name: programs
+    label: Programs
+    type: object
+    fields:
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: string}
+    - {name: bodyText, label: Body text, type: text}
+    - name: cards
+      label: Cards
+      type: object
+      list: true
+      fields:
+      - {name: label, label: Label, type: string}
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+      - {name: image, label: Image, type: image}
+      - {name: alt, label: Alt text, type: string}
+  - name: impactStory
+    label: Impact story
+    type: object
+    fields:
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: string}
+    - {name: bodyText, label: Body text, type: text}
+    - {name: subheading, label: Subheading, type: string}
+    - {name: subheadingBody, label: Subheading body, type: text}
+    - {name: image, label: Image, type: image}
+    - {name: imageAlt, label: Image alt text, type: string}
+  - name: mediaSpotlight
+    label: Media spotlight
+    type: object
+    fields:
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: string}
+    - name: features
+      label: Features
+      type: object
+      list: true
+      fields:
+      - {name: youtubeId, label: YouTube ID, type: string}
+      - {name: label, label: Label, type: string}
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+  - name: partners
+    label: Partners
+    type: object
+    fields:
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - name: partners
+      label: Partners
+      type: object
+      list: true
+      fields:
+      - {name: name, label: Name, type: string}
+      - {name: image, label: Image, type: image}
+  - name: newsletter
+    label: Newsletter
+    type: object
+    fields:
+    - {name: badge, label: Badge, type: string}
+    - {name: heading, label: Heading, type: string}
+    - {name: bodyText, label: Body text, type: text}
+    - {name: cardTitle, label: Card title, type: string}
+    - {name: cardBody, label: Card body, type: text}
+    - {name: footnote, label: Footnote, type: string}
 
+- name: about-us
+  label: About
+  type: file
+  path: src/data/about-us.json
+  format: json
+  fields:
+  - name: seo
+    label: SEO
+    type: object
+    fields:
+    - {name: title, label: Title, type: string, required: true}
+    - {name: description, label: Description, type: text}
+  - name: hero
+    label: Hero
+    type: object
+    fields:
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: text}
+    - {name: body, label: Body, type: text}
+    - {name: image, label: Image, type: image}
+    - {name: imageAlt, label: Image alt, type: string}
+  - name: missionVision
+    label: Mission & Vision
+    type: object
+    fields:
+    - name: cards
+      label: Cards
+      type: object
+      list: true
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - {name: body, label: Body, type: text}
+  - name: ourStory
+    label: Our Story
+    type: object
+    fields:
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: bodyBefore, label: Body (before quote), type: text, list: true}
+    - {name: pullQuote, label: Pull quote, type: text}
+    - {name: bodyAfter, label: Body (after quote), type: text, list: true}
+  - name: whatWeDo
+    label: What We Do
+    type: object
+    fields:
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: string}
+    - {name: intro, label: Intro, type: text}
+    - name: pillars
+      label: Pillars
+      type: object
+      list: true
+      fields:
+      - {name: index, label: Index, type: string}
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+  - name: team
+    label: Team
+    type: object
+    fields:
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: string}
+    - {name: intro, label: Intro, type: text}
+    - name: groups
+      label: Groups
+      type: object
+      list: true
+      fields:
+      - {name: label, label: Label, type: string}
+      - name: members
+        label: Members
+        type: object
+        list: true
+        fields:
+        - {name: name, label: Name, type: string}
+        - {name: role, label: Role, type: string}
+        - {name: image, label: Image, type: image}
+  - name: partners
+    label: Partners
+    type: object
+    fields:
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - name: items
+      label: Items
+      type: object
+      list: true
+      fields:
+      - {name: name, label: Name, type: string}
+      - {name: image, label: Image, type: image}
+  - name: cta
+    label: CTA
+    type: object
+    fields:
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: text}
+
+- name: hervoice-group
+  label: HerVoice
+  type: group
+  items:
   - name: hervoice
     label: HerVoice
     type: file
     path: src/data/hervoice.json
     format: json
     fields:
-      - name: seo
-        label: SEO
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+    - name: hero
+      label: Hero
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - {name: description, label: Description, type: text}
+      - {name: quote, label: Quote, type: text}
+      - {name: descriptionAfter, label: Description (after quote), type: text}
+      - {name: partnersEyebrow, label: Partners eyebrow, type: string}
+      - {name: partnersText, label: Partners text, type: text}
+      - {name: closing, label: Closing line, type: text}
+    - name: howToSubmit
+      label: How to Submit
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - {name: headingAccent, label: Heading accent, type: string}
+      - {name: description, label: Description, type: text}
+      - {name: guidelinesTitle, label: Guidelines title, type: string}
+      - name: guidelines
+        label: Guidelines
         type: object
+        list: true
         fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - name: hero
-        label: Hero
+        - {name: label, label: Label, type: string}
+        - {name: text, label: Text, type: text}
+      - name: steps
+        label: Steps
         type: object
+        list: true
         fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: description, label: Description, type: text }
-          - { name: quote, label: Quote, type: text }
-          - { name: descriptionAfter, label: Description (after quote), type: text }
-          - { name: partnersEyebrow, label: Partners eyebrow, type: string }
-          - { name: partnersText, label: Partners text, type: text }
-          - { name: closing, label: Closing line, type: text }
-      - name: howToSubmit
-        label: How to Submit
+        - {name: num, label: Number, type: string}
+        - {name: title, label: Title, type: string}
+        - {name: desc, label: Description, type: text}
+    - name: eligibility
+      label: Eligibility
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - {name: description, label: Description, type: text}
+      - {name: priorityEyebrow, label: Priority eyebrow, type: string}
+      - {name: priorityNote, label: Priority note, type: text}
+      - {name: requirementsEyebrow, label: Requirements eyebrow, type: string}
+      - name: requirements
+        label: Requirements
         type: object
+        list: true
         fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: headingAccent, label: Heading accent, type: string }
-          - { name: description, label: Description, type: text }
-          - { name: guidelinesTitle, label: Guidelines title, type: string }
-          - name: guidelines
-            label: Guidelines
-            type: object
-            list: true
-            fields:
-              - { name: label, label: Label, type: string }
-              - { name: text, label: Text, type: text }
-          - name: steps
-            label: Steps
-            type: object
-            list: true
-            fields:
-              - { name: num, label: Number, type: string }
-              - { name: title, label: Title, type: string }
-              - { name: desc, label: Description, type: text }
-      - name: eligibility
-        label: Eligibility
+        - {name: value, label: Value, type: string}
+        - {name: label, label: Label, type: string}
+        - {name: note, label: Note, type: string}
+    - name: featuredWritings
+      label: Featured Writings
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - name: stories
+        label: Stories
         type: object
+        list: true
         fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: description, label: Description, type: text }
-          - { name: priorityEyebrow, label: Priority eyebrow, type: string }
-          - { name: priorityNote, label: Priority note, type: text }
-          - { name: requirementsEyebrow, label: Requirements eyebrow, type: string }
-          - name: requirements
-            label: Requirements
-            type: object
-            list: true
-            fields:
-              - { name: value, label: Value, type: string }
-              - { name: label, label: Label, type: string }
-              - { name: note, label: Note, type: string }
-      - name: featuredWritings
-        label: Featured Writings
+        - {name: slug, label: Slug, type: string}
+        - {name: title, label: Title, type: string}
+        - {name: image, label: Image, type: image}
+        - {name: authorName, label: Author name, type: string}
+    - name: congressionalTestimonies
+      label: Congressional Testimonies
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - {name: intro, label: Intro, type: text}
+      - {name: quote, label: Quote, type: text}
+      - {name: quoteAttribution, label: Quote attribution, type: string}
+      - {name: note, label: Note, type: text}
+      - name: videos
+        label: Videos
         type: object
+        list: true
         fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - name: stories
-            label: Stories
-            type: object
-            list: true
-            fields:
-              - { name: slug, label: Slug, type: string }
-              - { name: title, label: Title, type: string }
-              - { name: image, label: Image, type: image }
-              - { name: authorName, label: Author name, type: string }
-      - name: congressionalTestimonies
-        label: Congressional Testimonies
+        - {name: poster, label: Poster, type: image}
+        - {name: src, label: Video URL, type: string}
+        - {name: label, label: Label, type: string}
+    - name: partnerSupport
+      label: Partner Support
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - {name: description, label: Description, type: text}
+      - name: partners
+        label: Partners
         type: object
+        list: true
         fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: intro, label: Intro, type: text }
-          - { name: quote, label: Quote, type: text }
-          - { name: quoteAttribution, label: Quote attribution, type: string }
-          - { name: note, label: Note, type: text }
-          - name: videos
-            label: Videos
-            type: object
-            list: true
-            fields:
-              - { name: poster, label: Poster, type: image }
-              - { name: src, label: Video URL, type: string }
-              - { name: label, label: Label, type: string }
-      - name: partnerSupport
-        label: Partner Support
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: description, label: Description, type: text }
-          - name: partners
-            label: Partners
-            type: object
-            list: true
-            fields:
-              - { name: name, label: Name, type: string }
-              - { name: location, label: Location, type: string }
-              - { name: logo, label: Logo, type: image }
-      - name: writingContestCTA
-        label: Writing Contest CTA
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: description, label: Description, type: text }
+        - {name: name, label: Name, type: string}
+        - {name: location, label: Location, type: string}
+        - {name: logo, label: Logo, type: image}
+    - name: writingContestCTA
+      label: Writing Contest CTA
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - {name: description, label: Description, type: text}
 
   - name: hervoice-winners
     label: HerVoice Winners
@@ -472,77 +391,77 @@ content:
     path: src/data/hervoice-winners.json
     format: json
     fields:
-      - name: seo
-        label: SEO
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string, required: true}
+      - {name: description, label: Description, type: text}
+    - name: hero
+      label: Hero
+      type: object
+      fields:
+      - {name: headingLead, label: Heading — lead, type: string}
+      - {name: headingYear, label: Heading — year, type: string}
+      - {name: headingTail, label: Heading — tail, type: string}
+      - {name: bodyText, label: Body text, type: text}
+      - name: stats
+        label: Stats
         type: object
+        list: true
         fields:
-          - { name: title, label: Title, type: string, required: true }
-          - { name: description, label: Description, type: text }
-      - name: hero
-        label: Hero
+        - {name: value, label: Value, type: string}
+        - {name: label, label: Label, type: string}
+    - name: cashPrizeWinners
+      label: Cash Prize Winners
+      type: object
+      fields:
+      - {name: title, label: Section title, type: string}
+      - name: winners
+        label: Winners
         type: object
+        list: true
         fields:
-          - { name: headingLead, label: Heading — lead, type: string }
-          - { name: headingYear, label: Heading — year, type: string }
-          - { name: headingTail, label: Heading — tail, type: string }
-          - { name: bodyText, label: Body text, type: text }
-          - name: stats
-            label: Stats
-            type: object
-            list: true
-            fields:
-              - { name: value, label: Value, type: string }
-              - { name: label, label: Label, type: string }
-      - name: cashPrizeWinners
-        label: Cash Prize Winners
+        - {name: rank, label: Rank, type: string}
+        - {name: prize, label: Prize, type: string}
+        - {name: name, label: Author name, type: string}
+        - {name: title, label: Title, type: string}
+        - {name: image, label: Image, type: image}
+        - {name: slug, label: Slug, type: string}
+    - name: honorableMentions
+      label: Honorable Mentions
+      type: object
+      fields:
+      - {name: title, label: Section title, type: string}
+      - name: mentions
+        label: Mentions
         type: object
+        list: true
         fields:
-          - { name: title, label: Section title, type: string }
-          - name: winners
-            label: Winners
-            type: object
-            list: true
-            fields:
-              - { name: rank, label: Rank, type: string }
-              - { name: prize, label: Prize, type: string }
-              - { name: name, label: Author name, type: string }
-              - { name: title, label: Title, type: string }
-              - { name: image, label: Image, type: image }
-              - { name: slug, label: Slug, type: string }
-      - name: honorableMentions
-        label: Honorable Mentions
+        - {name: name, label: Author name, type: string}
+        - {name: title, label: Title, type: string}
+        - {name: image, label: Image, type: image}
+        - {name: slug, label: Slug, type: string}
+    - name: judgeTestimonials
+      label: Judge Testimonials
+      type: object
+      fields:
+      - {name: title, label: Section title, type: string}
+      - name: judges
+        label: Judges
         type: object
+        list: true
         fields:
-          - { name: title, label: Section title, type: string }
-          - name: mentions
-            label: Mentions
-            type: object
-            list: true
-            fields:
-              - { name: name, label: Author name, type: string }
-              - { name: title, label: Title, type: string }
-              - { name: image, label: Image, type: image }
-              - { name: slug, label: Slug, type: string }
-      - name: judgeTestimonials
-        label: Judge Testimonials
-        type: object
-        fields:
-          - { name: title, label: Section title, type: string }
-          - name: judges
-            label: Judges
-            type: object
-            list: true
-            fields:
-              - { name: name, label: Name, type: string }
-              - { name: title, label: Title, type: text }
-              - { name: quote, label: Quote, type: text }
-              - { name: image, label: Image, type: image }
-      - name: herVoiceCta
-        label: HerVoice CTA
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string }
-          - { name: bodyText, label: Body text, type: text }
+        - {name: name, label: Name, type: string}
+        - {name: title, label: Title, type: text}
+        - {name: quote, label: Quote, type: text}
+        - {name: image, label: Image, type: image}
+    - name: herVoiceCta
+      label: HerVoice CTA
+      type: object
+      fields:
+      - {name: heading, label: Heading, type: string}
+      - {name: bodyText, label: Body text, type: text}
 
   - name: hervoice-featured-writings
     label: Featured Writings
@@ -550,30 +469,30 @@ content:
     path: src/data/hervoice-featured-writings.json
     format: json
     fields:
-      - name: seo
-        label: SEO
-        type: object
-        fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - name: header
-        label: Header
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: lede, label: Lede, type: text }
-      - name: writings
-        label: Writings
-        type: object
-        list: true
-        fields:
-          - { name: id, label: ID, type: number }
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-          - { name: image, label: Image, type: image }
-          - { name: link, label: Link, type: string }
-          - { name: from, label: From (Platform), type: string }
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+    - name: header
+      label: Header
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - {name: lede, label: Lede, type: text}
+    - name: writings
+      label: Writings
+      type: object
+      list: true
+      fields:
+      - {name: id, label: ID, type: number}
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+      - {name: image, label: Image, type: image}
+      - {name: link, label: Link, type: string}
+      - {name: from, label: From (Platform), type: string}
 
   - name: hervoice-stories
     label: HerVoice Stories
@@ -581,40 +500,40 @@ content:
     path: src/data/hervoice-stories.json
     format: json
     fields:
-      - name: stories
-        label: Stories
+    - name: stories
+      label: Stories
+      type: object
+      list: true
+      fields:
+      - {name: slug, label: Slug, type: string}
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+      - {name: image, label: Cover image, type: image}
+      - {name: imageAlt, label: Image alt / caption, type: string}
+      - {name: imageCredit, label: Image credit, type: string}
+      - {name: date, label: Date, type: string}
+      - {name: authorName, label: Author name, type: string}
+      - {name: authorPosition, label: Author position, type: string}
+      - {name: authorBio, label: Author bio, type: text}
+      - {name: messageToWorld, label: Message to the world, type: text}
+      - name: content
+        label: Content blocks
         type: object
         list: true
         fields:
-          - { name: slug, label: Slug, type: string }
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-          - { name: image, label: Cover image, type: image }
-          - { name: imageAlt, label: Image alt / caption, type: string }
-          - { name: imageCredit, label: Image credit, type: string }
-          - { name: date, label: Date, type: string }
-          - { name: authorName, label: Author name, type: string }
-          - { name: authorPosition, label: Author position, type: string }
-          - { name: authorBio, label: Author bio, type: text }
-          - { name: messageToWorld, label: Message to the world, type: text }
-          - name: content
-            label: Content blocks
-            type: object
-            list: true
-            fields:
-              - name: type
-                label: Block type
-                type: select
-                options:
-                  values: [p, poem]
-              - { name: text, label: Paragraph text (for "p"), type: text }
-              - name: lines
-                label: Poem lines (for "poem")
-                type: object
-                list: true
-                fields:
-                  - { name: value, label: Line, type: string }
-                  - { name: translation, label: Translation (optional), type: string }
+        - name: type
+          label: Block type
+          type: select
+          options:
+            values: [p, poem]
+        - {name: text, label: Paragraph text (for "p"), type: text}
+        - name: lines
+          label: Poem lines (for "poem")
+          type: object
+          list: true
+          fields:
+          - {name: value, label: Line, type: string}
+          - {name: translation, label: Translation (optional), type: string}
 
   - name: writing-contest
     label: Writing Contest
@@ -622,195 +541,221 @@ content:
     path: src/data/writing-contest.json
     format: json
     fields:
-      - name: seo
-        label: SEO
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+    - name: hero
+      label: Hero
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - {name: paragraph, label: Paragraph, type: text}
+      - {name: calloutText, label: Callout text, type: text}
+      - {name: calloutName, label: Callout name, type: string}
+      - name: image
+        label: Image
         type: object
         fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - name: hero
-        label: Hero
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: paragraph, label: Paragraph, type: text }
-          - { name: calloutText, label: Callout text, type: text }
-          - { name: calloutName, label: Callout name, type: string }
-          - name: image
-            label: Image
-            type: object
-            fields:
-              - { name: src, label: Image, type: image }
-              - { name: alt, label: Alt text, type: string }
-      - name: aboutContest
-        label: About the Contest
-        type: object
-        fields:
-          - { name: title, label: Title, type: string }
-          - { name: paragraph, label: Paragraph, type: text }
-      - name: writingPrompt
-        label: Writing Prompt
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: prompt, label: Prompt, type: text }
-      - name: whoCanParticipate
-        label: Who Can Participate
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: title, label: Title, type: string }
-          - { name: items, label: Items, type: string, list: true }
-      - name: submissionRequirements
-        label: Submission Requirements
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: title, label: Title, type: string }
-          - { name: formatTitle, label: Format title, type: string }
-          - name: formatOptions
-            label: Format options
-            type: object
-            list: true
-            fields:
-              - { name: title, label: Title, type: string }
-              - { name: description, label: Description, type: text }
-          - { name: formatWarning, label: Format warning, type: text }
-          - { name: rulesTitle, label: Rules title, type: string }
-          - { name: rules, label: Rules, type: string, list: true }
-      - name: howToSubmit
-        label: How to Submit
-        type: object
-        fields:
-          - { name: title, label: Title, type: string }
-          - { name: intro, label: Intro, type: text }
-          - { name: warning, label: Warning, type: text }
-          - { name: contactText, label: Contact text, type: text }
-      - name: deadlines
-        label: Deadlines
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: title, label: Title, type: string }
-          - name: items
-            label: Items
-            type: object
-            list: true
-            fields:
-              - { name: date, label: Date, type: string }
-              - { name: title, label: Title, type: string }
-              - { name: description, label: Description, type: text }
-          - { name: note, label: Note, type: text }
-      - name: awards
-        label: Awards
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: title, label: Title, type: string }
-          - { name: introLead, label: Intro lead, type: text }
-          - { name: introHighlight1, label: Intro highlight 1, type: string }
-          - { name: introHighlight2, label: Intro highlight 2, type: string }
-          - name: prizes
-            label: Prizes
-            type: object
-            list: true
-            fields:
-              - { name: place, label: Place, type: string }
-              - { name: amount, label: Amount, type: string }
-          - name: recognitionBenefits
-            label: Recognition benefits
-            type: object
-            list: true
-            fields:
-              - { name: title, label: Title, type: string }
-              - { name: description, label: Description, type: text }
-      - name: judges
-        label: Judges
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: title, label: Title, type: string }
-          - name: items
-            label: Items
-            type: object
-            list: true
-            fields:
-              - { name: name, label: Name, type: string }
-              - { name: description, label: Description, type: text }
-              - { name: image, label: Image, type: image }
-          - { name: thankYou, label: Thank you, type: text }
-          - { name: sponsorsText, label: Sponsors text, type: text }
-          - name: sponsorLogos
-            label: Sponsor logos
-            type: object
-            list: true
-            fields:
-              - { name: src, label: Image, type: image }
-              - { name: alt, label: Alt text, type: string }
-
-  - name: success-stories
-    label: Success Stories
-    type: file
-    path: src/data/success-stories.json
-    format: json
-    fields:
-      - name: seo
-        label: SEO
-        type: object
-        fields:
-          - { name: title, label: Title, type: string, required: true }
-          - { name: description, label: Description, type: text }
-      - name: header
-        label: Header
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: subtitle, label: Subtitle, type: text }
-      - name: stories
-        label: Stories
+        - {name: src, label: Image, type: image}
+        - {name: alt, label: Alt text, type: string}
+    - name: aboutContest
+      label: About the Contest
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: paragraph, label: Paragraph, type: text}
+    - name: writingPrompt
+      label: Writing Prompt
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: prompt, label: Prompt, type: text}
+    - name: whoCanParticipate
+      label: Who Can Participate
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: title, label: Title, type: string}
+      - {name: items, label: Items, type: string, list: true}
+    - name: submissionRequirements
+      label: Submission Requirements
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: title, label: Title, type: string}
+      - {name: formatTitle, label: Format title, type: string}
+      - name: formatOptions
+        label: Format options
         type: object
         list: true
         fields:
-          - { name: image, label: Logo image, type: image }
-          - { name: title, label: Title, type: string, required: true }
-          - { name: subtitle, label: Subtitle, type: string }
-          - { name: date, label: Date, type: string }
-          - { name: badge, label: Badge, type: string }
-          - name: stats
-            label: Stats
-            type: object
-            list: true
-            fields:
-              - { name: value, label: Value, type: string, required: true }
-              - { name: label, label: Label, type: string }
-          - { name: intro, label: Intro paragraph, type: text }
-          - name: links
-            label: Links
-            type: object
-            list: true
-            fields:
-              - { name: label, label: Label, type: string, required: true }
-              - { name: url, label: URL, type: string }
-          - name: quote
-            label: Quote
-            type: object
-            fields:
-              - { name: body, label: Body, type: text }
-              - { name: author, label: Author, type: string }
-          - { name: afterQuote, label: Paragraph after quote, type: text }
-          - name: impact
-            label: Impact
-            type: object
-            fields:
-              - { name: title, label: Title, type: string }
-              - { name: body, label: Body, type: text }
-      - name: closingCta
-        label: Closing CTA
+        - {name: title, label: Title, type: string}
+        - {name: description, label: Description, type: text}
+      - {name: formatWarning, label: Format warning, type: text}
+      - {name: rulesTitle, label: Rules title, type: string}
+      - {name: rules, label: Rules, type: string, list: true}
+    - name: howToSubmit
+      label: How to Submit
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: intro, label: Intro, type: text}
+      - {name: warning, label: Warning, type: text}
+      - {name: contactText, label: Contact text, type: text}
+    - name: deadlines
+      label: Deadlines
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: title, label: Title, type: string}
+      - name: items
+        label: Items
         type: object
+        list: true
         fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string, required: true }
+        - {name: date, label: Date, type: string}
+        - {name: title, label: Title, type: string}
+        - {name: description, label: Description, type: text}
+      - {name: note, label: Note, type: text}
+    - name: awards
+      label: Awards
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: title, label: Title, type: string}
+      - {name: introLead, label: Intro lead, type: text}
+      - {name: introHighlight1, label: Intro highlight 1, type: string}
+      - {name: introHighlight2, label: Intro highlight 2, type: string}
+      - name: prizes
+        label: Prizes
+        type: object
+        list: true
+        fields:
+        - {name: place, label: Place, type: string}
+        - {name: amount, label: Amount, type: string}
+      - name: recognitionBenefits
+        label: Recognition benefits
+        type: object
+        list: true
+        fields:
+        - {name: title, label: Title, type: string}
+        - {name: description, label: Description, type: text}
+    - name: judges
+      label: Judges
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: title, label: Title, type: string}
+      - name: items
+        label: Items
+        type: object
+        list: true
+        fields:
+        - {name: name, label: Name, type: string}
+        - {name: description, label: Description, type: text}
+        - {name: image, label: Image, type: image}
+      - {name: thankYou, label: Thank you, type: text}
+      - {name: sponsorsText, label: Sponsors text, type: text}
+      - name: sponsorLogos
+        label: Sponsor logos
+        type: object
+        list: true
+        fields:
+        - {name: src, label: Image, type: image}
+        - {name: alt, label: Alt text, type: string}
+
+- name: programs
+  label: Programs
+  type: group
+  items:
+  - name: mentorship
+    label: Mentorship
+    type: file
+    path: src/data/mentorship.json
+    format: json
+    fields:
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+    - name: hero
+      label: Hero
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: title, label: Title, type: string}
+      - {name: titleLine2, label: Title line 2, type: string}
+      - {name: image, label: Image, type: image}
+      - {name: imageAlt, label: Image alt, type: string}
+      - {name: paragraphs, label: Paragraphs, type: text, list: true}
+    - name: intro
+      label: Intro
+      type: object
+      fields:
+      - {name: quote, label: Quote, type: text}
+      - {name: paragraph, label: Paragraph, type: text}
+      - {name: impactLabel, label: Impact label, type: string}
+      - {name: impactText, label: Impact text, type: text}
+      - {name: closing, label: Closing, type: text}
+    - name: workshopStructure
+      label: Workshop structure
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+      - name: items
+        label: Items
+        type: object
+        list: true
+        fields:
+        - {name: title, label: Title, type: string}
+        - {name: description, label: Description, type: text}
+    - name: eligibility
+      label: Eligibility
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+      - {name: rules, label: Rules, type: text, list: true}
+    - name: opportunities
+      label: Opportunities
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: title, label: Title, type: string}
+      - {name: titleLine2, label: Title line 2, type: string}
+      - name: items
+        label: Items
+        type: object
+        list: true
+        fields:
+        - {name: title, label: Title, type: string}
+        - {name: description, label: Description, type: text}
+      - {name: note, label: Note, type: text}
+    - name: workshops
+      label: Workshops
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: title, label: Title, type: string}
+      - name: items
+        label: Items
+        type: object
+        list: true
+        fields:
+        - {name: name, label: Name, type: string}
+        - {name: mentors, label: Mentors, type: string, list: true}
+        - {name: description, label: Description, type: text}
+        - {name: image, label: Image, type: image}
+        - {name: link, label: Application link, type: string}
 
   - name: spr
     label: Student Project Roadmap
@@ -818,208 +763,74 @@ content:
     path: src/data/spr.json
     format: json
     fields:
-      - name: seo
-        label: SEO
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string, required: true}
+      - {name: description, label: Description, type: text}
+    - name: hero
+      label: Hero
+      type: object
+      fields:
+      - {name: backText, label: Back link text, type: string}
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string, required: true}
+      - {name: intro, label: Intro, type: text}
+      - name: image
+        label: Background image
         type: object
         fields:
-          - { name: title, label: Title, type: string, required: true }
-          - { name: description, label: Description, type: text }
-      - name: hero
-        label: Hero
+        - {name: src, label: Source, type: image}
+        - {name: alt, label: Alt text, type: string}
+    - name: eligibility
+      label: Eligibility
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - {name: subtitle, label: Subtitle, type: text}
+      - {name: items, label: Requirement items, type: string, list: true}
+      - name: howToApply
+        label: How to apply
         type: object
         fields:
-          - { name: backText, label: Back link text, type: string }
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: intro, label: Intro, type: text }
-          - name: image
-            label: Background image
-            type: object
-            fields:
-              - { name: src, label: Source, type: image }
-              - { name: alt, label: Alt text, type: string }
-      - name: eligibility
-        label: Eligibility
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: subtitle, label: Subtitle, type: text }
-          - { name: items, label: Requirement items, type: string, list: true }
-          - name: howToApply
-            label: How to apply
-            type: object
-            fields:
-              - { name: eyebrow, label: Eyebrow, type: string }
-              - { name: title, label: Title, type: string }
-              - { name: bodyBefore, label: Body (before email), type: text }
-              - { name: bodyAfter, label: Body (after email), type: text }
-      - name: stepByStep
-        label: Step by step
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - name: steps
-            label: Steps
-            type: object
-            list: true
-            fields:
-              - { name: title, label: Title, type: string, required: true }
-              - { name: description, label: Description, type: text }
-      - name: benefits
-        label: Benefits
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - name: items
-            label: Benefit items
-            type: object
-            list: true
-            fields:
-              - { name: title, label: Title, type: string, required: true }
-              - { name: description, label: Description, type: text }
-          - name: importantNote
-            label: Important note
-            type: object
-            fields:
-              - { name: title, label: Title, type: string }
-              - { name: body, label: Body, type: text }
-
-  - name: get-involved
-    label: Get Involved
-    type: file
-    path: src/data/get-involved.json
-    format: json
-    fields:
-      - name: seo
-        label: SEO
-        type: object
-        fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - name: splitScreen
-        label: Split screen
-        type: object
-        fields:
-          - name: partner
-            label: Partner panel
-            type: object
-            fields:
-              - { name: eyebrow, label: Eyebrow, type: string }
-              - { name: heading, label: Heading, type: string }
-              - { name: body, label: Body, type: text }
-              - { name: image, label: Image, type: image }
-              - { name: imageAlt, label: Image alt, type: string }
-          - name: volunteer
-            label: Volunteer panel
-            type: object
-            fields:
-              - { name: eyebrow, label: Eyebrow, type: string }
-              - { name: heading, label: Heading, type: string }
-              - { name: body, label: Body, type: text }
-              - { name: image, label: Image, type: image }
-              - { name: imageAlt, label: Image alt, type: string }
-
-  - name: get-involved-partner
-    label: Partner With Us
-    type: file
-    path: src/data/get-involved-partner.json
-    format: json
-    fields:
-      - name: seo
-        label: SEO
-        type: object
-        fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - { name: eyebrow, label: Eyebrow, type: string }
-      - { name: heading, label: Heading, type: string }
-      - { name: body, label: Body, type: text }
-      - { name: questions, label: Questions label, type: string }
-
-  - name: get-involved-volunteer
-    label: Volunteer With Us
-    type: file
-    path: src/data/get-involved-volunteer.json
-    format: json
-    fields:
-      - name: seo
-        label: SEO
-        type: object
-        fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - { name: eyebrow, label: Eyebrow, type: string }
-      - { name: heading, label: Heading, type: string }
-      - { name: body, label: Body, type: text }
-      - { name: note, label: Note, type: text }
-      - { name: questions, label: Questions label, type: string }
-
-  - name: resources
-    label: Resources
-    type: file
-    path: src/data/resources.json
-    format: json
-    fields:
-      - name: seo
-        label: SEO
-        type: object
-        fields:
-          - { name: title, label: Title, type: string, required: true }
-          - { name: description, label: Description, type: text }
-      - name: header
-        label: Header
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: intro, label: Intro, type: text }
-      - name: resources
-        label: Resources
+        - {name: eyebrow, label: Eyebrow, type: string}
+        - {name: title, label: Title, type: string}
+        - {name: bodyBefore, label: Body (before email), type: text}
+        - {name: bodyAfter, label: Body (after email), type: text}
+    - name: stepByStep
+      label: Step by step
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - name: steps
+        label: Steps
         type: object
         list: true
         fields:
-          - { name: id, label: ID, type: number }
-          - { name: name, label: Name, type: string, required: true }
-          - { name: location, label: Location, type: string }
-          - { name: description, label: Description, type: text }
-          - { name: link, label: Link, type: string }
-          - { name: image, label: Image, type: image }
-      - name: footerNote
-        label: Footer note
+        - {name: title, label: Title, type: string, required: true}
+        - {name: description, label: Description, type: text}
+    - name: benefits
+      label: Benefits
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - name: items
+        label: Benefit items
+        type: object
+        list: true
+        fields:
+        - {name: title, label: Title, type: string, required: true}
+        - {name: description, label: Description, type: text}
+      - name: importantNote
+        label: Important note
         type: object
         fields:
-          - { name: text, label: Text, type: text }
-          - { name: email, label: Email, type: string }
-
-  - name: annual-report
-    label: Annual Report
-    type: file
-    path: src/data/annual-report.json
-    format: json
-    fields:
-      - name: seo
-        label: SEO
-        type: object
-        fields:
-          - { name: title, label: Title, type: string, required: true }
-          - { name: description, label: Description, type: text }
-      - name: header
-        label: Header
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: body, label: Body, type: text }
-      - name: reportCard
-        label: Report Card
-        type: object
-        fields:
-          - { name: year, label: Year, type: string }
-          - { name: title, label: Title, type: string, required: true }
-          - { name: description, label: Description, type: text, list: true }
+        - {name: title, label: Title, type: string}
+        - {name: body, label: Body, type: text}
 
   - name: sisterhood-sessions
     label: Sisterhood Sessions
@@ -1027,130 +838,220 @@ content:
     path: src/data/sisterhood-sessions.json
     format: json
     fields:
-      - name: seo
-        label: SEO
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string, required: true}
+      - {name: description, label: Description, type: text}
+    - name: header
+      label: Header
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string, required: true}
+      - {name: body, label: Body, type: text}
+    - name: whyTheyMatter
+      label: Why They Matter
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string, required: true}
+      - {name: body, label: Body, type: text}
+      - {name: quote, label: Quote, type: text}
+    - name: community
+      label: Community
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string, required: true}
+      - {name: body, label: Body, type: text}
+      - {name: listIntro, label: List intro, type: text}
+      - {name: benefits, label: Benefits, type: string, list: true}
+      - {name: closing, label: Closing, type: text}
+    - name: sessionFormat
+      label: Session Format
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string, required: true}
+      - name: cards
+        label: Cards
         type: object
+        list: true
         fields:
-          - { name: title, label: Title, type: string, required: true }
-          - { name: description, label: Description, type: text }
-      - name: header
-        label: Header
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: body, label: Body, type: text }
-      - name: whyTheyMatter
-        label: Why They Matter
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: body, label: Body, type: text }
-          - { name: quote, label: Quote, type: text }
-      - name: community
-        label: Community
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: body, label: Body, type: text }
-          - { name: listIntro, label: List intro, type: text }
-          - { name: benefits, label: Benefits, type: string, list: true }
-          - { name: closing, label: Closing, type: text }
-      - name: sessionFormat
-        label: Session Format
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string, required: true }
-          - name: cards
-            label: Cards
-            type: object
-            list: true
-            fields:
-              - { name: title, label: Title, type: string, required: true }
-              - { name: highlight, label: Highlight, type: string }
-              - { name: body, label: Body, type: text }
-          - { name: closing, label: Closing, type: text }
+        - {name: title, label: Title, type: string, required: true}
+        - {name: highlight, label: Highlight, type: string}
+        - {name: body, label: Body, type: text}
+      - {name: closing, label: Closing, type: text}
 
-  - name: newsletter
-    label: Newsletter
+- name: get-involved-group
+  label: Get Involved
+  type: group
+  items:
+  - name: get-involved
+    label: Get Involved
     type: file
-    path: src/data/newsletter.json
+    path: src/data/get-involved.json
     format: json
     fields:
-      - name: seo
-        label: SEO
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+    - name: splitScreen
+      label: Split screen
+      type: object
+      fields:
+      - name: partner
+        label: Partner panel
         type: object
         fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - { name: eyebrow, label: Eyebrow, type: string }
-      - { name: heading, label: Heading, type: string }
-      - { name: subheading, label: Subheading, type: text }
-      - name: image
-        label: Image
+        - {name: eyebrow, label: Eyebrow, type: string}
+        - {name: heading, label: Heading, type: string}
+        - {name: body, label: Body, type: text}
+        - {name: image, label: Image, type: image}
+        - {name: imageAlt, label: Image alt, type: string}
+      - name: volunteer
+        label: Volunteer panel
         type: object
         fields:
-          - { name: url, label: Image, type: image }
-          - { name: alt, label: Alt text, type: string }
-      - name: overlay
-        label: Overlay
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string }
-          - { name: text, label: Text, type: text }
+        - {name: eyebrow, label: Eyebrow, type: string}
+        - {name: heading, label: Heading, type: string}
+        - {name: body, label: Body, type: text}
+        - {name: image, label: Image, type: image}
+        - {name: imageAlt, label: Image alt, type: string}
 
-  - name: contact
-    label: Contact
+  - name: get-involved-partner
+    label: Partner With Us
     type: file
-    path: src/data/contact.json
+    path: src/data/get-involved-partner.json
     format: json
     fields:
-      - name: seo
-        label: SEO
-        type: object
-        fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - { name: eyebrow, label: Eyebrow, type: string }
-      - { name: heading, label: Heading, type: string }
-      - { name: intro, label: Intro, type: text }
-      - name: email
-        label: Email block
-        type: object
-        fields:
-          - { name: label, label: Label, type: string }
-          - { name: value, label: Value, type: string }
-      - name: location
-        label: Location block
-        type: object
-        fields:
-          - { name: label, label: Label, type: string }
-          - { name: value, label: Value, type: string }
-      - { name: followUsTitle, label: Follow Us title, type: string }
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: string}
+    - {name: body, label: Body, type: text}
+    - {name: questions, label: Questions label, type: string}
 
-  - name: mis
-    label: MIS
+  - name: get-involved-volunteer
+    label: Volunteer With Us
     type: file
-    path: src/data/mis.json
+    path: src/data/get-involved-volunteer.json
     format: json
     fields:
-      - name: seo
-        label: SEO
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: string}
+    - {name: body, label: Body, type: text}
+    - {name: note, label: Note, type: text}
+    - {name: questions, label: Questions label, type: string}
+
+- name: impact
+  label: Impact
+  type: group
+  items:
+  - name: success-stories
+    label: Success Stories
+    type: file
+    path: src/data/success-stories.json
+    format: json
+    fields:
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string, required: true}
+      - {name: description, label: Description, type: text}
+    - name: header
+      label: Header
+      type: object
+      fields:
+      - {name: heading, label: Heading, type: string, required: true}
+      - {name: subtitle, label: Subtitle, type: text}
+    - name: stories
+      label: Stories
+      type: object
+      list: true
+      fields:
+      - {name: image, label: Logo image, type: image}
+      - {name: title, label: Title, type: string, required: true}
+      - {name: subtitle, label: Subtitle, type: string}
+      - {name: date, label: Date, type: string}
+      - {name: badge, label: Badge, type: string}
+      - name: stats
+        label: Stats
+        type: object
+        list: true
+        fields:
+        - {name: value, label: Value, type: string, required: true}
+        - {name: label, label: Label, type: string}
+      - {name: intro, label: Intro paragraph, type: text}
+      - name: links
+        label: Links
+        type: object
+        list: true
+        fields:
+        - {name: label, label: Label, type: string, required: true}
+        - {name: url, label: URL, type: string}
+      - name: quote
+        label: Quote
         type: object
         fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - name: content
-        label: Content
+        - {name: body, label: Body, type: text}
+        - {name: author, label: Author, type: string}
+      - {name: afterQuote, label: Paragraph after quote, type: text}
+      - name: impact
+        label: Impact
         type: object
         fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: body, label: Body, type: string, list: true }
-          - { name: advisory, label: Advisory, type: text }
+        - {name: title, label: Title, type: string}
+        - {name: body, label: Body, type: text}
+    - name: closingCta
+      label: Closing CTA
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string, required: true}
+
+  - name: annual-report
+    label: Annual Report
+    type: file
+    path: src/data/annual-report.json
+    format: json
+    fields:
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string, required: true}
+      - {name: description, label: Description, type: text}
+    - name: header
+      label: Header
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string, required: true}
+      - {name: body, label: Body, type: text}
+    - name: reportCard
+      label: Report Card
+      type: object
+      fields:
+      - {name: year, label: Year, type: string}
+      - {name: title, label: Title, type: string, required: true}
+      - {name: description, label: Description, type: text, list: true}
 
   - name: agfaf
     label: AGFAF
@@ -1158,66 +1059,193 @@ content:
     path: src/data/agfaf.json
     format: json
     fields:
-      - name: seo
-        label: SEO
-        type: object
-        fields:
-          - { name: title, label: Title, type: string, required: true }
-          - { name: description, label: Description, type: text }
-      - name: logo
-        label: Logo
-        type: object
-        fields:
-          - { name: src, label: Image, type: image }
-          - { name: alt, label: Alt text, type: string }
-      - { name: title, label: Title, type: string, required: true }
-      - { name: description, label: Description, type: text, list: true }
-      - name: gratitude
-        label: Gratitude
-        type: object
-        fields:
-          - { name: title, label: Title, type: string }
-          - { name: quote, label: Quote, type: text }
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string, required: true}
+      - {name: description, label: Description, type: text}
+    - name: logo
+      label: Logo
+      type: object
+      fields:
+      - {name: src, label: Image, type: image}
+      - {name: alt, label: Alt text, type: string}
+    - {name: title, label: Title, type: string, required: true}
+    - {name: description, label: Description, type: text, list: true}
+    - name: gratitude
+      label: Gratitude
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: quote, label: Quote, type: text}
 
+- name: resources-group
+  label: Resources
+  type: group
+  items:
+  - name: resources
+    label: Resources
+    type: file
+    path: src/data/resources.json
+    format: json
+    fields:
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string, required: true}
+      - {name: description, label: Description, type: text}
+    - name: header
+      label: Header
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string, required: true}
+      - {name: intro, label: Intro, type: text}
+    - name: resources
+      label: Resources
+      type: object
+      list: true
+      fields:
+      - {name: id, label: ID, type: number}
+      - {name: name, label: Name, type: string, required: true}
+      - {name: location, label: Location, type: string}
+      - {name: description, label: Description, type: text}
+      - {name: link, label: Link, type: string}
+      - {name: image, label: Image, type: image}
+    - name: footerNote
+      label: Footer note
+      type: object
+      fields:
+      - {name: text, label: Text, type: text}
+      - {name: email, label: Email, type: string}
+
+  - name: mis
+    label: MIS
+    type: file
+    path: src/data/mis.json
+    format: json
+    fields:
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+    - name: content
+      label: Content
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: heading, label: Heading, type: string}
+      - {name: body, label: Body, type: string, list: true}
+      - {name: advisory, label: Advisory, type: text}
+
+- name: connect
+  label: Connect
+  type: group
+  items:
+  - name: newsletter
+    label: Newsletter
+    type: file
+    path: src/data/newsletter.json
+    format: json
+    fields:
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: string}
+    - {name: subheading, label: Subheading, type: text}
+    - name: image
+      label: Image
+      type: object
+      fields:
+      - {name: url, label: Image, type: image}
+      - {name: alt, label: Alt text, type: string}
+    - name: overlay
+      label: Overlay
+      type: object
+      fields:
+      - {name: heading, label: Heading, type: string}
+      - {name: text, label: Text, type: text}
+
+  - name: contact
+    label: Contact
+    type: file
+    path: src/data/contact.json
+    format: json
+    fields:
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+    - {name: eyebrow, label: Eyebrow, type: string}
+    - {name: heading, label: Heading, type: string}
+    - {name: intro, label: Intro, type: text}
+    - name: email
+      label: Email block
+      type: object
+      fields:
+      - {name: label, label: Label, type: string}
+      - {name: value, label: Value, type: string}
+    - name: location
+      label: Location block
+      type: object
+      fields:
+      - {name: label, label: Label, type: string}
+      - {name: value, label: Value, type: string}
+    - {name: followUsTitle, label: Follow Us title, type: string}
+
+- name: legal-group
+  label: Legal
+  type: group
+  items:
   - name: legal
     label: Legal
     type: file
     path: src/data/legal.json
     format: json
     fields:
-      - name: seo
-        label: SEO
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+    - name: hero
+      label: Hero
+      type: object
+      fields:
+      - {name: eyebrow, label: Eyebrow, type: string}
+      - {name: headingLead, label: Heading (before &), type: string}
+      - {name: headingTrail, label: Heading (after &), type: string}
+      - {name: body, label: Body, type: text}
+    - name: body
+      label: Body
+      type: object
+      fields:
+      - name: parts
+        label: Sections
+        type: object
+        list: true
+        fields:
+        - {name: eyebrow, label: Eyebrow, type: string}
+        - {name: title, label: Title, type: string}
+        - {name: paragraphs, label: Paragraphs, type: text, list: true}
+      - name: footer
+        label: Footer
         type: object
         fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - name: hero
-        label: Hero
-        type: object
-        fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: headingLead, label: Heading (before &), type: string }
-          - { name: headingTrail, label: Heading (after &), type: string }
-          - { name: body, label: Body, type: text }
-      - name: body
-        label: Body
-        type: object
-        fields:
-          - name: parts
-            label: Sections
-            type: object
-            list: true
-            fields:
-              - { name: eyebrow, label: Eyebrow, type: string }
-              - { name: title, label: Title, type: string }
-              - { name: paragraphs, label: Paragraphs, type: text, list: true }
-          - name: footer
-            label: Footer
-            type: object
-            fields:
-              - { name: updated, label: Last updated, type: string }
-              - { name: contactPrompt, label: Contact prompt, type: string }
-              - { name: email, label: Email, type: string }
+        - {name: updated, label: Last updated, type: string}
+        - {name: contactPrompt, label: Contact prompt, type: string}
+        - {name: email, label: Email, type: string}
 
   - name: privacy
     label: Privacy Policy
@@ -1225,27 +1253,27 @@ content:
     path: src/data/privacy.json
     format: json
     fields:
-      - name: seo
-        label: SEO
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+    - {name: title, label: Title, type: string}
+    - {name: description, label: Description, type: text}
+    - {name: updated, label: Last updated, type: string}
+    - name: body
+      label: Body
+      type: object
+      fields:
+      - name: sections
+        label: Sections
         type: object
+        list: true
         fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - { name: title, label: Title, type: string }
-      - { name: description, label: Description, type: text }
-      - { name: updated, label: Last updated, type: string }
-      - name: body
-        label: Body
-        type: object
-        fields:
-          - name: sections
-            label: Sections
-            type: object
-            list: true
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: paragraphs, label: Paragraphs, type: text, list: true }
-              - { name: items, label: List items, type: string, list: true }
+        - {name: heading, label: Heading, type: string}
+        - {name: paragraphs, label: Paragraphs, type: text, list: true}
+        - {name: items, label: List items, type: string, list: true}
 
   - name: terms
     label: Terms
@@ -1253,24 +1281,24 @@ content:
     path: src/data/terms.json
     format: json
     fields:
-      - name: seo
-        label: SEO
+    - name: seo
+      label: SEO
+      type: object
+      fields:
+      - {name: title, label: Title, type: string}
+      - {name: description, label: Description, type: text}
+    - {name: title, label: Title, type: string}
+    - {name: description, label: Description, type: text}
+    - {name: updated, label: Last updated, type: string}
+    - name: body
+      label: Body
+      type: object
+      fields:
+      - name: sections
+        label: Sections
         type: object
+        list: true
         fields:
-          - { name: title, label: Title, type: string }
-          - { name: description, label: Description, type: text }
-      - { name: title, label: Title, type: string }
-      - { name: description, label: Description, type: text }
-      - { name: updated, label: Last updated, type: string }
-      - name: body
-        label: Body
-        type: object
-        fields:
-          - name: sections
-            label: Sections
-            type: object
-            list: true
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: paragraphs, label: Paragraphs, type: text, list: true }
-              - { name: items, label: List items, type: string, list: true }
+        - {name: heading, label: Heading, type: string}
+        - {name: paragraphs, label: Paragraphs, type: text, list: true}
+        - {name: items, label: List items, type: string, list: true}

@@ -7,27 +7,27 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { agency } from "@/admin/lib/agency-api";
+import { agency } from "@/lib/agency-api";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
 
-import { Button } from "@/admin/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/admin/components/ui/dialog";
+} from "@/components/ui/dialog";
 import {
   Field,
   FieldContent,
   FieldError,
   FieldLabel,
-} from "@/admin/components/ui/field";
-import { Input } from "@/admin/components/ui/input";
-import { Spinner } from "@/admin/components/ui/spinner";
-import { Textarea } from "@/admin/components/ui/textarea";
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
+import { Textarea } from "@/components/ui/textarea";
 
 type FeaturedWriting =
   RouterOutputs["admin"]["featuredWritings"]["list"][number];
