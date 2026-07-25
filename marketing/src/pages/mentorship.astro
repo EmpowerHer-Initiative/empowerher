@@ -10,10 +10,10 @@ import data from "../data/mentorship.json";
 ---
 
 <Layout title={data.seo.title} description={data.seo.description}>
-  <Hero {...data.hero} />
-  <Intro {...data.intro} />
-  <WorkshopStructure {...data.workshopStructure} />
-  <Eligibility {...data.eligibility} />
-  <Opportunities {...data.opportunities} />
-  <Workshops {...data.workshops} />
+  <Hero {...data.hero} cmsPath="hero" />
+  <Intro {...data.intro} cmsPath="intro" />
+  <WorkshopStructure {...data.workshopStructure} cmsPath="workshopStructure" />
+  <Eligibility {...data.eligibility} cmsPath="eligibility" />
+  <Opportunities {...data.opportunities} cmsPath="opportunities" />
+  <Workshops {...data.workshops} cmsPath="workshops" />
 </Layout>

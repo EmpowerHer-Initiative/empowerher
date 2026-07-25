@@ -1,6 +1,7 @@
 ---
 // Ports the StepByStep section from app/(marketing)/success-stories/spr/page.tsx
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Step {
   title: string;
@@ -10,17 +11,25 @@ interface Props {
   eyebrow: string;
   heading: string;
   steps: Step[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "stepByStep"). */
+  cmsPath?: string;
 }
-const { eyebrow, heading, steps } = Astro.props;
+const { eyebrow, heading, steps, cmsPath } = Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-2xl">
       <Reveal>
-        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        <p
+          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+          data-cms-field={cmsField(cmsPath, "eyebrow")}
+        >
           {eyebrow}
         </p>
-        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+        <h2
+          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
+          data-cms-field={cmsField(cmsPath, "heading")}
+        >
           {heading}
         </h2>
       </Reveal>
@@ -42,10 +51,16 @@ const { eyebrow, heading, steps } = Astro.props;
 
               {/* Content */}
               <div class="pt-0.5 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1">
-                <h3 class="group-hover:text-primary text-lg leading-snug font-semibold transition-colors duration-500">
+                <h3
+                  class="group-hover:text-primary text-lg leading-snug font-semibold transition-colors duration-500"
+                  data-cms-field={cmsField(cmsPath, `steps.${i}.title`)}
+                >
                   {step.title}
                 </h3>
-                <p class="text-foreground/70 mt-3 text-sm leading-relaxed">
+                <p
+                  class="text-foreground/70 mt-3 text-sm leading-relaxed"
+                  data-cms-field={cmsField(cmsPath, `steps.${i}.description`)}
+                >
                   {step.description}
                 </p>
               </div>

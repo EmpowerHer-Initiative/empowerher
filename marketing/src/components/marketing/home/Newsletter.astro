@@ -4,6 +4,7 @@
 // is deferred until the Astro project has an API.
 import Heart from "../../icons/Heart.astro";
 import Reveal from "./Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   badge: string;
@@ -12,8 +13,9 @@ interface Props {
   cardTitle: string;
   cardBody: string;
   footnote: string;
+  cmsPath?: string;
 }
-const { badge, heading, bodyText, cardTitle, cardBody, footnote } = Astro.props;
+const { badge, heading, bodyText, cardTitle, cardBody, footnote, cmsPath } = Astro.props;
 ---
 <section class="bg-muted text-foreground relative overflow-hidden py-28 md:py-40">
   <div class="bg-primary/[0.08] pointer-events-none absolute -top-32 -left-32 size-96 rounded-full blur-3xl"></div>
@@ -27,14 +29,14 @@ const { badge, heading, bodyText, cardTitle, cardBody, footnote } = Astro.props;
         <div>
           <div class="border-border bg-card inline-flex items-center gap-2 rounded-full border px-4 py-1.5">
             <Heart class="text-primary size-3.5" />
-            <span class="text-muted-foreground text-[10px] font-semibold tracking-[0.2em] uppercase">{badge}</span>
+            <span class="text-muted-foreground text-[10px] font-semibold tracking-[0.2em] uppercase" data-cms-field={cmsField(cmsPath, "badge")}>{badge}</span>
           </div>
-          <h2 class="mt-6 font-serif text-4xl leading-tight md:text-5xl">
+          <h2 class="mt-6 font-serif text-4xl leading-tight md:text-5xl" data-cms-field={cmsField(cmsPath, "heading")}>
             {heading}
             <br />
             <span class="text-primary italic">Community</span>
           </h2>
-          <p class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]">
+          <p class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]" data-cms-field={cmsField(cmsPath, "bodyText")}>
             {bodyText}
           </p>
         </div>
@@ -42,8 +44,8 @@ const { badge, heading, bodyText, cardTitle, cardBody, footnote } = Astro.props;
 
       <Reveal delay={120}>
         <div class="border-border bg-card rounded-3xl border p-8 shadow-sm md:p-10">
-          <h3 class="font-serif text-2xl">{cardTitle}</h3>
-          <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
+          <h3 class="font-serif text-2xl" data-cms-field={cmsField(cmsPath, "cardTitle")}>{cardTitle}</h3>
+          <p class="text-muted-foreground mt-3 text-sm leading-relaxed" data-cms-field={cmsField(cmsPath, "cardBody")}>
             {cardBody}
           </p>
           <form class="mt-8 space-y-4" novalidate>
@@ -61,7 +63,7 @@ const { badge, heading, bodyText, cardTitle, cardBody, footnote } = Astro.props;
               Subscribe
             </button>
           </form>
-          <p class="text-muted-foreground mt-4 text-center text-xs">
+          <p class="text-muted-foreground mt-4 text-center text-xs" data-cms-field={cmsField(cmsPath, "footnote")}>
             {footnote}
           </p>
         </div>

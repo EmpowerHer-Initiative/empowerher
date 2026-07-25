@@ -2,6 +2,7 @@
 // Ports the Eligibility section from app/(marketing)/success-stories/spr/page.tsx
 import Mail from "../../icons/Mail.astro";
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface HowToApply {
   eyebrow: string;
@@ -15,8 +16,10 @@ interface Props {
   subtitle: string;
   items: string[];
   howToApply: HowToApply;
+  /** CMS field path prefix for live-preview highlighting (e.g. "eligibility"). */
+  cmsPath?: string;
 }
-const { eyebrow, heading, subtitle, items, howToApply } = Astro.props;
+const { eyebrow, heading, subtitle, items, howToApply, cmsPath } = Astro.props;
 
 const ruleAccents = [
   "from-amber-300 to-amber-500 shadow-amber-500/30",
@@ -32,13 +35,22 @@ const ruleAccents = [
   <div class="relative container">
     <div class="mx-auto max-w-2xl">
       <Reveal>
-        <p class="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase">
+        <p
+          class="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase"
+          data-cms-field={cmsField(cmsPath, "eyebrow")}
+        >
           {eyebrow}
         </p>
-        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+        <h2
+          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
+          data-cms-field={cmsField(cmsPath, "heading")}
+        >
           {heading}
         </h2>
-        <p class="mt-6 text-base leading-relaxed text-white/70">
+        <p
+          class="mt-6 text-base leading-relaxed text-white/70"
+          data-cms-field={cmsField(cmsPath, "subtitle")}
+        >
           {subtitle}
         </p>
       </Reveal>
@@ -54,7 +66,10 @@ const ruleAccents = [
             >
               {String(i + 1).padStart(2, "0")}
             </span>
-            <p class="self-center text-base leading-relaxed text-white/85">
+            <p
+              class="self-center text-base leading-relaxed text-white/85"
+              data-cms-field={cmsField(cmsPath, `items.${i}`)}
+            >
               {rule}
             </p>
           </Reveal>
@@ -63,13 +78,22 @@ const ruleAccents = [
 
       {/* How to apply — inline */}
       <Reveal class="mt-16 border-t border-white/15 pt-12">
-        <p class="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase">
+        <p
+          class="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase"
+          data-cms-field={cmsField(cmsPath, "howToApply.eyebrow")}
+        >
           {howToApply.eyebrow}
         </p>
-        <h3 class="mt-4 font-serif text-3xl text-white">
+        <h3
+          class="mt-4 font-serif text-3xl text-white"
+          data-cms-field={cmsField(cmsPath, "howToApply.title")}
+        >
           {howToApply.title}
         </h3>
-        <p class="mt-5 text-base leading-relaxed text-white/75">
+        <p
+          class="mt-5 text-base leading-relaxed text-white/75"
+          data-cms-field={cmsField(cmsPath, "howToApply.bodyBefore")}
+        >
           {howToApply.bodyBefore}{" "}
           <a
             href="mailto:apply@empowerher-initiative.org"

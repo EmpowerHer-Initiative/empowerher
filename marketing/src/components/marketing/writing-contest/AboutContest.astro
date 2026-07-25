@@ -2,21 +2,29 @@
 // Ports components/marketing/writing-contest/about-contest.tsx
 import Reveal from "../home/Reveal.astro";
 import BookOpen from "../../icons/BookOpen.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   title: string;
   paragraph: string;
+  cmsPath?: string;
 }
-const { title, paragraph } = Astro.props;
+const { title, paragraph, cmsPath } = Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="mx-auto max-w-4xl">
-      <h2 class="flex items-center gap-3 font-serif text-3xl leading-tight md:text-4xl">
+      <h2
+        class="flex items-center gap-3 font-serif text-3xl leading-tight md:text-4xl"
+        data-cms-field={cmsField(cmsPath, "title")}
+      >
         <BookOpen class="text-primary size-8 shrink-0" />
         {title}
       </h2>
-      <p class="text-muted-foreground mt-8 text-lg leading-[1.8]">
+      <p
+        class="text-muted-foreground mt-8 text-lg leading-[1.8]"
+        data-cms-field={cmsField(cmsPath, "paragraph")}
+      >
         {paragraph}
       </p>
     </Reveal>

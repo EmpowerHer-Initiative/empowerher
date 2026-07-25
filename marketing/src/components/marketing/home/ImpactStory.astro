@@ -2,6 +2,7 @@
 // Ports components/marketing/home/impact-story.tsx
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "./Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
@@ -11,20 +12,21 @@ interface Props {
   subheadingBody: string;
   image: string;
   imageAlt: string;
+  cmsPath?: string;
 }
-const { eyebrow, heading, bodyText, subheading, subheadingBody, image, imageAlt } = Astro.props;
+const { eyebrow, heading, bodyText, subheading, subheadingBody, image, imageAlt, cmsPath } = Astro.props;
 ---
 <section class="bg-muted/30 py-28 md:py-40">
   <div class="container">
     <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
       <Reveal class="order-2 lg:order-1">
-        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">{eyebrow}</p>
-        <h2 class="mt-4 font-serif text-3xl leading-tight md:text-4xl">{heading}</h2>
-        <p class="text-muted-foreground mt-6 text-base leading-[1.8]">
+        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>{eyebrow}</p>
+        <h2 class="mt-4 font-serif text-3xl leading-tight md:text-4xl" data-cms-field={cmsField(cmsPath, "heading")}>{heading}</h2>
+        <p class="text-muted-foreground mt-6 text-base leading-[1.8]" data-cms-field={cmsField(cmsPath, "bodyText")}>
           {bodyText}
         </p>
-        <h3 class="mt-8 font-serif text-2xl leading-tight">{subheading}</h3>
-        <p class="text-muted-foreground mt-3 text-base leading-[1.8]">
+        <h3 class="mt-8 font-serif text-2xl leading-tight" data-cms-field={cmsField(cmsPath, "subheading")}>{subheading}</h3>
+        <p class="text-muted-foreground mt-3 text-base leading-[1.8]" data-cms-field={cmsField(cmsPath, "subheadingBody")}>
           {subheadingBody}
         </p>
         <div class="mt-8 flex flex-wrap gap-4">
@@ -52,6 +54,7 @@ const { eyebrow, heading, bodyText, subheading, subheadingBody, image, imageAlt 
             loading="lazy"
             decoding="async"
             class="h-auto w-full object-contain"
+            data-cms-field={cmsField(cmsPath, "image")}
           />
         </div>
       </Reveal>

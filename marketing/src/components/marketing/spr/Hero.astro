@@ -2,6 +2,7 @@
 // Ports the Hero section from app/(marketing)/success-stories/spr/page.tsx
 import ArrowLeft from "../../icons/ArrowLeft.astro";
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   backText?: string;
@@ -9,8 +10,10 @@ interface Props {
   heading: string;
   intro: string;
   image: { src: string; alt: string };
+  /** CMS field path prefix for live-preview highlighting (e.g. "hero"). */
+  cmsPath?: string;
 }
-const { backText, eyebrow, heading, intro, image } = Astro.props;
+const { backText, eyebrow, heading, intro, image, cmsPath } = Astro.props;
 ---
 <section class="relative overflow-hidden">
   {/* Full-bleed image behind */}
@@ -18,6 +21,7 @@ const { backText, eyebrow, heading, intro, image } = Astro.props;
     <img
       src={image.src}
       alt={image.alt}
+      data-cms-field={cmsField(cmsPath, "image.src")}
       fetchpriority="high"
       decoding="async"
       class="h-full w-full object-cover"
@@ -30,6 +34,7 @@ const { backText, eyebrow, heading, intro, image } = Astro.props;
       <a
         href="/success-stories"
         class="group text-background/60 hover:text-background mb-10 inline-flex items-center gap-2 text-sm font-medium transition-colors"
+        data-cms-field={cmsField(cmsPath, "backText")}
       >
         <ArrowLeft class="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
         {backText}
@@ -37,13 +42,22 @@ const { backText, eyebrow, heading, intro, image } = Astro.props;
     </Reveal>
 
     <Reveal class="max-w-2xl" delay={120}>
-      <p class="text-background/50 text-xs font-semibold tracking-[0.3em] uppercase">
+      <p
+        class="text-background/50 text-xs font-semibold tracking-[0.3em] uppercase"
+        data-cms-field={cmsField(cmsPath, "eyebrow")}
+      >
         {eyebrow}
       </p>
-      <h1 class="text-background mt-5 font-serif text-5xl leading-[1.05] md:text-6xl lg:text-7xl">
+      <h1
+        class="text-background mt-5 font-serif text-5xl leading-[1.05] md:text-6xl lg:text-7xl"
+        data-cms-field={cmsField(cmsPath, "heading")}
+      >
         {heading}
       </h1>
-      <p class="text-background/75 mt-8 max-w-xl text-base leading-relaxed md:text-lg">
+      <p
+        class="text-background/75 mt-8 max-w-xl text-base leading-relaxed md:text-lg"
+        data-cms-field={cmsField(cmsPath, "intro")}
+      >
         {intro}
       </p>
     </Reveal>

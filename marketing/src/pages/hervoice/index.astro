@@ -11,11 +11,14 @@ import WritingContestCTA from "../../components/marketing/hervoice/WritingContes
 import content from "../../data/hervoice.json";
 ---
 <Layout title={content.seo.title} description={content.seo.description}>
-  <Hero {...content.hero} />
-  <HowToSubmit {...content.howToSubmit} />
-  <Eligibility {...content.eligibility} />
-  <FeaturedWritings {...content.featuredWritings} />
-  <CongressionalTestimonies {...content.congressionalTestimonies} />
-  <PartnerSupport {...content.partnerSupport} />
-  <WritingContestCTA {...content.writingContestCTA} />
+  <Hero {...content.hero} cmsPath="hero" />
+  <HowToSubmit {...content.howToSubmit} cmsPath="howToSubmit" />
+  <Eligibility {...content.eligibility} cmsPath="eligibility" />
+  <FeaturedWritings {...content.featuredWritings} cmsPath="featuredWritings" />
+  <CongressionalTestimonies
+    {...content.congressionalTestimonies}
+    cmsPath="congressionalTestimonies"
+  />
+  <PartnerSupport {...content.partnerSupport} cmsPath="partnerSupport" />
+  <WritingContestCTA {...content.writingContestCTA} cmsPath="writingContestCTA" />
 </Layout>

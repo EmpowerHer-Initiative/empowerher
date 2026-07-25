@@ -3,15 +3,16 @@
 import Users from "../../icons/Users.astro";
 import BookOpen from "../../icons/BookOpen.astro";
 import Award from "../../icons/Award.astro";
+import { cmsField } from "../../../lib/cms";
 
 const icons = { Users, BookOpen, Award };
-const { icon, value, label } = Astro.props;
+const { icon, value, label, cmsPath } = Astro.props;
 const Icon = icons[icon as keyof typeof icons];
 ---
 <div class="bg-muted/50 rounded-2xl p-5">
   <div class="flex items-center gap-2.5">
     <Icon class="text-primary size-5" />
-    <span class="text-foreground text-base font-semibold">{value}</span>
+    <span class="text-foreground text-base font-semibold" data-cms-field={cmsField(cmsPath, "value")}>{value}</span>
   </div>
-  <p class="text-muted-foreground mt-1.5 text-sm">{label}</p>
+  <p class="text-muted-foreground mt-1.5 text-sm" data-cms-field={cmsField(cmsPath, "label")}>{label}</p>
 </div>

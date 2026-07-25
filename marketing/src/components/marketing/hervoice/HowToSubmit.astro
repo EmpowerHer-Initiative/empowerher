@@ -1,6 +1,7 @@
 ---
 // Ports components/marketing/hervoice/how-to-submit.tsx
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
@@ -10,6 +11,8 @@ interface Props {
   guidelinesTitle: string;
   guidelines: { label: string; text: string }[];
   steps: { num: string; title: string; desc: string }[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "howToSubmit"). */
+  cmsPath?: string;
 }
 const {
   eyebrow,
@@ -19,6 +22,7 @@ const {
   guidelinesTitle,
   guidelines,
   steps,
+  cmsPath,
 } = Astro.props;
 ---
 <section class="bg-muted text-foreground py-28 md:py-40">
@@ -27,31 +31,54 @@ const {
       {/* Left — editorial heading */}
       <Reveal>
         <div>
-          <p class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+          <p
+            class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
+            data-cms-field={cmsField(cmsPath, "eyebrow")}
+          >
             {eyebrow}
           </p>
-          <h2 class="mt-4 font-serif text-3xl leading-tight md:text-5xl">
+          <h2
+            class="mt-4 font-serif text-3xl leading-tight md:text-5xl"
+            data-cms-field={cmsField(cmsPath, "heading")}
+          >
             {heading}
             <br />
-            <span class="text-primary italic">{headingAccent}</span>
+            <span
+              class="text-primary italic"
+              data-cms-field={cmsField(cmsPath, "headingAccent")}
+            >
+              {headingAccent}
+            </span>
           </h2>
-          <p class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]">
+          <p
+            class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]"
+            data-cms-field={cmsField(cmsPath, "description")}
+          >
             {description}
           </p>
 
           {/* Guidelines — border-left style like co-founder quotes */}
           <div class="mt-12 space-y-5">
-            <p class="text-primary text-sm font-semibold tracking-[0.3em] uppercase">
+            <p
+              class="text-primary text-sm font-semibold tracking-[0.3em] uppercase"
+              data-cms-field={cmsField(cmsPath, "guidelinesTitle")}
+            >
               {guidelinesTitle}
             </p>
-            {guidelines.map(({ label, text }) => (
+            {guidelines.map(({ label, text }, i) => (
               <div
                 class="group border-primary/30 hover:border-primary hover:bg-primary/[0.04] rounded-r-lg border-l-2 py-1.5 pl-5 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:translate-x-1"
               >
-                <p class="text-foreground group-hover:text-primary text-lg font-semibold transition-colors duration-500">
+                <p
+                  class="text-foreground group-hover:text-primary text-lg font-semibold transition-colors duration-500"
+                  data-cms-field={cmsField(cmsPath, `guidelines.${i}.label`)}
+                >
                   {label}
                 </p>
-                <p class="text-muted-foreground mt-1 text-base leading-relaxed">
+                <p
+                  class="text-muted-foreground mt-1 text-base leading-relaxed"
+                  data-cms-field={cmsField(cmsPath, `guidelines.${i}.text`)}
+                >
                   {text}
                 </p>
               </div>
@@ -62,16 +89,25 @@ const {
 
       {/* Right — numbered steps in a vertical list */}
       <Reveal class="divide-border space-y-0 divide-y" delay={120}>
-        {steps.map((step) => (
+        {steps.map((step, i) => (
           <div class="flex gap-6 py-8 first:pt-0 last:pb-0">
-            <span class="text-primary font-serif text-5xl md:text-6xl">
+            <span
+              class="text-primary font-serif text-5xl md:text-6xl"
+              data-cms-field={cmsField(cmsPath, `steps.${i}.num`)}
+            >
               {step.num}
             </span>
             <div class="pt-1">
-              <h3 class="text-foreground text-lg font-semibold md:text-xl">
+              <h3
+                class="text-foreground text-lg font-semibold md:text-xl"
+                data-cms-field={cmsField(cmsPath, `steps.${i}.title`)}
+              >
                 {step.title}
               </h3>
-              <p class="text-muted-foreground mt-2 text-base leading-relaxed">
+              <p
+                class="text-muted-foreground mt-2 text-base leading-relaxed"
+                data-cms-field={cmsField(cmsPath, `steps.${i}.desc`)}
+              >
                 {step.desc}
               </p>
             </div>

@@ -2,22 +2,30 @@
 // Ports components/marketing/writing-contest/who-can-participate.tsx
 import Reveal from "../home/Reveal.astro";
 import CheckCircle2 from "../../icons/CheckCircle2.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
   title: string;
   items: string[];
+  cmsPath?: string;
 }
-const { eyebrow, title, items } = Astro.props;
+const { eyebrow, title, items, cmsPath } = Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-4xl">
       <Reveal>
-        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        <p
+          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+          data-cms-field={cmsField(cmsPath, "eyebrow")}
+        >
           {eyebrow}
         </p>
-        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+        <h2
+          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
+          data-cms-field={cmsField(cmsPath, "title")}
+        >
           {title}
         </h2>
       </Reveal>
@@ -25,7 +33,10 @@ const { eyebrow, title, items } = Astro.props;
         {items.map((item, i) => (
           <Reveal class="border-border/60 bg-background flex items-start gap-4 rounded-2xl border p-6 shadow-sm" delay={i * 80}>
             <CheckCircle2 class="text-primary mt-0.5 size-6 shrink-0" />
-            <p class="text-foreground/80 text-base leading-relaxed">
+            <p
+              class="text-foreground/80 text-base leading-relaxed"
+              data-cms-field={cmsField(cmsPath, `items.${i}`)}
+            >
               {item}
             </p>
           </Reveal>

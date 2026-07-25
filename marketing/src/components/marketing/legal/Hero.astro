@@ -1,25 +1,34 @@
 ---
 // Ports components/marketing/legal/hero.tsx.
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
   headingLead: string;
   headingTrail: string;
   body: string;
+  /** CMS field path prefix for live-preview highlighting (e.g. "hero"). */
+  cmsPath?: string;
 }
-const { eyebrow, headingLead, headingTrail, body } = Astro.props;
+const { eyebrow, headingLead, headingTrail, body, cmsPath } = Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="max-w-4xl">
-      <p class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+      <p
+        class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
+        data-cms-field={cmsField(cmsPath, "eyebrow")}
+      >
         {eyebrow}
       </p>
       <h1 class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl">
         {headingLead} <span class="text-primary italic">&</span> {headingTrail}
       </h1>
-      <p class="text-muted-foreground mt-6 max-w-xl text-lg leading-relaxed">
+      <p
+        class="text-muted-foreground mt-6 max-w-xl text-lg leading-relaxed"
+        data-cms-field={cmsField(cmsPath, "body")}
+      >
         {body}
       </p>
     </Reveal>

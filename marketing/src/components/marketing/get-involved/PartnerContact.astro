@@ -3,14 +3,17 @@
 import ArrowLeft from "../../icons/ArrowLeft.astro";
 import Reveal from "../home/Reveal.astro";
 import PartnerForm from "./PartnerForm.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
   heading: string;
   body: string;
   questions: string;
+  /** CMS field path prefix for live-preview highlighting (root-level: ""). */
+  cmsPath?: string;
 }
-const { eyebrow, heading, body, questions } = Astro.props;
+const { eyebrow, heading, body, questions, cmsPath } = Astro.props;
 
 const email = "info@empowerher-initiative.org";
 ---
@@ -38,19 +41,28 @@ const email = "info@empowerher-initiative.org";
         Back
       </a>
 
-      <p class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+      <p
+        class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
+        data-cms-field={cmsField(cmsPath, "eyebrow")}
+      >
         {eyebrow}
       </p>
-      <h1 class="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl">
+      <h1
+        class="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl"
+        data-cms-field={cmsField(cmsPath, "heading")}
+      >
         {heading}
       </h1>
-      <p class="text-muted-foreground mt-6 text-base leading-relaxed">
+      <p
+        class="text-muted-foreground mt-6 text-base leading-relaxed"
+        data-cms-field={cmsField(cmsPath, "body")}
+      >
         {body}
       </p>
     </Reveal>
 
     <Reveal delay={120} class="border-border relative mt-16 border-t pt-8">
-      <p class="text-muted-foreground text-xs">
+      <p class="text-muted-foreground text-xs" data-cms-field={cmsField(cmsPath, "questions")}>
         {questions}{" "}
         <a
           href={`mailto:${email}`}

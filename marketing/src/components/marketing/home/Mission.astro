@@ -3,6 +3,7 @@
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Quote from "../../icons/Quote.astro";
 import Reveal from "./Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
@@ -11,30 +12,31 @@ interface Props {
   signatureName: string;
   signatureRole: string;
   quotes: { text: string; image: string; name: string; role: string }[];
+  cmsPath?: string;
 }
-const { eyebrow, heading, paragraphs, signatureName, signatureRole, quotes } = Astro.props;
+const { eyebrow, heading, paragraphs, signatureName, signatureRole, quotes, cmsPath } = Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="mx-auto max-w-4xl">
-      <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">{eyebrow}</p>
-      <h2 class="mt-6 font-serif text-3xl leading-[1.25] md:text-5xl lg:text-6xl">
+      <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>{eyebrow}</p>
+      <h2 class="mt-6 font-serif text-3xl leading-[1.25] md:text-5xl lg:text-6xl" data-cms-field={cmsField(cmsPath, "heading")}>
         {heading} <span class="text-primary italic">And we are with you.</span>
       </h2>
       <div class="text-muted-foreground mx-auto mt-8 max-w-2xl space-y-5 text-base leading-[1.8] md:text-lg">
-        {paragraphs.map((p) => (
-          <p>{p}</p>
+        {paragraphs.map((p, i) => (
+          <p data-cms-field={cmsField(cmsPath, `paragraphs.${i}`)}>{p}</p>
         ))}
       </div>
       <div class="mt-8 text-right">
-        <p class="text-foreground font-semibold">{signatureName}</p>
-        <p class="text-muted-foreground text-sm">{signatureRole}</p>
+        <p class="text-foreground font-semibold" data-cms-field={cmsField(cmsPath, "signatureName")}>{signatureName}</p>
+        <p class="text-muted-foreground text-sm" data-cms-field={cmsField(cmsPath, "signatureRole")}>{signatureRole}</p>
       </div>
 
       <div class="mt-16 grid gap-12 md:grid-cols-2 md:gap-8">
         <div class="border-primary/20 relative border-l-2 pl-8 md:pl-12">
           <Quote class="bg-background text-primary absolute top-0 -left-3 size-6 rounded-full" />
-          <blockquote class="font-serif text-xl leading-relaxed italic md:text-2xl">
+          <blockquote class="font-serif text-xl leading-relaxed italic md:text-2xl" data-cms-field={cmsField(cmsPath, "quotes.0.text")}>
             &ldquo;{quotes[0].text}&rdquo;
           </blockquote>
           <div class="mt-6 flex items-center gap-4">
@@ -44,17 +46,18 @@ const { eyebrow, heading, paragraphs, signatureName, signatureRole, quotes } = A
               loading="lazy"
               decoding="async"
               class="size-12 rounded-full object-cover"
+              data-cms-field={cmsField(cmsPath, "quotes.0.image")}
             />
             <div>
-              <p class="text-sm font-semibold">{quotes[0].name}</p>
-              <p class="text-muted-foreground text-xs">{quotes[0].role}</p>
+              <p class="text-sm font-semibold" data-cms-field={cmsField(cmsPath, "quotes.0.name")}>{quotes[0].name}</p>
+              <p class="text-muted-foreground text-xs" data-cms-field={cmsField(cmsPath, "quotes.0.role")}>{quotes[0].role}</p>
             </div>
           </div>
         </div>
 
         <div class="border-secondary/30 relative border-l-2 pl-8 md:pl-12">
           <Quote class="bg-background text-secondary absolute top-0 -left-3 size-6 rounded-full" />
-          <blockquote class="font-serif text-xl leading-relaxed italic md:text-2xl">
+          <blockquote class="font-serif text-xl leading-relaxed italic md:text-2xl" data-cms-field={cmsField(cmsPath, "quotes.1.text")}>
             &ldquo;{quotes[1].text}&rdquo;
           </blockquote>
           <div class="mt-6 flex items-center gap-4">
@@ -64,10 +67,11 @@ const { eyebrow, heading, paragraphs, signatureName, signatureRole, quotes } = A
               loading="lazy"
               decoding="async"
               class="size-12 rounded-full object-cover"
+              data-cms-field={cmsField(cmsPath, "quotes.1.image")}
             />
             <div>
-              <p class="text-sm font-semibold">{quotes[1].name}</p>
-              <p class="text-muted-foreground text-xs">{quotes[1].role}</p>
+              <p class="text-sm font-semibold" data-cms-field={cmsField(cmsPath, "quotes.1.name")}>{quotes[1].name}</p>
+              <p class="text-muted-foreground text-xs" data-cms-field={cmsField(cmsPath, "quotes.1.role")}>{quotes[1].role}</p>
             </div>
           </div>
         </div>

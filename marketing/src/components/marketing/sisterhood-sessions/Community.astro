@@ -1,6 +1,7 @@
 ---
 // Ports components/marketing/sisterhood-sessions/community.tsx
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow?: string;
@@ -9,29 +10,44 @@ interface Props {
   listIntro: string;
   benefits: string[];
   closing: string;
+  /** CMS field path prefix for live-preview highlighting (e.g. "community"). */
+  cmsPath?: string;
 }
-const { eyebrow, heading, body, listIntro, benefits, closing } = Astro.props;
+const { eyebrow, heading, body, listIntro, benefits, closing, cmsPath } =
+  Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-3xl">
       <Reveal delay={0}>
-        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        <p
+          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+          data-cms-field={cmsField(cmsPath, "eyebrow")}
+        >
           {eyebrow}
         </p>
       </Reveal>
       <Reveal delay={80}>
-        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+        <h2
+          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
+          data-cms-field={cmsField(cmsPath, "heading")}
+        >
           {heading}
         </h2>
       </Reveal>
       <Reveal delay={160}>
-        <p class="text-muted-foreground mt-8 text-lg leading-relaxed">
+        <p
+          class="text-muted-foreground mt-8 text-lg leading-relaxed"
+          data-cms-field={cmsField(cmsPath, "body")}
+        >
           {body}
         </p>
       </Reveal>
       <Reveal delay={240}>
-        <p class="mt-10 text-base font-semibold">
+        <p
+          class="mt-10 text-base font-semibold"
+          data-cms-field={cmsField(cmsPath, "listIntro")}
+        >
           {listIntro}
         </p>
       </Reveal>
@@ -46,7 +62,10 @@ const { eyebrow, heading, body, listIntro, benefits, closing } = Astro.props;
               <span class="text-muted-foreground/25 group-hover:text-primary/25 font-serif text-4xl leading-none transition-colors duration-500 md:text-5xl">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <p class="text-muted-foreground pt-2 text-base leading-relaxed md:text-lg">
+              <p
+                class="text-muted-foreground pt-2 text-base leading-relaxed md:text-lg"
+                data-cms-field={cmsField(cmsPath, `benefits.${i}`)}
+              >
                 {benefit}
               </p>
             </div>
@@ -55,7 +74,10 @@ const { eyebrow, heading, body, listIntro, benefits, closing } = Astro.props;
       </Reveal>
 
       <Reveal delay={0}>
-        <p class="text-muted-foreground mt-10 text-lg leading-relaxed">
+        <p
+          class="text-muted-foreground mt-10 text-lg leading-relaxed"
+          data-cms-field={cmsField(cmsPath, "closing")}
+        >
           {closing}
         </p>
       </Reveal>

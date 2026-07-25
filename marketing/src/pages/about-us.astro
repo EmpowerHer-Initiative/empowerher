@@ -11,11 +11,11 @@ import CTA from "../components/marketing/about-us/CTA.astro";
 ---
 
 <Layout title={aboutUs.seo.title} description={aboutUs.seo.description}>
-  <Hero {...aboutUs.hero} />
-  <MissionVision cards={aboutUs.missionVision.cards} />
-  <OurStory {...aboutUs.ourStory} />
-  <WhatWeDo {...aboutUs.whatWeDo} />
-  <Team {...aboutUs.team} />
-  <Partners {...aboutUs.partners} />
-  <CTA {...aboutUs.cta} />
+  <Hero {...aboutUs.hero} cmsPath="hero" />
+  <MissionVision cards={aboutUs.missionVision.cards} cmsPath="missionVision" />
+  <OurStory {...aboutUs.ourStory} cmsPath="ourStory" />
+  <WhatWeDo {...aboutUs.whatWeDo} cmsPath="whatWeDo" />
+  <Team {...aboutUs.team} cmsPath="team" />
+  <Partners {...aboutUs.partners} cmsPath="partners" />
+  <CTA {...aboutUs.cta} cmsPath="cta" />
 </Layout>

@@ -4,6 +4,7 @@
 import Layout from "../layouts/Layout.astro";
 import ArrowLeft from "../components/icons/ArrowLeft.astro";
 import content from "../data/terms.json";
+import { cmsField } from "../lib/cms";
 
 interface Section {
   heading?: string;
@@ -21,6 +22,9 @@ const { seo, title, description, updated, body } = content as {
 
 const backButtonClass =
   "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none active:translate-y-px active:scale-95 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 h-9 gap-1.5 px-3";
+
+// Root-level CMS prefix — fields live at the JSON root (title, description, updated, body.sections).
+const cmsPath = "";
 ---
 <Layout title={seo.title} description={seo.description}>
   <div class="container mx-auto max-w-3xl py-10">
@@ -28,25 +32,28 @@ const backButtonClass =
       <ArrowLeft /> Back
     </a>
     <div class="mb-8 flex flex-col items-center gap-2 text-center">
-      <h1 class="text-3xl font-bold">{title}</h1>
-      <p class="text-muted-foreground max-w-2xl text-sm leading-relaxed md:text-base">
+      <h1 class="text-3xl font-bold" data-cms-field={cmsField(cmsPath, "title")}>{title}</h1>
+      <p
+        class="text-muted-foreground max-w-2xl text-sm leading-relaxed md:text-base"
+        data-cms-field={cmsField(cmsPath, "description")}
+      >
         {description}
       </p>
     </div>
     <div class="prose-theme prose max-w-none">
-      <p>
+      <p data-cms-field={cmsField(cmsPath, "updated")}>
         <strong>{updated}</strong>
       </p>
-      {body.sections.map((section) => (
+      {body.sections.map((section, i) => (
         <>
-          {section.heading && <h2>{section.heading}</h2>}
-          {section.paragraphs.map((paragraph) => (
-            <p>{paragraph}</p>
+          {section.heading && <h2 data-cms-field={cmsField(cmsPath, `body.sections.${i}.heading`)}>{section.heading}</h2>}
+          {section.paragraphs.map((paragraph, j) => (
+            <p data-cms-field={cmsField(cmsPath, `body.sections.${i}.paragraphs.${j}`)}>{paragraph}</p>
           ))}
           {section.items && (
             <ul>
-              {section.items.map((item) => (
-                <li>{item}</li>
+              {section.items.map((item, j) => (
+                <li data-cms-field={cmsField(cmsPath, `body.sections.${i}.items.${j}`)}>{item}</li>
               ))}
             </ul>
           )}

@@ -1,29 +1,41 @@
 ---
 // Ports components/marketing/sisterhood-sessions/header.tsx
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow?: string;
   heading: string;
   body: string;
+  /** CMS field path prefix for live-preview highlighting (e.g. "header"). */
+  cmsPath?: string;
 }
-const { eyebrow, heading, body } = Astro.props;
+const { eyebrow, heading, body, cmsPath } = Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-3xl">
       <Reveal delay={0}>
-        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        <p
+          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+          data-cms-field={cmsField(cmsPath, "eyebrow")}
+        >
           {eyebrow}
         </p>
       </Reveal>
       <Reveal delay={80}>
-        <h1 class="mt-5 font-serif text-4xl leading-[1.1] md:text-6xl">
+        <h1
+          class="mt-5 font-serif text-4xl leading-[1.1] md:text-6xl"
+          data-cms-field={cmsField(cmsPath, "heading")}
+        >
           {heading}
         </h1>
       </Reveal>
       <Reveal delay={160}>
-        <p class="text-muted-foreground mt-8 text-lg leading-relaxed">
+        <p
+          class="text-muted-foreground mt-8 text-lg leading-relaxed"
+          data-cms-field={cmsField(cmsPath, "body")}
+        >
           {body}
         </p>
       </Reveal>

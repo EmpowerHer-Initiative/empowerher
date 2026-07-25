@@ -6,6 +6,7 @@ import DollarSign from "../../icons/DollarSign.astro";
 import Globe from "../../icons/Globe.astro";
 import Star from "../../icons/Star.astro";
 import Trophy from "../../icons/Trophy.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
@@ -15,6 +16,7 @@ interface Props {
   introHighlight2: string;
   prizes: { place: string; amount: string }[];
   recognitionBenefits: { title: string; description: string }[];
+  cmsPath?: string;
 }
 const {
   eyebrow,
@@ -24,6 +26,7 @@ const {
   introHighlight2,
   prizes,
   recognitionBenefits,
+  cmsPath,
 } = Astro.props;
 
 // Per-prize accent color is a style choice — kept in code, zipped by index.
@@ -42,16 +45,25 @@ const benefitIcons = [Globe, Star, Award, DollarSign];
   <div class="container">
     <div class="mx-auto max-w-5xl">
       <Reveal>
-        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        <p
+          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+          data-cms-field={cmsField(cmsPath, "eyebrow")}
+        >
           {eyebrow}
         </p>
-        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+        <h2
+          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
+          data-cms-field={cmsField(cmsPath, "title")}
+        >
           {title}
         </h2>
-        <p class="text-muted-foreground mt-6 max-w-2xl text-lg leading-relaxed">
+        <p
+          class="text-muted-foreground mt-6 max-w-2xl text-lg leading-relaxed"
+          data-cms-field={cmsField(cmsPath, "introLead")}
+        >
           {introLead}{" "}
-          <span class="text-foreground font-semibold">{introHighlight1}</span> and{" "}
-          <span class="text-foreground font-semibold">
+          <span class="text-foreground font-semibold" data-cms-field={cmsField(cmsPath, "introHighlight1")}>{introHighlight1}</span> and{" "}
+          <span class="text-foreground font-semibold" data-cms-field={cmsField(cmsPath, "introHighlight2")}>
             {introHighlight2}
           </span>
           .
@@ -68,8 +80,8 @@ const benefitIcons = [Globe, Star, Award, DollarSign];
             <div class={`flex size-20 items-center justify-center rounded-full ${prizeAccents[i]}`}>
               <Trophy class="size-9" />
             </div>
-            <h3 class="mt-5 font-serif text-2xl">{prize.place}</h3>
-            <p class="text-primary mt-2 font-serif text-5xl">
+            <h3 class="mt-5 font-serif text-2xl" data-cms-field={cmsField(cmsPath, `prizes.${i}.place`)}>{prize.place}</h3>
+            <p class="text-primary mt-2 font-serif text-5xl" data-cms-field={cmsField(cmsPath, `prizes.${i}.amount`)}>
               ${prize.amount}
             </p>
             <p class="text-muted-foreground mt-1 text-sm">US Dollars</p>
@@ -87,9 +99,12 @@ const benefitIcons = [Globe, Star, Award, DollarSign];
                 <div class="bg-primary/10 text-primary flex size-11 shrink-0 items-center justify-center rounded-xl">
                   <Icon class="size-5" />
                 </div>
-                <h3 class="text-lg font-semibold">{b.title}</h3>
+                <h3 class="text-lg font-semibold" data-cms-field={cmsField(cmsPath, `recognitionBenefits.${i}.title`)}>{b.title}</h3>
               </div>
-              <p class="text-muted-foreground mt-4 text-base leading-relaxed">
+              <p
+                class="text-muted-foreground mt-4 text-base leading-relaxed"
+                data-cms-field={cmsField(cmsPath, `recognitionBenefits.${i}.description`)}
+              >
                 {b.description}
               </p>
             </Reveal>

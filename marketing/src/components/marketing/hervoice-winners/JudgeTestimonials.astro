@@ -2,6 +2,7 @@
 // Ports components/marketing/hervoice-winners/judge-testimonials.tsx
 // --hv-serif-i -> font-serif italic.
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Judge {
   name: string;
@@ -12,13 +13,15 @@ interface Judge {
 interface Props {
   title: string;
   judges: Judge[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "judgeTestimonials"). */
+  cmsPath?: string;
 }
-const { title, judges } = Astro.props;
+const { title, judges, cmsPath } = Astro.props;
 ---
 <section class="bg-white px-6 py-16 md:py-24">
   <div class="mx-auto max-w-5xl">
     <Reveal>
-      <h2 class="text-center font-serif text-3xl font-bold tracking-tight md:text-4xl">
+      <h2 class="text-center font-serif text-3xl font-bold tracking-tight md:text-4xl" data-cms-field={cmsField(cmsPath, "title")}>
         {title}
       </h2>
     </Reveal>
@@ -33,16 +36,17 @@ const { title, judges } = Astro.props;
               loading="lazy"
               decoding="async"
               class="h-40 w-40 shrink-0 self-center rounded-2xl border-2 border-[#E0AE3C]/40 object-cover md:self-start"
+              data-cms-field={cmsField(cmsPath, `judges.${i}.image`)}
             />
             <div class="flex-1">
-              <blockquote class="font-serif text-[17px] leading-relaxed text-[#3C4654] italic">
+              <blockquote class="font-serif text-[17px] leading-relaxed text-[#3C4654] italic" data-cms-field={cmsField(cmsPath, `judges.${i}.quote`)}>
                 &ldquo;{judge.quote}&rdquo;
               </blockquote>
               <div class="mt-6">
                 <div class="h-px w-full bg-[#E0AE3C]/30"></div>
                 <div class="mt-4">
-                  <p class="font-serif text-sm font-bold text-[#1A2230]">{judge.name}</p>
-                  <p class="mt-0.5 text-xs leading-snug text-[#6B7686]">{judge.title}</p>
+                  <p class="font-serif text-sm font-bold text-[#1A2230]" data-cms-field={cmsField(cmsPath, `judges.${i}.name`)}>{judge.name}</p>
+                  <p class="mt-0.5 text-xs leading-snug text-[#6B7686]" data-cms-field={cmsField(cmsPath, `judges.${i}.title`)}>{judge.title}</p>
                 </div>
               </div>
             </div>

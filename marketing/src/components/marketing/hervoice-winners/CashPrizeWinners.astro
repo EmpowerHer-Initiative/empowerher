@@ -1,6 +1,7 @@
 ---
 // Ports components/marketing/hervoice-winners/cash-prize-winners.tsx
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Winner {
   rank: string;
@@ -13,8 +14,10 @@ interface Winner {
 interface Props {
   title: string;
   winners: Winner[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "cashPrizeWinners"). */
+  cmsPath?: string;
 }
-const { title, winners } = Astro.props;
+const { title, winners, cmsPath } = Astro.props;
 
 // Ribbon gradient styling stays hardcoded and is zipped to winners by index.
 const RIBBON_BG = {
@@ -33,7 +36,7 @@ const bottomTwo = cashWinners.slice(3);
 <section class="bg-white px-6 py-16 md:py-24">
   <div class="mx-auto max-w-6xl">
     <Reveal>
-      <h2 class="text-center font-serif text-3xl font-bold tracking-tight md:text-4xl">
+      <h2 class="text-center font-serif text-3xl font-bold tracking-tight md:text-4xl" data-cms-field={cmsField(cmsPath, "title")}>
         {title}
       </h2>
     </Reveal>
@@ -41,7 +44,7 @@ const bottomTwo = cashWinners.slice(3);
     {/* Top 3 — larger cards */}
     <Reveal>
       <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-        {topThree.map((w) => (
+        {topThree.map((w, i) => (
           <a
             href={`/hervoice/${w.slug}`}
             class="group relative overflow-hidden rounded-2xl border border-[#ECE3D2] bg-white shadow-[0_12px_32px_-16px_rgba(26,34,48,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_-18px_rgba(26,34,48,.45)]"
@@ -53,18 +56,19 @@ const bottomTwo = cashWinners.slice(3);
                 loading="lazy"
                 decoding="async"
                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                data-cms-field={cmsField(cmsPath, `winners.${i}.image`)}
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
             </div>
             <div class="p-5">
               <div class="flex items-center gap-2">
-                <span class={`inline-block rounded-md px-2.5 py-1 font-serif text-[11px] font-bold tracking-[0.1em] text-white ${RIBBON_BG[w.ribbon]}`}>
+                <span class={`inline-block rounded-md px-2.5 py-1 font-serif text-[11px] font-bold tracking-[0.1em] text-white ${RIBBON_BG[w.ribbon]}`} data-cms-field={cmsField(cmsPath, `winners.${i}.rank`)}>
                   {w.rank}
                 </span>
-                <span class="font-serif text-sm font-bold text-[#C8902A]">{w.prize}</span>
+                <span class="font-serif text-sm font-bold text-[#C8902A]" data-cms-field={cmsField(cmsPath, `winners.${i}.prize`)}>{w.prize}</span>
               </div>
-              <h3 class="mt-2 font-serif text-xl font-bold text-[#1A2230]">{w.title}</h3>
-              <p class="mt-1 text-sm text-[#6B7686]">by {w.name}</p>
+              <h3 class="mt-2 font-serif text-xl font-bold text-[#1A2230]" data-cms-field={cmsField(cmsPath, `winners.${i}.title`)}>{w.title}</h3>
+              <p class="mt-1 text-sm text-[#6B7686]" data-cms-field={cmsField(cmsPath, `winners.${i}.name`)}>by {w.name}</p>
             </div>
           </a>
         ))}
@@ -74,7 +78,7 @@ const bottomTwo = cashWinners.slice(3);
     {/* 4th & 5th — smaller cards */}
     <Reveal delay={80}>
       <div class="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2">
-        {bottomTwo.map((w) => (
+        {bottomTwo.map((w, i) => (
           <a
             href={`/hervoice/${w.slug}`}
             class="group relative overflow-hidden rounded-2xl border border-[#ECE3D2] bg-white shadow-[0_12px_32px_-16px_rgba(26,34,48,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_-18px_rgba(26,34,48,.45)]"
@@ -86,18 +90,19 @@ const bottomTwo = cashWinners.slice(3);
                 loading="lazy"
                 decoding="async"
                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                data-cms-field={cmsField(cmsPath, `winners.${topThree.length + i}.image`)}
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
             </div>
             <div class="p-5">
               <div class="flex items-center gap-2">
-                <span class={`inline-block rounded-md px-2.5 py-1 font-serif text-[11px] font-bold tracking-[0.1em] text-white ${RIBBON_BG[w.ribbon]}`}>
+                <span class={`inline-block rounded-md px-2.5 py-1 font-serif text-[11px] font-bold tracking-[0.1em] text-white ${RIBBON_BG[w.ribbon]}`} data-cms-field={cmsField(cmsPath, `winners.${topThree.length + i}.rank`)}>
                   {w.rank}
                 </span>
-                <span class="font-serif text-sm font-bold text-[#C8902A]">{w.prize}</span>
+                <span class="font-serif text-sm font-bold text-[#C8902A]" data-cms-field={cmsField(cmsPath, `winners.${topThree.length + i}.prize`)}>{w.prize}</span>
               </div>
-              <h3 class="mt-2 font-serif text-lg font-bold text-[#1A2230]">{w.title}</h3>
-              <p class="mt-1 text-sm text-[#6B7686]">by {w.name}</p>
+              <h3 class="mt-2 font-serif text-lg font-bold text-[#1A2230]" data-cms-field={cmsField(cmsPath, `winners.${topThree.length + i}.title`)}>{w.title}</h3>
+              <p class="mt-1 text-sm text-[#6B7686]" data-cms-field={cmsField(cmsPath, `winners.${topThree.length + i}.name`)}>by {w.name}</p>
             </div>
           </a>
         ))}

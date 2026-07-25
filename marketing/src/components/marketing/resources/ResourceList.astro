@@ -6,6 +6,7 @@
 import Reveal from "../home/Reveal.astro";
 import MapPin from "../../icons/MapPin.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Resource {
   id?: number;
@@ -18,11 +19,13 @@ interface Resource {
 
 interface Props {
   resources: Resource[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "resources"). */
+  cmsPath?: string;
 }
 
 const PAGE_SIZE = 10;
 
-const { resources } = Astro.props;
+const { resources, cmsPath } = Astro.props;
 
 const total = resources.length;
 ---
@@ -46,16 +49,25 @@ const total = resources.length;
             <div class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col gap-8 rounded-3xl border p-8 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl lg:flex-row lg:p-10">
               {/* Content */}
               <div class="flex flex-1 flex-col items-start gap-4">
-                <h3 class="font-serif text-2xl leading-tight md:text-3xl">
+                <h3
+                  class="font-serif text-2xl leading-tight md:text-3xl"
+                  data-cms-field={cmsField(cmsPath, `${i}.name`)}
+                >
                   {resource.name}
                 </h3>
 
-                <span class="text-muted-foreground inline-flex items-center gap-2 text-sm">
+                <span
+                  class="text-muted-foreground inline-flex items-center gap-2 text-sm"
+                  data-cms-field={cmsField(cmsPath, `${i}.location`)}
+                >
                   <MapPin class="size-4" />
                   {resource.location}
                 </span>
 
-                <p class="text-muted-foreground text-base leading-relaxed whitespace-pre-line">
+                <p
+                  class="text-muted-foreground text-base leading-relaxed whitespace-pre-line"
+                  data-cms-field={cmsField(cmsPath, `${i}.description`)}
+                >
                   {resource.description}
                 </p>
 
@@ -63,6 +75,7 @@ const total = resources.length;
                   href={resource.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-cms-field={cmsField(cmsPath, `${i}.link`)}
                   class="group/btn bg-primary text-primary-foreground hover:shadow-primary/25 mt-auto inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
                 >
                   View
@@ -76,6 +89,7 @@ const total = resources.length;
                   <img
                     src={resource.image}
                     alt={resource.name}
+                    data-cms-field={cmsField(cmsPath, `${i}.image`)}
                     loading="lazy"
                     decoding="async"
                     class="max-h-full max-w-full object-contain transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"

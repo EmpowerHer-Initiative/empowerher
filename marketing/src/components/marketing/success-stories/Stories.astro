@@ -5,6 +5,7 @@ import Reveal from "../home/Reveal.astro";
 import StoryCard from "./StoryCard.astro";
 import QuoteBox from "./QuoteBox.astro";
 import ImpactBox from "./ImpactBox.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Stat {
   value: string;
@@ -29,59 +30,66 @@ interface Story {
 }
 interface Props {
   stories: Story[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "stories"). */
+  cmsPath?: string;
 }
-const { stories } = Astro.props;
+const { stories, cmsPath } = Astro.props;
 
 // Stat icons stay in code, zipped to each story's stats by index.
 const statIcons = ["Users", "BookOpen", "Award"];
 ---
 <section class="pb-28 md:pb-40">
   <div class="container space-y-10">
-    {stories.map((story) => (
-      <Reveal>
-        <StoryCard
-          logo={story.image}
-          title={story.title}
-          subtitle={story.subtitle}
-          date={story.date}
-          badge={story.badge}
-          stats={story.stats.map((s, i) => ({
-            icon: statIcons[i % statIcons.length],
-            value: s.value,
-            label: s.label,
-          }))}
-        >
-          <p class="text-foreground/80 text-base leading-relaxed">
-            {story.intro}
-          </p>
-          {story.links && story.links.length > 0 && (
-            <div class="flex flex-col gap-3 sm:flex-row sm:gap-8">
-              {story.links.map((link) => (
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-primary inline-flex items-center gap-1.5 text-base font-medium underline underline-offset-4 transition-opacity hover:opacity-80"
-                >
-                  {link.label}
-                  <ExternalLink class="size-4" />
-                </a>
-              ))}
-            </div>
-          )}
-          <QuoteBox author={story.quote.author}>
-            <Fragment set:html={story.quote.body} />
-          </QuoteBox>
-          {story.afterQuote && (
-            <p class="text-foreground/80 text-base leading-relaxed">
-              {story.afterQuote}
+    {stories.map((story, si) => {
+      const storyPath = cmsField(cmsPath, `${si}`);
+      return (
+        <Reveal>
+          <StoryCard
+            logo={story.image}
+            title={story.title}
+            subtitle={story.subtitle}
+            date={story.date}
+            badge={story.badge}
+            stats={story.stats.map((s, i) => ({
+              icon: statIcons[i % statIcons.length],
+              value: s.value,
+              label: s.label,
+            }))}
+            cmsPath={storyPath}
+          >
+            <p class="text-foreground/80 text-base leading-relaxed" data-cms-field={cmsField(storyPath, "intro")}>
+              {story.intro}
             </p>
-          )}
-          {story.impact && (
-            <ImpactBox title={story.impact.title}>{story.impact.body}</ImpactBox>
-          )}
-        </StoryCard>
-      </Reveal>
-    ))}
+            {story.links && story.links.length > 0 && (
+              <div class="flex flex-col gap-3 sm:flex-row sm:gap-8">
+                {story.links.map((link, li) => (
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-primary inline-flex items-center gap-1.5 text-base font-medium underline underline-offset-4 transition-opacity hover:opacity-80"
+                    data-cms-field={cmsField(storyPath, `links.${li}.label`)}
+                  >
+                    {link.label}
+                    <ExternalLink class="size-4" />
+                  </a>
+                ))}
+              </div>
+            )}
+            <QuoteBox author={story.quote.author} cmsPath={cmsField(storyPath, "quote")}>
+              <Fragment set:html={story.quote.body} />
+            </QuoteBox>
+            {story.afterQuote && (
+              <p class="text-foreground/80 text-base leading-relaxed" data-cms-field={cmsField(storyPath, "afterQuote")}>
+                {story.afterQuote}
+              </p>
+            )}
+            {story.impact && (
+              <ImpactBox title={story.impact.title} cmsPath={cmsField(storyPath, "impact")}>{story.impact.body}</ImpactBox>
+            )}
+          </StoryCard>
+        </Reveal>
+      );
+    })}
   </div>
 </section>

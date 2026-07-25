@@ -7,11 +7,19 @@ interface Props {
   delay?: number;
   distance?: number;
   threshold?: number;
+  /** Forwarded to the root element for CMS live-preview highlighting. */
+  "data-cms-field"?: string;
 }
-const { class: className, delay = 0, distance = 48, threshold = 0.15 } = Astro.props;
+const {
+  class: className,
+  delay = 0,
+  distance = 48,
+  threshold = 0.15,
+  "data-cms-field": cmsFieldAttr,
+} = Astro.props;
 const style = `opacity:0;transform:translateY(${distance}px);transition:opacity 1.2s cubic-bezier(0.32,0.72,0,1),transform 1.2s cubic-bezier(0.32,0.72,0,1);transition-delay:${delay}ms;will-change:opacity,transform;`;
 ---
-<div class={className} data-reveal data-threshold={threshold} style={style}>
+<div class={className} data-reveal data-threshold={threshold} style={style} data-cms-field={cmsFieldAttr}>
   <slot />
 </div>
 

@@ -1,14 +1,17 @@
 ---
 // Ports components/marketing/hervoice-winners/hero.tsx
 // hv-* tokens inlined to exact hex; --hv-display -> font-serif.
+import { cmsField } from "../../../lib/cms";
 interface Props {
   headingLead: string;
   headingYear: string;
   headingTail: string;
   bodyText: string;
   stats: { value: string; label: string }[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "hero"). */
+  cmsPath?: string;
 }
-const { headingLead, headingYear, headingTail, bodyText, stats } = Astro.props;
+const { headingLead, headingYear, headingTail, bodyText, stats, cmsPath } = Astro.props;
 // gold flag is a style toggle derived by index (odd = gold).
 ---
 <section class="relative isolate overflow-hidden bg-[radial-gradient(120%_130%_at_12%_0%,#FFFFFF_0%,#FAF6EE_46%,#F2EADC_100%)]">
@@ -17,12 +20,12 @@ const { headingLead, headingYear, headingTail, bodyText, stats } = Astro.props;
 
   <div class="relative mx-auto flex max-w-4xl flex-col items-center px-6 py-20 text-center md:py-28">
     <h1 class="hv-rise mt-5 font-serif text-[clamp(36px,5.5vw,72px)] leading-[0.92] font-bold tracking-[-0.03em]" style="animation-delay:80ms">
-      {headingLead} <span class="text-[#1E78C4]">{headingYear}</span>
+      {headingLead} <span class="text-[#1E78C4]" data-cms-field={cmsField(cmsPath, "headingYear")}>{headingYear}</span>
       <br />
       {headingTail}
     </h1>
 
-    <p class="hv-rise mt-8 max-w-2xl text-lg leading-relaxed [text-wrap:pretty] text-[#3C4654]" style="animation-delay:160ms">
+    <p class="hv-rise mt-8 max-w-2xl text-lg leading-relaxed [text-wrap:pretty] text-[#3C4654]" style="animation-delay:160ms" data-cms-field={cmsField(cmsPath, "bodyText")}>
       {bodyText}
     </p>
 
@@ -48,8 +51,8 @@ const { headingLead, headingYear, headingTail, bodyText, stats } = Astro.props;
     <div class="hv-rise mt-10 flex flex-wrap justify-center gap-8" style="animation-delay:320ms">
       {stats.map((s, i) => (
         <div>
-          <div class={`font-serif text-3xl leading-none font-bold ${i % 2 === 1 ? "text-[#C8902A]" : "text-[#1E78C4]"}`}>{s.value}</div>
-          <div class="mt-1.5 max-w-48 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase">{s.label}</div>
+          <div class={`font-serif text-3xl leading-none font-bold ${i % 2 === 1 ? "text-[#C8902A]" : "text-[#1E78C4]"}`} data-cms-field={cmsField(cmsPath, `stats.${i}.value`)}>{s.value}</div>
+          <div class="mt-1.5 max-w-48 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase" data-cms-field={cmsField(cmsPath, `stats.${i}.label`)}>{s.label}</div>
         </div>
       ))}
     </div>

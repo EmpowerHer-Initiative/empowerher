@@ -13,13 +13,13 @@ import data from "../data/writing-contest.json";
 ---
 
 <Layout title={data.seo.title} description={data.seo.description}>
-  <Hero {...data.hero} />
-  <AboutContest {...data.aboutContest} />
-  <WritingPrompt {...data.writingPrompt} />
-  <WhoCanParticipate {...data.whoCanParticipate} />
-  <SubmissionRequirements {...data.submissionRequirements} />
-  <HowToSubmit {...data.howToSubmit} />
-  <Deadlines {...data.deadlines} />
-  <Awards {...data.awards} />
-  <Judges {...data.judges} />
+  <Hero {...data.hero} cmsPath="hero" />
+  <AboutContest {...data.aboutContest} cmsPath="aboutContest" />
+  <WritingPrompt {...data.writingPrompt} cmsPath="writingPrompt" />
+  <WhoCanParticipate {...data.whoCanParticipate} cmsPath="whoCanParticipate" />
+  <SubmissionRequirements {...data.submissionRequirements} cmsPath="submissionRequirements" />
+  <HowToSubmit {...data.howToSubmit} cmsPath="howToSubmit" />
+  <Deadlines {...data.deadlines} cmsPath="deadlines" />
+  <Awards {...data.awards} cmsPath="awards" />
+  <Judges {...data.judges} cmsPath="judges" />
 </Layout>

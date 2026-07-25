@@ -2,15 +2,18 @@
 // Ports app/(marketing)/afgaf/page.tsx (identical to agfaf/page.tsx).
 import Reveal from "../home/Reveal.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   logo: { src: string; alt: string };
   title: string;
   description: string[];
   gratitude: { title: string; quote: string };
+  /** CMS field path prefix for live-preview highlighting (root-level: ""). */
+  cmsPath?: string;
 }
 
-const { logo, title, description, gratitude } = Astro.props;
+const { logo, title, description, gratitude, cmsPath } = Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
@@ -23,27 +26,28 @@ const { logo, title, description, gratitude } = Astro.props;
           class="w-72 object-contain"
           fetchpriority="high"
           decoding="async"
+          data-cms-field={cmsField(cmsPath, "logo.src")}
         />
       </Reveal>
 
       {/* Title */}
       <Reveal>
-        <h1 class="mt-16 font-serif text-3xl leading-tight md:text-4xl">
+        <h1 class="mt-16 font-serif text-3xl leading-tight md:text-4xl" data-cms-field={cmsField(cmsPath, "title")}>
           {title}
         </h1>
       </Reveal>
 
       {/* Description */}
       <Reveal class="text-muted-foreground mt-8 space-y-6 text-base leading-relaxed">
-        {description.map((paragraph) => <p>{paragraph}</p>)}
+        {description.map((paragraph, i) => <p data-cms-field={cmsField(cmsPath, `description.${i}`)}>{paragraph}</p>)}
       </Reveal>
 
       {/* Gratitude */}
       <Reveal class="border-l-primary bg-primary/[0.05] mt-12 rounded-r-2xl border-l-4 p-8">
-        <p class="text-foreground font-semibold italic">
+        <p class="text-foreground font-semibold italic" data-cms-field={cmsField(cmsPath, "gratitude.title")}>
           {gratitude.title}
         </p>
-        <blockquote class="text-muted-foreground mt-4 leading-relaxed italic">
+        <blockquote class="text-muted-foreground mt-4 leading-relaxed italic" data-cms-field={cmsField(cmsPath, "gratitude.quote")}>
           {gratitude.quote}
         </blockquote>
       </Reveal>

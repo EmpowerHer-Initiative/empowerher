@@ -4,12 +4,14 @@
 // has no DB yet, so the list is hardcoded — replace/extend when wiring a data
 // source. AGFAF is EmpowerHer's primary sponsor.
 import Reveal from "./Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
   partners: { name: string; image: string }[];
+  cmsPath?: string;
 }
-const { eyebrow, partners: partnerList } = Astro.props;
+const { eyebrow, partners: partnerList, cmsPath } = Astro.props;
 
 const PARTNER_STYLES = [{ link: "/agfaf" }];
 const partners = partnerList.map((p, i) => ({ ...p, ...PARTNER_STYLES[i] }));
@@ -18,21 +20,22 @@ const partners = partnerList.map((p, i) => ({ ...p, ...PARTNER_STYLES[i] }));
   <section class="py-28 md:py-32">
     <div class="container">
       <Reveal>
-        <p class="text-muted-foreground text-center text-xs font-semibold tracking-[0.3em] uppercase">
+        <p class="text-muted-foreground text-center text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>
           {eyebrow}
         </p>
       </Reveal>
       <Reveal delay={80}>
         <div class="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16">
-          {partners.map((p) => (
+          {partners.map((p, i) => (
             <a
               href={p.link}
               target="_blank"
               rel="noopener noreferrer"
               title={p.name}
               class="group block transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1.5 hover:scale-105"
+              data-cms-field={cmsField(cmsPath, `partners.${i}.name`)}
             >
-              <img src={p.image} alt={p.name} loading="lazy" decoding="async" class="h-16 w-auto object-contain md:h-24" />
+              <img src={p.image} alt={p.name} loading="lazy" decoding="async" class="h-16 w-auto object-contain md:h-24" data-cms-field={cmsField(cmsPath, `partners.${i}.image`)} />
             </a>
           ))}
         </div>

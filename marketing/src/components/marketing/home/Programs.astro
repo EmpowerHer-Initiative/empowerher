@@ -5,22 +5,24 @@ import ArrowUpRight from "../../icons/ArrowUpRight.astro";
 import BookOpen from "../../icons/BookOpen.astro";
 import Users from "../../icons/Users.astro";
 import Reveal from "./Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
   heading: string;
   bodyText: string;
   cards: { label: string; title: string; description: string; image: string; alt: string }[];
+  cmsPath?: string;
 }
-const { eyebrow, heading, bodyText, cards } = Astro.props;
+const { eyebrow, heading, bodyText, cards, cmsPath } = Astro.props;
 ---
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <Reveal>
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <p class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">{eyebrow}</p>
-          <h2 class="mt-4 font-serif text-3xl md:text-5xl">{heading}</h2>
+          <p class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>{eyebrow}</p>
+          <h2 class="mt-4 font-serif text-3xl md:text-5xl" data-cms-field={cmsField(cmsPath, "heading")}>{heading}</h2>
         </div>
         <a
           href="/mentorship"
@@ -32,7 +34,7 @@ const { eyebrow, heading, bodyText, cards } = Astro.props;
     </Reveal>
 
     <Reveal delay={80}>
-      <p class="text-muted-foreground mt-8 max-w-3xl text-base leading-[1.8]">
+      <p class="text-muted-foreground mt-8 max-w-3xl text-base leading-[1.8]" data-cms-field={cmsField(cmsPath, "bodyText")}>
         {bodyText}
       </p>
     </Reveal>
@@ -47,15 +49,16 @@ const { eyebrow, heading, bodyText, cards } = Astro.props;
               loading="lazy"
               decoding="async"
               class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+              data-cms-field={cmsField(cmsPath, "cards.0.image")}
             />
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
             <div class="absolute right-0 bottom-0 left-0 p-8">
               <div class="flex items-center gap-2 text-white/60">
                 <BookOpen class="size-4" />
-                <span class="text-xs font-medium tracking-[0.2em] uppercase">{cards[0].label}</span>
+                <span class="text-xs font-medium tracking-[0.2em] uppercase" data-cms-field={cmsField(cmsPath, "cards.0.label")}>{cards[0].label}</span>
               </div>
-              <h3 class="mt-2 font-serif text-3xl text-white md:text-4xl">{cards[0].title}</h3>
-              <p class="mt-2 max-w-md text-sm text-white/70">
+              <h3 class="mt-2 font-serif text-3xl text-white md:text-4xl" data-cms-field={cmsField(cmsPath, "cards.0.title")}>{cards[0].title}</h3>
+              <p class="mt-2 max-w-md text-sm text-white/70" data-cms-field={cmsField(cmsPath, "cards.0.description")}>
                 {cards[0].description}
               </p>
               <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-white/80 transition-all duration-500 group-hover:gap-2.5">
@@ -73,15 +76,16 @@ const { eyebrow, heading, bodyText, cards } = Astro.props;
               loading="lazy"
               decoding="async"
               class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+              data-cms-field={cmsField(cmsPath, "cards.1.image")}
             />
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
             <div class="absolute right-0 bottom-0 left-0 p-6">
               <div class="flex items-center gap-2 text-white/60">
                 <Users class="size-4" />
-                <span class="text-xs font-medium tracking-[0.2em] uppercase">{cards[1].label}</span>
+                <span class="text-xs font-medium tracking-[0.2em] uppercase" data-cms-field={cmsField(cmsPath, "cards.1.label")}>{cards[1].label}</span>
               </div>
-              <h3 class="mt-2 font-serif text-2xl text-white">{cards[1].title}</h3>
-              <p class="mt-1 text-sm text-white/70">
+              <h3 class="mt-2 font-serif text-2xl text-white" data-cms-field={cmsField(cmsPath, "cards.1.title")}>{cards[1].title}</h3>
+              <p class="mt-1 text-sm text-white/70" data-cms-field={cmsField(cmsPath, "cards.1.description")}>
                 {cards[1].description}
               </p>
               <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-white/80 transition-all duration-500 group-hover:gap-2.5">

@@ -2,6 +2,7 @@
 // Ports components/marketing/get-involved/split-screen.tsx
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Panel {
   eyebrow: string;
@@ -13,8 +14,10 @@ interface Panel {
 interface Props {
   partner: Panel;
   volunteer: Panel;
+  /** CMS field path prefix for live-preview highlighting (e.g. "splitScreen"). */
+  cmsPath?: string;
 }
-const { partner, volunteer } = Astro.props;
+const { partner, volunteer, cmsPath } = Astro.props;
 ---
 <section class="flex min-h-screen flex-col lg:flex-row">
   {/* Partner — left half */}
@@ -24,6 +27,7 @@ const { partner, volunteer } = Astro.props;
       <img
         src={partner.image}
         alt={partner.imageAlt}
+        data-cms-field={cmsField(cmsPath, "partner.image")}
         loading="eager"
         fetchpriority="high"
         decoding="async"
@@ -35,13 +39,22 @@ const { partner, volunteer } = Astro.props;
 
     {/* Content */}
     <Reveal class="relative px-10 pt-32 pb-16 md:px-14 md:pb-20 lg:px-16 lg:pb-24">
-      <p class="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase">
+      <p
+        class="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase"
+        data-cms-field={cmsField(cmsPath, "partner.eyebrow")}
+      >
         {partner.eyebrow}
       </p>
-      <h2 class="mt-4 font-serif text-4xl leading-[1.1] text-white md:text-5xl">
+      <h2
+        class="mt-4 font-serif text-4xl leading-[1.1] text-white md:text-5xl"
+        data-cms-field={cmsField(cmsPath, "partner.heading")}
+      >
         {partner.heading}
       </h2>
-      <p class="mt-5 max-w-sm text-base leading-relaxed text-white/70">
+      <p
+        class="mt-5 max-w-sm text-base leading-relaxed text-white/70"
+        data-cms-field={cmsField(cmsPath, "partner.body")}
+      >
         {partner.body}
       </p>
       <a
@@ -66,6 +79,7 @@ const { partner, volunteer } = Astro.props;
       <img
         src={volunteer.image}
         alt={volunteer.imageAlt}
+        data-cms-field={cmsField(cmsPath, "volunteer.image")}
         loading="lazy"
         decoding="async"
         class="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
@@ -76,13 +90,22 @@ const { partner, volunteer } = Astro.props;
 
     {/* Content */}
     <Reveal delay={120} class="relative px-10 pt-32 pb-16 md:px-14 md:pb-20 lg:px-16 lg:pb-24">
-      <p class="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase">
+      <p
+        class="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase"
+        data-cms-field={cmsField(cmsPath, "volunteer.eyebrow")}
+      >
         {volunteer.eyebrow}
       </p>
-      <h2 class="mt-4 font-serif text-4xl leading-[1.1] text-white md:text-5xl">
+      <h2
+        class="mt-4 font-serif text-4xl leading-[1.1] text-white md:text-5xl"
+        data-cms-field={cmsField(cmsPath, "volunteer.heading")}
+      >
         {volunteer.heading}
       </h2>
-      <p class="mt-5 max-w-sm text-base leading-relaxed text-white/70">
+      <p
+        class="mt-5 max-w-sm text-base leading-relaxed text-white/70"
+        data-cms-field={cmsField(cmsPath, "volunteer.body")}
+      >
         {volunteer.body}
       </p>
       <a

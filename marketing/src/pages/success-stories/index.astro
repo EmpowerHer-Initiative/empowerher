@@ -9,7 +9,7 @@ import data from "../../data/success-stories.json";
 const { seo, header, stories, closingCta } = data;
 ---
 <Layout title={seo.title} description={seo.description}>
-  <Header {...header} />
-  <Stories stories={stories} />
-  <ClosingCTA {...closingCta} />
+  <Header {...header} cmsPath="header" />
+  <Stories stories={stories} cmsPath="stories" />
+  <ClosingCTA {...closingCta} cmsPath="closingCta" />
 </Layout>

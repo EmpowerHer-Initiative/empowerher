@@ -9,7 +9,7 @@ const { seo, header, resources, footerNote } = data;
 ---
 
 <Layout title={seo.title} description={seo.description}>
-  <Header eyebrow={header.eyebrow} heading={header.heading} intro={header.intro} />
-  <ResourceList resources={resources} />
-  <FooterNote text={footerNote.text} email={footerNote.email} />
+  <Header eyebrow={header.eyebrow} heading={header.heading} intro={header.intro} cmsPath="header" />
+  <ResourceList resources={resources} cmsPath="resources" />
+  <FooterNote text={footerNote.text} email={footerNote.email} cmsPath="footerNote" />
 </Layout>

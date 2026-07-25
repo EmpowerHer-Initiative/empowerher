@@ -3,23 +3,30 @@
 import ArrowRight from "../../icons/ArrowRight.astro";
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
   heading: string;
+  /** CMS field path prefix for live-preview highlighting (e.g. "cta"). */
+  cmsPath?: string;
 }
-const { eyebrow, heading } = Astro.props;
+const { eyebrow, heading, cmsPath } = Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
       <Reveal>
         <div>
-          <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+          <p
+            class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
+            data-cms-field={cmsField(cmsPath, "eyebrow")}
+          >
             {eyebrow}
           </p>
           <h2
             class="font-serif text-4xl leading-[1.1] md:text-5xl lg:text-6xl"
+            data-cms-field={cmsField(cmsPath, "heading")}
             set:html={heading}
           />
         </div>

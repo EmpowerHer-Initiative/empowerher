@@ -2,6 +2,7 @@
 // Ports components/marketing/mentorship/opportunities.tsx
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
@@ -9,21 +10,23 @@ interface Props {
   titleLine2: string;
   items: { title: string; description: string }[];
   note: string;
+  /** CMS field path prefix for live-preview highlighting (e.g. "opportunities"). */
+  cmsPath?: string;
 }
 
-const { eyebrow, title, titleLine2, items, note } = Astro.props;
+const { eyebrow, title, titleLine2, items, note, cmsPath } = Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal>
       <div class="mb-16">
-        <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+        <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>
           {eyebrow}
         </p>
         <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">
-          {title}
+          <span data-cms-field={cmsField(cmsPath, "title")}>{title}</span>
           <br />
-          {titleLine2}
+          <span data-cms-field={cmsField(cmsPath, "titleLine2")}>{titleLine2}</span>
         </h2>
       </div>
     </Reveal>
@@ -32,10 +35,10 @@ const { eyebrow, title, titleLine2, items, note } = Astro.props;
       <div class="grid gap-6 md:grid-cols-3">
         <div class="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors">
           <p class="text-primary/40 font-serif text-5xl">01</p>
-          <h3 class="mt-6 text-xl font-semibold">
+          <h3 class="mt-6 text-xl font-semibold" data-cms-field={cmsField(cmsPath, "items.0.title")}>
             {items[0].title}
           </h3>
-          <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
+          <p class="text-muted-foreground mt-3 text-sm leading-relaxed" data-cms-field={cmsField(cmsPath, "items.0.description")}>
             {items[0].description}
           </p>
           <a
@@ -49,8 +52,8 @@ const { eyebrow, title, titleLine2, items, note } = Astro.props;
 
         <div class="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors">
           <p class="text-primary/40 font-serif text-5xl">02</p>
-          <h3 class="mt-6 text-xl font-semibold">{items[1].title}</h3>
-          <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
+          <h3 class="mt-6 text-xl font-semibold" data-cms-field={cmsField(cmsPath, "items.1.title")}>{items[1].title}</h3>
+          <p class="text-muted-foreground mt-3 text-sm leading-relaxed" data-cms-field={cmsField(cmsPath, "items.1.description")}>
             {items[1].description}
           </p>
           <a
@@ -64,8 +67,8 @@ const { eyebrow, title, titleLine2, items, note } = Astro.props;
 
         <div class="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors">
           <p class="text-primary/40 font-serif text-5xl">03</p>
-          <h3 class="mt-6 text-xl font-semibold">{items[2].title}</h3>
-          <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
+          <h3 class="mt-6 text-xl font-semibold" data-cms-field={cmsField(cmsPath, "items.2.title")}>{items[2].title}</h3>
+          <p class="text-muted-foreground mt-3 text-sm leading-relaxed" data-cms-field={cmsField(cmsPath, "items.2.description")}>
             {items[2].description}
           </p>
         </div>
@@ -73,7 +76,7 @@ const { eyebrow, title, titleLine2, items, note } = Astro.props;
     </Reveal>
 
     <Reveal delay={240}>
-      <p class="text-muted-foreground mt-10 text-sm leading-relaxed">
+      <p class="text-muted-foreground mt-10 text-sm leading-relaxed" data-cms-field={cmsField(cmsPath, "note")}>
         {note}
       </p>
     </Reveal>

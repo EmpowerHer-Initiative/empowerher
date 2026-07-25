@@ -4,6 +4,7 @@
 // description, image, link). MOCK: representative sample hardcoded inline.
 import ExternalLink from "../../icons/ExternalLink.astro";
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
@@ -15,9 +16,11 @@ interface Props {
     image: string;
     link: string;
   }[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "workshops"). */
+  cmsPath?: string;
 }
 
-const { eyebrow, title, items } = Astro.props;
+const { eyebrow, title, items, cmsPath } = Astro.props;
 ---
 <section
   id="workshops"
@@ -27,10 +30,10 @@ const { eyebrow, title, items } = Astro.props;
     <div class="mb-16 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <Reveal>
         <div>
-          <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+          <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>
             {eyebrow}
           </p>
-          <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">
+          <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl" data-cms-field={cmsField(cmsPath, "title")}>
             {title}
           </h2>
         </div>
@@ -51,6 +54,7 @@ const { eyebrow, title, items } = Astro.props;
               <img
                 src={workshop.image}
                 alt={workshop.name}
+                data-cms-field={cmsField(cmsPath, `items.${i}.image`)}
                 loading="lazy"
                 decoding="async"
                 class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
@@ -60,14 +64,14 @@ const { eyebrow, title, items } = Astro.props;
             <div class="flex flex-col justify-center gap-6 p-8 md:p-12 lg:p-14">
               <div>
                 {workshop.mentors.length > 0 && (
-                  <p class="text-primary mb-3 text-xs font-semibold tracking-[0.3em] uppercase">
+                  <p class="text-primary mb-3 text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, `items.${i}.mentors`)}>
                     Mentor — {workshop.mentors.join(", ")}
                   </p>
                 )}
-                <h3 class="text-2xl leading-snug font-semibold md:text-3xl">
+                <h3 class="text-2xl leading-snug font-semibold md:text-3xl" data-cms-field={cmsField(cmsPath, `items.${i}.name`)}>
                   {workshop.name}
                 </h3>
-                <p class="text-muted-foreground mt-4 text-base leading-relaxed">
+                <p class="text-muted-foreground mt-4 text-base leading-relaxed" data-cms-field={cmsField(cmsPath, `items.${i}.description`)}>
                   {workshop.description}
                 </p>
               </div>

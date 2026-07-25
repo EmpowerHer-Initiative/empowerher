@@ -2,14 +2,17 @@
 // Ports components/marketing/hervoice/partner-support.tsx
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
   heading: string;
   description: string;
   partners: { name: string; location: string; logo: string }[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "partnerSupport"). */
+  cmsPath?: string;
 }
-const { eyebrow, heading, description, partners } = Astro.props;
+const { eyebrow, heading, description, partners, cmsPath } = Astro.props;
 
 // Routing (external partner URLs) stays in code, zipped by index with the
 // editable name/location/logo content from the CMS.
@@ -28,19 +31,28 @@ const partnerOrgs = partners.map((p, i) => ({
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="max-w-3xl">
-      <p class="text-primary mb-6 text-xs font-semibold tracking-[0.3em] uppercase">
+      <p
+        class="text-primary mb-6 text-xs font-semibold tracking-[0.3em] uppercase"
+        data-cms-field={cmsField(cmsPath, "eyebrow")}
+      >
         {eyebrow}
       </p>
-      <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">
+      <h2
+        class="font-serif text-4xl leading-[1.1] md:text-5xl"
+        data-cms-field={cmsField(cmsPath, "heading")}
+      >
         {heading}
       </h2>
-      <p class="text-foreground/70 mt-8 text-base leading-[1.8] md:text-lg">
+      <p
+        class="text-foreground/70 mt-8 text-base leading-[1.8] md:text-lg"
+        data-cms-field={cmsField(cmsPath, "description")}
+      >
         {description}
       </p>
     </Reveal>
 
     <Reveal class="mt-16 grid gap-5 sm:grid-cols-2" delay={120}>
-      {partnerOrgs.map((p) => (
+      {partnerOrgs.map((p, i) => (
         <a
           href={p.href}
           target="_blank"
@@ -53,14 +65,21 @@ const partnerOrgs = partners.map((p, i) => ({
               alt={p.name}
               loading="lazy"
               decoding="async"
+              data-cms-field={cmsField(cmsPath, `partners.${i}.logo`)}
               class="h-full w-full object-contain"
             />
           </div>
           <div class="min-w-0 flex-1">
-            <p class="group-hover:text-primary leading-snug font-semibold transition-colors duration-300">
+            <p
+              class="group-hover:text-primary leading-snug font-semibold transition-colors duration-300"
+              data-cms-field={cmsField(cmsPath, `partners.${i}.name`)}
+            >
               {p.name}
             </p>
-            <p class="text-muted-foreground mt-1 text-sm">
+            <p
+              class="text-muted-foreground mt-1 text-sm"
+              data-cms-field={cmsField(cmsPath, `partners.${i}.location`)}
+            >
               {p.location}
             </p>
           </div>

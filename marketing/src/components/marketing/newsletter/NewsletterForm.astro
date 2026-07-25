@@ -4,6 +4,7 @@
 // isSubmitted success swap are deferred until the Astro project has an API.
 import Send from "../../icons/Send.astro";
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
@@ -11,21 +12,32 @@ interface Props {
   subheading: string;
   image: { url: string; alt: string };
   overlay: { heading: string; text: string };
+  /** CMS field path prefix for live-preview highlighting (root-level pass ""). */
+  cmsPath?: string;
 }
 
-const { eyebrow, heading, subheading, image, overlay } = Astro.props;
+const { eyebrow, heading, subheading, image, overlay, cmsPath } = Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="border-border/50 mx-auto grid max-w-5xl overflow-hidden rounded-3xl border md:grid-cols-2">
       <Reveal class="flex flex-col justify-center p-8 md:p-12">
-        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        <p
+          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+          data-cms-field={cmsField(cmsPath, "eyebrow")}
+        >
           {eyebrow}
         </p>
-        <h1 class="mt-4 font-serif text-3xl leading-tight md:text-4xl">
+        <h1
+          class="mt-4 font-serif text-3xl leading-tight md:text-4xl"
+          data-cms-field={cmsField(cmsPath, "heading")}
+        >
           {heading}
         </h1>
-        <p class="text-muted-foreground mt-4 text-base leading-relaxed">
+        <p
+          class="text-muted-foreground mt-4 text-base leading-relaxed"
+          data-cms-field={cmsField(cmsPath, "subheading")}
+        >
           {subheading}
         </p>
 
@@ -60,14 +72,23 @@ const { eyebrow, heading, subheading, image, overlay } = Astro.props;
         <img
           src={image.url}
           alt={image.alt}
+          data-cms-field={cmsField(cmsPath, "image.url")}
           class="absolute inset-0 h-full w-full object-cover"
           loading="lazy"
           decoding="async"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
         <Reveal class="absolute right-6 bottom-6 left-6 text-white" delay={120}>
-          <h3 class="mb-2 font-serif text-2xl">{overlay.heading}</h3>
-          <p class="text-sm leading-relaxed text-white/85">
+          <h3
+            class="mb-2 font-serif text-2xl"
+            data-cms-field={cmsField(cmsPath, "overlay.heading")}
+          >
+            {overlay.heading}
+          </h3>
+          <p
+            class="text-sm leading-relaxed text-white/85"
+            data-cms-field={cmsField(cmsPath, "overlay.text")}
+          >
             {overlay.text}
           </p>
         </Reveal>

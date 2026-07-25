@@ -1,6 +1,7 @@
 ---
 // Ports components/marketing/sisterhood-sessions/session-format.tsx
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Card {
   title: string;
@@ -12,32 +13,53 @@ interface Props {
   heading: string;
   cards: Card[];
   closing: string;
+  /** CMS field path prefix for live-preview highlighting (e.g. "sessionFormat"). */
+  cmsPath?: string;
 }
-const { eyebrow, heading, cards, closing } = Astro.props;
+const { eyebrow, heading, cards, closing, cmsPath } = Astro.props;
 ---
 <section class="bg-foreground/[0.02] py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-4xl">
       <Reveal delay={0}>
-        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        <p
+          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+          data-cms-field={cmsField(cmsPath, "eyebrow")}
+        >
           {eyebrow}
         </p>
       </Reveal>
       <Reveal delay={80}>
-        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+        <h2
+          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
+          data-cms-field={cmsField(cmsPath, "heading")}
+        >
           {heading}
         </h2>
       </Reveal>
 
       <Reveal delay={160}>
         <div class="mt-14 grid gap-6 md:grid-cols-2">
-          {cards.map((card) => (
+          {cards.map((card, i) => (
             <div class="border-border/40 bg-background rounded-3xl border p-10">
-              <h3 class="text-xl font-semibold">{card.title}</h3>
+              <h3
+                class="text-xl font-semibold"
+                data-cms-field={cmsField(cmsPath, `cards.${i}.title`)}
+              >
+                {card.title}
+              </h3>
               {card.highlight && (
-                <p class="text-primary mt-4 font-serif text-5xl">{card.highlight}</p>
+                <p
+                  class="text-primary mt-4 font-serif text-5xl"
+                  data-cms-field={cmsField(cmsPath, `cards.${i}.highlight`)}
+                >
+                  {card.highlight}
+                </p>
               )}
-              <p class="text-muted-foreground mt-4 text-base leading-relaxed">
+              <p
+                class="text-muted-foreground mt-4 text-base leading-relaxed"
+                data-cms-field={cmsField(cmsPath, `cards.${i}.body`)}
+              >
                 {card.body}
               </p>
             </div>
@@ -46,7 +68,10 @@ const { eyebrow, heading, cards, closing } = Astro.props;
       </Reveal>
 
       <Reveal delay={0}>
-        <p class="text-muted-foreground mt-14 text-base leading-relaxed md:text-lg">
+        <p
+          class="text-muted-foreground mt-14 text-base leading-relaxed md:text-lg"
+          data-cms-field={cmsField(cmsPath, "closing")}
+        >
           {closing}
         </p>
       </Reveal>

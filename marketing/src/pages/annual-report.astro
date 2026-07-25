@@ -8,6 +8,6 @@ const { seo, header, reportCard } = content;
 ---
 
 <Layout title={seo.title} description={seo.description}>
-  <Header {...header} />
-  <ReportCard {...reportCard} />
+  <Header {...header} cmsPath="header" />
+  <ReportCard {...reportCard} cmsPath="reportCard" />
 </Layout>

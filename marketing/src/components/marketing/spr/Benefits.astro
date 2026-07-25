@@ -9,6 +9,7 @@ import TrendingUp from "../../icons/TrendingUp.astro";
 import Users from "../../icons/Users.astro";
 import Zap from "../../icons/Zap.astro";
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Benefit {
   title: string;
@@ -19,8 +20,10 @@ interface Props {
   heading: string;
   items: Benefit[];
   importantNote: { title: string; body: string };
+  /** CMS field path prefix for live-preview highlighting (e.g. "benefits"). */
+  cmsPath?: string;
 }
-const { eyebrow, heading, items, importantNote } = Astro.props;
+const { eyebrow, heading, items, importantNote, cmsPath } = Astro.props;
 
 // Per-item icons stay in code, zipped to items by index.
 const icons = [Laptop, BriefcaseBusiness, Zap, Users, Network, TrendingUp];
@@ -28,10 +31,16 @@ const icons = [Laptop, BriefcaseBusiness, Zap, Users, Network, TrendingUp];
 <section class="bg-foreground/[0.03] py-28 md:py-40">
   <div class="container">
     <Reveal class="mx-auto max-w-2xl">
-      <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+      <p
+        class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+        data-cms-field={cmsField(cmsPath, "eyebrow")}
+      >
         {eyebrow}
       </p>
-      <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+      <h2
+        class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
+        data-cms-field={cmsField(cmsPath, "heading")}
+      >
         {heading}
       </h2>
     </Reveal>
@@ -48,8 +57,16 @@ const icons = [Laptop, BriefcaseBusiness, Zap, Users, Network, TrendingUp];
                 <Icon class="size-5" />
               </div>
               <div>
-                <h3 class="text-base font-semibold">{benefit.title}</h3>
-                <p class="text-foreground/70 mt-2 text-sm leading-relaxed">
+                <h3
+                  class="text-base font-semibold"
+                  data-cms-field={cmsField(cmsPath, `items.${i}.title`)}
+                >
+                  {benefit.title}
+                </h3>
+                <p
+                  class="text-foreground/70 mt-2 text-sm leading-relaxed"
+                  data-cms-field={cmsField(cmsPath, `items.${i}.description`)}
+                >
                   {benefit.description}
                 </p>
               </div>
@@ -64,10 +81,16 @@ const icons = [Laptop, BriefcaseBusiness, Zap, Users, Network, TrendingUp];
       <div class="flex gap-4 rounded-2xl border border-l-4 border-red-200 border-l-red-600 bg-red-50 p-6">
         <AlertCircle class="mt-0.5 size-5 shrink-0 text-red-600" />
         <div>
-          <p class="text-sm font-semibold text-red-800">
+          <p
+            class="text-sm font-semibold text-red-800"
+            data-cms-field={cmsField(cmsPath, "importantNote.title")}
+          >
             {importantNote.title}
           </p>
-          <p class="text-foreground/80 mt-1.5 text-sm leading-relaxed">
+          <p
+            class="text-foreground/80 mt-1.5 text-sm leading-relaxed"
+            data-cms-field={cmsField(cmsPath, "importantNote.body")}
+          >
             {importantNote.body}
           </p>
         </div>

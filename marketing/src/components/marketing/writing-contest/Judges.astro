@@ -1,6 +1,7 @@
 ---
 // Ports components/marketing/writing-contest/judges.tsx
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
@@ -9,18 +10,25 @@ interface Props {
   thankYou: string;
   sponsorsText: string;
   sponsorLogos: { src: string; alt: string }[];
+  cmsPath?: string;
 }
-const { eyebrow, title, items, thankYou, sponsorsText, sponsorLogos } =
+const { eyebrow, title, items, thankYou, sponsorsText, sponsorLogos, cmsPath } =
   Astro.props;
 ---
 <section class="bg-foreground/[0.025] py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-6xl">
       <Reveal>
-        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        <p
+          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+          data-cms-field={cmsField(cmsPath, "eyebrow")}
+        >
           {eyebrow}
         </p>
-        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+        <h2
+          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
+          data-cms-field={cmsField(cmsPath, "title")}
+        >
           {title}
         </h2>
       </Reveal>
@@ -34,11 +42,15 @@ const { eyebrow, title, items, thankYou, sponsorsText, sponsorLogos } =
                 alt={judge.name}
                 loading="lazy"
                 decoding="async"
+                data-cms-field={cmsField(cmsPath, `items.${i}.image`)}
                 class="h-full w-full object-cover"
               />
             </div>
-            <h3 class="mt-5 font-serif text-2xl">{judge.name}</h3>
-            <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
+            <h3 class="mt-5 font-serif text-2xl" data-cms-field={cmsField(cmsPath, `items.${i}.name`)}>{judge.name}</h3>
+            <p
+              class="text-muted-foreground mt-3 text-sm leading-relaxed"
+              data-cms-field={cmsField(cmsPath, `items.${i}.description`)}
+            >
               {judge.description}
             </p>
           </Reveal>
@@ -47,11 +59,14 @@ const { eyebrow, title, items, thankYou, sponsorsText, sponsorLogos } =
 
       {/* Thank you + sponsors */}
       <Reveal class="mt-20 space-y-10">
-        <p class="text-muted-foreground mx-auto max-w-2xl text-center text-base leading-relaxed font-medium md:text-lg">
+        <p
+          class="text-muted-foreground mx-auto max-w-2xl text-center text-base leading-relaxed font-medium md:text-lg"
+          data-cms-field={cmsField(cmsPath, "thankYou")}
+        >
           {thankYou}
         </p>
         <div class="border-border/60 bg-background rounded-3xl border p-10 text-center shadow-sm md:p-14">
-          <p class="mx-auto max-w-3xl font-serif text-xl leading-relaxed md:text-2xl">
+          <p class="mx-auto max-w-3xl font-serif text-xl leading-relaxed md:text-2xl" data-cms-field={cmsField(cmsPath, "sponsorsText")}>
             {sponsorsText}
           </p>
           <div class="mt-10 flex flex-wrap items-center justify-center gap-6">
@@ -61,6 +76,7 @@ const { eyebrow, title, items, thankYou, sponsorsText, sponsorLogos } =
                 alt={sponsorLogos[0].alt}
                 loading="lazy"
                 decoding="async"
+                data-cms-field={cmsField(cmsPath, "sponsorLogos.0.src")}
                 class="h-full w-full object-cover"
               />
             </div>
@@ -70,6 +86,7 @@ const { eyebrow, title, items, thankYou, sponsorsText, sponsorLogos } =
                 alt={sponsorLogos[1].alt}
                 loading="lazy"
                 decoding="async"
+                data-cms-field={cmsField(cmsPath, "sponsorLogos.1.src")}
                 class="h-full w-full object-contain"
               />
             </div>

@@ -2,6 +2,7 @@
 // Ports components/marketing/about-us/team.tsx
 import Reveal from "../home/Reveal.astro";
 import TeamMember from "./TeamMember.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Member {
   name: string;
@@ -17,19 +18,32 @@ interface Props {
   heading: string;
   intro: string;
   groups: Group[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "team"). */
+  cmsPath?: string;
 }
-const { eyebrow, heading, intro, groups } = Astro.props;
+const { eyebrow, heading, intro, groups, cmsPath } = Astro.props;
 const [executiveTeam, directors, mentorsTeam] = groups;
 ---
 <section class="bg-foreground/[0.02] py-28 md:py-40">
   <div class="container">
     <Reveal>
       <div class="mb-16">
-        <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase">
+        <p
+          class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
+          data-cms-field={cmsField(cmsPath, "eyebrow")}
+        >
           {eyebrow}
         </p>
-        <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">{heading}</h2>
-        <p class="text-muted-foreground mt-4 max-w-lg">
+        <h2
+          class="font-serif text-4xl leading-[1.1] md:text-5xl"
+          data-cms-field={cmsField(cmsPath, "heading")}
+        >
+          {heading}
+        </h2>
+        <p
+          class="text-muted-foreground mt-4 max-w-lg"
+          data-cms-field={cmsField(cmsPath, "intro")}
+        >
           {intro}
         </p>
       </div>
@@ -38,12 +52,20 @@ const [executiveTeam, directors, mentorsTeam] = groups;
     {executiveTeam.members.length > 0 && (
       <Reveal>
         <div class="mb-14">
-          <p class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+          <p
+            class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase"
+            data-cms-field={cmsField(cmsPath, "groups.0.label")}
+          >
             {executiveTeam.label}
           </p>
           <div class="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2">
             {executiveTeam.members.map((member, index) => (
-              <TeamMember member={member} index={index} size="lg" />
+              <TeamMember
+                member={member}
+                index={index}
+                size="lg"
+                cmsPath={cmsField(cmsPath, `groups.0.members.${index}`)}
+              />
             ))}
           </div>
         </div>
@@ -53,12 +75,20 @@ const [executiveTeam, directors, mentorsTeam] = groups;
     {directors.members.length > 0 && (
       <Reveal>
         <div class="border-border/40 mb-14 border-t pt-14">
-          <p class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+          <p
+            class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase"
+            data-cms-field={cmsField(cmsPath, "groups.1.label")}
+          >
             {directors.label}
           </p>
           <div class="mx-auto grid max-w-6xl grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
             {directors.members.map((member, index) => (
-              <TeamMember member={member} index={index} size="md" />
+              <TeamMember
+                member={member}
+                index={index}
+                size="md"
+                cmsPath={cmsField(cmsPath, `groups.1.members.${index}`)}
+              />
             ))}
           </div>
         </div>
@@ -68,12 +98,20 @@ const [executiveTeam, directors, mentorsTeam] = groups;
     {mentorsTeam.members.length > 0 && (
       <Reveal>
         <div class="border-border/40 border-t pt-14">
-          <p class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+          <p
+            class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase"
+            data-cms-field={cmsField(cmsPath, "groups.2.label")}
+          >
             {mentorsTeam.label}
           </p>
           <div class="mx-auto grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
             {mentorsTeam.members.map((member, index) => (
-              <TeamMember member={member} index={index} size="sm" />
+              <TeamMember
+                member={member}
+                index={index}
+                size="sm"
+                cmsPath={cmsField(cmsPath, `groups.2.members.${index}`)}
+              />
             ))}
           </div>
         </div>

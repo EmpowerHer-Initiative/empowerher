@@ -2,23 +2,26 @@
 // Ports components/marketing/success-stories/closing-cta.tsx
 import Heart from "../../icons/Heart.astro";
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
   heading: string;
+  /** CMS field path prefix for live-preview highlighting. */
+  cmsPath?: string;
 }
-const { eyebrow, heading } = Astro.props;
+const { eyebrow, heading, cmsPath } = Astro.props;
 ---
 <section class="pb-28 md:pb-40">
   <div class="container">
     <div class="mx-auto max-w-2xl text-center">
       <Reveal>
-        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>
           {eyebrow}
         </p>
       </Reveal>
       <Reveal delay={80}>
-        <h2 class="mt-5 font-serif text-3xl md:text-5xl">
+        <h2 class="mt-5 font-serif text-3xl md:text-5xl" data-cms-field={cmsField(cmsPath, "heading")}>
           {heading}
         </h2>
       </Reveal>

@@ -1,6 +1,7 @@
 ---
 // Ports components/marketing/hervoice-winners/honorable-mentions.tsx
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Mention {
   name: string;
@@ -11,20 +12,22 @@ interface Mention {
 interface Props {
   title: string;
   mentions: Mention[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "honorableMentions"). */
+  cmsPath?: string;
 }
-const { title, mentions } = Astro.props;
+const { title, mentions, cmsPath } = Astro.props;
 ---
 <section class="bg-[#FAF6EE] px-6 py-16 md:py-24">
   <div class="mx-auto max-w-5xl">
     <Reveal>
-      <h2 class="text-center font-serif text-3xl font-bold tracking-tight md:text-4xl">
+      <h2 class="text-center font-serif text-3xl font-bold tracking-tight md:text-4xl" data-cms-field={cmsField(cmsPath, "title")}>
         {title}
       </h2>
     </Reveal>
 
     <Reveal>
       <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-        {mentions.map((story) => (
+        {mentions.map((story, i) => (
           <a
             href={`/hervoice/${story.slug}`}
             class="group relative overflow-hidden rounded-2xl border border-[#ECE3D2] bg-white shadow-[0_12px_32px_-16px_rgba(26,34,48,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_-18px_rgba(26,34,48,.45)]"
@@ -36,12 +39,13 @@ const { title, mentions } = Astro.props;
                 loading="lazy"
                 decoding="async"
                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                data-cms-field={cmsField(cmsPath, `mentions.${i}.image`)}
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
             </div>
             <div class="p-5">
-              <h3 class="font-serif text-lg font-bold text-[#1A2230]">{story.title}</h3>
-              <p class="mt-1 text-sm text-[#6B7686]">by {story.name}</p>
+              <h3 class="font-serif text-lg font-bold text-[#1A2230]" data-cms-field={cmsField(cmsPath, `mentions.${i}.title`)}>{story.title}</h3>
+              <p class="mt-1 text-sm text-[#6B7686]" data-cms-field={cmsField(cmsPath, `mentions.${i}.name`)}>by {story.name}</p>
             </div>
           </a>
         ))}

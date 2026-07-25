@@ -1,19 +1,28 @@
 ---
 // Ports components/marketing/legal/_shared.tsx (Article).
+import { cmsField } from "../../../lib/cms";
 interface Props {
   id: string;
   eyebrow: string;
   title: string;
+  /** CMS field path prefix for this part (e.g. "body.parts.0"). */
+  cmsPath?: string;
 }
-const { id, eyebrow, title } = Astro.props;
+const { id, eyebrow, title, cmsPath } = Astro.props;
 ---
 <section id={id} class="border-border/30 scroll-mt-32 border-t py-16">
   <div class="grid gap-8 md:grid-cols-12">
     <div class="md:col-span-4">
-      <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+      <p
+        class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+        data-cms-field={cmsField(cmsPath, "eyebrow")}
+      >
         {eyebrow}
       </p>
-      <h2 class="mt-3 font-serif text-2xl leading-tight md:text-3xl">
+      <h2
+        class="mt-3 font-serif text-2xl leading-tight md:text-3xl"
+        data-cms-field={cmsField(cmsPath, "title")}
+      >
         {title}
       </h2>
     </div>

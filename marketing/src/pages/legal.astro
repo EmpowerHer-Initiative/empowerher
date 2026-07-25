@@ -31,7 +31,8 @@ const { seo, hero, body } = content as {
       headingLead={hero.headingLead}
       headingTrail={hero.headingTrail}
       body={hero.body}
+      cmsPath="hero"
     />
-    <LegalBody parts={body.parts} footer={body.footer} />
+    <LegalBody parts={body.parts} footer={body.footer} cmsPath="body" />
   </main>
 </Layout>

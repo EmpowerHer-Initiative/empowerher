@@ -3,13 +3,15 @@
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "./Reveal.astro";
 import CountUp from "./CountUp.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   heading: string;
   bodyText: string;
   stats: { number: string; label: string }[];
+  cmsPath?: string;
 }
-const { heading, bodyText, stats: rawStats } = Astro.props;
+const { heading, bodyText, stats: rawStats, cmsPath } = Astro.props;
 
 function parseNumber(number: string) {
   const m = number.match(/^([\d.]+)(.*)$/);
@@ -25,10 +27,10 @@ const stats = rawStats.map((s) => ({ ...parseNumber(s.number), label: s.label })
 <section class="border-border/40 bg-primary/[0.03] border-y py-20 md:py-28">
   <div class="container">
     <Reveal class="max-w-2xl">
-      <h2 class="font-serif text-3xl leading-tight md:text-5xl">
+      <h2 class="font-serif text-3xl leading-tight md:text-5xl" data-cms-field={cmsField(cmsPath, "heading")}>
         {heading}
       </h2>
-      <p class="text-muted-foreground mt-6 max-w-md text-base leading-relaxed md:text-lg">
+      <p class="text-muted-foreground mt-6 max-w-md text-base leading-relaxed md:text-lg" data-cms-field={cmsField(cmsPath, "bodyText")}>
         {bodyText}
       </p>
       <a
@@ -43,12 +45,12 @@ const stats = rawStats.map((s) => ({ ...parseNumber(s.number), label: s.label })
     </Reveal>
 
     <div class="divide-border/40 mt-14 grid grid-cols-1 divide-y md:grid-cols-3 md:divide-x md:divide-y-0">
-      {stats.map((s) => (
+      {stats.map((s, i) => (
         <div class="flex flex-col gap-2 px-2 py-8 md:px-8 md:py-2">
-          <span class="text-primary font-serif text-4xl md:text-5xl">
+          <span class="text-primary font-serif text-4xl md:text-5xl" data-cms-field={cmsField(cmsPath, `stats.${i}.number`)}>
             <CountUp to={s.to} decimals={s.decimals} suffix={s.suffix} />
           </span>
-          <span class="text-muted-foreground max-w-xs text-sm leading-snug">{s.label}</span>
+          <span class="text-muted-foreground max-w-xs text-sm leading-snug" data-cms-field={cmsField(cmsPath, `stats.${i}.label`)}>{s.label}</span>
         </div>
       ))}
     </div>

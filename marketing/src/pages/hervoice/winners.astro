@@ -12,20 +12,20 @@ import data from "../../data/hervoice-winners.json";
 <Layout title={data.seo.title} description={data.seo.description}>
   <div class="text-[#1A2230] antialiased">
     {/* ── SECTION 1: Hero ── */}
-    <Hero {...data.hero} />
+    <Hero {...data.hero} cmsPath="hero" />
 
     {/* ── SECTION 2: Cash Prize Winners ── */}
-    <CashPrizeWinners {...data.cashPrizeWinners} />
+    <CashPrizeWinners {...data.cashPrizeWinners} cmsPath="cashPrizeWinners" />
 
     {/* ── SECTION 3: Honorable Mentions ── */}
-    <HonorableMentions {...data.honorableMentions} />
+    <HonorableMentions {...data.honorableMentions} cmsPath="honorableMentions" />
 
     {/* ── SECTION 4: Judge Testimonials ── */}
-    <JudgeTestimonials {...data.judgeTestimonials} />
+    <JudgeTestimonials {...data.judgeTestimonials} cmsPath="judgeTestimonials" />
 
     {/* ── SECTION 5: CTA Banner ── */}
     <Reveal>
-      <HerVoiceCTA {...data.herVoiceCta} />
+      <HerVoiceCTA {...data.herVoiceCta} cmsPath="herVoiceCta" />
     </Reveal>
   </div>
 </Layout>

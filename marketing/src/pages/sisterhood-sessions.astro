@@ -10,8 +10,8 @@ const { seo, header, whyTheyMatter, community, sessionFormat } = content;
 ---
 
 <Layout title={seo.title} description={seo.description}>
-  <Header {...header} />
-  <WhyTheyMatter {...whyTheyMatter} />
-  <Community {...community} />
-  <SessionFormat {...sessionFormat} />
+  <Header cmsPath="header" {...header} />
+  <WhyTheyMatter cmsPath="whyTheyMatter" {...whyTheyMatter} />
+  <Community cmsPath="community" {...community} />
+  <SessionFormat cmsPath="sessionFormat" {...sessionFormat} />
 </Layout>

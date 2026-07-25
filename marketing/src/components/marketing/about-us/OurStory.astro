@@ -1,34 +1,45 @@
 ---
 // Ports components/marketing/about-us/our-story.tsx
 import Reveal from "../home/Reveal.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
   bodyBefore: string[];
   pullQuote: string;
   bodyAfter: string[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "ourStory"). */
+  cmsPath?: string;
 }
-const { eyebrow, bodyBefore, pullQuote, bodyAfter } = Astro.props;
+const { eyebrow, bodyBefore, pullQuote, bodyAfter, cmsPath } = Astro.props;
 ---
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-3xl">
       <Reveal>
-        <p class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase">
+        <p
+          class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase"
+          data-cms-field={cmsField(cmsPath, "eyebrow")}
+        >
           {eyebrow}
         </p>
       </Reveal>
 
       <Reveal delay={80}>
         <div class="text-muted-foreground space-y-7 text-lg leading-relaxed">
-          {bodyBefore.map((paragraph) => <p set:html={paragraph} />)}
+          {bodyBefore.map((paragraph, i) => (
+            <p data-cms-field={cmsField(cmsPath, `bodyBefore.${i}`)} set:html={paragraph} />
+          ))}
         </div>
       </Reveal>
 
       <!-- Pull Quote -->
       <Reveal delay={160}>
         <blockquote class="border-border my-14 border-l-2 pl-8">
-          <p class="text-foreground font-serif text-2xl leading-snug md:text-3xl">
+          <p
+            class="text-foreground font-serif text-2xl leading-snug md:text-3xl"
+            data-cms-field={cmsField(cmsPath, "pullQuote")}
+          >
             {pullQuote}
           </p>
         </blockquote>
@@ -36,7 +47,9 @@ const { eyebrow, bodyBefore, pullQuote, bodyAfter } = Astro.props;
 
       <Reveal delay={80}>
         <div class="text-muted-foreground space-y-7 text-lg leading-relaxed">
-          {bodyAfter.map((paragraph) => <p set:html={paragraph} />)}
+          {bodyAfter.map((paragraph, i) => (
+            <p data-cms-field={cmsField(cmsPath, `bodyAfter.${i}`)} set:html={paragraph} />
+          ))}
         </div>
       </Reveal>
     </div>

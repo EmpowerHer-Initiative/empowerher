@@ -2,6 +2,7 @@
 // Ports components/marketing/legal/legal-body.tsx.
 import Reveal from "../home/Reveal.astro";
 import Article from "./Article.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Part {
   eyebrow: string;
@@ -15,8 +16,10 @@ interface Props {
     contactPrompt: string;
     email: string;
   };
+  /** CMS field path prefix for live-preview highlighting (e.g. "body"). */
+  cmsPath?: string;
 }
-const { parts, footer } = Astro.props;
+const { parts, footer, cmsPath } = Astro.props;
 
 const sectionIds = ["terms", "privacy"];
 ---
@@ -24,9 +27,14 @@ const sectionIds = ["terms", "privacy"];
   <div class="mx-auto max-w-5xl">
     {parts.map((part, i) => (
       <Reveal>
-        <Article id={sectionIds[i]} eyebrow={part.eyebrow} title={part.title}>
-          {part.paragraphs.map((paragraph) => (
-            <p>{paragraph}</p>
+        <Article
+          id={sectionIds[i]}
+          eyebrow={part.eyebrow}
+          title={part.title}
+          cmsPath={cmsField(cmsPath, `parts.${i}`)}
+        >
+          {part.paragraphs.map((paragraph, j) => (
+            <p data-cms-field={cmsField(cmsPath, `parts.${i}.paragraphs.${j}`)}>{paragraph}</p>
           ))}
         </Article>
       </Reveal>
@@ -36,6 +44,7 @@ const sectionIds = ["terms", "privacy"];
       {footer.updated} {footer.contactPrompt}{" "}
       <a
         href={`mailto:${footer.email}`}
+        data-cms-field={cmsField(cmsPath, "footer.email")}
         class="text-foreground underline-offset-4 hover:underline"
       >
         {footer.email}

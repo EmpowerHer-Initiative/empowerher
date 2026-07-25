@@ -16,6 +16,8 @@ interface Writing {
   image: string;
   link: string;
   from: string;
+  /** Flat index within the CMS `writings` list (for live-preview highlighting). */
+  cmsIndex?: number;
 }
 
 const { seo, header, writings } = content as {
@@ -30,8 +32,8 @@ const slugify = (value: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
-const grouped = writings.reduce<Record<string, Writing[]>>((acc, writing) => {
-  (acc[writing.from] ??= []).push(writing);
+const grouped = writings.reduce<Record<string, Writing[]>>((acc, writing, i) => {
+  (acc[writing.from] ??= []).push({ ...writing, cmsIndex: i });
   return acc;
 }, {});
 
@@ -46,6 +48,7 @@ const groups = Object.entries(grouped).map(([platform, list]) => ({
     eyebrow={header.eyebrow}
     heading={header.heading}
     lede={header.lede}
+    cmsPath="header"
   />
 
   <section class="py-28 md:py-40">
@@ -59,7 +62,7 @@ const groups = Object.entries(grouped).map(([platform, list]) => ({
           </Reveal>
         ) : (
           groups.map(({ id, platform, items }) => (
-            <PlatformSection id={id} platform={platform} writings={items} />
+            <PlatformSection id={id} platform={platform} writings={items} cmsPath="writings" />
           ))
         )}
       </div>

@@ -10,8 +10,8 @@ const { seo, hero, eligibility, stepByStep, benefits } = data;
 ---
 
 <Layout title={seo.title} description={seo.description}>
-  <Hero {...hero} />
-  <Eligibility {...eligibility} />
-  <StepByStep {...stepByStep} />
-  <Benefits {...benefits} />
+  <Hero cmsPath="hero" {...hero} />
+  <Eligibility cmsPath="eligibility" {...eligibility} />
+  <StepByStep cmsPath="stepByStep" {...stepByStep} />
+  <Benefits cmsPath="benefits" {...benefits} />
 </Layout>

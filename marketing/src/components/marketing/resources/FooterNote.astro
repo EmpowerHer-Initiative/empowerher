@@ -2,13 +2,16 @@
 // Ports components/marketing/resources/footer-note.tsx
 import Reveal from "../home/Reveal.astro";
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   text: string;
   email?: string;
+  /** CMS field path prefix for live-preview highlighting (e.g. "footerNote"). */
+  cmsPath?: string;
 }
 
-const { text, email } = Astro.props;
+const { text, email, cmsPath } = Astro.props;
 ---
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
@@ -24,13 +27,17 @@ const { text, email } = Astro.props;
         </h2>
       </Reveal>
       <Reveal delay={160}>
-        <p class="text-muted-foreground mt-6 max-w-xl text-base leading-relaxed">
+        <p
+          class="text-muted-foreground mt-6 max-w-xl text-base leading-relaxed"
+          data-cms-field={cmsField(cmsPath, "text")}
+        >
           {text}
         </p>
       </Reveal>
       <Reveal delay={240}>
         <a
           href={`mailto:${email}`}
+          data-cms-field={cmsField(cmsPath, "email")}
           class="text-foreground mt-8 inline-flex items-center gap-2 text-sm font-medium hover:opacity-70"
         >
           {email}

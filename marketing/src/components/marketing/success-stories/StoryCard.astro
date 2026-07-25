@@ -3,6 +3,7 @@
 import Star from "../../icons/Star.astro";
 import Calendar from "../../icons/Calendar.astro";
 import StatBox from "./StatBox.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Stat {
   icon: string;
@@ -16,8 +17,10 @@ interface Props {
   date?: string;
   badge?: string;
   stats?: Stat[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "stories.0"). */
+  cmsPath?: string;
 }
-const { logo, title, subtitle, date, badge, stats } = Astro.props;
+const { logo, title, subtitle, date, badge, stats, cmsPath } = Astro.props;
 ---
 <div class="border-border/60 bg-background mx-auto max-w-4xl rounded-3xl border p-8 shadow-sm md:p-12">
   {/* Logo */}
@@ -28,14 +31,15 @@ const { logo, title, subtitle, date, badge, stats } = Astro.props;
       class="h-full w-full object-contain px-2"
       loading="lazy"
       decoding="async"
+      data-cms-field={cmsField(cmsPath, "image")}
     />
   </div>
 
   {/* Title + badge */}
   <div class="mt-8 flex items-start justify-between gap-6">
-    <h2 class="font-serif text-3xl leading-tight md:text-4xl">{title}</h2>
+    <h2 class="font-serif text-3xl leading-tight md:text-4xl" data-cms-field={cmsField(cmsPath, "title")}>{title}</h2>
     {badge && (
-      <span class="bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium">
+      <span class="bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium" data-cms-field={cmsField(cmsPath, "badge")}>
         <Star class="size-3.5 fill-current" />
         {badge}
       </span>
@@ -43,11 +47,11 @@ const { logo, title, subtitle, date, badge, stats } = Astro.props;
   </div>
 
   {subtitle && (
-    <p class="text-muted-foreground mt-3 text-lg italic">{subtitle}</p>
+    <p class="text-muted-foreground mt-3 text-lg italic" data-cms-field={cmsField(cmsPath, "subtitle")}>{subtitle}</p>
   )}
 
   {date && (
-    <div class="text-muted-foreground mt-4 flex items-center gap-2 text-sm">
+    <div class="text-muted-foreground mt-4 flex items-center gap-2 text-sm" data-cms-field={cmsField(cmsPath, "date")}>
       <Calendar class="size-4" />
       {date}
     </div>
@@ -56,8 +60,8 @@ const { logo, title, subtitle, date, badge, stats } = Astro.props;
   {/* Stats */}
   {stats && stats.length > 0 && (
     <div class="mt-8 grid gap-4 sm:grid-cols-3">
-      {stats.map((s) => (
-        <StatBox icon={s.icon} value={s.value} label={s.label} />
+      {stats.map((s, j) => (
+        <StatBox icon={s.icon} value={s.value} label={s.label} cmsPath={cmsField(cmsPath, `stats.${j}`)} />
       ))}
     </div>
   )}

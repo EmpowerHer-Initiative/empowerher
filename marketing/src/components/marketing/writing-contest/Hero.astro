@@ -2,6 +2,7 @@
 // Ports components/marketing/writing-contest/hero.tsx
 import Reveal from "../home/Reveal.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
+import { cmsField } from "../../../lib/cms";
 
 const FORM_URL = "https://forms.gle/J5D6atwg4cH5yicf9";
 
@@ -12,27 +13,40 @@ interface Props {
   calloutText: string;
   calloutName: string;
   image: { src: string; alt: string };
+  cmsPath?: string;
 }
-const { eyebrow, heading, paragraph, calloutText, calloutName, image } =
+const { eyebrow, heading, paragraph, calloutText, calloutName, image, cmsPath } =
   Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="grid items-center gap-16 lg:grid-cols-[1fr_1fr]">
       <Reveal class="max-w-xl">
-        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        <p
+          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+          data-cms-field={cmsField(cmsPath, "eyebrow")}
+        >
           {eyebrow}
         </p>
-        <h1 class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl">
+        <h1
+          class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl"
+          data-cms-field={cmsField(cmsPath, "heading")}
+        >
           {heading}
         </h1>
-        <p class="text-muted-foreground mt-8 text-base leading-relaxed md:text-lg">
+        <p
+          class="text-muted-foreground mt-8 text-base leading-relaxed md:text-lg"
+          data-cms-field={cmsField(cmsPath, "paragraph")}
+        >
           {paragraph}
         </p>
         <div class="border-primary/30 bg-primary/[0.05] border-l-primary mt-8 rounded-2xl border border-l-4 p-5">
-          <p class="text-foreground text-sm leading-relaxed">
+          <p
+            class="text-foreground text-sm leading-relaxed"
+            data-cms-field={cmsField(cmsPath, "calloutText")}
+          >
             {calloutText}{" "}
-            <span class="font-semibold">{calloutName}</span>.
+            <span class="font-semibold" data-cms-field={cmsField(cmsPath, "calloutName")}>{calloutName}</span>.
           </p>
         </div>
         <div class="mt-10 flex flex-wrap gap-4">
@@ -61,6 +75,7 @@ const { eyebrow, heading, paragraph, calloutText, calloutName, image } =
           loading="eager"
           fetchpriority="high"
           decoding="async"
+          data-cms-field={cmsField(cmsPath, "image.src")}
           class="aspect-[4/3] h-full w-full object-cover"
         />
       </Reveal>

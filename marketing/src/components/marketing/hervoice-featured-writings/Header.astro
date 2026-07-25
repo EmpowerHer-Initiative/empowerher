@@ -2,13 +2,16 @@
 // Ports the header <section> of app/(marketing)/hervoice/featured-writings-from-our-partners/page.tsx
 import Reveal from "../home/Reveal.astro";
 import ArrowLeft from "../../icons/ArrowLeft.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow?: string;
   heading: string;
   lede: string;
+  /** CMS field path prefix for live-preview highlighting (e.g. "header"). */
+  cmsPath?: string;
 }
-const { eyebrow, heading, lede } = Astro.props;
+const { eyebrow, heading, lede, cmsPath } = Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
@@ -25,18 +28,18 @@ const { eyebrow, heading, lede } = Astro.props;
 
       {eyebrow && (
         <Reveal delay={80}>
-          <p class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+          <p class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>
             {eyebrow}
           </p>
         </Reveal>
       )}
       <Reveal delay={160}>
-        <h1 class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl">
+        <h1 class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl" data-cms-field={cmsField(cmsPath, "heading")}>
           {heading}
         </h1>
       </Reveal>
       <Reveal delay={240}>
-        <p class="text-muted-foreground mt-8 max-w-xl text-base leading-relaxed md:text-lg">
+        <p class="text-muted-foreground mt-8 max-w-xl text-base leading-relaxed md:text-lg" data-cms-field={cmsField(cmsPath, "lede")}>
           {lede}
         </p>
       </Reveal>

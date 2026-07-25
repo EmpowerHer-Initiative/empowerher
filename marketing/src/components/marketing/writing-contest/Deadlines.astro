@@ -3,23 +3,31 @@
 import Reveal from "../home/Reveal.astro";
 import AlertTriangle from "../../icons/AlertTriangle.astro";
 import Calendar from "../../icons/Calendar.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
   title: string;
   items: { date: string; title: string; description: string }[];
   note: string;
+  cmsPath?: string;
 }
-const { eyebrow, title, items, note } = Astro.props;
+const { eyebrow, title, items, note, cmsPath } = Astro.props;
 ---
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-5xl">
       <Reveal>
-        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        <p
+          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+          data-cms-field={cmsField(cmsPath, "eyebrow")}
+        >
           {eyebrow}
         </p>
-        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+        <h2
+          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
+          data-cms-field={cmsField(cmsPath, "title")}
+        >
           {title}
         </h2>
       </Reveal>
@@ -32,14 +40,20 @@ const { eyebrow, title, items, note } = Astro.props;
                 {i + 1}
               </div>
               <div>
-                <span class="bg-primary/10 text-primary inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold">
+                <span
+                  class="bg-primary/10 text-primary inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
+                  data-cms-field={cmsField(cmsPath, `items.${i}.date`)}
+                >
                   <Calendar class="size-3.5" />
                   {deadline.date}
                 </span>
-                <h3 class="mt-3 font-serif text-2xl">
+                <h3 class="mt-3 font-serif text-2xl" data-cms-field={cmsField(cmsPath, `items.${i}.title`)}>
                   {deadline.title}
                 </h3>
-                <p class="text-muted-foreground mt-1.5 text-sm leading-relaxed">
+                <p
+                  class="text-muted-foreground mt-1.5 text-sm leading-relaxed"
+                  data-cms-field={cmsField(cmsPath, `items.${i}.description`)}
+                >
                   {deadline.description}
                 </p>
               </div>
@@ -50,7 +64,7 @@ const { eyebrow, title, items, note } = Astro.props;
 
       <Reveal class="mt-8 flex items-center justify-center gap-3 rounded-2xl border border-amber-400/50 bg-amber-50 p-5 text-center">
         <AlertTriangle class="size-5 shrink-0 text-amber-600" />
-        <p class="text-sm font-medium text-amber-900">
+        <p class="text-sm font-medium text-amber-900" data-cms-field={cmsField(cmsPath, "note")}>
           {note}
         </p>
       </Reveal>

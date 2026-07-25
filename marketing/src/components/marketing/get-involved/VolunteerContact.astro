@@ -3,6 +3,7 @@
 import ArrowLeft from "../../icons/ArrowLeft.astro";
 import Reveal from "../home/Reveal.astro";
 import VolunteerForm from "./VolunteerForm.astro";
+import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
@@ -10,8 +11,10 @@ interface Props {
   body: string;
   note: string;
   questions: string;
+  /** CMS field path prefix for live-preview highlighting (root-level: ""). */
+  cmsPath?: string;
 }
-const { eyebrow, heading, body, note, questions } = Astro.props;
+const { eyebrow, heading, body, note, questions, cmsPath } = Astro.props;
 
 const email = "info@empowerher-initiative.org";
 ---
@@ -41,25 +44,25 @@ const email = "info@empowerher-initiative.org";
         </a>
       </Reveal>
 
-      <Reveal delay={80} class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
+      <Reveal delay={80} class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>
         {eyebrow}
       </Reveal>
-      <Reveal delay={160} class="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl">
+      <Reveal delay={160} class="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl" data-cms-field={cmsField(cmsPath, "heading")}>
         {heading}
       </Reveal>
-      <Reveal delay={240} class="text-muted-foreground mt-6 text-base leading-relaxed">
+      <Reveal delay={240} class="text-muted-foreground mt-6 text-base leading-relaxed" data-cms-field={cmsField(cmsPath, "body")}>
         {body}
       </Reveal>
 
       <Reveal delay={320} class="border-border bg-foreground/5 mt-10 rounded-xl border p-5">
-        <p class="text-muted-foreground text-xs">
+        <p class="text-muted-foreground text-xs" data-cms-field={cmsField(cmsPath, "note")}>
           {note}
         </p>
       </Reveal>
     </div>
 
     <Reveal class="border-border relative mt-16 border-t pt-8">
-      <p class="text-muted-foreground text-xs">
+      <p class="text-muted-foreground text-xs" data-cms-field={cmsField(cmsPath, "questions")}>
         {questions}{" "}
         <a
           href={`mailto:${email}`}

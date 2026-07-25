@@ -15,13 +15,13 @@ import content from "../data/home.json";
 
 <Layout title={content.seo.title} description={content.seo.description}>
   <Hero cmsPath="hero" {...content.hero} />
-  <StatsBar {...content.statsBar} />
-  <HerVoiceContest {...content.herVoiceContest} />
-  <AtAGlance {...content.atAGlance} />
-  <Mission {...content.mission} />
-  <Programs {...content.programs} />
-  <ImpactStory {...content.impactStory} />
-  <MediaSpotlight {...content.mediaSpotlight} />
-  <Partners {...content.partners} />
-  <Newsletter {...content.newsletter} />
+  <StatsBar cmsPath="statsBar" {...content.statsBar} />
+  <HerVoiceContest cmsPath="herVoiceContest" {...content.herVoiceContest} />
+  <AtAGlance cmsPath="atAGlance" {...content.atAGlance} />
+  <Mission cmsPath="mission" {...content.mission} />
+  <Programs cmsPath="programs" {...content.programs} />
+  <ImpactStory cmsPath="impactStory" {...content.impactStory} />
+  <MediaSpotlight cmsPath="mediaSpotlight" {...content.mediaSpotlight} />
+  <Partners cmsPath="partners" {...content.partners} />
+  <Newsletter cmsPath="newsletter" {...content.newsletter} />
 </Layout>

@@ -1,5 +1,7 @@
 ---
 // Ports the TeamMember helper from components/marketing/about-us/team.tsx
+import { cmsField } from "../../../lib/cms";
+
 const LOGO_PLACEHOLDER =
   "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT8waekQlgkEDp7B3XRvCJzMmyWOSiao4I6cq9";
 
@@ -13,8 +15,10 @@ interface Props {
   member: { name: string; role: string; image: string };
   index: number;
   size?: keyof typeof memberSizes;
+  /** CMS field path prefix for this member (e.g. "team.groups.0.members.0"). */
+  cmsPath?: string;
 }
-const { member, index, size = "md" } = Astro.props;
+const { member, index, size = "md", cmsPath } = Astro.props;
 
 const tint =
   index % 2 === 0
@@ -33,11 +37,12 @@ const imgClass =
       alt={member.name}
       loading="lazy"
       decoding="async"
+      data-cms-field={cmsField(cmsPath, "image")}
       class={`h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-[1.03] ${imgClass}`}
     />
   </div>
   <div class={s.pad}>
-    <p class={`leading-tight font-semibold ${s.name}`}>{member.name}</p>
-    <p class={`text-muted-foreground leading-snug ${s.role}`}>{member.role}</p>
+    <p class={`leading-tight font-semibold ${s.name}`} data-cms-field={cmsField(cmsPath, "name")}>{member.name}</p>
+    <p class={`text-muted-foreground leading-snug ${s.role}`} data-cms-field={cmsField(cmsPath, "role")}>{member.role}</p>
   </div>
 </div>
