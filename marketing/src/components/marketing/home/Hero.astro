@@ -6,8 +6,10 @@ interface Props {
   heading: string;
   bodyText: string;
   images: { image: string }[];
+  /** CMS field path prefix for live-preview highlighting (e.g. "hero"). */
+  cmsPath?: string;
 }
-const { heading, bodyText, images: imageList } = Astro.props;
+const { heading, bodyText, images: imageList, cmsPath } = Astro.props;
 const images = imageList.map((i) => i.image);
 ---
 <section class="relative min-h-[100dvh] overflow-hidden" data-hero>
@@ -16,6 +18,7 @@ const images = imageList.map((i) => i.image);
       src={src}
       alt=""
       data-hero-img
+      data-cms-field={cmsPath ? `${cmsPath}.images.${i}.image` : undefined}
       loading={i === 0 ? "eager" : "lazy"}
       fetchpriority={i === 0 ? "high" : undefined}
       decoding="async"
@@ -26,12 +29,18 @@ const images = imageList.map((i) => i.image);
 
   <div class="relative container flex min-h-[100dvh] items-end pt-40 pb-20 md:items-center md:pb-0">
     <div class="max-w-5xl">
-      <h1 class="font-serif text-4xl leading-[1.08] text-white md:text-6xl lg:text-8xl">
+      <h1
+        class="font-serif text-4xl leading-[1.08] text-white md:text-6xl lg:text-8xl"
+        data-cms-field={cmsPath ? `${cmsPath}.heading` : undefined}
+      >
         {heading}
         <br />
         <span class="text-[var(--primary)] italic">Inspiring Futures</span>
       </h1>
-      <p class="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
+      <p
+        class="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg"
+        data-cms-field={cmsPath ? `${cmsPath}.bodyText` : undefined}
+      >
         {bodyText}
       </p>
       <div class="mt-10 flex flex-wrap items-center gap-4">

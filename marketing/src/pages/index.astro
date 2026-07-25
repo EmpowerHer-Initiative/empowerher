@@ -14,7 +14,7 @@ import content from "../data/home.json";
 ---
 
 <Layout title={content.seo.title} description={content.seo.description}>
-  <Hero {...content.hero} />
+  <Hero cmsPath="hero" {...content.hero} />
   <StatsBar {...content.statsBar} />
   <HerVoiceContest {...content.herVoiceContest} />
   <AtAGlance {...content.atAGlance} />
