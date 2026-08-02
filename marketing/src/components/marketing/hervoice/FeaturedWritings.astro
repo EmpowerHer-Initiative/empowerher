@@ -1,8 +1,9 @@
 ---
 // Ports components/marketing/hervoice/featured-writings.tsx (+ writings-pager.tsx).
-// Stories are synced from the admin DB by scripts/sync-from-db.ts. Like the
-// source's WritingsPager, cards paginate 6 per page — all cards stay in the DOM
-// and pages swap client-side so the listing stays fully static.
+// Stories are authored in the Pages CMS collection (src/content/hervoice/,
+// loaded via src/lib/stories.ts). Like the source's WritingsPager, cards
+// paginate 6 per page — all cards stay in the DOM and pages swap client-side
+// so the listing stays fully static.
 import ArrowRight from "../../icons/ArrowRight.astro";
 import ChevronLeft from "../../icons/ChevronLeft.astro";
 import ChevronRight from "../../icons/ChevronRight.astro";
@@ -75,7 +76,6 @@ const smSize =
                   alt={story.title}
                   loading="lazy"
                   decoding="async"
-                  data-cms-field={cmsField(cmsPath, `stories.${i}.image`)}
                   class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
                 />
               )}
@@ -84,17 +84,11 @@ const smSize =
               </span>
             </div>
             <div class="flex flex-1 flex-col p-6">
-              <p
-                class="group-hover:text-primary font-serif text-xl leading-snug transition-colors duration-300"
-                data-cms-field={cmsField(cmsPath, `stories.${i}.title`)}
-              >
+              <p class="group-hover:text-primary font-serif text-xl leading-snug transition-colors duration-300">
                 &ldquo;{story.title}&rdquo;
               </p>
               {story.authorName && (
-                <p
-                  class="text-muted-foreground mt-2 text-sm"
-                  data-cms-field={cmsField(cmsPath, `stories.${i}.authorName`)}
-                >
+                <p class="text-muted-foreground mt-2 text-sm">
                   {story.authorName}
                 </p>
               )}

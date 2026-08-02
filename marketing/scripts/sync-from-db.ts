@@ -1,23 +1,23 @@
 /**
- * Syncs admin-managed content (Neon Postgres + winner MDX files in ../admin)
- * into the static JSON files under src/data/ that the Astro pages import.
+ * Syncs admin-managed content (Neon Postgres) into the static JSON files under
+ * src/data/ that the Astro pages import: partners, resources, featured
+ * writings, team, workshops.
+ *
+ * HerVoice stories are NOT synced — they are authored in Pages CMS as a
+ * collection (src/content/hervoice/, one markdown file per story).
  *
  * Run with `pnpm sync`. Re-running is idempotent: only the DB-backed keys of
  * each JSON file are replaced; all authored sections (seo, hero, copy, CTAs)
  * are preserved untouched.
  */
-import { readFileSync, readdirSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { parseEnv } from "node:util";
 import { neon } from "@neondatabase/serverless";
-import matter from "gray-matter";
 
 /* ─── Config ────────────────────────────────────────────────────────────────── */
 
 const ADMIN_ENV = fileURLToPath(new URL("../../admin/.env", import.meta.url));
-const WINNERS_DIR = fileURLToPath(
-  new URL("../../admin/content/hervoice/winners", import.meta.url),
-);
 const DATA_DIR = fileURLToPath(new URL("../src/data", import.meta.url));
 
 // Partner links that must stay internal routes instead of the DB's external URL.
@@ -46,13 +46,6 @@ function loadAdminDatabaseUrl(): string {
   return env.DATABASE_URL;
 }
 
-const fmtDate = (d: Date) =>
-  new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(d);
-
 /** Trim strings; drop keys whose value is null/undefined/empty string. */
 function clean<T extends Record<string, unknown>>(obj: T): T {
   const out: Record<string, unknown> = {};
@@ -75,90 +68,16 @@ function patchJson(
   writeFileSync(path, JSON.stringify(data, null, 2) + "\n");
 }
 
-/* ─── Winner MDX → markdown story ───────────────────────────────────────────── */
-
-/** `<Poem values={[{ value: "...", translation: "..." }, …]} />` → blockquote. */
-function poemToBlockquote(jsx: string): string {
-  const items: string[] = [];
-  const itemRe = /\{\s*value:\s*"((?:[^"\\]|\\.)*)"(?:\s*,\s*translation:\s*"((?:[^"\\]|\\.)*)")?\s*,?\s*\}/g;
-  for (const m of jsx.matchAll(itemRe)) {
-    const value = JSON.parse(`"${m[1]}"`);
-    const translation = m[2] ? JSON.parse(`"${m[2]}"`) : undefined;
-    items.push(`> ${value}${translation ? ` — *${translation}*` : ""}`);
-  }
-  if (items.length === 0) {
-    throw new Error(`Could not parse <Poem> values:\n${jsx}`);
-  }
-  return items.join("\n>\n");
-}
-
-function mdxBodyToMarkdown(body: string, file: string): string {
-  let md = body
-    .replace(/<\/?PoemWrapper>/g, "")
-    .replace(/<Poem\s+values=\{\[([\s\S]*?)\]\}\s*\/>/g, (_, values) =>
-      poemToBlockquote(values),
-    )
-    .replace(
-      /<Image\s+src="([^"]*)"(?:\s+alt="([^"]*)")?\s*\/>/g,
-      (_, src, alt) => `![${alt ?? ""}](${src})`,
-    );
-  md = md.replace(/\n{3,}/g, "\n\n").trim();
-  if (/<[A-Za-z]/.test(md)) {
-    throw new Error(`Unconverted JSX remains in ${file}:\n${md.match(/<[A-Za-z][^\n]*/)?.[0]}`);
-  }
-  return md;
-}
-
-function contestPosition(place: string): string {
-  return place === "honorable"
-    ? "Honorable Mention — HerVoice 2026 Writing Contest"
-    : `${place} Place — HerVoice 2026 Writing Contest`;
-}
-
-function loadWinnerStories() {
-  return readdirSync(WINNERS_DIR)
-    .filter((f) => f.endsWith(".mdx"))
-    .map((file) => {
-      const slug = file.replace(/\.mdx$/, "");
-      const { data, content } = matter(readFileSync(`${WINNERS_DIR}/${file}`, "utf8"));
-      // frontmatter date is MM-DD-YYYY
-      const [month, day, year] = String(data.date).split("-").map(Number);
-      return clean({
-        slug,
-        title: data.title,
-        description: data.description ?? "",
-        image: data.image,
-        imageAlt: data.imageAlt,
-        imageCredit: data.imageCredit,
-        date: fmtDate(new Date(year, month - 1, day)),
-        authorName: data.authorName,
-        authorPosition: contestPosition(String(data.contestPlace)),
-        authorBio: data.authorBio,
-        messageToWorld: data.messageToWorld,
-        content: mdxBodyToMarkdown(content, file),
-      });
-    });
-}
-
 /* ─── Main ──────────────────────────────────────────────────────────────────── */
 
 async function main() {
   const sql = neon(loadAdminDatabaseUrl());
 
-  const [partners, resources, stories, writings, teachers, workshops] =
+  const [partners, resources, writings, teachers, workshops] =
     await Promise.all([
       sql.query(`SELECT name, image, link FROM partners ORDER BY index ASC`),
       sql.query(
         `SELECT id, name, location, description, link, image FROM resources ORDER BY "createdAt" DESC`,
-      ),
-      sql.query(
-        `SELECT slug, title, description, content, image,
-                image_alt AS "imageAlt", image_credit AS "imageCredit",
-                author_name AS "authorName", author_bio AS "authorBio",
-                author_position AS "authorPosition", author_instagram AS "authorInstagram",
-                author_facebook AS "authorFacebook", author_linkedin AS "authorLinkedin",
-                message_to_world AS "messageToWorld", "createdAt"
-         FROM hervoice WHERE NOT hide ORDER BY "createdAt" DESC, title ASC`,
       ),
       sql.query(
         `SELECT id, title, description, image, link, "from" FROM featured_writings ORDER BY "createdAt" DESC`,
@@ -178,31 +97,6 @@ async function main() {
       link: PARTNER_LINK_OVERRIDES[p.name] ?? p.link,
     }),
   );
-
-  const dbStories = stories.map((s) =>
-    clean({
-      slug: s.slug,
-      title: s.title,
-      description: s.description ?? "",
-      image: s.image,
-      imageAlt: s.imageAlt,
-      imageCredit: s.imageCredit,
-      date: fmtDate(new Date(s.createdAt)),
-      authorName: s.authorName,
-      authorPosition: s.authorPosition,
-      authorBio: s.authorBio,
-      authorInstagram: s.authorInstagram,
-      authorFacebook: s.authorFacebook,
-      authorLinkedin: s.authorLinkedin,
-      messageToWorld: s.messageToWorld,
-      content: s.content,
-    }),
-  );
-
-  // DB stories win on slug collision (same rule as the admin app's loadStory).
-  const dbSlugs = new Set(dbStories.map((s) => s.slug));
-  const winnerStories = loadWinnerStories().filter((w) => !dbSlugs.has(w.slug));
-  const allStories = [...dbStories, ...winnerStories];
 
   const teamMember = (t: Record<string, any>) => ({
     name: (t.name as string).trim(),
@@ -228,17 +122,6 @@ async function main() {
   patchJson("resources.json", (d) => {
     d.resources = resources.map((r) => clean(r));
   });
-  patchJson("hervoice-stories.json", (d) => {
-    d.stories = allStories;
-  });
-  patchJson("hervoice.json", (d) => {
-    d.featuredWritings.stories = dbStories.map((s) => ({
-      slug: s.slug,
-      title: s.title,
-      image: s.image,
-      authorName: s.authorName,
-    }));
-  });
   patchJson("hervoice-featured-writings.json", (d) => {
     d.writings = writings.map((w) => clean(w));
   });
@@ -248,7 +131,6 @@ async function main() {
 
   console.log(`partners:           ${partnerItems.length}`);
   console.log(`resources:          ${resources.length}`);
-  console.log(`stories:            ${allStories.length} (${dbStories.length} db + ${winnerStories.length} winners)`);
   console.log(`featured writings:  ${writings.length}`);
   console.log(`team members:       ${teachers.length}`);
   console.log(`workshops:          ${workshops.length}`);

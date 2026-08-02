@@ -9,12 +9,27 @@ import CongressionalTestimonies from "../../components/marketing/hervoice/Congre
 import PartnerSupport from "../../components/marketing/hervoice/PartnerSupport.astro";
 import WritingContestCTA from "../../components/marketing/hervoice/WritingContestCTA.astro";
 import content from "../../data/hervoice.json";
+import { stories } from "../../lib/stories";
+
+// Contest winners are showcased on /hervoice/winners, not in this listing.
+const writingCards = stories
+  .filter((s) => !s.hideFromListing)
+  .map(({ slug, title, image, authorName }) => ({
+    slug,
+    title,
+    image,
+    authorName: authorName ?? null,
+  }));
 ---
 <Layout title={content.seo.title} description={content.seo.description}>
   <Hero {...content.hero} cmsPath="hero" />
   <HowToSubmit {...content.howToSubmit} cmsPath="howToSubmit" />
   <Eligibility {...content.eligibility} cmsPath="eligibility" />
-  <FeaturedWritings {...content.featuredWritings} cmsPath="featuredWritings" />
+  <FeaturedWritings
+    {...content.featuredWritings}
+    stories={writingCards}
+    cmsPath="featuredWritings"
+  />
   <CongressionalTestimonies
     {...content.congressionalTestimonies}
     cmsPath="congressionalTestimonies"

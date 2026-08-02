@@ -1,0 +1,91 @@
+---
+title: My Voice from the Heart of Darkness
+description: >-
+  This blog recounts the inspiring journey of a young Afghan girl who, after the
+  Taliban disrupts her education, finds resilience through online learning.
+  Forced into tailoring, she ultimately reclaims her identity and confidence,
+  becoming an 11th-grade student in an American online school. Proudly
+  identifying as a builder rather than just a survivor, she dreams of studying
+  computer science and advocates for the voices of Afghan girls, embodying the
+  enduring light of hope in the darkest circumstances.
+image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfPqEMS3C8OG5vkbyTeNds9rYucAtpJg0PMV7'
+date: '2025-12-08'
+authorName: Nazanin Razawi
+authorBio: >-
+  Nazanin Razawi is a dedicated writer, author, and passionate advocate for
+  girls' education in Afghanistan. With a strong background in writing articles,
+  essays, and letters that address critical social issues, she strives to
+  inspire change and empower women through her work. Her dream is to establish
+  an organization that provides unrestricted access to education for girls in
+  underserved communities. Nazanin is committed to using her abilities in
+  writing, communication, and leadership to help create a brighter and more
+  equitable future for the next generation.
+authorLinkedin: 'https://www.linkedin.com/in/naz-raz-692826341'
+---
+
+In the heart of darkness if there is a light, that's from us.
+
+There were some nights that Kabul became silent than anytime. As if the city shut in its breath to scare less from the shadows of the persons that were passing through the alleys. I was a girl on those nights with eyes full of questions and a traumatic heart from the days that everything turned upside down.
+The day that the sky of my country collapsed and my life was divided into two parts: before the fall and after that.
+
+In the republic era I was an intelligent student. A girl who loves to learn; always with books, curiosity, and with big dreams. But when the Taliban came back, it was as if they closed all the dreams together and locked the school gates. We became the generation that took away the right to learn from them, an innocent generation that became forbidden.
+
+Something broke inside me those days; not a simple break– an abysmal silence.
+I was hopeful of going to school a few times as people were saying it is going to open on that day– but it never happened. It was forever…
+Long after school closed, I had to go to tailoring to work. For more than two years I sat behind the sewing machine. With hands that were shaking for writing before, it was shaking for cutting the fabric now.
+Everyday the sounds of the machine's needle It was a reminder that I, a student of yesterday, became a worker of today's necessity.
+Depression came slowly, not with scream but with reticence. In the reticence of that small room I got lost somewhere among the fabrics and threads.
+
+But I have always had a silent stubbornness with me.
+A small voice that was saying: this is not the end.
+One day that voice became louder;
+I sat and talked honestly with myself– I said to myself:
+
+“You either give up…
+Or rebuild yourself.”
+And I chose the second path.
+
+Despite not having decent facilities, freedom, safety, and even a proper internet I opened the phone and found a way that it was still open; online education.
+It was weak, slow, disappointing– but it was yet a way.
+I weeped, became tired,I wanted to leave several times, but I didn't….
+
+In the learning process, I found several learning opportunities that weren't only learning programs; it was opportunities to remember again who I am. These programs lead me to speak with girls like myself. Each of these girls had a story from the pain and hope. During the online classes I have learned language, courage, and self confidence– but the most important I found is, how conversation can make a bridge between humans– and between your yesterday and today.
+
+Those courses weren't a miracle, the miracle was myself.
+Those courses became a hatch that I passed through but I built the path myself.
+
+Currently, I am an 11th grade student in an online American school– something that I would not have believed if someone had told me two years ago.
+It wasn't an easy path, it was a real fight, fight with the restrictions, fear, and lack of opportunities. But it was possible, and I stand for it. Now, I am saying this with pride:
+I am not a survivor, I am a builder.
+I built this path brick by brick with the will that was born in the nights of Kabul.
+
+Sometimes I think of myself, the girl who sat behind the sewing machine with her head down and thought her future was buried there. Today, the same girl has risen again and has a pen in her hand to build her future.
+
+And now I am not only fighting for myself.
+My voice is the voices of thousands of Afghan girls who are forced to remain silent.
+
+I still dream of majoring in computer science; In a university whose doors are not closed to me. I want one day to be able to save other girls who are stuck behind the walls of despair with the knowledge I am learning.
+I want to show that an Afghan girl, even if the world is against her, can still rise, learn, and build a different future.
+
+In the cultural and language workshop I recently attended, I didn't just learn about languages; I learned about myself. I learned how to speak, how to make my story a bridge to the world, how to be a voice that won't be silenced.
+
+I learned what true power is:
+In words..
+In knowledge..
+In self-belief….
+And today, In “her voice” I raise my voice.
+Not to get attention but to tell a simple truth:
+
+Afghan girls are invincible.
+
+I, a girl from the land of war and poetry,  
+I rebuilt myself.
+With words, knowledge, and hope..
+And one day, my voice—our voice—will break through all the walls that shut us out.
+
+It is not only my story.
+It is the story of all the girls who stood in the dark, but did not turn off their light
+
+And if there is light in the heart of darkness,
+We are that light..
+Alway.

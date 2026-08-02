@@ -1,0 +1,44 @@
+---
+title: A Bridge Between Two Worlds
+description: >-
+  In "A Bridge Between Two Worlds" by Zahra A, an EmpowerHer student, she drifts
+  between dream and reality, imagining a peaceful world where mothers sing
+  lullabies, fathers laugh with their children, and stories replace war. Waking
+  to the harshness of her own reality, she finds strength not in escape but in
+  resolve—to write, to speak, and to build a bridge from dreams to a future
+  where Afghan children can smile again.
+image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT56kEagAWxDjwpl6zcWuZFSE0gC1TOnBMHdPh'
+date: '2025-07-01'
+---
+
+It was night. The electricity had gone out. The house was filled with darkness, and only
+
+the ticking of the clock could be heard. I lit a candle. Its light danced on the wall and
+
+brought the shadows to life to me.
+
+A book was resting on my knees, but I was no longer reading. My eyes slowly became
+
+heavy and then closed. I don’t know how much time passed, but suddenly, I found myself in a place that looked nothing like our world. The streets were bright and silent, yet full of life. The smell of flowers filled the alleys and the air. People passed by each other with smiles, without reason, but truly real.
+
+I saw a woman holding her child in her arms. The child was asleep, calm and innocent,
+
+with a face that looked like morning. The mother was quietly singing a lullaby, and her
+
+The voice had warmed the entire street. A few steps ahead, a man was holding his little daughter’s hand. They walked together, laughed, and danced for no reason at all. In that peaceful place, an old woman was sitting at her doorway. She held a small teapot in her hand and, with a gentle smile, poured tea for the people passing by. When her eyes met mine, she reached out her shaky hand and poured a cup of tea for me too, a cup filled with kindness, not just tea.
+
+A little farther away, under the shade of a tree, an old man was sitting. Several children had gathered around him. He was telling them stories, Stories from a time when houses had no locks, when walls were shorter than people’s hearts, and when war existed only in books. I sat next to him. I asked him to tell one of those stories to me as well.
+
+He looked at me and smiled. Just as he was about to speak, a strange, unclear sound reached my ears from far away.
+
+A sound not from that world, and not from ours. Something was beginning to change. Something cold touched my face. My eyelids moved. I opened my eyes.
+
+The room was dark. The candle had gone out, and the book had slipped from my knees to the floor. That world, that sweet dream, was gone. Reality had returned. I remembered where I was, in a world where the cries of children in the streets are louder than the lullabies of mothers. Where a silent drone can erase a mother from life, a mother who, just moments before, might have been smiling.
+
+The father, who, in my dream, was full of love and hope, in this world, he stands behind a silent wall, his throat was tight with tears, staring at the emptiness in his hands.
+
+I stood up and walked toward the window, and opened it. The night air was heavy. But in the heart of that darkness, a small star was shining. Not bright but alive. Right there, in the silence of the room and the cold of the night, I thought to myself: If I could weave that kind of world in my dream, perhaps we can wake up the real world, too.
+
+Not with miracles. Not with empty promises. But with words, with voices, with a light that even a candle is born from. I made a decision, not to run away from reality, not to bury myself in dreams, but to stand, awake, on the edge between sleep and reality, and build a bridge from what I saw to what must become real.
+
+Maybe one day, a child who cries today will smile because of the story of this very night.

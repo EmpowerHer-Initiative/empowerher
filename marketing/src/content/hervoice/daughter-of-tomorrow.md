@@ -1,0 +1,42 @@
+---
+title: Daughter of Tomorrow
+description: >-
+  An Afghan woman's letter to future generations, expressing hope that current
+  struggles will lead to a tomorrow where Afghan women can live freely, lead
+  boldly, and pursue education without fear.
+image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT2h374NLQtJ7K2Z4UcWn3gCXRdBvVoY9Ohil8'
+date: '2025-10-04'
+authorName: Nelofar Mohammadi
+authorBio: >-
+  Nelofar Mohammadi was born and raised in Kabul, Afghanistan, where she began
+  writing in seventh grade as a way to express resilience and hope. She was
+  graduated from Tarbiat Private High School in Kabul in December 2021. After
+  being displaced by the Taliban's return to power, she rebuilt her life in
+  Tehran. She now works as an English translator and HR administrator, while
+  continuing her studies in Business Administration at the American University
+  of Afghanistan. Nelofar serves as a volunteer mentor for first-year students
+  at AUAF. She has also volunteered with Rumie Library as an English translator
+  to support access to education. Through her writing, work, and studies, she
+  remains committed to empowering women and inspiring others to pursue their
+  dreams despite hardship.
+---
+
+Dear Daughter of Tomorrow,
+
+I don’t know who you will be… My daughter, my niece, or simply a young girl walking down the beautiful streets of Kabul. But I do know that everything we suffer today is endured for you.
+
+Right now, our voices are stolen. Our schools are closed. We are told to be silent, invisible, forgotten. I study outside my homeland, in a small room that cannot contain the weight of my dreams. But I refuse to surrender. Because you are my hope.
+
+I see you standing tall, opening books no one can take from your hands. I see you leading without hesitation, making decisions for our nation without fear of being silenced. I see an Afghanistan where women are not exceptions, but leaders. Where your voice is not “dangerous” but beautiful and powerful. An Afghanistan where Farkhunda is not killed and burned by tens of so-called ba ghairat men. Where Rahila is not murdered inside her classroom.
+
+I picture you… unafraid, unbroken, and simply happy to be a girl.
+
+And my dear, if I could pass you anything, it would be courage. The same courage Afghan women carry now; in exile, in whispers, in hidden resistance. We hold it so that you can one day shout it from the heart of Kabul without fear.
+
+Until that day, I will write.
+
+Because the future belongs to you, and it must shine brighter than the darkness of my present.
+
+With hope,
+
+Nelofar Mohammadi - An Afghan Woman of Today

@@ -368,19 +368,11 @@ content:
                   - { name: note, label: Note, type: string }
           - name: featuredWritings
             label: Featured Writings
+            description: Story cards come from the HerVoice Stories collection.
             type: object
             fields:
               - { name: eyebrow, label: Eyebrow, type: string }
               - { name: heading, label: Heading, type: string }
-              - name: stories
-                label: Stories
-                type: object
-                list: true
-                fields:
-                  - { name: slug, label: Slug, type: string }
-                  - { name: title, label: Title, type: string }
-                  - { name: image, label: Image, type: image }
-                  - { name: authorName, label: Author name, type: string }
           - name: congressionalTestimonies
             label: Congressional Testimonies
             type: object
@@ -537,52 +529,71 @@ content:
 
       - name: hervoice-stories
         label: HerVoice Stories
-        type: file
-        path: src/data/hervoice-stories.json
-        format: json
+        description: One file per story — the blog behind /hervoice.
+        type: collection
+        path: src/content/hervoice
+        format: yaml-frontmatter
+        filename:
+          # Slug comes from the title when creating; existing slugs are linked
+          # from Home/Winners — rename deliberately only.
+          template: "{primary}.md"
+          field: create
+        view:
+          primary: title
+          fields: [title, authorName, date]
+          sort: [date, title]
+          search: [title, authorName]
+          default: { sort: date, order: desc }
         fields:
-          - name: stories
-            label: Stories
-            type: object
-            list: true
-            fields:
-              - { name: slug, label: Slug, type: string }
-              - { name: title, label: Title, type: string }
-              - { name: description, label: Description, type: text }
-              - { name: image, label: Cover image, type: image }
-              - { name: imageAlt, label: Image alt / caption, type: string }
-              - { name: imageCredit, label: Image credit, type: string }
-              - { name: date, label: Date, type: string }
-              - { name: authorName, label: Author name, type: string }
-              - { name: authorPosition, label: Author position, type: string }
-              - { name: authorBio, label: Author bio, type: text }
-              - {
-                  name: authorInstagram,
-                  label: Author Instagram,
-                  type: string,
-                  options: { type: url },
-                }
-              - {
-                  name: authorFacebook,
-                  label: Author Facebook,
-                  type: string,
-                  options: { type: url },
-                }
-              - {
-                  name: authorLinkedin,
-                  label: Author LinkedIn,
-                  type: string,
-                  options: { type: url },
-                }
-              - {
-                  name: messageToWorld,
-                  label: Message to the world,
-                  type: text,
-                }
-              - name: content
-                label: Content (markdown)
-                description: Story body as markdown. Blockquotes render as poems (italic = translation); images become captioned figures.
-                type: code
+          - { name: title, label: Title, type: string, required: true }
+          - { name: description, label: Description, type: text }
+          - { name: image, label: Cover image, type: image, required: true }
+          - { name: imageAlt, label: Image alt / caption, type: string }
+          - { name: imageCredit, label: Image credit, type: string }
+          - {
+              name: date,
+              label: Date,
+              type: date,
+              required: true,
+              options: { format: "yyyy-MM-dd" },
+            }
+          - {
+              name: hideFromListing,
+              label: Hide from the HerVoice listing,
+              type: boolean,
+              description: "On for contest winners — they're showcased on the Winners page instead.",
+            }
+          - { name: authorName, label: Author name, type: string }
+          - { name: authorPosition, label: Author position, type: string }
+          - { name: authorBio, label: Author bio, type: text }
+          - {
+              name: authorInstagram,
+              label: Author Instagram,
+              type: string,
+              options: { type: url },
+            }
+          - {
+              name: authorFacebook,
+              label: Author Facebook,
+              type: string,
+              options: { type: url },
+            }
+          - {
+              name: authorLinkedin,
+              label: Author LinkedIn,
+              type: string,
+              options: { type: url },
+            }
+          - {
+              name: messageToWorld,
+              label: Message to the world,
+              type: text,
+            }
+          - name: body
+            label: Story
+            type: rich-text
+            options: { format: markdown }
+            description: Blockquotes render as poems (italic = translation); images become captioned figures.
 
       - name: writing-contest
         label: Writing Contest

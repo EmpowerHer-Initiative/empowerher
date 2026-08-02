@@ -77,6 +77,12 @@ file body as-is with no field parsing).
 `datagrid` (CSV-like), `code`, `raw` (no parsing — pairs with a single `body` code
 field or none).
 
+**Body field in `*-frontmatter` formats:** a field named exactly **`body`** edits
+the document body below the frontmatter (typically `rich-text` with
+`options: { format: markdown }`, or `code` for a raw markdown editor); every
+other field is a frontmatter key. See the `hervoice-stories` collection for an
+example.
+
 ---
 
 ## Field reference

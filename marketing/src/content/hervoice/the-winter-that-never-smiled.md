@@ -1,0 +1,75 @@
+---
+title: The Winter That Never Smiled
+description: >-
+  Set against the wounded silence of Kabul and the destroyed Buddha of Bamyan,
+  this story recounts the author’s grief, exile, and the tragic loss of a friend
+  taken and broken by oppression. Through memory and promise, it becomes an act
+  of witnessing and remembrance.
+image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTX3KxEb60NuwXa2fRLmOSMZCPIdDxFh6c93H7'
+imageAlt: 'Image by: Writer'
+date: '2026-01-08'
+authorName: S.R.
+authorBio: >-
+  I am S.R., a woman writing to give voice to Afghan women and remind others of
+  the power of hope and resilience.
+---
+
+It was a cold, dry winter. Buda, with his wounded body, still watched over the city,  
+silent and steadfast. After work, I always took the path past him to reach my home.  
+There were shorter routes, but I chose that one just to see him. It felt like visiting an  
+old friend.
+
+In Buda’s wounds, I saw my own. He had been targeted for standing firm, for bearing  
+witness to history, for representing a culture and knowledge long silenced.
+
+In the days that followed, it felt as if Buda had lowered his head under the weight of  
+the world. Every time I passed him, I could not meet his gaze; I lowered mine too,  
+carrying a portion of his sorrow. The air seemed heavier, the streets quieter, and the  
+shadows longer. This was not what we had earned, not what we had fought for. We  
+had grown up believing in laughter, in festivals, in sunlight on the mountains and yet  
+here we were, walking past a silent witness to our loss, our hearts pressed down under  
+the weight of fear and grief.
+
+For a few minutes, I stared at him, my chest tight. I had been forced to leave Kabul  
+after the Taliban took over. Fear followed us like a shadow, the nightmares of the  
+previous generation returning. The world seemed to have forgotten us. In the corners  
+of the city, bodies appeared, nameless and unattended, and no one claimed  
+responsibility for their deaths.
+
+I loved Bamyan, the Potato Flower Festival, the Dambura music, the laughter of  
+people in Band-e Amir, but now, fear had taken root behind the eyes of children, and  
+in the gaze of the girls, I saw something like exhaustion and despair, far older than  
+their years.
+
+Then I received a message.  
+"Zahra is gone."
+
+I could not believe it. Zahra, with her deep laugh that could fill a room, her strength  
+and kindness, how could she no longer be here?
+
+Our phone lines were not safe. I contacted another friend online. Her voice trembled  
+as she spoke. Zahra had been taken from her home days before by the Taliban,  
+accused of actions they deemed unacceptable. Her family searched frantically, going  
+from office to office, but all were denied access. After six days, the Taliban confirmed  
+they had her, and demanded her father pay 250,000 Afghanis as a fine. They also  
+forced a written promise that Zahra would not repeat the acts they condemned.
+
+When Zahra finally returned home, she was not the same girl. Her mother watched  
+her closely, noticing every hesitation, every silence. The light in her eyes had dimmed,  
+the warmth in her smile was gone, and her movements carried a heaviness that had  
+not been there before. The girl who had left was fractured, carrying the weight of  
+what she had endured. When her mother asked her what had happened, Zahra would  
+only whisper,  
+"I am tired. I need to rest."
+
+The quiet in her room was heavier than any words. Her suffering was visible in the  
+way she moved, the way she avoided gaze, and the heaviness in her breath. The light  
+in her eyes, so full of hope before, had dimmed.
+
+And then she was gone. Zahra had taken her own life, her story carried with her.  
+I could not bring myself to attend her funeral. I was not brave enough to say goodbye.  
+I wept for a long time, and as the cold, sorrowful sun sank behind the mountains, I  
+stood before Buda and made a promise: I would tell her story. Now, my tears no  
+longer hold me back. I write for her, and for all those like her, hoping that even a  
+single reader might glimpse how we live here, the fear, the loss, and the quiet courage  
+that endures despite it all.

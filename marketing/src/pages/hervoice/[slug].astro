@@ -1,37 +1,19 @@
 ---
 // Ports app/(marketing)/hervoice/[slug]/page.tsx.
-// Source reads DB/MDX stories; here stories come from
-// src/data/hervoice-stories.json (populated by scripts/sync-from-db.ts) and
-// getStaticPaths() builds one page per entry. Slugs must include the ones the
-// home contest cards + featured-writings grid link to.
+// Stories are authored in Pages CMS as a collection — one markdown file per
+// story in src/content/hervoice/ (loaded via src/lib/stories.ts). Slugs are
+// filenames and must include the ones the home contest cards + winners page
+// link to.
 import { marked } from "marked";
 import Layout from "../../layouts/Layout.astro";
 import ArrowLeft from "../../components/icons/ArrowLeft.astro";
 import Instagram from "../../components/icons/Instagram.astro";
 import Facebook from "../../components/icons/Facebook.astro";
 import LinkedIn from "../../components/icons/LinkedIn.astro";
-import storyData from "../../data/hervoice-stories.json";
+import { stories, type Story } from "../../lib/stories";
 
 const DEFAULT_AVATAR =
   "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTK53dXUCVy1oGkRMuS0Lravl9JbQIxWFcNhtq";
-
-type Story = {
-  slug: string;
-  title: string;
-  description: string;
-  image: string;
-  imageAlt?: string;
-  imageCredit?: string;
-  date: string;
-  authorName?: string;
-  authorBio?: string;
-  authorPosition?: string;
-  authorInstagram?: string;
-  authorFacebook?: string;
-  authorLinkedin?: string;
-  messageToWorld?: string;
-  content: string;
-};
 
 // Same rendering rules as admin components/hervoice/markdown.tsx:
 // blockquotes are poems (left border, serif lines, muted italic translations),
@@ -52,7 +34,7 @@ marked.use({
 });
 
 export function getStaticPaths() {
-  return (storyData.stories as unknown as Story[]).map((s) => ({
+  return stories.map((s) => ({
     params: { slug: s.slug },
     props: { post: s },
   }));
