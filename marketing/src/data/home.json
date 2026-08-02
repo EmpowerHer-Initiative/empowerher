@@ -4,7 +4,7 @@
     "description": "A nonprofit organization empowering Afghan women and girls across the Middle East and Central Asia through mentorship, leadership development, educational support, storytelling, publication, and community engagement."
   },
   "hero": {
-    "heading": "Empowering Dreams,",
+    "heading": "Empowering Dreams",
     "bodyText": "At EmpowerHer, we believe every Afghan girl and woman has a story worth telling and a future worth fighting for. Through mentorship programs and publication opportunities, we help them find the tools, confidence, and platforms they need to raise their voices and become changemakers in their communities and beyond.",
     "images": [
       {
@@ -45,9 +45,18 @@
     "headingSub": "Writing Contest",
     "bodyText": "Courage, identity, and storytelling — by Afghan girls and women, written from within Afghanistan.",
     "stats": [
-      { "value": "300+", "label": "Submissions" },
-      { "value": "3", "label": "Honorees" },
-      { "value": "5", "label": "Cash Winners" }
+      {
+        "value": "300+",
+        "label": "Submissions"
+      },
+      {
+        "value": "3",
+        "label": "Honorees"
+      },
+      {
+        "value": "5",
+        "label": "Cash Winners"
+      }
     ],
     "winners": [
       {
@@ -77,7 +86,10 @@
     "eyebrow": "By the Numbers",
     "heading": "EmpowerHer at a Glance",
     "stats": [
-      { "number": "500+", "label": "Students Mentored" },
+      {
+        "number": "500+",
+        "label": "Students Mentored"
+      },
       {
         "number": "9+",
         "label": "Countries Reached",
@@ -88,7 +100,10 @@
         "label": "Countries in Our Global Team",
         "detail": "Afghanistan, Poland, Peru, United States, China, Pakistan, Iran, Bangladesh"
       },
-      { "number": "25+", "label": "Provinces of Afghanistan Reached" },
+      {
+        "number": "25+",
+        "label": "Provinces of Afghanistan Reached"
+      },
       {
         "number": "50+",
         "label": "Student Publications",
