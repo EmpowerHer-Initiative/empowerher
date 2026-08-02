@@ -14,9 +14,6 @@ import AdminLoading from "./loading";
 async function AdminGuard({ children }: { children: React.ReactNode }) {
   const user = await auth.api.getSession({
     headers: await headers(),
-    query: {
-      disableCookieCache: true,
-    },
   });
 
   if (!user) {

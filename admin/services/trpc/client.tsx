@@ -22,6 +22,7 @@ export const makeQueryClient = () => {
       queries: {
         staleTime: 5 * 60 * 1000, // 5 minutes
         retry: false,
+        refetchOnWindowFocus: false,
       },
       dehydrate: {
         // serializeData: superjson.serialize,

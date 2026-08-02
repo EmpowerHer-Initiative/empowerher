@@ -17,9 +17,6 @@ export default async function StaffLayout({
 }) {
   const user = await auth.api.getSession({
     headers: await headers(),
-    query: {
-      disableCookieCache: true,
-    },
   });
 
   if (!user) {

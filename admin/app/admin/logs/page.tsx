@@ -119,24 +119,17 @@ const LogsPage = () => {
     isPending,
     error,
     refetch,
-  } = useQuery({
-    ...trpc.logs.list.queryOptions(filterInput),
-    refetchInterval: 60_000,
-  });
+  } = useQuery(trpc.logs.list.queryOptions(filterInput));
 
-  const { data: logsCount } = useQuery({
-    ...trpc.logs.count.queryOptions({
+  const { data: logsCount } = useQuery(
+    trpc.logs.count.queryOptions({
       type: filterInput.type,
       status: filterInput.status,
       search: filterInput.search,
     }),
-    refetchInterval: 60_000,
-  });
+  );
 
-  const { data: tableSize } = useQuery({
-    ...trpc.logs.tableSize.queryOptions(),
-    refetchInterval: 60_000,
-  });
+  const { data: tableSize } = useQuery(trpc.logs.tableSize.queryOptions());
 
   const { data: purgePreview } = useQuery({
     ...trpc.logs.purgePreview.queryOptions(),
