@@ -15,6 +15,10 @@ import { stories, type Story } from "../../lib/stories";
 const DEFAULT_AVATAR =
   "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTK53dXUCVy1oGkRMuS0Lravl9JbQIxWFcNhtq";
 
+// Poster shown before a message-to-the-world video plays (same as admin).
+const VIDEO_POSTER =
+  "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqvTKsUwBYobifLHTavDVU7h0yBGlSc4z8XEQ";
+
 // Same rendering rules as admin components/hervoice/markdown.tsx:
 // blockquotes are poems (left border, serif lines, muted italic translations),
 // images become captioned figures.
@@ -200,12 +204,36 @@ const initial = post?.authorName
               <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
                 A Message to The World
               </p>
-              <blockquote class="mt-6 font-serif text-lg leading-relaxed italic md:text-xl">
-                &ldquo;{post.messageToWorld}&rdquo;
-              </blockquote>
-              <p class="text-primary mt-4 text-right text-sm font-semibold tracking-wide">
-                — {post.authorName}
-              </p>
+              {post.messageToWorld.startsWith("http") ? (
+                <div class="mt-6">
+                  <div class="overflow-hidden rounded-2xl">
+                    <video
+                      class="w-full"
+                      controls
+                      preload="metadata"
+                      poster={VIDEO_POSTER}
+                    >
+                      <source src={post.messageToWorld} type="video/mp4" />
+                    </video>
+                  </div>
+                  {post.authorName && (
+                    <p class="text-muted-foreground/70 mt-4 text-center text-sm italic">
+                      A message from {post.authorName} to the world
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <>
+                  <blockquote class="mt-6 font-serif text-lg leading-relaxed italic md:text-xl">
+                    &ldquo;{post.messageToWorld}&rdquo;
+                  </blockquote>
+                  {post.authorName && (
+                    <p class="text-primary mt-4 text-right text-sm font-semibold tracking-wide">
+                      — {post.authorName}
+                    </p>
+                  )}
+                </>
+              )}
             </div>
           )}
         </div>
