@@ -4,7 +4,7 @@ media:
 
 settings:
   # Live URL of this site. Enables the CMS live-preview panel.
-  baseUrl: http://localhost:4321
+  baseUrl: https://empowerher-7raz.vercel.app
   preview:
     # Route per content entry. Default is `/` for `home`, otherwise `/<name>`.
     # Only entries whose route differs from that default need an override here.
