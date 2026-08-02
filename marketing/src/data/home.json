@@ -183,8 +183,49 @@
     "eyebrow": "Trusted Partners & Supporters",
     "partners": [
       {
-        "name": "Afghan Girls Financial Assistance Fund",
-        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpavV7aqrM0zsm5gThJ2eDxZtjCFUdBGElvb1"
+        "name": "Right to Learn Afghanistan",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTBRQC7aZcQ1oEZ9sIXj8tePOrDbdN2iaU7v5q",
+        "link": "https://righttolearn.ca/"
+      },
+      {
+        "name": "NSHSS",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTjPNmNesfkIRBuYnTVcl8O9LdXP5103pNyJUt",
+        "link": "https://www.nshss.org/"
+      },
+      {
+        "name": "AGFAF",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpavV7aqrM0zsm5gThJ2eDxZtjCFUdBGElvb1",
+        "link": "/agfaf"
+      },
+      {
+        "name": "Amplify Afghan Women",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBzmSPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O9",
+        "link": "https://sites.google.com/view/amplifyafghans/home"
+      },
+      {
+        "name": "Sahar Education",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT0La8F8o1jbZo7DsLPidlGr6Uf2HKquxXJ3CN",
+        "link": "https://www.sahareducation.org/"
+      },
+      {
+        "name": "Girls Opportunity Alliance",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTVVN0CQ82WufQtTg5yH7OAp0KFlsjbkaYIPZ",
+        "link": "https://www.obama.org/programs/girls-opportunity-alliance/"
+      },
+      {
+        "name": "Mente Global",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTUekbWeMuHB63DFcWbZp7rAk9VUJPgitsO2Ca",
+        "link": "https://menteeglobal.org/"
+      },
+      {
+        "name": "Inanna",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTIznPr82WufQtTg5yH7OAp0KFlsjbkaYIPZB",
+        "link": "https://inanna.ca/"
+      },
+      {
+        "name": "Human Media",
+        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT2HJysqLQtJ7K2Z4UcWn3gCXRdBvVoY9Ohil8",
+        "link": "https://humanitasmedia.org/"
       }
     ]
   },

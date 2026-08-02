@@ -1,17 +1,16 @@
 ---
 // Ports components/marketing/about-us/partners.tsx (renders components/partners-section.tsx).
-// AGFAF is EmpowerHer's primary sponsor. Partner link is a fixed internal route.
+// Partner list is synced from the admin DB by scripts/sync-from-db.ts.
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
-  items: { name: string; image: string }[];
+  items: { name: string; image: string; link: string }[];
   /** CMS field path prefix for live-preview highlighting (e.g. "partners"). */
   cmsPath?: string;
 }
 const { eyebrow, items, cmsPath } = Astro.props;
-const link = "/agfaf";
 ---
 {items.length > 0 && (
   <section class="py-28 md:py-32">
@@ -28,7 +27,7 @@ const link = "/agfaf";
         <div class="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16">
           {items.map((p, i) => (
             <a
-              href={link}
+              href={p.link}
               target="_blank"
               rel="noopener noreferrer"
               title={p.name}

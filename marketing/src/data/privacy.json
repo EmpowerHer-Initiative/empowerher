@@ -5,42 +5,78 @@
   },
   "title": "Privacy",
   "description": "This Privacy Policy describes how EmpowerHer collects, uses, and protects participant information across its programs, workshops, publications, and platforms.",
-  "updated": "Last updated: Placeholder Date, 20XX",
+  "updated": "Last updated: June 28, 2026",
   "body": {
     "sections": [
       {
         "paragraphs": [
-          "This is placeholder privacy copy provided for layout purposes only. The text below is generic lorem-style legal filler and does not represent the actual privacy practices of any organization. Replace every section with reviewed policy language before publishing."
+          "EmpowerHer is committed to protecting the privacy of the Afghan women and girls who participate in its programs. This Privacy Policy describes the information we collect, how we use it, and the choices and protections available to participants across our programs, workshops, publication platforms, scholarships, events, and initiatives."
         ]
       },
       {
         "heading": "Information We Collect",
         "paragraphs": [
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. We may collect placeholder categories of information when you interact with our sample services, including the following mock examples:"
+          "EmpowerHer may collect information including:"
         ],
         "items": [
-          "Sample names and contact details",
-          "Placeholder application materials",
-          "Mock participation records",
-          "Illustrative submitted works"
+          "Names",
+          "Email addresses",
+          "Application materials",
+          "Educational information",
+          "Workshop participation records",
+          "Submitted writings and creative works"
         ]
       },
       {
-        "heading": "How We Use Information",
+        "heading": "How We Use Your Information",
         "paragraphs": [
-          "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Any information described here is used solely to demonstrate the visual layout of this document and carries no operational meaning."
+          "Information collected may be used for:"
+        ],
+        "items": [
+          "Program administration",
+          "Workshop coordination",
+          "Scholarship review",
+          "Publication opportunities",
+          "Communication regarding EmpowerHer activities"
         ]
       },
       {
         "heading": "Confidentiality",
         "paragraphs": [
-          "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. This placeholder clause stands in for a real confidentiality commitment and should be replaced."
+          "EmpowerHer will protect participant information and will not share personal data with third parties without consent, except when necessary for program administration or improvement of program operations. EmpowerHer is not responsible for unauthorized disclosure, sharing, or misuse of program materials or participant information by third parties or participants.",
+          "Participants should avoid sharing sensitive personal information during public workshops, events, or publications."
         ]
       },
       {
-        "heading": "Your Choices",
+        "heading": "Media and Publication Consent",
         "paragraphs": [
-          "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore. Contact details, opt-out mechanisms, and data-request procedures would appear here in a finalized policy."
+          "By participating in EmpowerHer programs and voluntarily submitting written work, photographs, or creative projects, participants grant EmpowerHer permission to:"
+        ],
+        "items": [
+          "Publish submitted work on EmpowerHer platforms.",
+          "Share participant achievements and success stories.",
+          "Promote EmpowerHer programs through websites, newsletters, reports, and social media."
+        ]
+      },
+      {
+        "heading": "Data Retention and Security",
+        "paragraphs": [
+          "EmpowerHer implements reasonable safeguards to protect participant data and retains information only as long as necessary for program administration and reporting purposes."
+        ]
+      },
+      {
+        "heading": "Modifications",
+        "paragraphs": [],
+        "items": [
+          "EmpowerHer reserves the right to modify this Privacy Policy at any time. Updated policies will be posted on official EmpowerHer platforms.",
+          "Continued participation in EmpowerHer programs constitutes acceptance of this policy."
+        ]
+      },
+      {
+        "heading": "Contact Us",
+        "paragraphs": [
+          "If you have questions about this Privacy Policy or our practices, contact us at:",
+          "EmpowerHer Initiative Email: info@empowerher-initiative.org"
         ]
       }
     ]

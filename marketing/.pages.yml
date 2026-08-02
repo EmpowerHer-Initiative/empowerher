@@ -169,6 +169,7 @@ content:
             fields:
               - { name: name, label: Name, type: string }
               - { name: image, label: Image, type: image }
+              - { name: link, label: Link, type: string, options: { type: url } }
       - name: newsletter
         label: Newsletter
         type: object
@@ -279,6 +280,7 @@ content:
             fields:
               - { name: name, label: Name, type: string }
               - { name: image, label: Image, type: image }
+              - { name: link, label: Link, type: string, options: { type: url } }
       - name: cta
         label: CTA
         type: object
@@ -555,32 +557,32 @@ content:
               - { name: authorPosition, label: Author position, type: string }
               - { name: authorBio, label: Author bio, type: text }
               - {
+                  name: authorInstagram,
+                  label: Author Instagram,
+                  type: string,
+                  options: { type: url },
+                }
+              - {
+                  name: authorFacebook,
+                  label: Author Facebook,
+                  type: string,
+                  options: { type: url },
+                }
+              - {
+                  name: authorLinkedin,
+                  label: Author LinkedIn,
+                  type: string,
+                  options: { type: url },
+                }
+              - {
                   name: messageToWorld,
                   label: Message to the world,
                   type: text,
                 }
               - name: content
-                label: Content blocks
-                type: object
-                list: true
-                fields:
-                  - name: type
-                    label: Block type
-                    type: select
-                    options:
-                      values: [p, poem]
-                  - { name: text, label: Paragraph text (for "p"), type: text }
-                  - name: lines
-                    label: Poem lines (for "poem")
-                    type: object
-                    list: true
-                    fields:
-                      - { name: value, label: Line, type: string }
-                      - {
-                          name: translation,
-                          label: Translation (optional),
-                          type: string,
-                        }
+                label: Content (markdown)
+                description: Story body as markdown. Blockquotes render as poems (italic = translation); images become captioned figures.
+                type: code
 
       - name: writing-contest
         label: Writing Contest

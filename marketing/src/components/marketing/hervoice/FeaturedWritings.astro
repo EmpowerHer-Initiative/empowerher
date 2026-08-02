@@ -1,9 +1,11 @@
 ---
-// Ports components/marketing/hervoice/featured-writings.tsx (+ writings-pager.tsx grid).
-// The source section is DB-fed (getHervoiceStories); here the stories are mocked
-// inline. Slugs match the hardcoded map in src/pages/hervoice/[slug].astro so every
-// card resolves. Six stories = one page, so no pagination controls render.
+// Ports components/marketing/hervoice/featured-writings.tsx (+ writings-pager.tsx).
+// Stories are synced from the admin DB by scripts/sync-from-db.ts. Like the
+// source's WritingsPager, cards paginate 6 per page — all cards stay in the DOM
+// and pages swap client-side so the listing stays fully static.
 import ArrowRight from "../../icons/ArrowRight.astro";
+import ChevronLeft from "../../icons/ChevronLeft.astro";
+import ChevronRight from "../../icons/ChevronRight.astro";
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
 
@@ -22,6 +24,17 @@ interface Props {
   cmsPath?: string;
 }
 const { eyebrow, heading, stories, cmsPath } = Astro.props;
+
+const PER_PAGE = 6;
+const totalPages = Math.max(1, Math.ceil(stories.length / PER_PAGE));
+const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+const btnBase =
+  "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent text-sm font-medium whitespace-nowrap transition-all outline-none select-none active:translate-y-px active:scale-95 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0";
+const ghost = "hover:bg-muted hover:text-foreground dark:hover:bg-muted/50";
+const iconSize = "size-8 [&_svg]:size-4";
+const smSize =
+  "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] [&_svg]:size-3.5";
 ---
 <section
   id="writings"
@@ -47,10 +60,12 @@ const { eyebrow, heading, stories, cmsPath } = Astro.props;
 
     {/* Editorial card grid */}
     <Reveal delay={80}>
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-stories-grid>
         {stories.map((story, i) => (
           <a
             href={`/hervoice/${story.slug}`}
+            data-story-card
+            hidden={i >= PER_PAGE}
             class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col overflow-hidden rounded-2xl border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl"
           >
             <div class="bg-muted relative aspect-[16/10] overflow-hidden">
@@ -93,6 +108,24 @@ const { eyebrow, heading, stories, cmsPath } = Astro.props;
       </div>
     </Reveal>
 
+    {totalPages > 1 && (
+      <div class="mt-10" data-stories-pager>
+        <div class="flex items-center justify-center gap-1">
+          <button type="button" data-prev disabled class={`${btnBase} ${ghost} ${iconSize}`}>
+            <ChevronLeft />
+          </button>
+          {pages.map((page) => (
+            <button type="button" data-page-btn={page} class={`${btnBase} ${smSize} min-w-7`}>
+              {page}
+            </button>
+          ))}
+          <button type="button" data-next class={`${btnBase} ${ghost} ${iconSize}`}>
+            <ChevronRight />
+          </button>
+        </div>
+      </div>
+    )}
+
     <Reveal class="mt-12 text-center">
       <a
         href="/hervoice/featured-writings-from-our-partners"
@@ -104,3 +137,68 @@ const { eyebrow, heading, stories, cmsPath } = Astro.props;
     </Reveal>
   </div>
 </section>
+
+<script>
+  const PER_PAGE = 6;
+  const GHOST = ["hover:bg-muted", "hover:text-foreground", "dark:hover:bg-muted/50"];
+  const OUTLINE = [
+    "border-border",
+    "bg-background",
+    "hover:bg-muted",
+    "hover:text-foreground",
+    "dark:border-input",
+    "dark:bg-input/30",
+    "dark:hover:bg-input/50",
+  ];
+
+  function initStoriesPager() {
+    const section = document.querySelector<HTMLElement>("#writings");
+    if (!section || section.dataset.pagerInit) return;
+    section.dataset.pagerInit = "1";
+
+    const cards = Array.from(
+      section.querySelectorAll<HTMLElement>("[data-story-card]")
+    );
+    const pageBtns = Array.from(
+      section.querySelectorAll<HTMLButtonElement>("[data-page-btn]")
+    );
+    const prev = section.querySelector<HTMLButtonElement>("[data-prev]");
+    const next = section.querySelector<HTMLButtonElement>("[data-next]");
+    if (!pageBtns.length) return;
+
+    const total = Math.max(1, Math.ceil(cards.length / PER_PAGE));
+    let current = 1;
+
+    const setVariant = (btn: HTMLButtonElement, active: boolean) => {
+      btn.classList.remove(...GHOST, ...OUTLINE);
+      btn.classList.add(...(active ? OUTLINE : GHOST));
+      btn.classList.toggle("pointer-events-none", active);
+    };
+
+    const render = () => {
+      cards.forEach((card, i) => {
+        card.hidden = Math.floor(i / PER_PAGE) + 1 !== current;
+      });
+      pageBtns.forEach((btn) =>
+        setVariant(btn, Number(btn.dataset.pageBtn) === current)
+      );
+      if (prev) prev.disabled = current === 1;
+      if (next) next.disabled = current === total;
+    };
+
+    const go = (page: number) => {
+      current = Math.min(Math.max(1, page), total);
+      render();
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    pageBtns.forEach((btn) =>
+      btn.addEventListener("click", () => go(Number(btn.dataset.pageBtn)))
+    );
+    prev?.addEventListener("click", () => go(current - 1));
+    next?.addEventListener("click", () => go(current + 1));
+
+    render();
+  }
+  document.addEventListener("astro:page-load", initStoriesPager);
+</script>

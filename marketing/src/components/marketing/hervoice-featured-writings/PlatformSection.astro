@@ -29,7 +29,7 @@ const PER_PAGE = 4;
 const totalPages = Math.max(1, Math.ceil(writings.length / PER_PAGE));
 
 // Page buttons are rendered once and toggled client-side, so list them all
-// (matches the source's <=7-page branch; mock data never exceeds that).
+// (matches the source's <=7-page branch; per-platform counts stay well under that).
 const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
 const btnBase =

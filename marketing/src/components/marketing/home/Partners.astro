@@ -1,20 +1,15 @@
 ---
 // Ports components/partners-section.tsx (rendered by home/partners.tsx).
-// STUB: the Next.js app loads partners from the database (getPartners()). Astro
-// has no DB yet, so the list is hardcoded — replace/extend when wiring a data
-// source. AGFAF is EmpowerHer's primary sponsor.
+// Partner list is synced from the admin DB by scripts/sync-from-db.ts.
 import Reveal from "./Reveal.astro";
 import { cmsField } from "../../../lib/cms";
 
 interface Props {
   eyebrow: string;
-  partners: { name: string; image: string }[];
+  partners: { name: string; image: string; link: string }[];
   cmsPath?: string;
 }
-const { eyebrow, partners: partnerList, cmsPath } = Astro.props;
-
-const PARTNER_STYLES = [{ link: "/agfaf" }];
-const partners = partnerList.map((p, i) => ({ ...p, ...PARTNER_STYLES[i] }));
+const { eyebrow, partners, cmsPath } = Astro.props;
 ---
 {partners.length > 0 && (
   <section class="py-28 md:py-32">

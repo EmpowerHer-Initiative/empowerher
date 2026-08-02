@@ -10,76 +10,324 @@
   },
   "writings": [
     {
-      "id": 1,
-      "title": "The Classroom I Carry With Me",
-      "description": "A seventeen-year-old from Kabul writes about teaching her younger sisters at home after the schools closed their doors.",
-      "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80",
-      "link": "https://www.nshss.org/",
-      "from": "NSHSS"
+      "id": 47,
+      "title": "A Person Lost Amon Millions",
+      "description": "In “A Person Lost Among Millions,” by Nadia Sakhiby (Nadia S.), an EmpowerHer student, the writer tells the emotional journey of a person searching for identity, belonging, and a sense of purpose. Through Irmak’s transformation from loneliness and self-doubt to finding healing through creativity and passion, the piece explores resilience, self-discovery, and the power of finding one’s own light.",
+      "image": "https://cdn.empowerher-initiative.org/featured-writings/55e1c079-e568-4305-b5d0-41c0121f6437.png",
+      "link": "http://inanna.ca/2026/07/21/a-person-lost-among-millions/",
+      "from": "Inanna Publications"
     },
     {
-      "id": 2,
-      "title": "Letters to the Girl I Used to Be",
-      "description": "Reflections on memory, loss, and the quiet courage of continuing to learn in secret.",
-      "image": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=1200&q=80",
-      "link": "https://www.nshss.org/",
-      "from": "NSHSS"
+      "id": 46,
+      "title": "Moonbay Town",
+      "description": "In “Moonbay Town,” by Mahtab E.B., an EmpowerHer student, the writer presents a magical and emotional story about life, mortality, and the search for meaning. Through the journey of Lara, a woman who fears losing the life she loves, the piece explores themes of acceptance, friendship, memory, and the beauty of cherishing each moment before it passes.",
+      "image": "https://cdn.empowerher-initiative.org/featured-writings/deace44e-0c07-450a-9dff-f17fd6c8f1f8.png",
+      "link": "https://inanna.ca/2026/07/22/moonbay-town/",
+      "from": "Inanna Publications"
     },
     {
-      "id": 3,
-      "title": "What the River Taught Me About Patience",
-      "description": "An essay on finding hope in the small rituals of a home that has become a school.",
-      "image": "https://images.unsplash.com/photo-1491841550275-ad7854e35ca1?auto=format&fit=crop&w=1200&q=80",
-      "link": "https://www.nshss.org/",
-      "from": "NSHSS"
+      "id": 45,
+      "title": "In Search of Tomorrow",
+      "description": "In “In Search of Tomorrow,” by Malika Haidari, an EmpowerHer student, the writer reflects on the importance of embracing the present despite uncertainty about the future. Through lyrical poetry and vivid imagery, the piece encourages readers to find hope, beauty, and purpose in everyday moments, reminding us that even in difficult times, today is a gift worth living.",
+      "image": "https://cdn.empowerher-initiative.org/featured-writings/f0189324-04a4-454c-b47e-cba4ffcfbe82.png",
+      "link": "https://inanna.ca/2026/07/23/in-search-of-tomorrow/",
+      "from": "Inanna Publications"
     },
     {
-      "id": 4,
-      "title": "A Notebook Full of Tomorrows",
-      "description": "One student describes the science lessons she records at night, dreaming of a laboratory she has never seen.",
-      "image": "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1200&q=80",
-      "link": "https://www.nshss.org/",
-      "from": "NSHSS"
+      "id": 44,
+      "title": "Should gender determine a person's freedom or future?",
+      "description": "In “Should Gender Determine a Person’s Freedom or Future?” by Nadia S., an EmpowerHer student, the writer argues that gender should never limit a person's opportunities, education, or ambitions. Through thoughtful examples and clear reasoning, the essay explores how equal rights empower individuals, strengthen communities, and create a more just and inclusive society.",
+      "image": "https://cdn.empowerher-initiative.org/featured-writings/ec8c8761-a132-4e76-9ba7-f8c5599b5788.png",
+      "link": "https://humanitasmedia.org/should-gender-determine-a-persons-freedom-or-future/",
+      "from": "Humanitas Media"
     },
     {
-      "id": 5,
-      "title": "The Weight and the Wings of Words",
-      "description": "A young poet on why she keeps writing even when no one outside her family will read the pages.",
-      "image": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1200&q=80",
-      "link": "https://www.nshss.org/",
-      "from": "NSHSS"
+      "id": 43,
+      "title": "Down the Road of Kabul",
+      "description": "In “Down the Road of Kabul,” by Mahtab E.B., an EmpowerHer student, the writer gives voice to the daily realities of Afghan women and girls living under Taliban rule. Through powerful poetry, she contrasts the world's dismissal of their suffering with the resilience and hope that continue to endure, affirming that while dreams may be delayed, they can never be silenced.",
+      "image": "https://cdn.empowerher-initiative.org/featured-writings/9da44128-4c0c-43d8-b284-1f5b51bd2443.png",
+      "link": "https://humanitasmedia.org/down-the-road-of-kabul/",
+      "from": "Humanitas Media"
     },
     {
-      "id": 6,
-      "title": "Between Two Windows",
-      "description": "A meditation on the view from home and the wider world she is determined to reach.",
-      "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80",
-      "link": "https://www.nshss.org/",
-      "from": "NSHSS"
+      "id": 42,
+      "title": "The girl who has never given up on her dreams",
+      "description": "In “The Girl Who Has Never Given Up on Her Dreams,” by Samana Rezaee, an EmpowerHer student, the writer reflects on losing her university education under Taliban rule while refusing to let go of her aspirations. Despite facing depression, health challenges, and repeated setbacks, she continues pursuing scholarships and learning opportunities, offering a powerful testament to resilience, hope, and the enduring belief that education can never truly be taken away.",
+      "image": "https://cdn.empowerher-initiative.org/featured-writings/00678d8b-0cc9-462e-beb3-d95c43a7e94a.png",
+      "link": "https://humanitasmedia.org/the-girl-who-has-never-given-up-on-her-dreams/",
+      "from": "Humanitas Media"
     },
     {
-      "id": 7,
-      "title": "We Are Still Here",
-      "description": "A defiant, tender account of building an underground network of girls who refuse to stop studying.",
-      "image": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80",
-      "link": "https://www.amplifyafghanwomen.org/",
+      "id": 41,
+      "title": "Familiar Stranger",
+      "description": "In “Familiar Stranger,” by Nargis Q., an EmpowerHer student, the writer explores the quiet strength of motherhood through a heartfelt conversation between a mother and her daughter. Moving between memories of hardship, war, displacement, and sacrifice, the story reveals how resilience is often born not from choice but from love, ultimately celebrating the unbreakable bond between a mother and her child.",
+      "image": "https://cdn.empowerher-initiative.org/featured-writings/f2625529-65dd-46cd-9601-2b67c947356c.png",
+      "link": "https://humanitasmedia.org/familiar-stranger/",
+      "from": "Humanitas Media"
+    },
+    {
+      "id": 40,
+      "title": "The Silent Bird",
+      "description": "In “The Story of a Silent Bird,” by Nadia S., an EmpowerHer student, the writer reflects on the profound loneliness of exile and the ache of longing for a home that no longer feels like home. Through the powerful image of a caged bird and rich natural symbolism, the poem explores themes of displacement, identity, and resilience, capturing the quiet emotional burden carried by those forced to leave everything behind.",
+      "image": "https://cdn.empowerher-initiative.org/featured-writings/485373e7-76b9-4bf4-9108-bff72f68d82c.png",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/writings-from-empowerher-part-6?authuser=0",
       "from": "Amplify Afghan Women"
     },
     {
-      "id": 8,
-      "title": "My Mother's Hands, My Own Voice",
-      "description": "A daughter traces the line between the generation that raised her and the future she intends to write.",
-      "image": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80",
-      "link": "https://www.amplifyafghanwomen.org/",
+      "id": 39,
+      "title": "Dreams Have No Gender",
+      "description": "In “Dreams Have No Gender,” by Razia H., an EmpowerHer student, the writer argues that education, employment, and personal freedom are fundamental rights that should never be determined by gender. Reflecting on the experiences of Afghan women and girls, the essay highlights the importance of equal opportunities and shows how empowering women strengthens families, communities, and society as a whole.",
+      "image": "https://cdn.empowerher-initiative.org/featured-writings/f2597372-703f-4e5d-b4b0-35d40b24ed99.png",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/writings-from-empowerher-part-6?authuser=0",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 38,
+      "title": "A Future Inspired by Ladyland",
+      "description": "In “A Future Inspired by Ladyland,” by Malika H., an EmpowerHer student, the writer reflects on Sultana's Dream and its powerful vision of a society built on equality and knowledge. Connecting the story's imagined world to the realities faced by Afghan women today, the piece explores freedom, justice, and the hope for a future where women and men stand side by side with equal rights and opportunities.",
+      "image": "https://cdn.empowerher-initiative.org/featured-writings/0ec8166e-7a56-452a-a38a-0948806e6e75.png",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/writings-from-empowerher-part-6?authuser=0",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 37,
+      "title": "Hope in the Dark",
+      "description": "In “Hope in the Dark,” by Mahtab E.B., an EmpowerHer student, the writer draws on recent events and lived experience to shed light on the growing restrictions imposed on Afghan women and girls. Blending personal reflection with a call to action, the piece highlights the resilience, courage, and unwavering hope of Afghan women while urging the international community to stand in solidarity with their fight for education, freedom, and human rights.",
+      "image": "https://cdn.empowerher-initiative.org/featured-writings/0f3dae1b-4998-49c8-91e7-06d6a69d2f08.png",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/writings-from-empowerher-part-6?authuser=0",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 36,
+      "title": "Silence in Herat and Kabul: A Story of Change, Fear, and Hope",
+      "description": "In “Silence in Herat and Kabul: A Story of Change, Fear, and Hope,” by Razia Hussaini, an EmpowerHer student, the writer offers a powerful reflection on the realities faced by Afghan women and girls under increasing restrictions. Through a personal perspective, the piece captures the fear, silence, and uncertainty experienced in Kabul and Herat while highlighting the resilience, courage, and enduring hope of those who continue to dream despite oppression.",
+      "image": "https://cdn.empowerher-initiative.org/featured-writings/6783406e-7d7d-4e2f-acd6-e32b89b060bb.png",
+      "link": "http://inanna.ca/2026/07/20/silenceinheratandkabul/",
+      "from": "Inanna Publications"
+    },
+    {
+      "id": 35,
+      "title": "Women, Life, Freedom: The Fight for Human Rights Under Taliban Rule",
+      "description": "This article documents the Taliban's escalating restrictions on women in Herat through firsthand accounts from EmpowerHer students, reports of protests and violence, and the lived experiences of Afghan women facing fear, uncertainty, and repression. It highlights the resilience of Afghan women while calling for sustained international support, advocacy, and access to education and opportunity.",
+      "image": "https://humanitasmedia.org/wp-content/uploads/2026/06/Women-Life-Freedom-The-Fight-for-Human-Rights-Under-Taliban-Rule-671x1024.jpg",
+      "link": "https://humanitasmedia.org/women-life-freedom-the-fight-for-human-rights-under-taliban-rule/",
+      "from": "Humanitas Media"
+    },
+    {
+      "id": 34,
+      "title": "What I Carried in My Voice",
+      "description": "In “What I Carried in My Voice,” by Nazifa Popal, Third Place Winner of the HerVoice 2026 Writing Contest, the writer reflects on a moment when language, experience, and quiet determination became tools of courage in the face of intimidation. Drawing on her work supporting women and communities in Afghanistan, the piece explores how strength is built through years of service, resilience, and perseverance rather than a single act of bravery. Through a powerful personal narrative, Nazifa honors the unseen forms of leadership that allow Afghan women to protect, uplift, and advocate for others even in the most challenging circumstances.",
+      "image": "https://www.nshss.org/media/bnrd1bhf/what-i-carried-in-my-voice.png?width=640&height=360&v=1dceeb59b6b6430&format=webp",
+      "link": "https://www.nshss.org/resources/blog/blog-posts/what-i-carried-in-my-voice/",
+      "from": "National Society of High School Scholars (NSHSS)"
+    },
+    {
+      "id": 33,
+      "title": "When did I feel that I am a strong girl?",
+      "description": "In “When Did I Feel That I Am a Strong Girl?” by Roqia Qasemi, Second Place Winner of the HerVoice 2026 Writing Contest, the writer reflects on the moments that shaped her understanding of strength as an Afghan girl living through violence, loss, and educational restrictions. Through powerful personal memories and unwavering determination, the piece explores how courage is forged in the face of injustice and how the pursuit of education becomes an act of resistance. Roqia’s story stands as a moving tribute to the resilience of Afghan girls who continue to rise, dream, and fight for their future despite immense obstacles.",
+      "image": "https://www.nshss.org/media/vknncugc/when-did-i-feel-that-i-am-a-strong-girl.png?width=640&height=360&v=1dceeb3a2051130&format=webp",
+      "link": "https://www.nshss.org/resources/blog/blog-posts/when-did-i-feel-that-i-am-a-strong-girl/",
+      "from": "National Society of High School Scholars (NSHSS)"
+    },
+    {
+      "id": 32,
+      "title": "Bread and a Red Apple",
+      "description": "In “The Girl Who Returned to School,” by the First Place Winner of the HerVoice 2026 Writing Contest, the writer recounts the story of a young Afghan girl who survives a brutal acid attack meant to silence her pursuit of education. Through memories of pain, perseverance, and hope, the piece explores the courage required to defy fear and continue learning in the face of violence. As the narrator grows into a teacher who secretly educates other girls, the story becomes a powerful tribute to resilience, resistance, and the enduring strength of Afghan women fighting for their right to learn.",
+      "image": "https://www.nshss.org/media/dwyjgggc/bread-and-a-red-apple.png?width=640&height=360&v=1dceeafb1aa0770&format=webp",
+      "link": "https://www.nshss.org/resources/blog/blog-posts/bread-and-a-red-apple/",
+      "from": "National Society of High School Scholars (NSHSS)"
+    },
+    {
+      "id": 31,
+      "title": "My Name Is Afghani",
+      "description": "In “My Name Is Afghani,” by S.R., an EmpowerHer student, the writer tells the haunting story of a woman whose life has been shaped by war, widowhood, and generational loss. Through Afghani’s quiet endurance, the piece reflects the suffering of countless Afghan women while honoring their resilience, sacrifice, and struggle to survive in a world that offers them little mercy.",
+      "image": "https://www.nshss.org/media/ylwljhlp/afghan-woman.jpg?width=640&height=360&v=1dcaa8d6d15d410&format=webp&quality=80",
+      "link": "https://www.nshss.org/resources/blog/blog-posts/my-name-is-afghani/",
+      "from": "National Society of High School Scholars (NSHSS)"
+    },
+    {
+      "id": 30,
+      "title": "Her Voice, Her Fight",
+      "description": "In “Her Voice, Her Fight,” by Halima Nazir, an EmpowerHer student, the writer reflects on a powerful encounter with a young Afghan woman whose quiet kindness revealed a story of sacrifice, resilience, and purpose. Through this personal narrative, Halima shows how education becomes an act of resistance, and how determined women continue to uplift others even while facing judgment, loss, and hardship.",
+      "image": "https://www.nshss.org/media/ncrh30wj/illustration.jpg?width=640&height=360&v=1dcab2661c13070&format=webp&quality=80",
+      "link": "https://www.nshss.org/resources/blog/blog-posts/her-voice-her-fight/",
+      "from": "National Society of High School Scholars (NSHSS)"
+    },
+    {
+      "id": 29,
+      "title": "Waiting for the Rainbow Behind the Dark Clouds",
+      "description": "In “Waiting for the Rainbow Behind the Dark Clouds,” by Halima Nazir, an EmpowerHer student, the writer tells a symbolic story of an Afghan girl who dares to seek knowledge despite fear and restriction. Through Laila’s journey, the piece shows how education becomes an act of hope and resistance, affirming that Afghan girls’ dreams endure even under injustice.",
+      "image": "https://www.nshss.org/media/tjglru45/illustration-afghan-women.jpg?width=640&height=360&v=1dcab2a23138450&format=webp&quality=80",
+      "link": "https://www.nshss.org/resources/blog/blog-posts/waiting-for-the-rainbow-behind-the-dark-clouds/",
+      "from": "National Society of High School Scholars (NSHSS)"
+    },
+    {
+      "id": 28,
+      "title": "The Bird Who Learned to Sing Without Sound",
+      "description": "In “The Bird Who Learned to Sing Without Sound” by Nazanin R, an EmpowerHer student, the writer uses allegory to explore silence, repression, and quiet resistance. Through the story of a bird that learns to express itself without sound, the piece reflects how muted voices can still create impact, showing that even restrained expression can carry meaning, influence others, and become a form of survival and defiance.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT9iKIVmYe4JPUruwi65vt0CYVFsO1cglLAGDp",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/the-bird-who-learned-to-sing-without-sound?authuser=0",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 27,
+      "title": "A Girl Made of Hope",
+      "description": "In “A Girl Made of Hope” by S.R., an EmpowerHer student, the writer tells the true story of Leila, an Afghan woman forced to flee her home to escape an imposed marriage and growing repression. Through quiet, powerful narration, the piece explores consent, displacement, and survival, showing how hope can exist not as safety or certainty, but as the courage to keep moving forward when everything familiar becomes a threat.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTUBKIk6MuHB63DFcWbZp7rAk9VUJPgitsO2Ca",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/a-girl-made-of-hope?authuser=0",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 26,
+      "title": "Me and a Memory",
+      "description": "In “Me and a Memory” by Zainab H, an EmpowerHer student, the writer reflects on a childhood memory centered around her brother’s bicycle and a lasting scar on her forehead. Through vivid storytelling, she captures innocence, joy, pain, and the quiet influence of patriarchal expectations, showing how a small personal memory can hold deeper truths about family, protection, and silence.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT8CmdOYlgkEDp7B3XRvCJzMmyWOSiao4I6cq9",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/me-and-a-memory?authuser=0",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 25,
+      "title": "Why is writing a powerful way to protest?",
+      "description": "In “Why Is Writing a Powerful Way to Protest?” by Zainab H, an EmpowerHer student, the writer explains how writing becomes a form of resistance when speech is restricted. She shows how written words preserve truth, turn personal pain into collective voice, and contribute to lasting social change, emphasizing writing as a powerful refusal of silence in the face of injustice.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqgqNRnBYobifLHTavDVU7h0yBGlSc4z8XEQn",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/why-is-writing-a-powerful-way-to-protest?authuser=0",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 24,
+      "title": "Invincible Dreams",
+      "description": "In “Invincible Dreams,” by Faryal Asadzai, an EmpowerHer student, the writer reflects on her childhood in Kabul, her dream of becoming a lawyer, and the moment that dream was disrupted by the ban on girls’ education. Through personal memories of school, fear, and loss, Faryal shows how injustice silenced her voice—but not her determination. She describes how writing, self-education, and resilience became new ways to resist and grow. Her piece affirms that although Afghan girls have been denied classrooms and opportunities, their ambitions remain alive, evolving, and unbreakable.",
+      "image": "https://www.nshss.org/media/htpfutn2/her-voice-img-5.png?width=640&height=360&v=1dc71253c3c84c0&format=webp&quality=80",
+      "link": "https://www.nshss.org/resources/blog/blog-posts/invincible-dreams/",
+      "from": "National Society of High School Scholars (NSHSS)"
+    },
+    {
+      "id": 23,
+      "title": "Hope Always Her Helper",
+      "description": "In this poem by Kawsar K, an EmpowerHer student, the writer tells the story of Sanam, a bright and determined Afghan girl whose dreams of studying law and psychology are threatened by Taliban oppression. Despite fear and hardship, Sanam refuses to surrender her hope. Through resilience, quiet strength, and dedication to learning, she becomes a symbol of courage, showing that even when dreams are attacked, the human spirit can continue to rise.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTh9iTh8ymYWNaVI2CGjn5RkZbu3BUS0i97AMX",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/hope-always-her-helper?authuser=0",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 22,
+      "title": "My Dream World",
+      "description": "In “My Dream World” by Zahra A, an EmpowerHer student, the writer imagines a peaceful and compassionate world where fear, violence, and exclusion do not exist. Through gentle descriptions of open education, mutual respect, harmony with nature, and everyday kindness, Zahra contrasts this dream with the realities many girls face today. The piece emphasizes dignity, freedom, and community, showing how imagination can inspire hope and guide the vision for a kinder and more just future.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTFHVfhji81Sgch3ByG9m45xzoRfbnkKwIXpZO",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/my-dream-world?authuser=0",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 21,
+      "title": "If the Taliban Didn’t Exist",
+      "description": "In “If the Taliban Didn’t Exist” by Arifa A, an EmpowerHer student, the writer imagines a free Afghanistan where girls can study, dress freely, and dream without fear. She envisions herself as a doctor, author, and mentor who heals her community through medicine, storytelling, and art. Through this imagined life, Arifa highlights what Afghan girls have been denied and affirms her belief that one day these dreams can become reality.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTHrdhxiHttPGlZm7LizXgbMhJYdWu6pKQCBn9",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/if-the-taliban-didnt-exist?authuser=0",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 20,
+      "title": "My Dream World",
+      "description": "In “My Dream World” by Asia R, an EmpowerHer student, the writer creates a vivid vision of a world defined by peace, freedom, and compassion. Through rich imagery of open schools, fearless communities, harmony with nature, and people-led governance, she contrasts this imagined world with the fear, silence, and limits of real life. The piece presents dreaming not as escape, but as a powerful act of hope and transformation, showing how imagination can guide efforts toward justice, kindness, and a more humane future.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTCixJ6Pp0xR3LuJK2fkyDlQSq5OVpmHz6CThE",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/my-dream-world_1?authuser=0",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 19,
+      "title": "Online Education and the Fight for a Future",
+      "description": "In her powerful article Online Education and the Fight for a Future, Haya — an EmpowerHer student — reflects on the resilience of Afghan girls pursuing education in secret. She highlights how online learning has become a form of resistance and hope, showing that even behind closed doors, dreams of leadership, change, and freedom continue to grow.",
+      "image": "https://www.nshss.org/media/wgxo3nrb/girl-next-to-window.jpg?width=640&height=360&v=1dc32f91f7e03f0&format=webp&quality=80",
+      "link": "https://www.nshss.org/resources/blog/blog-posts/online-education-and-the-fight-for-a-future/",
+      "from": "National Society of High School Scholars (NSHSS)"
+    },
+    {
+      "id": 18,
+      "title": "Alkahest",
+      "description": "In “Alkahest” by Asma H, an EmpowerHer student, the writer shares her dream of becoming a pilot and her belief that knowledge, like alkahest, can’t be destroyed. Despite Taliban bans, she continued studying in secret, finding strength and hope in learning. Her story shows that even when schools close, the power of education and determination remain unbreakable.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfRmzu73C8OG5vkbyTeNds9rYucAtpJg0PMV7",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/writing-from-empowerher-3?authuser=1",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 17,
+      "title": "The Girl with the Borrowed Light",
+      "description": "In “The Girl with the Borrowed Light” by Zarghona N, an EmpowerHer student, the story follows Laila, a 16-year-old Afghan girl who continues learning in secret despite school bans. Using a borrowed phone and weak internet, she studies online and teaches her younger sister, turning her small, dark room into a place of hope. Through determination and courage, Laila becomes a symbol of resilience—showing that even in darkness, education and hope cannot be taken away.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT4sck5FSxLP0HVtXjpzDWZR85f7vGSgA1FduQ",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/writing-from-empowerher-3?authuser=1",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 16,
+      "title": "Why does empowering women matter?",
+      "description": "In “Why Does Empowering Women Matter?” by Sohaila S, an EmpowerHer student, the writer explains that empowering women strengthens societies through education, healthcare, and leadership. She highlights Afghan women’s struggles under oppression yet praises their courage to keep fighting for freedom. Sohaila calls for unity and support, reminding us that empowering women benefits everyone and builds a more just and hopeful future.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT38knrnKpPsIbjXnuoAM3O2JygVY8KzGFtD6k",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/writing-from-empowerher-3?authuser=1",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 15,
+      "title": "What if the Taliban Didn’t Exist?",
+      "description": "In “What if the Taliban Didn’t Exist?” by Farzana A, an EmpowerHer student, the writer imagines a peaceful Afghanistan where girls study freely, families live without fear, and dreams thrive. She contrasts this vision with the harsh reality under Taliban rule but ends with hope, showing that despite oppression, Afghans still hold strong dreams for freedom and a brighter future.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT0La06tY1jbZo7DsLPidlGr6Uf2HKquxXJ3CN",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/writing-from-empowerher-3?authuser=1",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 13,
+      "title": "How Education and Art Empower Afghan Girls",
+      "description": "In this piece, EmpowerHer Creative Arts Workshop mentor and Afghan student-artist Sabira Hussaini reflects on how education and art empower Afghan girls. Through her painting Omulbanin: The Girl Who Dreamed of Harvard and her work with EmpowerHer, she honors lost dreams while inspiring girls to believe in their power to create change.",
+      "image": "https://www.nshss.org/media/0b1hmzo4/sabira-hussani-art.png?width=640&height=360&v=1dc228d45c7d710&format=webp&quality=80",
+      "link": "https://www.nshss.org/resources/blog/blog-posts/the-power-of-dreams-how-education-and-art-empower-afghan-girls/",
+      "from": "National Society of High School Scholars (NSHSS)"
+    },
+    {
+      "id": 12,
+      "title": "A Bridge Between Two Worlds",
+      "description": "In “A Bridge Between Two Worlds” by Zahra A, an EmpowerHer student, she drifts between dream and reality, imagining a peaceful world where mothers sing lullabies, fathers laugh with their children, and stories replace war. Waking to the harshness of her own reality, she finds strength not in escape but in resolve—to write, to speak, and to build a bridge from dreams to a future where Afghan children can smile again.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT56kEagAWxDjwpl6zcWuZFSE0gC1TOnBMHdPh",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/writings-from-empowerher-part-2?authuser=0",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 11,
+      "title": "In another time, I was…",
+      "description": "In “In Another Time, I Was…” by Suhaila N, an EmpowerHer student, she imagines being transported from present-day Afghanistan into the ancient Kushan Empire, where women were artists, writers, and advisors. Through this journey, she reflects on the courage of Afghan girls today, who resist injustice with pens instead of swords. Blending history, imagination, and present struggles, her story honors the enduring strength of Afghan women and reminds us that their voices must never be forgotten.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTCsBIywp0xR3LuJK2fkyDlQSq5OVpmHz6CThE",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/writings-from-empowerher-part-2?authuser=0",
+      "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 10,
+      "title": "If the Taliban Had Never Existed",
+      "description": "In “If the Taliban Had Never Existed” by Sakhydadi, an EmpowerHer student, she imagines an Afghanistan free of fear, where girls like Samira can study, dream, and build futures without restriction. Through her hopeful narrative, Samira contrasts the freedom of this imagined world with the painful reality of generations denied education and dignity under Taliban rule. The piece is both a vision of what could have been and a call to keep alive the dream of a peaceful, inclusive Afghanistan where no voice is silenced and no dream forbidden.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTVlV0WA82WufQtTg5yH7OAp0KFlsjbkaYIPZ",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/writings-from-empowerher-part-1?authuser=0",
       "from": "Amplify Afghan Women"
     },
     {
       "id": 9,
-      "title": "The Color of Resilience",
-      "description": "On painting, protest, and the small acts of beauty that keep a community together.",
-      "image": "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?auto=format&fit=crop&w=1200&q=80",
-      "link": "https://www.amplifyafghanwomen.org/",
+      "title": "The Girl from Kabul: A Story of Words and Wounds",
+      "description": "In this powerful story, Sadaf A, an EmpowerHer student, portrays the journey of Sahar, a young Afghan girl whose dreams of becoming a writer are shattered when a tragedy in Kabul takes her entire family. Struggling through grief, exile, and silence, Sahar finds healing in words. Her writing becomes a voice for thousands of Afghan girls and families silenced by war. The Girl from Kabul is a testament to how storytelling can transform suffering into strength and loss into a legacy that moves the world.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTCNVteXp0xR3LuJK2fkyDlQSq5OVpmHz6CThE",
+      "link": "https://sites.google.com/view/amplifyafghans/women-and-society/writings-from-empowerher-part-1?authuser=0",
       "from": "Amplify Afghan Women"
+    },
+    {
+      "id": 8,
+      "title": "Leading with Resilience: My Journey as an Afghan Student and Advocate",
+      "description": "In “Leading with Resilience: My Journey as an Afghan Student and Advocate,” Mahdi Rahimi reflects on his path from Afghanistan to the United States, navigating displacement, cultural adaptation, and new opportunities. Through personal stories of hardship and determination, he shares lessons on resilience, advocacy, and the power of education. Highlighting the importance of taking initiative, building community, and staying true to one’s mission, Mahdi encourages young leaders to transform challenges into opportunities for impact and empowerment.",
+      "image": "https://www.nshss.org/media/03nk1qj0/afghan-students-2025.jpg?width=640&height=360&v=1dc107735d0c7e0&format=webp&quality=80",
+      "link": "https://www.nshss.org/resources/blog/blog-posts/leading-with-resilience-my-journey-as-an-afghan-student-and-advocate/",
+      "from": "National Society of High School Scholars (NSHSS)"
+    },
+    {
+      "id": 7,
+      "title": "Building Windows Where They Built Walls",
+      "description": "In “Building Windows Where They Built Walls,” Nahid Karimi shares her journey from losing her freedom under the Taliban to co-founding EmpowerHer, an organization dedicated to Afghan girls’ education and empowerment. Blending memory, resilience, and poetry, she gives voice to the struggles of women silenced in Afghanistan while opening windows of hope for their future. Her story is not only one of survival but of transformation—turning pain into purpose, and personal loss into a movement that inspires girls to reclaim their voices, pursue education, and imagine a world where their dreams are no longer bound by walls.",
+      "image": "https://www.nshss.org/media/vymjdyup/afghan-girl_2025.png?width=640&height=360&v=1dbfa899b327380&format=webp&quality=80",
+      "link": "https://www.nshss.org/resources/blog/blog-posts/building-windows-where-they-built-walls/",
+      "from": "National Society of High School Scholars (NSHSS)"
     }
   ]
 }

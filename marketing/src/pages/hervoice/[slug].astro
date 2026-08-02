@@ -1,9 +1,10 @@
 ---
-// Ports app/(marketing)/hervoice/[slug]/page.tsx (mock content only).
-// Source reads DB/MDX stories; here stories come from Pages CMS
-// (src/data/hervoice-stories.json) and getStaticPaths() builds one page per
-// entry. Slugs must include the ones the home contest cards + featured-writings
-// grid link to.
+// Ports app/(marketing)/hervoice/[slug]/page.tsx.
+// Source reads DB/MDX stories; here stories come from
+// src/data/hervoice-stories.json (populated by scripts/sync-from-db.ts) and
+// getStaticPaths() builds one page per entry. Slugs must include the ones the
+// home contest cards + featured-writings grid link to.
+import { marked } from "marked";
 import Layout from "../../layouts/Layout.astro";
 import ArrowLeft from "../../components/icons/ArrowLeft.astro";
 import Instagram from "../../components/icons/Instagram.astro";
@@ -14,10 +15,6 @@ import storyData from "../../data/hervoice-stories.json";
 const DEFAULT_AVATAR =
   "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTK53dXUCVy1oGkRMuS0Lravl9JbQIxWFcNhtq";
 
-type Block =
-  | { type: "p"; text: string }
-  | { type: "poem"; lines: { value: string; translation?: string }[] };
-
 type Story = {
   slug: string;
   title: string;
@@ -26,15 +23,33 @@ type Story = {
   imageAlt?: string;
   imageCredit?: string;
   date: string;
-  authorName: string;
+  authorName?: string;
   authorBio?: string;
   authorPosition?: string;
   authorInstagram?: string;
   authorFacebook?: string;
   authorLinkedin?: string;
   messageToWorld?: string;
-  content: Block[];
+  content: string;
 };
+
+// Same rendering rules as admin components/hervoice/markdown.tsx:
+// blockquotes are poems (left border, serif lines, muted italic translations),
+// images become captioned figures.
+marked.use({
+  gfm: true,
+  renderer: {
+    blockquote({ tokens }) {
+      return `<blockquote class="not-prose border-primary/20 text-foreground [&_em]:text-muted-foreground/60 my-10 space-y-6 border-l-2 pl-6 font-serif text-lg leading-relaxed md:pl-8 md:text-xl [&_em]:ml-3 [&_em]:text-sm [&_em]:italic">${this.parser.parse(tokens)}</blockquote>`;
+    },
+    image({ href, text }) {
+      const caption = text
+        ? `<figcaption class="text-muted-foreground/60 mt-3 text-center text-sm">${text}</figcaption>`
+        : "";
+      return `<figure class="my-8"><img src="${href}" alt="${text ?? ""}" class="w-full rounded-2xl object-cover" loading="lazy" decoding="async" />${caption}</figure>`;
+    },
+  },
+});
 
 export function getStaticPaths() {
   return (storyData.stories as unknown as Story[]).map((s) => ({
@@ -44,6 +59,7 @@ export function getStaticPaths() {
 }
 
 const { post } = Astro.props as { post: Story };
+const contentHtml = marked.parse(post.content ?? "") as string;
 
 const socials = post
   ? [
@@ -53,7 +69,9 @@ const socials = post
     ].filter((s) => s.href)
   : [];
 
-const initial = post ? post.authorName.trim().charAt(0).toUpperCase() : "";
+const initial = post?.authorName
+  ? post.authorName.trim().charAt(0).toUpperCase()
+  : "";
 ---
 {post && (
   <Layout title={post.title} description={post.description}>
@@ -84,6 +102,7 @@ const initial = post ? post.authorName.trim().charAt(0).toUpperCase() : "";
             <p class="text-muted-foreground/60 text-sm">{post.date}</p>
 
             {/* Author card — popover reveals on hover */}
+            {post.authorName && (
             <div class="group/author relative">
               <button
                 type="button"
@@ -151,6 +170,7 @@ const initial = post ? post.authorName.trim().charAt(0).toUpperCase() : "";
                 )}
               </div>
             </div>
+            )}
           </div>
         </div>
       </div>
@@ -188,26 +208,10 @@ const initial = post ? post.authorName.trim().charAt(0).toUpperCase() : "";
     <section class="pb-28 md:pb-40">
       <div class="container">
         <div class="mx-auto max-w-3xl">
-          <div class="text-foreground space-y-7 text-base leading-[1.9]">
-            {post.content.map((block) =>
-              block.type === "poem" ? (
-                <blockquote class="border-primary/20 text-foreground my-10 space-y-1 border-l-2 pl-6 md:pl-8">
-                  {block.lines.map((line) => (
-                    <p class="font-serif text-lg leading-relaxed md:text-xl">
-                      <span>{line.value}</span>
-                      {line.translation && (
-                        <span class="text-muted-foreground/60 ml-3 text-sm italic">
-                          {line.translation}
-                        </span>
-                      )}
-                    </p>
-                  ))}
-                </blockquote>
-              ) : (
-                <p>{block.text}</p>
-              )
-            )}
-          </div>
+          <div
+            class="prose-theme prose text-base leading-[1.9]"
+            set:html={contentHtml}
+          />
 
           {post.messageToWorld && (
             <div class="border-primary/20 bg-card mt-16 rounded-3xl border p-8 md:p-10">
