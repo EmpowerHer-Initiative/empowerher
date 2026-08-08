@@ -80,7 +80,7 @@ const EmailCell = ({
 
   return (
     <Link
-      href={`/admin/logs?search=${encodeURIComponent(rejectedStudent.email)}`}
+      href={`/logs?search=${encodeURIComponent(rejectedStudent.email)}`}
       className={buttonVariants({ size: "sm" })}
     >
       View email

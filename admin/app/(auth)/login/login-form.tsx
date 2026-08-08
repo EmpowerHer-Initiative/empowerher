@@ -28,7 +28,7 @@ const formSchema = z.object({
 export const LoginForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const destination = searchParams.get("callbackUrl") ?? "/";
+  const destination = searchParams.get("callbackUrl") ?? "/users";
 
   const { data: user } = useCurrentUser();
 
@@ -49,7 +49,7 @@ export const LoginForm = () => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     signin.mutate(values, {
       onSuccess: () => {
-        router.push(destination);
+        router.replace(destination);
       },
       onError: (error) => {
         form.setError("email", { message: error.message });

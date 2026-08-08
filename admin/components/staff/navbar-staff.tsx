@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useIsAdmin } from "@/services/auth/hooks/use-role";
 
+import { LogoutButton } from "@/components/logout-button";
+
 const links: { label: string; href: string; adminOnly?: boolean }[] = [
   { label: "Accepted Students", href: "/staff/students" },
   { label: "Rejected Students", href: "/staff/rejected-students" },
@@ -35,13 +37,14 @@ export const NavbarStaff = () => {
           ))}
         {isAdmin && (
           <Link
-            href="/admin"
+            href="/"
             className="text-muted-foreground hover:text-foreground inline-block border-b border-transparent p-3 text-sm transition-[colors] duration-200"
           >
             Admin →
           </Link>
         )}
       </div>
+      <LogoutButton size="sm" className="ml-auto shrink-0" />
     </div>
   );
 };

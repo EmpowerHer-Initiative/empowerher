@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import { authClient } from "@/services/auth/auth-client";
 import { useCurrentUser } from "@/services/auth/hooks/use-user";
 import { queryClient, useTRPC } from "@/services/trpc/client";
-import { RouterOutputs } from "@/services/trpc/routers/_app";
 
 const useSignup = () => {
   const trpc = useTRPC();
@@ -54,7 +53,6 @@ const useSignup = () => {
  * @returns UseMutationResult for sign-in operation
  */
 const useSignin = () => {
-  const router = useRouter();
   const trpc = useTRPC();
 
   return useMutation({
@@ -68,44 +66,18 @@ const useSignin = () => {
         throw new Error(response.error.message || response.error.statusText);
       }
 
-      const { data, error } = await authClient.getSession();
-
-      if (error) {
-        throw new Error(error.message || error.statusText);
-      }
-
-      return data;
+      // signIn.email already sets the session cookie and returns the user.
+      // Skip a second getSession() round-trip here — it only added latency
+      // before the redirect. The dashboard's own server-side session check
+      // (and the getCurrent query below) will read the fresh cookie.
+      return response.data;
     },
-    onSuccess: (response) => {
-      router.refresh();
-      if (response) {
-        queryClient.setQueryData(trpc.users.getCurrent.queryKey(), () => {
-          const data: RouterOutputs["users"]["getCurrent"] = {
-            session: {
-              id: response.session.id,
-              createdAt: response.session.createdAt.toISOString(),
-              updatedAt: response.session.updatedAt.toISOString(),
-              userId: response.session.userId,
-              expiresAt: response.session.expiresAt.toISOString(),
-              token: response.session.token,
-              ipAddress: response.session.ipAddress,
-              userAgent: response.session.userAgent,
-            },
-            user: {
-              id: response.user.id,
-              createdAt: response.user.createdAt.toISOString(),
-              updatedAt: response.user.updatedAt.toISOString(),
-              email: response.user.email,
-              emailVerified: response.user.emailVerified,
-              name: response.user.name,
-              image: response.user.image,
-              metadata: response.user.metadata,
-            },
-          };
-
-          return data;
-        });
-      }
+    onSuccess: () => {
+      // Refetch the current user in the background so navbar/UserControl
+      // pick up the new session without blocking the redirect.
+      queryClient.invalidateQueries({
+        queryKey: trpc.users.getCurrent.queryKey(),
+      });
     },
     onError: (error) => {
       toast.error(error.message || "Sign in failed");

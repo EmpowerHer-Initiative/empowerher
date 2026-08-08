@@ -108,7 +108,7 @@ const EmailCell = ({ student }: { student: Student }) => {
 
   return (
     <Link
-      href={`/admin/logs?search=${encodeURIComponent(student.email ?? "")}`}
+      href={`/logs?search=${encodeURIComponent(student.email ?? "")}`}
       className={buttonVariants({ size: "sm" })}
     >
       View email

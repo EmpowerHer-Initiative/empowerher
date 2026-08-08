@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -5,16 +6,12 @@ import { cn } from "@/lib/utils";
 import { auth } from "@/services/auth/auth";
 
 import { AccessDenied } from "@/components/access-denied";
-import { NavbarStaff } from "@/components/staff/navbar-staff";
-import { PeriodProvider } from "@/components/staff/period-context";
-import { PeriodSwitcher } from "@/components/staff/period-switcher";
+import { NavbarAdmin } from "@/components/admin/navbar-admin";
 import { UserControl } from "@/components/user-control";
 
-export default async function StaffLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import AdminLoading from "./loading";
+
+async function AdminGuard({ children }: { children: React.ReactNode }) {
   const user = await auth.api.getSession({
     headers: await headers(),
   });
@@ -23,10 +20,23 @@ export default async function StaffLayout({
     redirect("/login");
   }
 
-  if (user.user.role !== "admin" && user.user.role !== "staff") {
-    return <AccessDenied area="staff" role={user.user.role} />;
+  if (user.user.role !== "admin") {
+    return <AccessDenied area="admin" role={user.user.role} />;
   }
 
+  return (
+    <>
+      <UserControl />
+      {children}
+    </>
+  );
+}
+
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div
       className={cn(
@@ -34,12 +44,10 @@ export default async function StaffLayout({
         "[&_h1]:text-foreground [&_h1]:mb-8 [&_h1]:text-4xl [&_h1]:font-bold"
       )}
     >
-      <PeriodProvider>
-        <UserControl />
-        <NavbarStaff />
-        {children}
-        <PeriodSwitcher />
-      </PeriodProvider>
+      <NavbarAdmin />
+      <Suspense fallback={<AdminLoading />}>
+        <AdminGuard>{children}</AdminGuard>
+      </Suspense>
     </div>
   );
 }

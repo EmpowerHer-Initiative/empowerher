@@ -6,6 +6,7 @@ import { ArrowRight, Mail, ShieldAlert, UserCog, Users } from "lucide-react";
 import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
+import { LogoutButton } from "@/components/logout-button";
 import { buttonVariants } from "@/components/ui/button";
 
 type Area = "admin" | "staff";
@@ -74,6 +75,11 @@ export function AccessDenied({
           account. Here&apos;s who it&apos;s for:
         </p>
 
+        <p className="text-muted-foreground/80 mx-auto mt-3 max-w-md text-sm leading-relaxed">
+          If your access was just changed, log out and back in — your account can
+          take up to a minute to reflect the latest permissions.
+        </p>
+
         <div className="mt-8 space-y-3 text-left">
           {rows.map((row) => (
             <div
@@ -135,9 +141,7 @@ export function AccessDenied({
             <Mail className="size-4" />
             Contact us
           </a>
-          <Link href="/" className={buttonVariants({ variant: "ghost" })}>
-            Back home
-          </Link>
+          <LogoutButton variant="ghost" />
         </div>
       </div>
     </div>

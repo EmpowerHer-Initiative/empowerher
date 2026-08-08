@@ -19,12 +19,17 @@ export const proxy = async (request: Request) => {
 
   const betterAuthSession = await isAuthenticated();
 
-  const isProtectedRoute =
-    pathname.startsWith("/admin") ||
-    pathname.startsWith("/staff") ||
-    pathname === "/settings";
+  // Everything is protected except the auth pages and the post-deletion
+  // confirmation page. No session cookie → send the user to /login.
+  const PUBLIC_ROUTES = [
+    "/login",
+    "/signup",
+    "/reset-password",
+    "/account-deleted",
+  ];
+  const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
 
-  if (isProtectedRoute && !betterAuthSession) {
+  if (!isPublicRoute && !betterAuthSession) {
     const loginPath = `/login?callbackUrl=${pathname}`;
     return NextResponse.redirect(new URL(loginPath, nextRequest.url));
   }
