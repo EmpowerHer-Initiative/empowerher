@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/admin",
+      "destination": "https://admin.empowerher-initiative.org",
+      "permanent": false
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "https://admin.empowerher-initiative.org/:path*",
+      "permanent": false
+    }
+  ]
+}
