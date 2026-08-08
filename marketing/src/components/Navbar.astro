@@ -37,7 +37,7 @@ const isHome = Astro.url.pathname === "/";
   <div class="container flex h-16 items-center justify-between lg:h-20">
     <a href="/" class="nav-brand flex items-center gap-2 transition-colors duration-300">
       <Logo class="size-12" />
-      <span class="font-serif text-xl">EmpowerHer Initiative</span>
+      <span class="font-serif text-xl leading-[1]">EmpowerHer<br class="md:hidden" /> Initiative</span>
     </a>
 
     <div class="hidden items-center gap-6 lg:flex">
@@ -78,10 +78,16 @@ const isHome = Astro.url.pathname === "/";
       Get Involved
     </a>
 
-    <button id="nav-toggle" class="relative z-50 flex size-10 flex-col items-center justify-center gap-1.5 lg:hidden" aria-label="Menu">
-      <span class="bar bar-1 h-[1.5px] w-5 rounded-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"></span>
-      <span class="bar bar-2 h-[1.5px] w-5 rounded-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"></span>
-    </button>
+    <div class="flex items-center gap-3 lg:hidden">
+      <a href="/get-involved" data-paths="/get-involved" class="nav-cta inline-flex rounded-full px-4 py-2 text-xs font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97]">
+        Get Involved
+      </a>
+
+      <button id="nav-toggle" class="relative z-50 flex size-10 flex-col items-center justify-center gap-1.5" aria-label="Menu">
+        <span class="bar bar-1 h-[1.5px] w-5 rounded-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"></span>
+        <span class="bar bar-2 h-[1.5px] w-5 rounded-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"></span>
+      </button>
+    </div>
   </div>
 </nav>
 
@@ -172,6 +178,9 @@ const isHome = Astro.url.pathname === "/";
   .site-nav[data-state="scrolled"] .nav-cta { background: var(--color-primary); color: var(--color-primary-foreground); }
   .site-nav[data-state="scrolled"] .nav-cta:hover { background: color-mix(in oklab, var(--color-primary) 90%, transparent); }
   .site-nav .nav-cta.active { box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-primary) 45%, transparent); }
+  /* Mobile menu open: nav sits over the white overlay, so the top-state white
+     button would vanish — force the primary fill. */
+  .site-nav.menu-open .nav-cta { background: var(--color-primary); color: var(--color-primary-foreground); }
 
   /* Hamburger bars */
   .site-nav[data-state="top"] .bar { background: #fff; }
