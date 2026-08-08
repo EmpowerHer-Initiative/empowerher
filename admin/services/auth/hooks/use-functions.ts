@@ -171,7 +171,6 @@ const useResetPassword = () => {
  * @returns UseMutationResult for email verification operation
  */
 const useVerifyEmail = (options?: { onSuccess?: () => void }) => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const { data: user } = useCurrentUser();
 
@@ -203,8 +202,9 @@ const useVerifyEmail = (options?: { onSuccess?: () => void }) => {
         options.onSuccess();
       } else {
         const callbackUrl = searchParams.get("callbackUrl") ?? "/";
+        // Hard navigation so the destination reloads with the verified session.
         setTimeout(() => {
-          router.push(callbackUrl);
+          window.location.href = callbackUrl;
         }, 2000);
       }
     },

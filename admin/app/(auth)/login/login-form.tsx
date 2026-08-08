@@ -50,7 +50,9 @@ export const LoginForm = () => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     signin.mutate(values, {
       onSuccess: () => {
-        router.replace(DESTINATION);
+        // Hard navigation (not router.replace) so the dashboard reloads with
+        // the fresh session cookie instead of a stale client-side view.
+        window.location.href = DESTINATION;
       },
       onError: (error) => {
         form.setError("email", { message: error.message });
