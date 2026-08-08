@@ -27,7 +27,7 @@ export default function SettingsPage() {
   }
 
   if (!user.data) {
-    router.replace("/login?callbackUrl=/settings");
+    router.replace("/login");
     return null;
   }
 

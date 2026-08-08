@@ -30,8 +30,7 @@ export const proxy = async (request: Request) => {
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
 
   if (!isPublicRoute && !betterAuthSession) {
-    const loginPath = `/login?callbackUrl=${pathname}`;
-    return NextResponse.redirect(new URL(loginPath, nextRequest.url));
+    return NextResponse.redirect(new URL("/login", nextRequest.url));
   }
 
   const hasVerifyEmailInParams =
@@ -61,10 +60,7 @@ export const proxy = async (request: Request) => {
       // On DB error, fall back to cookie-only behavior to avoid lockout
     }
 
-    const callbackUrl = nextRequest.nextUrl.searchParams.get("callbackUrl");
-    const destination =
-      callbackUrl && callbackUrl.startsWith("/") ? callbackUrl : "/";
-    return NextResponse.redirect(new URL(destination, nextRequest.url));
+    return NextResponse.redirect(new URL("/", nextRequest.url));
   }
 
   return NextResponse.next();

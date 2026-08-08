@@ -18,7 +18,7 @@ export default async function SettingsLayout({ children }: Props) {
     headers: await headers(),
   });
 
-  if (!session) redirect("/login?callbackUrl=/settings");
+  if (!session) redirect("/login");
 
   return (
     <div className="mx-auto max-w-3xl gap-8 px-8 pt-20">

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -18,7 +18,10 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 import { Wrapper } from "@/components/auth/wrapper";
+
+const DESTINATION = "/";
 
 const formSchema = z.object({
   email: z.email(),
@@ -27,14 +30,12 @@ const formSchema = z.object({
 
 export const LoginForm = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const destination = searchParams.get("callbackUrl") ?? "/users";
 
   const { data: user } = useCurrentUser();
 
   useEffect(() => {
-    if (user) router.replace(destination);
-  }, [user, router, destination]);
+    if (user) router.replace(DESTINATION);
+  }, [user, router]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,13 +50,18 @@ export const LoginForm = () => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     signin.mutate(values, {
       onSuccess: () => {
-        router.replace(destination);
+        router.replace(DESTINATION);
       },
       onError: (error) => {
         form.setError("email", { message: error.message });
       },
     });
   };
+
+  // Show a full-screen spinner from the moment the user submits until the
+  // dashboard takes over. On error the mutation resets to idle, so this is
+  // unmounted (removed from the DOM) and the form + error are shown again.
+  const isRedirecting = signin.isPending || signin.isSuccess;
 
   return (
     <div className="flex min-h-dvh items-center justify-center bg-gradient-to-b from-[#f0f8ff] via-white to-white p-8">
@@ -122,18 +128,17 @@ export const LoginForm = () => {
         </form>
         <div className="text-muted-foreground text-sm">
           Don&apos;t have an account?{" "}
-          <Link
-            href={
-              destination !== "/"
-                ? `/signup?callbackUrl=${destination}`
-                : "/signup"
-            }
-            className="text-primary underline"
-          >
+          <Link href="/signup" className="text-primary underline">
             Sign up
           </Link>
         </div>
       </Wrapper>
+
+      {isRedirecting && (
+        <div className="bg-background/80 fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-sm">
+          <Spinner className="text-primary size-16" />
+        </div>
+      )}
     </div>
   );
 };
