@@ -10,7 +10,7 @@ const ROOT = resolve(import.meta.dirname, "..");
 const FEATURE_ENV_MAP: Record<string, string[]> = {
   auth: ["BETTER_AUTH_SECRET", "DATABASE_URL", "NEXT_PUBLIC_API_URL"],
   // cron: ["CRON_SECRET"],
-  agencyApi: ["PUBLIC_AGENCY_API_KEY"],
+  agencyApi: ["NEXT_PUBLIC_AGENCY_API_KEY"],
 };
 
 // ─── Collect all required vars ─────────────────────────────────────
