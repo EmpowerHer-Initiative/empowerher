@@ -6,7 +6,6 @@ import { authRouter } from "./auth";
 import { commentsRouter } from "./comments";
 import { contactRouter } from "./contact";
 import { featuredWritingsRouter } from "./featured-writings";
-import { filesRouter } from "./files";
 import { logsRouter } from "./logs";
 import { newsletterRouter } from "./newsletter";
 import { partnersRouter } from "./partners";
@@ -22,7 +21,6 @@ export const appRouter = createTRPCRouter({
   contact: contactRouter,
   comments: commentsRouter,
   users: usersRouter,
-  files: filesRouter,
   logs: logsRouter,
   newsletter: newsletterRouter,
   verification: verificationRouter,

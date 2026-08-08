@@ -10,13 +10,6 @@ const ROOT = resolve(import.meta.dirname, "..");
 const FEATURE_ENV_MAP: Record<string, string[]> = {
   auth: ["BETTER_AUTH_SECRET", "DATABASE_URL", "NEXT_PUBLIC_API_URL"],
   // cron: ["CRON_SECRET"],
-  storage: [
-    "R2_ENDPOINT",
-    "R2_ACCESS_KEY_ID",
-    "R2_SECRET_ACCESS_KEY",
-    "R2_BUCKET_NAME",
-    "R2_PUBLIC_URL",
-  ],
   agencyApi: ["PUBLIC_AGENCY_API_KEY"],
 };
 

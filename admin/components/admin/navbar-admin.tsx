@@ -27,7 +27,6 @@ const links: { label: string; href: string; deprecated?: boolean }[] = [
   { label: "Staffs", href: "/staffs", deprecated: true },
   { label: "Workshops", href: "/workshops", deprecated: true },
   { label: "Partners", href: "/partners", deprecated: true },
-  { label: "Media", href: "/media", deprecated: true },
   { label: "Staff Area", href: "/staff" },
 ];
 
