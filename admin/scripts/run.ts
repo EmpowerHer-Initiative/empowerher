@@ -7,7 +7,6 @@ const ROOT = resolve(SCRIPTS_DIR, "..");
 // ─── Script registry ──────────────────────────────────────────────
 const scripts = [
   { name: "check-env", desc: "Validate required env vars by feature flag" },
-  { name: "check-email", desc: "AWS SES email health check" },
   { name: "list-routes", desc: "Show all tRPC routes" },
   { name: "list-crons", desc: "Show cron jobs from vercel.json" },
 ];

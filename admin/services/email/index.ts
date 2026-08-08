@@ -1,30 +1,13 @@
 import type { ReactElement } from "react";
-import { SES } from "@aws-sdk/client-ses";
 import { render } from "@react-email/render";
-import MailComposer from "nodemailer/lib/mail-composer";
 
+import { agency } from "@/lib/agency-api";
 import { siteConfig } from "@/lib/site";
 import type { EmailTemplateName } from "@/services/db/schema";
 import { log } from "@/services/log";
 
-let ses: SES | null = null;
-
-function getSes() {
-  if (!ses) {
-    const accessKeyId = process.env.AWS_ACCESS_KEY_VALUE;
-    const secretAccessKey = process.env.AWS_SECRET_KEY_VALUE;
-
-    if (!accessKeyId || !secretAccessKey) {
-      throw new Error("Missing AWS credentials in environment variables");
-    }
-
-    ses = new SES({
-      region: process.env.AWS_BUCKET_ORIGIN || "us-east-1",
-      credentials: { accessKeyId, secretAccessKey },
-    });
-  }
-  return ses;
-}
+// Sent emails are viewable at `${AGENCY_EMAIL_HUB_URL}/${id}`.
+const AGENCY_EMAIL_HUB_URL = "https://hub.alisamadii.com/emails";
 
 export type Attachment = {
   filename: string;
@@ -72,30 +55,28 @@ async function send({ from, to, subject, react, attachments }: SendOptions) {
   const { template, templateProps } = extractTemplateInfo(react);
 
   try {
-    if (attachments?.length) {
-      const mail = new MailComposer({
-        from: source,
-        to: toAddresses.join(", "),
-        subject,
-        html,
-        attachments: attachments.map((a) => ({
-          filename: a.filename,
-          content: Buffer.from(a.content),
-          contentType: a.contentType,
-        })),
-      });
-      const message = await mail.compile().build();
-      await getSes().sendRawEmail({ RawMessage: { Data: message } });
-    } else {
-      await getSes().sendEmail({
-        Source: source,
-        Destination: { ToAddresses: toAddresses },
-        Message: {
-          Subject: { Charset: "UTF-8", Data: subject },
-          Body: { Html: { Charset: "UTF-8", Data: html } },
-        },
-      });
+    // `emails.send` throws AttachmentTooLargeError synchronously (>1 MB combined);
+    // API failures come back on `error` rather than throwing.
+    const { data, error } = await agency.emails.send({
+      from: source,
+      to: toAddresses,
+      subject,
+      html,
+      ...(attachments?.length
+        ? {
+            attachments: attachments.map((a) => ({
+              filename: a.filename,
+              content: a.content,
+              contentType: a.contentType,
+            })),
+          }
+        : {}),
+    });
+
+    if (error) {
+      throw new Error(error.message);
     }
+
     log({
       type: "email",
       status: "success",
@@ -106,9 +87,11 @@ async function send({ from, to, subject, react, attachments }: SendOptions) {
         attachmentCount: attachments?.length,
         template,
         templateProps,
+        emailId: data.id,
+        emailUrl: `${AGENCY_EMAIL_HUB_URL}/${data.id}`,
       },
     });
-    return { data: true as const };
+    return { data: { id: data.id } };
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Failed to send email";
@@ -145,21 +128,30 @@ async function resend({
   const source = from ?? siteConfig.noreplyEmail;
 
   try {
-    await getSes().sendEmail({
-      Source: source,
-      Destination: { ToAddresses: toAddresses },
-      Message: {
-        Subject: { Charset: "UTF-8", Data: subject },
-        Body: { Html: { Charset: "UTF-8", Data: html } },
-      },
+    const { data, error } = await agency.emails.send({
+      from: source,
+      to: toAddresses,
+      subject,
+      html,
     });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
     log({
       type: "email",
       status: "success",
       summary: `[Retry] Email to ${toAddresses.join(", ")}: ${subject}`,
-      metadata: { to: toAddresses.join(", "), subject, retry: true },
+      metadata: {
+        to: toAddresses.join(", "),
+        subject,
+        retry: true,
+        emailId: data.id,
+        emailUrl: `${AGENCY_EMAIL_HUB_URL}/${data.id}`,
+      },
     });
-    return { data: true as const };
+    return { data: { id: data.id } };
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Failed to send email";

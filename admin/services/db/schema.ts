@@ -103,6 +103,8 @@ export type EmailLogMetadata = {
   template?: EmailTemplateName;
   templateProps?: Record<string, string>;
   retry?: boolean;
+  emailId?: string;
+  emailUrl?: string;
 };
 
 export type DataChangeMetadata = {

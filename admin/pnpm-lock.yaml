@@ -9,12 +9,9 @@ importers:
   .:
     dependencies:
       '@alisamadiillc/agency-api':
-        specifier: ^0.1.3
-        version: 0.1.3
+        specifier: ^0.3.5
+        version: 0.3.5
       '@aws-sdk/client-s3':
-        specifier: ^3.1036.0
-        version: 3.1036.0
-      '@aws-sdk/client-ses':
         specifier: ^3.1036.0
         version: 3.1036.0
       '@aws-sdk/s3-request-presigner':
@@ -107,9 +104,6 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      nodemailer:
-        specifier: ^8.0.7
-        version: 8.0.7
       nuqs:
         specifier: ^2.8.9
         version: 2.8.9(next@16.2.4(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react@19.2.5)
@@ -204,9 +198,6 @@ importers:
       '@types/node':
         specifier: ^25.6.0
         version: 25.6.0
-      '@types/nodemailer':
-        specifier: ^8.0.0
-        version: 8.0.0
       '@types/react':
         specifier: ^19.2.14
         version: 19.2.14
@@ -264,8 +255,8 @@ importers:
 
 packages:
 
-  '@alisamadiillc/agency-api@0.1.3':
-    resolution: {integrity: sha512-hC0QHco8+bB0M8KVmiW+9E0ImEA8DnQmEqAy2b+aGqjaP5h/u5+0bHOl+S4dQFZQbJpvWWMgXFXlI0NkpY7Yiw==}
+  '@alisamadiillc/agency-api@0.3.5':
+    resolution: {integrity: sha512-nLU4nkw0/mKY6N4L8VTRSqpmIC6q9GIhS/E4DMNDfOOj7KWdX5XeG3fXTJj14n26O1tuBqbhv6KDGnv0q1TKrw==}
     engines: {node: '>=18'}
 
   '@alloc/quick-lru@5.2.0':
@@ -297,10 +288,6 @@ packages:
 
   '@aws-sdk/client-s3@3.1036.0':
     resolution: {integrity: sha512-QGjLHw1xklwWX+MWt/7X66lMxjNQLOb0tjcwAU3PaBrYZ51kphDlfvc2sInNEsIU03+I158Y4WSMhl8l71SAsw==}
-    engines: {node: '>=20.0.0'}
-
-  '@aws-sdk/client-ses@3.1036.0':
-    resolution: {integrity: sha512-EPdupdy89atxuW3Ej2YiYMWntZ3QGgDZxyoxn5jzhhNGT02nObkkNI31OENEzdBQeewHlkjJ5b/9xZT1xomtgg==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.974.5':
@@ -2909,9 +2896,6 @@ packages:
 
   '@types/node@25.6.0':
     resolution: {integrity: sha512-+qIYRKdNYJwY3vRCZMdJbPLJAtGjQBudzZzdzwQYkEPQd+PJGixUL5QfvCLDaULoLv+RhT3LDkwEfKaAkgSmNQ==}
-
-  '@types/nodemailer@8.0.0':
-    resolution: {integrity: sha512-fyf8jWULsCo0d0BuoQ75i6IeoHs47qcqxWc7yUdUcV0pOZGjUTTOvwdG1PRXUDqN/8A64yQdQdnA2pZgcdi+cA==}
 
   '@types/react-dom@19.2.3':
     resolution: {integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==}
@@ -5657,10 +5641,6 @@ packages:
   node-releases@2.0.37:
     resolution: {integrity: sha512-1h5gKZCF+pO/o3Iqt5Jp7wc9rH3eJJ0+nh/CIoiRwjRxde/hAHyLPXYN4V3CqKAbiZPSeJFSWHmJsbkicta0Eg==}
 
-  nodemailer@8.0.7:
-    resolution: {integrity: sha512-pkjE4mkBzQjdJT4/UmlKl3pX0rC9fZmjh7c6C9o7lv66Ac6w9WCnzPzhbPNxwZAzlF4mdq4CSWB5+FbK6FWCow==}
-    engines: {node: '>=6.0.0'}
-
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
@@ -7047,7 +7027,7 @@ packages:
 
 snapshots:
 
-  '@alisamadiillc/agency-api@0.1.3': {}
+  '@alisamadiillc/agency-api@0.3.5': {}
 
   '@alloc/quick-lru@5.2.0': {}
 
@@ -7152,51 +7132,6 @@ snapshots:
       '@smithy/util-middleware': 4.2.14
       '@smithy/util-retry': 4.3.4
       '@smithy/util-stream': 4.5.25
-      '@smithy/util-utf8': 4.2.2
-      '@smithy/util-waiter': 4.2.16
-      tslib: 2.8.1
-    transitivePeerDependencies:
-      - aws-crt
-
-  '@aws-sdk/client-ses@3.1036.0':
-    dependencies:
-      '@aws-crypto/sha256-browser': 5.2.0
-      '@aws-crypto/sha256-js': 5.2.0
-      '@aws-sdk/core': 3.974.5
-      '@aws-sdk/credential-provider-node': 3.972.36
-      '@aws-sdk/middleware-host-header': 3.972.10
-      '@aws-sdk/middleware-logger': 3.972.10
-      '@aws-sdk/middleware-recursion-detection': 3.972.11
-      '@aws-sdk/middleware-user-agent': 3.972.35
-      '@aws-sdk/region-config-resolver': 3.972.13
-      '@aws-sdk/types': 3.973.8
-      '@aws-sdk/util-endpoints': 3.996.8
-      '@aws-sdk/util-user-agent-browser': 3.972.10
-      '@aws-sdk/util-user-agent-node': 3.973.21
-      '@smithy/config-resolver': 4.4.17
-      '@smithy/core': 3.23.17
-      '@smithy/fetch-http-handler': 5.3.17
-      '@smithy/hash-node': 4.2.14
-      '@smithy/invalid-dependency': 4.2.14
-      '@smithy/middleware-content-length': 4.2.14
-      '@smithy/middleware-endpoint': 4.4.32
-      '@smithy/middleware-retry': 4.5.5
-      '@smithy/middleware-serde': 4.2.20
-      '@smithy/middleware-stack': 4.2.14
-      '@smithy/node-config-provider': 4.3.14
-      '@smithy/node-http-handler': 4.6.1
-      '@smithy/protocol-http': 5.3.14
-      '@smithy/smithy-client': 4.12.13
-      '@smithy/types': 4.14.1
-      '@smithy/url-parser': 4.2.14
-      '@smithy/util-base64': 4.3.2
-      '@smithy/util-body-length-browser': 4.2.2
-      '@smithy/util-body-length-node': 4.2.3
-      '@smithy/util-defaults-mode-browser': 4.3.49
-      '@smithy/util-defaults-mode-node': 4.2.54
-      '@smithy/util-endpoints': 3.4.2
-      '@smithy/util-middleware': 4.2.14
-      '@smithy/util-retry': 4.3.4
       '@smithy/util-utf8': 4.2.2
       '@smithy/util-waiter': 4.2.16
       tslib: 2.8.1
@@ -9737,10 +9672,6 @@ snapshots:
   '@types/node@25.6.0':
     dependencies:
       undici-types: 7.19.2
-
-  '@types/nodemailer@8.0.0':
-    dependencies:
-      '@types/node': 25.6.0
 
   '@types/react-dom@19.2.3(@types/react@19.2.14)':
     dependencies:
@@ -12962,8 +12893,6 @@ snapshots:
       formdata-polyfill: 4.0.10
 
   node-releases@2.0.37: {}
-
-  nodemailer@8.0.7: {}
 
   normalize-path@3.0.0: {}
 
