@@ -123,3 +123,13 @@
 .animate-fade-up {
   animation: fade-up 0.7s cubic-bezier(0.32, 0.72, 0, 1) both;
 }
+
+/* View transitions disabled for now: keep the ClientRouter's instant
+   client-side navigation (Next.js-style, no full reload) but drop the
+   cross-fade animation on every page swap. */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+}
