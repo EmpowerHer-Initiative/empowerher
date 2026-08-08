@@ -6,7 +6,17 @@ import Upload from "../../icons/Upload.astro";
 const inputClass =
   "w-full rounded-xl border bg-background px-4 py-3 text-sm outline-none transition-all duration-300 placeholder:text-muted-foreground/40 focus:border-primary/40 focus:ring-2 focus:ring-primary/10 border-border/60";
 ---
-<form class="space-y-6">
+<div id="volunteer-success" class="hidden space-y-4 rounded-2xl border border-border/40 bg-primary/[0.03] p-8">
+  <h2 class="font-serif text-2xl">Thank you for applying to volunteer.</h2>
+  <p class="text-muted-foreground text-base leading-[1.8]">
+    We've received your application and CV. Our team will review it and reach out to you.
+  </p>
+  <button type="button" id="volunteer-reset" class="text-primary text-sm font-medium underline-offset-4 hover:underline">
+    Submit another application
+  </button>
+</div>
+
+<form id="volunteer-form" class="space-y-6" novalidate>
   <div class="grid gap-5 sm:grid-cols-2">
     <div class="space-y-2">
       <label for="firstName" class="text-foreground/80 text-sm font-medium">
@@ -56,10 +66,14 @@ const inputClass =
       CV / Resume <span class="text-primary">*</span>{" "}
       <span class="text-muted-foreground">(PDF)</span>
     </label>
-    <div
+    <label
+      id="cv-dropzone"
+      for="cv"
       class="relative flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed px-6 py-8 transition-all duration-300 border-border/60 bg-background hover:border-primary/30 hover:bg-primary/[0.02]"
     >
       <input
+        id="cv"
+        name="cv"
         type="file"
         accept=".pdf,application/pdf"
         class="hidden"
@@ -68,14 +82,15 @@ const inputClass =
         <Upload class="text-muted-foreground size-5" />
       </div>
       <div class="text-center">
-        <p class="text-foreground/80 text-sm font-medium">
+        <p id="cv-label" class="text-foreground/80 text-sm font-medium">
           Drag &amp; drop your CV here
         </p>
         <p class="text-muted-foreground mt-1 text-xs">
-          or click to browse — PDF only
+          or click to browse — PDF only, max 1 MB
         </p>
       </div>
-    </div>
+    </label>
+    <p class="text-destructive text-xs" data-error="cv" hidden></p>
   </div>
 
   <div class="space-y-2">
@@ -98,6 +113,7 @@ const inputClass =
 
   <button
     type="submit"
+    id="volunteer-submit"
     class="group bg-primary text-primary-foreground hover:shadow-primary/20 inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98] disabled:opacity-70"
   >
     Submit Volunteer Application
@@ -105,4 +121,175 @@ const inputClass =
       <ArrowRight class="size-3.5" />
     </span>
   </button>
+  <p class="text-destructive text-sm" data-error="form" hidden></p>
 </form>
+
+<script>
+  import { agency } from "../../../lib/agency";
+  import { AttachmentTooLargeError } from "@alisamadiillc/agency-api";
+
+  const MAX_CV_BYTES = 1_000_000; // ~1 MB — send() rejects >1 MB combined
+
+  const escapeHtml = (s: string) =>
+    s.replace(/[&<>"']/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c] as string,
+    );
+
+  function initVolunteerForm() {
+    const form = document.getElementById("volunteer-form") as HTMLFormElement | null;
+    if (!form || (form as any).__bound) return;
+    (form as any).__bound = true;
+
+    const success = document.getElementById("volunteer-success");
+    const submitBtn = document.getElementById("volunteer-submit") as HTMLButtonElement | null;
+    const fileInput = document.getElementById("cv") as HTMLInputElement | null;
+    const dropzone = document.getElementById("cv-dropzone");
+    const cvLabel = document.getElementById("cv-label");
+
+    const setError = (name: string, msg: string | null) => {
+      const el = form.querySelector<HTMLElement>(`[data-error="${name}"]`);
+      if (!el) return;
+      if (msg) {
+        el.textContent = msg;
+        el.hidden = false;
+      } else {
+        el.hidden = true;
+      }
+    };
+
+    // Reflect the chosen file's name; drag-drop assigns to the input too.
+    fileInput?.addEventListener("change", () => {
+      const f = fileInput.files?.[0];
+      if (cvLabel) cvLabel.textContent = f ? f.name : "Drag & drop your CV here";
+      if (f) setError("cv", null);
+    });
+
+    if (dropzone && fileInput) {
+      ["dragover", "dragenter"].forEach((ev) =>
+        dropzone.addEventListener(ev, (e) => {
+          e.preventDefault();
+          dropzone.classList.add("border-primary/40");
+        }),
+      );
+      ["dragleave", "drop"].forEach((ev) =>
+        dropzone.addEventListener(ev, (e) => {
+          e.preventDefault();
+          dropzone.classList.remove("border-primary/40");
+        }),
+      );
+      dropzone.addEventListener("drop", (e) => {
+        const dt = (e as DragEvent).dataTransfer;
+        if (dt?.files?.length) {
+          fileInput.files = dt.files;
+          fileInput.dispatchEvent(new Event("change"));
+        }
+      });
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      setError("form", null);
+      setError("cv", null);
+
+      const data = new FormData(form);
+      const firstName = String(data.get("firstName") || "").trim();
+      const lastName = String(data.get("lastName") || "").trim();
+      const email = String(data.get("email") || "").trim();
+      const message = String(data.get("message") || "").trim();
+      const file = fileInput?.files?.[0] || null;
+
+      if (!firstName || !lastName) {
+        setError("form", "Please enter your first and last name.");
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setError("form", "Please enter a valid email.");
+        return;
+      }
+      if (!file) {
+        setError("cv", "Please attach your CV (PDF).");
+        return;
+      }
+      if (file.type !== "application/pdf") {
+        setError("cv", "The CV must be a PDF file.");
+        return;
+      }
+      if (file.size > MAX_CV_BYTES) {
+        setError("cv", "That file is too large — please keep your CV under 1 MB.");
+        return;
+      }
+      if (message.length < 10) {
+        setError("form", "Please tell us a little more (at least 10 characters).");
+        return;
+      }
+
+      if (!agency) {
+        setError("form", "The form is not configured yet (missing PUBLIC_AGENCY_API_KEY).");
+        return;
+      }
+
+      const originalBtn = submitBtn?.innerHTML;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending…";
+      }
+
+      try {
+        const buf = new Uint8Array(await file.arrayBuffer());
+        const name = `${firstName} ${lastName}`.trim();
+        const html = `
+          <h2>New volunteer application</h2>
+          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          <p><strong>Message:</strong></p>
+          <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
+          <p>CV attached: ${escapeHtml(file.name)}</p>`;
+
+        const { error } = await agency.emails.send({
+          from: "info@empowerher-initiative.org",
+          to: "info@empowerher-initiative.org",
+          subject: `Volunteer application — ${name}`,
+          type: "volunteer",
+          html,
+          text: `New volunteer application\nName: ${name}\nEmail: ${email}\n\n${message}`,
+          attachments: [
+            { filename: file.name, content: buf, contentType: "application/pdf" },
+          ],
+        });
+
+        if (error) {
+          setError(
+            "form",
+            error.code === "EMAIL_DOMAIN_NOT_CONFIGURED" ||
+              error.code === "SENDER_DOMAIN_MISMATCH"
+              ? "The form's sender address isn't configured correctly. Please contact us directly."
+              : error.message,
+          );
+          return;
+        }
+        form.classList.add("hidden");
+        success?.classList.remove("hidden");
+      } catch (err) {
+        if (err instanceof AttachmentTooLargeError) {
+          setError("cv", "That file is too large — please keep your CV under 1 MB.");
+        } else {
+          setError("form", "Something went wrong sending your application. Please try again.");
+        }
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          if (originalBtn !== undefined) submitBtn.innerHTML = originalBtn;
+        }
+      }
+    });
+
+    document.getElementById("volunteer-reset")?.addEventListener("click", () => {
+      form.reset();
+      if (cvLabel) cvLabel.textContent = "Drag & drop your CV here";
+      success?.classList.add("hidden");
+      form.classList.remove("hidden");
+    });
+  }
+
+  document.addEventListener("astro:page-load", initVolunteerForm);
+</script>

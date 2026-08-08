@@ -23,12 +23,12 @@ const programs = [
 ];
 
 const navLinks = [
-  { label: "About", href: "/about-us" },
-  { label: "Programs", href: "#", children: programs },
-  { label: "Success Stories", href: "/success-stories" },
-  { label: "Resources", href: "/resources" },
-  { label: "AGFAF", href: "/agfaf" },
-  { label: "Contact", href: "/contact" },
+  { label: "About", href: "/about-us", paths: ["/about-us"] },
+  { label: "Programs", href: "#", children: programs, paths: ["/mentorship", "/mis", "/success-stories/spr", "/hervoice"] },
+  { label: "Success Stories", href: "/success-stories", paths: ["/success-stories"] },
+  { label: "Resources", href: "/resources", paths: ["/resources"] },
+  { label: "AGFAF", href: "/agfaf", paths: ["/agfaf"] },
+  { label: "Contact", href: "/contact", paths: ["/contact"] },
 ];
 
 const isHome = Astro.url.pathname === "/";
@@ -44,12 +44,12 @@ const isHome = Astro.url.pathname === "/";
       {navLinks.map((link) => (
         <div class="group relative">
           {link.children ? (
-            <button class="nav-link flex items-center gap-1 text-[13px] font-medium transition-colors duration-300">
+            <button data-paths={link.paths.join(" ")} class="nav-link flex items-center gap-1 text-[13px] font-medium transition-colors duration-300">
               {link.label}
               <ChevronDown class="size-3 transition-transform duration-300 group-hover:rotate-180" />
             </button>
           ) : (
-            <a href={link.href} class="nav-link text-[13px] font-medium transition-colors duration-300">{link.label}</a>
+            <a href={link.href} data-paths={link.paths.join(" ")} class="nav-link text-[13px] font-medium transition-colors duration-300">{link.label}</a>
           )}
 
           {link.children && (
@@ -74,7 +74,7 @@ const isHome = Astro.url.pathname === "/";
       ))}
     </div>
 
-    <a href="/get-involved" class="nav-cta hidden rounded-full px-6 py-2.5 text-[13px] font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97] lg:inline-flex">
+    <a href="/get-involved" data-paths="/get-involved" class="nav-cta hidden rounded-full px-6 py-2.5 text-[13px] font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97] lg:inline-flex">
       Get Involved
     </a>
 
@@ -91,7 +91,7 @@ const isHome = Astro.url.pathname === "/";
       <div class="m-item border-border/20 border-b transition-all duration-700" style={`transition-delay:${80 + i * 40}ms`}>
         {link.children ? (
           <>
-            <button class="m-sub-toggle flex w-full items-center justify-between py-5 text-2xl font-bold">
+            <button data-paths={link.paths.join(" ")} class="m-sub-toggle flex w-full items-center justify-between py-5 text-2xl font-bold">
               {link.label}
               <ChevronDown class="m-chevron size-5 transition-transform duration-300" />
             </button>
@@ -111,7 +111,7 @@ const isHome = Astro.url.pathname === "/";
             </div>
           </>
         ) : (
-          <a href={link.href} class="block py-5 text-2xl font-bold">{link.label}</a>
+          <a href={link.href} data-paths={link.paths.join(" ")} class="m-nav-link block py-5 text-2xl font-bold">{link.label}</a>
         )}
       </div>
     ))}
@@ -155,6 +155,13 @@ const isHome = Astro.url.pathname === "/";
   .site-nav[data-state="scrolled"] .nav-link { color: color-mix(in oklab, var(--color-foreground) 60%, transparent); }
   .site-nav[data-state="scrolled"] .nav-link:hover { color: var(--color-foreground); }
 
+  /* Active tab — current page. Wins over both data-state rules. */
+  .site-nav .nav-link.active,
+  .site-nav[data-state="top"] .nav-link.active,
+  .site-nav[data-state="scrolled"] .nav-link.active { color: var(--color-primary); }
+  .m-nav-link.active,
+  .m-sub-toggle.active { color: var(--color-primary); }
+
   /* Dropdown panel */
   .dropdown { opacity: 0; transform: translate(-50%, 0.25rem); pointer-events: none; }
   .group:hover .dropdown { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
@@ -164,6 +171,7 @@ const isHome = Astro.url.pathname === "/";
   .site-nav[data-state="top"] .nav-cta:hover { background: color-mix(in oklab, #fff 90%, transparent); }
   .site-nav[data-state="scrolled"] .nav-cta { background: var(--color-primary); color: var(--color-primary-foreground); }
   .site-nav[data-state="scrolled"] .nav-cta:hover { background: color-mix(in oklab, var(--color-primary) 90%, transparent); }
+  .site-nav .nav-cta.active { box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-primary) 45%, transparent); }
 
   /* Hamburger bars */
   .site-nav[data-state="top"] .bar { background: #fff; }
@@ -238,6 +246,43 @@ const isHome = Astro.url.pathname === "/";
     document
       .querySelectorAll(".m-item.expanded")
       .forEach((el) => el.classList.remove("expanded"));
+
+    syncActive();
+  }
+
+  // Highlight the tab that owns the current path. Longest matching owned path
+  // wins so /success-stories/spr lights up "Programs" while /success-stories
+  // lights up "Success Stories". Runs on the persisted nav + mobile menu.
+  function syncActive() {
+    const path = location.pathname.replace(/\/+$/, "") || "/";
+    const owns = (owned: string) => path === owned || path.startsWith(owned + "/");
+
+    document.querySelectorAll<HTMLElement>("[data-paths]").forEach((el) => {
+      el.classList.remove("active");
+      el.removeAttribute("aria-current");
+    });
+
+    let best: HTMLElement | null = null;
+    let bestLen = 0;
+    document.querySelectorAll<HTMLElement>("[data-paths]").forEach((el) => {
+      for (const owned of (el.dataset.paths || "").split(/\s+/).filter(Boolean)) {
+        if (owns(owned) && owned.length > bestLen) {
+          best = el;
+          bestLen = owned.length;
+        }
+      }
+    });
+
+    // Every element carrying the winning owned path gets marked (desktop + mobile).
+    if (best) {
+      const winner = (best as HTMLElement).dataset.paths || "";
+      document.querySelectorAll<HTMLElement>("[data-paths]").forEach((el) => {
+        if ((el.dataset.paths || "") === winner) {
+          el.classList.add("active");
+          el.setAttribute("aria-current", "page");
+        }
+      });
+    }
   }
 
   document.addEventListener("astro:page-load", syncNav);

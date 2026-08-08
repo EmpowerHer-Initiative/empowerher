@@ -58,9 +58,33 @@ const socials = post
 const initial = post?.authorName
   ? post.authorName.trim().charAt(0).toUpperCase()
   : "";
+
+const articleSchema = post && {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: post.title,
+  description: post.description,
+  image: post.image,
+  datePublished: post.isoDate,
+  dateModified: post.isoDate,
+  url: new URL(`/hervoice/${post.slug}`, Astro.site).href,
+  ...(post.authorName && { author: { "@type": "Person", name: post.authorName } }),
+  publisher: { "@id": `${Astro.site?.href}#organization` },
+};
 ---
 {post && (
-  <Layout title={post.title} description={post.description}>
+  <Layout
+    title={post.title}
+    description={post.description}
+    image={post.image}
+    imageAlt={post.imageAlt ?? post.title}
+    type="article"
+    publishedTime={post.isoDate}
+  >
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(articleSchema)}
+    />
     {/* Hero */}
     <section class="py-28 md:py-40">
       <div class="container">

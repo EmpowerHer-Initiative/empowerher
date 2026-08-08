@@ -7,11 +7,63 @@ import Footer from "../components/Footer.astro";
 interface Props {
   title?: string;
   description?: string;
+  /** Absolute URL of the social share image. Defaults to /og-image.png. */
+  image?: string;
+  /** Alt text for the share image. */
+  imageAlt?: string;
+  /** og:type — "website" for pages, "article" for blog stories. */
+  type?: "website" | "article";
+  /** ISO date (YYYY-MM-DD) for articles → article:published_time. */
+  publishedTime?: string;
 }
+
+const SITE_NAME = "EmpowerHer Initiative";
+const SITE_DESC =
+  "A nonprofit organization empowering Afghan women and girls across the Middle East and Central Asia through mentorship, leadership development, educational support, storytelling, publication, and community engagement.";
+
 const {
-  title = "EmpowerHer Initiative",
-  description = "A nonprofit organization empowering Afghan women and girls across the Middle East and Central Asia through mentorship, leadership development, educational support, storytelling, publication, and community engagement.",
+  title = SITE_NAME,
+  description = SITE_DESC,
+  image,
+  imageAlt = `${SITE_NAME} logo`,
+  type = "website",
+  publishedTime,
 } = Astro.props;
+
+// Astro.site comes from `site` in astro.config.mjs.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = image ?? new URL("/og-image.png", Astro.site).href;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "NGO",
+      "@id": `${Astro.site?.href}#organization`,
+      name: SITE_NAME,
+      url: Astro.site?.href,
+      logo: {
+        "@type": "ImageObject",
+        url: "https://cdn.empowerher-initiative.org/logo.png",
+      },
+      description: SITE_DESC,
+      email: "info@empowerher-initiative.org",
+      sameAs: [
+        "https://www.facebook.com/share/157naMfgkw",
+        "https://www.instagram.com/_empowerher_org",
+        "https://www.linkedin.com/company/empowerher-org/",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${Astro.site?.href}#website`,
+      url: Astro.site?.href,
+      name: SITE_NAME,
+      description: SITE_DESC,
+      publisher: { "@id": `${Astro.site?.href}#organization` },
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -19,8 +71,13 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" href="https://cdn.empowerher-initiative.org/logo.png" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#5ba8d8" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -31,8 +88,26 @@ const {
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://cdn.empowerher-initiative.org/image-banner.png" />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    {type !== "article" && (
+      <>
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+      </>
+    )}
+    {publishedTime && (
+      <meta property="article:published_time" content={publishedTime} />
+    )}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <ClientRouter />
   </head>
   <body>
