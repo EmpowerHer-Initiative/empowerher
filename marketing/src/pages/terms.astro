@@ -1,24 +1,21 @@
 ---
 // Ports app/(marketing)/(legal)/[...slug]/page.tsx detail layout.
-// Content synced from admin/content/legal/terms.md.
+// Body is authored as rich text (markdown) in Pages CMS.
+import { marked } from "marked";
 import Layout from "../layouts/Layout.astro";
 import ArrowLeft from "../components/icons/ArrowLeft.astro";
 import content from "../data/terms.json";
 import { cmsField } from "../lib/cms";
-
-interface Section {
-  heading?: string;
-  paragraphs: string[];
-  items?: string[];
-}
 
 const { seo, title, description, updated, body } = content as {
   seo: { title: string; description: string };
   title: string;
   description: string;
   updated: string;
-  body: { sections: Section[] };
+  body: string;
 };
+
+const bodyHtml = marked.parse(body ?? "") as string;
 
 const backButtonClass =
   "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none active:translate-y-px active:scale-95 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 h-9 gap-1.5 px-3";
@@ -44,21 +41,7 @@ const cmsPath = "";
       <p data-cms-field={cmsField(cmsPath, "updated")}>
         <strong>{updated}</strong>
       </p>
-      {body.sections.map((section, i) => (
-        <>
-          {section.heading && <h2 data-cms-field={cmsField(cmsPath, `body.sections.${i}.heading`)}>{section.heading}</h2>}
-          {section.paragraphs.map((paragraph, j) => (
-            <p data-cms-field={cmsField(cmsPath, `body.sections.${i}.paragraphs.${j}`)}>{paragraph}</p>
-          ))}
-          {section.items && (
-            <ul>
-              {section.items.map((item, j) => (
-                <li data-cms-field={cmsField(cmsPath, `body.sections.${i}.items.${j}`)}>{item}</li>
-              ))}
-            </ul>
-          )}
-        </>
-      ))}
+      <div data-cms-field={cmsField(cmsPath, "body")} set:html={bodyHtml} />
     </div>
   </div>
 </Layout>

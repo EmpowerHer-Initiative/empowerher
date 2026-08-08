@@ -1346,22 +1346,9 @@ content:
           - { name: description, label: Description, type: text }
           - { name: updated, label: Last updated, type: string }
           - name: body
-            label: Body
-            type: object
-            fields:
-              - name: sections
-                label: Sections
-                type: object
-                list: true
-                fields:
-                  - { name: heading, label: Heading, type: string }
-                  - {
-                      name: paragraphs,
-                      label: Paragraphs,
-                      type: text,
-                      list: true,
-                    }
-                  - { name: items, label: List items, type: string, list: true }
+            label: Content
+            type: rich-text
+            options: { format: markdown }
 
       - name: terms
         label: Terms
@@ -1379,19 +1366,6 @@ content:
           - { name: description, label: Description, type: text }
           - { name: updated, label: Last updated, type: string }
           - name: body
-            label: Body
-            type: object
-            fields:
-              - name: sections
-                label: Sections
-                type: object
-                list: true
-                fields:
-                  - { name: heading, label: Heading, type: string }
-                  - {
-                      name: paragraphs,
-                      label: Paragraphs,
-                      type: text,
-                      list: true,
-                    }
-                  - { name: items, label: List items, type: string, list: true }
+            label: Content
+            type: rich-text
+            options: { format: markdown }

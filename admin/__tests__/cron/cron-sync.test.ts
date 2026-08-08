@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -6,6 +6,9 @@ const ROOT = resolve(__dirname, "../..");
 const JOBS_DIR = resolve(ROOT, "services/cron/jobs");
 
 function getJobFileNames(): string[] {
+  // The jobs dir may not exist when there are no cron jobs — git doesn't track
+  // empty directories, so it's absent on a fresh checkout (e.g. Vercel build).
+  if (!existsSync(JOBS_DIR)) return [];
   return readdirSync(JOBS_DIR)
     .filter((f) => f.endsWith(".ts") && f !== "index.ts")
     .map((f) => f.replace(".ts", ""));
