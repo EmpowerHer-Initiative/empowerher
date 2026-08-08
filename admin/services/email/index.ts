@@ -6,9 +6,6 @@ import { siteConfig } from "@/lib/site";
 import type { EmailTemplateName } from "@/services/db/schema";
 import { log } from "@/services/log";
 
-// Sent emails are viewable at `${AGENCY_EMAIL_HUB_URL}/${id}`.
-const AGENCY_EMAIL_HUB_URL = "https://hub.alisamadii.com/emails";
-
 export type Attachment = {
   filename: string;
   content: Buffer | Uint8Array;
@@ -21,6 +18,8 @@ type SendOptions = {
   subject: string;
   react: ReactElement;
   attachments?: Attachment[];
+  /** Agency hub log category. Defaults to the template name. */
+  type?: string;
 };
 
 function extractTemplateInfo(react: ReactElement): {
@@ -48,7 +47,7 @@ function extractTemplateInfo(react: ReactElement): {
   return {};
 }
 
-async function send({ from, to, subject, react, attachments }: SendOptions) {
+async function send({ from, to, subject, react, attachments, type }: SendOptions) {
   const html = await render(react);
   const toAddresses = Array.isArray(to) ? to : [to];
   const source = from ?? siteConfig.noreplyEmail;
@@ -62,6 +61,8 @@ async function send({ from, to, subject, react, attachments }: SendOptions) {
       to: toAddresses,
       subject,
       html,
+      // Categorize the hub log row; default to the template name.
+      ...(type ?? template ? { type: type ?? template } : {}),
       ...(attachments?.length
         ? {
             attachments: attachments.map((a) => ({
@@ -88,7 +89,7 @@ async function send({ from, to, subject, react, attachments }: SendOptions) {
         template,
         templateProps,
         emailId: data.id,
-        emailUrl: `${AGENCY_EMAIL_HUB_URL}/${data.id}`,
+        emailUrl: `${siteConfig.emailHubUrl}/${data.id}`,
       },
     });
     return { data: { id: data.id } };
@@ -148,7 +149,7 @@ async function resend({
         subject,
         retry: true,
         emailId: data.id,
-        emailUrl: `${AGENCY_EMAIL_HUB_URL}/${data.id}`,
+        emailUrl: `${siteConfig.emailHubUrl}/${data.id}`,
       },
     });
     return { data: { id: data.id } };

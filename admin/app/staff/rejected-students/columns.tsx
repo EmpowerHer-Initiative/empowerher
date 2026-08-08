@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
 import { toast } from "sonner";
 
+import { siteConfig } from "@/lib/site";
 import { useIsAdmin } from "@/services/auth/hooks/use-role";
 import { queryClient, useTRPC } from "@/services/trpc/client";
 import type { RouterOutputs } from "@/services/trpc/routers/_app";
@@ -74,17 +74,19 @@ const EmailCell = ({
     return <span className="text-muted-foreground text-sm">N/A</span>;
   }
 
-  if (!isAdmin) {
+  if (!isAdmin || !rejectedStudent.emailId) {
     return <span className="text-sm">{rejectedStudent.email}</span>;
   }
 
   return (
-    <Link
-      href={`/logs?search=${encodeURIComponent(rejectedStudent.email)}`}
+    <a
+      href={`${siteConfig.emailHubUrl}/${rejectedStudent.emailId}`}
+      target="_blank"
+      rel="noopener noreferrer"
       className={buttonVariants({ size: "sm" })}
     >
       View email
-    </Link>
+    </a>
   );
 };
 

@@ -121,7 +121,11 @@ export const staffRejectedStudentsRouter = createTRPCRouter({
 
         await db
           .update(rejectedStudentsTable)
-          .set({ emailSent: true, emailSentAt: new Date() })
+          .set({
+            emailSent: true,
+            emailSentAt: new Date(),
+            emailId: result.data.id,
+          })
           .where(eq(rejectedStudentsTable.id, recipient.id));
         sent++;
       }

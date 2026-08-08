@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
@@ -13,6 +12,7 @@ import {
   setStoredDueDate,
   startOfToday,
 } from "@/lib/approval-due-date";
+import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { useIsAdmin } from "@/services/auth/hooks/use-role";
 import { queryClient, useTRPC } from "@/services/trpc/client";
@@ -107,12 +107,14 @@ const EmailCell = ({ student }: { student: Student }) => {
   }
 
   return (
-    <Link
-      href={`/logs?search=${encodeURIComponent(student.email ?? "")}`}
+    <a
+      href={`${siteConfig.emailHubUrl}/${student.emailId}`}
+      target="_blank"
+      rel="noopener noreferrer"
       className={buttonVariants({ size: "sm" })}
     >
       View email
-    </Link>
+    </a>
   );
 };
 

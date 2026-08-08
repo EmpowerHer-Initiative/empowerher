@@ -28,6 +28,8 @@ export const siteConfig = {
   supportEmail: "info@empowerher-initiative.org",
   // Sender for student application emails (accept/reject)
   applyEmail: "EmpowerHer Mentorship Program <apply@empowerher-initiative.org>",
+  // Agency hub base for viewing a sent email: `${emailHubUrl}/${id}`
+  emailHubUrl: "https://hub.alisamadii.com/emails",
 
   // Email template branding
   emailLogoUrl: "https://cdn.alisamadii.com/company/business-logo-black.png",

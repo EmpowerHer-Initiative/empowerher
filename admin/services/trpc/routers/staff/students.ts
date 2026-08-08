@@ -160,11 +160,9 @@ export const staffStudentsRouter = createTRPCRouter({
         });
       }
 
-      // SES does not return a message id through our wrapper; emailId acts as
-      // a "sent" marker the UI uses to show the approved state.
       const [updated] = await db
         .update(studentsTable)
-        .set({ status: "approved", emailId: new Date().toISOString() })
+        .set({ status: "approved", emailId: result.data.id })
         .where(eq(studentsTable.id, input.id))
         .returning();
 
