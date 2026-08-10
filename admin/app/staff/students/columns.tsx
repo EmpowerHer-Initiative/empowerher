@@ -60,6 +60,13 @@ type Student = RouterOutputs["staff"]["students"]["list"][number];
 
 export const columns: ColumnDef<Student>[] = [
   {
+    id: "number",
+    header: "#",
+    cell: ({ row }) => (
+      <span className="text-muted-foreground text-sm">{row.index + 1}</span>
+    ),
+  },
+  {
     header: "Name",
     cell: ({ row }) => (
       <div className="flex flex-col -space-y-1 text-sm">

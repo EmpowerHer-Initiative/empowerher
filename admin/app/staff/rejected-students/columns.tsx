@@ -31,6 +31,13 @@ type RejectedStudent =
 
 export const columns: ColumnDef<RejectedStudent>[] = [
   {
+    id: "number",
+    header: "#",
+    cell: ({ row }) => (
+      <span className="text-muted-foreground text-sm">{row.index + 1}</span>
+    ),
+  },
+  {
     header: "Email",
     cell: ({ row }) => (
       <div className="text-sm font-medium">{row.original.email}</div>
