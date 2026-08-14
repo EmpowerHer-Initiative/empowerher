@@ -55,6 +55,24 @@ export const staffStudentsRouter = createTRPCRouter({
         });
       }
 
+      const [existingStudent] = await db
+        .select()
+        .from(studentsTable)
+        .where(
+          and(
+            eq(studentsTable.email, normalizedEmail),
+            eq(studentsTable.period, input.period)
+          )
+        )
+        .limit(1);
+
+      if (existingStudent) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "A student with this email already exists in this period",
+        });
+      }
+
       try {
         const [student] = await db
           .insert(studentsTable)

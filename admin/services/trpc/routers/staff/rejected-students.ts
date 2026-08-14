@@ -51,6 +51,24 @@ export const staffRejectedStudentsRouter = createTRPCRouter({
         });
       }
 
+      const [existingRejected] = await db
+        .select()
+        .from(rejectedStudentsTable)
+        .where(
+          and(
+            eq(rejectedStudentsTable.email, normalizedEmail),
+            eq(rejectedStudentsTable.period, input.period)
+          )
+        )
+        .limit(1);
+
+      if (existingRejected) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "This email is already in the rejected list for this period",
+        });
+      }
+
       try {
         const [rejected] = await db
           .insert(rejectedStudentsTable)
