@@ -3,33 +3,30 @@
 // on scroll. Desktop dropdowns are CSS hover; mobile menu + scroll state are JS.
 import Logo from "./icons/Logo.astro";
 import ChevronDown from "./icons/ChevronDown.astro";
+import site from "../data/site.json";
 
-const programs = [
-  {
-    label: "Mentorship Program",
-    href: "/mentorship",
-    children: [
-      { label: "Monthly Internet Scholarship (MIS)", href: "/mis" },
-      { label: "Student Project Roadmap", href: "/success-stories/spr" },
-    ],
-  },
-  {
-    label: "HerVoice",
-    href: "/hervoice",
-    children: [
-      { label: "Featured Writings from Our Partners", href: "/hervoice/featured-writings-from-our-partners" },
-    ],
-  },
-];
+// Brand, menu links, and CTA are CMS-managed in site.json (global entry → bare
+// paths). Active-tab ownership (data-paths) is derived from each link's own
+// href plus its descendants'.
+const navCta = site.nav.cta;
+const [nameFirst, ...nameRestParts] = site.name.split(" ");
+const nameRest = nameRestParts.join(" ");
 
-const navLinks = [
-  { label: "About", href: "/about-us", paths: ["/about-us"] },
-  { label: "Programs", href: "#", children: programs, paths: ["/mentorship", "/mis", "/success-stories/spr", "/hervoice"] },
-  { label: "Success Stories", href: "/success-stories", paths: ["/success-stories"] },
-  { label: "Resources", href: "/resources", paths: ["/resources"] },
-  { label: "AGFAF", href: "/agfaf", paths: ["/agfaf"] },
-  { label: "Contact", href: "/contact", paths: ["/contact"] },
-];
+interface NavItem {
+  label: string;
+  link: string;
+  children?: NavItem[];
+}
+
+const collectPaths = (item: NavItem): string[] =>
+  [item.link, ...(item.children ?? []).flatMap(collectPaths)].filter(
+    (p) => p && p !== "#",
+  );
+
+const navLinks = (site.nav.links as NavItem[]).map((item) => ({
+  ...item,
+  paths: collectPaths(item),
+}));
 
 const isHome = Astro.url.pathname === "/";
 ---
@@ -37,34 +34,42 @@ const isHome = Astro.url.pathname === "/";
   <div class="container flex h-16 items-center justify-between lg:h-20">
     <a href="/" class="nav-brand flex items-center gap-2 transition-colors duration-300">
       <Logo class="size-12" />
-      <span class="font-serif text-xl leading-[1]">EmpowerHer<br class="md:hidden" /> Initiative</span>
+      <span class="font-serif text-xl leading-[1]" data-cms-field="name">{nameFirst}<br class="md:hidden" /> {nameRest}</span>
     </a>
 
     <div class="hidden items-center gap-6 lg:flex">
-      {navLinks.map((link) => (
+      {navLinks.map((link, i) => (
         <div class="group relative">
-          {link.children ? (
+          {link.children?.length ? (
             <button data-paths={link.paths.join(" ")} class="nav-link flex items-center gap-1 text-[13px] font-medium transition-colors duration-300">
-              {link.label}
+              <span data-cms-field={`nav.links.${i}.label`}>{link.label}</span>
               <ChevronDown class="size-3 transition-transform duration-300 group-hover:rotate-180" />
             </button>
           ) : (
-            <a href={link.href} data-paths={link.paths.join(" ")} class="nav-link text-[13px] font-medium transition-colors duration-300">{link.label}</a>
+            <a href={link.link} data-paths={link.paths.join(" ")} class="nav-link text-[13px] font-medium transition-colors duration-300">
+              <span data-cms-field={`nav.links.${i}.label`}>{link.label}</span>
+            </a>
           )}
 
-          {link.children && (
+          {!!link.children?.length && (
             <div class="dropdown absolute top-full left-1/2 z-50 pt-4 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)]">
               <div class="border-border/50 bg-background/95 shadow-dropdown min-w-[280px] rounded-2xl border p-1.5 backdrop-blur-xl">
-                {link.children.map((child) => (
-                  child.children ? (
+                {link.children.map((child, ci) => (
+                  child.children?.length ? (
                     <div>
-                      <a href={child.href} class="text-foreground hover:bg-muted/50 block rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors duration-200">{child.label}</a>
-                      {child.children.map((sub) => (
-                        <a href={sub.href} class="text-foreground/60 hover:bg-muted/50 hover:text-foreground block rounded-xl px-4 py-2.5 pl-7 text-[13px] transition-colors duration-200">{sub.label}</a>
+                      <a href={child.link} class="text-foreground hover:bg-muted/50 block rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors duration-200">
+                        <span data-cms-field={`nav.links.${i}.children.${ci}.label`}>{child.label}</span>
+                      </a>
+                      {child.children.map((sub, si) => (
+                        <a href={sub.link} class="text-foreground/60 hover:bg-muted/50 hover:text-foreground block rounded-xl px-4 py-2.5 pl-7 text-[13px] transition-colors duration-200">
+                          <span data-cms-field={`nav.links.${i}.children.${ci}.children.${si}.label`}>{sub.label}</span>
+                        </a>
                       ))}
                     </div>
                   ) : (
-                    <a href={child.href} class="text-foreground/70 hover:bg-muted/50 hover:text-foreground block rounded-xl px-4 py-2.5 text-sm transition-colors duration-200">{child.label}</a>
+                    <a href={child.link} class="text-foreground/70 hover:bg-muted/50 hover:text-foreground block rounded-xl px-4 py-2.5 text-sm transition-colors duration-200">
+                      <span data-cms-field={`nav.links.${i}.children.${ci}.label`}>{child.label}</span>
+                    </a>
                   )
                 ))}
               </div>
@@ -74,13 +79,13 @@ const isHome = Astro.url.pathname === "/";
       ))}
     </div>
 
-    <a href="/get-involved" data-paths="/get-involved" class="nav-cta hidden rounded-full px-6 py-2.5 text-[13px] font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97] lg:inline-flex">
-      Get Involved
+    <a href={navCta.link} data-paths={navCta.link} class="nav-cta hidden rounded-full px-6 py-2.5 text-[13px] font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97] lg:inline-flex">
+      <span data-cms-field="nav.cta.label">{navCta.label}</span>
     </a>
 
     <div class="flex items-center gap-3 lg:hidden">
-      <a href="/get-involved" data-paths="/get-involved" class="nav-cta inline-flex rounded-full px-4 py-2 text-xs font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97]">
-        Get Involved
+      <a href={navCta.link} data-paths={navCta.link} class="nav-cta inline-flex rounded-full px-4 py-2 text-xs font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97]">
+        <span data-cms-field="nav.cta.label">{navCta.label}</span>
       </a>
 
       <button id="nav-toggle" class="relative z-50 flex size-10 flex-col items-center justify-center gap-1.5" aria-label="Menu">
@@ -95,29 +100,37 @@ const isHome = Astro.url.pathname === "/";
   <div class="container flex h-full flex-col justify-center">
     {navLinks.map((link, i) => (
       <div class="m-item border-border/20 border-b transition-all duration-700" style={`transition-delay:${80 + i * 40}ms`}>
-        {link.children ? (
+        {link.children?.length ? (
           <>
             <button data-paths={link.paths.join(" ")} class="m-sub-toggle flex w-full items-center justify-between py-5 text-2xl font-bold">
-              {link.label}
+              <span data-cms-field={`nav.links.${i}.label`}>{link.label}</span>
               <ChevronDown class="m-chevron size-5 transition-transform duration-300" />
             </button>
             <div class="m-sub overflow-hidden transition-all duration-500">
-              {link.children.map((c) => (
-                c.children ? (
+              {link.children.map((c, ci) => (
+                c.children?.length ? (
                   <div>
-                    <a href={c.href} class="block py-2 pl-4 text-lg font-semibold">{c.label}</a>
-                    {c.children.map((sub) => (
-                      <a href={sub.href} class="text-muted-foreground block py-1.5 pl-8 text-base">{sub.label}</a>
+                    <a href={c.link} class="block py-2 pl-4 text-lg font-semibold">
+                      <span data-cms-field={`nav.links.${i}.children.${ci}.label`}>{c.label}</span>
+                    </a>
+                    {c.children.map((sub, si) => (
+                      <a href={sub.link} class="text-muted-foreground block py-1.5 pl-8 text-base">
+                        <span data-cms-field={`nav.links.${i}.children.${ci}.children.${si}.label`}>{sub.label}</span>
+                      </a>
                     ))}
                   </div>
                 ) : (
-                  <a href={c.href} class="text-muted-foreground block py-2 pl-4 text-lg">{c.label}</a>
+                  <a href={c.link} class="text-muted-foreground block py-2 pl-4 text-lg">
+                    <span data-cms-field={`nav.links.${i}.children.${ci}.label`}>{c.label}</span>
+                  </a>
                 )
               ))}
             </div>
           </>
         ) : (
-          <a href={link.href} data-paths={link.paths.join(" ")} class="m-nav-link block py-5 text-2xl font-bold">{link.label}</a>
+          <a href={link.link} data-paths={link.paths.join(" ")} class="m-nav-link block py-5 text-2xl font-bold">
+            <span data-cms-field={`nav.links.${i}.label`}>{link.label}</span>
+          </a>
         )}
       </div>
     ))}

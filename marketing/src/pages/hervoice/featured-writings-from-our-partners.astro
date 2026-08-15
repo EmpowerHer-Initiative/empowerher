@@ -20,10 +20,11 @@ interface Writing {
   cmsIndex?: number;
 }
 
-const { seo, header, writings } = content as {
+const { seo, header, writings, emptyText } = content as {
   seo: { title: string; description: string };
   header: { eyebrow?: string; heading: string; lede: string };
   writings: Writing[];
+  emptyText: string;
 };
 
 const slugify = (value: string) =>
@@ -56,8 +57,8 @@ const groups = Object.entries(grouped).map(([platform, list]) => ({
       <div class="mx-auto max-w-4xl space-y-24">
         {groups.length === 0 ? (
           <Reveal>
-            <p class="text-muted-foreground py-16 text-center text-base">
-              No featured writings yet.
+            <p class="text-muted-foreground py-16 text-center text-base" data-cms-field="emptyText">
+              {emptyText}
             </p>
           </Reveal>
         ) : (

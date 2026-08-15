@@ -1,31 +1,17 @@
 ---
-// Ports components/footer.tsx
+// Ports components/footer.tsx. Text content is CMS-managed in src/data/site.json
+// (global entry → bare data-cms-field paths).
+import site from "../data/site.json";
 import Facebook from "./icons/Facebook.astro";
 import Instagram from "./icons/Instagram.astro";
 import LinkedIn from "./icons/LinkedIn.astro";
 import FileText from "./icons/FileText.astro";
 
-const email = "info@empowerher-initiative.org";
-const companyName = "EmpowerHer Initiative";
+const { name, email, socials, footer } = site;
 const year = new Date().getFullYear();
 
-const quickLinks = [
-  { label: "About", href: "/about-us" },
-  { label: "Mentorship", href: "/mentorship" },
-  { label: "HerVoice", href: "/hervoice" },
-  { label: "Success Stories", href: "/success-stories" },
-  { label: "Get Involved", href: "/get-involved" },
-  { label: "Resources", href: "/resources" },
-  { label: "AGFAF", href: "/afgaf" },
-  { label: "Newsletter", href: "/newsletter" },
-  { label: "Contact", href: "/contact" },
-];
-
-const socialLinks = [
-  { label: "Facebook", href: "https://www.facebook.com/share/157naMfgkw", Icon: Facebook },
-  { label: "Instagram", href: "https://www.instagram.com/_empowerher_org", Icon: Instagram },
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/empowerher-org/", Icon: LinkedIn },
-];
+// Icons are picked by the social's label; unknown labels fall back to text.
+const socialIcons: Record<string, any> = { Facebook, Instagram, LinkedIn };
 ---
 <footer class="border-border/30 border-t">
   <div class="container py-20 md:py-28">
@@ -40,53 +26,56 @@ const socialLinks = [
             class="w-40 -translate-x-6 object-contain md:w-54"
           />
         </a>
-        <p class="text-muted-foreground max-w-sm text-sm leading-[1.8]">
-          We envision Afghan women as guiding lights in their communities,
-          inspiring hope and progress while leading the way to a more equitable,
-          inclusive, and sustainable society.
+        <p class="text-muted-foreground max-w-sm text-sm leading-[1.8]" data-cms-field="footer.text">
+          {footer.text}
         </p>
-        <a href={`mailto:${email}`} class="text-foreground/70 hover:text-foreground mt-4 text-sm transition-colors">
+        <a href={`mailto:${email}`} class="text-foreground/70 hover:text-foreground mt-4 text-sm transition-colors" data-cms-field="email">
           Email: {email}
         </a>
-        <p class="text-muted-foreground mt-4 text-sm font-medium">EST. 2024</p>
-        <p class="text-muted-foreground text-sm">United States of America</p>
+        <p class="text-muted-foreground mt-4 text-sm font-medium" data-cms-field="footer.est">{footer.est}</p>
+        <p class="text-muted-foreground text-sm" data-cms-field="footer.location">{footer.location}</p>
       </div>
 
       <div class="flex flex-col items-start gap-12 sm:flex-row sm:gap-20">
         <div>
-          <p class="mb-4 text-lg font-bold">Pages</p>
+          <p class="mb-4 text-lg font-bold" data-cms-field="footer.pagesTitle">{footer.pagesTitle}</p>
           <ul class="space-y-2">
-            {quickLinks.map((link) => (
+            {footer.pages.map((link, i) => (
               <li>
-                <a href={link.href} class="text-foreground/60 hover:text-foreground text-sm transition-colors duration-300">{link.label}</a>
+                <a href={link.link} class="text-foreground/60 hover:text-foreground text-sm transition-colors duration-300">
+                  <span data-cms-field={`footer.pages.${i}.label`}>{link.label}</span>
+                </a>
               </li>
             ))}
           </ul>
         </div>
 
         <div class="flex flex-col items-start">
-          <p class="mb-4 text-lg font-bold">Follow Us</p>
+          <p class="mb-4 text-lg font-bold" data-cms-field="footer.followTitle">{footer.followTitle}</p>
           <div class="flex gap-4">
-            {socialLinks.map((s) => (
-              <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} class="text-foreground/70 hover:text-foreground transition-colors">
-                <s.Icon class="size-6" />
-              </a>
-            ))}
+            {socials.map((s, i) => {
+              const Icon = socialIcons[s.label];
+              return (
+                <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={s.label} class="text-foreground/70 hover:text-foreground transition-colors" data-cms-field={`socials.${i}`}>
+                  {Icon ? <Icon class="size-6" /> : s.label}
+                </a>
+              );
+            })}
           </div>
 
-          <a href="/annual-report" class="bg-secondary text-secondary-foreground mt-5 inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium duration-300 will-change-transform hover:scale-105 active:scale-95">
+          <a href={footer.reportCta.link} class="bg-secondary text-secondary-foreground mt-5 inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium duration-300 will-change-transform hover:scale-105 active:scale-95">
             <FileText class="mr-2 size-4" />
-            Annual Impact Report
+            <span data-cms-field="footer.reportCta.label">{footer.reportCta.label}</span>
           </a>
         </div>
       </div>
     </div>
 
     <div class="border-border/20 mt-20 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
-      <p class="text-muted-foreground text-xs">&copy; {year} {companyName}. All rights reserved.</p>
+      <p class="text-muted-foreground text-xs">&copy; {year} <span data-cms-field="name">{name}</span>. <span data-cms-field="footer.rights">{footer.rights}</span></p>
       <div class="flex gap-6">
-        <a href="/privacy" class="text-muted-foreground hover:text-foreground text-xs transition-colors">Privacy</a>
-        <a href="/terms" class="text-muted-foreground hover:text-foreground text-xs transition-colors">Terms</a>
+        <a href="/privacy" class="text-muted-foreground hover:text-foreground text-xs transition-colors" data-cms-field="footer.privacyLabel">{footer.privacyLabel}</a>
+        <a href="/terms" class="text-muted-foreground hover:text-foreground text-xs transition-colors" data-cms-field="footer.termsLabel">{footer.termsLabel}</a>
       </div>
     </div>
   </div>

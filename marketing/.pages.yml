@@ -18,8 +18,86 @@ settings:
       get-involved: /get-involved/
       get-involved-partner: /get-involved/partner-with-us
       get-involved-volunteer: /get-involved/volunteer-with-us
+      site: /
+      agfaf: /agfaf
+    global: [ site ]
 
 content:
+  - name: site
+    label: Site Settings
+    type: file
+    path: src/data/site.json
+    format: json
+    fields:
+      - name: seo
+        label: SEO
+        type: object
+        fields:
+          - {
+              name: title,
+              label: Title,
+              type: string,
+              required: true,
+              description: Shown as the page title in Google results and the browser tab.
+            }
+          - {
+              name: description,
+              label: Description,
+              type: text,
+              description: Short summary shown under the title in Google results.
+            }
+      - { name: name, label: Name, type: string }
+      - { name: email, label: Contact email, type: string, options: { type: email } }
+      - name: socials
+        label: Social links
+        type: object
+        list: { collapsible: { summary: "{fields.label}" } }
+        fields:
+          - { name: label, label: Label, type: string }
+          - { name: url, label: URL, type: string, options: { type: url } }
+      - name: nav
+        label: Navigation
+        type: object
+        fields:
+          - name: links
+            label: Menu links
+            type: object
+            list: { collapsible: { summary: "{fields.label}" } }
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: link, label: Link, type: string, options: { type: url } }
+              - name: children
+                label: Dropdown items
+                type: object
+                list: { collapsible: { summary: "{fields.label}" } }
+                fields:
+                  - { name: label, label: Label, type: string }
+                  - { name: link, label: Link, type: string, options: { type: url } }
+                  - name: children
+                    label: Sub-items
+                    type: object
+                    list: { collapsible: { summary: "{fields.label}" } }
+                    fields:
+                      - { name: label, label: Label, type: string }
+                      - { name: link, label: Link, type: string, options: { type: url } }
+          - { name: cta, label: CTA button, component: link }
+      - name: footer
+        label: Footer
+        type: object
+        fields:
+          - { name: text, label: Mission text, type: text }
+          - { name: est, label: Established line, type: string }
+          - { name: location, label: Location line, type: string }
+          - { name: pagesTitle, label: Pages column title, type: string }
+          - name: pages
+            label: Pages links
+            component: link
+            list: { collapsible: { summary: "{fields.label}" } }
+          - { name: followTitle, label: Follow Us title, type: string }
+          - { name: reportCta, label: Report button, component: link }
+          - { name: rights, label: Rights text, type: string }
+          - { name: privacyLabel, label: Privacy link label, type: string }
+          - { name: termsLabel, label: Terms link label, type: string }
   - name: home
     label: Home
     type: file
@@ -219,19 +297,9 @@ content:
         type: object
         fields:
           - { name: eyebrow, label: Eyebrow, type: string }
-          - {
-              name: bodyBefore,
-              label: Body (before quote),
-              type: text,
-              list: true,
-            }
+          - { name: bodyBefore, label: Body (before quote), type: text, list: true }
           - { name: pullQuote, label: Pull quote, type: text }
-          - {
-              name: bodyAfter,
-              label: Body (after quote),
-              type: text,
-              list: true,
-            }
+          - { name: bodyAfter, label: Body (after quote), type: text, list: true }
       - name: whatWeDo
         label: What We Do
         type: object
@@ -312,11 +380,7 @@ content:
               - { name: heading, label: Heading, type: string }
               - { name: description, label: Description, type: text }
               - { name: quote, label: Quote, type: text }
-              - {
-                  name: descriptionAfter,
-                  label: Description (after quote),
-                  type: text,
-                }
+              - { name: descriptionAfter, label: Description (after quote), type: text }
               - { name: partnersEyebrow, label: Partners eyebrow, type: string }
               - { name: partnersText, label: Partners text, type: text }
               - { name: closing, label: Closing line, type: text }
@@ -353,11 +417,7 @@ content:
               - { name: description, label: Description, type: text }
               - { name: priorityEyebrow, label: Priority eyebrow, type: string }
               - { name: priorityNote, label: Priority note, type: text }
-              - {
-                  name: requirementsEyebrow,
-                  label: Requirements eyebrow,
-                  type: string,
-                }
+              - { name: requirementsEyebrow, label: Requirements eyebrow, type: string }
               - name: requirements
                 label: Requirements
                 type: object
@@ -381,11 +441,7 @@ content:
               - { name: heading, label: Heading, type: string }
               - { name: intro, label: Intro, type: text }
               - { name: quote, label: Quote, type: text }
-              - {
-                  name: quoteAttribution,
-                  label: Quote attribution,
-                  type: string,
-                }
+              - { name: quoteAttribution, label: Quote attribution, type: string }
               - { name: note, label: Note, type: text }
               - name: videos
                 label: Videos
@@ -526,6 +582,12 @@ content:
               - { name: image, label: Image, type: image }
               - { name: link, label: Link, type: string }
               - { name: from, label: From (Platform), type: string }
+          - {
+              name: emptyText,
+              label: Empty state text,
+              type: string,
+              description: Shown when there are no writings yet.
+            }
 
       - name: hervoice-stories
         label: HerVoice Stories
@@ -540,9 +602,9 @@ content:
           field: create
         view:
           primary: title
-          fields: [title, authorName, date]
-          sort: [date, title]
-          search: [title, authorName]
+          fields: [ title, authorName, date ]
+          sort: [ date, title ]
+          search: [ title, authorName ]
           default: { sort: date, order: desc }
         fields:
           - { name: title, label: Title, type: string, required: true }
@@ -550,45 +612,20 @@ content:
           - { name: image, label: Cover image, type: image, required: true }
           - { name: imageAlt, label: Image alt / caption, type: string }
           - { name: imageCredit, label: Image credit, type: string }
-          - {
-              name: date,
-              label: Date,
-              type: date,
-              required: true,
-              options: { format: "yyyy-MM-dd" },
-            }
+          - { name: date, label: Date, type: date, required: true, options: { format: "yyyy-MM-dd" } }
           - {
               name: hideFromListing,
               label: Hide from the HerVoice listing,
               type: boolean,
-              description: "On for contest winners — they're showcased on the Winners page instead.",
+              description: "On for contest winners — they're showcased on the Winners page instead."
             }
           - { name: authorName, label: Author name, type: string }
           - { name: authorPosition, label: Author position, type: string }
           - { name: authorBio, label: Author bio, type: text }
-          - {
-              name: authorInstagram,
-              label: Author Instagram,
-              type: string,
-              options: { type: url },
-            }
-          - {
-              name: authorFacebook,
-              label: Author Facebook,
-              type: string,
-              options: { type: url },
-            }
-          - {
-              name: authorLinkedin,
-              label: Author LinkedIn,
-              type: string,
-              options: { type: url },
-            }
-          - {
-              name: messageToWorld,
-              label: Message to the world,
-              type: text,
-            }
+          - { name: authorInstagram, label: Author Instagram, type: string, options: { type: url } }
+          - { name: authorFacebook, label: Author Facebook, type: string, options: { type: url } }
+          - { name: authorLinkedin, label: Author LinkedIn, type: string, options: { type: url } }
+          - { name: messageToWorld, label: Message to the world, type: text }
           - name: body
             label: Story
             type: rich-text
@@ -688,16 +725,8 @@ content:
               - { name: eyebrow, label: Eyebrow, type: string }
               - { name: title, label: Title, type: string }
               - { name: introLead, label: Intro lead, type: text }
-              - {
-                  name: introHighlight1,
-                  label: Intro highlight 1,
-                  type: string,
-                }
-              - {
-                  name: introHighlight2,
-                  label: Intro highlight 2,
-                  type: string,
-                }
+              - { name: introHighlight1, label: Intro highlight 1, type: string }
+              - { name: introHighlight2, label: Intro highlight 2, type: string }
               - name: prizes
                 label: Prizes
                 type: object
@@ -858,12 +887,7 @@ content:
               - { name: eyebrow, label: Eyebrow, type: string }
               - { name: heading, label: Heading, type: string }
               - { name: subtitle, label: Subtitle, type: text }
-              - {
-                  name: items,
-                  label: Requirement items,
-                  type: string,
-                  list: true,
-                }
+              - { name: items, label: Requirement items, type: string, list: true }
               - name: howToApply
                 label: How to apply
                 type: object
@@ -1124,12 +1148,7 @@ content:
             fields:
               - { name: year, label: Year, type: string }
               - { name: title, label: Title, type: string, required: true }
-              - {
-                  name: description,
-                  label: Description,
-                  type: text,
-                  list: true,
-                }
+              - { name: description, label: Description, type: text, list: true }
 
       - name: agfaf
         label: AGFAF
@@ -1316,12 +1335,7 @@ content:
                 fields:
                   - { name: eyebrow, label: Eyebrow, type: string }
                   - { name: title, label: Title, type: string }
-                  - {
-                      name: paragraphs,
-                      label: Paragraphs,
-                      type: text,
-                      list: true,
-                    }
+                  - { name: paragraphs, label: Paragraphs, type: text, list: true }
               - name: footer
                 label: Footer
                 type: object
@@ -1369,3 +1383,9 @@ content:
             label: Content
             type: rich-text
             options: { format: markdown }
+components:
+  link:
+    type: object
+    fields:
+      - { name: label, label: Button label, type: string }
+      - { name: link, label: Button link, type: string, options: { type: url } }
