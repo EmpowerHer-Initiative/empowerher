@@ -12,7 +12,7 @@ settings:
       hervoice: /hervoice/
       hervoice-winners: /hervoice/winners
       hervoice-featured-writings: /hervoice/featured-writings-from-our-partners
-      hervoice-stories: /hervoice/
+      hervoice-stories: /hervoice/{slug}
       spr: /success-stories/spr
       success-stories: /success-stories/
       get-involved: /get-involved/
