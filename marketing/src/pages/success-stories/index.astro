@@ -5,11 +5,12 @@ import Header from "../../components/marketing/success-stories/Header.astro";
 import Stories from "../../components/marketing/success-stories/Stories.astro";
 import ClosingCTA from "../../components/marketing/success-stories/ClosingCTA.astro";
 import data from "../../data/success-stories.json";
+import { impactStories } from "../../lib/collections";
 
-const { seo, header, stories, closingCta } = data;
+const { seo, header, closingCta } = data;
 ---
 <Layout title={seo.title} description={seo.description}>
   <Header {...header} cmsPath="header" />
-  <Stories stories={stories} cmsPath="stories" />
+  <Stories stories={impactStories} />
   <ClosingCTA {...closingCta} cmsPath="closingCta" />
 </Layout>

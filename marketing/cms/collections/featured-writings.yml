@@ -1,0 +1,22 @@
+label: Featured Writings
+description: Partner-published writings, grouped by platform on the HerVoice featured-writings page.
+filename: "{primary}.json"
+view:
+  primary: title
+  fields: [title, from]
+  sort: [sort_order, title]
+  search: [title, from]
+  reorder: sort_order
+  default: { sort: sort_order, order: asc }
+fields:
+  - { name: title, label: Title, type: string, required: true }
+  - { name: description, label: Description, type: text }
+  - { name: image, label: Image, type: image, required: true }
+  - { name: link, label: Link, type: string, options: { type: url } }
+  - {
+      name: from,
+      label: Platform,
+      type: string,
+      description: The publisher/platform this writing is grouped under.,
+    }
+  - { name: sort_order, label: Sort order, type: number, required: true }

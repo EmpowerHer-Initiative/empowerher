@@ -54,7 +54,6 @@ const { eyebrow, title, items, cmsPath } = Astro.props;
               <img
                 src={workshop.image}
                 alt={workshop.name}
-                data-cms-field={cmsField(cmsPath, `items.${i}.image`)}
                 loading="lazy"
                 decoding="async"
                 class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
@@ -64,14 +63,14 @@ const { eyebrow, title, items, cmsPath } = Astro.props;
             <div class="flex flex-col justify-center gap-6 p-8 md:p-12 lg:p-14">
               <div>
                 {workshop.mentors.length > 0 && (
-                  <p class="text-primary mb-3 text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, `items.${i}.mentors`)}>
+                  <p class="text-primary mb-3 text-xs font-semibold tracking-[0.3em] uppercase">
                     Mentor — {workshop.mentors.join(", ")}
                   </p>
                 )}
-                <h3 class="text-2xl leading-snug font-semibold md:text-3xl" data-cms-field={cmsField(cmsPath, `items.${i}.name`)}>
+                <h3 class="text-2xl leading-snug font-semibold md:text-3xl">
                   {workshop.name}
                 </h3>
-                <p class="text-muted-foreground mt-4 text-base leading-relaxed" data-cms-field={cmsField(cmsPath, `items.${i}.description`)}>
+                <p class="text-muted-foreground mt-4 text-base leading-relaxed">
                   {workshop.description}
                 </p>
               </div>

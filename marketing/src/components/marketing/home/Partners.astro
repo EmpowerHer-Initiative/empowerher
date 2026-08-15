@@ -28,9 +28,8 @@ const { eyebrow, partners, cmsPath } = Astro.props;
               rel="noopener noreferrer"
               title={p.name}
               class="group block transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1.5 hover:scale-105"
-              data-cms-field={cmsField(cmsPath, `partners.${i}.name`)}
             >
-              <img src={p.image} alt={p.name} loading="lazy" decoding="async" class="h-16 w-auto object-contain md:h-24" data-cms-field={cmsField(cmsPath, `partners.${i}.image`)} />
+              <img src={p.image} alt={p.name} loading="lazy" decoding="async" class="h-16 w-auto object-contain md:h-24" />
             </a>
           ))}
         </div>

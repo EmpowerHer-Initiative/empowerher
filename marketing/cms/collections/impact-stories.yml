@@ -1,0 +1,50 @@
+label: Success Stories
+description: Program impact stories on the Success Stories page.
+filename: "{primary}.json"
+view:
+  primary: title
+  fields: [title, date]
+  sort: [sort_order, title]
+  search: [title]
+  reorder: sort_order
+  default: { sort: sort_order, order: asc }
+fields:
+  - { name: image, label: Logo image, type: image, required: true }
+  - { name: title, label: Title, type: string, required: true }
+  - { name: subtitle, label: Subtitle, type: string }
+  - {
+      name: date,
+      label: Date,
+      type: string,
+      description: Free-form range, e.g. "August 2023 – January 2025".,
+    }
+  - { name: badge, label: Badge, type: string }
+  - name: stats
+    label: Stats
+    type: object
+    list: true
+    fields:
+      - { name: value, label: Value, type: string, required: true }
+      - { name: label, label: Label, type: string }
+  - { name: intro, label: Intro paragraph, type: text }
+  - name: links
+    label: Links
+    type: object
+    list: true
+    fields:
+      - { name: label, label: Label, type: string, required: true }
+      - { name: url, label: URL, type: string, options: { type: url } }
+  - name: quote
+    label: Quote
+    type: object
+    fields:
+      - { name: body, label: Body, type: text }
+      - { name: author, label: Author, type: string }
+  - { name: afterQuote, label: Paragraph after quote, type: text }
+  - name: impact
+    label: Impact
+    type: object
+    fields:
+      - { name: title, label: Title, type: string }
+      - { name: body, label: Body, type: text }
+  - { name: sort_order, label: Sort order, type: number, required: true }

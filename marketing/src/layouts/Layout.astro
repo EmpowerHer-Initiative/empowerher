@@ -59,6 +59,7 @@ const jsonLd = {
       "@id": `${Astro.site?.href}#website`,
       url: Astro.site?.href,
       name: SITE_NAME,
+      alternateName: "EmpowerHer",
       description: SITE_DESC,
       publisher: { "@id": `${Astro.site?.href}#organization` },
     },
@@ -76,6 +77,7 @@ const jsonLd = {
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#5ba8d8" />
+    <meta name="application-name" content={SITE_NAME} />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonical} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

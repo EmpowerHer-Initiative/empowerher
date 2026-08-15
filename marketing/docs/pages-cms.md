@@ -1,16 +1,145 @@
+<!-- cms-bridge:managed:start — synced from @alisamadiillc/cms-bridge. Do NOT edit inside this block; edit the package and re-run `npx cms-bridge init`. Project-specific notes go OUTSIDE the markers. -->
+
 # Pages CMS — `.pages.yml` conventions
 
 This documents the **CMS-specific conventions** the Pages CMS understands in a
 site's `.pages.yml`. The CMS renders special UI when it sees these, so the config
 must follow the exact shapes below.
 
-> **Maintainers:** update this file whenever a new CMS feature/skill is added, so
-> the AI editing a `.pages.yml` knows the syntax for it. This is the canonical
-> reference — keep it in sync with the CMS.
+> **Maintainers:** this content is the canonical reference shipped inside the
+> `@alisamadiillc/cms-bridge` package and synced into each project by
+> `npx cms-bridge init`. Edit it in the package (`docs/pages-cms.md`), publish,
+> and re-run init — do not hand-edit the synced copy inside a project.
 
 The special-UI conventions this fork adds are documented in their own sections
 below (typed inputs, `seo`, live preview, groups). First, the general reference for
 authoring any `.pages.yml` — **content entries** and the **field system**.
+
+---
+
+## The `site` entry — REQUIRED on every client project
+
+**Every client site MUST have a global config entry named `site`.** Not optional,
+not "if the site has a footer" — always. This is the single place a client edits
+their identity: business name, logo, phone, email, address. The CMS **canvas
+view** has a dedicated "Site settings" panel that opens exactly this entry, and
+the in-page editor resolves global fields (header/footer text on every page)
+through it — a project without a conventional `site` entry breaks both.
+
+Historically some projects had a config entry and some didn't. When you build a
+new site or touch an old one, bring it to this convention.
+
+### The contract
+
+```yaml
+settings:
+  baseUrl: https://the-client-site.com
+  preview:
+    paths:
+      site: / # site previews at the homepage
+      home: /
+    global: [site] # optional — `site` is already the default, but be explicit
+
+content:
+  - name: site # EXACTLY `site` — the CMS defaults its global resolution to this name
+    label: Site (global)
+    description: Business name, contact details and footer — shown on every page.
+    type: file
+    path: src/data/site.json # EXACTLY this path
+    format: json
+    fields:
+      # ... baseline fields below
+```
+
+- `name: site`, `type: file`, `path: src/data/site.json`, `format: json` —
+  identical across all projects. Clients move between the projects; the config
+  must always be in the same place with the same shape.
+- List it **first** in `content`, at the top level (never inside a group).
+- Its **top-level keys must never overlap** with any page entry that shares a
+  route — overlap breaks field→entry resolution in the canvas. (If the homepage
+  has its own catering band and `site` already owns a `catering` object, key the
+  homepage one `cateringPromo`, not `catering`.)
+
+### Baseline fields (include all that apply, in this order)
+
+```yaml
+fields:
+  - name: seo
+    label: SEO
+    type: object
+    fields:
+      - {
+          name: title,
+          label: Title,
+          type: string,
+          required: true,
+          description: "Shown as the page title in Google results and the browser tab.",
+        }
+      - {
+          name: description,
+          label: Description,
+          type: text,
+          description: "Short summary shown under the title in Google results.",
+        }
+  - { name: name, label: Business name, type: string, required: true }
+  - { name: tagline, label: Tagline, type: string }
+  - { name: logo, label: Logo, type: image }
+  - { name: phone, label: Phone, type: string, options: { type: tel } }
+  - { name: email, label: Email, type: string, options: { type: email } }
+  - name: address
+    label: Address
+    type: object
+    fields:
+      - { name: street, label: Street, type: string }
+      - { name: city, label: City, type: string }
+      - { name: region, label: State, type: string }
+      - { name: zip, label: ZIP, type: string }
+      - {
+          name: mapsUrl,
+          label: Google Maps link,
+          type: string,
+          options: { type: url },
+        }
+  - name: socials
+    label: Social links
+    type: object
+    list: true
+    fields:
+      - { name: label, label: Network, type: string }
+      - { name: url, label: Profile URL, type: string, options: { type: url } }
+  - name: footer
+    label: Footer
+    type: object
+    fields:
+      - { name: text, label: Footer text, type: string }
+```
+
+Rules:
+
+- **Use these exact field names** (`name`, `tagline`, `logo`, `phone`, `email`,
+  `address.street`…) when the concept exists for the client. Do not invent
+  synonyms (`businessName`, `telephone`, `contactEmail`) — consistency across
+  projects is the whole point.
+- **Omit what genuinely doesn't apply** (a SaaS with no street address skips
+  `address`); don't ship empty decoy fields.
+- **Extend freely after the baseline** with industry-specific globals (`hours`
+  for restaurants, `orderUrl`, a `catering` contact object, license numbers…) —
+  appended after the baseline fields, same naming discipline.
+- Everything rendered from `site.json` (header, footer, contact blocks) carries
+  `data-cms-field` with the site-relative path (`name`, `phone`,
+  `hours.0.days`) — no entry prefix. That is what lets the canvas edit the
+  footer phone on any page and update every other page live.
+
+### Migrating an existing project without a `site` entry
+
+1. Create `src/data/site.json` and move the global values (name, contact,
+   footer…) out of the page JSONs into it, using the baseline field names.
+2. Add the `site` entry to `.pages.yml` as above (first in `content`), plus
+   `preview.paths.site: /`.
+3. Update `Header.astro` / `Footer.astro` (and any contact blocks) to import
+   `site.json` and tag elements with `data-cms-field`.
+4. Remove the now-duplicated keys from page entries so top-level keys don't
+   overlap.
 
 ---
 
@@ -55,9 +184,15 @@ a **list view** plus create/edit/delete.
     sort: [date, title] # sortable columns
     search: [title] # searchable fields
     default: { sort: date, order: desc }
+    reorder: sort_order # optional — drag-to-reorder, names a number field (see Ordering)
   operations: { create: true, rename: true, delete: true } # optional gating
   fields: [...]
 ```
+
+> **Gotcha:** the collection list only shows files whose extension matches the
+> `filename` template's extension. The default template ends in `.md`, so a
+> `format: json` collection shows "No entries" unless you set e.g.
+> `filename: "{primary}.json"`.
 
 **Filename templates** (collections) use tokens expanded at create time: `{year}`
 `{month}` `{day}` `{hour}` `{minute}` `{second}`, `{primary}` (alias `{slug}` — the
@@ -70,18 +205,66 @@ Other entry keys: `delimiters` (frontmatter delimiter override), `commit`
 (`{ templates?, identity? }` — custom commit messages / author), `format: raw` (edit the
 file body as-is with no field parsing).
 
+### Ordering
+
+How entry order works, end to end:
+
+**1. List-view sorting (display only).** `view.sort` lists the sortable columns;
+`view.default: { sort, order }` sets the initial sort. Without a default the CMS
+falls back to a `date` field if one exists, else the primary field. Sorting the
+list does **not** change any files.
+
+**2. Manual ordering — drag-to-reorder (`view.reorder`).** Set `view.reorder`
+to the name of a **`type: number` field** (convention: `sort_order`, make it
+`required: true`) and the collection list becomes drag-sortable:
+
+```yaml
+- name: team
+  type: collection
+  path: src/content/team
+  format: json
+  filename: "{primary}.json"
+  view:
+    fields: [name, role]
+    primary: name
+    reorder: sort_order
+  fields:
+    - { name: name, label: Name, type: string, required: true }
+    - { name: sort_order, label: Sort order, type: number, required: true }
+```
+
+Behavior:
+
+- A grip-handle column appears and the list default-sorts by the field ascending
+  (all entries on one page).
+- Dropping a row rewrites the field to `0..n-1` across the entries whose value
+  changed — **one commit** for the whole reorder. Gaps, duplicates, or missing
+  values self-heal on the first drag.
+- Dragging is disabled while searching, while another column sort is active, and
+  for `layout: tree` collections. Folders are never draggable.
+- New entries prefill the field with `max + 1` (they land at the bottom).
+- If entries changed on GitHub since the list loaded, the save is rejected with
+  a "refresh and try again" error instead of overwriting.
+
+**3. Site-side consumption.** The Astro site must sort by the field ascending —
+the CMS only writes numbers, it doesn't control render order:
+
+```ts
+const members = (await getCollection("team"))
+  .map((entry) => entry.data)
+  .sort((a, b) => a.sort_order - b.sort_order);
+```
+
+**4. Lists inside an entry (`list: true` fields).** Array items already have
+drag handles in the entry editor; their saved array order is the render order —
+no extra field needed.
+
 ### Formats
 
 `format` (usually inferred from the file extension): `json`, `yaml`, `toml`,
 `yaml-frontmatter`, `json-frontmatter`, `toml-frontmatter` (body + frontmatter),
 `datagrid` (CSV-like), `code`, `raw` (no parsing — pairs with a single `body` code
 field or none).
-
-**Body field in `*-frontmatter` formats:** a field named exactly **`body`** edits
-the document body below the frontmatter (typically `rich-text` with
-`options: { format: markdown }`, or `code` for a raw markdown editor); every
-other field is a frontmatter key. See the `hervoice-stories` collection for an
-example.
 
 ---
 
@@ -120,7 +303,7 @@ to show each item as a collapsed row titled by a template. Works on any type
 | `rich-text` | WYSIWYG. Options: `format` (`html` \| markdown default), `switcher` (md/html toggle, default true), plus image opts (`media`, `path`, `extensions`)                                                                                         |
 | `number`    | numeric. Options: `min`, `max`, `step`                                                                                                                                                                                                      |
 | `boolean`   | toggle                                                                                                                                                                                                                                      |
-| `date`      | date picker. Options: `time` (→ date-time), `format` (save format), `min`, `max`, `step`                                                                                                                                                    |
+| `date`      | shadcn calendar picker, **pre-fills with today** on new entries. Options: `time` (→ date-time), `format` (save format), `min`, `max`, `step`                                                                                                |
 | `select`    | dropdown. Options: `values` (list of strings or `{value,label}`), `multiple`, `min`, `max`, `placeholder`                                                                                                                                   |
 | `image`     | media picker (image). Options: `media`, `path`, `extensions`, `categories`, `multiple` (bool or `{max}`), `unique`, `rename`                                                                                                                |
 | `file`      | media picker (any file). Same options as `image`                                                                                                                                                                                            |
@@ -129,6 +312,39 @@ to show each item as a collapsed row titled by a template. Works on any type
 | `uuid`      | auto id. Options: `editable`, `generate` (default true → regenerate button)                                                                                                                                                                 |
 | `object`    | a group of nested `fields` (use `list: true` for repeatable groups)                                                                                                                                                                         |
 | `block`     | polymorphic item — pick one shape from `blocks` (see below)                                                                                                                                                                                 |
+
+### Publish / created dates — always use `type: date`
+
+Never model a publish/created date as `type: number` with an epoch timestamp — the
+editor gets a raw number input and has to hand-type milliseconds. Use `type: date`:
+it renders a calendar picker pre-filled with today, so the editor usually just clicks
+Save.
+
+```yaml
+- name: created_at
+  label: Publish date
+  type: date
+  required: true
+```
+
+- Saves `yyyy-MM-dd` by default. Use `options: { format: ... }` (date-fns tokens) for
+  another save format, or `options: { time: true }` for a datetime.
+- Astro side (`src/content.config.ts`): declare the field as `z.coerce.date()`. Then
+  sort with `b.created_at.getTime() - a.created_at.getTime()` and format with
+  `created_at.toLocaleDateString(...)` — no epoch math.
+- **Always pass `timeZone: "UTC"` to `toLocaleDateString`** — `yyyy-MM-dd` parses as
+  UTC midnight, so local-time formatting renders the previous day in western
+  timezones.
+- CMS `view.sort` on the field works as-is: lexical sort of `yyyy-MM-dd` is
+  chronological.
+
+### Field labels — write for clients
+
+Labels are read by non-technical clients. Prefer plain language over CMS jargon
+("Description", not "Excerpt"; "Publish date", not "created_at"). When a field's
+purpose isn't obvious from its label, add a `description:` helper line explaining
+where the value shows up (e.g. "Short summary shown on the newsletter card and in
+search results").
 
 ### `object` — grouped / nested fields
 
@@ -288,6 +504,40 @@ Rules:
 Then wire the values into the page's `<head>` in your Astro layout (e.g.
 `<title>{seo.title}</title>` and `<meta name="description" content={seo.description}>`).
 
+### Site name in search results
+
+Google shows a **site name** above the page title in results (e.g. "EmpowerHer
+Initiative") instead of the bare domain (`empowerher-initiative.org`) only when
+the site advertises one consistently. Wire all three signals — sourced from
+`site.name` so they always agree — in the shared `<head>` (a `SEO.astro`
+component or the layout):
+
+```astro
+---
+import site from "../data/site.json";
+---
+<!-- 1. Application name meta -->
+<meta name="application-name" content={site.name} />
+<!-- 2. Open Graph site name -->
+<meta property="og:site_name" content={site.name} />
+<!-- 3. WebSite structured data -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.name,
+  url: Astro.site?.href,
+  // alternateName: a shorter/common form, when the legal name is long
+})} />
+```
+
+- All three must carry the **same** name (`site.name`). Mismatched values make
+  Google fall back to the domain.
+- Add `alternateName` to the `WebSite` node when the client has a long legal name
+  but a short common name (e.g. name "EmpowerHer Initiative Inc.",
+  alternateName "EmpowerHer").
+- Site-name changes can take a few crawls to appear; the markup is the
+  prerequisite, not an instant switch.
+
 ---
 
 ## Live preview highlighting — `settings` + `data-cms-field`
@@ -313,11 +563,18 @@ settings:
       site: / # default route is `/` for entry `home`, else `/<name>`
       about: /about
       hervoice-winners: /hervoice/winners
+    global: [site] # optional — entries rendered on EVERY page (header/footer)
 ```
 
 Route resolution per content entry: `settings.preview.paths[<entry name>]` if set,
 otherwise `/` when the entry is named `home`, otherwise `/<entry name>`. A
 single-page site whose only entry is `site` therefore needs `paths: { site: / }`.
+
+`settings.preview.global` lists entries whose fields appear on **every** page
+(global chrome — header/footer/site config). The CMS **canvas view** uses it to
+resolve which JSON file an in-page edit belongs to and to update those values on
+all page frames at once. When omitted it defaults to a file entry named `site`
+if one exists — so the convention-following sites need nothing extra.
 
 ### 2. `data-cms-field` on every rendered element
 
@@ -365,9 +622,9 @@ most specific elements you can is best; objects highlight through their children
 
 #### Component-based sites — the `cmsField()` helper
 
-When a page renders its data **inline** (like this template's `index.astro`, which
-reads root-level `site.json` directly), the field paths are static — just write the
-literal string: `data-cms-field="hero.heading"`.
+When a page renders its data **inline** (reads a root-level `site.json` directly),
+the field paths are static — just write the literal string:
+`data-cms-field="hero.heading"`.
 
 But most real sites split each section into its own component and pass a **slice** of
 the data down (`<Hero {...content.hero} />`). Inside `Hero.astro` you no longer know
@@ -428,39 +685,105 @@ Because `cmsField` returns `undefined` for the no-prefix case, it produces the s
 output as writing the literal by hand — use literals for inline root pages, the helper
 for anything that receives a `cmsPath` prop.
 
-### 3. The bridge script
+### 3. The bridge — `@alisamadiillc/cms-bridge` (Astro integration)
 
-The site must ship the preview bridge and fetch it **only** when the URL has
-`?cms-preview=1` (the CMS iframe adds this flag). Copy `public/cms-preview.js` from
-the template, and in the base layout add a tiny inline loader that checks the flag
-client-side and injects the bridge only then.
+The site ships the CMS bridge via the **`@alisamadiillc/cms-bridge`** npm package —
+no hand-copied script, no manual loader. Upgrading every client site is a version
+bump.
 
-> **Why not gate with `Astro.url.searchParams`?** Static (prerendered) Astro pages
-> have no query params at render time — `Astro.url.search` is always empty — so a
-> server-side `{Astro.url... && <script>}` gate never fires. Gate on the client with
-> `location.search` instead.
-
-```astro
-<!-- src/layouts/Layout.astro, just before </body> -->
-<script is:inline>
-  if (new URLSearchParams(location.search).has("cms-preview")) {
-    var s = document.createElement("script");
-    s.src = "/cms-preview.js";
-    document.head.appendChild(s);
-  }
-</script>
+```bash
+pnpm add @alisamadiillc/cms-bridge
 ```
 
-Normal visitors run the tiny inline check, it's false, and the 2.8KB bridge is never
-fetched.
+```js
+// astro.config.mjs
+import cmsBridge from "@alisamadiillc/cms-bridge/astro";
 
-The script listens for the CMS `postMessage`, resolves the element by
-`data-cms-field`, scrolls to it, and adds a brief highlight outline. It stays inert
-(and unloaded) for real visitors.
+export default defineConfig({
+  integrations: [sitemap(), cmsBridge()],
+});
+```
+
+That's the whole install. The integration injects a ~200 B inline check on every
+page; the actual bridge is a lazy chunk (~5 KB) fetched **only** when the URL has
+`?cms-preview=…` (the CMS iframe adds it) — normal visitors never download it.
+
+Two modes, keyed by the param value:
+
+- `?cms-preview=1` — **highlight** mode (the classic docked preview panel): the CMS
+  posts a field path on input focus; the bridge scrolls to and pulses the matching
+  `data-cms-field` element. Read-only.
+- `?cms-preview=edit` — **canvas edit** mode: every leaf `data-cms-field` text
+  element becomes `contenteditable`; on blur the bridge posts
+  `{ type: "field-commit", path, value }` to the CMS, which resolves the entry by
+  schema membership and saves a local draft. The CMS can also push values back
+  (`{ type: "set", values }`) so drafts and cross-page globals (footer phone etc.)
+  update live in every frame.
+
+The mode survives Astro `ClientRouter` soft navigations via `sessionStorage`, and
+the bridge re-scans on `astro:page-load`.
+
+> **Legacy sites:** an old hand-maintained `public/cms-preview.js` keeps working —
+> the CMS still speaks the v1 protocol. Migrate by installing the package, adding
+> the integration, and deleting `public/cms-preview.js` + the inline loader in
+> `Layout.astro`.
 
 > **The one rule that makes it all work:** the CMS field path, the JSON key, and the
 > `data-cms-field` value are the same string. Keep them aligned and there is nothing
 > else to map.
+
+### Automating all of the above — the `cms-bridge` CLI
+
+You don't wire a project by hand. The package ships a CLI:
+
+- `npx cms-bridge init` — extracts static page text into `src/data/*.json`, tags
+  elements with `data-cms-field`, merges `.pages.yml` (append-only, your edits
+  win), adds the integration, and writes a self-contained `cms-report.md` for
+  anything it couldn't safely auto-convert. Idempotent — re-run any time.
+- `npx cms-bridge check` — analyze only; exits non-zero while unwired content or
+  config problems remain.
+- `npx cms-bridge collections` — sync `cms/collections/*.yml` definitions into
+  `.pages.yml` (see below).
+
+`init` also syncs THIS document into the project, so the conventions travel with
+the code.
+
+---
+
+## Collections — `cms/collections/*.yml`
+
+**Every client project should define its collections this way.** The hub's CMS
+view is collections-first: clients manage repeating content (blog posts, jobs,
+testimonials, newsletters…) through the CMS overlay, whose list comes straight
+from the `type: collection` entries in `.pages.yml`. A project without collection
+definitions gives the client an empty CMS. Page copy is edited on the canvas;
+anything that behaves like a table of records belongs in a collection.
+
+Define a collection ("database table" — newsletters, jobs, testimonials) as a file
+in the project, then sync it. The file body IS the `.pages.yml` entry body; `name`
+(from the filename) and `type: collection` are injected, defaults fill the rest.
+
+```yaml
+# cms/collections/newsletters.yml
+label: Newsletters
+description: Email newsletters — drafts and archive.
+fields:
+  - { name: title, label: Title, type: string, required: true }
+  - { name: date, label: Date, type: date }
+  - { name: excerpt, label: Excerpt, type: text }
+  - { name: body, label: Body, type: rich-text }
+```
+
+Defaults when omitted: `path: src/data/<name>`, `format: json`,
+`filename: "{year}-{month}-{day}-{fields.<primary>}.json"`, `view.primary` = the
+field named `title` (else the first non-object field, which is the table's title
+column).
+
+`npx cms-bridge collections` upserts each definition into a `Collections` sidebar
+group (append-only — your edits win), creates the content directory, and with
+`--sample` writes one sample entry. Deleting a definition file does not delete the
+entry (it's reported as an orphan). Never hand-author a collection entry into
+`.pages.yml` — write the definition file and sync.
 
 ---
 
@@ -530,3 +853,5 @@ content:
 
 > **When re-organizing an existing site:** move entries into `type: group` wrappers
 > **without editing their `path`, `name`, or fields**. Only the nesting changes.
+
+<!-- cms-bridge:managed:end -->

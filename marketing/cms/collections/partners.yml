@@ -1,0 +1,21 @@
+label: Partners
+description: Partner & supporter logos shown on the home and About pages.
+filename: "{primary}.json"
+view:
+  primary: name
+  fields: [name, link]
+  sort: [sort_order, name]
+  search: [name]
+  reorder: sort_order
+  default: { sort: sort_order, order: asc }
+fields:
+  - { name: name, label: Name, type: string, required: true }
+  - { name: image, label: Logo, type: image, required: true }
+  - {
+      name: link,
+      label: Link,
+      type: string,
+      options: { type: url },
+      description: External site, or an internal path like /agfaf.,
+    }
+  - { name: sort_order, label: Sort order, type: number, required: true }

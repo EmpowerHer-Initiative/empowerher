@@ -1,0 +1,23 @@
+label: Workshops
+description: Available workshops shown on the Mentorship page.
+filename: "{primary}.json"
+view:
+  primary: name
+  fields: [name]
+  sort: [sort_order, name]
+  search: [name]
+  reorder: sort_order
+  default: { sort: sort_order, order: asc }
+fields:
+  - { name: name, label: Name, type: string, required: true }
+  - {
+      name: mentors,
+      label: Mentors,
+      type: string,
+      list: true,
+      description: One entry per mentor; shown as "Mentor — A, B".,
+    }
+  - { name: description, label: Description, type: text }
+  - { name: image, label: Image, type: image, required: true }
+  - { name: link, label: Application link, type: string, options: { type: url } }
+  - { name: sort_order, label: Sort order, type: number, required: true }

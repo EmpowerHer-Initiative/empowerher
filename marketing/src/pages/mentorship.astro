@@ -7,6 +7,7 @@ import Eligibility from "../components/marketing/mentorship/Eligibility.astro";
 import Opportunities from "../components/marketing/mentorship/Opportunities.astro";
 import Workshops from "../components/marketing/mentorship/Workshops.astro";
 import data from "../data/mentorship.json";
+import { workshops } from "../lib/collections";
 ---
 
 <Layout title={data.seo.title} description={data.seo.description}>
@@ -15,5 +16,5 @@ import data from "../data/mentorship.json";
   <WorkshopStructure {...data.workshopStructure} cmsPath="workshopStructure" />
   <Eligibility {...data.eligibility} cmsPath="eligibility" />
   <Opportunities {...data.opportunities} cmsPath="opportunities" />
-  <Workshops {...data.workshops} cmsPath="workshops" />
+  <Workshops {...data.workshops} items={workshops} cmsPath="workshops" />
 </Layout>

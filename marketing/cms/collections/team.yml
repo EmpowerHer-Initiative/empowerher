@@ -1,0 +1,23 @@
+label: Team Members
+description: People on the About page, grouped into Executive Team, Directors and Mentors & Lecturers.
+filename: "{primary}.json"
+view:
+  primary: name
+  fields: [name, role, group]
+  sort: [sort_order, name]
+  search: [name, role]
+  reorder: sort_order
+  default: { sort: sort_order, order: asc }
+fields:
+  - { name: name, label: Name, type: string, required: true }
+  - { name: role, label: Role / title, type: string }
+  - { name: image, label: Photo, type: image, required: true }
+  - {
+      name: group,
+      label: Group,
+      type: select,
+      required: true,
+      options: { values: ["Executive Team", "Directors", "Mentors & Lecturers"] },
+      description: Which band this person appears in on the About page.,
+    }
+  - { name: sort_order, label: Sort order, type: number, required: true }

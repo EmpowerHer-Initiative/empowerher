@@ -1,0 +1,17 @@
+label: Resources
+description: Cards in the Resources directory.
+filename: "{primary}.json"
+view:
+  primary: name
+  fields: [name, location]
+  sort: [sort_order, name]
+  search: [name, location]
+  reorder: sort_order
+  default: { sort: sort_order, order: asc }
+fields:
+  - { name: name, label: Name, type: string, required: true }
+  - { name: location, label: Location, type: string }
+  - { name: description, label: Description, type: text }
+  - { name: link, label: Link, type: string, options: { type: url } }
+  - { name: image, label: Logo, type: image }
+  - { name: sort_order, label: Sort order, type: number, required: true }

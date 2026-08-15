@@ -4,12 +4,13 @@ import Header from "../components/marketing/resources/Header.astro";
 import ResourceList from "../components/marketing/resources/ResourceList.astro";
 import FooterNote from "../components/marketing/resources/FooterNote.astro";
 import data from "../data/resources.json";
+import { resources } from "../lib/collections";
 
-const { seo, header, resources, footerNote } = data;
+const { seo, header, footerNote } = data;
 ---
 
 <Layout title={seo.title} description={seo.description}>
   <Header eyebrow={header.eyebrow} heading={header.heading} intro={header.intro} cmsPath="header" />
-  <ResourceList resources={resources} cmsPath="resources" />
+  <ResourceList resources={resources} />
   <FooterNote text={footerNote.text} email={footerNote.email} cmsPath="footerNote" />
 </Layout>

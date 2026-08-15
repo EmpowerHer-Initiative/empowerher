@@ -38,7 +38,6 @@ const { eyebrow, items, cmsPath } = Astro.props;
                 alt={p.name}
                 loading="lazy"
                 decoding="async"
-                data-cms-field={cmsField(cmsPath, `items.${i}.image`)}
                 class="h-16 w-auto object-contain md:h-24"
               />
             </a>

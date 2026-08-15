@@ -238,16 +238,9 @@ content:
       - name: partners
         label: Partners
         type: object
+        # Logos are managed in the `partners` collection.
         fields:
           - { name: eyebrow, label: Eyebrow, type: string }
-          - name: partners
-            label: Partners
-            type: object
-            list: true
-            fields:
-              - { name: name, label: Name, type: string }
-              - { name: image, label: Image, type: image }
-              - { name: link, label: Link, type: string, options: { type: url } }
       - name: newsletter
         label: Newsletter
         type: object
@@ -318,37 +311,17 @@ content:
       - name: team
         label: Team
         type: object
+        # Members are managed in the `team` collection.
         fields:
           - { name: eyebrow, label: Eyebrow, type: string }
           - { name: heading, label: Heading, type: string }
           - { name: intro, label: Intro, type: text }
-          - name: groups
-            label: Groups
-            type: object
-            list: true
-            fields:
-              - { name: label, label: Label, type: string }
-              - name: members
-                label: Members
-                type: object
-                list: true
-                fields:
-                  - { name: name, label: Name, type: string }
-                  - { name: role, label: Role, type: string }
-                  - { name: image, label: Image, type: image }
       - name: partners
         label: Partners
         type: object
+        # Logos are managed in the `partners` collection.
         fields:
           - { name: eyebrow, label: Eyebrow, type: string }
-          - name: items
-            label: Items
-            type: object
-            list: true
-            fields:
-              - { name: name, label: Name, type: string }
-              - { name: image, label: Image, type: image }
-              - { name: link, label: Link, type: string, options: { type: url } }
       - name: cta
         label: CTA
         type: object
@@ -571,17 +544,7 @@ content:
               - { name: eyebrow, label: Eyebrow, type: string }
               - { name: heading, label: Heading, type: string }
               - { name: lede, label: Lede, type: text }
-          - name: writings
-            label: Writings
-            type: object
-            list: true
-            fields:
-              - { name: id, label: ID, type: number }
-              - { name: title, label: Title, type: string }
-              - { name: description, label: Description, type: text }
-              - { name: image, label: Image, type: image }
-              - { name: link, label: Link, type: string }
-              - { name: from, label: From (Platform), type: string }
+          # Writings are managed in the `featured-writings` collection.
           - {
               name: emptyText,
               label: Empty state text,
@@ -840,19 +803,10 @@ content:
           - name: workshops
             label: Workshops
             type: object
+            # Workshop cards are managed in the `workshops` collection.
             fields:
               - { name: eyebrow, label: Eyebrow, type: string }
               - { name: title, label: Title, type: string }
-              - name: items
-                label: Items
-                type: object
-                list: true
-                fields:
-                  - { name: name, label: Name, type: string }
-                  - { name: mentors, label: Mentors, type: string, list: true }
-                  - { name: description, label: Description, type: text }
-                  - { name: image, label: Image, type: image }
-                  - { name: link, label: Application link, type: string }
 
       - name: spr
         label: Student Project Roadmap
@@ -1078,44 +1032,7 @@ content:
             fields:
               - { name: heading, label: Heading, type: string, required: true }
               - { name: subtitle, label: Subtitle, type: text }
-          - name: stories
-            label: Stories
-            type: object
-            list: true
-            fields:
-              - { name: image, label: Logo image, type: image }
-              - { name: title, label: Title, type: string, required: true }
-              - { name: subtitle, label: Subtitle, type: string }
-              - { name: date, label: Date, type: string }
-              - { name: badge, label: Badge, type: string }
-              - name: stats
-                label: Stats
-                type: object
-                list: true
-                fields:
-                  - { name: value, label: Value, type: string, required: true }
-                  - { name: label, label: Label, type: string }
-              - { name: intro, label: Intro paragraph, type: text }
-              - name: links
-                label: Links
-                type: object
-                list: true
-                fields:
-                  - { name: label, label: Label, type: string, required: true }
-                  - { name: url, label: URL, type: string }
-              - name: quote
-                label: Quote
-                type: object
-                fields:
-                  - { name: body, label: Body, type: text }
-                  - { name: author, label: Author, type: string }
-              - { name: afterQuote, label: Paragraph after quote, type: text }
-              - name: impact
-                label: Impact
-                type: object
-                fields:
-                  - { name: title, label: Title, type: string }
-                  - { name: body, label: Body, type: text }
+          # Stories are managed in the `impact-stories` collection.
           - name: closingCta
             label: Closing CTA
             type: object
@@ -1200,17 +1117,7 @@ content:
               - { name: eyebrow, label: Eyebrow, type: string }
               - { name: heading, label: Heading, type: string, required: true }
               - { name: intro, label: Intro, type: text }
-          - name: resources
-            label: Resources
-            type: object
-            list: true
-            fields:
-              - { name: id, label: ID, type: number }
-              - { name: name, label: Name, type: string, required: true }
-              - { name: location, label: Location, type: string }
-              - { name: description, label: Description, type: text }
-              - { name: link, label: Link, type: string }
-              - { name: image, label: Image, type: image }
+          # Resource cards are managed in the `resource-listings` collection.
           - name: footerNote
             label: Footer note
             type: object
@@ -1383,6 +1290,238 @@ content:
             label: Content
             type: rich-text
             options: { format: markdown }
+  - name: collections
+    label: Collections
+    type: group
+    items:
+      - name: featured-writings
+        type: collection
+        label: Featured Writings
+        description: Partner-published writings, grouped by platform on the HerVoice featured-writings page.
+        filename: "{primary}.json"
+        view:
+          primary: title
+          fields:
+            - title
+            - from
+          sort:
+            - sort_order
+            - title
+          search:
+            - title
+            - from
+          reorder: sort_order
+          default:
+            sort: sort_order
+            order: asc
+        path: src/data/featured-writings
+        format: json
+        fields:
+          - { name: title, label: Title, type: string, required: true }
+          - { name: description, label: Description, type: text }
+          - { name: image, label: Image, type: image, required: true }
+          - { name: link, label: Link, type: string, options: { type: url } }
+          - {
+              name: from,
+              label: Platform,
+              type: string,
+              description: The publisher/platform this writing is grouped under.
+            }
+          - { name: sort_order, label: Sort order, type: number, required: true }
+      - name: impact-stories
+        type: collection
+        label: Success Stories
+        description: Program impact stories on the Success Stories page.
+        filename: "{primary}.json"
+        view:
+          primary: title
+          fields:
+            - title
+            - date
+          sort:
+            - sort_order
+            - title
+          search:
+            - title
+          reorder: sort_order
+          default:
+            sort: sort_order
+            order: asc
+        path: src/data/impact-stories
+        format: json
+        fields:
+          - { name: image, label: Logo image, type: image, required: true }
+          - { name: title, label: Title, type: string, required: true }
+          - { name: subtitle, label: Subtitle, type: string }
+          - {
+              name: date,
+              label: Date,
+              type: string,
+              description: Free-form range,
+              e.g. "August 2023 – January 2025".: null
+            }
+          - { name: badge, label: Badge, type: string }
+          - name: stats
+            label: Stats
+            type: object
+            list: true
+            fields:
+              - { name: value, label: Value, type: string, required: true }
+              - { name: label, label: Label, type: string }
+          - { name: intro, label: Intro paragraph, type: text }
+          - name: links
+            label: Links
+            type: object
+            list: true
+            fields:
+              - { name: label, label: Label, type: string, required: true }
+              - { name: url, label: URL, type: string, options: { type: url } }
+          - name: quote
+            label: Quote
+            type: object
+            fields:
+              - { name: body, label: Body, type: text }
+              - { name: author, label: Author, type: string }
+          - { name: afterQuote, label: Paragraph after quote, type: text }
+          - name: impact
+            label: Impact
+            type: object
+            fields:
+              - { name: title, label: Title, type: string }
+              - { name: body, label: Body, type: text }
+          - { name: sort_order, label: Sort order, type: number, required: true }
+      - name: partners
+        type: collection
+        label: Partners
+        description: Partner & supporter logos shown on the home and About pages.
+        filename: "{primary}.json"
+        view:
+          primary: name
+          fields:
+            - name
+            - link
+          sort:
+            - sort_order
+            - name
+          search:
+            - name
+          reorder: sort_order
+          default:
+            sort: sort_order
+            order: asc
+        path: src/data/partners
+        format: json
+        fields:
+          - { name: name, label: Name, type: string, required: true }
+          - { name: image, label: Logo, type: image, required: true }
+          - {
+              name: link,
+              label: Link,
+              type: string,
+              options: { type: url },
+              description: External site,
+              or an internal path like /agfaf.: null
+            }
+          - { name: sort_order, label: Sort order, type: number, required: true }
+      - name: resource-listings
+        type: collection
+        label: Resources
+        description: Cards in the Resources directory.
+        filename: "{primary}.json"
+        view:
+          primary: name
+          fields:
+            - name
+            - location
+          sort:
+            - sort_order
+            - name
+          search:
+            - name
+            - location
+          reorder: sort_order
+          default:
+            sort: sort_order
+            order: asc
+        path: src/data/resource-listings
+        format: json
+        fields:
+          - { name: name, label: Name, type: string, required: true }
+          - { name: location, label: Location, type: string }
+          - { name: description, label: Description, type: text }
+          - { name: link, label: Link, type: string, options: { type: url } }
+          - { name: image, label: Logo, type: image }
+          - { name: sort_order, label: Sort order, type: number, required: true }
+      - name: team
+        type: collection
+        label: Team Members
+        description: People on the About page, grouped into Executive Team, Directors and Mentors & Lecturers.
+        filename: "{primary}.json"
+        view:
+          primary: name
+          fields:
+            - name
+            - role
+            - group
+          sort:
+            - sort_order
+            - name
+          search:
+            - name
+            - role
+          reorder: sort_order
+          default:
+            sort: sort_order
+            order: asc
+        path: src/data/team
+        format: json
+        fields:
+          - { name: name, label: Name, type: string, required: true }
+          - { name: role, label: Role / title, type: string }
+          - { name: image, label: Photo, type: image, required: true }
+          - {
+              name: group,
+              label: Group,
+              type: select,
+              required: true,
+              options: { values: [ Executive Team, Directors, Mentors & Lecturers ] },
+              description: Which band this person appears in on the About page.
+            }
+          - { name: sort_order, label: Sort order, type: number, required: true }
+      - name: workshops
+        type: collection
+        label: Workshops
+        description: Available workshops shown on the Mentorship page.
+        filename: "{primary}.json"
+        view:
+          primary: name
+          fields:
+            - name
+          sort:
+            - sort_order
+            - name
+          search:
+            - name
+          reorder: sort_order
+          default:
+            sort: sort_order
+            order: asc
+        path: src/data/workshops
+        format: json
+        fields:
+          - { name: name, label: Name, type: string, required: true }
+          - {
+              name: mentors,
+              label: Mentors,
+              type: string,
+              list: true,
+              description: One entry per mentor; shown as "Mentor — A,
+              B".: null
+            }
+          - { name: description, label: Description, type: text }
+          - { name: image, label: Image, type: image, required: true }
+          - { name: link, label: Application link, type: string, options: { type: url } }
+          - { name: sort_order, label: Sort order, type: number, required: true }
 components:
   link:
     type: object

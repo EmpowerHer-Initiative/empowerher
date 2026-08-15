@@ -11,6 +11,7 @@ import MediaSpotlight from "../components/marketing/home/MediaSpotlight.astro";
 import Partners from "../components/marketing/home/Partners.astro";
 import Newsletter from "../components/marketing/home/Newsletter.astro";
 import content from "../data/home.json";
+import { partners } from "../lib/collections";
 ---
 
 <Layout title={content.seo.title} description={content.seo.description}>
@@ -22,6 +23,6 @@ import content from "../data/home.json";
   <Programs cmsPath="programs" {...content.programs} />
   <ImpactStory cmsPath="impactStory" {...content.impactStory} />
   <MediaSpotlight cmsPath="mediaSpotlight" {...content.mediaSpotlight} />
-  <Partners cmsPath="partners" {...content.partners} />
+  <Partners cmsPath="partners" eyebrow={content.partners.eyebrow} partners={partners} />
   <Newsletter cmsPath="newsletter" {...content.newsletter} />
 </Layout>

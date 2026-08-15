@@ -34,22 +34,24 @@ src/pages/index.astro:   <h1 data-cms-field="hero.heading">{home.hero.heading}</
   ```astro
   <h3 data-cms-field={`features.items.${i}.title`}>{item.title}</h3>
   ```
+
 - **Naming scheme** (auto-generated fields follow this; keep it for manual ones):
 
-  | element | key |
-  |---|---|
-  | h1 | `heading` |
-  | h2 / h3 | `title` |
-  | h4-h6 | `subtitle` |
-  | p / blockquote / figcaption | `text` |
-  | short p/span above the heading | `eyebrow` |
-  | a (link/button) | `cta` — an object `{label, link}` |
-  | img | `image` + sibling `imageAlt` |
+  | element                        | key                               |
+  | ------------------------------ | --------------------------------- |
+  | h1                             | `heading`                         |
+  | h2 / h3                        | `title`                           |
+  | h4-h6                          | `subtitle`                        |
+  | p / blockquote / figcaption    | `text`                            |
+  | short p/span above the heading | `eyebrow`                         |
+  | a (link/button)                | `cta` — an object `{label, link}` |
+  | img                            | `image` + sibling `imageAlt`      |
 
   Collisions get numbered: `text`, `text2`, `cta`, `cta2`. The section
   prefix comes from the containing `<section>`: its `data-cms-section`
   attribute → already-tagged fields' first path segment → `id` → first heading
   slug → first meaningful class name.
+
 - **CTA pattern** — links are `{label, link}` objects. The `data-cms-field`
   goes on an inner `<span>` around the label (so the link itself stays
   clickable in edit mode):
@@ -72,6 +74,7 @@ src/pages/index.astro:   <h1 data-cms-field="hero.heading">{home.hero.heading}</
   # in an entry:
   - { name: cta, label: Button, component: link }
   ```
+
 - **Image pattern** — `data-cms-field` tags the src; alt lives in a sibling
   key and is not tagged:
 
@@ -84,6 +87,7 @@ src/pages/index.astro:   <h1 data-cms-field="hero.heading">{home.hero.heading}</
   ```astro
   <img src={img.src} alt={img.alt} data-cms-field={`gallery.images.${i}.src`} />
   ```
+
 - **SEO** — every page entry has a top-level `seo` object placed FIRST:
   `{ title (string, required), description (text) }`. Pages pass it to the
   layout: `<Layout title={menu.seo.title} description={menu.seo.description}>`.

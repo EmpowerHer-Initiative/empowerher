@@ -12,8 +12,8 @@ importers:
         specifier: 0.3.5
         version: 0.3.5
       '@alisamadiillc/cms-bridge':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^0.3.2
+        version: 0.3.2
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3
@@ -55,8 +55,8 @@ packages:
     resolution: {integrity: sha512-nLU4nkw0/mKY6N4L8VTRSqpmIC6q9GIhS/E4DMNDfOOj7KWdX5XeG3fXTJj14n26O1tuBqbhv6KDGnv0q1TKrw==}
     engines: {node: '>=18'}
 
-  '@alisamadiillc/cms-bridge@0.2.0':
-    resolution: {integrity: sha512-2y3w5InvjuhxxzOkVg5vUFO+LFSIVfDHcGdahoafFQ6eYraHXACJC8/lH2/rwwyhgMax23/gNfoKWoUdX97r9w==}
+  '@alisamadiillc/cms-bridge@0.3.2':
+    resolution: {integrity: sha512-Ebs4S0DmVwPOy3ISK2QQF+VDpNCQMViG452y/RaqY05f1DQvDYxrRqdtRf2sOWyvWn2lakAq3WTrJ7KYTfNH2w==}
     hasBin: true
 
   '@astrojs/compiler-binding-darwin-arm64@0.3.1':
@@ -1735,7 +1735,7 @@ snapshots:
 
   '@alisamadiillc/agency-api@0.3.5': {}
 
-  '@alisamadiillc/cms-bridge@0.2.0':
+  '@alisamadiillc/cms-bridge@0.3.2':
     dependencies:
       '@astrojs/compiler': 2.13.1
       es-module-lexer: 1.7.0
