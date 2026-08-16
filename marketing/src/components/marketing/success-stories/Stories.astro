@@ -6,6 +6,7 @@ import StoryCard from "./StoryCard.astro";
 import QuoteBox from "./QuoteBox.astro";
 import ImpactBox from "./ImpactBox.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
 interface Stat {
   value: string;
@@ -39,10 +40,12 @@ const { stories, cmsPath } = Astro.props;
 const statIcons = ["Users", "BookOpen", "Award"];
 ---
 <section class="pb-28 md:pb-40">
-  <div class="container space-y-10">
+  <div class="container">
+    <Group field={cmsField(cmsPath, "")} class="space-y-10">
     {stories.map((story, si) => {
       const storyPath = cmsField(cmsPath, `${si}`);
       return (
+        <Item index={si}>
         <Reveal>
           <StoryCard
             logo={story.image}
@@ -57,9 +60,7 @@ const statIcons = ["Users", "BookOpen", "Award"];
             }))}
             cmsPath={storyPath}
           >
-            <p class="text-foreground/80 text-base leading-relaxed" data-cms-field={cmsField(storyPath, "intro")}>
-              {story.intro}
-            </p>
+            <Text as="p" class="text-foreground/80 text-base leading-relaxed" field={cmsField(storyPath, "intro")} value={story.intro} />
             {story.links && story.links.length > 0 && (
               <div class="flex flex-col gap-3 sm:flex-row sm:gap-8">
                 {story.links.map((link, li) => (
@@ -80,16 +81,16 @@ const statIcons = ["Users", "BookOpen", "Award"];
               <Fragment set:html={story.quote.body} />
             </QuoteBox>
             {story.afterQuote && (
-              <p class="text-foreground/80 text-base leading-relaxed" data-cms-field={cmsField(storyPath, "afterQuote")}>
-                {story.afterQuote}
-              </p>
+              <Text as="p" class="text-foreground/80 text-base leading-relaxed" field={cmsField(storyPath, "afterQuote")} value={story.afterQuote} />
             )}
             {story.impact && (
               <ImpactBox title={story.impact.title} cmsPath={cmsField(storyPath, "impact")}>{story.impact.body}</ImpactBox>
             )}
           </StoryCard>
         </Reveal>
+        </Item>
       );
     })}
+    </Group>
   </div>
 </section>

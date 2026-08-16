@@ -4,6 +4,7 @@ import Star from "../../icons/Star.astro";
 import Calendar from "../../icons/Calendar.astro";
 import StatBox from "./StatBox.astro";
 import { cmsField } from "../../../lib/cms";
+import { Image, Heading2, Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
 interface Stat {
   icon: string;
@@ -25,19 +26,19 @@ const { logo, title, subtitle, date, badge, stats, cmsPath } = Astro.props;
 <div class="border-border/60 bg-background mx-auto max-w-4xl rounded-3xl border p-8 shadow-sm md:p-12">
   {/* Logo */}
   <div class="border-border/60 size-28 overflow-hidden rounded-2xl border bg-white">
-    <img
-      src={logo}
+    <Image
+      field={cmsField(cmsPath, "image")}
+      value={logo}
       alt={title}
       class="h-full w-full object-contain px-2"
       loading="lazy"
       decoding="async"
-      data-cms-field={cmsField(cmsPath, "image")}
     />
   </div>
 
   {/* Title + badge */}
   <div class="mt-8 flex items-start justify-between gap-6">
-    <h2 class="font-serif text-3xl leading-tight md:text-4xl" data-cms-field={cmsField(cmsPath, "title")}>{title}</h2>
+    <Heading2 class="font-serif text-3xl leading-tight md:text-4xl" field={cmsField(cmsPath, "title")} value={title} />
     {badge && (
       <span class="bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium" data-cms-field={cmsField(cmsPath, "badge")}>
         <Star class="size-3.5 fill-current" />
@@ -47,7 +48,7 @@ const { logo, title, subtitle, date, badge, stats, cmsPath } = Astro.props;
   </div>
 
   {subtitle && (
-    <p class="text-muted-foreground mt-3 text-lg italic" data-cms-field={cmsField(cmsPath, "subtitle")}>{subtitle}</p>
+    <Text as="p" class="text-muted-foreground mt-3 text-lg italic" field={cmsField(cmsPath, "subtitle")} value={subtitle} />
   )}
 
   {date && (
@@ -59,11 +60,13 @@ const { logo, title, subtitle, date, badge, stats, cmsPath } = Astro.props;
 
   {/* Stats */}
   {stats && stats.length > 0 && (
-    <div class="mt-8 grid gap-4 sm:grid-cols-3">
+    <Group field={cmsField(cmsPath, "stats")} class="mt-8 grid gap-4 sm:grid-cols-3">
       {stats.map((s, j) => (
-        <StatBox icon={s.icon} value={s.value} label={s.label} cmsPath={cmsField(cmsPath, `stats.${j}`)} />
+        <Item index={j}>
+          <StatBox icon={s.icon} value={s.value} label={s.label} cmsPath={cmsField(cmsPath, `stats.${j}`)} />
+        </Item>
       ))}
-    </div>
+    </Group>
   )}
 
   {/* Body */}

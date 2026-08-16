@@ -4,6 +4,7 @@ import ArrowRight from "../../icons/ArrowRight.astro";
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -35,61 +36,60 @@ const {
       {/* Left: large editorial title */}
       <Reveal>
         <div>
-          <p
+          <Text
+            as="p"
             class="text-primary mb-8 text-xs font-semibold tracking-[0.3em] uppercase"
-            data-cms-field={cmsField(cmsPath, "eyebrow")}
-          >
-            {eyebrow}
-          </p>
-          <h1
+            field={cmsField(cmsPath, "eyebrow")}
+            value={eyebrow}
+          />
+          <Heading1
             class="font-serif text-5xl leading-[1.0] md:text-7xl lg:text-8xl"
-            data-cms-field={cmsField(cmsPath, "heading")}
-          >
-            {heading}
-          </h1>
+            field={cmsField(cmsPath, "heading")}
+            value={heading}
+          />
         </div>
       </Reveal>
 
       {/* Right: description + CTA */}
       <Reveal class="lg:pb-4" delay={120}>
-        <p
+        <Text
+          as="p"
           class="text-muted-foreground text-lg leading-relaxed md:text-xl"
-          data-cms-field={cmsField(cmsPath, "description")}
-        >
-          {description}
-        </p>
-        <blockquote
+          field={cmsField(cmsPath, "description")}
+          value={description}
+        />
+        <Text
+          as="blockquote"
           class="border-primary/20 mt-8 border-l-2 pl-6 font-serif text-xl leading-relaxed italic"
-          data-cms-field={cmsField(cmsPath, "quote")}
-        >
-          {quote}
-        </blockquote>
-        <p
+          field={cmsField(cmsPath, "quote")}
+          value={quote}
+        />
+        <Text
+          as="p"
           class="text-muted-foreground mt-8 text-base leading-relaxed"
-          data-cms-field={cmsField(cmsPath, "descriptionAfter")}
-        >
-          {descriptionAfter}
-        </p>
+          field={cmsField(cmsPath, "descriptionAfter")}
+          value={descriptionAfter}
+        />
         <div class="border-primary/20 bg-primary/[0.04] mt-8 rounded-2xl border p-6">
-          <p
+          <Text
+            as="p"
             class="text-muted-foreground/50 text-xs font-semibold tracking-[0.2em] uppercase"
-            data-cms-field={cmsField(cmsPath, "partnersEyebrow")}
-          >
-            {partnersEyebrow}
-          </p>
-          <p
+            field={cmsField(cmsPath, "partnersEyebrow")}
+            value={partnersEyebrow}
+          />
+          <Text
+            as="p"
             class="text-muted-foreground mt-3 text-base leading-relaxed"
-            data-cms-field={cmsField(cmsPath, "partnersText")}
-          >
-            {partnersText}
-          </p>
+            field={cmsField(cmsPath, "partnersText")}
+            value={partnersText}
+          />
         </div>
-        <p
+        <Text
+          as="p"
           class="mt-8 text-base leading-relaxed font-medium"
-          data-cms-field={cmsField(cmsPath, "closing")}
-        >
-          {closing}
-        </p>
+          field={cmsField(cmsPath, "closing")}
+          value={closing}
+        />
         <div class="mt-10 flex flex-wrap items-center gap-4">
           <a
             href="#writings"

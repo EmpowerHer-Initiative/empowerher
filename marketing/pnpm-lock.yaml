@@ -12,8 +12,8 @@ importers:
         specifier: 0.3.5
         version: 0.3.5
       '@alisamadiillc/cms-bridge':
-        specifier: ^0.3.6
-        version: 0.3.6
+        specifier: ^0.4.0
+        version: 0.4.0(astro@7.1.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3
@@ -55,9 +55,14 @@ packages:
     resolution: {integrity: sha512-nLU4nkw0/mKY6N4L8VTRSqpmIC6q9GIhS/E4DMNDfOOj7KWdX5XeG3fXTJj14n26O1tuBqbhv6KDGnv0q1TKrw==}
     engines: {node: '>=18'}
 
-  '@alisamadiillc/cms-bridge@0.3.6':
-    resolution: {integrity: sha512-JJ9BB6NhYFV+uXBr66KcH9PlKEw1hhPUamH1lEJOAYElaXdbb61PwxlAwJ7bOE+P+ZkVLSF2D0XgI4N6Zko4lg==}
+  '@alisamadiillc/cms-bridge@0.4.0':
+    resolution: {integrity: sha512-1aRIkqk71D9E5HzdnKuTmyrMFm8F+x2CvUHJwty86HFsMZHmU/adjoP/pParNKXN57ADkCHLMa8Ez26W8z8AqQ==}
     hasBin: true
+    peerDependencies:
+      astro: '>=4.0.0'
+    peerDependenciesMeta:
+      astro:
+        optional: true
 
   '@astrojs/compiler-binding-darwin-arm64@0.3.1':
     resolution: {integrity: sha512-IEmEF2fUIlTHtpeE/isyEGVOB14cEyh/LZOFYt6wn3jNyVpdC8aR5OZ+RzFUR/f+8ZDM1LaMwZKvoA7eMyJeFw==}
@@ -1735,7 +1740,7 @@ snapshots:
 
   '@alisamadiillc/agency-api@0.3.5': {}
 
-  '@alisamadiillc/cms-bridge@0.3.6':
+  '@alisamadiillc/cms-bridge@0.4.0(astro@7.1.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))':
     dependencies:
       '@astrojs/compiler': 2.13.1
       es-module-lexer: 1.7.0
@@ -1743,6 +1748,8 @@ snapshots:
       mri: 1.2.0
       picocolors: 1.1.1
       yaml: 2.9.0
+    optionalDependencies:
+      astro: 7.1.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0)
 
   '@astrojs/compiler-binding-darwin-arm64@0.3.1':
     optional: true

@@ -4,6 +4,7 @@ import ArrowLeft from "../../icons/ArrowLeft.astro";
 import Reveal from "../home/Reveal.astro";
 import PartnerForm from "./PartnerForm.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -41,27 +42,27 @@ const email = "info@empowerher-initiative.org";
         Back
       </a>
 
-      <p
+      <Text
+        as="p"
         class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
-        data-cms-field={cmsField(cmsPath, "eyebrow")}
-      >
-        {eyebrow}
-      </p>
-      <h1
+        field={cmsField(cmsPath, "eyebrow")}
+        value={eyebrow}
+      />
+      <Heading1
         class="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl"
-        data-cms-field={cmsField(cmsPath, "heading")}
-      >
-        {heading}
-      </h1>
-      <p
+        field={cmsField(cmsPath, "heading")}
+        value={heading}
+      />
+      <Text
+        as="p"
         class="text-muted-foreground mt-6 text-base leading-relaxed"
-        data-cms-field={cmsField(cmsPath, "body")}
-      >
-        {body}
-      </p>
+        field={cmsField(cmsPath, "body")}
+        value={body}
+      />
     </Reveal>
 
     <Reveal delay={120} class="border-border relative mt-16 border-t pt-8">
+      {/* Hand-tagged: content spans multiple child elements (text + nested <a>). */}
       <p class="text-muted-foreground text-xs" data-cms-field={cmsField(cmsPath, "questions")}>
         {questions}{" "}
         <a

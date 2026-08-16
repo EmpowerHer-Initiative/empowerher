@@ -3,6 +3,7 @@
 import Reveal from "../home/Reveal.astro";
 import BookOpen from "../../icons/BookOpen.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   title: string;
@@ -14,6 +15,7 @@ const { title, paragraph, cmsPath } = Astro.props;
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="mx-auto max-w-4xl">
+      <!-- kept hand-tagged: heading mixes icon + text (multiple child elements) -->
       <h2
         class="flex items-center gap-3 font-serif text-3xl leading-tight md:text-4xl"
         data-cms-field={cmsField(cmsPath, "title")}
@@ -21,12 +23,12 @@ const { title, paragraph, cmsPath } = Astro.props;
         <BookOpen class="text-primary size-8 shrink-0" />
         {title}
       </h2>
-      <p
+      <Text
+        as="p"
         class="text-muted-foreground mt-8 text-lg leading-[1.8]"
-        data-cms-field={cmsField(cmsPath, "paragraph")}
-      >
-        {paragraph}
-      </p>
+        field={cmsField(cmsPath, "paragraph")}
+        value={paragraph}
+      />
     </Reveal>
   </div>
 </section>

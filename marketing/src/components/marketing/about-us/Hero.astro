@@ -2,6 +2,7 @@
 // Ports components/marketing/about-us/hero.tsx
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text, Image } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -15,13 +16,13 @@ interface Props {
 const { eyebrow, heading, body, image, imageAlt, cmsPath } = Astro.props;
 ---
 <section class="relative h-[90vh] min-h-[600px] overflow-hidden">
-  <img
-    src={image}
+  <Image
+    field={cmsField(cmsPath, "image")}
+    value={image}
     alt={imageAlt}
     loading="eager"
     fetchpriority="high"
     decoding="async"
-    data-cms-field={cmsField(cmsPath, "image")}
     class="absolute inset-0 h-full w-full object-cover"
   />
   <!-- Gradient overlay -->
@@ -30,14 +31,15 @@ const { eyebrow, heading, body, image, imageAlt, cmsPath } = Astro.props;
   <div class="relative flex h-full flex-col justify-end pb-20 md:pb-28">
     <div class="container">
       <Reveal>
-        <p
+        <Text
+          as="p"
           class="mb-5 text-xs font-semibold tracking-[0.3em] text-white/60 uppercase"
-          data-cms-field={cmsField(cmsPath, "eyebrow")}
-        >
-          {eyebrow}
-        </p>
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
       </Reveal>
       <Reveal delay={80}>
+        <!-- heading carries an inline <br />; keep hand-tagged (renderRich escapes HTML). -->
         <h1
           class="max-w-3xl font-serif text-5xl leading-[1.05] text-white md:text-7xl lg:text-8xl"
           data-cms-field={cmsField(cmsPath, "heading")}
@@ -45,12 +47,12 @@ const { eyebrow, heading, body, image, imageAlt, cmsPath } = Astro.props;
         />
       </Reveal>
       <Reveal delay={160}>
-        <p
+        <Text
+          as="p"
           class="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg"
-          data-cms-field={cmsField(cmsPath, "body")}
-        >
-          {body}
-        </p>
+          field={cmsField(cmsPath, "body")}
+          value={body}
+        />
       </Reveal>
     </div>
   </div>

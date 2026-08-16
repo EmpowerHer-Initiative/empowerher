@@ -1,7 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import MISContent from "../components/marketing/mis/MISContent.astro";
-import data from "../data/mis.json";
+import pages from "../data/pages.json";
+const data = pages.mis;
 
 const { seo, content } = data as {
   seo: { title: string; description: string };

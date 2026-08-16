@@ -4,6 +4,7 @@ import ArrowRight from "../../icons/ArrowRight.astro";
 import Download from "../../icons/Download.astro";
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading2, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   year?: string;
@@ -21,9 +22,7 @@ const { year, title, description, cmsPath } = Astro.props;
       <Reveal>
         <div class="mb-10 flex items-center gap-4">
           <div class="bg-border/30 h-px flex-1"></div>
-          <span class="border-border/40 text-muted-foreground rounded-full border px-4 py-1.5 text-xs font-semibold tracking-[0.2em] uppercase" data-cms-field={cmsField(cmsPath, "year")}>
-            {year}
-          </span>
+          <Text as="span" class="border-border/40 text-muted-foreground rounded-full border px-4 py-1.5 text-xs font-semibold tracking-[0.2em] uppercase" field={cmsField(cmsPath, "year")} value={year} />
           <div class="bg-border/30 h-px flex-1"></div>
         </div>
       </Reveal>
@@ -32,13 +31,11 @@ const { year, title, description, cmsPath } = Astro.props;
         {/* Content */}
         <Reveal delay={160}>
           <div class="pt-2">
-            <h2 class="font-serif text-4xl leading-tight md:text-5xl" data-cms-field={cmsField(cmsPath, "title")}>
-              {title}
-            </h2>
+            <Heading2 class="font-serif text-4xl leading-tight md:text-5xl" field={cmsField(cmsPath, "title")} value={title} />
 
             <div class="text-muted-foreground mt-8 space-y-4 text-base leading-relaxed">
               {description.map((paragraph, i) => (
-                <p data-cms-field={cmsField(cmsPath, `description.${i}`)}>{paragraph}</p>
+                <Text as="p" field={cmsField(cmsPath, `description.${i}`)} value={paragraph} />
               ))}
               <p>
                 The initiative operates through two core programs: the{" "}

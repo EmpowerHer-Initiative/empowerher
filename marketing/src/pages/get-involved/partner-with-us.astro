@@ -1,7 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import PartnerContact from "../../components/marketing/get-involved/PartnerContact.astro";
-import data from "../../data/get-involved-partner.json";
+import pages from "../../data/pages.json";
+const data = pages["get-involved-partner"];
 ---
 <Layout title={data.seo.title} description={data.seo.description}>
   <PartnerContact

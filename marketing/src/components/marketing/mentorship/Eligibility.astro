@@ -2,6 +2,7 @@
 // Ports components/marketing/mentorship/eligibility.tsx
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading2, Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -19,31 +20,50 @@ const { eyebrow, title, description, rules, cmsPath } = Astro.props;
     <div class="grid gap-16 lg:grid-cols-2 lg:gap-32">
       <Reveal>
         <div>
-          <p class="text-primary mb-6 text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>
-            {eyebrow}
-          </p>
-          <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl" data-cms-field={cmsField(cmsPath, "title")}>
-            {title}
-          </h2>
-          <p class="text-muted-foreground mt-6 text-base leading-relaxed" data-cms-field={cmsField(cmsPath, "description")}>
-            {description}
-          </p>
+          <Text
+            as="p"
+            class="text-primary mb-6 text-xs font-semibold tracking-[0.3em] uppercase"
+            field={cmsField(cmsPath, "eyebrow")}
+            value={eyebrow}
+          />
+          <Heading2
+            class="font-serif text-4xl leading-[1.1] md:text-5xl"
+            field={cmsField(cmsPath, "title")}
+            value={title}
+          />
+          <Text
+            as="p"
+            class="text-muted-foreground mt-6 text-base leading-relaxed"
+            field={cmsField(cmsPath, "description")}
+            value={description}
+          />
         </div>
       </Reveal>
 
       <Reveal delay={120}>
-        <div class="space-y-3">
+        <Group field={cmsField(cmsPath, "rules")} class="space-y-3">
           {rules.map((rule, i) => (
-            <div
+            <Item
+              index={i}
+              as="div"
               class="group hover:border-primary/30 hover:bg-primary/[0.04] flex gap-5 rounded-2xl border border-transparent p-5 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
             >
               <span class="bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground flex size-11 shrink-0 items-center justify-center rounded-full font-serif text-lg transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <p class="text-foreground/80 mt-1 text-sm leading-relaxed" data-cms-field={cmsField(cmsPath, `rules.${i}`)} set:html={rule}></p>
-            </div>
+              {i === 3 ? (
+                <p class="text-foreground/80 mt-1 text-sm leading-relaxed" data-cms-field={cmsField(cmsPath, `rules.${i}`)} set:html={rule} />
+              ) : (
+                <Text
+                  as="p"
+                  class="text-foreground/80 mt-1 text-sm leading-relaxed"
+                  field={cmsField(cmsPath, `rules.${i}`)}
+                  value={rule}
+                />
+              )}
+            </Item>
           ))}
-        </div>
+        </Group>
       </Reveal>
     </div>
   </div>

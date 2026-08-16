@@ -3,6 +3,7 @@
 import Reveal from "../home/Reveal.astro";
 import Lightbulb from "../../icons/Lightbulb.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -15,19 +16,19 @@ const { eyebrow, prompt, cmsPath } = Astro.props;
   <div class="container">
     <Reveal class="mx-auto max-w-4xl text-center">
       <Lightbulb class="text-primary mx-auto size-12" />
-      <p
+      <Text
+        as="p"
         class="text-primary mt-6 text-xs font-semibold tracking-[0.3em] uppercase"
-        data-cms-field={cmsField(cmsPath, "eyebrow")}
-      >
-        {eyebrow}
-      </p>
+        field={cmsField(cmsPath, "eyebrow")}
+        value={eyebrow}
+      />
       <div class="border-primary/20 bg-background mt-8 rounded-3xl border p-10 shadow-sm md:p-16">
-        <p
+        <Text
+          as="p"
           class="font-serif text-3xl leading-snug md:text-4xl lg:text-5xl"
-          data-cms-field={cmsField(cmsPath, "prompt")}
-        >
-          {prompt}
-        </p>
+          field={cmsField(cmsPath, "prompt")}
+          value={prompt}
+        />
       </div>
     </Reveal>
   </div>

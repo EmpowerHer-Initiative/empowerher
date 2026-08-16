@@ -1,7 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import VolunteerContact from "../../components/marketing/get-involved/VolunteerContact.astro";
-import data from "../../data/get-involved-volunteer.json";
+import pages from "../../data/pages.json";
+const data = pages["get-involved-volunteer"];
 ---
 <Layout title={data.seo.title} description={data.seo.description}>
   <VolunteerContact

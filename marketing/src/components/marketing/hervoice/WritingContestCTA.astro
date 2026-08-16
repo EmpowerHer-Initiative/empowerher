@@ -3,6 +3,7 @@
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading2, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -17,24 +18,23 @@ const { eyebrow, heading, description, cmsPath } = Astro.props;
   <div class="container">
     <Reveal class="bg-primary text-primary-foreground mx-auto flex max-w-5xl flex-col gap-8 overflow-hidden rounded-[2rem] px-8 py-12 md:flex-row md:items-center md:justify-between md:px-14 md:py-16">
       <div>
-        <p
+        <Text
+          as="p"
           class="text-primary-foreground/60 text-xs font-semibold tracking-[0.3em] uppercase"
-          data-cms-field={cmsField(cmsPath, "eyebrow")}
-        >
-          {eyebrow}
-        </p>
-        <h2
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
+        <Heading2
           class="mt-4 font-serif text-3xl leading-tight md:text-4xl"
-          data-cms-field={cmsField(cmsPath, "heading")}
-        >
-          {heading}
-        </h2>
-        <p
+          field={cmsField(cmsPath, "heading")}
+          value={heading}
+        />
+        <Text
+          as="p"
           class="text-primary-foreground/70 mt-4 max-w-lg text-base leading-relaxed"
-          data-cms-field={cmsField(cmsPath, "description")}
-        >
-          {description}
-        </p>
+          field={cmsField(cmsPath, "description")}
+          value={description}
+        />
       </div>
       <a
         href="/hervoice/winners"

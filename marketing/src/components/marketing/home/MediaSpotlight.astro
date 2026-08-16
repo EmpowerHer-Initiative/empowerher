@@ -4,6 +4,7 @@
 import Play from "../../icons/Play.astro";
 import Reveal from "./Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading2, Heading3, Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -18,19 +19,20 @@ const { eyebrow, heading, features: mediaFeatures, cmsPath } = Astro.props;
     <Reveal>
       <div class="flex items-end justify-between gap-6">
         <div>
-          <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>{eyebrow}</p>
-          <h2 class="mt-4 font-serif text-3xl leading-tight md:text-4xl" data-cms-field={cmsField(cmsPath, "heading")}>{heading}</h2>
+          <Text as="p" class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" field={cmsField(cmsPath, "eyebrow")} value={eyebrow} />
+          <Heading2 class="mt-4 font-serif text-3xl leading-tight md:text-4xl" field={cmsField(cmsPath, "heading")} value={heading} />
         </div>
       </div>
     </Reveal>
 
     <Reveal delay={120}>
       <div class="relative mt-12 overflow-hidden rounded-[2.5rem]">
-        <div class="flex transition-transform duration-[800ms] ease-[cubic-bezier(0.32,0.72,0,1)]" style="transform:translateX(0)">
+        <Group field={cmsField(cmsPath, "features")} class="flex transition-transform duration-[800ms] ease-[cubic-bezier(0.32,0.72,0,1)]" style="transform:translateX(0)">
           {mediaFeatures.map((m, i) => (
-            <div class="w-full shrink-0">
+            <Item index={i} as="div" class="w-full shrink-0">
               <div class="bg-muted/30 grid gap-0 lg:grid-cols-2">
                 <div class="relative aspect-video lg:aspect-auto lg:min-h-[440px]">
+                  <!-- iframe src carries the raw youtubeId; no bridge element for iframe, so KEPT hand-tagged. -->
                   <iframe
                     src={`https://www.youtube.com/embed/${m.youtubeId}`}
                     title={m.title}
@@ -44,15 +46,15 @@ const { eyebrow, heading, features: mediaFeatures, cmsPath } = Astro.props;
                 <div class="flex flex-col justify-center p-8 md:p-14">
                   <div class="text-primary flex items-center gap-2">
                     <Play class="size-4 fill-current" />
-                    <span class="text-xs font-medium tracking-[0.2em] uppercase" data-cms-field={cmsField(cmsPath, `features.${i}.label`)}>{m.label}</span>
+                    <Text as="span" class="text-xs font-medium tracking-[0.2em] uppercase" field={cmsField(cmsPath, `features.${i}.label`)} value={m.label} />
                   </div>
-                  <h3 class="mt-4 font-serif text-2xl leading-tight md:text-3xl" data-cms-field={cmsField(cmsPath, `features.${i}.title`)}>{m.title}</h3>
-                  <p class="text-muted-foreground mt-5 text-base leading-[1.8]" data-cms-field={cmsField(cmsPath, `features.${i}.description`)}>{m.description}</p>
+                  <Heading3 class="mt-4 font-serif text-2xl leading-tight md:text-3xl" field={cmsField(cmsPath, `features.${i}.title`)} value={m.title} />
+                  <Text as="p" class="text-muted-foreground mt-5 text-base leading-[1.8]" field={cmsField(cmsPath, `features.${i}.description`)} value={m.description} />
                 </div>
               </div>
-            </div>
+            </Item>
           ))}
-        </div>
+        </Group>
       </div>
     </Reveal>
   </div>

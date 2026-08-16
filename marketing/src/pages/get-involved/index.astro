@@ -1,7 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import SplitScreen from "../../components/marketing/get-involved/SplitScreen.astro";
-import data from "../../data/get-involved.json";
+import pages from "../../data/pages.json";
+const data = pages["get-involved"];
 ---
 <Layout title={data.seo.title} description={data.seo.description}>
   <SplitScreen

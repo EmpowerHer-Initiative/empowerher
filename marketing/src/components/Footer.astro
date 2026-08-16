@@ -2,6 +2,7 @@
 // Ports components/footer.tsx. Text content is CMS-managed in src/data/site.json
 // (global entry → bare data-cms-field paths).
 import site from "../data/site.json";
+import { Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
 import Facebook from "./icons/Facebook.astro";
 import Instagram from "./icons/Instagram.astro";
 import LinkedIn from "./icons/LinkedIn.astro";
@@ -26,32 +27,30 @@ const socialIcons: Record<string, any> = { Facebook, Instagram, LinkedIn };
             class="w-40 -translate-x-6 object-contain md:w-54"
           />
         </a>
-        <p class="text-muted-foreground max-w-sm text-sm leading-[1.8]" data-cms-field="footer.text">
-          {footer.text}
-        </p>
+        <Text class="text-muted-foreground max-w-sm text-sm leading-[1.8]" field="footer.text" value={footer.text} />
         <a href={`mailto:${email}`} class="text-foreground/70 hover:text-foreground mt-4 text-sm transition-colors" data-cms-field="email">
           Email: {email}
         </a>
-        <p class="text-muted-foreground mt-4 text-sm font-medium" data-cms-field="footer.est">{footer.est}</p>
-        <p class="text-muted-foreground text-sm" data-cms-field="footer.location">{footer.location}</p>
+        <Text class="text-muted-foreground mt-4 text-sm font-medium" field="footer.est" value={footer.est} />
+        <Text class="text-muted-foreground text-sm" field="footer.location" value={footer.location} />
       </div>
 
       <div class="flex flex-col items-start gap-12 sm:flex-row sm:gap-20">
         <div>
-          <p class="mb-4 text-lg font-bold" data-cms-field="footer.pagesTitle">{footer.pagesTitle}</p>
-          <ul class="space-y-2">
+          <Text class="mb-4 text-lg font-bold" field="footer.pagesTitle" value={footer.pagesTitle} />
+          <Group as="ul" field="footer.pages" class="space-y-2">
             {footer.pages.map((link, i) => (
-              <li>
+              <Item index={i} as="li">
                 <a href={link.link} class="text-foreground/60 hover:text-foreground text-sm transition-colors duration-300">
-                  <span data-cms-field={`footer.pages.${i}.label`}>{link.label}</span>
+                  <Text as="span" field={`footer.pages.${i}.label`} value={link.label} />
                 </a>
-              </li>
+              </Item>
             ))}
-          </ul>
+          </Group>
         </div>
 
         <div class="flex flex-col items-start">
-          <p class="mb-4 text-lg font-bold" data-cms-field="footer.followTitle">{footer.followTitle}</p>
+          <Text class="mb-4 text-lg font-bold" field="footer.followTitle" value={footer.followTitle} />
           <div class="flex gap-4">
             {socials.map((s, i) => {
               const Icon = socialIcons[s.label];
@@ -65,17 +64,17 @@ const socialIcons: Record<string, any> = { Facebook, Instagram, LinkedIn };
 
           <a href={footer.reportCta.link} class="bg-secondary text-secondary-foreground mt-5 inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium duration-300 will-change-transform hover:scale-105 active:scale-95">
             <FileText class="mr-2 size-4" />
-            <span data-cms-field="footer.reportCta.label">{footer.reportCta.label}</span>
+            <Text as="span" field="footer.reportCta.label" value={footer.reportCta.label} />
           </a>
         </div>
       </div>
     </div>
 
     <div class="border-border/20 mt-20 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
-      <p class="text-muted-foreground text-xs">&copy; {year} <span data-cms-field="name">{name}</span>. <span data-cms-field="footer.rights">{footer.rights}</span></p>
+      <p class="text-muted-foreground text-xs">&copy; {year} <Text as="span" field="name" value={name} />. <Text as="span" field="footer.rights" value={footer.rights} /></p>
       <div class="flex gap-6">
-        <a href="/privacy" class="text-muted-foreground hover:text-foreground text-xs transition-colors" data-cms-field="footer.privacyLabel">{footer.privacyLabel}</a>
-        <a href="/terms" class="text-muted-foreground hover:text-foreground text-xs transition-colors" data-cms-field="footer.termsLabel">{footer.termsLabel}</a>
+        <a href="/privacy" class="text-muted-foreground hover:text-foreground text-xs transition-colors"><Text as="span" field="footer.privacyLabel" value={footer.privacyLabel} /></a>
+        <a href="/terms" class="text-muted-foreground hover:text-foreground text-xs transition-colors"><Text as="span" field="footer.termsLabel" value={footer.termsLabel} /></a>
       </div>
     </div>
   </div>

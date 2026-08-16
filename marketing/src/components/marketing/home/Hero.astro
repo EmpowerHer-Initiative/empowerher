@@ -3,6 +3,7 @@
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Highlight from "../../Highlight.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text, Image } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   heading: string;
@@ -17,11 +18,11 @@ const images = imageList.map((i) => i.image);
 ---
 <section class="relative min-h-[100dvh] overflow-hidden" data-hero>
   {images.map((src, i) => (
-    <img
-      src={src}
+    <Image
+      field={cmsField(cmsPath, `images.${i}.image`)}
+      value={src}
       alt=""
       data-hero-img
-      data-cms-field={cmsField(cmsPath, `images.${i}.image`)}
       loading={i === 0 ? "eager" : "lazy"}
       fetchpriority={i === 0 ? "high" : undefined}
       decoding="async"
@@ -33,16 +34,17 @@ const images = imageList.map((i) => i.image);
   <div class="relative container flex min-h-[100dvh] items-end pt-40 pb-20 md:items-center md:pb-0">
     <div class="max-w-5xl">
       <h1 class="font-serif text-4xl leading-[1.08] text-white md:text-6xl lg:text-8xl">
-        <span data-cms-field={cmsField(cmsPath, "heading")}><Highlight text={heading} /></span>
+        <Text as="span" field={cmsField(cmsPath, "heading")} value={heading} />
         <br />
+        <!-- heading2 uses Highlight hlClass="italic" — bridge can't reproduce that highlight class, so KEPT hand-tagged. -->
         <span data-cms-field={cmsField(cmsPath, "heading2")}><Highlight text={heading2} hlClass="italic" /></span>
       </h1>
-      <p
+      <Text
+        as="p"
         class="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg"
-        data-cms-field={cmsField(cmsPath, "bodyText")}
-      >
-        {bodyText}
-      </p>
+        field={cmsField(cmsPath, "bodyText")}
+        value={bodyText}
+      />
       <div class="mt-10 flex flex-wrap items-center gap-4">
         <a
           href="/about-us"

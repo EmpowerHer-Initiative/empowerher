@@ -3,6 +3,7 @@
 import Reveal from "../home/Reveal.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading1, Text, Image } from "@alisamadiillc/cms-bridge/components";
 
 const FORM_URL = "https://forms.gle/J5D6atwg4cH5yicf9";
 
@@ -22,31 +23,31 @@ const { eyebrow, heading, paragraph, calloutText, calloutName, image, cmsPath } 
   <div class="container">
     <div class="grid items-center gap-16 lg:grid-cols-[1fr_1fr]">
       <Reveal class="max-w-xl">
-        <p
+        <Text
+          as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          data-cms-field={cmsField(cmsPath, "eyebrow")}
-        >
-          {eyebrow}
-        </p>
-        <h1
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
+        <Heading1
           class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl"
-          data-cms-field={cmsField(cmsPath, "heading")}
-        >
-          {heading}
-        </h1>
-        <p
+          field={cmsField(cmsPath, "heading")}
+          value={heading}
+        />
+        <Text
+          as="p"
           class="text-muted-foreground mt-8 text-base leading-relaxed md:text-lg"
-          data-cms-field={cmsField(cmsPath, "paragraph")}
-        >
-          {paragraph}
-        </p>
+          field={cmsField(cmsPath, "paragraph")}
+          value={paragraph}
+        />
         <div class="border-primary/30 bg-primary/[0.05] border-l-primary mt-8 rounded-2xl border border-l-4 p-5">
+          <!-- kept hand-tagged: paragraph mixes calloutText + nested span + literal period (multiple child elements) -->
           <p
             class="text-foreground text-sm leading-relaxed"
             data-cms-field={cmsField(cmsPath, "calloutText")}
           >
             {calloutText}{" "}
-            <span class="font-semibold" data-cms-field={cmsField(cmsPath, "calloutName")}>{calloutName}</span>.
+            <Text as="span" class="font-semibold" field={cmsField(cmsPath, "calloutName")} value={calloutName} />.
           </p>
         </div>
         <div class="mt-10 flex flex-wrap gap-4">
@@ -69,13 +70,13 @@ const { eyebrow, heading, paragraph, calloutText, calloutName, image, cmsPath } 
       </Reveal>
 
       <Reveal class="border-border/30 overflow-hidden rounded-3xl border" delay={120}>
-        <img
-          src={image.src}
+        <Image
+          field={cmsField(cmsPath, "image.src")}
+          value={image.src}
           alt={image.alt}
           loading="eager"
           fetchpriority="high"
           decoding="async"
-          data-cms-field={cmsField(cmsPath, "image.src")}
           class="aspect-[4/3] h-full w-full object-cover"
         />
       </Reveal>

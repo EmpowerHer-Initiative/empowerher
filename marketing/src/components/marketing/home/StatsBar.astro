@@ -4,6 +4,7 @@ import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "./Reveal.astro";
 import CountUp from "./CountUp.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading2, Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   heading: string;
@@ -27,12 +28,8 @@ const stats = rawStats.map((s) => ({ ...parseNumber(s.number), label: s.label })
 <section class="border-border/40 bg-primary/[0.03] border-y py-20 md:py-28">
   <div class="container">
     <Reveal class="max-w-2xl">
-      <h2 class="font-serif text-3xl leading-tight md:text-5xl" data-cms-field={cmsField(cmsPath, "heading")}>
-        {heading}
-      </h2>
-      <p class="text-muted-foreground mt-6 max-w-md text-base leading-relaxed md:text-lg" data-cms-field={cmsField(cmsPath, "bodyText")}>
-        {bodyText}
-      </p>
+      <Heading2 class="font-serif text-3xl leading-tight md:text-5xl" field={cmsField(cmsPath, "heading")} value={heading} />
+      <Text as="p" class="text-muted-foreground mt-6 max-w-md text-base leading-relaxed md:text-lg" field={cmsField(cmsPath, "bodyText")} value={bodyText} />
       <a
         href="https://www.unesco.org/en/articles/let-girls-and-women-afghanistan-learn"
         target="_blank"
@@ -44,15 +41,15 @@ const stats = rawStats.map((s) => ({ ...parseNumber(s.number), label: s.label })
       </a>
     </Reveal>
 
-    <div class="divide-border/40 mt-14 grid grid-cols-1 divide-y md:grid-cols-3 md:divide-x md:divide-y-0">
+    <Group field={cmsField(cmsPath, "stats")} class="divide-border/40 mt-14 grid grid-cols-1 divide-y md:grid-cols-3 md:divide-x md:divide-y-0">
       {stats.map((s, i) => (
-        <div class="flex flex-col gap-2 px-2 py-8 md:px-8 md:py-2">
+        <Item index={i} as="div" class="flex flex-col gap-2 px-2 py-8 md:px-8 md:py-2">
           <span class="text-primary font-serif text-4xl md:text-5xl" data-cms-field={cmsField(cmsPath, `stats.${i}.number`)}>
             <CountUp to={s.to} decimals={s.decimals} suffix={s.suffix} />
           </span>
-          <span class="text-muted-foreground max-w-xs text-sm leading-snug" data-cms-field={cmsField(cmsPath, `stats.${i}.label`)}>{s.label}</span>
-        </div>
+          <Text as="span" class="text-muted-foreground max-w-xs text-sm leading-snug" field={cmsField(cmsPath, `stats.${i}.label`)} value={s.label} />
+        </Item>
       ))}
-    </div>
+    </Group>
   </div>
 </section>

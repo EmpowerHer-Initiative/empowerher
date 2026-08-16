@@ -1,7 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import AgfafContent from "../components/marketing/agfaf/AgfafContent.astro";
-import agfaf from "../data/agfaf.json";
+import pages from "../data/pages.json";
+const agfaf = pages.agfaf;
 ---
 
 <Layout title={agfaf.seo.title} description={agfaf.seo.description}>

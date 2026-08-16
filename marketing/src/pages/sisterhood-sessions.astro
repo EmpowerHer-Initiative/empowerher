@@ -4,7 +4,8 @@ import Header from "../components/marketing/sisterhood-sessions/Header.astro";
 import WhyTheyMatter from "../components/marketing/sisterhood-sessions/WhyTheyMatter.astro";
 import Community from "../components/marketing/sisterhood-sessions/Community.astro";
 import SessionFormat from "../components/marketing/sisterhood-sessions/SessionFormat.astro";
-import content from "../data/sisterhood-sessions.json";
+import pages from "../data/pages.json";
+const content = pages["sisterhood-sessions"];
 
 const { seo, header, whyTheyMatter, community, sessionFormat } = content;
 ---

@@ -3,6 +3,7 @@
 import Reveal from "../home/Reveal.astro";
 import TeamMember from "./TeamMember.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading2, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Member {
   name: string;
@@ -28,24 +29,23 @@ const [executiveTeam, directors, mentorsTeam] = groups;
   <div class="container">
     <Reveal>
       <div class="mb-16">
-        <p
+        <Text
+          as="p"
           class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
-          data-cms-field={cmsField(cmsPath, "eyebrow")}
-        >
-          {eyebrow}
-        </p>
-        <h2
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
+        <Heading2
           class="font-serif text-4xl leading-[1.1] md:text-5xl"
-          data-cms-field={cmsField(cmsPath, "heading")}
-        >
-          {heading}
-        </h2>
-        <p
+          field={cmsField(cmsPath, "heading")}
+          value={heading}
+        />
+        <Text
+          as="p"
           class="text-muted-foreground mt-4 max-w-lg"
-          data-cms-field={cmsField(cmsPath, "intro")}
-        >
-          {intro}
-        </p>
+          field={cmsField(cmsPath, "intro")}
+          value={intro}
+        />
       </div>
     </Reveal>
 

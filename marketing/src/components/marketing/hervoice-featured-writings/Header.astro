@@ -3,6 +3,7 @@
 import Reveal from "../home/Reveal.astro";
 import ArrowLeft from "../../icons/ArrowLeft.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow?: string;
@@ -28,20 +29,14 @@ const { eyebrow, heading, lede, cmsPath } = Astro.props;
 
       {eyebrow && (
         <Reveal delay={80}>
-          <p class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>
-            {eyebrow}
-          </p>
+          <Text as="p" class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase" field={cmsField(cmsPath, "eyebrow")} value={eyebrow} />
         </Reveal>
       )}
       <Reveal delay={160}>
-        <h1 class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl" data-cms-field={cmsField(cmsPath, "heading")}>
-          {heading}
-        </h1>
+        <Heading1 class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl" field={cmsField(cmsPath, "heading")} value={heading} />
       </Reveal>
       <Reveal delay={240}>
-        <p class="text-muted-foreground mt-8 max-w-xl text-base leading-relaxed md:text-lg" data-cms-field={cmsField(cmsPath, "lede")}>
-          {lede}
-        </p>
+        <Text as="p" class="text-muted-foreground mt-8 max-w-xl text-base leading-relaxed md:text-lg" field={cmsField(cmsPath, "lede")} value={lede} />
       </Reveal>
     </div>
   </div>

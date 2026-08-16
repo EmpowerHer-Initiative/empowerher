@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import aboutUs from "../data/about-us.json";
+import pages from "../data/pages.json";
+const aboutUs = pages["about-us"];
 import { partners, teamMembers, TEAM_BANDS } from "../lib/collections";
 
 // Team members are a flat CMS collection; regroup into the fixed display bands.

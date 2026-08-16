@@ -3,6 +3,7 @@
 import Reveal from "../home/Reveal.astro";
 import Article from "./Article.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Part {
   eyebrow: string;
@@ -33,6 +34,8 @@ const sectionIds = ["terms", "privacy"];
           title={part.title}
           cmsPath={cmsField(cmsPath, `parts.${i}`)}
         >
+          {/* Hand-tagged: no wrapper div at this call site to host <Group> without
+              breaking Article's `space-y-4` direct-child spacing on these paragraphs. */}
           {part.paragraphs.map((paragraph, j) => (
             <p data-cms-field={cmsField(cmsPath, `parts.${i}.paragraphs.${j}`)}>{paragraph}</p>
           ))}
@@ -42,13 +45,13 @@ const sectionIds = ["terms", "privacy"];
 
     <div class="border-border/30 text-muted-foreground border-t pt-10 text-xs">
       {footer.updated} {footer.contactPrompt}{" "}
-      <a
+      <Text
+        as="a"
         href={`mailto:${footer.email}`}
-        data-cms-field={cmsField(cmsPath, "footer.email")}
+        field={cmsField(cmsPath, "footer.email")}
+        value={footer.email}
         class="text-foreground underline-offset-4 hover:underline"
-      >
-        {footer.email}
-      </a>
+      />
       .
     </div>
   </div>

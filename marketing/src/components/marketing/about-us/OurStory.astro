@@ -2,6 +2,7 @@
 // Ports components/marketing/about-us/our-story.tsx
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -17,12 +18,12 @@ const { eyebrow, bodyBefore, pullQuote, bodyAfter, cmsPath } = Astro.props;
   <div class="container">
     <div class="mx-auto max-w-3xl">
       <Reveal>
-        <p
+        <Text
+          as="p"
           class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase"
-          data-cms-field={cmsField(cmsPath, "eyebrow")}
-        >
-          {eyebrow}
-        </p>
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
       </Reveal>
 
       <Reveal delay={80}>
@@ -36,12 +37,12 @@ const { eyebrow, bodyBefore, pullQuote, bodyAfter, cmsPath } = Astro.props;
       <!-- Pull Quote -->
       <Reveal delay={160}>
         <blockquote class="border-border my-14 border-l-2 pl-8">
-          <p
+          <Text
+            as="p"
             class="text-foreground font-serif text-2xl leading-snug md:text-3xl"
-            data-cms-field={cmsField(cmsPath, "pullQuote")}
-          >
-            {pullQuote}
-          </p>
+            field={cmsField(cmsPath, "pullQuote")}
+            value={pullQuote}
+          />
         </blockquote>
       </Reveal>
 

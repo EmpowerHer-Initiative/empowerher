@@ -11,6 +11,7 @@ import LinkedIn from "../../icons/LinkedIn.astro";
 import Instagram from "../../icons/Instagram.astro";
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -52,24 +53,23 @@ const inputClass =
     <div class="grid gap-16 lg:grid-cols-2 lg:gap-24">
       {/* Left — Contact Info */}
       <Reveal>
-        <p
+        <Text
+          as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          data-cms-field={cmsField(cmsPath, "eyebrow")}
-        >
-          {eyebrow}
-        </p>
-        <h1
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
+        <Heading1
           class="mt-4 font-serif text-4xl leading-tight md:text-5xl"
-          data-cms-field={cmsField(cmsPath, "heading")}
-        >
-          {heading}
-        </h1>
-        <p
+          field={cmsField(cmsPath, "heading")}
+          value={heading}
+        />
+        <Text
+          as="p"
           class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]"
-          data-cms-field={cmsField(cmsPath, "intro")}
-        >
-          {intro}
-        </p>
+          field={cmsField(cmsPath, "intro")}
+          value={intro}
+        />
 
         <div class="mt-12 space-y-6">
           <div class="flex items-start gap-4">
@@ -77,12 +77,14 @@ const inputClass =
               <Mail class="text-primary size-4" />
             </div>
             <div>
-              <p
+              <Text
+                as="p"
                 class="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase"
-                data-cms-field={cmsField(cmsPath, "email.label")}
-              >
-                {email.label}
-              </p>
+                field={cmsField(cmsPath, "email.label")}
+                value={email.label}
+              />
+              {/* Hand-tagged: <a> is not p|span|div (Text scope) and href is a
+              hardcoded mailto:, not a {label,link} object (Link scope). */}
               <a
                 href="mailto:info@empowerher-initiative.org"
                 data-cms-field={cmsField(cmsPath, "email.value")}
@@ -98,29 +100,29 @@ const inputClass =
               <MapPin class="text-primary size-4" />
             </div>
             <div>
-              <p
+              <Text
+                as="p"
                 class="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase"
-                data-cms-field={cmsField(cmsPath, "location.label")}
-              >
-                {location.label}
-              </p>
-              <p
+                field={cmsField(cmsPath, "location.label")}
+                value={location.label}
+              />
+              <Text
+                as="p"
                 class="text-foreground mt-1 text-sm"
-                data-cms-field={cmsField(cmsPath, "location.value")}
-              >
-                {location.value}
-              </p>
+                field={cmsField(cmsPath, "location.value")}
+                value={location.value}
+              />
             </div>
           </div>
         </div>
 
         <div class="border-border/30 mt-12 border-t pt-8">
-          <p
+          <Text
+            as="p"
             class="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase"
-            data-cms-field={cmsField(cmsPath, "followUsTitle")}
-          >
-            {followUsTitle}
-          </p>
+            field={cmsField(cmsPath, "followUsTitle")}
+            value={followUsTitle}
+          />
           <div class="mt-4 flex items-center gap-3">
             {
               socialLinks.map((s) => (

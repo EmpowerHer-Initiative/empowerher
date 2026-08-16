@@ -1,6 +1,7 @@
 ---
 // Ports the TeamMember helper from components/marketing/about-us/team.tsx
 import { cmsField } from "../../../lib/cms";
+import { Image, Text } from "@alisamadiillc/cms-bridge/components";
 
 const LOGO_PLACEHOLDER =
   "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT8waekQlgkEDp7B3XRvCJzMmyWOSiao4I6cq9";
@@ -32,17 +33,17 @@ const imgClass =
   class={`group flex flex-col rounded-3xl p-2.5 text-center shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1.5 hover:shadow-lg ${tint}`}
 >
   <div class="aspect-square w-full overflow-hidden rounded-2xl">
-    <img
-      src={member.image}
+    <Image
+      field={cmsField(cmsPath, "image")}
+      value={member.image}
       alt={member.name}
       loading="lazy"
       decoding="async"
-      data-cms-field={cmsField(cmsPath, "image")}
       class={`h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-[1.03] ${imgClass}`}
     />
   </div>
   <div class={s.pad}>
-    <p class={`leading-tight font-semibold ${s.name}`} data-cms-field={cmsField(cmsPath, "name")}>{member.name}</p>
-    <p class={`text-muted-foreground leading-snug ${s.role}`} data-cms-field={cmsField(cmsPath, "role")}>{member.role}</p>
+    <Text as="p" class={`leading-tight font-semibold ${s.name}`} field={cmsField(cmsPath, "name")} value={member.name} />
+    <Text as="p" class={`text-muted-foreground leading-snug ${s.role}`} field={cmsField(cmsPath, "role")} value={member.role} />
   </div>
 </div>

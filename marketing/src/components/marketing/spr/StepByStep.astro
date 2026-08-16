@@ -2,6 +2,13 @@
 // Ports the StepByStep section from app/(marketing)/success-stories/spr/page.tsx
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import {
+  Heading2,
+  Heading3,
+  Text,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Step {
   title: string;
@@ -20,18 +27,17 @@ const { eyebrow, heading, steps, cmsPath } = Astro.props;
   <div class="container">
     <div class="mx-auto max-w-2xl">
       <Reveal>
-        <p
+        <Text
+          as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          data-cms-field={cmsField(cmsPath, "eyebrow")}
-        >
-          {eyebrow}
-        </p>
-        <h2
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
+        <Heading2
           class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          data-cms-field={cmsField(cmsPath, "heading")}
-        >
-          {heading}
-        </h2>
+          field={cmsField(cmsPath, "heading")}
+          value={heading}
+        />
       </Reveal>
 
       {/* Vertical timeline */}
@@ -39,9 +45,13 @@ const { eyebrow, heading, steps, cmsPath } = Astro.props;
         {/* Connecting line */}
         <div class="bg-border absolute top-4 bottom-4 left-[1.125rem] w-px"></div>
 
-        <ol class="space-y-0">
+        <Group as="ol" field={cmsField(cmsPath, "steps")} class="space-y-0">
           {steps.map((step, i) => (
-            <li class="group relative flex gap-8 pb-12 last:pb-0">
+            <Item
+              index={i}
+              as="li"
+              class="group relative flex gap-8 pb-12 last:pb-0"
+            >
               {/* Circle node */}
               <div class="border-primary/40 bg-background group-hover:border-primary group-hover:bg-primary group-hover:shadow-primary/25 relative z-10 flex size-9 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:shadow-lg">
                 <span class="text-primary group-hover:text-primary-foreground text-[10px] font-bold transition-colors duration-500">
@@ -51,22 +61,21 @@ const { eyebrow, heading, steps, cmsPath } = Astro.props;
 
               {/* Content */}
               <div class="pt-0.5 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1">
-                <h3
+                <Heading3
                   class="group-hover:text-primary text-lg leading-snug font-semibold transition-colors duration-500"
-                  data-cms-field={cmsField(cmsPath, `steps.${i}.title`)}
-                >
-                  {step.title}
-                </h3>
-                <p
+                  field={cmsField(cmsPath, `steps.${i}.title`)}
+                  value={step.title}
+                />
+                <Text
+                  as="p"
                   class="text-foreground/70 mt-3 text-sm leading-relaxed"
-                  data-cms-field={cmsField(cmsPath, `steps.${i}.description`)}
-                >
-                  {step.description}
-                </p>
+                  field={cmsField(cmsPath, `steps.${i}.description`)}
+                  value={step.description}
+                />
               </div>
-            </li>
+            </Item>
           ))}
-        </ol>
+        </Group>
       </Reveal>
     </div>
   </div>

@@ -2,6 +2,7 @@
 // Ports components/marketing/about-us/what-we-do.tsx
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Group, Heading2, Heading3, Item, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -18,64 +19,63 @@ const { eyebrow, heading, intro, pillars, cmsPath } = Astro.props;
     <div class="mb-20 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <Reveal>
         <div>
-          <p
+          <Text
+            as="p"
             class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
-            data-cms-field={cmsField(cmsPath, "eyebrow")}
-          >
-            {eyebrow}
-          </p>
-          <h2
+            field={cmsField(cmsPath, "eyebrow")}
+            value={eyebrow}
+          />
+          <Heading2
             class="font-serif text-4xl leading-[1.1] md:text-5xl"
-            data-cms-field={cmsField(cmsPath, "heading")}
-          >
-            {heading}
-          </h2>
+            field={cmsField(cmsPath, "heading")}
+            value={heading}
+          />
         </div>
       </Reveal>
       <Reveal delay={80}>
-        <p
+        <Text
+          as="p"
           class="text-muted-foreground max-w-sm text-sm leading-relaxed md:text-right"
-          data-cms-field={cmsField(cmsPath, "intro")}
-        >
-          {intro}
-        </p>
+          field={cmsField(cmsPath, "intro")}
+          value={intro}
+        />
       </Reveal>
     </div>
 
     <!-- Alternating full-width blocks -->
-    <div class="divide-border/40 divide-y">
+    <Group field={cmsField(cmsPath, "pillars")} class="divide-border/40 divide-y">
       {pillars.map((item, i) => (
         <Reveal delay={i * 80}>
-          <div
+          <Item
+            index={i}
             class={`group hover:bg-muted/30 flex flex-col gap-8 py-10 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:flex-row md:items-center md:gap-0 ${
               i % 2 !== 0 ? "md:flex-row-reverse" : ""
             }`}
           >
             <div class="md:w-1/4">
-              <span
+              <Text
+                as="span"
                 class="text-primary/30 group-hover:text-primary/60 font-serif text-6xl transition-colors duration-500 md:text-8xl"
-                data-cms-field={cmsField(cmsPath, `pillars.${i}.index`)}
-              >
-                {item.index}
-              </span>
+                field={cmsField(cmsPath, `pillars.${i}.index`)}
+                value={item.index}
+              />
             </div>
             <div class={`md:w-3/4 ${i % 2 !== 0 ? "md:pr-16" : "md:pl-16"}`}>
-              <h3
+              <Heading3
                 class="text-2xl font-semibold md:text-3xl"
-                data-cms-field={cmsField(cmsPath, `pillars.${i}.title`)}
-              >
-                {item.title}
-              </h3>
-              <p
+                field={cmsField(cmsPath, `pillars.${i}.title`)}
+                value={item.title}
+              />
+              <Text
+                as="p"
                 class="text-muted-foreground mt-4 max-w-2xl text-base leading-relaxed"
-                data-cms-field={cmsField(cmsPath, `pillars.${i}.description`)}
-              >
-                {item.description}
-              </p>
+                field={cmsField(cmsPath, `pillars.${i}.description`)}
+                value={item.description}
+              />
             </div>
-          </div>
+          </Item>
         </Reveal>
       ))}
-    </div>
+    </Group>
   </div>
 </section>

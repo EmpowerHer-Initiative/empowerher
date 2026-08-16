@@ -3,6 +3,7 @@
 import Reveal from "../home/Reveal.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading1, Text, Image, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   logo: { src: string; alt: string };
@@ -20,36 +21,50 @@ const { logo, title, description, gratitude, cmsPath } = Astro.props;
     <div class="mx-auto max-w-3xl">
       {/* Logo */}
       <Reveal class="flex justify-center">
-        <img
-          src={logo.src}
+        <Image
+          field={cmsField(cmsPath, "logo.src")}
+          value={logo.src}
           alt={logo.alt}
           class="w-72 object-contain"
           fetchpriority="high"
           decoding="async"
-          data-cms-field={cmsField(cmsPath, "logo.src")}
         />
       </Reveal>
 
       {/* Title */}
       <Reveal>
-        <h1 class="mt-16 font-serif text-3xl leading-tight md:text-4xl" data-cms-field={cmsField(cmsPath, "title")}>
-          {title}
-        </h1>
+        <Heading1
+          class="mt-16 font-serif text-3xl leading-tight md:text-4xl"
+          field={cmsField(cmsPath, "title")}
+          value={title}
+        />
       </Reveal>
 
       {/* Description */}
-      <Reveal class="text-muted-foreground mt-8 space-y-6 text-base leading-relaxed">
-        {description.map((paragraph, i) => <p data-cms-field={cmsField(cmsPath, `description.${i}`)}>{paragraph}</p>)}
+      <Reveal>
+        <Group field={cmsField(cmsPath, "description")} class="text-muted-foreground mt-8 space-y-6 text-base leading-relaxed">
+          {description.map((paragraph, i) => (
+            <Item index={i} as="p">
+              <Text as="span" field={cmsField(cmsPath, `description.${i}`)} value={paragraph} />
+            </Item>
+          ))}
+        </Group>
       </Reveal>
 
       {/* Gratitude */}
       <Reveal class="border-l-primary bg-primary/[0.05] mt-12 rounded-r-2xl border-l-4 p-8">
-        <p class="text-foreground font-semibold italic" data-cms-field={cmsField(cmsPath, "gratitude.title")}>
-          {gratitude.title}
-        </p>
-        <blockquote class="text-muted-foreground mt-4 leading-relaxed italic" data-cms-field={cmsField(cmsPath, "gratitude.quote")}>
-          {gratitude.quote}
-        </blockquote>
+        <Text
+          as="p"
+          class="text-foreground font-semibold italic"
+          field={cmsField(cmsPath, "gratitude.title")}
+          value={gratitude.title}
+        />
+        <Text
+          as="blockquote"
+          class="text-muted-foreground mt-4 leading-relaxed italic"
+          field={cmsField(cmsPath, "gratitude.quote")}
+          value={gratitude.quote}
+        />
       </Reveal>
 
       {/* CTA */}

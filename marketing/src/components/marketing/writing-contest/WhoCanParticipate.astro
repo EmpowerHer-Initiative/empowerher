@@ -3,6 +3,7 @@
 import Reveal from "../home/Reveal.astro";
 import CheckCircle2 from "../../icons/CheckCircle2.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text, Heading2, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -16,32 +17,29 @@ const { eyebrow, title, items, cmsPath } = Astro.props;
   <div class="container">
     <div class="mx-auto max-w-4xl">
       <Reveal>
-        <p
+        <Text
+          as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          data-cms-field={cmsField(cmsPath, "eyebrow")}
-        >
-          {eyebrow}
-        </p>
-        <h2
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
+        <Heading2
           class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          data-cms-field={cmsField(cmsPath, "title")}
-        >
-          {title}
-        </h2>
+          field={cmsField(cmsPath, "title")}
+          value={title}
+        />
       </Reveal>
-      <div class="mt-12 grid gap-4">
+      <Group field={cmsField(cmsPath, "items")} class="mt-12 grid gap-4">
         {items.map((item, i) => (
           <Reveal class="border-border/60 bg-background flex items-start gap-4 rounded-2xl border p-6 shadow-sm" delay={i * 80}>
-            <CheckCircle2 class="text-primary mt-0.5 size-6 shrink-0" />
-            <p
-              class="text-foreground/80 text-base leading-relaxed"
-              data-cms-field={cmsField(cmsPath, `items.${i}`)}
-            >
-              {item}
-            </p>
+            <!-- display:contents: Reveal is a flex row (icon + text side by side); Item must not introduce a box that breaks that layout -->
+            <Item index={i} class="contents">
+              <CheckCircle2 class="text-primary mt-0.5 size-6 shrink-0" />
+              <Text as="p" class="text-foreground/80 text-base leading-relaxed" field={cmsField(cmsPath, `items.${i}`)} value={item} />
+            </Item>
           </Reveal>
         ))}
-      </div>
+      </Group>
     </div>
   </div>
 </section>

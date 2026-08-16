@@ -4,7 +4,8 @@
 import { marked } from "marked";
 import Layout from "../layouts/Layout.astro";
 import ArrowLeft from "../components/icons/ArrowLeft.astro";
-import content from "../data/terms.json";
+import pages from "../data/pages.json";
+const content = pages.terms;
 import { cmsField } from "../lib/cms";
 
 const { seo, title, description, updated, body } = content as {

@@ -3,6 +3,13 @@
 import Mail from "../../icons/Mail.astro";
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import {
+  Heading2,
+  Heading3,
+  Text,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface HowToApply {
   eyebrow: string;
@@ -35,61 +42,62 @@ const ruleAccents = [
   <div class="relative container">
     <div class="mx-auto max-w-2xl">
       <Reveal>
-        <p
+        <Text
+          as="p"
           class="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase"
-          data-cms-field={cmsField(cmsPath, "eyebrow")}
-        >
-          {eyebrow}
-        </p>
-        <h2
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
+        <Heading2
           class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          data-cms-field={cmsField(cmsPath, "heading")}
-        >
-          {heading}
-        </h2>
-        <p
+          field={cmsField(cmsPath, "heading")}
+          value={heading}
+        />
+        <Text
+          as="p"
           class="mt-6 text-base leading-relaxed text-white/70"
-          data-cms-field={cmsField(cmsPath, "subtitle")}
-        >
-          {subtitle}
-        </p>
+          field={cmsField(cmsPath, "subtitle")}
+          value={subtitle}
+        />
       </Reveal>
 
-      <ol class="mt-12 space-y-5">
+      <Group as="ol" field={cmsField(cmsPath, "items")} class="mt-12 space-y-5">
         {items.map((rule, i) => (
-          <Reveal
-            class="group flex gap-5 rounded-2xl border border-white/10 bg-white/[0.05] p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.09]"
-            delay={i * 140}
-          >
-            <span
-              class={`flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${ruleAccents[i % ruleAccents.length]} font-serif text-xl text-[#0b1f3a] shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:-rotate-6`}
+          <Item index={i} as="li">
+            <Reveal
+              class="group flex gap-5 rounded-2xl border border-white/10 bg-white/[0.05] p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.09]"
+              delay={i * 140}
             >
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <p
-              class="self-center text-base leading-relaxed text-white/85"
-              data-cms-field={cmsField(cmsPath, `items.${i}`)}
-            >
-              {rule}
-            </p>
-          </Reveal>
+              <span
+                class={`flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${ruleAccents[i % ruleAccents.length]} font-serif text-xl text-[#0b1f3a] shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:-rotate-6`}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <Text
+                as="p"
+                class="self-center text-base leading-relaxed text-white/85"
+                field={cmsField(cmsPath, `items.${i}`)}
+                value={rule}
+              />
+            </Reveal>
+          </Item>
         ))}
-      </ol>
+      </Group>
 
       {/* How to apply — inline */}
       <Reveal class="mt-16 border-t border-white/15 pt-12">
-        <p
+        <Text
+          as="p"
           class="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase"
-          data-cms-field={cmsField(cmsPath, "howToApply.eyebrow")}
-        >
-          {howToApply.eyebrow}
-        </p>
-        <h3
+          field={cmsField(cmsPath, "howToApply.eyebrow")}
+          value={howToApply.eyebrow}
+        />
+        <Heading3
           class="mt-4 font-serif text-3xl text-white"
-          data-cms-field={cmsField(cmsPath, "howToApply.title")}
-        >
-          {howToApply.title}
-        </h3>
+          field={cmsField(cmsPath, "howToApply.title")}
+          value={howToApply.title}
+        />
+        {/* bodyBefore/bodyAfter share one <p> around a hardcoded mailto link — content spans multiple child elements, left hand-tagged. */}
         <p
           class="mt-5 text-base leading-relaxed text-white/75"
           data-cms-field={cmsField(cmsPath, "howToApply.bodyBefore")}

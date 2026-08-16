@@ -2,6 +2,7 @@
 // Ports components/marketing/mentorship/intro.tsx
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   quote: string;
@@ -19,29 +20,44 @@ const { quote, paragraph, impactLabel, impactText, closing, cmsPath } = Astro.pr
   <div class="container">
     <div class="mx-auto max-w-3xl space-y-10">
       <Reveal>
-        <blockquote class="border-primary/20 border-l-2 pl-8 font-serif text-2xl leading-relaxed italic md:text-3xl" data-cms-field={cmsField(cmsPath, "quote")}>
-          {quote}
-        </blockquote>
+        <Text
+          as="blockquote"
+          class="border-primary/20 border-l-2 pl-8 font-serif text-2xl leading-relaxed italic md:text-3xl"
+          field={cmsField(cmsPath, "quote")}
+          value={quote}
+        />
       </Reveal>
       <Reveal delay={80}>
-        <p class="text-muted-foreground leading-[1.8]" data-cms-field={cmsField(cmsPath, "paragraph")}>
-          {paragraph}
-        </p>
+        <Text
+          as="p"
+          class="text-muted-foreground leading-[1.8]"
+          field={cmsField(cmsPath, "paragraph")}
+          value={paragraph}
+        />
       </Reveal>
       <Reveal delay={160}>
         <div class="border-primary/20 bg-primary/[0.04] rounded-2xl border p-8">
-          <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "impactLabel")}>
-            {impactLabel}
-          </p>
-          <p class="text-muted-foreground leading-[1.8]" data-cms-field={cmsField(cmsPath, "impactText")}>
-            {impactText}
-          </p>
+          <Text
+            as="p"
+            class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
+            field={cmsField(cmsPath, "impactLabel")}
+            value={impactLabel}
+          />
+          <Text
+            as="p"
+            class="text-muted-foreground leading-[1.8]"
+            field={cmsField(cmsPath, "impactText")}
+            value={impactText}
+          />
         </div>
       </Reveal>
       <Reveal delay={240}>
-        <p class="leading-[1.8] font-medium" data-cms-field={cmsField(cmsPath, "closing")}>
-          {closing}
-        </p>
+        <Text
+          as="p"
+          class="leading-[1.8] font-medium"
+          field={cmsField(cmsPath, "closing")}
+          value={closing}
+        />
       </Reveal>
     </div>
   </div>

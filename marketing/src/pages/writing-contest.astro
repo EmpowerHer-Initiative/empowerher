@@ -9,7 +9,8 @@ import HowToSubmit from "../components/marketing/writing-contest/HowToSubmit.ast
 import Deadlines from "../components/marketing/writing-contest/Deadlines.astro";
 import Awards from "../components/marketing/writing-contest/Awards.astro";
 import Judges from "../components/marketing/writing-contest/Judges.astro";
-import data from "../data/writing-contest.json";
+import pages from "../data/pages.json";
+const data = pages["writing-contest"];
 ---
 
 <Layout title={data.seo.title} description={data.seo.description}>

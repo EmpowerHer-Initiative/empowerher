@@ -2,6 +2,7 @@
 // Ports components/marketing/sisterhood-sessions/header.tsx
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow?: string;
@@ -16,28 +17,27 @@ const { eyebrow, heading, body, cmsPath } = Astro.props;
   <div class="container">
     <div class="mx-auto max-w-3xl">
       <Reveal delay={0}>
-        <p
+        <Text
+          as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          data-cms-field={cmsField(cmsPath, "eyebrow")}
-        >
-          {eyebrow}
-        </p>
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
       </Reveal>
       <Reveal delay={80}>
-        <h1
+        <Heading1
           class="mt-5 font-serif text-4xl leading-[1.1] md:text-6xl"
-          data-cms-field={cmsField(cmsPath, "heading")}
-        >
-          {heading}
-        </h1>
+          field={cmsField(cmsPath, "heading")}
+          value={heading}
+        />
       </Reveal>
       <Reveal delay={160}>
-        <p
+        <Text
+          as="p"
           class="text-muted-foreground mt-8 text-lg leading-relaxed"
-          data-cms-field={cmsField(cmsPath, "body")}
-        >
-          {body}
-        </p>
+          field={cmsField(cmsPath, "body")}
+          value={body}
+        />
       </Reveal>
     </div>
   </div>

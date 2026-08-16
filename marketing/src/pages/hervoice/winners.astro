@@ -7,7 +7,8 @@ import CashPrizeWinners from "../../components/marketing/hervoice-winners/CashPr
 import HonorableMentions from "../../components/marketing/hervoice-winners/HonorableMentions.astro";
 import JudgeTestimonials from "../../components/marketing/hervoice-winners/JudgeTestimonials.astro";
 import HerVoiceCTA from "../../components/marketing/hervoice-winners/HerVoiceCTA.astro";
-import data from "../../data/hervoice-winners.json";
+import pages from "../../data/pages.json";
+const data = pages["hervoice-winners"];
 ---
 <Layout title={data.seo.title} description={data.seo.description}>
   <div class="text-[#1A2230] antialiased">

@@ -10,6 +10,13 @@ import Users from "../../icons/Users.astro";
 import Zap from "../../icons/Zap.astro";
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import {
+  Heading2,
+  Heading3,
+  Text,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Benefit {
   title: string;
@@ -31,48 +38,49 @@ const icons = [Laptop, BriefcaseBusiness, Zap, Users, Network, TrendingUp];
 <section class="bg-foreground/[0.03] py-28 md:py-40">
   <div class="container">
     <Reveal class="mx-auto max-w-2xl">
-      <p
+      <Text
+        as="p"
         class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-        data-cms-field={cmsField(cmsPath, "eyebrow")}
-      >
-        {eyebrow}
-      </p>
-      <h2
+        field={cmsField(cmsPath, "eyebrow")}
+        value={eyebrow}
+      />
+      <Heading2
         class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-        data-cms-field={cmsField(cmsPath, "heading")}
-      >
-        {heading}
-      </h2>
+        field={cmsField(cmsPath, "heading")}
+        value={heading}
+      />
     </Reveal>
 
     <div class="mx-auto mt-16 max-w-2xl">
       <Reveal class="grid gap-5 sm:grid-cols-2" delay={80}>
-        {items.map((benefit, i) => {
-          const Icon = icons[i % icons.length];
-          return (
-            <div
-              class="group border-border/60 bg-background hover:border-primary/30 hover:shadow-primary/5 flex gap-5 rounded-2xl border p-7 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div class="bg-primary/10 text-primary flex size-11 shrink-0 items-center justify-center rounded-xl">
-                <Icon class="size-5" />
-              </div>
-              <div>
-                <h3
-                  class="text-base font-semibold"
-                  data-cms-field={cmsField(cmsPath, `items.${i}.title`)}
-                >
-                  {benefit.title}
-                </h3>
-                <p
-                  class="text-foreground/70 mt-2 text-sm leading-relaxed"
-                  data-cms-field={cmsField(cmsPath, `items.${i}.description`)}
-                >
-                  {benefit.description}
-                </p>
-              </div>
-            </div>
-          );
-        })}
+        <Group field={cmsField(cmsPath, "items")} class="contents">
+          {items.map((benefit, i) => {
+            const Icon = icons[i % icons.length];
+            return (
+              <Item
+                index={i}
+                class="group border-border/60 bg-background hover:border-primary/30 hover:shadow-primary/5 flex gap-5 rounded-2xl border p-7 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div class="bg-primary/10 text-primary flex size-11 shrink-0 items-center justify-center rounded-xl">
+                  <Icon class="size-5" />
+                </div>
+                <div>
+                  <Heading3
+                    class="text-base font-semibold"
+                    field={cmsField(cmsPath, `items.${i}.title`)}
+                    value={benefit.title}
+                  />
+                  <Text
+                    as="p"
+                    class="text-foreground/70 mt-2 text-sm leading-relaxed"
+                    field={cmsField(cmsPath, `items.${i}.description`)}
+                    value={benefit.description}
+                  />
+                </div>
+              </Item>
+            );
+          })}
+        </Group>
       </Reveal>
     </div>
 
@@ -81,18 +89,18 @@ const icons = [Laptop, BriefcaseBusiness, Zap, Users, Network, TrendingUp];
       <div class="flex gap-4 rounded-2xl border border-l-4 border-red-200 border-l-red-600 bg-red-50 p-6">
         <AlertCircle class="mt-0.5 size-5 shrink-0 text-red-600" />
         <div>
-          <p
+          <Text
+            as="p"
             class="text-sm font-semibold text-red-800"
-            data-cms-field={cmsField(cmsPath, "importantNote.title")}
-          >
-            {importantNote.title}
-          </p>
-          <p
+            field={cmsField(cmsPath, "importantNote.title")}
+            value={importantNote.title}
+          />
+          <Text
+            as="p"
             class="text-foreground/80 mt-1.5 text-sm leading-relaxed"
-            data-cms-field={cmsField(cmsPath, "importantNote.body")}
-          >
-            {importantNote.body}
-          </p>
+            field={cmsField(cmsPath, "importantNote.body")}
+            value={importantNote.body}
+          />
         </div>
       </div>
     </Reveal>

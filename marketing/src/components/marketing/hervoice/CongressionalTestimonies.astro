@@ -2,6 +2,7 @@
 // Ports components/marketing/hervoice/congressional-testimonies.tsx
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading2, Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -29,61 +30,62 @@ const {
   <div class="container">
     <div class="mx-auto max-w-4xl">
       <Reveal>
-        <p
+        <Text
+          as="p"
           class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase"
-          data-cms-field={cmsField(cmsPath, "eyebrow")}
-        >
-          {eyebrow}
-        </p>
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
       </Reveal>
       <Reveal delay={80}>
-        <h2
+        <Heading2
           class="text-foreground font-serif text-4xl leading-[1.1] md:text-5xl"
-          data-cms-field={cmsField(cmsPath, "heading")}
-        >
-          {heading}
-        </h2>
+          field={cmsField(cmsPath, "heading")}
+          value={heading}
+        />
       </Reveal>
 
       <Reveal delay={160}>
-        <p
+        <Text
+          as="p"
           class="text-muted-foreground mt-8 max-w-2xl text-base leading-relaxed"
-          data-cms-field={cmsField(cmsPath, "intro")}
-        >
-          {intro}
-        </p>
+          field={cmsField(cmsPath, "intro")}
+          value={intro}
+        />
       </Reveal>
 
       {/* Centered blockquote */}
       <Reveal class="border-border my-16 border-l-2 pl-8">
+        <!-- static &ldquo;/&rdquo; entities wrap the field; Text would drop them, so kept hand-tagged. -->
         <p
           class="text-muted-foreground font-serif text-xl leading-relaxed md:text-2xl"
           data-cms-field={cmsField(cmsPath, "quote")}
         >
           &ldquo;{quote}&rdquo;
         </p>
-        <p
+        <Text
+          as="p"
           class="text-muted-foreground mt-6 text-xs font-semibold tracking-[0.3em] uppercase"
-          data-cms-field={cmsField(cmsPath, "quoteAttribution")}
-        >
-          {quoteAttribution}
-        </p>
+          field={cmsField(cmsPath, "quoteAttribution")}
+          value={quoteAttribution}
+        />
       </Reveal>
 
       <Reveal delay={80}>
-        <p
+        <Text
+          as="p"
           class="text-muted-foreground mb-10 text-sm"
-          data-cms-field={cmsField(cmsPath, "note")}
-        >
-          {note}
-        </p>
+          field={cmsField(cmsPath, "note")}
+          value={note}
+        />
       </Reveal>
 
       {/* Videos */}
       <Reveal delay={160}>
-        <div class="grid gap-6 md:grid-cols-2">
+        <Group field={cmsField(cmsPath, "videos")} class="grid gap-6 md:grid-cols-2">
           {videos.map((video, i) => (
-            <div class="overflow-hidden rounded-2xl">
+            <Item index={i} class="overflow-hidden rounded-2xl">
+              <!-- video/source aren't <img> — poster & src stay hand-tagged, no bridge component covers them. -->
               <video
                 controls
                 poster={video.poster}
@@ -97,15 +99,15 @@ const {
                 />
                 Your browser does not support the video tag.
               </video>
-              <p
+              <Text
+                as="p"
                 class="text-muted-foreground mt-3 text-xs font-semibold tracking-[0.2em] uppercase"
-                data-cms-field={cmsField(cmsPath, `videos.${i}.label`)}
-              >
-                {video.label}
-              </p>
-            </div>
+                field={cmsField(cmsPath, `videos.${i}.label`)}
+                value={video.label}
+              />
+            </Item>
           ))}
-        </div>
+        </Group>
       </Reveal>
     </div>
   </div>

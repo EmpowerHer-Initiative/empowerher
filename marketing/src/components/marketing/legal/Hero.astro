@@ -3,6 +3,7 @@
 import Reveal from "../home/Reveal.astro";
 import Highlight from "../../Highlight.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -16,21 +17,22 @@ const { eyebrow, heading, body, cmsPath } = Astro.props;
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="max-w-4xl">
-      <p
+      <Text
+        as="p"
         class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
-        data-cms-field={cmsField(cmsPath, "eyebrow")}
-      >
-        {eyebrow}
-      </p>
+        field={cmsField(cmsPath, "eyebrow")}
+        value={eyebrow}
+      />
+      {/* heading wraps <Highlight hlClass="italic" />: kept hand-tagged, not a plain-text field */}
       <h1 class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl" data-cms-field={cmsField(cmsPath, "heading")}>
         <Highlight text={heading} hlClass="italic" />
       </h1>
-      <p
+      <Text
+        as="p"
         class="text-muted-foreground mt-6 max-w-xl text-lg leading-relaxed"
-        data-cms-field={cmsField(cmsPath, "body")}
-      >
-        {body}
-      </p>
+        field={cmsField(cmsPath, "body")}
+        value={body}
+      />
     </Reveal>
   </div>
 </section>

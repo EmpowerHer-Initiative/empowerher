@@ -4,6 +4,7 @@ import Reveal from "../home/Reveal.astro";
 import AlertTriangle from "../../icons/AlertTriangle.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading2, Text } from "@alisamadiillc/cms-bridge/components";
 
 const FORM_URL = "https://forms.gle/J5D6atwg4cH5yicf9";
 
@@ -21,18 +22,17 @@ const { title, intro, warning, contactText, cmsPath } = Astro.props;
     <div class="mx-auto max-w-3xl">
       <Reveal class="border-primary/20 bg-primary/[0.04] rounded-3xl border p-10 text-center md:p-16">
         <ExternalLink class="text-primary mx-auto size-12" />
-        <h2
+        <Heading2
           class="mt-6 font-serif text-3xl leading-tight md:text-4xl"
-          data-cms-field={cmsField(cmsPath, "title")}
-        >
-          {title}
-        </h2>
-        <p
+          field={cmsField(cmsPath, "title")}
+          value={title}
+        />
+        <Text
+          as="p"
           class="text-foreground/80 mt-5 text-lg font-medium"
-          data-cms-field={cmsField(cmsPath, "intro")}
-        >
-          {intro}
-        </p>
+          field={cmsField(cmsPath, "intro")}
+          value={intro}
+        />
         <div class="mt-8">
           <a
             href={FORM_URL}
@@ -46,10 +46,9 @@ const { title, intro, warning, contactText, cmsPath } = Astro.props;
         </div>
         <div class="mt-8 flex items-start gap-3 rounded-2xl border border-amber-400/50 bg-amber-50 p-5 text-left">
           <AlertTriangle class="mt-0.5 size-5 shrink-0 text-amber-600" />
-          <p class="text-sm leading-relaxed text-amber-900" data-cms-field={cmsField(cmsPath, "warning")}>
-            {warning}
-          </p>
+          <Text as="p" class="text-sm leading-relaxed text-amber-900" field={cmsField(cmsPath, "warning")} value={warning} />
         </div>
+        <!-- kept hand-tagged: paragraph mixes contactText + static mailto <a> + literal text (multiple child elements) -->
         <p class="text-muted-foreground mt-6 text-sm" data-cms-field={cmsField(cmsPath, "contactText")}>
           {contactText}{" "}
           <a

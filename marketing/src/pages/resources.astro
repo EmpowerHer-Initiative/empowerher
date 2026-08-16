@@ -3,7 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/marketing/resources/Header.astro";
 import ResourceList from "../components/marketing/resources/ResourceList.astro";
 import FooterNote from "../components/marketing/resources/FooterNote.astro";
-import data from "../data/resources.json";
+import pages from "../data/pages.json";
+const data = pages.resources;
 import { resources } from "../lib/collections";
 
 const { seo, header, footerNote } = data;

@@ -3,6 +3,7 @@
 import ArrowLeft from "../../icons/ArrowLeft.astro";
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading1, Text, Image } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   backText?: string;
@@ -18,10 +19,10 @@ const { backText, eyebrow, heading, intro, image, cmsPath } = Astro.props;
 <section class="relative overflow-hidden">
   {/* Full-bleed image behind */}
   <div class="absolute inset-0">
-    <img
-      src={image.src}
+    <Image
+      field={cmsField(cmsPath, "image.src")}
+      value={image.src}
       alt={image.alt}
-      data-cms-field={cmsField(cmsPath, "image.src")}
       fetchpriority="high"
       decoding="async"
       class="h-full w-full object-cover"
@@ -30,6 +31,7 @@ const { backText, eyebrow, heading, intro, image, cmsPath } = Astro.props;
   </div>
 
   <div class="relative container py-28 md:py-40">
+    {/* backText: icon + text inside one <a> — content spans multiple child elements, left hand-tagged. */}
     <Reveal>
       <a
         href="/success-stories"
@@ -42,24 +44,23 @@ const { backText, eyebrow, heading, intro, image, cmsPath } = Astro.props;
     </Reveal>
 
     <Reveal class="max-w-2xl" delay={120}>
-      <p
+      <Text
+        as="p"
         class="text-background/50 text-xs font-semibold tracking-[0.3em] uppercase"
-        data-cms-field={cmsField(cmsPath, "eyebrow")}
-      >
-        {eyebrow}
-      </p>
-      <h1
+        field={cmsField(cmsPath, "eyebrow")}
+        value={eyebrow}
+      />
+      <Heading1
         class="text-background mt-5 font-serif text-5xl leading-[1.05] md:text-6xl lg:text-7xl"
-        data-cms-field={cmsField(cmsPath, "heading")}
-      >
-        {heading}
-      </h1>
-      <p
+        field={cmsField(cmsPath, "heading")}
+        value={heading}
+      />
+      <Text
+        as="p"
         class="text-background/75 mt-8 max-w-xl text-base leading-relaxed md:text-lg"
-        data-cms-field={cmsField(cmsPath, "intro")}
-      >
-        {intro}
-      </p>
+        field={cmsField(cmsPath, "intro")}
+        value={intro}
+      />
     </Reveal>
   </div>
 </section>

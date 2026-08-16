@@ -2,6 +2,12 @@
 // Ports components/marketing/sisterhood-sessions/community.tsx
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import {
+  Heading2,
+  Text,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow?: string;
@@ -20,66 +26,70 @@ const { eyebrow, heading, body, listIntro, benefits, closing, cmsPath } =
   <div class="container">
     <div class="mx-auto max-w-3xl">
       <Reveal delay={0}>
-        <p
+        <Text
+          as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          data-cms-field={cmsField(cmsPath, "eyebrow")}
-        >
-          {eyebrow}
-        </p>
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
       </Reveal>
       <Reveal delay={80}>
-        <h2
+        <Heading2
           class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          data-cms-field={cmsField(cmsPath, "heading")}
-        >
-          {heading}
-        </h2>
+          field={cmsField(cmsPath, "heading")}
+          value={heading}
+        />
       </Reveal>
       <Reveal delay={160}>
-        <p
+        <Text
+          as="p"
           class="text-muted-foreground mt-8 text-lg leading-relaxed"
-          data-cms-field={cmsField(cmsPath, "body")}
-        >
-          {body}
-        </p>
+          field={cmsField(cmsPath, "body")}
+          value={body}
+        />
       </Reveal>
       <Reveal delay={240}>
-        <p
+        <Text
+          as="p"
           class="mt-10 text-base font-semibold"
-          data-cms-field={cmsField(cmsPath, "listIntro")}
-        >
-          {listIntro}
-        </p>
+          field={cmsField(cmsPath, "listIntro")}
+          value={listIntro}
+        />
       </Reveal>
 
       {/* Numbered list — large serif numbers */}
       <Reveal delay={320}>
-        <div class="divide-border/40 mt-6 divide-y">
+        <Group
+          as="div"
+          field={cmsField(cmsPath, "benefits")}
+          class="divide-border/40 mt-6 divide-y"
+        >
           {benefits.map((benefit, i) => (
-            <div
+            <Item
+              index={i}
               class="group hover:bg-muted/20 flex items-start gap-8 py-7 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:gap-12"
             >
               <span class="text-muted-foreground/25 group-hover:text-primary/25 font-serif text-4xl leading-none transition-colors duration-500 md:text-5xl">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <p
+              <Text
+                as="p"
                 class="text-muted-foreground pt-2 text-base leading-relaxed md:text-lg"
-                data-cms-field={cmsField(cmsPath, `benefits.${i}`)}
-              >
-                {benefit}
-              </p>
-            </div>
+                field={cmsField(cmsPath, `benefits.${i}`)}
+                value={benefit}
+              />
+            </Item>
           ))}
-        </div>
+        </Group>
       </Reveal>
 
       <Reveal delay={0}>
-        <p
+        <Text
+          as="p"
           class="text-muted-foreground mt-10 text-lg leading-relaxed"
-          data-cms-field={cmsField(cmsPath, "closing")}
-        >
-          {closing}
-        </p>
+          field={cmsField(cmsPath, "closing")}
+          value={closing}
+        />
       </Reveal>
     </div>
   </div>

@@ -1,8 +1,8 @@
 ---
 // Ports components/marketing/hervoice-winners/hero.tsx
 // hv-* tokens inlined to exact hex; --hv-display -> font-serif.
-import Highlight from "../../Highlight.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
 interface Props {
   heading: string;
   heading2: string;
@@ -20,14 +20,18 @@ const { heading, heading2, bodyText, stats, cmsPath } = Astro.props;
 
   <div class="relative mx-auto flex max-w-4xl flex-col items-center px-6 py-20 text-center md:py-28">
     <h1 class="hv-rise mt-5 font-serif text-[clamp(36px,5.5vw,72px)] leading-[0.92] font-bold tracking-[-0.03em]" style="animation-delay:80ms;--cms-highlight:#1E78C4">
-      <span data-cms-field={cmsField(cmsPath, "heading")}><Highlight text={heading} /></span>
+      <Text as="span" field={cmsField(cmsPath, "heading")} value={heading} />
       <br />
-      <span data-cms-field={cmsField(cmsPath, "heading2")}><Highlight text={heading2} /></span>
+      <Text as="span" field={cmsField(cmsPath, "heading2")} value={heading2} />
     </h1>
 
-    <p class="hv-rise mt-8 max-w-2xl text-lg leading-relaxed [text-wrap:pretty] text-[#3C4654]" style="animation-delay:160ms" data-cms-field={cmsField(cmsPath, "bodyText")}>
-      {bodyText}
-    </p>
+    <Text
+      as="p"
+      class="hv-rise mt-8 max-w-2xl text-lg leading-relaxed [text-wrap:pretty] text-[#3C4654]"
+      style="animation-delay:160ms"
+      field={cmsField(cmsPath, "bodyText")}
+      value={bodyText}
+    />
 
     <div class="hv-rise mt-10 flex items-center justify-center" style="animation-delay:240ms">
       <div class="relative h-32 w-32">
@@ -48,14 +52,24 @@ const { heading, heading2, bodyText, stats, cmsPath } = Astro.props;
       </div>
     </div>
 
-    <div class="hv-rise mt-10 flex flex-wrap justify-center gap-8" style="animation-delay:320ms">
+    <Group field={cmsField(cmsPath, "stats")} class="hv-rise mt-10 flex flex-wrap justify-center gap-8" style="animation-delay:320ms">
       {stats.map((s, i) => (
-        <div>
-          <div class={`font-serif text-3xl leading-none font-bold ${i % 2 === 1 ? "text-[#C8902A]" : "text-[#1E78C4]"}`} data-cms-field={cmsField(cmsPath, `stats.${i}.value`)}>{s.value}</div>
-          <div class="mt-1.5 max-w-48 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase" data-cms-field={cmsField(cmsPath, `stats.${i}.label`)}>{s.label}</div>
-        </div>
+        <Item index={i}>
+          <Text
+            as="div"
+            class={`font-serif text-3xl leading-none font-bold ${i % 2 === 1 ? "text-[#C8902A]" : "text-[#1E78C4]"}`}
+            field={cmsField(cmsPath, `stats.${i}.value`)}
+            value={s.value}
+          />
+          <Text
+            as="div"
+            class="mt-1.5 max-w-48 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase"
+            field={cmsField(cmsPath, `stats.${i}.label`)}
+            value={s.label}
+          />
+        </Item>
       ))}
-    </div>
+    </Group>
 
     <div class="hv-rise mt-10" style="animation-delay:400ms">
       <a

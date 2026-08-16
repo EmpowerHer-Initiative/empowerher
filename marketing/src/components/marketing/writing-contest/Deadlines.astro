@@ -4,6 +4,7 @@ import Reveal from "../home/Reveal.astro";
 import AlertTriangle from "../../icons/AlertTriangle.astro";
 import Calendar from "../../icons/Calendar.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text, Heading2, Heading3, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -18,28 +19,28 @@ const { eyebrow, title, items, note, cmsPath } = Astro.props;
   <div class="container">
     <div class="mx-auto max-w-5xl">
       <Reveal>
-        <p
+        <Text
+          as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          data-cms-field={cmsField(cmsPath, "eyebrow")}
-        >
-          {eyebrow}
-        </p>
-        <h2
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
+        <Heading2
           class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          data-cms-field={cmsField(cmsPath, "title")}
-        >
-          {title}
-        </h2>
+          field={cmsField(cmsPath, "title")}
+          value={title}
+        />
       </Reveal>
 
-      <div class="mt-12 grid gap-6 md:grid-cols-2">
+      <Group field={cmsField(cmsPath, "items")} class="mt-12 grid gap-6 md:grid-cols-2">
         {items.map((deadline, i) => (
           <Reveal class="border-border/60 bg-background border-l-primary relative overflow-hidden rounded-2xl border border-l-4 p-7 shadow-sm" delay={i * 80}>
-            <div class="flex items-start gap-4">
+            <Item index={i} class="flex items-start gap-4">
               <div class="bg-primary text-primary-foreground flex size-12 shrink-0 items-center justify-center rounded-xl font-serif text-lg">
                 {i + 1}
               </div>
               <div>
+                <!-- kept hand-tagged: badge mixes Calendar icon + date text (multiple child elements) -->
                 <span
                   class="bg-primary/10 text-primary inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
                   data-cms-field={cmsField(cmsPath, `items.${i}.date`)}
@@ -47,26 +48,22 @@ const { eyebrow, title, items, note, cmsPath } = Astro.props;
                   <Calendar class="size-3.5" />
                   {deadline.date}
                 </span>
-                <h3 class="mt-3 font-serif text-2xl" data-cms-field={cmsField(cmsPath, `items.${i}.title`)}>
-                  {deadline.title}
-                </h3>
-                <p
+                <Heading3 class="mt-3 font-serif text-2xl" field={cmsField(cmsPath, `items.${i}.title`)} value={deadline.title} />
+                <Text
+                  as="p"
                   class="text-muted-foreground mt-1.5 text-sm leading-relaxed"
-                  data-cms-field={cmsField(cmsPath, `items.${i}.description`)}
-                >
-                  {deadline.description}
-                </p>
+                  field={cmsField(cmsPath, `items.${i}.description`)}
+                  value={deadline.description}
+                />
               </div>
-            </div>
+            </Item>
           </Reveal>
         ))}
-      </div>
+      </Group>
 
       <Reveal class="mt-8 flex items-center justify-center gap-3 rounded-2xl border border-amber-400/50 bg-amber-50 p-5 text-center">
         <AlertTriangle class="size-5 shrink-0 text-amber-600" />
-        <p class="text-sm font-medium text-amber-900" data-cms-field={cmsField(cmsPath, "note")}>
-          {note}
-        </p>
+        <Text as="p" class="text-sm font-medium text-amber-900" field={cmsField(cmsPath, "note")} value={note} />
       </Reveal>
     </div>
   </div>

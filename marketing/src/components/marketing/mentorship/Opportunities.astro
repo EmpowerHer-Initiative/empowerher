@@ -3,6 +3,7 @@
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading3, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -20,13 +21,16 @@ const { eyebrow, title, titleLine2, items, note, cmsPath } = Astro.props;
   <div class="container">
     <Reveal>
       <div class="mb-16">
-        <p class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>
-          {eyebrow}
-        </p>
+        <Text
+          as="p"
+          class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
+          field={cmsField(cmsPath, "eyebrow")}
+          value={eyebrow}
+        />
         <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">
-          <span data-cms-field={cmsField(cmsPath, "title")}>{title}</span>
+          <Text as="span" field={cmsField(cmsPath, "title")} value={title} />
           <br />
-          <span data-cms-field={cmsField(cmsPath, "titleLine2")}>{titleLine2}</span>
+          <Text as="span" field={cmsField(cmsPath, "titleLine2")} value={titleLine2} />
         </h2>
       </div>
     </Reveal>
@@ -35,12 +39,17 @@ const { eyebrow, title, titleLine2, items, note, cmsPath } = Astro.props;
       <div class="grid gap-6 md:grid-cols-3">
         <div class="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors">
           <p class="text-primary/40 font-serif text-5xl">01</p>
-          <h3 class="mt-6 text-xl font-semibold" data-cms-field={cmsField(cmsPath, "items.0.title")}>
-            {items[0].title}
-          </h3>
-          <p class="text-muted-foreground mt-3 text-sm leading-relaxed" data-cms-field={cmsField(cmsPath, "items.0.description")}>
-            {items[0].description}
-          </p>
+          <Heading3
+            class="mt-6 text-xl font-semibold"
+            field={cmsField(cmsPath, "items.0.title")}
+            value={items[0].title}
+          />
+          <Text
+            as="p"
+            class="text-muted-foreground mt-3 text-sm leading-relaxed"
+            field={cmsField(cmsPath, "items.0.description")}
+            value={items[0].description}
+          />
           <a
             href="/success-stories/spr"
             class="text-primary hover:text-primary/80 mt-6 inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
@@ -52,10 +61,17 @@ const { eyebrow, title, titleLine2, items, note, cmsPath } = Astro.props;
 
         <div class="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors">
           <p class="text-primary/40 font-serif text-5xl">02</p>
-          <h3 class="mt-6 text-xl font-semibold" data-cms-field={cmsField(cmsPath, "items.1.title")}>{items[1].title}</h3>
-          <p class="text-muted-foreground mt-3 text-sm leading-relaxed" data-cms-field={cmsField(cmsPath, "items.1.description")}>
-            {items[1].description}
-          </p>
+          <Heading3
+            class="mt-6 text-xl font-semibold"
+            field={cmsField(cmsPath, "items.1.title")}
+            value={items[1].title}
+          />
+          <Text
+            as="p"
+            class="text-muted-foreground mt-3 text-sm leading-relaxed"
+            field={cmsField(cmsPath, "items.1.description")}
+            value={items[1].description}
+          />
           <a
             href="/hervoice"
             class="text-primary hover:text-primary/80 mt-6 inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
@@ -67,18 +83,28 @@ const { eyebrow, title, titleLine2, items, note, cmsPath } = Astro.props;
 
         <div class="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors">
           <p class="text-primary/40 font-serif text-5xl">03</p>
-          <h3 class="mt-6 text-xl font-semibold" data-cms-field={cmsField(cmsPath, "items.2.title")}>{items[2].title}</h3>
-          <p class="text-muted-foreground mt-3 text-sm leading-relaxed" data-cms-field={cmsField(cmsPath, "items.2.description")}>
-            {items[2].description}
-          </p>
+          <Heading3
+            class="mt-6 text-xl font-semibold"
+            field={cmsField(cmsPath, "items.2.title")}
+            value={items[2].title}
+          />
+          <Text
+            as="p"
+            class="text-muted-foreground mt-3 text-sm leading-relaxed"
+            field={cmsField(cmsPath, "items.2.description")}
+            value={items[2].description}
+          />
         </div>
       </div>
     </Reveal>
 
     <Reveal delay={240}>
-      <p class="text-muted-foreground mt-10 text-sm leading-relaxed" data-cms-field={cmsField(cmsPath, "note")}>
-        {note}
-      </p>
+      <Text
+        as="p"
+        class="text-muted-foreground mt-10 text-sm leading-relaxed"
+        field={cmsField(cmsPath, "note")}
+        value={note}
+      />
     </Reveal>
   </div>
 </section>

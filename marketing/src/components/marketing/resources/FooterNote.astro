@@ -3,6 +3,7 @@
 import Reveal from "../home/Reveal.astro";
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   text: string;
@@ -27,12 +28,12 @@ const { text, email, cmsPath } = Astro.props;
         </h2>
       </Reveal>
       <Reveal delay={160}>
-        <p
+        <Text
+          as="p"
           class="text-muted-foreground mt-6 max-w-xl text-base leading-relaxed"
-          data-cms-field={cmsField(cmsPath, "text")}
-        >
-          {text}
-        </p>
+          field={cmsField(cmsPath, "text")}
+          value={text}
+        />
       </Reveal>
       <Reveal delay={240}>
         <a

@@ -7,6 +7,7 @@ import Reveal from "../home/Reveal.astro";
 import MapPin from "../../icons/MapPin.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading3, Text, Image, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
 interface Resource {
   id?: number;
@@ -39,9 +40,10 @@ const total = resources.length;
         </p>
       </Reveal>
 
-      <div class="space-y-6">
+      <Group field={cmsField(cmsPath)} class="space-y-6">
         {resources.map((resource, i) => (
-          <div
+          <Item
+            index={i}
             class="resource-card"
             data-page={Math.floor(i / PAGE_SIZE) + 1}
             style="opacity:0;transform:translateY(48px);transition:opacity 1.2s cubic-bezier(0.32,0.72,0,1),transform 1.2s cubic-bezier(0.32,0.72,0,1);will-change:opacity,transform;"
@@ -49,12 +51,11 @@ const total = resources.length;
             <div class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col gap-8 rounded-3xl border p-8 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl lg:flex-row lg:p-10">
               {/* Content */}
               <div class="flex flex-1 flex-col items-start gap-4">
-                <h3
+                <Heading3
                   class="font-serif text-2xl leading-tight md:text-3xl"
-                  data-cms-field={cmsField(cmsPath, `${i}.name`)}
-                >
-                  {resource.name}
-                </h3>
+                  field={cmsField(cmsPath, `${i}.name`)}
+                  value={resource.name}
+                />
 
                 <span
                   class="text-muted-foreground inline-flex items-center gap-2 text-sm"
@@ -64,12 +65,12 @@ const total = resources.length;
                   {resource.location}
                 </span>
 
-                <p
+                <Text
+                  as="p"
                   class="text-muted-foreground text-base leading-relaxed whitespace-pre-line"
-                  data-cms-field={cmsField(cmsPath, `${i}.description`)}
-                >
-                  {resource.description}
-                </p>
+                  field={cmsField(cmsPath, `${i}.description`)}
+                  value={resource.description}
+                />
 
                 <a
                   href={resource.link}
@@ -86,10 +87,10 @@ const total = resources.length;
               {/* Logo */}
               {resource.image && (
                 <div class="border-border/30 relative flex aspect-video w-full shrink-0 items-center justify-center overflow-hidden rounded-2xl border bg-white p-6 lg:aspect-square lg:w-72">
-                  <img
-                    src={resource.image}
+                  <Image
+                    field={cmsField(cmsPath, `${i}.image`)}
+                    value={resource.image}
                     alt={resource.name}
-                    data-cms-field={cmsField(cmsPath, `${i}.image`)}
                     loading="lazy"
                     decoding="async"
                     class="max-h-full max-w-full object-contain transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
@@ -97,9 +98,9 @@ const total = resources.length;
                 </div>
               )}
             </div>
-          </div>
+          </Item>
         ))}
-      </div>
+      </Group>
 
       <nav
         id="resource-pagination"

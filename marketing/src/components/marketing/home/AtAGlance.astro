@@ -3,6 +3,7 @@
 import Reveal from "./Reveal.astro";
 import CountUp from "./CountUp.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading2, Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -26,20 +27,20 @@ const stats = rawStats.map((s) => ({ ...parseNumber(s.number), label: s.label, d
 <section class="border-border/40 bg-primary/[0.03] border-y py-20 md:py-28">
   <div class="container">
     <Reveal class="max-w-2xl">
-      <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>{eyebrow}</p>
-      <h2 class="mt-4 font-serif text-3xl leading-tight md:text-5xl" data-cms-field={cmsField(cmsPath, "heading")}>{heading}</h2>
+      <Text as="p" class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" field={cmsField(cmsPath, "eyebrow")} value={eyebrow} />
+      <Heading2 class="mt-4 font-serif text-3xl leading-tight md:text-5xl" field={cmsField(cmsPath, "heading")} value={heading} />
     </Reveal>
 
-    <div class="divide-border/40 mt-14 grid grid-cols-1 divide-y sm:grid-cols-2 sm:divide-x lg:grid-cols-5 lg:divide-y-0">
+    <Group field={cmsField(cmsPath, "stats")} class="divide-border/40 mt-14 grid grid-cols-1 divide-y sm:grid-cols-2 sm:divide-x lg:grid-cols-5 lg:divide-y-0">
       {stats.map((s, i) => (
-        <div class="flex flex-col gap-2 px-2 py-8 sm:px-8 sm:py-2">
+        <Item index={i} as="div" class="flex flex-col gap-2 px-2 py-8 sm:px-8 sm:py-2">
           <span class="text-primary font-serif text-4xl md:text-5xl" data-cms-field={cmsField(cmsPath, `stats.${i}.number`)}>
             <CountUp to={s.to} decimals={s.decimals} suffix={s.suffix} />
           </span>
-          <span class="text-foreground text-sm font-medium" data-cms-field={cmsField(cmsPath, `stats.${i}.label`)}>{s.label}</span>
-          {s.detail && <span class="text-muted-foreground text-xs leading-relaxed" data-cms-field={cmsField(cmsPath, `stats.${i}.detail`)}>{s.detail}</span>}
-        </div>
+          <Text as="span" class="text-foreground text-sm font-medium" field={cmsField(cmsPath, `stats.${i}.label`)} value={s.label} />
+          {s.detail && <Text as="span" class="text-muted-foreground text-xs leading-relaxed" field={cmsField(cmsPath, `stats.${i}.detail`)} value={s.detail} />}
+        </Item>
       ))}
-    </div>
+    </Group>
   </div>
 </section>

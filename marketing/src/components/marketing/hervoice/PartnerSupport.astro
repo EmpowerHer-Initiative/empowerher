@@ -3,6 +3,7 @@
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading2, Text, Image, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -31,61 +32,64 @@ const partnerOrgs = partners.map((p, i) => ({
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="max-w-3xl">
-      <p
+      <Text
+        as="p"
         class="text-primary mb-6 text-xs font-semibold tracking-[0.3em] uppercase"
-        data-cms-field={cmsField(cmsPath, "eyebrow")}
-      >
-        {eyebrow}
-      </p>
-      <h2
+        field={cmsField(cmsPath, "eyebrow")}
+        value={eyebrow}
+      />
+      <Heading2
         class="font-serif text-4xl leading-[1.1] md:text-5xl"
-        data-cms-field={cmsField(cmsPath, "heading")}
-      >
-        {heading}
-      </h2>
-      <p
+        field={cmsField(cmsPath, "heading")}
+        value={heading}
+      />
+      <Text
+        as="p"
         class="text-foreground/70 mt-8 text-base leading-[1.8] md:text-lg"
-        data-cms-field={cmsField(cmsPath, "description")}
-      >
-        {description}
-      </p>
+        field={cmsField(cmsPath, "description")}
+        value={description}
+      />
     </Reveal>
 
-    <Reveal class="mt-16 grid gap-5 sm:grid-cols-2" delay={120}>
-      {partnerOrgs.map((p, i) => (
-        <a
-          href={p.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="group border-border/60 bg-background hover:border-primary/40 hover:shadow-primary/5 flex items-center gap-5 rounded-2xl border p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
-        >
-          <div class="border-border/60 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border bg-white p-2">
-            <img
-              src={p.logo}
-              alt={p.name}
-              loading="lazy"
-              decoding="async"
-              data-cms-field={cmsField(cmsPath, `partners.${i}.logo`)}
-              class="h-full w-full object-contain"
-            />
-          </div>
-          <div class="min-w-0 flex-1">
-            <p
-              class="group-hover:text-primary leading-snug font-semibold transition-colors duration-300"
-              data-cms-field={cmsField(cmsPath, `partners.${i}.name`)}
-            >
-              {p.name}
-            </p>
-            <p
-              class="text-muted-foreground mt-1 text-sm"
-              data-cms-field={cmsField(cmsPath, `partners.${i}.location`)}
-            >
-              {p.location}
-            </p>
-          </div>
-          <ArrowUpRight class="text-muted-foreground group-hover:text-primary size-5 shrink-0 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-        </a>
-      ))}
+    <Reveal delay={120}>
+      <Group field={cmsField(cmsPath, "partners")} class="mt-16 grid gap-5 sm:grid-cols-2">
+        {partnerOrgs.map((p, i) => (
+          <Item
+            index={i}
+            as="a"
+            href={p.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group border-border/60 bg-background hover:border-primary/40 hover:shadow-primary/5 flex items-center gap-5 rounded-2xl border p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
+          >
+            <div class="border-border/60 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border bg-white p-2">
+              <Image
+                field={cmsField(cmsPath, `partners.${i}.logo`)}
+                value={p.logo}
+                alt={p.name}
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-contain"
+              />
+            </div>
+            <div class="min-w-0 flex-1">
+              <Text
+                as="p"
+                class="group-hover:text-primary leading-snug font-semibold transition-colors duration-300"
+                field={cmsField(cmsPath, `partners.${i}.name`)}
+                value={p.name}
+              />
+              <Text
+                as="p"
+                class="text-muted-foreground mt-1 text-sm"
+                field={cmsField(cmsPath, `partners.${i}.location`)}
+                value={p.location}
+              />
+            </div>
+            <ArrowUpRight class="text-muted-foreground group-hover:text-primary size-5 shrink-0 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Item>
+        ))}
+      </Group>
     </Reveal>
   </div>
 </section>

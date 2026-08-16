@@ -6,6 +6,7 @@ import Heart from "../../icons/Heart.astro";
 import Reveal from "./Reveal.astro";
 import Highlight from "../../Highlight.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading3, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   badge: string;
@@ -31,25 +32,22 @@ const { badge, heading, heading2, bodyText, cardTitle, cardBody, footnote, cmsPa
         <div>
           <div class="border-border bg-card inline-flex items-center gap-2 rounded-full border px-4 py-1.5">
             <Heart class="text-primary size-3.5" />
-            <span class="text-muted-foreground text-[10px] font-semibold tracking-[0.2em] uppercase" data-cms-field={cmsField(cmsPath, "badge")}>{badge}</span>
+            <Text as="span" class="text-muted-foreground text-[10px] font-semibold tracking-[0.2em] uppercase" field={cmsField(cmsPath, "badge")} value={badge} />
           </div>
           <h2 class="mt-6 font-serif text-4xl leading-tight md:text-5xl">
-            <span data-cms-field={cmsField(cmsPath, "heading")}><Highlight text={heading} /></span>
+            <Text as="span" field={cmsField(cmsPath, "heading")} value={heading} />
             <br />
+            <!-- heading2 uses Highlight hlClass="italic" — bridge can't reproduce that highlight class, so KEPT hand-tagged. -->
             <span data-cms-field={cmsField(cmsPath, "heading2")}><Highlight text={heading2} hlClass="italic" /></span>
           </h2>
-          <p class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]" data-cms-field={cmsField(cmsPath, "bodyText")}>
-            {bodyText}
-          </p>
+          <Text as="p" class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]" field={cmsField(cmsPath, "bodyText")} value={bodyText} />
         </div>
       </Reveal>
 
       <Reveal delay={120}>
         <div class="border-border bg-card rounded-3xl border p-8 shadow-sm md:p-10">
-          <h3 class="font-serif text-2xl" data-cms-field={cmsField(cmsPath, "cardTitle")}>{cardTitle}</h3>
-          <p class="text-muted-foreground mt-3 text-sm leading-relaxed" data-cms-field={cmsField(cmsPath, "cardBody")}>
-            {cardBody}
-          </p>
+          <Heading3 class="font-serif text-2xl" field={cmsField(cmsPath, "cardTitle")} value={cardTitle} />
+          <Text as="p" class="text-muted-foreground mt-3 text-sm leading-relaxed" field={cmsField(cmsPath, "cardBody")} value={cardBody} />
           <form class="mt-8 space-y-4" novalidate>
             <div>
               <input
@@ -65,9 +63,7 @@ const { badge, heading, heading2, bodyText, cardTitle, cardBody, footnote, cmsPa
               Subscribe
             </button>
           </form>
-          <p class="text-muted-foreground mt-4 text-center text-xs" data-cms-field={cmsField(cmsPath, "footnote")}>
-            {footnote}
-          </p>
+          <Text as="p" class="text-muted-foreground mt-4 text-center text-xs" field={cmsField(cmsPath, "footnote")} value={footnote} />
         </div>
       </Reveal>
     </div>

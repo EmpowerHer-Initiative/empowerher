@@ -5,6 +5,7 @@ import Quote from "../../icons/Quote.astro";
 import Reveal from "./Reveal.astro";
 import Highlight from "../../Highlight.astro";
 import { cmsField } from "../../../lib/cms";
+import { Text, Image } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -20,59 +21,62 @@ const { eyebrow, heading, paragraphs, signatureName, signatureRole, quotes, cmsP
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="mx-auto max-w-4xl">
-      <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>{eyebrow}</p>
+      <Text as="p" class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" field={cmsField(cmsPath, "eyebrow")} value={eyebrow} />
+      <!-- heading uses Highlight hlClass="italic" — bridge can't reproduce that highlight class, so KEPT hand-tagged. -->
       <h2 class="mt-6 font-serif text-3xl leading-[1.25] md:text-5xl lg:text-6xl" data-cms-field={cmsField(cmsPath, "heading")}>
         <Highlight text={heading} hlClass="italic" />
       </h2>
       <div class="text-muted-foreground mx-auto mt-8 max-w-2xl space-y-5 text-base leading-[1.8] md:text-lg">
         {paragraphs.map((p, i) => (
-          <p data-cms-field={cmsField(cmsPath, `paragraphs.${i}`)}>{p}</p>
+          <Text as="p" field={cmsField(cmsPath, `paragraphs.${i}`)} value={p} />
         ))}
       </div>
       <div class="mt-8 text-right">
-        <p class="text-foreground font-semibold" data-cms-field={cmsField(cmsPath, "signatureName")}>{signatureName}</p>
-        <p class="text-muted-foreground text-sm" data-cms-field={cmsField(cmsPath, "signatureRole")}>{signatureRole}</p>
+        <Text as="p" class="text-foreground font-semibold" field={cmsField(cmsPath, "signatureName")} value={signatureName} />
+        <Text as="p" class="text-muted-foreground text-sm" field={cmsField(cmsPath, "signatureRole")} value={signatureRole} />
       </div>
 
       <div class="mt-16 grid gap-12 md:grid-cols-2 md:gap-8">
         <div class="border-primary/20 relative border-l-2 pl-8 md:pl-12">
           <Quote class="bg-background text-primary absolute top-0 -left-3 size-6 rounded-full" />
+          <!-- quote text is wrapped in literal curly-quote entities (non-trivial markup), so KEPT hand-tagged. -->
           <blockquote class="font-serif text-xl leading-relaxed italic md:text-2xl" data-cms-field={cmsField(cmsPath, "quotes.0.text")}>
             &ldquo;{quotes[0].text}&rdquo;
           </blockquote>
           <div class="mt-6 flex items-center gap-4">
-            <img
-              src={quotes[0].image}
+            <Image
+              field={cmsField(cmsPath, "quotes.0.image")}
+              value={quotes[0].image}
               alt={quotes[0].name}
               loading="lazy"
               decoding="async"
               class="size-12 rounded-full object-cover"
-              data-cms-field={cmsField(cmsPath, "quotes.0.image")}
             />
             <div>
-              <p class="text-sm font-semibold" data-cms-field={cmsField(cmsPath, "quotes.0.name")}>{quotes[0].name}</p>
-              <p class="text-muted-foreground text-xs" data-cms-field={cmsField(cmsPath, "quotes.0.role")}>{quotes[0].role}</p>
+              <Text as="p" class="text-sm font-semibold" field={cmsField(cmsPath, "quotes.0.name")} value={quotes[0].name} />
+              <Text as="p" class="text-muted-foreground text-xs" field={cmsField(cmsPath, "quotes.0.role")} value={quotes[0].role} />
             </div>
           </div>
         </div>
 
         <div class="border-secondary/30 relative border-l-2 pl-8 md:pl-12">
           <Quote class="bg-background text-secondary absolute top-0 -left-3 size-6 rounded-full" />
+          <!-- quote text is wrapped in literal curly-quote entities (non-trivial markup), so KEPT hand-tagged. -->
           <blockquote class="font-serif text-xl leading-relaxed italic md:text-2xl" data-cms-field={cmsField(cmsPath, "quotes.1.text")}>
             &ldquo;{quotes[1].text}&rdquo;
           </blockquote>
           <div class="mt-6 flex items-center gap-4">
-            <img
-              src={quotes[1].image}
+            <Image
+              field={cmsField(cmsPath, "quotes.1.image")}
+              value={quotes[1].image}
               alt={quotes[1].name}
               loading="lazy"
               decoding="async"
               class="size-12 rounded-full object-cover"
-              data-cms-field={cmsField(cmsPath, "quotes.1.image")}
             />
             <div>
-              <p class="text-sm font-semibold" data-cms-field={cmsField(cmsPath, "quotes.1.name")}>{quotes[1].name}</p>
-              <p class="text-muted-foreground text-xs" data-cms-field={cmsField(cmsPath, "quotes.1.role")}>{quotes[1].role}</p>
+              <Text as="p" class="text-sm font-semibold" field={cmsField(cmsPath, "quotes.1.name")} value={quotes[1].name} />
+              <Text as="p" class="text-muted-foreground text-xs" field={cmsField(cmsPath, "quotes.1.role")} value={quotes[1].role} />
             </div>
           </div>
         </div>

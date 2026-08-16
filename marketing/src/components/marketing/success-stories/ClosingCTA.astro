@@ -3,6 +3,7 @@
 import Heart from "../../icons/Heart.astro";
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
+import { Heading2, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -16,14 +17,10 @@ const { eyebrow, heading, cmsPath } = Astro.props;
   <div class="container">
     <div class="mx-auto max-w-2xl text-center">
       <Reveal>
-        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>
-          {eyebrow}
-        </p>
+        <Text as="p" class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" field={cmsField(cmsPath, "eyebrow")} value={eyebrow} />
       </Reveal>
       <Reveal delay={80}>
-        <h2 class="mt-5 font-serif text-3xl md:text-5xl" data-cms-field={cmsField(cmsPath, "heading")}>
-          {heading}
-        </h2>
+        <Heading2 class="mt-5 font-serif text-3xl md:text-5xl" field={cmsField(cmsPath, "heading")} value={heading} />
       </Reveal>
       <Reveal class="mt-10" delay={160}>
         <a

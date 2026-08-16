@@ -1,7 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import NewsletterForm from "../components/marketing/newsletter/NewsletterForm.astro";
-import content from "../data/newsletter.json";
+import pages from "../data/pages.json";
+const content = pages.newsletter;
 
 const { seo, eyebrow, heading, subheading, image, overlay } = content;
 ---
