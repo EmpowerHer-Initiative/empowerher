@@ -1,17 +1,17 @@
 ---
 // Ports components/marketing/hervoice-winners/hero.tsx
 // hv-* tokens inlined to exact hex; --hv-display -> font-serif.
+import Highlight from "../../Highlight.astro";
 import { cmsField } from "../../../lib/cms";
 interface Props {
-  headingLead: string;
-  headingYear: string;
-  headingTail: string;
+  heading: string;
+  heading2: string;
   bodyText: string;
   stats: { value: string; label: string }[];
   /** CMS field path prefix for live-preview highlighting (e.g. "hero"). */
   cmsPath?: string;
 }
-const { headingLead, headingYear, headingTail, bodyText, stats, cmsPath } = Astro.props;
+const { heading, heading2, bodyText, stats, cmsPath } = Astro.props;
 // gold flag is a style toggle derived by index (odd = gold).
 ---
 <section class="relative isolate overflow-hidden bg-[radial-gradient(120%_130%_at_12%_0%,#FFFFFF_0%,#FAF6EE_46%,#F2EADC_100%)]">
@@ -19,10 +19,10 @@ const { headingLead, headingYear, headingTail, bodyText, stats, cmsPath } = Astr
   <div class="pointer-events-none absolute -bottom-44 -left-32 h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle_at_60%_40%,rgba(224,174,60,.18),transparent_62%)]"></div>
 
   <div class="relative mx-auto flex max-w-4xl flex-col items-center px-6 py-20 text-center md:py-28">
-    <h1 class="hv-rise mt-5 font-serif text-[clamp(36px,5.5vw,72px)] leading-[0.92] font-bold tracking-[-0.03em]" style="animation-delay:80ms">
-      {headingLead} <span class="text-[#1E78C4]" data-cms-field={cmsField(cmsPath, "headingYear")}>{headingYear}</span>
+    <h1 class="hv-rise mt-5 font-serif text-[clamp(36px,5.5vw,72px)] leading-[0.92] font-bold tracking-[-0.03em]" style="animation-delay:80ms;--cms-highlight:#1E78C4">
+      <span data-cms-field={cmsField(cmsPath, "heading")}><Highlight text={heading} /></span>
       <br />
-      {headingTail}
+      <span data-cms-field={cmsField(cmsPath, "heading2")}><Highlight text={heading2} /></span>
     </h1>
 
     <p class="hv-rise mt-8 max-w-2xl text-lg leading-relaxed [text-wrap:pretty] text-[#3C4654]" style="animation-delay:160ms" data-cms-field={cmsField(cmsPath, "bodyText")}>

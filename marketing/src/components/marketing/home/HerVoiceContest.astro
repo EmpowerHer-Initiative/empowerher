@@ -4,6 +4,7 @@ import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "./Reveal.astro";
 import ContestSeal from "./ContestSeal.astro";
 import StoryCover from "./StoryCover.astro";
+import Highlight from "../../Highlight.astro";
 import { cmsField } from "../../../lib/cms";
 
 interface Props {
@@ -53,10 +54,10 @@ const CONTEST_WINNERS = winners.map((w, i) => ({ ...w, ...WINNER_STYLES[i] }));
           <p class="text-secondary text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>{eyebrow}</p>
         </Reveal>
         <Reveal delay={90}>
-          <h2 class="mt-5 font-serif text-4xl leading-[1.02] md:text-6xl" data-cms-field={cmsField(cmsPath, "heading")}>
-            {heading} <span class="text-primary">2026</span>
+          <h2 class="mt-5 font-serif text-4xl leading-[1.02] md:text-6xl">
+            <span data-cms-field={cmsField(cmsPath, "heading")}><Highlight text={heading} /></span>
             <br />
-            {headingSub}
+            <span data-cms-field={cmsField(cmsPath, "headingSub")}><Highlight text={headingSub} /></span>
           </h2>
         </Reveal>
         <Reveal delay={180}>

@@ -14,8 +14,7 @@ const { seo, hero, body } = content as {
   seo: { title: string; description: string };
   hero: {
     eyebrow: string;
-    headingLead: string;
-    headingTrail: string;
+    heading: string;
     body: string;
   };
   body: {
@@ -28,8 +27,7 @@ const { seo, hero, body } = content as {
   <main>
     <Hero
       eyebrow={hero.eyebrow}
-      headingLead={hero.headingLead}
-      headingTrail={hero.headingTrail}
+      heading={hero.heading}
       body={hero.body}
       cmsPath="hero"
     />

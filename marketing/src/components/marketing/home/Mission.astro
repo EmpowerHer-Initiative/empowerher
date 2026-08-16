@@ -3,6 +3,7 @@
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Quote from "../../icons/Quote.astro";
 import Reveal from "./Reveal.astro";
+import Highlight from "../../Highlight.astro";
 import { cmsField } from "../../../lib/cms";
 
 interface Props {
@@ -21,7 +22,7 @@ const { eyebrow, heading, paragraphs, signatureName, signatureRole, quotes, cmsP
     <Reveal class="mx-auto max-w-4xl">
       <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" data-cms-field={cmsField(cmsPath, "eyebrow")}>{eyebrow}</p>
       <h2 class="mt-6 font-serif text-3xl leading-[1.25] md:text-5xl lg:text-6xl" data-cms-field={cmsField(cmsPath, "heading")}>
-        {heading} <span class="text-primary italic">And we are with you.</span>
+        <Highlight text={heading} hlClass="italic" />
       </h2>
       <div class="text-muted-foreground mx-auto mt-8 max-w-2xl space-y-5 text-base leading-[1.8] md:text-lg">
         {paragraphs.map((p, i) => (

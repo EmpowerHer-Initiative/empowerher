@@ -1,16 +1,18 @@
 ---
 // Ports components/marketing/home/hero.tsx
 import ArrowRight from "../../icons/ArrowRight.astro";
+import Highlight from "../../Highlight.astro";
 import { cmsField } from "../../../lib/cms";
 
 interface Props {
   heading: string;
+  heading2: string;
   bodyText: string;
   images: { image: string }[];
   /** CMS field path prefix for live-preview highlighting (e.g. "hero"). */
   cmsPath?: string;
 }
-const { heading, bodyText, images: imageList, cmsPath } = Astro.props;
+const { heading, heading2, bodyText, images: imageList, cmsPath } = Astro.props;
 const images = imageList.map((i) => i.image);
 ---
 <section class="relative min-h-[100dvh] overflow-hidden" data-hero>
@@ -30,13 +32,10 @@ const images = imageList.map((i) => i.image);
 
   <div class="relative container flex min-h-[100dvh] items-end pt-40 pb-20 md:items-center md:pb-0">
     <div class="max-w-5xl">
-      <h1
-        class="font-serif text-4xl leading-[1.08] text-white md:text-6xl lg:text-8xl"
-        data-cms-field={cmsField(cmsPath, "heading")}
-      >
-        {heading}
+      <h1 class="font-serif text-4xl leading-[1.08] text-white md:text-6xl lg:text-8xl">
+        <span data-cms-field={cmsField(cmsPath, "heading")}><Highlight text={heading} /></span>
         <br />
-        <span class="text-[var(--primary)] italic">Inspiring Futures</span>
+        <span data-cms-field={cmsField(cmsPath, "heading2")}><Highlight text={heading2} hlClass="italic" /></span>
       </h1>
       <p
         class="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg"

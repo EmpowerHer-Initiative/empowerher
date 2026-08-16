@@ -124,6 +124,14 @@
   animation: fade-up 0.7s cubic-bezier(0.32, 0.72, 0, 1) both;
 }
 
+/* Inline heading highlight — `backtick` runs render as <span class="cms-hl">.
+   Color defaults to the primary; override per element with --cms-highlight
+   (e.g. style="--cms-highlight:#1E78C4" on a heading in a dark/branded section).
+   See docs/pages-cms.md → "Inline text highlight — backticks". */
+.cms-hl {
+  color: var(--cms-highlight, var(--primary));
+}
+
 /* View transitions disabled for now: keep the ClientRouter's instant
    client-side navigation (Next.js-style, no full reload) but drop the
    cross-fade animation on every page swap. */

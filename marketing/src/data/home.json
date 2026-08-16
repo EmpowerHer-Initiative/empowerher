@@ -5,6 +5,7 @@
   },
   "hero": {
     "heading": "Empowering Dreams",
+    "heading2": "`Inspiring Futures`",
     "bodyText": "At EmpowerHer, we believe every Afghan girl and woman has a story worth telling and a future worth fighting for. Through mentorship programs and publication opportunities, we help them find the tools, confidence, and platforms they need to raise their voices and become changemakers in their communities and beyond.",
     "images": [
       {
@@ -41,7 +42,7 @@
   },
   "herVoiceContest": {
     "eyebrow": "EmpowerHer Presents",
-    "heading": "HerVoice",
+    "heading": "HerVoice `2026`",
     "headingSub": "Writing Contest",
     "bodyText": "Courage, identity, and storytelling — by Afghan girls and women, written from within Afghanistan.",
     "stats": [
@@ -113,7 +114,7 @@
   },
   "mission": {
     "eyebrow": "Message From Our Co-Founders",
-    "heading": "We see you. We hear you.",
+    "heading": "We see you. We hear you. `And we are with you.`",
     "paragraphs": [
       "EmpowerHer was born from the hope and strength that you carry within you—even in the darkest of days. You are not forgotten. Your dreams, your voices, your potential—they matter. They are powerful, and they are needed in this world.",
       "We know that many of you are facing unimaginable challenges. Barriers to education, threats to your freedom, and a world that too often refuses to see your worth. But we believe in your resilience. And through EmpowerHer, we are building a path forward—together.",
@@ -185,6 +186,7 @@
   "newsletter": {
     "badge": "Stay Connected",
     "heading": "Join Our",
+    "heading2": "`Community`",
     "bodyText": "Get updates on our programs, success stories, and ways to support Afghan girls' education. Be part of a growing movement for change.",
     "cardTitle": "Subscribe to Our Newsletter",
     "cardBody": "Join hundreds of supporters and community members.",

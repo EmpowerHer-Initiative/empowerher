@@ -1,0 +1,14 @@
+---
+// Renders inline highlights: each `backtick run` becomes <span class="cms-hl">.
+// One plain string field, edited inline in the CMS — the bridge flattens the
+// spans back to backticks on focus and re-renders them on blur.
+// Pass `hlClass` for extra styling on the highlighted run (e.g. "italic").
+// See docs/pages-cms.md → "Inline text highlight — backticks".
+const { text = "", hlClass } = Astro.props;
+const parts = String(text).split(/(`[^`]+`)/g).filter(Boolean);
+---
+{parts.map((p) =>
+  p.startsWith("`") && p.endsWith("`")
+    ? <span class:list={["cms-hl", hlClass]}>{p.slice(1, -1)}</span>
+    : p
+)}

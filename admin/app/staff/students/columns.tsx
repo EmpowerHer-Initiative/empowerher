@@ -125,6 +125,37 @@ const EmailCell = ({ student }: { student: Student }) => {
   );
 };
 
+const WORKSHOP_COLORS = [
+  "bg-red-500",
+  "bg-orange-500",
+  "bg-amber-500",
+  "bg-yellow-500",
+  "bg-lime-500",
+  "bg-green-500",
+  "bg-emerald-500",
+  "bg-teal-500",
+  "bg-cyan-500",
+  "bg-sky-500",
+  "bg-blue-500",
+  "bg-indigo-500",
+  "bg-violet-500",
+  "bg-purple-500",
+  "bg-fuchsia-500",
+  "bg-pink-500",
+  "bg-rose-500",
+  "bg-slate-500",
+  "bg-stone-500",
+  "bg-zinc-500",
+];
+
+const workshopColor = (name: string) => {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = (hash * 31 + name.charCodeAt(i)) | 0;
+  }
+  return WORKSHOP_COLORS[Math.abs(hash) % WORKSHOP_COLORS.length];
+};
+
 const WorkshopCell = ({ workshopId }: { workshopId: string }) => {
   const trpc = useTRPC();
   const { data: workshops } = useQuery(
@@ -136,15 +167,7 @@ const WorkshopCell = ({ workshopId }: { workshopId: string }) => {
   if (!workshop) return <Badge variant="outline">—</Badge>;
 
   return (
-    <Badge
-      className={cn(
-        workshop?.name.toLowerCase().startsWith("leadership") && "bg-blue-500",
-        workshop?.name.toLowerCase().startsWith("writing") && "bg-green-500",
-        workshop?.name.toLowerCase().startsWith("cultural") && "bg-yellow-500",
-        workshop?.name.toLowerCase().startsWith("creative") && "bg-red-500",
-        workshop?.name.toLowerCase().startsWith("html") && "bg-purple-500"
-      )}
-    >
+    <Badge className={cn(workshopColor(workshop.name.toLowerCase()))}>
       {workshop.name}
     </Badge>
   );
