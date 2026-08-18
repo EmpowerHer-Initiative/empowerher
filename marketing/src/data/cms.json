@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "baseUrl": "https://empowerher-7raz.vercel.app",
+  "baseUrl": "https://www.empowerher-initiative.org",
   "media": {
     "input": "public/media",
     "output": "/media"
   },
   "pages": {
+    "home": {
+      "route": "/"
+    },
+    "about-us": {
+      "route": "/about-us"
+    },
+    "writing-contest": {
+      "route": "/writing-contest"
+    },
+    "mentorship": {
+      "route": "/mentorship"
+    },
+    "sisterhood-sessions": {
+      "route": "/sisterhood-sessions"
+    },
     "hervoice": {
       "route": "/hervoice/",
       "title": "HerVoice"
@@ -18,13 +33,13 @@
       "route": "/hervoice/featured-writings-from-our-partners",
       "title": "Featured Writings"
     },
-    "spr": {
-      "route": "/success-stories/spr",
-      "title": "Student Project Roadmap"
-    },
     "success-stories": {
       "route": "/success-stories/",
       "title": "Success Stories"
+    },
+    "spr": {
+      "route": "/success-stories/spr",
+      "title": "Student Project Roadmap"
     },
     "get-involved": {
       "route": "/get-involved/",
@@ -41,21 +56,6 @@
     "agfaf": {
       "route": "/agfaf",
       "title": "AGFAF"
-    },
-    "home": {
-      "route": "/"
-    },
-    "about-us": {
-      "route": "/about-us"
-    },
-    "writing-contest": {
-      "route": "/writing-contest"
-    },
-    "mentorship": {
-      "route": "/mentorship"
-    },
-    "sisterhood-sessions": {
-      "route": "/sisterhood-sessions"
     },
     "annual-report": {
       "route": "/annual-report"
@@ -167,8 +167,7 @@
     {
       "name": "featured-writings",
       "label": "Featured Writings",
-      "path": "src/data/featured-writings",
-      "format": "json",
+      "path": "src/data/featured-writings.json",
       "fields": [
         {
           "name": "title",
@@ -196,20 +195,13 @@
           "name": "from",
           "type": "string",
           "label": "Platform"
-        },
-        {
-          "name": "sort_order",
-          "type": "number",
-          "required": true,
-          "label": "Sort order"
         }
       ]
     },
     {
       "name": "impact-stories",
       "label": "Success Stories",
-      "path": "src/data/impact-stories",
-      "format": "json",
+      "path": "src/data/impact-stories.json",
       "fields": [
         {
           "name": "image",
@@ -247,20 +239,13 @@
           "name": "afterQuote",
           "type": "text",
           "label": "Paragraph after quote"
-        },
-        {
-          "name": "sort_order",
-          "type": "number",
-          "required": true,
-          "label": "Sort order"
         }
       ]
     },
     {
       "name": "partners",
       "label": "Partners",
-      "path": "src/data/partners",
-      "format": "json",
+      "path": "src/data/partners.json",
       "fields": [
         {
           "name": "name",
@@ -278,20 +263,13 @@
           "name": "link",
           "type": "string",
           "label": "Link"
-        },
-        {
-          "name": "sort_order",
-          "type": "number",
-          "required": true,
-          "label": "Sort order"
         }
       ]
     },
     {
       "name": "resource-listings",
       "label": "Resources",
-      "path": "src/data/resource-listings",
-      "format": "json",
+      "path": "src/data/resource-listings.json",
       "fields": [
         {
           "name": "name",
@@ -318,20 +296,13 @@
           "name": "image",
           "type": "image",
           "label": "Logo"
-        },
-        {
-          "name": "sort_order",
-          "type": "number",
-          "required": true,
-          "label": "Sort order"
         }
       ]
     },
     {
       "name": "team",
       "label": "Team Members",
-      "path": "src/data/team",
-      "format": "json",
+      "path": "src/data/team.json",
       "fields": [
         {
           "name": "name",
@@ -360,20 +331,13 @@
             "Directors",
             "Mentors & Lecturers"
           ]
-        },
-        {
-          "name": "sort_order",
-          "type": "number",
-          "required": true,
-          "label": "Sort order"
         }
       ]
     },
     {
       "name": "workshops",
       "label": "Workshops",
-      "path": "src/data/workshops",
-      "format": "json",
+      "path": "src/data/workshops.json",
       "fields": [
         {
           "name": "name",
@@ -401,12 +365,6 @@
           "name": "link",
           "type": "string",
           "label": "Application link"
-        },
-        {
-          "name": "sort_order",
-          "type": "number",
-          "required": true,
-          "label": "Sort order"
         }
       ]
     }

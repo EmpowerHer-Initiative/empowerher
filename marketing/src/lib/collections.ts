@@ -1,38 +1,30 @@
 /**
- * Loaders for the JSON record collections under src/data/<collection>/ (one file
- * per record, edited in Pages CMS). Each collection is globbed eagerly and
- * returned sorted by its `sort_order` number field ascending — the same order
- * the CMS drag-to-reorder writes. Adding/removing a record is just adding or
- * deleting a file; no code change.
+ * Loaders for the src/data/<collection>.json array files (edited in Pages CMS).
+ * Each file is a single JSON array already in display order — imported directly,
+ * no sort step. Reorder / add / remove a record = a change to that one file.
  */
 
-type WithOrder = { sort_order?: number };
+import partnersData from "../data/partners.json";
+import teamData from "../data/team.json";
+import resourcesData from "../data/resource-listings.json";
+import featuredWritingsData from "../data/featured-writings.json";
+import workshopsData from "../data/workshops.json";
+import impactStoriesData from "../data/impact-stories.json";
 
-function sorted<T extends WithOrder>(files: Record<string, T>): T[] {
-  return Object.values(files).sort(
-    (a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0),
-  );
-}
-
-export type Partner = { name: string; image: string; link: string; sort_order?: number };
-export const partners = sorted(
-  import.meta.glob<Partner>("../data/partners/*.json", { eager: true, import: "default" }),
-);
+export type Partner = { name: string; image: string; link: string };
+export const partners = partnersData as Partner[];
 
 export type TeamMember = {
   name: string;
   role: string;
   image: string;
   group: string;
-  sort_order?: number;
 };
-export const teamMembers = sorted(
-  import.meta.glob<TeamMember>("../data/team/*.json", { eager: true, import: "default" }),
-);
+export const teamMembers = teamData as TeamMember[];
 /**
  * Display order of the About-page team bands. Must match the `group` select
- * values in cms/collections/team.yml — this is a structural join key, not
- * editable page copy.
+ * values in the team collection — this is a structural join key, not editable
+ * page copy.
  */
 export const TEAM_BANDS = ["Executive Team", "Directors", "Mentors & Lecturers"];
 
@@ -42,11 +34,8 @@ export type Resource = {
   description: string;
   link: string;
   image: string;
-  sort_order?: number;
 };
-export const resources = sorted(
-  import.meta.glob<Resource>("../data/resource-listings/*.json", { eager: true, import: "default" }),
-);
+export const resources = resourcesData as Resource[];
 
 export type FeaturedWriting = {
   title: string;
@@ -54,11 +43,8 @@ export type FeaturedWriting = {
   image: string;
   link: string;
   from: string;
-  sort_order?: number;
 };
-export const featuredWritings = sorted(
-  import.meta.glob<FeaturedWriting>("../data/featured-writings/*.json", { eager: true, import: "default" }),
-);
+export const featuredWritings = featuredWritingsData as FeaturedWriting[];
 
 export type Workshop = {
   name: string;
@@ -66,11 +52,8 @@ export type Workshop = {
   description: string;
   image: string;
   link: string;
-  sort_order?: number;
 };
-export const workshops = sorted(
-  import.meta.glob<Workshop>("../data/workshops/*.json", { eager: true, import: "default" }),
-);
+export const workshops = workshopsData as unknown as Workshop[];
 
 export type ImpactStory = {
   image: string;
@@ -84,8 +67,5 @@ export type ImpactStory = {
   quote: { body: string; author?: string };
   afterQuote?: string;
   impact?: { title: string; body: string };
-  sort_order?: number;
 };
-export const impactStories = sorted(
-  import.meta.glob<ImpactStory>("../data/impact-stories/*.json", { eager: true, import: "default" }),
-);
+export const impactStories = impactStoriesData as unknown as ImpactStory[];
