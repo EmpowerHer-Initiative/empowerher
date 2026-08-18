@@ -7,8 +7,14 @@
   "email": "info@empowerher-initiative.org",
   "socials": [
     { "label": "Facebook", "url": "https://www.facebook.com/share/157naMfgkw" },
-    { "label": "Instagram", "url": "https://www.instagram.com/_empowerher_org" },
-    { "label": "LinkedIn", "url": "https://www.linkedin.com/company/empowerher-org/" }
+    {
+      "label": "Instagram",
+      "url": "https://www.instagram.com/_empowerher_org"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/company/empowerher-org/"
+    }
   ],
   "nav": {
     "links": [
@@ -22,14 +28,20 @@
             "link": "/mentorship",
             "children": [
               { "label": "Monthly Internet Scholarship (MIS)", "link": "/mis" },
-              { "label": "Student Project Roadmap", "link": "/success-stories/spr" }
+              {
+                "label": "Student Project Roadmap",
+                "link": "/success-stories/spr"
+              }
             ]
           },
           {
             "label": "HerVoice",
             "link": "/hervoice",
             "children": [
-              { "label": "Featured Writings from Our Partners", "link": "/hervoice/featured-writings-from-our-partners" }
+              {
+                "label": "Featured Writings from Our Partners",
+                "link": "/hervoice/featured-writings-from-our-partners"
+              }
             ]
           }
         ]

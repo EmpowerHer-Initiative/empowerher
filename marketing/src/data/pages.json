@@ -192,7 +192,9 @@
       "cardTitle": "Subscribe to Our Newsletter",
       "cardBody": "Join hundreds of supporters and community members.",
       "footnote": "We respect your privacy. Unsubscribe anytime."
-    }
+    },
+    "text": "2026",
+    "text2": "Winners"
   },
   "about-us": {
     "seo": {
@@ -410,6 +412,18 @@
       "eyebrow": "Contest Results",
       "heading": "HerVoice 2026 Writing Contest",
       "description": "Look at the results of the HerVoice 2026 Writing Contest, including cash prize winners and honorable mentions."
+    },
+    "workshopEnrollment": {
+      "cta": {
+        "label": "Creative Writing and Storytelling Workshop",
+        "link": "/mentorship"
+      },
+      "title": "Workshop Enrollment",
+      "title2": "Submission Process",
+      "cta2": {
+        "label": "hervoice@empowerher-initiative.org",
+        "link": "mailto:hervoice@empowerher-initiative.org"
+      }
     }
   },
   "hervoice-winners": {
@@ -752,6 +766,16 @@
           "alt": "AGFAF"
         }
       ]
+    },
+    "section": {
+      "cta": {
+        "label": "Explore HerVoice",
+        "link": "/hervoice"
+      },
+      "cta2": {
+        "label": "hervoice@empowerher-initiative.org",
+        "link": "mailto:hervoice@empowerher-initiative.org"
+      }
     }
   },
   "mentorship": {
@@ -855,6 +879,11 @@
     "workshops": {
       "eyebrow": "Apply Now",
       "title": "Available Workshops"
+    },
+    "section": {
+      "text": "01",
+      "text2": "02",
+      "text3": "03"
     }
   },
   "spr": {
@@ -946,6 +975,12 @@
         "title": "Important Note",
         "body": "EmpowerHer does not provide a monthly salary for its staff members. All roles within this roadmap are volunteer-based. Participation as an Assistant or Mentor is completely free, and no monetary compensation is provided."
       }
+    },
+    "section": {
+      "cta": {
+        "label": "apply@empowerher-initiative.org",
+        "link": "mailto:apply@empowerher-initiative.org"
+      }
     }
   },
   "sisterhood-sessions": {
@@ -992,6 +1027,12 @@
         }
       ],
       "closing": "These sessions ensure that every workshop not only focuses on learning and skill development but also prioritizes community, connection, and emotional support. By creating time for reflection and conversation, Sisterhood Sessions help students strengthen their relationships with one another and feel supported throughout their EmpowerHer journey."
+    },
+    "section": {
+      "cta": {
+        "label": "Back to Mentorship Program",
+        "link": "/mentorship"
+      }
     }
   },
   "get-involved": {
@@ -1024,7 +1065,13 @@
     "eyebrow": "Organizations & Companies",
     "heading": "Partner With Us",
     "body": "Organizations and companies aligned with our mission and vision, or those interested in supporting our work, are encouraged to complete the form below. A member of our team will be in touch to explore potential partnership opportunities.",
-    "questions": "Questions?"
+    "questions": "Questions?",
+    "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT3hSLjjKpPsIbjXnuoAM3O2JygVY8KzGFtD6k",
+    "imageAlt": "",
+    "eyebrow2": "Partnership Inquiry",
+    "title": "Tell us about your organization",
+    "title2": "Thank you for your interest in partnering.",
+    "text": "We've received your inquiry and our team will be in touch shortly."
   },
   "get-involved-volunteer": {
     "seo": {
@@ -1035,7 +1082,11 @@
     "heading": "Volunteer With Us",
     "body": "EmpowerHer welcomes volunteers from around the world to contribute to our virtual workshops and programs. Volunteers may support our community and staff in different ways, such as serving as lecturers, mentors, assistants, or administrative members, as positions become available. We encourage volunteers to share perspectives from their countries and backgrounds to foster meaningful cross-cultural learning. We value diverse voices committed to educating and empowering Afghan girls and youth.",
     "note": "Afghan girls outside the Middle East and Central Asia are especially encouraged to volunteer with us.",
-    "questions": "Questions?"
+    "questions": "Questions?",
+    "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTDe1RCWh0fiZ3z8JjCWsbc2laUL6tAeqPnMNS",
+    "imageAlt": "",
+    "title": "Thank you for applying to volunteer.",
+    "text": "We've received your application and CV. Our team will review it and reach out to you."
   },
   "success-stories": {
     "seo": {
@@ -1068,6 +1119,16 @@
         "EmpowerHer is dedicated to equipping Afghan girls and women with the tools, confidence, and opportunities to create meaningful and lasting change.",
         "Through creative arts, storytelling, education, leadership development, and cultural exchange, the organization provides supportive spaces where participants can express themselves, preserve their lived experiences, and amplify their voices."
       ]
+    },
+    "section": {
+      "cta": {
+        "label": "Mentorship Program",
+        "link": "/mentorship"
+      },
+      "cta2": {
+        "label": "HerVoice",
+        "link": "/hervoice"
+      }
     }
   },
   "agfaf": {
@@ -1104,6 +1165,10 @@
     "footerNote": {
       "text": "If you know of an educational resource, scholarship, or program that supports Afghan girls and women, we'd love to hear about it. Reach out and help us connect more girls with the opportunities they deserve.",
       "email": "info@empowerher-initiative.org"
+    },
+    "helpUsGrow": {
+      "eyebrow": "Know a resource?",
+      "title": "Help us grow this list."
     }
   },
   "mis": {
@@ -1154,7 +1219,11 @@
       "label": "Location",
       "value": "United States of America"
     },
-    "followUsTitle": "Follow Us"
+    "followUsTitle": "Follow Us",
+    "thankYouYour": {
+      "title": "Thank you — your message is on its way.",
+      "text": "We've received your message and will get back to you as soon as we can."
+    }
   },
   "legal": {
     "seo": {

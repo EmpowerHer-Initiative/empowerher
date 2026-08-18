@@ -4,7 +4,9 @@ import Reveal from "../home/Reveal.astro";
 import AlertTriangle from "../../icons/AlertTriangle.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
 import { cmsField } from "../../../lib/cms";
-import { Heading2, Text } from "@alisamadiillc/cms-bridge/components";
+import { Heading2, Text, Link } from "@alisamadiillc/cms-bridge/components";
+import pages from "../../../data/pages.json";
+const content = pages["writing-contest"];
 
 const FORM_URL = "https://forms.gle/J5D6atwg4cH5yicf9";
 
@@ -51,12 +53,8 @@ const { title, intro, warning, contactText, cmsPath } = Astro.props;
         <!-- kept hand-tagged: paragraph mixes contactText + static mailto <a> + literal text (multiple child elements) -->
         <p class="text-muted-foreground mt-6 text-sm" data-cms-field={cmsField(cmsPath, "contactText")}>
           {contactText}{" "}
-          <a
-            href="mailto:hervoice@empowerher-initiative.org"
-            class="text-primary font-semibold underline underline-offset-4"
-          >
-            hervoice@empowerher-initiative.org
-          </a>
+          <Link 
+            class="text-primary font-semibold underline underline-offset-4" field="section.cta2" value={content.section.cta2}>{content.section.cta2.label}</Link>
         </p>
       </Reveal>
     </div>

@@ -4,7 +4,9 @@ import ArrowRight from "../../icons/ArrowRight.astro";
 import Download from "../../icons/Download.astro";
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
-import { Heading2, Text } from "@alisamadiillc/cms-bridge/components";
+import { Heading2, Text, Link } from "@alisamadiillc/cms-bridge/components";
+import pages from "../../../data/pages.json";
+const content = pages["annual-report"];
 
 interface Props {
   year?: string;
@@ -39,21 +41,13 @@ const { year, title, description, cmsPath } = Astro.props;
               ))}
               <p>
                 The initiative operates through two core programs: the{" "}
-                <a
-                  href="/mentorship"
-                  class="text-foreground font-medium underline-offset-2 hover:underline"
-                >
-                  Mentorship Program
-                </a>
+                <Link 
+                  class="text-foreground font-medium underline-offset-2 hover:underline" field="section.cta" value={content.section.cta}>{content.section.cta.label}</Link>
                 , a structured six-week cycle of workshops designed to develop
                 leadership skills, strengthen capacity, and support participants
                 in designing and advancing impact-driven projects; and{" "}
-                <a
-                  href="/hervoice"
-                  class="text-foreground font-medium underline-offset-2 hover:underline"
-                >
-                  HerVoice
-                </a>
+                <Link 
+                  class="text-foreground font-medium underline-offset-2 hover:underline" field="section.cta2" value={content.section.cta2}>{content.section.cta2.label}</Link>
                 , a storytelling platform that publishes and elevates the voices
                 and lived experiences of Afghan girls and women.
               </p>

@@ -4,7 +4,9 @@ import ArrowLeft from "../../icons/ArrowLeft.astro";
 import Reveal from "../home/Reveal.astro";
 import PartnerForm from "./PartnerForm.astro";
 import { cmsField } from "../../../lib/cms";
-import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
+import { Heading1, Text, Heading2, Image } from "@alisamadiillc/cms-bridge/components";
+import pages from "../../../data/pages.json";
+const content = pages["get-involved-partner"];
 
 interface Props {
   eyebrow: string;
@@ -23,14 +25,11 @@ const email = "info@empowerher-initiative.org";
   <div class="bg-muted text-foreground relative flex flex-col justify-between overflow-hidden px-10 py-16 md:px-14 lg:w-[45%] lg:px-16 lg:py-24">
     {/* Background image subtle overlay */}
     <div class="absolute inset-0 opacity-10">
-      <img
-        src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT3hSLjjKpPsIbjXnuoAM3O2JygVY8KzGFtD6k"
-        alt=""
+      <Image 
         loading="eager"
         fetchpriority="high"
         decoding="async"
-        class="h-full w-full object-cover"
-      />
+        class="h-full w-full object-cover" field="image" value={content.image} alt={content.imageAlt} />
     </div>
 
     <Reveal class="relative">
@@ -78,12 +77,8 @@ const email = "info@empowerher-initiative.org";
   {/* ── Right panel — form ───────────────────────────────────────────────── */}
   <div class="flex flex-1 flex-col justify-center px-8 py-16 md:px-14 lg:px-16 lg:py-24">
     <Reveal class="mx-auto w-full max-w-lg">
-      <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
-        Partnership Inquiry
-      </p>
-      <h2 class="mt-4 font-serif text-3xl md:text-4xl">
-        Tell us about your organization
-      </h2>
+      <Text as="p" class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" field="eyebrow2" value={content.eyebrow2} />
+      <Heading2 class="mt-4 font-serif text-3xl md:text-4xl" field="title" value={content.title} />
       <p class="text-muted-foreground mt-3 text-sm">
         All fields marked with <span class="text-primary">*</span>{" "}
         are required.

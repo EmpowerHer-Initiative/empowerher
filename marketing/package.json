@@ -11,13 +11,13 @@
     "preview": "astro preview",
     "astro": "astro",
     "sync": "tsx scripts/sync-from-db.ts",
-    "cms:init": "npx cms-bridge init",
-    "cms:check": "npx cms-bridge check",
-    "cms:collections": "npx cms-bridge collections"
+    "cms:init": "cms-bridge init",
+    "cms:check": "cms-bridge check",
+    "cms:collection": "cms-bridge collection"
   },
   "dependencies": {
     "@alisamadiillc/agency-api": "0.3.5",
-    "@alisamadiillc/cms-bridge": "^0.4.0",
+    "@alisamadiillc/cms-bridge": "0.5.0",
     "@astrojs/sitemap": "^3.7.3",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",

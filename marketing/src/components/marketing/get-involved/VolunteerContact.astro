@@ -4,7 +4,9 @@ import ArrowLeft from "../../icons/ArrowLeft.astro";
 import Reveal from "../home/Reveal.astro";
 import VolunteerForm from "./VolunteerForm.astro";
 import { cmsField } from "../../../lib/cms";
-import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
+import { Heading1, Text, Image } from "@alisamadiillc/cms-bridge/components";
+import pages from "../../../data/pages.json";
+const content = pages["get-involved-volunteer"];
 
 interface Props {
   eyebrow: string;
@@ -24,14 +26,11 @@ const email = "info@empowerher-initiative.org";
   <div class="bg-muted text-foreground relative flex flex-col justify-between overflow-hidden px-10 py-16 md:px-14 lg:w-[45%] lg:px-16 lg:py-24">
     {/* Background image subtle overlay */}
     <div class="absolute inset-0 opacity-10">
-      <img
-        src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTDe1RCWh0fiZ3z8JjCWsbc2laUL6tAeqPnMNS"
-        alt=""
+      <Image 
         loading="eager"
         fetchpriority="high"
         decoding="async"
-        class="h-full w-full object-cover"
-      />
+        class="h-full w-full object-cover" field="image" value={content.image} alt={content.imageAlt} />
     </div>
 
     <div class="relative">

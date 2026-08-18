@@ -1,4 +1,7 @@
 ---
+import { Text } from "@alisamadiillc/cms-bridge/components";
+import pages from "../../../data/pages.json";
+const content = pages.home;
 // Ports components/marketing/home/contest-seal.tsx
 ---
 <div class="relative size-32">
@@ -13,7 +16,7 @@
     </text>
   </svg>
   <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-    <p class="font-serif text-[26px] leading-none font-bold">2026</p>
-    <p class="mt-0.5 text-[8.5px] font-bold tracking-[0.2em] text-[#E0AE3C] uppercase">Winners</p>
+    <Text as="p" class="font-serif text-[26px] leading-none font-bold" field="text" value={content.text} />
+    <Text as="p" class="mt-0.5 text-[8.5px] font-bold tracking-[0.2em] text-[#E0AE3C] uppercase" field="text2" value={content.text2} />
   </div>
 </div>

@@ -3,7 +3,9 @@
 import Reveal from "../home/Reveal.astro";
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
 import { cmsField } from "../../../lib/cms";
-import { Text } from "@alisamadiillc/cms-bridge/components";
+import { Text, Heading2 } from "@alisamadiillc/cms-bridge/components";
+import pages from "../../../data/pages.json";
+const content = pages.resources;
 
 interface Props {
   text: string;
@@ -18,14 +20,10 @@ const { text, email, cmsPath } = Astro.props;
   <div class="container">
     <div class="max-w-3xl">
       <Reveal>
-        <p class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase">
-          Know a resource?
-        </p>
+        <Text as="p" class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase" field="helpUsGrow.eyebrow" value={content.helpUsGrow.eyebrow} />
       </Reveal>
       <Reveal delay={80}>
-        <h2 class="mt-5 font-serif text-4xl leading-tight md:text-5xl">
-          Help us grow this list.
-        </h2>
+        <Heading2 class="mt-5 font-serif text-4xl leading-tight md:text-5xl" field="helpUsGrow.title" value={content.helpUsGrow.title} />
       </Reveal>
       <Reveal delay={160}>
         <Text

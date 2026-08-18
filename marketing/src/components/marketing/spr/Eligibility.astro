@@ -8,8 +8,10 @@ import {
   Heading3,
   Text,
   Group,
-  Item,
+  Item, Link
 } from "@alisamadiillc/cms-bridge/components";
+import pages from "../../../data/pages.json";
+const content = pages.spr;
 
 interface HowToApply {
   eyebrow: string;
@@ -103,12 +105,8 @@ const ruleAccents = [
           data-cms-field={cmsField(cmsPath, "howToApply.bodyBefore")}
         >
           {howToApply.bodyBefore}{" "}
-          <a
-            href="mailto:apply@empowerher-initiative.org"
-            class="font-medium text-amber-300 underline decoration-amber-300/40 underline-offset-4 transition-colors hover:decoration-amber-300"
-          >
-            apply@empowerher-initiative.org
-          </a>
+          <Link 
+            class="font-medium text-amber-300 underline decoration-amber-300/40 underline-offset-4 transition-colors hover:decoration-amber-300" field="section.cta" value={content.section.cta}>{content.section.cta.label}</Link>
           {howToApply.bodyAfter}
         </p>
         <div class="mt-8">
