@@ -10,7 +10,7 @@ import { impactStories } from "../../lib/collections";
 
 const { seo, header, closingCta } = data;
 ---
-<Layout title={seo.title} description={seo.description}>
+<Layout>
   <Header {...header} cmsPath="header" />
   <Stories stories={impactStories} />
   <ClosingCTA {...closingCta} cmsPath="closingCta" />

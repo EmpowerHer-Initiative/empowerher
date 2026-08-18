@@ -13,7 +13,7 @@ import pages from "../data/pages.json";
 const data = pages["writing-contest"];
 ---
 
-<Layout title={data.seo.title} description={data.seo.description}>
+<Layout>
   <Hero {...data.hero} cmsPath="hero" />
   <AboutContest {...data.aboutContest} cmsPath="aboutContest" />
   <WritingPrompt {...data.writingPrompt} cmsPath="writingPrompt" />

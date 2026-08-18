@@ -10,7 +10,7 @@ import { resources } from "../lib/collections";
 const { seo, header, footerNote } = data;
 ---
 
-<Layout title={seo.title} description={seo.description}>
+<Layout>
   <Header eyebrow={header.eyebrow} heading={header.heading} intro={header.intro} cmsPath="header" />
   <ResourceList resources={resources} />
   <FooterNote text={footerNote.text} email={footerNote.email} cmsPath="footerNote" />

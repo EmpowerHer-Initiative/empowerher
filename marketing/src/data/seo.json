@@ -1,0 +1,122 @@
+{
+  "site": {
+    "title": "EmpowerHer Initiative",
+    "description": "A nonprofit empowering Afghan women and girls across the Middle East and Central Asia through mentorship, leadership development, educational support, storytelling, and community engagement.",
+    "favicon": "/favicon.ico",
+    "ogImage": "/og-image.png",
+    "appleTouchIcon": "/apple-touch-icon.png",
+    "googleAnalytics": ""
+  },
+  "pages": {
+    "home": {
+      "title": "EmpowerHer Initiative",
+      "description": "A nonprofit organization empowering Afghan women and girls across the Middle East and Central Asia through mentorship, leadership development, educational support, storytelling, publication, and community engagement.",
+      "ogImage": ""
+    },
+    "about-us": {
+      "title": "About Us — EmpowerHer Initiative",
+      "description": "Learn about our mission, vision, story, and the team behind EmpowerHer.",
+      "ogImage": ""
+    },
+    "writing-contest": {
+      "title": "HerVoice 2026 Writing Contest — EmpowerHer Initiative",
+      "description": "Submit your story to the HerVoice 2026 Writing Contest.",
+      "ogImage": ""
+    },
+    "mentorship": {
+      "title": "Mentorship Program — EmpowerHer Initiative",
+      "description": "Free workshops and mentorship for Afghan girls to build resilience, gain support, and launch impact projects.",
+      "ogImage": ""
+    },
+    "sisterhood-sessions": {
+      "title": "Sisterhood Sessions — EmpowerHer Initiative",
+      "description": "A supportive and caring space for EmpowerHer students to connect, share ideas, and build friendships.",
+      "ogImage": ""
+    },
+    "hervoice": {
+      "title": "HerVoice — EmpowerHer Initiative",
+      "description": "HerVoice is EmpowerHer's creative storytelling and publication platform, where students publish their original writings and express themselves freely.",
+      "ogImage": ""
+    },
+    "hervoice-winners": {
+      "title": "HerVoice 2026 Writing Contest Winners — EmpowerHer Initiative",
+      "description": "Results of the HerVoice 2026 Writing Contest, including cash prize winners and honorable mentions.",
+      "ogImage": ""
+    },
+    "hervoice-featured-writings": {
+      "title": "Featured Writings from Our Partners — EmpowerHer Initiative",
+      "description": "Read featured writings from Afghan girls published through EmpowerHer's partner platforms — NSHSS and Amplify Afghan Women.",
+      "ogImage": ""
+    },
+    "success-stories": {
+      "title": "Success Stories — EmpowerHer Initiative",
+      "description": "Past program outcomes and impact stories from EmpowerHer participants.",
+      "ogImage": ""
+    },
+    "spr": {
+      "title": "Student Project Roadmap — EmpowerHer Initiative",
+      "description": "A leadership pathway for EmpowerHer graduates to design and lead their own impact-driven online classes.",
+      "ogImage": ""
+    },
+    "get-involved": {
+      "title": "Get Involved — EmpowerHer Initiative",
+      "description": "Partner with us or volunteer to support Afghan girls' education and empowerment.",
+      "ogImage": ""
+    },
+    "get-involved-partner": {
+      "title": "Partner With Us — EmpowerHer Initiative",
+      "description": "Partner with us or volunteer to support Afghan girls' education and empowerment.",
+      "ogImage": ""
+    },
+    "get-involved-volunteer": {
+      "title": "Volunteer With Us — EmpowerHer Initiative",
+      "description": "Partner with us or volunteer to support Afghan girls' education and empowerment.",
+      "ogImage": ""
+    },
+    "agfaf": {
+      "title": "AGFAF — EmpowerHer Initiative",
+      "description": "Afghan Girls Financial Assistance Fund — our primary sponsor and partner.",
+      "ogImage": ""
+    },
+    "annual-report": {
+      "title": "Annual Impact Reports — EmpowerHer Initiative",
+      "description": "View and download EmpowerHer's annual impact reports.",
+      "ogImage": ""
+    },
+    "resources": {
+      "title": "Resources — EmpowerHer Initiative",
+      "description": "Educational resources, scholarships, and opportunities for Afghan girls.",
+      "ogImage": ""
+    },
+    "mis": {
+      "title": "Monthly Internet Scholarship (MIS) — EmpowerHer Initiative",
+      "description": "EmpowerHer provides monthly internet scholarships to help members participate in our programs.",
+      "ogImage": ""
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "description": "Subscribe to the EmpowerHer newsletter for the latest updates on our programs, success stories, and opportunities to get involved.",
+      "ogImage": ""
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Get in touch with the EmpowerHer team.",
+      "ogImage": ""
+    },
+    "legal": {
+      "title": "Terms & Privacy — EmpowerHer Initiative",
+      "description": "The terms of use and privacy policy for the EmpowerHer Initiative.",
+      "ogImage": ""
+    },
+    "privacy": {
+      "title": "Privacy — EmpowerHer Initiative",
+      "description": "This Privacy Policy describes how EmpowerHer collects, uses, and protects participant information across its programs, workshops, publications, and platforms.",
+      "ogImage": ""
+    },
+    "terms": {
+      "title": "Terms — EmpowerHer Initiative",
+      "description": "These Terms and Policies describe the terms and conditions for participating in EmpowerHer programs, workshops, publications, scholarships, events, and initiatives.",
+      "ogImage": ""
+    }
+  }
+}

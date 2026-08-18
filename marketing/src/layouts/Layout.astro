@@ -3,11 +3,16 @@ import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+import cms from "../data/cms.json";
+import seo from "../data/seo.json";
+import variables from "../data/variables.json";
 
 interface Props {
+  /** Overrides the seo.json title for this route (e.g. dynamic pages). */
   title?: string;
+  /** Overrides the seo.json description for this route. */
   description?: string;
-  /** Absolute URL of the social share image. Defaults to /og-image.png. */
+  /** Absolute URL of the social share image. Defaults to seo.json ogImage. */
   image?: string;
   /** Alt text for the share image. */
   imageAlt?: string;
@@ -17,22 +22,34 @@ interface Props {
   publishedTime?: string;
 }
 
-const SITE_NAME = "EmpowerHer Initiative";
-const SITE_DESC =
-  "A nonprofit organization empowering Afghan women and girls across the Middle East and Central Asia through mentorship, leadership development, educational support, storytelling, publication, and community engagement.";
+// Resolve the seo.json page slice by matching the current path to a cms.json
+// route (both normalized without a trailing slash).
+const norm = (p: string) => p.replace(/\/+$/, "") || "/";
+const here = norm(Astro.url.pathname);
+const pageKey = Object.keys(cms.pages).find(
+  (k) => norm((cms.pages as Record<string, { route: string }>)[k].route) === here,
+);
+const pageSeo = (pageKey && seo.pages[pageKey as keyof typeof seo.pages]) || null;
 
+const SITE_NAME = seo.site.title || variables.name;
+
+// Precedence: explicit prop → per-page seo.json → site default.
 const {
-  title = SITE_NAME,
-  description = SITE_DESC,
+  title = pageSeo?.title || seo.site.title || SITE_NAME,
+  description = pageSeo?.description || seo.site.description,
   image,
-  imageAlt = `${SITE_NAME} logo`,
+  imageAlt = `${variables.name} logo`,
   type = "website",
   publishedTime,
 } = Astro.props;
 
 // Astro.site comes from `site` in astro.config.mjs.
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = image ?? new URL("/og-image.png", Astro.site).href;
+const ogPath =
+  image ?? (pageSeo?.ogImage || seo.site.ogImage || "/og-image.png");
+const ogImage = new URL(ogPath, Astro.site).href;
+const favicon = seo.site.favicon || "/favicon.ico";
+const appleTouchIcon = seo.site.appleTouchIcon || "/apple-touch-icon.png";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -40,27 +57,23 @@ const jsonLd = {
     {
       "@type": "NGO",
       "@id": `${Astro.site?.href}#organization`,
-      name: SITE_NAME,
+      name: variables.name,
       url: Astro.site?.href,
       logo: {
         "@type": "ImageObject",
-        url: "https://cdn.empowerher-initiative.org/logo.png",
+        url: variables.logo,
       },
-      description: SITE_DESC,
-      email: "info@empowerher-initiative.org",
-      sameAs: [
-        "https://www.facebook.com/share/157naMfgkw",
-        "https://www.instagram.com/_empowerher_org",
-        "https://www.linkedin.com/company/empowerher-org/",
-      ],
+      description: seo.site.description,
+      email: variables.email,
+      sameAs: variables.socials.map((s) => s.url),
     },
     {
       "@type": "WebSite",
       "@id": `${Astro.site?.href}#website`,
       url: Astro.site?.href,
-      name: SITE_NAME,
+      name: variables.name,
       alternateName: "EmpowerHer",
-      description: SITE_DESC,
+      description: seo.site.description,
       publisher: { "@id": `${Astro.site?.href}#organization` },
     },
   ],
@@ -72,9 +85,9 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href={favicon} sizes="48x48" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href={appleTouchIcon} />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#5ba8d8" />
     <meta name="application-name" content={SITE_NAME} />
@@ -110,6 +123,16 @@ const jsonLd = {
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content={imageAlt} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {seo.site.googleAnalytics && (
+      <>
+        <script
+          is:inline
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${seo.site.googleAnalytics}`}
+        />
+        <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${seo.site.googleAnalytics}');`} />
+      </>
+    )}
     <ClientRouter />
   </head>
   <body>

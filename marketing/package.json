@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@alisamadiillc/agency-api": "0.3.5",
-    "@alisamadiillc/cms-bridge": "0.5.0",
+    "@alisamadiillc/cms-bridge": "0.6.0",
     "@astrojs/sitemap": "^3.7.3",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
