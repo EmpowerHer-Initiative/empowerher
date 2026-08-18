@@ -167,7 +167,7 @@
     {
       "name": "featured-writings",
       "label": "Featured Writings",
-      "path": "src/data/featured-writings.json",
+      "path": "src/data/collections/featured-writings.json",
       "fields": [
         {
           "name": "title",
@@ -201,7 +201,7 @@
     {
       "name": "impact-stories",
       "label": "Success Stories",
-      "path": "src/data/impact-stories.json",
+      "path": "src/data/collections/impact-stories.json",
       "fields": [
         {
           "name": "image",
@@ -245,7 +245,7 @@
     {
       "name": "partners",
       "label": "Partners",
-      "path": "src/data/partners.json",
+      "path": "src/data/collections/partners.json",
       "fields": [
         {
           "name": "name",
@@ -269,7 +269,7 @@
     {
       "name": "resource-listings",
       "label": "Resources",
-      "path": "src/data/resource-listings.json",
+      "path": "src/data/collections/resource-listings.json",
       "fields": [
         {
           "name": "name",
@@ -302,7 +302,7 @@
     {
       "name": "team",
       "label": "Team Members",
-      "path": "src/data/team.json",
+      "path": "src/data/collections/team.json",
       "fields": [
         {
           "name": "name",
@@ -337,7 +337,7 @@
     {
       "name": "workshops",
       "label": "Workshops",
-      "path": "src/data/workshops.json",
+      "path": "src/data/collections/workshops.json",
       "fields": [
         {
           "name": "name",
