@@ -1,21 +1,8 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { createTRPCContext } from "@/services/trpc/init";
-import { ALLOWED_ORIGINS } from "@/services/trpc/lib/allow-origin";
+import { getAllowedOrigins } from "@/services/trpc/lib/allow-origin";
 import { appRouter } from "@/services/trpc/routers/_app";
-
-// Get allowed origins from environment variables and defaults
-function getAllowedOrigins(): string[] {
-  const origins: string[] = ALLOWED_ORIGINS;
-
-  // Vercel preview URLs (if using Vercel)
-  if (process.env.VERCEL_URL) {
-    origins.push(`https://${process.env.VERCEL_URL}`);
-  }
-
-  // Remove duplicates and return
-  return [...new Set(origins)];
-}
 
 // Check if origin is allowed and get the allowed origin value
 function getAllowedOriginHeader(

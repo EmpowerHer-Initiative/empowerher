@@ -1,0 +1,204 @@
+---
+// Site-wide newsletter popup: a small card that slides in from the bottom-right
+// shortly after the first page load of a session, inviting a newsletter signup.
+// Wired to the admin API via src/lib/newsletter.ts. Shows once per session;
+// dismissing or subscribing hides it for the rest of the session (sessionStorage).
+import Mail from "./icons/Mail.astro";
+import Send from "./icons/Send.astro";
+---
+<div
+  id="newsletter-popup"
+  class="pointer-events-none fixed right-4 bottom-4 z-50 w-[calc(100vw-2rem)] max-w-sm translate-y-4 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] sm:right-6 sm:bottom-6"
+  data-open="false"
+  aria-hidden="true"
+>
+  <div class="border-border bg-card relative rounded-2xl border p-6 shadow-xl">
+    <button
+      id="newsletter-popup-close"
+      type="button"
+      aria-label="Dismiss"
+      class="text-muted-foreground hover:bg-muted hover:text-foreground absolute top-3 right-3 flex size-8 items-center justify-center rounded-full transition-colors"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-4">
+        <path d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
+
+    <div class="bg-primary/10 text-primary mb-4 flex size-11 items-center justify-center rounded-full">
+      <Mail class="size-5" />
+    </div>
+    <h3 class="text-foreground font-serif text-xl leading-tight">
+      Subscribe to Our Newsletter
+    </h3>
+    <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
+      Join hundreds of supporters and community members.
+    </p>
+
+    <form id="newsletter-popup-form" class="mt-5 space-y-3" novalidate>
+      <input
+        name="email"
+        type="email"
+        placeholder="Your email address"
+        class="border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-primary/40 w-full rounded-xl border px-4 py-3 text-sm transition-all duration-300 outline-none disabled:opacity-60"
+      />
+      <p class="text-destructive text-xs" data-error="email" hidden></p>
+      <p class="text-destructive text-xs" data-error="form" hidden></p>
+      <button
+        type="submit"
+        id="newsletter-popup-submit"
+        class="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] disabled:opacity-60"
+      >
+        <Send class="size-4" />
+        Subscribe
+      </button>
+    </form>
+
+    <p
+      id="newsletter-popup-success"
+      class="text-foreground mt-2 hidden text-sm font-medium"
+      data-success-text
+    ></p>
+  </div>
+</div>
+
+<style>
+  #newsletter-popup[data-open="true"] {
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  import { subscribeNewsletter } from "../lib/newsletter";
+
+  const DISMISS_KEY = "eh_newsletter_popup_dismissed"; // per-session (sessionStorage)
+  const SHOWN_KEY = "eh_newsletter_popup_shown"; // per-session (sessionStorage)
+  const OPEN_DELAY = 4000;
+
+  // The popup markup is a transition:persist-free node re-rendered per page, so
+  // bind once globally and drive open/close via a shared timer guarded by
+  // session flags. Shows once per session; dismissing/subscribing hides it for
+  // the rest of the session (returns on a fresh session).
+  const w = window as any;
+
+  function initNewsletterPopup() {
+    const popup = document.getElementById("newsletter-popup");
+    if (!popup || (popup as any).__bound) return;
+    (popup as any).__bound = true;
+
+    const form = document.getElementById("newsletter-popup-form") as HTMLFormElement | null;
+    const success = document.getElementById("newsletter-popup-success");
+    const submitBtn = document.getElementById("newsletter-popup-submit") as HTMLButtonElement | null;
+    const closeBtn = document.getElementById("newsletter-popup-close");
+
+    const dismissed = () => {
+      try {
+        return sessionStorage.getItem(DISMISS_KEY) === "1";
+      } catch {
+        return false;
+      }
+    };
+    const suppress = () => {
+      try {
+        sessionStorage.setItem(DISMISS_KEY, "1");
+      } catch {
+        /* ignore */
+      }
+    };
+
+    const open = () => {
+      popup.dataset.open = "true";
+      popup.setAttribute("aria-hidden", "false");
+    };
+    const close = () => {
+      popup.dataset.open = "false";
+      popup.setAttribute("aria-hidden", "true");
+    };
+
+    closeBtn?.addEventListener("click", () => {
+      close();
+      suppress();
+    });
+
+    const setError = (name: string, msg: string | null) => {
+      const el = form?.querySelector<HTMLElement>(`[data-error="${name}"]`);
+      const input = form?.querySelector<HTMLElement>(`[name="${name}"]`);
+      if (!el) return;
+      if (msg) {
+        el.textContent = msg;
+        el.hidden = false;
+        input?.setAttribute("aria-invalid", "true");
+      } else {
+        el.hidden = true;
+        input?.removeAttribute("aria-invalid");
+      }
+    };
+
+    form?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      setError("email", null);
+      setError("form", null);
+
+      const email = String(new FormData(form).get("email") || "").trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setError("email", "Please enter a valid email");
+        return;
+      }
+
+      const original = submitBtn?.innerHTML;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Subscribing…";
+      }
+      const result = await subscribeNewsletter(email);
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        if (original !== undefined) submitBtn.innerHTML = original;
+      }
+
+      if (!result.ok) {
+        setError(
+          "form",
+          result.error === "rate_limited"
+            ? "Too many requests — please try again in a few minutes."
+            : "Something went wrong. Please try again.",
+        );
+        return;
+      }
+
+      form.classList.add("hidden");
+      if (success) {
+        success.textContent = result.alreadySubscribed
+          ? "You're already on the list — thank you!"
+          : "Thanks for subscribing 🎉";
+        success.classList.remove("hidden");
+      }
+      suppress();
+      setTimeout(close, 2500);
+    });
+
+    // Schedule the one-per-session auto-open (guard against duplicate timers
+    // across view-transition navigations).
+    if (w.__newsletterPopupTimer) return;
+    let shownThisSession = false;
+    try {
+      shownThisSession = sessionStorage.getItem(SHOWN_KEY) === "1";
+    } catch {
+      /* ignore */
+    }
+    if (dismissed() || shownThisSession) return;
+
+    w.__newsletterPopupTimer = window.setTimeout(() => {
+      if (dismissed()) return;
+      try {
+        sessionStorage.setItem(SHOWN_KEY, "1");
+      } catch {
+        /* ignore */
+      }
+      open();
+    }, OPEN_DELAY);
+  }
+
+  document.addEventListener("astro:page-load", initNewsletterPopup);
+</script>

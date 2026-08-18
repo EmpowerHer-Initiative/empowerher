@@ -12,10 +12,12 @@ interface Props {
   year?: string;
   title: string;
   description: string[];
+  /** Path to the downloadable report PDF (in public/). */
+  pdf?: string;
   /** CMS field path prefix for live-preview highlighting. */
   cmsPath?: string;
 }
-const { year, title, description, cmsPath } = Astro.props;
+const { year, title, description, pdf, cmsPath } = Astro.props;
 ---
 <section class="py-28 md:py-40">
   <div class="container">
@@ -55,8 +57,10 @@ const { year, title, description, cmsPath } = Astro.props;
 
             <div class="border-border/30 mt-10 border-t pt-10">
               <a
-                href="#"
+                href={pdf || "#"}
                 download
+                target="_blank"
+                rel="noopener"
                 class="group bg-foreground text-background inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:opacity-80 active:scale-[0.98]"
               >
                 <Download class="size-4" />

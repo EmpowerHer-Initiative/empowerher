@@ -1,7 +1,7 @@
 ---
 // Ports components/marketing/newsletter/newsletter-form.tsx
-// Form is visual-only — submission backend (tRPC newsletter.subscribe) and the
-// isSubmitted success swap are deferred until the Astro project has an API.
+// Submits to the admin app's public POST /api/newsletter route via
+// src/lib/newsletter.ts, swapping to a success message on subscribe.
 import Send from "../../icons/Send.astro";
 import Reveal from "../home/Reveal.astro";
 import { cmsField } from "../../../lib/cms";
@@ -42,7 +42,17 @@ const { eyebrow, heading, subheading, image, overlay, cmsPath } = Astro.props;
         />
 
         <div class="mt-8">
-          <form class="space-y-4" novalidate>
+          <div
+            id="newsletter-page-success"
+            class="border-border/40 bg-primary/[0.03] hidden rounded-2xl border p-6 text-sm"
+          >
+            <p class="text-foreground font-medium">You're subscribed 🎉</p>
+            <p class="text-muted-foreground mt-1" data-success-text>
+              Thanks for joining — watch your inbox for our next update.
+            </p>
+          </div>
+
+          <form id="newsletter-page-form" class="space-y-4" novalidate>
             <div>
               <label
                 for="newsletter-email"
@@ -52,13 +62,17 @@ const { eyebrow, heading, subheading, image, overlay, cmsPath } = Astro.props;
               </label>
               <input
                 id="newsletter-email"
+                name="email"
                 type="email"
                 placeholder="Enter your email address"
                 class="border-border bg-muted/30 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/40 mt-2 w-full rounded-xl border px-5 py-3.5 text-sm transition-all duration-300 outline-none disabled:opacity-60"
               />
+              <p class="text-destructive mt-2 text-xs" data-error="email" hidden></p>
             </div>
+            <p class="text-destructive text-xs" data-error="form" hidden></p>
             <button
               type="submit"
+              id="newsletter-page-submit"
               class="group bg-primary text-primary-foreground hover:bg-primary/90 inline-flex w-full items-center justify-center gap-2.5 rounded-xl py-3.5 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] disabled:opacity-60"
             >
               <Send class="size-4" />
@@ -95,3 +109,75 @@ const { eyebrow, heading, subheading, image, overlay, cmsPath } = Astro.props;
     </div>
   </div>
 </section>
+
+<script>
+  import { subscribeNewsletter } from "../../../lib/newsletter";
+
+  // Re-run on astro:page-load (view transitions); bind once per form instance.
+  function initNewsletterPageForm() {
+    const form = document.getElementById("newsletter-page-form") as HTMLFormElement | null;
+    if (!form || (form as any).__bound) return;
+    (form as any).__bound = true;
+
+    const success = document.getElementById("newsletter-page-success");
+    const submitBtn = document.getElementById("newsletter-page-submit") as HTMLButtonElement | null;
+    const successText = success?.querySelector<HTMLElement>("[data-success-text]");
+
+    const setError = (name: string, msg: string | null) => {
+      const el = form.querySelector<HTMLElement>(`[data-error="${name}"]`);
+      const input = form.querySelector<HTMLElement>(`[name="${name}"]`);
+      if (!el) return;
+      if (msg) {
+        el.textContent = msg;
+        el.hidden = false;
+        input?.setAttribute("aria-invalid", "true");
+      } else {
+        el.hidden = true;
+        input?.removeAttribute("aria-invalid");
+      }
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      setError("email", null);
+      setError("form", null);
+
+      const email = String(new FormData(form).get("email") || "").trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setError("email", "Please enter a valid email");
+        return;
+      }
+
+      const original = submitBtn?.innerHTML;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Subscribing…";
+      }
+      const result = await subscribeNewsletter(email);
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        if (original !== undefined) submitBtn.innerHTML = original;
+      }
+
+      if (!result.ok) {
+        setError(
+          "form",
+          result.error === "rate_limited"
+            ? "Too many requests — please try again in a few minutes."
+            : "Something went wrong. Please try again.",
+        );
+        return;
+      }
+
+      if (successText) {
+        successText.textContent = result.alreadySubscribed
+          ? "You're already on the list — thanks for your support!"
+          : "Thanks for joining — watch your inbox for our next update.";
+      }
+      form.classList.add("hidden");
+      success?.classList.remove("hidden");
+    });
+  }
+
+  document.addEventListener("astro:page-load", initNewsletterPageForm);
+</script>
