@@ -125,35 +125,14 @@ const EmailCell = ({ student }: { student: Student }) => {
   );
 };
 
-const WORKSHOP_COLORS = [
-  "bg-red-500",
-  "bg-orange-500",
-  "bg-amber-500",
-  "bg-yellow-500",
-  "bg-lime-500",
-  "bg-green-500",
-  "bg-emerald-500",
-  "bg-teal-500",
-  "bg-cyan-500",
-  "bg-sky-500",
-  "bg-blue-500",
-  "bg-indigo-500",
-  "bg-violet-500",
-  "bg-purple-500",
-  "bg-fuchsia-500",
-  "bg-pink-500",
-  "bg-rose-500",
-  "bg-slate-500",
-  "bg-stone-500",
-  "bg-zinc-500",
-];
-
-const workshopColor = (name: string) => {
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) {
-    hash = (hash * 31 + name.charCodeAt(i)) | 0;
-  }
-  return WORKSHOP_COLORS[Math.abs(hash) % WORKSHOP_COLORS.length];
+const WORKSHOP_COLORS: Record<string, string> = {
+  "13aa0b1f-8b31-4dcc-9977-34533ee11319": "bg-red-500",
+  "21b1421e-2ff2-4387-9835-8c23fa075010": "bg-orange-500",
+  "49923651-c20e-42f7-be4b-4fe95eae825b": "bg-green-500",
+  "677c9a81-039a-46e5-9f9e-4633567a8480": "bg-teal-500",
+  "84f5c642-e292-4994-b3c3-ce6a8bb738b6": "bg-blue-500",
+  "9116bc1f-2f73-4cb6-9f2b-7d4ffbad394c": "bg-violet-500",
+  "d92a0f68-3b91-4995-b10b-781e36ed0cea": "bg-pink-500",
 };
 
 const WorkshopCell = ({ workshopId }: { workshopId: string }) => {
@@ -167,7 +146,7 @@ const WorkshopCell = ({ workshopId }: { workshopId: string }) => {
   if (!workshop) return <Badge variant="outline">—</Badge>;
 
   return (
-    <Badge className={cn(workshopColor(workshop.name.toLowerCase()))}>
+    <Badge className={cn(WORKSHOP_COLORS[workshopId] ?? "bg-slate-500")}>
       {workshop.name}
     </Badge>
   );
