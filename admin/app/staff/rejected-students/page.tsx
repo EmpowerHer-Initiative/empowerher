@@ -3,7 +3,12 @@
 import { useMemo, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Mail, Plus, Search } from "lucide-react";
+import {
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { ChevronLeft, ChevronRight, Mail, Plus, Search } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -53,6 +58,7 @@ type RejectedStudent =
   RouterOutputs["staff"]["rejectedStudents"]["list"][number];
 
 const SEND_LIMIT = 20;
+const PAGE_SIZE = 50;
 
 type Tab = "new" | "sent";
 
@@ -90,6 +96,14 @@ export default function RejectedStudentsPage() {
         (!query || student.email.toLowerCase().includes(query))
     );
   }, [rejectedStudents, search, tab]);
+
+  const table = useReactTable({
+    data: filtered,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: { pagination: { pageSize: PAGE_SIZE } },
+  });
 
   return (
     <div className="container">
@@ -148,12 +162,35 @@ export default function RejectedStudentsPage() {
         </TabsList>
       </Tabs>
 
-      <DataTable
-        isLoading={isPending}
-        columns={columns}
-        data={filtered}
-        error={error}
-      />
+      <DataTable isLoading={isPending} table={table} error={error} />
+
+      {table.getPageCount() > 1 && (
+        <div className="mt-4 flex items-center justify-between">
+          <p className="text-muted-foreground text-sm">
+            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            {table.getPageCount()} — {filtered.length} student
+            {filtered.length === 1 ? "" : "s"}
+          </p>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={!table.getCanPreviousPage()}
+              onClick={() => table.previousPage()}
+            >
+              <ChevronLeft /> Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={!table.getCanNextPage()}
+              onClick={() => table.nextPage()}
+            >
+              Next <ChevronRight />
+            </Button>
+          </div>
+        </div>
+      )}
 
       <Dialog open={addOpen} onOpenChange={setAddOpen}>
         <DialogContent>
