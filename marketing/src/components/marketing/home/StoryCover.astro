@@ -1,21 +1,42 @@
 ---
 // Ports components/marketing/home/story-cover.tsx
-import { cmsField } from "../../../lib/cms";
+import type { CmsField } from "@alisamadiillc/cms-bridge/fields";
 import { Text } from "@alisamadiillc/cms-bridge/components";
 interface Props {
   title: string;
   author: string;
   cover: string;
-  cmsPath?: string;
+  cmsPath?: CmsField;
 }
 const { title, author, cover, cmsPath } = Astro.props;
+const f = (s: string): CmsField | undefined =>
+  cmsPath ? (`${cmsPath}.${s}` as CmsField) : undefined;
 ---
-<div class={`relative h-[140px] w-[104px] flex-none overflow-hidden rounded-[5px] shadow-[0_1px_2px_rgba(10,15,25,.25),0_14px_28px_-16px_rgba(10,15,25,.55)] transition-transform duration-[450ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:-translate-y-1 group-hover:-rotate-2 ${cover}`}>
-  <div class="absolute inset-[7px] flex flex-col items-center justify-center gap-[7px] rounded-[2px] border border-white/30 px-2 py-2 text-center">
-    <span class="text-[6.5px] font-bold tracking-[0.22em] uppercase opacity-70">HerVoice &middot; 2026</span>
-    <Text as="span" class="font-serif text-xs leading-[1.05] font-medium italic" field={cmsField(cmsPath, "title")} value={title} />
+
+<div
+  class={`relative h-[140px] w-[104px] flex-none overflow-hidden rounded-[5px] shadow-[0_1px_2px_rgba(10,15,25,.25),0_14px_28px_-16px_rgba(10,15,25,.55)] transition-transform duration-[450ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:-translate-y-1 group-hover:-rotate-2 ${cover}`}
+>
+  <div
+    class="absolute inset-[7px] flex flex-col items-center justify-center gap-[7px] rounded-[2px] border border-white/30 px-2 py-2 text-center"
+  >
+    <span class="text-[6.5px] font-bold tracking-[0.22em] uppercase opacity-70"
+      >HerVoice &middot; 2026</span
+    >
+    <Text
+      as="span"
+      class="font-serif text-xs leading-[1.05] font-medium italic"
+      field={f("title")}
+      value={title}
+    />
     <span class="h-px w-[18px] bg-current opacity-50"></span>
-    <Text as="span" class="text-[6.5px] font-semibold tracking-[0.16em] uppercase opacity-60" field={cmsField(cmsPath, "name")} value={author} />
+    <Text
+      as="span"
+      class="text-[6.5px] font-semibold tracking-[0.16em] uppercase opacity-60"
+      field={f("name")}
+      value={author}
+    />
   </div>
-  <span class="absolute top-0 bottom-0 left-0 w-[5px] bg-black/20 shadow-[inset_-1px_0_0_rgba(255,255,255,.12)]"></span>
+  <span
+    class="absolute top-0 bottom-0 left-0 w-[5px] bg-black/20 shadow-[inset_-1px_0_0_rgba(255,255,255,.12)]"
+  ></span>
 </div>

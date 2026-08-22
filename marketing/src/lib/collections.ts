@@ -26,7 +26,11 @@ export const teamMembers = teamData as TeamMember[];
  * values in the team collection — this is a structural join key, not editable
  * page copy.
  */
-export const TEAM_BANDS = ["Executive Team", "Directors", "Mentors & Lecturers"];
+export const TEAM_BANDS = [
+  "Executive Team",
+  "Directors",
+  "Mentors & Lecturers",
+];
 
 export type Resource = {
   name: string;

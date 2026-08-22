@@ -8,10 +8,10 @@ collection table.
 
 The `path` of a collection is the entire contract for how it's stored:
 
-| `path` value                          | Kind          | Storage                          |
-| ------------------------------------- | ------------- | -------------------------------- |
-| ends in `.json` (a **file**)          | **array**     | one file: `[ {item}, … ]`        |
-| a **directory**                       | **directory** | one file per entry inside it     |
+| `path` value                 | Kind          | Storage                      |
+| ---------------------------- | ------------- | ---------------------------- |
+| ends in `.json` (a **file**) | **array**     | one file: `[ {item}, … ]`    |
+| a **directory**              | **directory** | one file per entry inside it |
 
 Keep `src/data/` to the core files (`cms.json`, `pages.json`, `variables.json`,
 `seo.json`) — array-collection files live in `src/data/collections/` (e.g.

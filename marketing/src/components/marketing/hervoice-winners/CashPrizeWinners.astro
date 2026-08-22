@@ -1,8 +1,14 @@
 ---
 // Ports components/marketing/hervoice-winners/cash-prize-winners.tsx
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
-import { Heading2, Heading3, Text, Image, Group, Item } from "@alisamadiillc/cms-bridge/components";
+import {
+  Heading2,
+  Heading3,
+  Text,
+  Image,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Winner {
   rank: string;
@@ -15,10 +21,8 @@ interface Winner {
 interface Props {
   title: string;
   winners: Winner[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "cashPrizeWinners"). */
-  cmsPath?: string;
 }
-const { title, winners, cmsPath } = Astro.props;
+const { title, winners } = Astro.props;
 
 // Ribbon gradient styling stays hardcoded and is zipped to winners by index.
 const RIBBON_BG = {
@@ -34,111 +38,132 @@ const cashWinners = winners.map((w, i) => ({ ...w, ribbon: RIBBON_KEYS[i] }));
 const topThree = cashWinners.slice(0, 3);
 const bottomTwo = cashWinners.slice(3);
 ---
+
 <section class="bg-white px-6 py-16 md:py-24">
   <div class="mx-auto max-w-6xl">
     <Reveal>
       <Heading2
         class="text-center font-serif text-3xl font-bold tracking-tight md:text-4xl"
-        field={cmsField(cmsPath, "title")}
+        field={"cashPrizeWinners.title"}
         value={title}
       />
     </Reveal>
 
     {/* Top 3 — larger cards */}
     <Reveal>
-      <Group field={cmsField(cmsPath, "winners")} class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-        {topThree.map((w, i) => (
-          <Item
-            index={i}
-            as="a"
-            href={`/hervoice/${w.slug}`}
-            class="group relative overflow-hidden rounded-2xl border border-[#ECE3D2] bg-white shadow-[0_12px_32px_-16px_rgba(26,34,48,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_-18px_rgba(26,34,48,.45)]"
-          >
-            <div class="relative aspect-[4/3] overflow-hidden">
-              <Image
-                field={cmsField(cmsPath, `winners.${i}.image`)}
-                value={w.image}
-                alt={w.title}
-                loading="lazy"
-                decoding="async"
-                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
-            </div>
-            <div class="p-5">
-              <div class="flex items-center gap-2">
-                <Text
-                  as="span"
-                  class={`inline-block rounded-md px-2.5 py-1 font-serif text-[11px] font-bold tracking-[0.1em] text-white ${RIBBON_BG[w.ribbon]}`}
-                  field={cmsField(cmsPath, `winners.${i}.rank`)}
-                  value={w.rank}
+      <Group
+        field={"cashPrizeWinners.winners"}
+        class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3"
+      >
+        {
+          topThree.map((w, i) => (
+            <Item
+              index={i}
+              as="a"
+              href={`/hervoice/${w.slug}`}
+              class="group relative overflow-hidden rounded-2xl border border-[#ECE3D2] bg-white shadow-[0_12px_32px_-16px_rgba(26,34,48,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_-18px_rgba(26,34,48,.45)]"
+            >
+              <div class="relative aspect-[4/3] overflow-hidden">
+                <Image
+                  field={`cashPrizeWinners.winners.${i}.image`}
+                  value={w.image}
+                  alt={w.title}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <Text
-                  as="span"
-                  class="font-serif text-sm font-bold text-[#C8902A]"
-                  field={cmsField(cmsPath, `winners.${i}.prize`)}
-                  value={w.prize}
-                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
               </div>
-              <Heading3
-                class="mt-2 font-serif text-xl font-bold text-[#1A2230]"
-                field={cmsField(cmsPath, `winners.${i}.title`)}
-                value={w.title}
-              />
-              {/* "by " prefix is literal, not part of the `name` field value — kept hand-tagged. */}
-              <p class="mt-1 text-sm text-[#6B7686]" data-cms-field={cmsField(cmsPath, `winners.${i}.name`)}>by {w.name}</p>
-            </div>
-          </Item>
-        ))}
+              <div class="p-5">
+                <div class="flex items-center gap-2">
+                  <Text
+                    as="span"
+                    class={`inline-block rounded-md px-2.5 py-1 font-serif text-[11px] font-bold tracking-[0.1em] text-white ${RIBBON_BG[w.ribbon]}`}
+                    field={`cashPrizeWinners.winners.${i}.rank`}
+                    value={w.rank}
+                  />
+                  <Text
+                    as="span"
+                    class="font-serif text-sm font-bold text-[#C8902A]"
+                    field={`cashPrizeWinners.winners.${i}.prize`}
+                    value={w.prize}
+                  />
+                </div>
+                <Heading3
+                  class="mt-2 font-serif text-xl font-bold text-[#1A2230]"
+                  field={`cashPrizeWinners.winners.${i}.title`}
+                  value={w.title}
+                />
+                {/* "by " prefix is literal, not part of the `name` field value — kept hand-tagged. */}
+                <p
+                  class="mt-1 text-sm text-[#6B7686]"
+                  data-cms-field={`cashPrizeWinners.winners.${i}.name`}
+                >
+                  by {w.name}
+                </p>
+              </div>
+            </Item>
+          ))
+        }
       </Group>
     </Reveal>
 
     {/* 4th & 5th — smaller cards */}
     <Reveal delay={80}>
-      <Group field={cmsField(cmsPath, "winners")} class="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2">
-        {bottomTwo.map((w, i) => (
-          <Item
-            index={topThree.length + i}
-            as="a"
-            href={`/hervoice/${w.slug}`}
-            class="group relative overflow-hidden rounded-2xl border border-[#ECE3D2] bg-white shadow-[0_12px_32px_-16px_rgba(26,34,48,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_-18px_rgba(26,34,48,.45)]"
-          >
-            <div class="relative aspect-[3/2] overflow-hidden">
-              <Image
-                field={cmsField(cmsPath, `winners.${topThree.length + i}.image`)}
-                value={w.image}
-                alt={w.title}
-                loading="lazy"
-                decoding="async"
-                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
-            </div>
-            <div class="p-5">
-              <div class="flex items-center gap-2">
-                <Text
-                  as="span"
-                  class={`inline-block rounded-md px-2.5 py-1 font-serif text-[11px] font-bold tracking-[0.1em] text-white ${RIBBON_BG[w.ribbon]}`}
-                  field={cmsField(cmsPath, `winners.${topThree.length + i}.rank`)}
-                  value={w.rank}
+      <Group
+        field={"cashPrizeWinners.winners"}
+        class="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2"
+      >
+        {
+          bottomTwo.map((w, i) => (
+            <Item
+              index={topThree.length + i}
+              as="a"
+              href={`/hervoice/${w.slug}`}
+              class="group relative overflow-hidden rounded-2xl border border-[#ECE3D2] bg-white shadow-[0_12px_32px_-16px_rgba(26,34,48,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_-18px_rgba(26,34,48,.45)]"
+            >
+              <div class="relative aspect-[3/2] overflow-hidden">
+                <Image
+                  field={`cashPrizeWinners.winners.${topThree.length + i}.image`}
+                  value={w.image}
+                  alt={w.title}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <Text
-                  as="span"
-                  class="font-serif text-sm font-bold text-[#C8902A]"
-                  field={cmsField(cmsPath, `winners.${topThree.length + i}.prize`)}
-                  value={w.prize}
-                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
               </div>
-              <Heading3
-                class="mt-2 font-serif text-lg font-bold text-[#1A2230]"
-                field={cmsField(cmsPath, `winners.${topThree.length + i}.title`)}
-                value={w.title}
-              />
-              {/* "by " prefix is literal, not part of the `name` field value — kept hand-tagged. */}
-              <p class="mt-1 text-sm text-[#6B7686]" data-cms-field={cmsField(cmsPath, `winners.${topThree.length + i}.name`)}>by {w.name}</p>
-            </div>
-          </Item>
-        ))}
+              <div class="p-5">
+                <div class="flex items-center gap-2">
+                  <Text
+                    as="span"
+                    class={`inline-block rounded-md px-2.5 py-1 font-serif text-[11px] font-bold tracking-[0.1em] text-white ${RIBBON_BG[w.ribbon]}`}
+                    field={`cashPrizeWinners.winners.${topThree.length + i}.rank`}
+                    value={w.rank}
+                  />
+                  <Text
+                    as="span"
+                    class="font-serif text-sm font-bold text-[#C8902A]"
+                    field={`cashPrizeWinners.winners.${topThree.length + i}.prize`}
+                    value={w.prize}
+                  />
+                </div>
+                <Heading3
+                  class="mt-2 font-serif text-lg font-bold text-[#1A2230]"
+                  field={`cashPrizeWinners.winners.${topThree.length + i}.title`}
+                  value={w.title}
+                />
+                {/* "by " prefix is literal, not part of the `name` field value — kept hand-tagged. */}
+                <p
+                  class="mt-1 text-sm text-[#6B7686]"
+                  data-cms-field={`cashPrizeWinners.winners.${topThree.length + i}.name`}
+                >
+                  by {w.name}
+                </p>
+              </div>
+            </Item>
+          ))
+        }
       </Group>
     </Reveal>
   </div>

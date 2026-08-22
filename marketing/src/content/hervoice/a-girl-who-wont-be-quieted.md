@@ -7,8 +7,8 @@ description: >-
   showcases that hope is actively created, and her past experiences become
   valuable tools in rebuilding her life. It’s a story of courage,
   transformation, and the unwavering pursuit of dreams.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTKq4XVFiCVy1oGkRMuS0Lravl9JbQIxWFcNht'
-date: '2025-11-30'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTKq4XVFiCVy1oGkRMuS0Lravl9JbQIxWFcNht"
+date: "2025-11-30"
 authorName: Hasina Rahimy
 authorBio: >-
   My name is Hasina Rahimy, and I am an Afghan student, former professional

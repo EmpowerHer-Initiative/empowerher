@@ -1,8 +1,8 @@
 ---
 title: Confession in the shadow
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTd2PyGnq0CAlsFIfYUDjLkbMy5eOzoTwZ6x1p'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTd2PyGnq0CAlsFIfYUDjLkbMy5eOzoTwZ6x1p"
 imageCredit: Image owned by Shamsia Hassani
-date: '2026-05-30'
+date: "2026-05-30"
 authorName: Samreen Makhfi
 authorPosition: 4th Place — HerVoice 2026 Writing Contest
 authorBio: >-

@@ -10,7 +10,6 @@ import Facebook from "../../icons/Facebook.astro";
 import LinkedIn from "../../icons/LinkedIn.astro";
 import Instagram from "../../icons/Instagram.astro";
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
 import { Heading1, Text, Heading2 } from "@alisamadiillc/cms-bridge/components";
 import pages from "../../../data/pages.json";
 const content = pages.contact;
@@ -22,12 +21,9 @@ interface Props {
   email: { label: string; value: string };
   location: { label: string; value: string };
   followUsTitle: string;
-  /** CMS field path prefix for live-preview highlighting (root-level pass ""). */
-  cmsPath?: string;
 }
 
-const { eyebrow, heading, intro, email, location, followUsTitle, cmsPath } =
-  Astro.props;
+const { eyebrow, heading, intro, email, location, followUsTitle } = Astro.props;
 
 const socialLinks = [
   {
@@ -50,6 +46,7 @@ const socialLinks = [
 const inputClass =
   "border-input file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 disabled:bg-input/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 w-full min-w-0 border bg-transparent px-2.5 transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-3 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 md:text-sm h-auto rounded-md py-2 text-base";
 ---
+
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="grid gap-16 lg:grid-cols-2 lg:gap-24">
@@ -58,38 +55,42 @@ const inputClass =
         <Text
           as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={cmsField(cmsPath, "eyebrow")}
+          field={"eyebrow"}
           value={eyebrow}
         />
         <Heading1
           class="mt-4 font-serif text-4xl leading-tight md:text-5xl"
-          field={cmsField(cmsPath, "heading")}
+          field={"heading"}
           value={heading}
         />
         <Text
           as="p"
           class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]"
-          field={cmsField(cmsPath, "intro")}
+          field={"intro"}
           value={intro}
         />
 
         <div class="mt-12 space-y-6">
           <div class="flex items-start gap-4">
-            <div class="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-full">
+            <div
+              class="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-full"
+            >
               <Mail class="text-primary size-4" />
             </div>
             <div>
               <Text
                 as="p"
                 class="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase"
-                field={cmsField(cmsPath, "email.label")}
+                field={"email.label"}
                 value={email.label}
               />
-              {/* Hand-tagged: <a> is not p|span|div (Text scope) and href is a
-              hardcoded mailto:, not a {label,link} object (Link scope). */}
+              {
+                /* Hand-tagged: <a> is not p|span|div (Text scope) and href is a
+              hardcoded mailto:, not a {label,link} object (Link scope). */
+              }
               <a
                 href="mailto:info@empowerher-initiative.org"
-                data-cms-field={cmsField(cmsPath, "email.value")}
+                data-cms-field={"email.value"}
                 class="text-foreground hover:text-primary mt-1 text-sm transition-colors"
               >
                 {email.value}
@@ -98,20 +99,22 @@ const inputClass =
           </div>
 
           <div class="flex items-start gap-4">
-            <div class="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-full">
+            <div
+              class="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-full"
+            >
               <MapPin class="text-primary size-4" />
             </div>
             <div>
               <Text
                 as="p"
                 class="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase"
-                field={cmsField(cmsPath, "location.label")}
+                field={"location.label"}
                 value={location.label}
               />
               <Text
                 as="p"
                 class="text-foreground mt-1 text-sm"
-                field={cmsField(cmsPath, "location.value")}
+                field={"location.value"}
                 value={location.value}
               />
             </div>
@@ -122,7 +125,7 @@ const inputClass =
           <Text
             as="p"
             class="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase"
-            field={cmsField(cmsPath, "followUsTitle")}
+            field={"followUsTitle"}
             value={followUsTitle}
           />
           <div class="mt-4 flex items-center gap-3">
@@ -145,9 +148,21 @@ const inputClass =
 
       {/* Right — Form */}
       <Reveal delay={120}>
-        <div id="contact-success" class="hidden space-y-4 rounded-2xl border border-border/40 bg-primary/[0.03] p-8">
-          <Heading2 class="font-serif text-2xl" field="thankYouYour.title" value={content.thankYouYour.title} />
-          <Text as="p" class="text-muted-foreground text-base leading-[1.8]" field="thankYouYour.text" value={content.thankYouYour.text} />
+        <div
+          id="contact-success"
+          class="border-border/40 bg-primary/[0.03] hidden space-y-4 rounded-2xl border p-8"
+        >
+          <Heading2
+            class="font-serif text-2xl"
+            field="thankYouYour.title"
+            value={content.thankYouYour.title}
+          />
+          <Text
+            as="p"
+            class="text-muted-foreground text-base leading-[1.8]"
+            field="thankYouYour.text"
+            value={content.thankYouYour.text}
+          />
           <button
             type="button"
             id="contact-reset"
@@ -159,45 +174,86 @@ const inputClass =
 
         <form id="contact-form" class="space-y-5" novalidate>
           <div role="group" class="group/field flex w-full flex-col gap-2">
-            <label for="c-name" class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none">
+            <label
+              for="c-name"
+              class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none"
+            >
               Name
             </label>
             <div class="flex flex-1 flex-col gap-0.5 leading-snug">
-              <input id="c-name" name="name" type="text" placeholder="Your name" class={inputClass} />
+              <input
+                id="c-name"
+                name="name"
+                type="text"
+                placeholder="Your name"
+                class={inputClass}
+              />
               <p class="text-destructive text-xs" data-error="name" hidden></p>
             </div>
           </div>
 
           <div role="group" class="group/field flex w-full flex-col gap-2">
-            <label for="c-email" class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none">
+            <label
+              for="c-email"
+              class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none"
+            >
               Email
             </label>
             <div class="flex flex-1 flex-col gap-0.5 leading-snug">
-              <input id="c-email" name="email" type="email" placeholder="you@example.com" class={inputClass} />
+              <input
+                id="c-email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                class={inputClass}
+              />
               <p class="text-destructive text-xs" data-error="email" hidden></p>
             </div>
           </div>
 
           <div role="group" class="group/field flex w-full flex-col gap-2">
-            <label for="c-subject" class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none">
+            <label
+              for="c-subject"
+              class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none"
+            >
               Subject
             </label>
             <div class="flex flex-1 flex-col gap-0.5 leading-snug">
-              <input id="c-subject" name="subject" type="text" placeholder="What is this about?" class={inputClass} />
+              <input
+                id="c-subject"
+                name="subject"
+                type="text"
+                placeholder="What is this about?"
+                class={inputClass}
+              />
             </div>
           </div>
 
           <div role="group" class="group/field flex w-full flex-col gap-2">
-            <label for="c-phone" class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none">
-              Phone <span class="text-muted-foreground font-normal">(optional)</span>
+            <label
+              for="c-phone"
+              class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none"
+            >
+              Phone <span class="text-muted-foreground font-normal"
+                >(optional)</span
+              >
             </label>
             <div class="flex flex-1 flex-col gap-0.5 leading-snug">
-              <input id="c-phone" name="phone" type="tel" placeholder="+1 (555) 123-4567" class={inputClass} />
+              <input
+                id="c-phone"
+                name="phone"
+                type="tel"
+                placeholder="+1 (555) 123-4567"
+                class={inputClass}
+              />
             </div>
           </div>
 
           <div role="group" class="group/field flex w-full flex-col gap-2">
-            <label for="c-message" class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none">
+            <label
+              for="c-message"
+              class="flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none"
+            >
               Message
             </label>
             <div class="flex flex-1 flex-col gap-0.5 leading-snug">
@@ -208,14 +264,15 @@ const inputClass =
                 rows="5"
                 class="border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 disabled:bg-input/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 flex field-sizing-content min-h-16 w-full rounded-lg border bg-transparent px-2.5 py-2 text-base transition-colors outline-none focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 md:text-sm"
               ></textarea>
-              <p class="text-destructive text-xs" data-error="message" hidden></p>
+              <p class="text-destructive text-xs" data-error="message" hidden>
+              </p>
             </div>
           </div>
 
           <button
             type="submit"
             id="contact-submit"
-            class="group/button inline-flex w-full shrink-0 items-center justify-center gap-1.5 rounded-lg border border-transparent bg-clip-padding px-4 text-base font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px active:scale-95 disabled:pointer-events-none disabled:opacity-50 md:px-6 h-10 bg-primary text-primary-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+            class="group/button focus-visible:border-ring focus-visible:ring-ring/50 bg-primary text-primary-foreground inline-flex h-10 w-full shrink-0 items-center justify-center gap-1.5 rounded-lg border border-transparent bg-clip-padding px-4 text-base font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:ring-3 active:translate-y-px active:scale-95 disabled:pointer-events-none disabled:opacity-50 md:px-6 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
           >
             Send Message
             <Send class="ml-2 size-4" />
@@ -234,12 +291,16 @@ const inputClass =
   // on astro:page-load. Bind per form instance, guarded so navigation back to
   // this page doesn't stack duplicate listeners on a persisted node.
   function initContactForm() {
-    const form = document.getElementById("contact-form") as HTMLFormElement | null;
+    const form = document.getElementById(
+      "contact-form",
+    ) as HTMLFormElement | null;
     if (!form || (form as any).__bound) return;
     (form as any).__bound = true;
 
     const success = document.getElementById("contact-success");
-    const submitBtn = document.getElementById("contact-submit") as HTMLButtonElement | null;
+    const submitBtn = document.getElementById(
+      "contact-submit",
+    ) as HTMLButtonElement | null;
 
     const setError = (name: string, msg: string | null) => {
       const el = document.querySelector<HTMLElement>(`[data-error="${name}"]`);
@@ -286,7 +347,10 @@ const inputClass =
       };
       if (!validate(v)) return;
       if (!agency) {
-        setError("form", "The contact form is not configured yet (missing PUBLIC_AGENCY_API_KEY).");
+        setError(
+          "form",
+          "The contact form is not configured yet (missing PUBLIC_AGENCY_API_KEY).",
+        );
         return;
       }
 

@@ -6,8 +6,14 @@
 import Reveal from "../home/Reveal.astro";
 import MapPin from "../../icons/MapPin.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
-import { cmsField } from "../../../lib/cms";
-import { Heading3, Text, Image, Group, Item } from "@alisamadiillc/cms-bridge/components";
+import type { CmsField } from "@alisamadiillc/cms-bridge/fields";
+import {
+  Heading3,
+  Text,
+  Image,
+  Collection,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Resource {
   id?: number;
@@ -21,15 +27,18 @@ interface Resource {
 interface Props {
   resources: Resource[];
   /** CMS field path prefix for live-preview highlighting (e.g. "resources"). */
-  cmsPath?: string;
+  cmsPath?: CmsField;
 }
 
 const PAGE_SIZE = 10;
 
 const { resources, cmsPath } = Astro.props;
+const f = (s: string): CmsField | undefined =>
+  cmsPath ? (`${cmsPath}.${s}` as CmsField) : undefined;
 
 const total = resources.length;
 ---
+
 <section id="resource-list" class="scroll-mt-24 pb-28 md:pb-40">
   <div class="container">
     <div class="mx-auto max-w-5xl">
@@ -40,189 +49,196 @@ const total = resources.length;
         </p>
       </Reveal>
 
-      <Group field={cmsField(cmsPath)} class="space-y-6">
-        {resources.map((resource, i) => (
-          <Item
-            index={i}
-            class="resource-card"
-            data-page={Math.floor(i / PAGE_SIZE) + 1}
-            style="opacity:0;transform:translateY(48px);transition:opacity 1.2s cubic-bezier(0.32,0.72,0,1),transform 1.2s cubic-bezier(0.32,0.72,0,1);will-change:opacity,transform;"
-          >
-            <div class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col gap-8 rounded-3xl border p-8 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl lg:flex-row lg:p-10">
-              {/* Content */}
-              <div class="flex flex-1 flex-col items-start gap-4">
-                <Heading3
-                  class="font-serif text-2xl leading-tight md:text-3xl"
-                  field={cmsField(cmsPath, `${i}.name`)}
-                  value={resource.name}
-                />
-
-                <span
-                  class="text-muted-foreground inline-flex items-center gap-2 text-sm"
-                  data-cms-field={cmsField(cmsPath, `${i}.location`)}
-                >
-                  <MapPin class="size-4" />
-                  {resource.location}
-                </span>
-
-                <Text
-                  as="p"
-                  class="text-muted-foreground text-base leading-relaxed whitespace-pre-line"
-                  field={cmsField(cmsPath, `${i}.description`)}
-                  value={resource.description}
-                />
-
-                <a
-                  href={resource.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-cms-field={cmsField(cmsPath, `${i}.link`)}
-                  class="group/btn bg-primary text-primary-foreground hover:shadow-primary/25 mt-auto inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
-                >
-                  View
-                  <ExternalLink class="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover/btn:translate-x-0.5" />
-                </a>
-              </div>
-
-              {/* Logo */}
-              {resource.image && (
-                <div class="border-border/30 relative flex aspect-video w-full shrink-0 items-center justify-center overflow-hidden rounded-2xl border bg-white p-6 lg:aspect-square lg:w-72">
-                  <Image
-                    field={cmsField(cmsPath, `${i}.image`)}
-                    value={resource.image}
-                    alt={resource.name}
-                    loading="lazy"
-                    decoding="async"
-                    class="max-h-full max-w-full object-contain transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+      <Collection
+        collection="resource-listings"
+        field={cmsPath}
+        class="space-y-6"
+      >
+        {
+          resources.map((resource, i) => (
+            <Item
+              index={i}
+              class="resource-card"
+              data-page={Math.floor(i / PAGE_SIZE) + 1}
+              style="opacity:0;transform:translateY(48px);transition:opacity 1.2s cubic-bezier(0.32,0.72,0,1),transform 1.2s cubic-bezier(0.32,0.72,0,1);will-change:opacity,transform;"
+            >
+              <div class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col gap-8 rounded-3xl border p-8 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl lg:flex-row lg:p-10">
+                {/* Content */}
+                <div class="flex flex-1 flex-col items-start gap-4">
+                  <Heading3
+                    class="font-serif text-2xl leading-tight md:text-3xl"
+                    field={f(`${i}.name`)}
+                    value={resource.name}
                   />
+
+                  <span
+                    class="text-muted-foreground inline-flex items-center gap-2 text-sm"
+                    data-cms-field={f(`${i}.location`)}
+                  >
+                    <MapPin class="size-4" />
+                    {resource.location}
+                  </span>
+
+                  <Text
+                    as="p"
+                    class="text-muted-foreground text-base leading-relaxed whitespace-pre-line"
+                    field={f(`${i}.description`)}
+                    value={resource.description}
+                  />
+
+                  <a
+                    href={resource.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cms-field={f(`${i}.link`)}
+                    class="group/btn bg-primary text-primary-foreground hover:shadow-primary/25 mt-auto inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
+                  >
+                    View
+                    <ExternalLink class="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover/btn:translate-x-0.5" />
+                  </a>
                 </div>
-              )}
-            </div>
-          </Item>
-        ))}
-      </Group>
+
+                {/* Logo */}
+                {resource.image && (
+                  <div class="border-border/30 relative flex aspect-video w-full shrink-0 items-center justify-center overflow-hidden rounded-2xl border bg-white p-6 lg:aspect-square lg:w-72">
+                    <Image
+                      field={f(`${i}.image`)}
+                      value={resource.image}
+                      alt={resource.name}
+                      loading="lazy"
+                      decoding="async"
+                      class="max-h-full max-w-full object-contain transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+                    />
+                  </div>
+                )}
+              </div>
+            </Item>
+          ))
+        }
+      </Collection>
 
       <nav
         id="resource-pagination"
         aria-label="Pagination"
         class="mt-16 flex items-center justify-center gap-2"
-      ></nav>
+      >
+      </nav>
     </div>
   </div>
 </section>
 
 <script>
   function initResourceList() {
-  const PAGE_SIZE = 10;
+    const PAGE_SIZE = 10;
 
-  const section = document.getElementById("resource-list");
-  const nav = document.getElementById("resource-pagination");
-  if (section && nav && !section.dataset.init) {
-    section.dataset.init = "1";
-    const cards = Array.from(
-      section.querySelectorAll<HTMLElement>(".resource-card")
-    );
-    const totalPages = Math.max(1, Math.ceil(cards.length / PAGE_SIZE));
-    let current = 1;
+    const section = document.getElementById("resource-list");
+    const nav = document.getElementById("resource-pagination");
+    if (section && nav && !section.dataset.init) {
+      section.dataset.init = "1";
+      const cards = Array.from(
+        section.querySelectorAll<HTMLElement>(".resource-card"),
+      );
+      const totalPages = Math.max(1, Math.ceil(cards.length / PAGE_SIZE));
+      let current = 1;
 
-    // Reveal on scroll into view (matches components/reveal.tsx behaviour).
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            const el = e.target as HTMLElement;
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0)";
-            io.unobserve(el);
+      // Reveal on scroll into view (matches components/reveal.tsx behaviour).
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              const el = e.target as HTMLElement;
+              el.style.opacity = "1";
+              el.style.transform = "translateY(0)";
+              io.unobserve(el);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+
+      const arrowUpRight = (extra: string) =>
+        `<svg class="size-4 ${extra}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>`;
+
+      // Compact page list with ellipsis: 1 … 4 5 [6] 7 8 … 20
+      const buildPages = (cur: number, tot: number): (number | "…")[] => {
+        if (tot <= 7) return Array.from({ length: tot }, (_, i) => i + 1);
+        const pages = new Set<number>([1, tot, cur]);
+        if (cur - 1 > 1) pages.add(cur - 1);
+        if (cur + 1 < tot) pages.add(cur + 1);
+        const sorted = [...pages].sort((a, b) => a - b);
+        const result: (number | "…")[] = [];
+        let prev = 0;
+        for (const p of sorted) {
+          if (p - prev > 1) result.push("…");
+          result.push(p);
+          prev = p;
+        }
+        return result;
+      };
+
+      const arrowCls =
+        "inline-flex size-11 items-center justify-center rounded-full border border-border/40 text-sm transition-colors hover:border-primary/30 disabled:pointer-events-none disabled:opacity-40";
+
+      const renderPagination = () => {
+        if (totalPages <= 1) {
+          nav.innerHTML = "";
+          return;
+        }
+        const parts: string[] = [];
+        parts.push(
+          `<button type="button" data-nav="${current - 1}" ${current === 1 ? "disabled" : ""} class="${arrowCls}">${arrowUpRight("-rotate-[135deg]")}</button>`,
+        );
+        for (const p of buildPages(current, totalPages)) {
+          if (p === "…") {
+            parts.push(
+              `<span class="text-muted-foreground inline-flex size-11 items-center justify-center text-sm">…</span>`,
+            );
+          } else {
+            const active = p === current;
+            const cls = active
+              ? "inline-flex size-11 items-center justify-center rounded-full border text-sm font-medium transition-colors border-primary bg-primary text-primary-foreground"
+              : "inline-flex size-11 items-center justify-center rounded-full border text-sm font-medium transition-colors border-border/40 hover:border-primary/30";
+            parts.push(
+              `<button type="button" data-nav="${p}" ${active ? 'aria-current="page"' : ""} class="${cls}">${p}</button>`,
+            );
+          }
+        }
+        parts.push(
+          `<button type="button" data-nav="${current + 1}" ${current === totalPages ? "disabled" : ""} class="${arrowCls}">${arrowUpRight("rotate-45")}</button>`,
+        );
+        nav.innerHTML = parts.join("");
+      };
+
+      const showPage = (p: number) => {
+        cards.forEach((c) => {
+          if (Number(c.dataset.page) === p) {
+            c.style.display = "";
+            c.style.opacity = "0";
+            c.style.transform = "translateY(48px)";
+            io.observe(c);
+          } else {
+            c.style.display = "none";
+            io.unobserve(c);
           }
         });
-      },
-      { threshold: 0.15 }
-    );
+        renderPagination();
+      };
 
-    const arrowUpRight = (extra: string) =>
-      `<svg class="size-4 ${extra}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>`;
+      const changePage = (next: number) => {
+        current = Math.min(Math.max(1, next), totalPages);
+        showPage(current);
+        section.scrollIntoView({ behavior: "smooth" });
+      };
 
-    // Compact page list with ellipsis: 1 … 4 5 [6] 7 8 … 20
-    const buildPages = (cur: number, tot: number): (number | "…")[] => {
-      if (tot <= 7) return Array.from({ length: tot }, (_, i) => i + 1);
-      const pages = new Set<number>([1, tot, cur]);
-      if (cur - 1 > 1) pages.add(cur - 1);
-      if (cur + 1 < tot) pages.add(cur + 1);
-      const sorted = [...pages].sort((a, b) => a - b);
-      const result: (number | "…")[] = [];
-      let prev = 0;
-      for (const p of sorted) {
-        if (p - prev > 1) result.push("…");
-        result.push(p);
-        prev = p;
-      }
-      return result;
-    };
-
-    const arrowCls =
-      "inline-flex size-11 items-center justify-center rounded-full border border-border/40 text-sm transition-colors hover:border-primary/30 disabled:pointer-events-none disabled:opacity-40";
-
-    const renderPagination = () => {
-      if (totalPages <= 1) {
-        nav.innerHTML = "";
-        return;
-      }
-      const parts: string[] = [];
-      parts.push(
-        `<button type="button" data-nav="${current - 1}" ${current === 1 ? "disabled" : ""} class="${arrowCls}">${arrowUpRight("-rotate-[135deg]")}</button>`
-      );
-      for (const p of buildPages(current, totalPages)) {
-        if (p === "…") {
-          parts.push(
-            `<span class="text-muted-foreground inline-flex size-11 items-center justify-center text-sm">…</span>`
-          );
-        } else {
-          const active = p === current;
-          const cls = active
-            ? "inline-flex size-11 items-center justify-center rounded-full border text-sm font-medium transition-colors border-primary bg-primary text-primary-foreground"
-            : "inline-flex size-11 items-center justify-center rounded-full border text-sm font-medium transition-colors border-border/40 hover:border-primary/30";
-          parts.push(
-            `<button type="button" data-nav="${p}" ${active ? 'aria-current="page"' : ""} class="${cls}">${p}</button>`
-          );
-        }
-      }
-      parts.push(
-        `<button type="button" data-nav="${current + 1}" ${current === totalPages ? "disabled" : ""} class="${arrowCls}">${arrowUpRight("rotate-45")}</button>`
-      );
-      nav.innerHTML = parts.join("");
-    };
-
-    const showPage = (p: number) => {
-      cards.forEach((c) => {
-        if (Number(c.dataset.page) === p) {
-          c.style.display = "";
-          c.style.opacity = "0";
-          c.style.transform = "translateY(48px)";
-          io.observe(c);
-        } else {
-          c.style.display = "none";
-          io.unobserve(c);
-        }
+      nav.addEventListener("click", (e) => {
+        const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
+          "button[data-nav]",
+        );
+        if (btn && !btn.disabled) changePage(Number(btn.dataset.nav));
       });
-      renderPagination();
-    };
 
-    const changePage = (next: number) => {
-      current = Math.min(Math.max(1, next), totalPages);
-      showPage(current);
-      section.scrollIntoView({ behavior: "smooth" });
-    };
-
-    nav.addEventListener("click", (e) => {
-      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
-        "button[data-nav]"
-      );
-      if (btn && !btn.disabled) changePage(Number(btn.dataset.nav));
-    });
-
-    showPage(1);
-  }
+      showPage(1);
+    }
   }
   document.addEventListener("astro:page-load", initResourceList);
 </script>

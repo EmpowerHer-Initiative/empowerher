@@ -5,9 +5,9 @@ description: >-
   inner fire of learning, resilience, and hope. Through knowledge, connection,
   and shared courage, her inner flame grows and spreads to other women, creating
   quiet but powerful change.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTtZJSp7RH9uDZYO2eqksXLbgS5pT0fia4Unhl'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTtZJSp7RH9uDZYO2eqksXLbgS5pT0fia4Unhl"
 imageAlt: Original work by the author
-date: '2026-01-08'
+date: "2026-01-08"
 authorName: Suhaila Naweed
 authorBio: >-
   Suhaila Naweed is a young Afghan artist, educator, and technology enthusiast

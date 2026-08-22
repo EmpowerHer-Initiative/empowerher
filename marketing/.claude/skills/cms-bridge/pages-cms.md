@@ -83,7 +83,13 @@ Baseline shape (keep what applies, extend after):
   "logo": "/media/logo.svg",
   "phone": "+1 904 555 0100",
   "email": "hello@client.com",
-  "address": { "street": "…", "city": "…", "region": "…", "zip": "…", "mapsUrl": "…" },
+  "address": {
+    "street": "…",
+    "city": "…",
+    "region": "…",
+    "zip": "…",
+    "mapsUrl": "…"
+  },
   "socials": [{ "label": "Instagram", "url": "…" }]
 }
 ```
@@ -112,7 +118,11 @@ page under Page Settings). The hub writes it **additively** — it never prunes.
     "googleAnalytics": "G-XXXXXXXXXX"
   },
   "pages": {
-    "home": { "title": "…", "description": "…", "ogImage": "/media/og-home.png" },
+    "home": {
+      "title": "…",
+      "description": "…",
+      "ogImage": "/media/og-home.png"
+    },
     "about": { "title": "…", "description": "…", "ogImage": "" }
   }
 }
@@ -141,7 +151,13 @@ guessing.
 ```astro
 ---
 import {
-  Heading1, Heading2, Text, Image, Link, Group, Item,
+  Heading1,
+  Heading2,
+  Text,
+  Image,
+  Link,
+  Group,
+  Item,
 } from "@alisamadiillc/cms-bridge/components";
 import pages from "../data/pages.json";
 const home = pages.home;
@@ -172,11 +188,17 @@ index goes in the field path.
 
 ```astro
 <Group field="gallery.images" class="grid">
-  {home.gallery.images.map((img, i) => (
-    <Item index={i}>
-      <Image field={`gallery.images.${i}.src`} value={img.src} alt={img.alt} />
-    </Item>
-  ))}
+  {
+    home.gallery.images.map((img, i) => (
+      <Item index={i}>
+        <Image
+          field={`gallery.images.${i}.src`}
+          value={img.src}
+          alt={img.alt}
+        />
+      </Item>
+    ))
+  }
 </Group>
 ```
 
@@ -204,7 +226,11 @@ Style the base look once in global CSS (`.cms-mark { … }`); override per field
 with `markClass` (or `markStyle`):
 
 ```astro
-<Heading1 field="hero.heading" value={home.hero.heading} markClass="text-brand-600 italic" />
+<Heading1
+  field="hero.heading"
+  value={home.hero.heading}
+  markClass="text-brand-600 italic"
+/>
 <!-- **pasta** → <span class="cms-mark text-brand-600 italic">pasta</span> -->
 ```
 
@@ -234,23 +260,30 @@ array position** (no `sort_order`). No `route`, no `body`. Default for data
 lists (team, partners, workshops, …).
 
 ```json
-{ "name": "team", "path": "src/data/collections/team.json",
-  "fields": [ { "name": "name", "type": "string", "required": true } ] }
+{
+  "name": "team",
+  "path": "src/data/collections/team.json",
+  "fields": [{ "name": "name", "type": "string", "required": true }]
+}
 ```
 
 The site imports the file directly, rendered in order:
 
 ```ts
-import team from "../data/collections/team.json";   // already ordered — no sort
+import team from "../data/collections/team.json"; // already ordered — no sort
 ```
 
 **Directory collection** — `path` is a FOLDER, one file per entry. Needed for
 `{slug}` routes and Markdown bodies (blog, stories).
 
 ```json
-{ "name": "blog", "path": "src/data/blog", "route": "/blog/{slug}",
+{
+  "name": "blog",
+  "path": "src/data/blog",
+  "route": "/blog/{slug}",
   "format": "md",
-  "fields": [ { "name": "title", "type": "string", "required": true } ] }
+  "fields": [{ "name": "title", "type": "string", "required": true }]
+}
 ```
 
 - `format` (directory only): `"md"` (frontmatter + body, default) or `"json"`.
@@ -316,7 +349,7 @@ them as noise, not signal, and never over-engineers around them.
   Reorder freely (e.g. home → about → sections → legal). No route, key, or
   content changes; nothing else reads the order.
 - **Item order in an array-collection file** — the array's order IS the display
-  order and the *only* ordering signal (there is no `sort_order` field). Moving
+  order and the _only_ ordering signal (there is no `sort_order` field). Moving
   a line up/down reorders that item on the site; it changes nothing else.
 
 > **Standing rule:** whenever a change turns out to be unnecessary for the AI to

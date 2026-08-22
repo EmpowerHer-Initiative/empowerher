@@ -15,9 +15,15 @@ fields:
       label: Mentors,
       type: string,
       list: true,
-      description: One entry per mentor; shown as "Mentor — A, B".,
+      description: One entry per mentor; shown as "Mentor — A,
+      B".,
     }
   - { name: description, label: Description, type: text }
   - { name: image, label: Image, type: image, required: true }
-  - { name: link, label: Application link, type: string, options: { type: url } }
+  - {
+      name: link,
+      label: Application link,
+      type: string,
+      options: { type: url },
+    }
   - { name: sort_order, label: Sort order, type: number, required: true }

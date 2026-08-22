@@ -1,7 +1,6 @@
 ---
 // Ports the StepByStep section from app/(marketing)/success-stories/spr/page.tsx
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
 import {
   Heading2,
   Heading3,
@@ -18,11 +17,10 @@ interface Props {
   eyebrow: string;
   heading: string;
   steps: Step[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "stepByStep"). */
-  cmsPath?: string;
 }
-const { eyebrow, heading, steps, cmsPath } = Astro.props;
+const { eyebrow, heading, steps } = Astro.props;
 ---
+
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-2xl">
@@ -30,12 +28,12 @@ const { eyebrow, heading, steps, cmsPath } = Astro.props;
         <Text
           as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={cmsField(cmsPath, "eyebrow")}
+          field={"stepByStep.eyebrow"}
           value={eyebrow}
         />
         <Heading2
           class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={cmsField(cmsPath, "heading")}
+          field={"stepByStep.heading"}
           value={heading}
         />
       </Reveal>
@@ -43,38 +41,41 @@ const { eyebrow, heading, steps, cmsPath } = Astro.props;
       {/* Vertical timeline */}
       <Reveal class="relative mt-16" delay={100}>
         {/* Connecting line */}
-        <div class="bg-border absolute top-4 bottom-4 left-[1.125rem] w-px"></div>
+        <div class="bg-border absolute top-4 bottom-4 left-[1.125rem] w-px">
+        </div>
 
-        <Group as="ol" field={cmsField(cmsPath, "steps")} class="space-y-0">
-          {steps.map((step, i) => (
-            <Item
-              index={i}
-              as="li"
-              class="group relative flex gap-8 pb-12 last:pb-0"
-            >
-              {/* Circle node */}
-              <div class="border-primary/40 bg-background group-hover:border-primary group-hover:bg-primary group-hover:shadow-primary/25 relative z-10 flex size-9 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:shadow-lg">
-                <span class="text-primary group-hover:text-primary-foreground text-[10px] font-bold transition-colors duration-500">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
+        <Group as="ol" field={"stepByStep.steps"} class="space-y-0">
+          {
+            steps.map((step, i) => (
+              <Item
+                index={i}
+                as="li"
+                class="group relative flex gap-8 pb-12 last:pb-0"
+              >
+                {/* Circle node */}
+                <div class="border-primary/40 bg-background group-hover:border-primary group-hover:bg-primary group-hover:shadow-primary/25 relative z-10 flex size-9 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:shadow-lg">
+                  <span class="text-primary group-hover:text-primary-foreground text-[10px] font-bold transition-colors duration-500">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
 
-              {/* Content */}
-              <div class="pt-0.5 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1">
-                <Heading3
-                  class="group-hover:text-primary text-lg leading-snug font-semibold transition-colors duration-500"
-                  field={cmsField(cmsPath, `steps.${i}.title`)}
-                  value={step.title}
-                />
-                <Text
-                  as="p"
-                  class="text-foreground/70 mt-3 text-sm leading-relaxed"
-                  field={cmsField(cmsPath, `steps.${i}.description`)}
-                  value={step.description}
-                />
-              </div>
-            </Item>
-          ))}
+                {/* Content */}
+                <div class="pt-0.5 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1">
+                  <Heading3
+                    class="group-hover:text-primary text-lg leading-snug font-semibold transition-colors duration-500"
+                    field={`stepByStep.steps.${i}.title`}
+                    value={step.title}
+                  />
+                  <Text
+                    as="p"
+                    class="text-foreground/70 mt-3 text-sm leading-relaxed"
+                    field={`stepByStep.steps.${i}.description`}
+                    value={step.description}
+                  />
+                </div>
+              </Item>
+            ))
+          }
         </Group>
       </Reveal>
     </div>

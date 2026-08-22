@@ -1,7 +1,6 @@
 ---
 // Ports components/marketing/sisterhood-sessions/community.tsx
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
 import {
   Heading2,
   Text,
@@ -16,12 +15,10 @@ interface Props {
   listIntro: string;
   benefits: string[];
   closing: string;
-  /** CMS field path prefix for live-preview highlighting (e.g. "community"). */
-  cmsPath?: string;
 }
-const { eyebrow, heading, body, listIntro, benefits, closing, cmsPath } =
-  Astro.props;
+const { eyebrow, heading, body, listIntro, benefits, closing } = Astro.props;
 ---
+
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-3xl">
@@ -29,14 +26,14 @@ const { eyebrow, heading, body, listIntro, benefits, closing, cmsPath } =
         <Text
           as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={cmsField(cmsPath, "eyebrow")}
+          field={"community.eyebrow"}
           value={eyebrow}
         />
       </Reveal>
       <Reveal delay={80}>
         <Heading2
           class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={cmsField(cmsPath, "heading")}
+          field={"community.heading"}
           value={heading}
         />
       </Reveal>
@@ -44,7 +41,7 @@ const { eyebrow, heading, body, listIntro, benefits, closing, cmsPath } =
         <Text
           as="p"
           class="text-muted-foreground mt-8 text-lg leading-relaxed"
-          field={cmsField(cmsPath, "body")}
+          field={"community.body"}
           value={body}
         />
       </Reveal>
@@ -52,7 +49,7 @@ const { eyebrow, heading, body, listIntro, benefits, closing, cmsPath } =
         <Text
           as="p"
           class="mt-10 text-base font-semibold"
-          field={cmsField(cmsPath, "listIntro")}
+          field={"community.listIntro"}
           value={listIntro}
         />
       </Reveal>
@@ -61,25 +58,27 @@ const { eyebrow, heading, body, listIntro, benefits, closing, cmsPath } =
       <Reveal delay={320}>
         <Group
           as="div"
-          field={cmsField(cmsPath, "benefits")}
+          field={"community.benefits"}
           class="divide-border/40 mt-6 divide-y"
         >
-          {benefits.map((benefit, i) => (
-            <Item
-              index={i}
-              class="group hover:bg-muted/20 flex items-start gap-8 py-7 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:gap-12"
-            >
-              <span class="text-muted-foreground/25 group-hover:text-primary/25 font-serif text-4xl leading-none transition-colors duration-500 md:text-5xl">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <Text
-                as="p"
-                class="text-muted-foreground pt-2 text-base leading-relaxed md:text-lg"
-                field={cmsField(cmsPath, `benefits.${i}`)}
-                value={benefit}
-              />
-            </Item>
-          ))}
+          {
+            benefits.map((benefit, i) => (
+              <Item
+                index={i}
+                class="group hover:bg-muted/20 flex items-start gap-8 py-7 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:gap-12"
+              >
+                <span class="text-muted-foreground/25 group-hover:text-primary/25 font-serif text-4xl leading-none transition-colors duration-500 md:text-5xl">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <Text
+                  as="p"
+                  class="text-muted-foreground pt-2 text-base leading-relaxed md:text-lg"
+                  field={`community.benefits.${i}`}
+                  value={benefit}
+                />
+              </Item>
+            ))
+          }
         </Group>
       </Reveal>
 
@@ -87,7 +86,7 @@ const { eyebrow, heading, body, listIntro, benefits, closing, cmsPath } =
         <Text
           as="p"
           class="text-muted-foreground mt-10 text-lg leading-relaxed"
-          field={cmsField(cmsPath, "closing")}
+          field={"community.closing"}
           value={closing}
         />
       </Reveal>

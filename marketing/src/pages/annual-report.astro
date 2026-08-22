@@ -5,10 +5,10 @@ import ReportCard from "../components/marketing/annual-report/ReportCard.astro";
 import pages from "../data/pages.json";
 const content = pages["annual-report"];
 
-const { seo, header, reportCard } = content;
+const { header, reportCard } = content;
 ---
 
 <Layout>
-  <Header {...header} cmsPath="header" />
-  <ReportCard {...reportCard} cmsPath="reportCard" />
+  <Header {...header} />
+  <ReportCard {...reportCard} />
 </Layout>

@@ -37,6 +37,7 @@ const footer = {
 // Icons are picked by the social's label; unknown labels fall back to text.
 const socialIcons: Record<string, any> = { Facebook, Instagram, LinkedIn };
 ---
+
 <footer class="border-border/30 border-t">
   <div class="container py-20 md:py-28">
     <div class="flex flex-col items-start justify-between gap-12 md:flex-row">
@@ -50,11 +51,18 @@ const socialIcons: Record<string, any> = { Facebook, Instagram, LinkedIn };
             class="w-40 -translate-x-6 object-contain md:w-54"
           />
         </a>
-        <p class="text-muted-foreground max-w-sm text-sm leading-[1.8]">{footer.text}</p>
-        <a href={`mailto:${email}`} class="text-foreground/70 hover:text-foreground mt-4 text-sm transition-colors">
+        <p class="text-muted-foreground max-w-sm text-sm leading-[1.8]">
+          {footer.text}
+        </p>
+        <a
+          href={`mailto:${email}`}
+          class="text-foreground/70 hover:text-foreground mt-4 text-sm transition-colors"
+        >
           Email: {email}
         </a>
-        <p class="text-muted-foreground mt-4 text-sm font-medium">{footer.est}</p>
+        <p class="text-muted-foreground mt-4 text-sm font-medium">
+          {footer.est}
+        </p>
         <p class="text-muted-foreground text-sm">{footer.location}</p>
       </div>
 
@@ -62,30 +70,46 @@ const socialIcons: Record<string, any> = { Facebook, Instagram, LinkedIn };
         <div>
           <p class="mb-4 text-lg font-bold">{footer.pagesTitle}</p>
           <ul class="space-y-2">
-            {footer.pages.map((link, i) => (
-              <li>
-                <a href={link.link} class="text-foreground/60 hover:text-foreground text-sm transition-colors duration-300">
-                  <span>{link.label}</span>
-                </a>
-              </li>
-            ))}
+            {
+              footer.pages.map((link, i) => (
+                <li>
+                  <a
+                    href={link.link}
+                    class="text-foreground/60 hover:text-foreground text-sm transition-colors duration-300"
+                  >
+                    <span>{link.label}</span>
+                  </a>
+                </li>
+              ))
+            }
           </ul>
         </div>
 
         <div class="flex flex-col items-start">
           <p class="mb-4 text-lg font-bold">{footer.followTitle}</p>
           <div class="flex gap-4">
-            {socials.map((s, i) => {
-              const Icon = socialIcons[s.label];
-              return (
-                <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={s.label} class="text-foreground/70 hover:text-foreground transition-colors">
-                  {Icon ? <Icon class="size-6" /> : s.label}
-                </a>
-              );
-            })}
+            {
+              socials.map((s, i) => {
+                const Icon = socialIcons[s.label];
+                return (
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    class="text-foreground/70 hover:text-foreground transition-colors"
+                  >
+                    {Icon ? <Icon class="size-6" /> : s.label}
+                  </a>
+                );
+              })
+            }
           </div>
 
-          <a href={footer.reportCta.link} class="bg-secondary text-secondary-foreground mt-5 inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium duration-300 will-change-transform hover:scale-105 active:scale-95">
+          <a
+            href={footer.reportCta.link}
+            class="bg-secondary text-secondary-foreground mt-5 inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium duration-300 will-change-transform hover:scale-105 active:scale-95"
+          >
             <FileText class="mr-2 size-4" />
             <span>{footer.reportCta.label}</span>
           </a>
@@ -93,11 +117,24 @@ const socialIcons: Record<string, any> = { Facebook, Instagram, LinkedIn };
       </div>
     </div>
 
-    <div class="border-border/20 mt-20 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
-      <p class="text-muted-foreground text-xs">&copy; {year} <span>{name}</span>. <span>{footer.rights}</span></p>
+    <div
+      class="border-border/20 mt-20 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row"
+    >
+      <p class="text-muted-foreground text-xs">
+        &copy; {year}
+        <span>{name}</span>. <span>{footer.rights}</span>
+      </p>
       <div class="flex gap-6">
-        <a href="/privacy" class="text-muted-foreground hover:text-foreground text-xs transition-colors"><span>{footer.privacyLabel}</span></a>
-        <a href="/terms" class="text-muted-foreground hover:text-foreground text-xs transition-colors"><span>{footer.termsLabel}</span></a>
+        <a
+          href="/privacy"
+          class="text-muted-foreground hover:text-foreground text-xs transition-colors"
+          ><span>{footer.privacyLabel}</span></a
+        >
+        <a
+          href="/terms"
+          class="text-muted-foreground hover:text-foreground text-xs transition-colors"
+          ><span>{footer.termsLabel}</span></a
+        >
       </div>
     </div>
   </div>

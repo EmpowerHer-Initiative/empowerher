@@ -2,23 +2,24 @@
 // Ports components/marketing/writing-contest/about-contest.tsx
 import Reveal from "../home/Reveal.astro";
 import BookOpen from "../../icons/BookOpen.astro";
-import { cmsField } from "../../../lib/cms";
 import { Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   title: string;
   paragraph: string;
-  cmsPath?: string;
 }
-const { title, paragraph, cmsPath } = Astro.props;
+const { title, paragraph } = Astro.props;
 ---
+
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="mx-auto max-w-4xl">
-      <!-- kept hand-tagged: heading mixes icon + text (multiple child elements) -->
+      {
+        /* kept hand-tagged: heading mixes icon + text (multiple child elements) */
+      }
       <h2
         class="flex items-center gap-3 font-serif text-3xl leading-tight md:text-4xl"
-        data-cms-field={cmsField(cmsPath, "title")}
+        data-cms-field={"aboutContest.title"}
       >
         <BookOpen class="text-primary size-8 shrink-0" />
         {title}
@@ -26,7 +27,7 @@ const { title, paragraph, cmsPath } = Astro.props;
       <Text
         as="p"
         class="text-muted-foreground mt-8 text-lg leading-[1.8]"
-        field={cmsField(cmsPath, "paragraph")}
+        field={"aboutContest.paragraph"}
         value={paragraph}
       />
     </Reveal>

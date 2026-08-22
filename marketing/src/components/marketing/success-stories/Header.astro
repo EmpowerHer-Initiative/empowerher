@@ -1,26 +1,37 @@
 ---
 // Ports components/marketing/success-stories/header.tsx
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
 import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   heading: string;
   subtitle: string;
-  /** CMS field path prefix for live-preview highlighting. */
-  cmsPath?: string;
 }
-const { heading, subtitle, cmsPath } = Astro.props;
+const { heading, subtitle } = Astro.props;
 ---
+
 <section class="pt-28 pb-12 md:pt-40 md:pb-16">
   <div class="container">
     <Reveal class="flex items-center justify-center gap-6">
-      <span class="via-border h-px max-w-[120px] flex-1 bg-gradient-to-r from-transparent to-transparent"></span>
-      <Heading1 class="text-center font-serif text-4xl md:text-6xl" field={cmsField(cmsPath, "heading")} value={heading} />
-      <span class="via-border h-px max-w-[120px] flex-1 bg-gradient-to-r from-transparent to-transparent"></span>
+      <span
+        class="via-border h-px max-w-[120px] flex-1 bg-gradient-to-r from-transparent to-transparent"
+      ></span>
+      <Heading1
+        class="text-center font-serif text-4xl md:text-6xl"
+        field={"header.heading"}
+        value={heading}
+      />
+      <span
+        class="via-border h-px max-w-[120px] flex-1 bg-gradient-to-r from-transparent to-transparent"
+      ></span>
     </Reveal>
     <Reveal delay={80}>
-      <Text as="p" class="text-muted-foreground mx-auto mt-6 max-w-xl text-center text-base leading-relaxed" field={cmsField(cmsPath, "subtitle")} value={subtitle} />
+      <Text
+        as="p"
+        class="text-muted-foreground mx-auto mt-6 max-w-xl text-center text-base leading-relaxed"
+        field={"header.subtitle"}
+        value={subtitle}
+      />
     </Reveal>
   </div>
 </section>

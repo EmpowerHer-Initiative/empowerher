@@ -1,8 +1,8 @@
 ---
 title: A Story from the Window of a Mud House
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqjUgW9BYobifLHTavDVU7h0yBGlSc4z8XEQn'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqjUgW9BYobifLHTavDVU7h0yBGlSc4z8XEQn"
 imageCredit: Image owned by the author
-date: '2026-05-30'
+date: "2026-05-30"
 authorName: Zarifa Gulabzada
 authorPosition: 5th Place — HerVoice 2026 Writing Contest
 authorBio: >-
@@ -17,7 +17,7 @@ authorBio: >-
   to pursue her education. She also volunteers with a small team called LearnUp
   Circle, which shares educational and scholarship opportunities for Afghan
   girls and youth.
-messageToWorld: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTFTzVl8i81Sgch3ByG9m45xzoRfbnkKwIXpZO'
+messageToWorld: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTFTzVl8i81Sgch3ByG9m45xzoRfbnkKwIXpZO"
 hideFromListing: true
 ---
 

@@ -2,8 +2,13 @@
 // Ports components/marketing/hervoice-winners/judge-testimonials.tsx
 // --hv-serif-i -> font-serif italic.
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
-import { Heading2, Text, Image, Group, Item } from "@alisamadiillc/cms-bridge/components";
+import {
+  Heading2,
+  Text,
+  Image,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Judge {
   name: string;
@@ -14,59 +19,66 @@ interface Judge {
 interface Props {
   title: string;
   judges: Judge[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "judgeTestimonials"). */
-  cmsPath?: string;
 }
-const { title, judges, cmsPath } = Astro.props;
+const { title, judges } = Astro.props;
 ---
+
 <section class="bg-white px-6 py-16 md:py-24">
   <div class="mx-auto max-w-5xl">
     <Reveal>
       <Heading2
         class="text-center font-serif text-3xl font-bold tracking-tight md:text-4xl"
-        field={cmsField(cmsPath, "title")}
+        field={"judgeTestimonials.title"}
         value={title}
       />
     </Reveal>
 
-    <Group field={cmsField(cmsPath, "judges")} class="mt-14 space-y-10">
-      {judges.map((judge, i) => (
-        <Reveal delay={i * 100}>
-          <Item index={i} class="flex flex-col gap-8 rounded-2xl border border-[#ECE3D2] bg-[#FAF6EE] p-8 md:flex-row md:p-10">
-            <Image
-              field={cmsField(cmsPath, `judges.${i}.image`)}
-              value={judge.image}
-              alt={judge.name}
-              loading="lazy"
-              decoding="async"
-              class="h-40 w-40 shrink-0 self-center rounded-2xl border-2 border-[#E0AE3C]/40 object-cover md:self-start"
-            />
-            <div class="flex-1">
-              {/* Quote is wrapped in literal &ldquo;/&rdquo; typographic marks around the field value — kept hand-tagged. */}
-              <blockquote class="font-serif text-[17px] leading-relaxed text-[#3C4654] italic" data-cms-field={cmsField(cmsPath, `judges.${i}.quote`)}>
-                &ldquo;{judge.quote}&rdquo;
-              </blockquote>
-              <div class="mt-6">
-                <div class="h-px w-full bg-[#E0AE3C]/30"></div>
-                <div class="mt-4">
-                  <Text
-                    as="p"
-                    class="font-serif text-sm font-bold text-[#1A2230]"
-                    field={cmsField(cmsPath, `judges.${i}.name`)}
-                    value={judge.name}
-                  />
-                  <Text
-                    as="p"
-                    class="mt-0.5 text-xs leading-snug text-[#6B7686]"
-                    field={cmsField(cmsPath, `judges.${i}.title`)}
-                    value={judge.title}
-                  />
+    <Group field={"judgeTestimonials.judges"} class="mt-14 space-y-10">
+      {
+        judges.map((judge, i) => (
+          <Reveal delay={i * 100}>
+            <Item
+              index={i}
+              class="flex flex-col gap-8 rounded-2xl border border-[#ECE3D2] bg-[#FAF6EE] p-8 md:flex-row md:p-10"
+            >
+              <Image
+                field={`judgeTestimonials.judges.${i}.image`}
+                value={judge.image}
+                alt={judge.name}
+                loading="lazy"
+                decoding="async"
+                class="h-40 w-40 shrink-0 self-center rounded-2xl border-2 border-[#E0AE3C]/40 object-cover md:self-start"
+              />
+              <div class="flex-1">
+                {/* Quote is wrapped in literal &ldquo;/&rdquo; typographic marks around the field value — kept hand-tagged. */}
+                <blockquote
+                  class="font-serif text-[17px] leading-relaxed text-[#3C4654] italic"
+                  data-cms-field={`judgeTestimonials.judges.${i}.quote`}
+                >
+                  &ldquo;{judge.quote}&rdquo;
+                </blockquote>
+                <div class="mt-6">
+                  <div class="h-px w-full bg-[#E0AE3C]/30" />
+                  <div class="mt-4">
+                    <Text
+                      as="p"
+                      class="font-serif text-sm font-bold text-[#1A2230]"
+                      field={`judgeTestimonials.judges.${i}.name`}
+                      value={judge.name}
+                    />
+                    <Text
+                      as="p"
+                      class="mt-0.5 text-xs leading-snug text-[#6B7686]"
+                      field={`judgeTestimonials.judges.${i}.title`}
+                      value={judge.title}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          </Item>
-        </Reveal>
-      ))}
+            </Item>
+          </Reveal>
+        ))
+      }
     </Group>
   </div>
 </section>

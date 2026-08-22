@@ -4,8 +4,8 @@ description: >-
   An Afghan woman's letter to future generations, expressing hope that current
   struggles will lead to a tomorrow where Afghan women can live freely, lead
   boldly, and pursue education without fear.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT2h374NLQtJ7K2Z4UcWn3gCXRdBvVoY9Ohil8'
-date: '2025-10-04'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT2h374NLQtJ7K2Z4UcWn3gCXRdBvVoY9Ohil8"
+date: "2025-10-04"
 authorName: Nelofar Mohammadi
 authorBio: >-
   Nelofar Mohammadi was born and raised in Kabul, Afghanistan, where she began

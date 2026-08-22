@@ -4,8 +4,7 @@ import ContactForm from "../components/marketing/contact/ContactForm.astro";
 import pages from "../data/pages.json";
 const content = pages.contact;
 
-const { seo, eyebrow, heading, intro, email, location, followUsTitle } =
-  content;
+const { eyebrow, heading, intro, email, location, followUsTitle } = content;
 ---
 
 <Layout>
@@ -16,6 +15,5 @@ const { seo, eyebrow, heading, intro, email, location, followUsTitle } =
     email={email}
     location={location}
     followUsTitle={followUsTitle}
-    cmsPath=""
   />
 </Layout>

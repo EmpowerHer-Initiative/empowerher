@@ -2,7 +2,6 @@
 // Ports components/marketing/legal/legal-body.tsx.
 import Reveal from "../home/Reveal.astro";
 import Article from "./Article.astro";
-import { cmsField } from "../../../lib/cms";
 import { Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Part {
@@ -17,38 +16,42 @@ interface Props {
     contactPrompt: string;
     email: string;
   };
-  /** CMS field path prefix for live-preview highlighting (e.g. "body"). */
-  cmsPath?: string;
 }
-const { parts, footer, cmsPath } = Astro.props;
+const { parts, footer } = Astro.props;
 
 const sectionIds = ["terms", "privacy"];
 ---
+
 <div class="container pb-32">
   <div class="mx-auto max-w-5xl">
-    {parts.map((part, i) => (
-      <Reveal>
-        <Article
-          id={sectionIds[i]}
-          eyebrow={part.eyebrow}
-          title={part.title}
-          cmsPath={cmsField(cmsPath, `parts.${i}`)}
-        >
-          {/* Hand-tagged: no wrapper div at this call site to host <Group> without
+    {
+      parts.map((part, i) => (
+        <Reveal>
+          <Article
+            id={sectionIds[i]}
+            eyebrow={part.eyebrow}
+            title={part.title}
+            cmsPath={`body.parts.${i}`}
+          >
+            {/* Hand-tagged: no wrapper div at this call site to host <Group> without
               breaking Article's `space-y-4` direct-child spacing on these paragraphs. */}
-          {part.paragraphs.map((paragraph, j) => (
-            <p data-cms-field={cmsField(cmsPath, `parts.${i}.paragraphs.${j}`)}>{paragraph}</p>
-          ))}
-        </Article>
-      </Reveal>
-    ))}
+            {part.paragraphs.map((paragraph, j) => (
+              <p data-cms-field={`body.parts.${i}.paragraphs.${j}`}>
+                {paragraph}
+              </p>
+            ))}
+          </Article>
+        </Reveal>
+      ))
+    }
 
     <div class="border-border/30 text-muted-foreground border-t pt-10 text-xs">
-      {footer.updated} {footer.contactPrompt}{" "}
+      {footer.updated}
+      {footer.contactPrompt}{" "}
       <Text
         as="a"
         href={`mailto:${footer.email}`}
-        field={cmsField(cmsPath, "footer.email")}
+        field={"body.footer.email"}
         value={footer.email}
         class="text-foreground underline-offset-4 hover:underline"
       />

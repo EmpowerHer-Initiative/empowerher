@@ -9,7 +9,6 @@ import TrendingUp from "../../icons/TrendingUp.astro";
 import Users from "../../icons/Users.astro";
 import Zap from "../../icons/Zap.astro";
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
 import {
   Heading2,
   Heading3,
@@ -27,78 +26,81 @@ interface Props {
   heading: string;
   items: Benefit[];
   importantNote: { title: string; body: string };
-  /** CMS field path prefix for live-preview highlighting (e.g. "benefits"). */
-  cmsPath?: string;
 }
-const { eyebrow, heading, items, importantNote, cmsPath } = Astro.props;
+const { eyebrow, heading, items, importantNote } = Astro.props;
 
 // Per-item icons stay in code, zipped to items by index.
 const icons = [Laptop, BriefcaseBusiness, Zap, Users, Network, TrendingUp];
 ---
+
 <section class="bg-foreground/[0.03] py-28 md:py-40">
   <div class="container">
     <Reveal class="mx-auto max-w-2xl">
       <Text
         as="p"
         class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-        field={cmsField(cmsPath, "eyebrow")}
+        field={"benefits.eyebrow"}
         value={eyebrow}
       />
       <Heading2
         class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-        field={cmsField(cmsPath, "heading")}
+        field={"benefits.heading"}
         value={heading}
       />
     </Reveal>
 
     <div class="mx-auto mt-16 max-w-2xl">
       <Reveal class="grid gap-5 sm:grid-cols-2" delay={80}>
-        <Group field={cmsField(cmsPath, "items")} class="contents">
-          {items.map((benefit, i) => {
-            const Icon = icons[i % icons.length];
-            return (
-              <Item
-                index={i}
-                class="group border-border/60 bg-background hover:border-primary/30 hover:shadow-primary/5 flex gap-5 rounded-2xl border p-7 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
-              >
-                <div class="bg-primary/10 text-primary flex size-11 shrink-0 items-center justify-center rounded-xl">
-                  <Icon class="size-5" />
-                </div>
-                <div>
-                  <Heading3
-                    class="text-base font-semibold"
-                    field={cmsField(cmsPath, `items.${i}.title`)}
-                    value={benefit.title}
-                  />
-                  <Text
-                    as="p"
-                    class="text-foreground/70 mt-2 text-sm leading-relaxed"
-                    field={cmsField(cmsPath, `items.${i}.description`)}
-                    value={benefit.description}
-                  />
-                </div>
-              </Item>
-            );
-          })}
+        <Group field={"benefits.items"} class="contents">
+          {
+            items.map((benefit, i) => {
+              const Icon = icons[i % icons.length];
+              return (
+                <Item
+                  index={i}
+                  class="group border-border/60 bg-background hover:border-primary/30 hover:shadow-primary/5 flex gap-5 rounded-2xl border p-7 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <div class="bg-primary/10 text-primary flex size-11 shrink-0 items-center justify-center rounded-xl">
+                    <Icon class="size-5" />
+                  </div>
+                  <div>
+                    <Heading3
+                      class="text-base font-semibold"
+                      field={`benefits.items.${i}.title`}
+                      value={benefit.title}
+                    />
+                    <Text
+                      as="p"
+                      class="text-foreground/70 mt-2 text-sm leading-relaxed"
+                      field={`benefits.items.${i}.description`}
+                      value={benefit.description}
+                    />
+                  </div>
+                </Item>
+              );
+            })
+          }
         </Group>
       </Reveal>
     </div>
 
     {/* Volunteer note */}
     <Reveal class="mx-auto mt-12 max-w-2xl">
-      <div class="flex gap-4 rounded-2xl border border-l-4 border-red-200 border-l-red-600 bg-red-50 p-6">
+      <div
+        class="flex gap-4 rounded-2xl border border-l-4 border-red-200 border-l-red-600 bg-red-50 p-6"
+      >
         <AlertCircle class="mt-0.5 size-5 shrink-0 text-red-600" />
         <div>
           <Text
             as="p"
             class="text-sm font-semibold text-red-800"
-            field={cmsField(cmsPath, "importantNote.title")}
+            field={"benefits.importantNote.title"}
             value={importantNote.title}
           />
           <Text
             as="p"
             class="text-foreground/80 mt-1.5 text-sm leading-relaxed"
-            field={cmsField(cmsPath, "importantNote.body")}
+            field={"benefits.importantNote.body"}
             value={importantNote.body}
           />
         </div>
@@ -111,7 +113,9 @@ const icons = [Laptop, BriefcaseBusiness, Zap, Users, Network, TrendingUp];
         class="group bg-foreground text-background hover:shadow-foreground/10 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
       >
         Apply Now
-        <span class="bg-background/10 flex size-6 items-center justify-center rounded-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5">
+        <span
+          class="bg-background/10 flex size-6 items-center justify-center rounded-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5"
+        >
           <ArrowRight class="size-3.5" />
         </span>
       </a>

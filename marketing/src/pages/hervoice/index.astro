@@ -22,19 +22,13 @@ const writingCards = stories
     authorName: authorName ?? null,
   }));
 ---
+
 <Layout>
-  <Hero {...content.hero} cmsPath="hero" />
-  <HowToSubmit {...content.howToSubmit} cmsPath="howToSubmit" />
-  <Eligibility {...content.eligibility} cmsPath="eligibility" />
-  <FeaturedWritings
-    {...content.featuredWritings}
-    stories={writingCards}
-    cmsPath="featuredWritings"
-  />
-  <CongressionalTestimonies
-    {...content.congressionalTestimonies}
-    cmsPath="congressionalTestimonies"
-  />
-  <PartnerSupport {...content.partnerSupport} cmsPath="partnerSupport" />
-  <WritingContestCTA {...content.writingContestCTA} cmsPath="writingContestCTA" />
+  <Hero {...content.hero} />
+  <HowToSubmit {...content.howToSubmit} />
+  <Eligibility {...content.eligibility} />
+  <FeaturedWritings {...content.featuredWritings} stories={writingCards} />
+  <CongressionalTestimonies {...content.congressionalTestimonies} />
+  <PartnerSupport {...content.partnerSupport} />
+  <WritingContestCTA {...content.writingContestCTA} />
 </Layout>

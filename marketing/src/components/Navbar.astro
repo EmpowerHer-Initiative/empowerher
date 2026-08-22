@@ -63,110 +63,180 @@ const navLinks = navItems.map((item) => ({
 
 const isHome = Astro.url.pathname === "/";
 ---
-<nav id="site-nav" transition:persist="site-nav" class:list={["site-nav", { home: isHome }]} data-state={isHome ? "top" : "scrolled"}>
+
+<nav
+  id="site-nav"
+  transition:persist="site-nav"
+  class:list={["site-nav", { home: isHome }]}
+  data-state={isHome ? "top" : "scrolled"}
+>
   <div class="container flex h-16 items-center justify-between lg:h-20">
-    <a href="/" class="nav-brand flex items-center gap-2 transition-colors duration-300">
+    <a
+      href="/"
+      class="nav-brand flex items-center gap-2 transition-colors duration-300"
+    >
       <Logo class="size-12" />
-      <span class="font-serif text-xl leading-[1]">{nameFirst}<br class="md:hidden" /> {nameRest}</span>
+      <span class="font-serif text-xl leading-[1]"
+        >{nameFirst}<br class="md:hidden" /> {nameRest}</span
+      >
     </a>
 
     <div class="hidden items-center gap-6 lg:flex">
-      {navLinks.map((link, i) => (
-        <div class="group relative">
-          {link.children?.length ? (
-            <button data-paths={link.paths.join(" ")} class="nav-link flex items-center gap-1 text-[13px] font-medium transition-colors duration-300">
-              <span>{link.label}</span>
-              <ChevronDown class="size-3 transition-transform duration-300 group-hover:rotate-180" />
-            </button>
-          ) : (
-            <a href={link.link} data-paths={link.paths.join(" ")} class="nav-link text-[13px] font-medium transition-colors duration-300">
-              <span>{link.label}</span>
-            </a>
-          )}
+      {
+        navLinks.map((link, i) => (
+          <div class="group relative">
+            {link.children?.length ? (
+              <button
+                data-paths={link.paths.join(" ")}
+                class="nav-link flex items-center gap-1 text-[13px] font-medium transition-colors duration-300"
+              >
+                <span>{link.label}</span>
+                <ChevronDown class="size-3 transition-transform duration-300 group-hover:rotate-180" />
+              </button>
+            ) : (
+              <a
+                href={link.link}
+                data-paths={link.paths.join(" ")}
+                class="nav-link text-[13px] font-medium transition-colors duration-300"
+              >
+                <span>{link.label}</span>
+              </a>
+            )}
 
-          {!!link.children?.length && (
-            <div class="dropdown absolute top-full left-1/2 z-50 pt-4 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)]">
-              <div class="border-border/50 bg-background/95 shadow-dropdown min-w-[280px] rounded-2xl border p-1.5 backdrop-blur-xl">
-                {link.children.map((child, ci) => (
-                  child.children?.length ? (
-                    <div>
-                      <a href={child.link} class="text-foreground hover:bg-muted/50 block rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors duration-200">
+            {!!link.children?.length && (
+              <div class="dropdown absolute top-full left-1/2 z-50 pt-4 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)]">
+                <div class="border-border/50 bg-background/95 shadow-dropdown min-w-[280px] rounded-2xl border p-1.5 backdrop-blur-xl">
+                  {link.children.map((child, ci) =>
+                    child.children?.length ? (
+                      <div>
+                        <a
+                          href={child.link}
+                          class="text-foreground hover:bg-muted/50 block rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors duration-200"
+                        >
+                          <span>{child.label}</span>
+                        </a>
+                        {child.children.map((sub, si) => (
+                          <a
+                            href={sub.link}
+                            class="text-foreground/60 hover:bg-muted/50 hover:text-foreground block rounded-xl px-4 py-2.5 pl-7 text-[13px] transition-colors duration-200"
+                          >
+                            <span>{sub.label}</span>
+                          </a>
+                        ))}
+                      </div>
+                    ) : (
+                      <a
+                        href={child.link}
+                        class="text-foreground/70 hover:bg-muted/50 hover:text-foreground block rounded-xl px-4 py-2.5 text-sm transition-colors duration-200"
+                      >
                         <span>{child.label}</span>
                       </a>
-                      {child.children.map((sub, si) => (
-                        <a href={sub.link} class="text-foreground/60 hover:bg-muted/50 hover:text-foreground block rounded-xl px-4 py-2.5 pl-7 text-[13px] transition-colors duration-200">
-                          <span>{sub.label}</span>
-                        </a>
-                      ))}
-                    </div>
-                  ) : (
-                    <a href={child.link} class="text-foreground/70 hover:bg-muted/50 hover:text-foreground block rounded-xl px-4 py-2.5 text-sm transition-colors duration-200">
-                      <span>{child.label}</span>
-                    </a>
-                  )
-                ))}
+                    ),
+                  )}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-      ))}
+            )}
+          </div>
+        ))
+      }
     </div>
 
-    <a href={navCta.link} data-paths={navCta.link} class="nav-cta hidden rounded-full px-6 py-2.5 text-[13px] font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97] lg:inline-flex">
+    <a
+      href={navCta.link}
+      data-paths={navCta.link}
+      class="nav-cta hidden rounded-full px-6 py-2.5 text-[13px] font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97] lg:inline-flex"
+    >
       <span>{navCta.label}</span>
     </a>
 
     <div class="flex items-center gap-3 lg:hidden">
-      <a href={navCta.link} data-paths={navCta.link} class="nav-cta inline-flex rounded-full px-4 py-2 text-xs font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97]">
+      <a
+        href={navCta.link}
+        data-paths={navCta.link}
+        class="nav-cta inline-flex rounded-full px-4 py-2 text-xs font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97]"
+      >
         <span>{navCta.label}</span>
       </a>
 
-      <button id="nav-toggle" class="relative z-50 flex size-10 flex-col items-center justify-center gap-1.5" aria-label="Menu">
-        <span class="bar bar-1 h-[1.5px] w-5 rounded-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"></span>
-        <span class="bar bar-2 h-[1.5px] w-5 rounded-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"></span>
+      <button
+        id="nav-toggle"
+        class="relative z-50 flex size-10 flex-col items-center justify-center gap-1.5"
+        aria-label="Menu"
+      >
+        <span
+          class="bar bar-1 h-[1.5px] w-5 rounded-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+        ></span>
+        <span
+          class="bar bar-2 h-[1.5px] w-5 rounded-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+        ></span>
       </button>
     </div>
   </div>
 </nav>
 
-<div id="mobile-menu" transition:persist="mobile-menu" class="bg-background fixed inset-0 z-30 transition-all duration-[600ms] ease-[cubic-bezier(0.32,0.72,0,1)] lg:hidden">
+<div
+  id="mobile-menu"
+  transition:persist="mobile-menu"
+  class="bg-background fixed inset-0 z-30 transition-all duration-[600ms] ease-[cubic-bezier(0.32,0.72,0,1)] lg:hidden"
+>
   <div class="container flex h-full flex-col justify-center">
-    {navLinks.map((link, i) => (
-      <div class="m-item border-border/20 border-b transition-all duration-700" style={`transition-delay:${80 + i * 40}ms`}>
-        {link.children?.length ? (
-          <>
-            <button data-paths={link.paths.join(" ")} class="m-sub-toggle flex w-full items-center justify-between py-5 text-2xl font-bold">
-              <span>{link.label}</span>
-              <ChevronDown class="m-chevron size-5 transition-transform duration-300" />
-            </button>
-            <div class="m-sub overflow-hidden transition-all duration-500">
-              {link.children.map((c, ci) => (
-                c.children?.length ? (
-                  <div>
-                    <a href={c.link} class="block py-2 pl-4 text-lg font-semibold">
+    {
+      navLinks.map((link, i) => (
+        <div
+          class="m-item border-border/20 border-b transition-all duration-700"
+          style={`transition-delay:${80 + i * 40}ms`}
+        >
+          {link.children?.length ? (
+            <>
+              <button
+                data-paths={link.paths.join(" ")}
+                class="m-sub-toggle flex w-full items-center justify-between py-5 text-2xl font-bold"
+              >
+                <span>{link.label}</span>
+                <ChevronDown class="m-chevron size-5 transition-transform duration-300" />
+              </button>
+              <div class="m-sub overflow-hidden transition-all duration-500">
+                {link.children.map((c, ci) =>
+                  c.children?.length ? (
+                    <div>
+                      <a
+                        href={c.link}
+                        class="block py-2 pl-4 text-lg font-semibold"
+                      >
+                        <span>{c.label}</span>
+                      </a>
+                      {c.children.map((sub, si) => (
+                        <a
+                          href={sub.link}
+                          class="text-muted-foreground block py-1.5 pl-8 text-base"
+                        >
+                          <span>{sub.label}</span>
+                        </a>
+                      ))}
+                    </div>
+                  ) : (
+                    <a
+                      href={c.link}
+                      class="text-muted-foreground block py-2 pl-4 text-lg"
+                    >
                       <span>{c.label}</span>
                     </a>
-                    {c.children.map((sub, si) => (
-                      <a href={sub.link} class="text-muted-foreground block py-1.5 pl-8 text-base">
-                        <span>{sub.label}</span>
-                      </a>
-                    ))}
-                  </div>
-                ) : (
-                  <a href={c.link} class="text-muted-foreground block py-2 pl-4 text-lg">
-                    <span>{c.label}</span>
-                  </a>
-                )
-              ))}
-            </div>
-          </>
-        ) : (
-          <a href={link.link} data-paths={link.paths.join(" ")} class="m-nav-link block py-5 text-2xl font-bold">
-            <span>{link.label}</span>
-          </a>
-        )}
-      </div>
-    ))}
+                  ),
+                )}
+              </div>
+            </>
+          ) : (
+            <a
+              href={link.link}
+              data-paths={link.paths.join(" ")}
+              class="m-nav-link block py-5 text-2xl font-bold"
+            >
+              <span>{link.label}</span>
+            </a>
+          )}
+        </div>
+      ))
+    }
   </div>
 </div>
 
@@ -190,59 +260,129 @@ const isHome = Astro.url.pathname === "/";
   }
   .site-nav[data-state="scrolled"] {
     background: var(--color-background);
-    border-bottom: 1px solid color-mix(in oklab, var(--color-border) 30%, transparent);
+    border-bottom: 1px solid
+      color-mix(in oklab, var(--color-border) 30%, transparent);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
   }
 
   /* Brand */
-  .site-nav[data-state="top"] .nav-brand { color: #fff; }
+  .site-nav[data-state="top"] .nav-brand {
+    color: #fff;
+  }
   .site-nav[data-state="scrolled"] .nav-brand,
-  .site-nav.menu-open .nav-brand { color: var(--color-primary); }
+  .site-nav.menu-open .nav-brand {
+    color: var(--color-primary);
+  }
 
   /* Nav links / triggers */
-  .site-nav[data-state="top"] .nav-link { color: color-mix(in oklab, #fff 70%, transparent); }
-  .site-nav[data-state="top"] .nav-link:hover { color: #fff; }
-  .site-nav[data-state="scrolled"] .nav-link { color: color-mix(in oklab, var(--color-foreground) 60%, transparent); }
-  .site-nav[data-state="scrolled"] .nav-link:hover { color: var(--color-foreground); }
+  .site-nav[data-state="top"] .nav-link {
+    color: color-mix(in oklab, #fff 70%, transparent);
+  }
+  .site-nav[data-state="top"] .nav-link:hover {
+    color: #fff;
+  }
+  .site-nav[data-state="scrolled"] .nav-link {
+    color: color-mix(in oklab, var(--color-foreground) 60%, transparent);
+  }
+  .site-nav[data-state="scrolled"] .nav-link:hover {
+    color: var(--color-foreground);
+  }
 
   /* Active tab — current page. Wins over both data-state rules. */
   .site-nav .nav-link.active,
   .site-nav[data-state="top"] .nav-link.active,
-  .site-nav[data-state="scrolled"] .nav-link.active { color: var(--color-primary); }
+  .site-nav[data-state="scrolled"] .nav-link.active {
+    color: var(--color-primary);
+  }
   .m-nav-link.active,
-  .m-sub-toggle.active { color: var(--color-primary); }
+  .m-sub-toggle.active {
+    color: var(--color-primary);
+  }
 
   /* Dropdown panel */
-  .dropdown { opacity: 0; transform: translate(-50%, 0.25rem); pointer-events: none; }
-  .group:hover .dropdown { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  .dropdown {
+    opacity: 0;
+    transform: translate(-50%, 0.25rem);
+    pointer-events: none;
+  }
+  .group:hover .dropdown {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
+  }
 
   /* CTA */
-  .site-nav[data-state="top"] .nav-cta { background: #fff; color: #000; }
-  .site-nav[data-state="top"] .nav-cta:hover { background: color-mix(in oklab, #fff 90%, transparent); }
-  .site-nav[data-state="scrolled"] .nav-cta { background: var(--color-primary); color: var(--color-primary-foreground); }
-  .site-nav[data-state="scrolled"] .nav-cta:hover { background: color-mix(in oklab, var(--color-primary) 90%, transparent); }
-  .site-nav .nav-cta.active { box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-primary) 45%, transparent); }
+  .site-nav[data-state="top"] .nav-cta {
+    background: #fff;
+    color: #000;
+  }
+  .site-nav[data-state="top"] .nav-cta:hover {
+    background: color-mix(in oklab, #fff 90%, transparent);
+  }
+  .site-nav[data-state="scrolled"] .nav-cta {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+  .site-nav[data-state="scrolled"] .nav-cta:hover {
+    background: color-mix(in oklab, var(--color-primary) 90%, transparent);
+  }
+  .site-nav .nav-cta.active {
+    box-shadow: 0 0 0 2px
+      color-mix(in oklab, var(--color-primary) 45%, transparent);
+  }
   /* Mobile menu open: nav sits over the white overlay, so the top-state white
      button would vanish — force the primary fill. */
-  .site-nav.menu-open .nav-cta { background: var(--color-primary); color: var(--color-primary-foreground); }
+  .site-nav.menu-open .nav-cta {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
 
   /* Hamburger bars */
-  .site-nav[data-state="top"] .bar { background: #fff; }
+  .site-nav[data-state="top"] .bar {
+    background: #fff;
+  }
   .site-nav[data-state="scrolled"] .bar,
-  .site-nav.menu-open .bar { background: var(--color-foreground); }
-  .site-nav.menu-open .bar-1 { transform: translateY(4px) rotate(45deg); }
-  .site-nav.menu-open .bar-2 { transform: translateY(-2px) rotate(-45deg); }
+  .site-nav.menu-open .bar {
+    background: var(--color-foreground);
+  }
+  .site-nav.menu-open .bar-1 {
+    transform: translateY(4px) rotate(45deg);
+  }
+  .site-nav.menu-open .bar-2 {
+    transform: translateY(-2px) rotate(-45deg);
+  }
 
   /* Mobile overlay */
-  #mobile-menu { opacity: 0; pointer-events: none; }
-  #mobile-menu.open { opacity: 1; pointer-events: auto; }
-  .m-item { opacity: 0; transform: translateY(1rem); }
-  #mobile-menu.open .m-item { opacity: 1; transform: translateY(0); }
-  .m-sub { max-height: 0; opacity: 0; }
-  .m-item.expanded .m-sub { max-height: 24rem; opacity: 1; padding-bottom: 1rem; }
-  .m-item.expanded .m-chevron { transform: rotate(180deg); }
+  #mobile-menu {
+    opacity: 0;
+    pointer-events: none;
+  }
+  #mobile-menu.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .m-item {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  #mobile-menu.open .m-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .m-sub {
+    max-height: 0;
+    opacity: 0;
+  }
+  .m-item.expanded .m-sub {
+    max-height: 24rem;
+    opacity: 1;
+    padding-bottom: 1rem;
+  }
+  .m-item.expanded .m-chevron {
+    transform: rotate(180deg);
+  }
 </style>
 
 <script>
@@ -310,7 +450,8 @@ const isHome = Astro.url.pathname === "/";
   // lights up "Success Stories". Runs on the persisted nav + mobile menu.
   function syncActive() {
     const path = location.pathname.replace(/\/+$/, "") || "/";
-    const owns = (owned: string) => path === owned || path.startsWith(owned + "/");
+    const owns = (owned: string) =>
+      path === owned || path.startsWith(owned + "/");
 
     document.querySelectorAll<HTMLElement>("[data-paths]").forEach((el) => {
       el.classList.remove("active");
@@ -320,7 +461,9 @@ const isHome = Astro.url.pathname === "/";
     let best: HTMLElement | null = null;
     let bestLen = 0;
     document.querySelectorAll<HTMLElement>("[data-paths]").forEach((el) => {
-      for (const owned of (el.dataset.paths || "").split(/\s+/).filter(Boolean)) {
+      for (const owned of (el.dataset.paths || "")
+        .split(/\s+/)
+        .filter(Boolean)) {
         if (owns(owned) && owned.length > bestLen) {
           best = el;
           bestLen = owned.length;

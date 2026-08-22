@@ -2,8 +2,12 @@
 // Ports components/marketing/hervoice/how-to-submit.tsx
 import Reveal from "../home/Reveal.astro";
 import Highlight from "../../Highlight.astro";
-import { cmsField } from "../../../lib/cms";
-import { Heading3, Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
+import {
+  Heading3,
+  Text,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -13,8 +17,6 @@ interface Props {
   guidelinesTitle: string;
   guidelines: { label: string; text: string }[];
   steps: { num: string; title: string; desc: string }[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "howToSubmit"). */
-  cmsPath?: string;
 }
 const {
   eyebrow,
@@ -24,9 +26,9 @@ const {
   guidelinesTitle,
   guidelines,
   steps,
-  cmsPath,
 } = Astro.props;
 ---
+
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <div class="grid gap-16 lg:grid-cols-2 lg:gap-24">
@@ -36,19 +38,23 @@ const {
           <Text
             as="p"
             class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
-            field={cmsField(cmsPath, "eyebrow")}
+            field={"howToSubmit.eyebrow"}
             value={eyebrow}
           />
           <h2 class="mt-4 font-serif text-3xl leading-tight md:text-5xl">
-            <Text as="span" field={cmsField(cmsPath, "heading")} value={heading} />
+            <Text as="span" field={"howToSubmit.heading"} value={heading} />
             <br />
-            <!-- hlClass="italic" wrapper — kept hand-tagged, no bridge equivalent. -->
-            <span data-cms-field={cmsField(cmsPath, "headingAccent")}><Highlight text={headingAccent} hlClass="italic" /></span>
+            {
+              /* hlClass="italic" wrapper — kept hand-tagged, no bridge equivalent. */
+            }
+            <span data-cms-field={"howToSubmit.headingAccent"}
+              ><Highlight text={headingAccent} hlClass="italic" /></span
+            >
           </h2>
           <Text
             as="p"
             class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]"
-            field={cmsField(cmsPath, "description")}
+            field={"howToSubmit.description"}
             value={description}
           />
 
@@ -57,29 +63,31 @@ const {
             <Text
               as="p"
               class="text-primary text-sm font-semibold tracking-[0.3em] uppercase"
-              field={cmsField(cmsPath, "guidelinesTitle")}
+              field={"howToSubmit.guidelinesTitle"}
               value={guidelinesTitle}
             />
-            <Group field={cmsField(cmsPath, "guidelines")} class="space-y-5">
-              {guidelines.map(({ label, text }, i) => (
-                <Item
-                  index={i}
-                  class="group border-primary/30 hover:border-primary hover:bg-primary/[0.04] rounded-r-lg border-l-2 py-1.5 pl-5 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:translate-x-1"
-                >
-                  <Text
-                    as="p"
-                    class="text-foreground group-hover:text-primary text-lg font-semibold transition-colors duration-500"
-                    field={cmsField(cmsPath, `guidelines.${i}.label`)}
-                    value={label}
-                  />
-                  <Text
-                    as="p"
-                    class="text-muted-foreground mt-1 text-base leading-relaxed"
-                    field={cmsField(cmsPath, `guidelines.${i}.text`)}
-                    value={text}
-                  />
-                </Item>
-              ))}
+            <Group field={"howToSubmit.guidelines"} class="space-y-5">
+              {
+                guidelines.map(({ label, text }, i) => (
+                  <Item
+                    index={i}
+                    class="group border-primary/30 hover:border-primary hover:bg-primary/[0.04] rounded-r-lg border-l-2 py-1.5 pl-5 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:translate-x-1"
+                  >
+                    <Text
+                      as="p"
+                      class="text-foreground group-hover:text-primary text-lg font-semibold transition-colors duration-500"
+                      field={`howToSubmit.guidelines.${i}.label`}
+                      value={label}
+                    />
+                    <Text
+                      as="p"
+                      class="text-muted-foreground mt-1 text-base leading-relaxed"
+                      field={`howToSubmit.guidelines.${i}.text`}
+                      value={text}
+                    />
+                  </Item>
+                ))
+              }
             </Group>
           </div>
         </div>
@@ -87,30 +95,35 @@ const {
 
       {/* Right — numbered steps in a vertical list */}
       <Reveal delay={120}>
-        <Group field={cmsField(cmsPath, "steps")} class="divide-border space-y-0 divide-y">
-          {steps.map((step, i) => (
-            <Item index={i} class="flex gap-6 py-8 first:pt-0 last:pb-0">
-              <Text
-                as="span"
-                class="text-primary font-serif text-5xl md:text-6xl"
-                field={cmsField(cmsPath, `steps.${i}.num`)}
-                value={step.num}
-              />
-              <div class="pt-1">
-                <Heading3
-                  class="text-foreground text-lg font-semibold md:text-xl"
-                  field={cmsField(cmsPath, `steps.${i}.title`)}
-                  value={step.title}
-                />
+        <Group
+          field={"howToSubmit.steps"}
+          class="divide-border space-y-0 divide-y"
+        >
+          {
+            steps.map((step, i) => (
+              <Item index={i} class="flex gap-6 py-8 first:pt-0 last:pb-0">
                 <Text
-                  as="p"
-                  class="text-muted-foreground mt-2 text-base leading-relaxed"
-                  field={cmsField(cmsPath, `steps.${i}.desc`)}
-                  value={step.desc}
+                  as="span"
+                  class="text-primary font-serif text-5xl md:text-6xl"
+                  field={`howToSubmit.steps.${i}.num`}
+                  value={step.num}
                 />
-              </div>
-            </Item>
-          ))}
+                <div class="pt-1">
+                  <Heading3
+                    class="text-foreground text-lg font-semibold md:text-xl"
+                    field={`howToSubmit.steps.${i}.title`}
+                    value={step.title}
+                  />
+                  <Text
+                    as="p"
+                    class="text-muted-foreground mt-2 text-base leading-relaxed"
+                    field={`howToSubmit.steps.${i}.desc`}
+                    value={step.desc}
+                  />
+                </div>
+              </Item>
+            ))
+          }
         </Group>
       </Reveal>
     </div>

@@ -1,7 +1,6 @@
 ---
 // Ports components/marketing/sisterhood-sessions/why-they-matter.tsx
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
 import { Heading2, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
@@ -9,11 +8,10 @@ interface Props {
   heading: string;
   body: string;
   quote: string;
-  /** CMS field path prefix for live-preview highlighting (e.g. "whyTheyMatter"). */
-  cmsPath?: string;
 }
-const { eyebrow, heading, body, quote, cmsPath } = Astro.props;
+const { eyebrow, heading, body, quote } = Astro.props;
 ---
+
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-3xl">
@@ -21,14 +19,14 @@ const { eyebrow, heading, body, quote, cmsPath } = Astro.props;
         <Text
           as="p"
           class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
-          field={cmsField(cmsPath, "eyebrow")}
+          field={"whyTheyMatter.eyebrow"}
           value={eyebrow}
         />
       </Reveal>
       <Reveal delay={80}>
         <Heading2
           class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={cmsField(cmsPath, "heading")}
+          field={"whyTheyMatter.heading"}
           value={heading}
         />
       </Reveal>
@@ -36,7 +34,7 @@ const { eyebrow, heading, body, quote, cmsPath } = Astro.props;
         <Text
           as="p"
           class="text-muted-foreground mt-8 text-lg leading-relaxed"
-          field={cmsField(cmsPath, "body")}
+          field={"whyTheyMatter.body"}
           value={body}
         />
       </Reveal>
@@ -44,7 +42,7 @@ const { eyebrow, heading, body, quote, cmsPath } = Astro.props;
         <Text
           as="blockquote"
           class="border-border text-muted-foreground mt-14 border-l-2 pl-8 font-serif text-2xl leading-[1.4] md:text-3xl"
-          field={cmsField(cmsPath, "quote")}
+          field={"whyTheyMatter.quote"}
           value={quote}
         />
       </Reveal>

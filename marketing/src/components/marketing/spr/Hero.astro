@@ -2,7 +2,6 @@
 // Ports the Hero section from app/(marketing)/success-stories/spr/page.tsx
 import ArrowLeft from "../../icons/ArrowLeft.astro";
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
 import { Heading1, Text, Image } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
@@ -10,17 +9,16 @@ interface Props {
   eyebrow: string;
   heading: string;
   intro: string;
-  image: { src: string; alt: string };
-  /** CMS field path prefix for live-preview highlighting (e.g. "hero"). */
-  cmsPath?: string;
+  image: { src: string; alt?: string };
 }
-const { backText, eyebrow, heading, intro, image, cmsPath } = Astro.props;
+const { backText, eyebrow, heading, intro, image } = Astro.props;
 ---
+
 <section class="relative overflow-hidden">
   {/* Full-bleed image behind */}
   <div class="absolute inset-0">
     <Image
-      field={cmsField(cmsPath, "image.src")}
+      field={"hero.image.src"}
       value={image.src}
       alt={image.alt}
       fetchpriority="high"
@@ -31,14 +29,18 @@ const { backText, eyebrow, heading, intro, image, cmsPath } = Astro.props;
   </div>
 
   <div class="relative container py-28 md:py-40">
-    {/* backText: icon + text inside one <a> — content spans multiple child elements, left hand-tagged. */}
+    {
+      /* backText: icon + text inside one <a> — content spans multiple child elements, left hand-tagged. */
+    }
     <Reveal>
       <a
         href="/success-stories"
         class="group text-background/60 hover:text-background mb-10 inline-flex items-center gap-2 text-sm font-medium transition-colors"
-        data-cms-field={cmsField(cmsPath, "backText")}
+        data-cms-field={"hero.backText"}
       >
-        <ArrowLeft class="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
+        <ArrowLeft
+          class="size-4 transition-transform duration-300 group-hover:-translate-x-0.5"
+        />
         {backText}
       </a>
     </Reveal>
@@ -47,18 +49,18 @@ const { backText, eyebrow, heading, intro, image, cmsPath } = Astro.props;
       <Text
         as="p"
         class="text-background/50 text-xs font-semibold tracking-[0.3em] uppercase"
-        field={cmsField(cmsPath, "eyebrow")}
+        field={"hero.eyebrow"}
         value={eyebrow}
       />
       <Heading1
         class="text-background mt-5 font-serif text-5xl leading-[1.05] md:text-6xl lg:text-7xl"
-        field={cmsField(cmsPath, "heading")}
+        field={"hero.heading"}
         value={heading}
       />
       <Text
         as="p"
         class="text-background/75 mt-8 max-w-xl text-base leading-relaxed md:text-lg"
-        field={cmsField(cmsPath, "intro")}
+        field={"hero.intro"}
         value={intro}
       />
     </Reveal>

@@ -2,16 +2,19 @@
 // Ports components/marketing/home/at-a-glance.tsx
 import Reveal from "./Reveal.astro";
 import CountUp from "./CountUp.astro";
-import { cmsField } from "../../../lib/cms";
-import { Heading2, Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
+import {
+  Heading2,
+  Text,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
   heading: string;
   stats: { number: string; label: string; detail?: string }[];
-  cmsPath?: string;
 }
-const { eyebrow, heading, stats: rawStats, cmsPath } = Astro.props;
+const { eyebrow, heading, stats: rawStats } = Astro.props;
 
 function parseNumber(number: string) {
   const m = number.match(/^([\d.]+)(.*)$/);
@@ -22,25 +25,63 @@ function parseNumber(number: string) {
   return { to: parseFloat(numeric), decimals, suffix };
 }
 
-const stats = rawStats.map((s) => ({ ...parseNumber(s.number), label: s.label, detail: s.detail }));
+const stats = rawStats.map((s) => ({
+  ...parseNumber(s.number),
+  label: s.label,
+  detail: s.detail,
+}));
 ---
+
 <section class="border-border/40 bg-primary/[0.03] border-y py-20 md:py-28">
   <div class="container">
     <Reveal class="max-w-2xl">
-      <Text as="p" class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" field={cmsField(cmsPath, "eyebrow")} value={eyebrow} />
-      <Heading2 class="mt-4 font-serif text-3xl leading-tight md:text-5xl" field={cmsField(cmsPath, "heading")} value={heading} />
+      <Text
+        as="p"
+        class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+        field={"atAGlance.eyebrow"}
+        value={eyebrow}
+      />
+      <Heading2
+        class="mt-4 font-serif text-3xl leading-tight md:text-5xl"
+        field={"atAGlance.heading"}
+        value={heading}
+      />
     </Reveal>
 
-    <Group field={cmsField(cmsPath, "stats")} class="divide-border/40 mt-14 grid grid-cols-1 divide-y sm:grid-cols-2 sm:divide-x lg:grid-cols-5 lg:divide-y-0">
-      {stats.map((s, i) => (
-        <Item index={i} as="div" class="flex flex-col gap-2 px-2 py-8 sm:px-8 sm:py-2">
-          <span class="text-primary font-serif text-4xl md:text-5xl" data-cms-field={cmsField(cmsPath, `stats.${i}.number`)}>
-            <CountUp to={s.to} decimals={s.decimals} suffix={s.suffix} />
-          </span>
-          <Text as="span" class="text-foreground text-sm font-medium" field={cmsField(cmsPath, `stats.${i}.label`)} value={s.label} />
-          {s.detail && <Text as="span" class="text-muted-foreground text-xs leading-relaxed" field={cmsField(cmsPath, `stats.${i}.detail`)} value={s.detail} />}
-        </Item>
-      ))}
+    <Group
+      field={"atAGlance.stats"}
+      class="divide-border/40 mt-14 grid grid-cols-1 divide-y sm:grid-cols-2 sm:divide-x lg:grid-cols-5 lg:divide-y-0"
+    >
+      {
+        stats.map((s, i) => (
+          <Item
+            index={i}
+            as="div"
+            class="flex flex-col gap-2 px-2 py-8 sm:px-8 sm:py-2"
+          >
+            <span
+              class="text-primary font-serif text-4xl md:text-5xl"
+              data-cms-field={`atAGlance.stats.${i}.number`}
+            >
+              <CountUp to={s.to} decimals={s.decimals} suffix={s.suffix} />
+            </span>
+            <Text
+              as="span"
+              class="text-foreground text-sm font-medium"
+              field={`atAGlance.stats.${i}.label`}
+              value={s.label}
+            />
+            {s.detail && (
+              <Text
+                as="span"
+                class="text-muted-foreground text-xs leading-relaxed"
+                field={`atAGlance.stats.${i}.detail`}
+                value={s.detail}
+              />
+            )}
+          </Item>
+        ))
+      }
     </Group>
   </div>
 </section>

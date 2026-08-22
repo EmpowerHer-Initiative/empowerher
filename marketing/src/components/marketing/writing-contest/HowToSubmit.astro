@@ -3,7 +3,6 @@
 import Reveal from "../home/Reveal.astro";
 import AlertTriangle from "../../icons/AlertTriangle.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
-import { cmsField } from "../../../lib/cms";
 import { Heading2, Text, Link } from "@alisamadiillc/cms-bridge/components";
 import pages from "../../../data/pages.json";
 const content = pages["writing-contest"];
@@ -15,24 +14,26 @@ interface Props {
   intro: string;
   warning: string;
   contactText: string;
-  cmsPath?: string;
 }
-const { title, intro, warning, contactText, cmsPath } = Astro.props;
+const { title, intro, warning, contactText } = Astro.props;
 ---
+
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-3xl">
-      <Reveal class="border-primary/20 bg-primary/[0.04] rounded-3xl border p-10 text-center md:p-16">
+      <Reveal
+        class="border-primary/20 bg-primary/[0.04] rounded-3xl border p-10 text-center md:p-16"
+      >
         <ExternalLink class="text-primary mx-auto size-12" />
         <Heading2
           class="mt-6 font-serif text-3xl leading-tight md:text-4xl"
-          field={cmsField(cmsPath, "title")}
+          field={"howToSubmit.title"}
           value={title}
         />
         <Text
           as="p"
           class="text-foreground/80 mt-5 text-lg font-medium"
-          field={cmsField(cmsPath, "intro")}
+          field={"howToSubmit.intro"}
           value={intro}
         />
         <div class="mt-8">
@@ -43,18 +44,35 @@ const { title, intro, warning, contactText, cmsPath } = Astro.props;
             class="group bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
           >
             Submit Your Entry
-            <ExternalLink class="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+            <ExternalLink
+              class="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
+            />
           </a>
         </div>
-        <div class="mt-8 flex items-start gap-3 rounded-2xl border border-amber-400/50 bg-amber-50 p-5 text-left">
+        <div
+          class="mt-8 flex items-start gap-3 rounded-2xl border border-amber-400/50 bg-amber-50 p-5 text-left"
+        >
           <AlertTriangle class="mt-0.5 size-5 shrink-0 text-amber-600" />
-          <Text as="p" class="text-sm leading-relaxed text-amber-900" field={cmsField(cmsPath, "warning")} value={warning} />
+          <Text
+            as="p"
+            class="text-sm leading-relaxed text-amber-900"
+            field={"howToSubmit.warning"}
+            value={warning}
+          />
         </div>
-        <!-- kept hand-tagged: paragraph mixes contactText + static mailto <a> + literal text (multiple child elements) -->
-        <p class="text-muted-foreground mt-6 text-sm" data-cms-field={cmsField(cmsPath, "contactText")}>
+        {
+          /* kept hand-tagged: paragraph mixes contactText + static mailto <a> + literal text (multiple child elements) */
+        }
+        <p
+          class="text-muted-foreground mt-6 text-sm"
+          data-cms-field={"howToSubmit.contactText"}
+        >
           {contactText}{" "}
-          <Link 
-            class="text-primary font-semibold underline underline-offset-4" field="section.cta2" value={content.section.cta2}>{content.section.cta2.label}</Link>
+          <Link
+            class="text-primary font-semibold underline underline-offset-4"
+            field="section.cta2"
+            value={content.section.cta2}>{content.section.cta2.label}</Link
+          >
         </p>
       </Reveal>
     </div>

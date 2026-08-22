@@ -9,7 +9,7 @@ description: >-
 image: >-
   https://cdn.empowerher-initiative.org/HerVoice/4683f3d2-f69d-4d0a-8cef-4b2a1b0b1b90.png
 imageCredit: Image owned by the author
-date: '2026-07-24'
+date: "2026-07-24"
 authorName: Nadia Sakhi
 authorBio: >-
   Nadia Sakhi is an Afghan poet and writer whose work explores silence, absence,
@@ -25,7 +25,7 @@ We blow out the candle,
 knowing that after its extinction,
 only darkness remains,
 
-And that is exactly what they want. 
+And that is exactly what they want.
 
 We must walk on a dark road,
 

@@ -82,7 +82,6 @@ src/pages/index.astro: <Heading1 field="hero.heading" value={home.hero.heading} 
 - Only ADD. Existing values in the JSON always win over generated defaults.
 - After every batch of changes, run `npx cms-bridge check` until clean.
 
-
 ## Fix recipes and items
 
 Nothing to do — every scanned element is either CMS-wired or intentionally out of scope. ✅

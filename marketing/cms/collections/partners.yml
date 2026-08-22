@@ -16,6 +16,7 @@ fields:
       label: Link,
       type: string,
       options: { type: url },
-      description: External site, or an internal path like /agfaf.,
+      description: External site,
+      or an internal path like /agfaf.,
     }
   - { name: sort_order, label: Sort order, type: number, required: true }

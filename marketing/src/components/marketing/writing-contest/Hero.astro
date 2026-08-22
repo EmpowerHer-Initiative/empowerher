@@ -2,8 +2,12 @@
 // Ports components/marketing/writing-contest/hero.tsx
 import Reveal from "../home/Reveal.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
-import { cmsField } from "../../../lib/cms";
-import { Heading1, Text, Image, Link } from "@alisamadiillc/cms-bridge/components";
+import {
+  Heading1,
+  Text,
+  Image,
+  Link,
+} from "@alisamadiillc/cms-bridge/components";
 import pages from "../../../data/pages.json";
 const content = pages["writing-contest"];
 
@@ -16,11 +20,11 @@ interface Props {
   calloutText: string;
   calloutName: string;
   image: { src: string; alt: string };
-  cmsPath?: string;
 }
-const { eyebrow, heading, paragraph, calloutText, calloutName, image, cmsPath } =
+const { eyebrow, heading, paragraph, calloutText, calloutName, image } =
   Astro.props;
 ---
+
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="grid items-center gap-16 lg:grid-cols-[1fr_1fr]">
@@ -28,28 +32,37 @@ const { eyebrow, heading, paragraph, calloutText, calloutName, image, cmsPath } 
         <Text
           as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={cmsField(cmsPath, "eyebrow")}
+          field={"hero.eyebrow"}
           value={eyebrow}
         />
         <Heading1
           class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl"
-          field={cmsField(cmsPath, "heading")}
+          field={"hero.heading"}
           value={heading}
         />
         <Text
           as="p"
           class="text-muted-foreground mt-8 text-base leading-relaxed md:text-lg"
-          field={cmsField(cmsPath, "paragraph")}
+          field={"hero.paragraph"}
           value={paragraph}
         />
-        <div class="border-primary/30 bg-primary/[0.05] border-l-primary mt-8 rounded-2xl border border-l-4 p-5">
-          <!-- kept hand-tagged: paragraph mixes calloutText + nested span + literal period (multiple child elements) -->
+        <div
+          class="border-primary/30 bg-primary/[0.05] border-l-primary mt-8 rounded-2xl border border-l-4 p-5"
+        >
+          {
+            /* kept hand-tagged: paragraph mixes calloutText + nested span + literal period (multiple child elements) */
+          }
           <p
             class="text-foreground text-sm leading-relaxed"
-            data-cms-field={cmsField(cmsPath, "calloutText")}
+            data-cms-field={"hero.calloutText"}
           >
             {calloutText}{" "}
-            <Text as="span" class="font-semibold" field={cmsField(cmsPath, "calloutName")} value={calloutName} />.
+            <Text
+              as="span"
+              class="font-semibold"
+              field={"hero.calloutName"}
+              value={calloutName}
+            />.
           </p>
         </div>
         <div class="mt-10 flex flex-wrap gap-4">
@@ -60,16 +73,24 @@ const { eyebrow, heading, paragraph, calloutText, calloutName, image, cmsPath } 
             class="group bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
           >
             Submit Your Entry
-            <ExternalLink class="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+            <ExternalLink
+              class="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
+            />
           </a>
-          <Link 
-            class="border-border/60 text-foreground/70 hover:border-primary hover:text-foreground inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]" field="section.cta" value={content.section.cta}>{content.section.cta.label}</Link>
+          <Link
+            class="border-border/60 text-foreground/70 hover:border-primary hover:text-foreground inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+            field="section.cta"
+            value={content.section.cta}>{content.section.cta.label}</Link
+          >
         </div>
       </Reveal>
 
-      <Reveal class="border-border/30 overflow-hidden rounded-3xl border" delay={120}>
+      <Reveal
+        class="border-border/30 overflow-hidden rounded-3xl border"
+        delay={120}
+      >
         <Image
-          field={cmsField(cmsPath, "image.src")}
+          field={"hero.image.src"}
           value={image.src}
           alt={image.alt}
           loading="eager"

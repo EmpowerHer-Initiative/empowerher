@@ -6,17 +6,17 @@ description: >-
   Afghanistan. Despite restrictions and hardship, she continued learning,
   developed her talents, found leadership through EmpowerHer, and remained
   committed to education, justice, and hope for Afghan girls.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTZeElzFvk6csY2jLvlARCPxbmd7I1gQ3t8Ouo'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTZeElzFvk6csY2jLvlARCPxbmd7I1gQ3t8Ouo"
 imageAlt: Owned by Mahtab Ebrahimi
-date: '2026-01-08'
+date: "2026-01-08"
 authorName: Mahtab Ebrahimi
 authorBio: >-
   Mahtab Ebrahimi is a 12th grade online student in Kabul, English teacher,
   graphic designer, and advocate for Afghan girls' education and empowerment,
   with work published by the Malala Fund.
-authorInstagram: 'https://www.instagram.com/spog___'
-authorFacebook: 'https://www.facebook.com/share/1He9r5GLkK/'
-authorLinkedin: 'https://www.linkedin.com/in/mahtab-ebrahimi-7b9b45350'
+authorInstagram: "https://www.instagram.com/spog___"
+authorFacebook: "https://www.facebook.com/share/1He9r5GLkK/"
+authorLinkedin: "https://www.linkedin.com/in/mahtab-ebrahimi-7b9b45350"
 ---
 
 My story begins when we immigrated to Pakistan in 2022. Living as a displaced refugee was very challenging there, as we could not afford to extend our visas, and I was completely hopeless about my future. I wasn’t able to attend a regular school because of documentation, and financial issues were piling up at their greatest. But I realized these kinds of challenges should not stop me from dreaming. So I started online learning, joined English and Graphic Designing courses offered by UNHCR in Pakistan. I also started singing and performing national anthems at events, where my team and I were awarded by Afghan and Pakistani organizations many times. Besides that, I started teaching English in a small refugee academy. I was pursuing my goals and dreaming of a peaceful future. My life wasn’t perfect in Pakistan, but at least I was able to continue my education—the hope that moved me forward.

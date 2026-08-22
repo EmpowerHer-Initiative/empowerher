@@ -5,9 +5,9 @@ description: >-
   this story recounts the author’s grief, exile, and the tragic loss of a friend
   taken and broken by oppression. Through memory and promise, it becomes an act
   of witnessing and remembrance.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTX3KxEb60NuwXa2fRLmOSMZCPIdDxFh6c93H7'
-imageAlt: 'Image by: Writer'
-date: '2026-01-08'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTX3KxEb60NuwXa2fRLmOSMZCPIdDxFh6c93H7"
+imageAlt: "Image by: Writer"
+date: "2026-01-08"
 authorName: S.R.
 authorBio: >-
   I am S.R., a woman writing to give voice to Afghan women and remind others of

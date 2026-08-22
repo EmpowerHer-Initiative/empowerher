@@ -4,8 +4,7 @@
 const ADMIN_API_URL = "https://admin.empowerher-initiative.org";
 
 export type SubscribeResult =
-  | { ok: true; alreadySubscribed: boolean }
-  | { ok: false; error: string };
+  { ok: true; alreadySubscribed: boolean } | { ok: false; error: string };
 
 export async function subscribeNewsletter(
   email: string,

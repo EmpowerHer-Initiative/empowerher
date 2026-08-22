@@ -2,27 +2,31 @@
 // Ports app/(marketing)/afgaf/page.tsx (identical to agfaf/page.tsx).
 import Reveal from "../home/Reveal.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
-import { cmsField } from "../../../lib/cms";
-import { Heading1, Text, Image, Group, Item } from "@alisamadiillc/cms-bridge/components";
+import {
+  Heading1,
+  Text,
+  Image,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   logo: { src: string; alt: string };
   title: string;
   description: string[];
   gratitude: { title: string; quote: string };
-  /** CMS field path prefix for live-preview highlighting (root-level: ""). */
-  cmsPath?: string;
 }
 
-const { logo, title, description, gratitude, cmsPath } = Astro.props;
+const { logo, title, description, gratitude } = Astro.props;
 ---
+
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-3xl">
       {/* Logo */}
       <Reveal class="flex justify-center">
         <Image
-          field={cmsField(cmsPath, "logo.src")}
+          field={"logo.src"}
           value={logo.src}
           alt={logo.alt}
           class="w-72 object-contain"
@@ -35,34 +39,41 @@ const { logo, title, description, gratitude, cmsPath } = Astro.props;
       <Reveal>
         <Heading1
           class="mt-16 font-serif text-3xl leading-tight md:text-4xl"
-          field={cmsField(cmsPath, "title")}
+          field={"title"}
           value={title}
         />
       </Reveal>
 
       {/* Description */}
       <Reveal>
-        <Group field={cmsField(cmsPath, "description")} class="text-muted-foreground mt-8 space-y-6 text-base leading-relaxed">
-          {description.map((paragraph, i) => (
-            <Item index={i} as="p">
-              <Text as="span" field={cmsField(cmsPath, `description.${i}`)} value={paragraph} />
-            </Item>
-          ))}
+        <Group
+          field={"description"}
+          class="text-muted-foreground mt-8 space-y-6 text-base leading-relaxed"
+        >
+          {
+            description.map((paragraph, i) => (
+              <Item index={i} as="p">
+                <Text as="span" field={`description.${i}`} value={paragraph} />
+              </Item>
+            ))
+          }
         </Group>
       </Reveal>
 
       {/* Gratitude */}
-      <Reveal class="border-l-primary bg-primary/[0.05] mt-12 rounded-r-2xl border-l-4 p-8">
+      <Reveal
+        class="border-l-primary bg-primary/[0.05] mt-12 rounded-r-2xl border-l-4 p-8"
+      >
         <Text
           as="p"
           class="text-foreground font-semibold italic"
-          field={cmsField(cmsPath, "gratitude.title")}
+          field={"gratitude.title"}
           value={gratitude.title}
         />
         <Text
           as="blockquote"
           class="text-muted-foreground mt-4 leading-relaxed italic"
-          field={cmsField(cmsPath, "gratitude.quote")}
+          field={"gratitude.quote"}
           value={gratitude.quote}
         />
       </Reveal>
@@ -76,7 +87,9 @@ const { logo, title, description, gratitude, cmsPath } = Astro.props;
           class="group bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
         >
           Visit AGFAF's Website
-          <ExternalLink class="size-4 transition-transform duration-300 group-hover:translate-x-px group-hover:-translate-y-px" />
+          <ExternalLink
+            class="size-4 transition-transform duration-300 group-hover:translate-x-px group-hover:-translate-y-px"
+          />
         </a>
       </Reveal>
     </div>

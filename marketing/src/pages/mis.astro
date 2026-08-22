@@ -4,7 +4,7 @@ import MISContent from "../components/marketing/mis/MISContent.astro";
 import pages from "../data/pages.json";
 const data = pages.mis;
 
-const { seo, content } = data as {
+const { content } = data as {
   seo: { title: string; description: string };
   content: {
     eyebrow: string;
@@ -21,6 +21,5 @@ const { seo, content } = data as {
     heading={content.heading}
     body={content.body}
     advisory={content.advisory}
-    cmsPath="content"
   />
 </Layout>

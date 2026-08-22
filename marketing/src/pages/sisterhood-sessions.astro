@@ -7,12 +7,12 @@ import SessionFormat from "../components/marketing/sisterhood-sessions/SessionFo
 import pages from "../data/pages.json";
 const content = pages["sisterhood-sessions"];
 
-const { seo, header, whyTheyMatter, community, sessionFormat } = content;
+const { header, whyTheyMatter, community, sessionFormat } = content;
 ---
 
 <Layout>
-  <Header cmsPath="header" {...header} />
-  <WhyTheyMatter cmsPath="whyTheyMatter" {...whyTheyMatter} />
-  <Community cmsPath="community" {...community} />
-  <SessionFormat cmsPath="sessionFormat" {...sessionFormat} />
+  <Header {...header} />
+  <WhyTheyMatter {...whyTheyMatter} />
+  <Community {...community} />
+  <SessionFormat {...sessionFormat} />
 </Layout>

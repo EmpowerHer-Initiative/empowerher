@@ -8,8 +8,8 @@ description: >-
   despite Taliban restrictions. She argues that women's leadership is essential
   for rebuilding Afghanistan and creating a future where both genders can work
   together in equality and justice.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTQSe9LAa2imSKVTAuXrJU9NxI0LRsOFlgdvwo'
-date: '2025-10-04'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTQSe9LAa2imSKVTAuXrJU9NxI0LRsOFlgdvwo"
+date: "2025-10-04"
 authorName: Khatira Ahmadi
 authorPosition: Student of PPE
 authorBio: >-
@@ -22,7 +22,7 @@ authorBio: >-
   and storytelling through online platforms, and I am currently working on a new
   project related to Afghan girls' education, scholarships, and creating more
   opportunities for them to achieve their dreams.
-authorLinkedin: 'https://www.linkedin.com/in/khatira-ahmadi-2ba6bb331'
+authorLinkedin: "https://www.linkedin.com/in/khatira-ahmadi-2ba6bb331"
 ---
 
 Women are denied from their basic rights of gaining knowledge, going outside, working

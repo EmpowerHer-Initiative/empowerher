@@ -8,8 +8,11 @@ import ArrowRight from "../../icons/ArrowRight.astro";
 import ChevronLeft from "../../icons/ChevronLeft.astro";
 import ChevronRight from "../../icons/ChevronRight.astro";
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
-import { Heading2, Text } from "@alisamadiillc/cms-bridge/components";
+import {
+  Heading2,
+  Text,
+  Collection,
+} from "@alisamadiillc/cms-bridge/components";
 
 type WritingCard = {
   slug: string;
@@ -22,10 +25,8 @@ interface Props {
   eyebrow: string;
   heading: string;
   stories: WritingCard[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "featuredWritings"). */
-  cmsPath?: string;
 }
-const { eyebrow, heading, stories, cmsPath } = Astro.props;
+const { eyebrow, heading, stories } = Astro.props;
 
 const PER_PAGE = 6;
 const totalPages = Math.max(1, Math.ceil(stories.length / PER_PAGE));
@@ -38,22 +39,25 @@ const iconSize = "size-8 [&_svg]:size-4";
 const smSize =
   "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] [&_svg]:size-3.5";
 ---
+
 <section
   id="writings"
   class="bg-foreground/[0.02] scroll-mt-20 py-28 md:py-40 lg:scroll-mt-24"
 >
   <div class="container">
-    <Reveal class="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+    <Reveal
+      class="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+    >
       <div>
         <Text
           as="p"
           class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
-          field={cmsField(cmsPath, "eyebrow")}
+          field={"featuredWritings.eyebrow"}
           value={eyebrow}
         />
         <Heading2
           class="font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={cmsField(cmsPath, "heading")}
+          field={"featuredWritings.heading"}
           value={heading}
         />
       </div>
@@ -61,64 +65,85 @@ const smSize =
 
     {/* Editorial card grid */}
     <Reveal delay={80}>
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-stories-grid>
-        {stories.map((story, i) => (
-          <a
-            href={`/hervoice/${story.slug}`}
-            data-story-card
-            hidden={i >= PER_PAGE}
-            class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col overflow-hidden rounded-2xl border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl"
-          >
-            <div class="bg-muted relative aspect-[16/10] overflow-hidden">
-              {story.image && (
-                <img
-                  src={story.image}
-                  alt={story.title}
-                  loading="lazy"
-                  decoding="async"
-                  class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
-                />
-              )}
-              <span class="bg-background/90 text-foreground absolute top-4 left-4 rounded-full px-3 py-1 font-serif text-xs backdrop-blur-sm">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-            </div>
-            <div class="flex flex-1 flex-col p-6">
-              <p class="group-hover:text-primary font-serif text-xl leading-snug transition-colors duration-300">
-                &ldquo;{story.title}&rdquo;
-              </p>
-              {story.authorName && (
-                <p class="text-muted-foreground mt-2 text-sm">
-                  {story.authorName}
+      <Collection
+        collection="hervoice-stories"
+        class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        data-stories-grid
+      >
+        {
+          stories.map((story, i) => (
+            <a
+              href={`/hervoice/${story.slug}`}
+              data-story-card
+              hidden={i >= PER_PAGE}
+              class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col overflow-hidden rounded-2xl border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl"
+            >
+              <div class="bg-muted relative aspect-[16/10] overflow-hidden">
+                {story.image && (
+                  <img
+                    src={story.image}
+                    alt={story.title}
+                    loading="lazy"
+                    decoding="async"
+                    class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+                  />
+                )}
+                <span class="bg-background/90 text-foreground absolute top-4 left-4 rounded-full px-3 py-1 font-serif text-xs backdrop-blur-sm">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <div class="flex flex-1 flex-col p-6">
+                <p class="group-hover:text-primary font-serif text-xl leading-snug transition-colors duration-300">
+                  &ldquo;{story.title}&rdquo;
                 </p>
-              )}
-              <span class="text-muted-foreground/50 group-hover:text-primary mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-medium transition-colors duration-300">
-                Read story
-                <ArrowRight class="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
-              </span>
-            </div>
-          </a>
-        ))}
-      </div>
+                {story.authorName && (
+                  <p class="text-muted-foreground mt-2 text-sm">
+                    {story.authorName}
+                  </p>
+                )}
+                <span class="text-muted-foreground/50 group-hover:text-primary mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-medium transition-colors duration-300">
+                  Read story
+                  <ArrowRight class="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+                </span>
+              </div>
+            </a>
+          ))
+        }
+      </Collection>
     </Reveal>
 
-    {totalPages > 1 && (
-      <div class="mt-10" data-stories-pager>
-        <div class="flex items-center justify-center gap-1">
-          <button type="button" data-prev disabled class={`${btnBase} ${ghost} ${iconSize}`}>
-            <ChevronLeft />
-          </button>
-          {pages.map((page) => (
-            <button type="button" data-page-btn={page} class={`${btnBase} ${smSize} min-w-7`}>
-              {page}
+    {
+      totalPages > 1 && (
+        <div class="mt-10" data-stories-pager>
+          <div class="flex items-center justify-center gap-1">
+            <button
+              type="button"
+              data-prev
+              disabled
+              class={`${btnBase} ${ghost} ${iconSize}`}
+            >
+              <ChevronLeft />
             </button>
-          ))}
-          <button type="button" data-next class={`${btnBase} ${ghost} ${iconSize}`}>
-            <ChevronRight />
-          </button>
+            {pages.map((page) => (
+              <button
+                type="button"
+                data-page-btn={page}
+                class={`${btnBase} ${smSize} min-w-7`}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              type="button"
+              data-next
+              class={`${btnBase} ${ghost} ${iconSize}`}
+            >
+              <ChevronRight />
+            </button>
+          </div>
         </div>
-      </div>
-    )}
+      )
+    }
 
     <Reveal class="mt-12 text-center">
       <a
@@ -126,7 +151,9 @@ const smSize =
         class="group border-border/60 text-foreground/80 hover:border-primary/30 hover:bg-primary/5 hover:text-foreground inline-flex items-center gap-2.5 rounded-full border px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
       >
         Featured Writings from Our Partners
-        <ArrowRight class="size-4 transition-transform duration-500 group-hover:translate-x-1" />
+        <ArrowRight
+          class="size-4 transition-transform duration-500 group-hover:translate-x-1"
+        />
       </a>
     </Reveal>
   </div>
@@ -134,7 +161,11 @@ const smSize =
 
 <script>
   const PER_PAGE = 6;
-  const GHOST = ["hover:bg-muted", "hover:text-foreground", "dark:hover:bg-muted/50"];
+  const GHOST = [
+    "hover:bg-muted",
+    "hover:text-foreground",
+    "dark:hover:bg-muted/50",
+  ];
   const OUTLINE = [
     "border-border",
     "bg-background",
@@ -151,10 +182,10 @@ const smSize =
     section.dataset.pagerInit = "1";
 
     const cards = Array.from(
-      section.querySelectorAll<HTMLElement>("[data-story-card]")
+      section.querySelectorAll<HTMLElement>("[data-story-card]"),
     );
     const pageBtns = Array.from(
-      section.querySelectorAll<HTMLButtonElement>("[data-page-btn]")
+      section.querySelectorAll<HTMLButtonElement>("[data-page-btn]"),
     );
     const prev = section.querySelector<HTMLButtonElement>("[data-prev]");
     const next = section.querySelector<HTMLButtonElement>("[data-next]");
@@ -174,7 +205,7 @@ const smSize =
         card.hidden = Math.floor(i / PER_PAGE) + 1 !== current;
       });
       pageBtns.forEach((btn) =>
-        setVariant(btn, Number(btn.dataset.pageBtn) === current)
+        setVariant(btn, Number(btn.dataset.pageBtn) === current),
       );
       if (prev) prev.disabled = current === 1;
       if (next) next.disabled = current === total;
@@ -187,7 +218,7 @@ const smSize =
     };
 
     pageBtns.forEach((btn) =>
-      btn.addEventListener("click", () => go(Number(btn.dataset.pageBtn)))
+      btn.addEventListener("click", () => go(Number(btn.dataset.pageBtn))),
     );
     prev?.addEventListener("click", () => go(current - 1));
     next?.addEventListener("click", () => go(current + 1));

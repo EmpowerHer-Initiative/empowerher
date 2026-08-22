@@ -1,74 +1,129 @@
 ---
 // Ports components/marketing/hervoice-winners/hero.tsx
 // hv-* tokens inlined to exact hex; --hv-display -> font-serif.
-import { cmsField } from "../../../lib/cms";
 import { Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
 interface Props {
   heading: string;
   heading2: string;
   bodyText: string;
   stats: { value: string; label: string }[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "hero"). */
-  cmsPath?: string;
 }
-const { heading, heading2, bodyText, stats, cmsPath } = Astro.props;
+const { heading, heading2, bodyText, stats } = Astro.props;
 // gold flag is a style toggle derived by index (odd = gold).
 ---
-<section class="relative isolate overflow-hidden bg-[radial-gradient(120%_130%_at_12%_0%,#FFFFFF_0%,#FAF6EE_46%,#F2EADC_100%)]">
-  <div class="pointer-events-none absolute -top-40 -right-40 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle_at_38%_36%,rgba(46,155,230,.16),transparent_62%)]"></div>
-  <div class="pointer-events-none absolute -bottom-44 -left-32 h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle_at_60%_40%,rgba(224,174,60,.18),transparent_62%)]"></div>
 
-  <div class="relative mx-auto flex max-w-4xl flex-col items-center px-6 py-20 text-center md:py-28">
-    <h1 class="hv-rise mt-5 font-serif text-[clamp(36px,5.5vw,72px)] leading-[0.92] font-bold tracking-[-0.03em]" style="animation-delay:80ms;--cms-highlight:#1E78C4">
-      <Text as="span" field={cmsField(cmsPath, "heading")} value={heading} />
+<section
+  class="relative isolate overflow-hidden bg-[radial-gradient(120%_130%_at_12%_0%,#FFFFFF_0%,#FAF6EE_46%,#F2EADC_100%)]"
+>
+  <div
+    class="pointer-events-none absolute -top-40 -right-40 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle_at_38%_36%,rgba(46,155,230,.16),transparent_62%)]"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute -bottom-44 -left-32 h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle_at_60%_40%,rgba(224,174,60,.18),transparent_62%)]"
+  >
+  </div>
+
+  <div
+    class="relative mx-auto flex max-w-4xl flex-col items-center px-6 py-20 text-center md:py-28"
+  >
+    <h1
+      class="hv-rise mt-5 font-serif text-[clamp(36px,5.5vw,72px)] leading-[0.92] font-bold tracking-[-0.03em]"
+      style="animation-delay:80ms;--cms-highlight:#1E78C4"
+    >
+      <Text as="span" field={"hero.heading"} value={heading} />
       <br />
-      <Text as="span" field={cmsField(cmsPath, "heading2")} value={heading2} />
+      <Text as="span" field={"hero.heading2"} value={heading2} />
     </h1>
 
     <Text
       as="p"
       class="hv-rise mt-8 max-w-2xl text-lg leading-relaxed [text-wrap:pretty] text-[#3C4654]"
       style="animation-delay:160ms"
-      field={cmsField(cmsPath, "bodyText")}
+      field={"hero.bodyText"}
       value={bodyText}
     />
 
-    <div class="hv-rise mt-10 flex items-center justify-center" style="animation-delay:240ms">
+    <div
+      class="hv-rise mt-10 flex items-center justify-center"
+      style="animation-delay:240ms"
+    >
       <div class="relative h-32 w-32">
-        <svg viewBox="0 0 120 120" aria-hidden="true" class="h-full w-full animate-[spin_26s_linear_infinite]">
+        <svg
+          viewBox="0 0 120 120"
+          aria-hidden="true"
+          class="h-full w-full animate-[spin_26s_linear_infinite]"
+        >
           <defs>
-            <path id="hv-seal-path" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" />
+            <path
+              id="hv-seal-path"
+              d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"></path>
           </defs>
-          <circle cx="60" cy="60" r="56" fill="none" stroke="#E0AE3C" stroke-width="1.4" />
-          <circle cx="60" cy="60" r="44" fill="none" stroke="#E0AE3C" stroke-width="1" stroke-dasharray="1.5 4.5" opacity="0.8" />
-          <text fill="#9A6E1C" style="font-size:9.2px;font-weight:700;letter-spacing:3px">
-            <textPath href="#hv-seal-path" startOffset="0">HERVOICE &middot; CELEBRATING WINNERS &middot; </textPath>
+          <circle
+            cx="60"
+            cy="60"
+            r="56"
+            fill="none"
+            stroke="#E0AE3C"
+            stroke-width="1.4"></circle>
+          <circle
+            cx="60"
+            cy="60"
+            r="44"
+            fill="none"
+            stroke="#E0AE3C"
+            stroke-width="1"
+            stroke-dasharray="1.5 4.5"
+            opacity="0.8"></circle>
+          <text
+            fill="#9A6E1C"
+            style="font-size:9.2px;font-weight:700;letter-spacing:3px"
+          >
+            <textPath href="#hv-seal-path" startOffset="0"
+              >HERVOICE &middot; CELEBRATING WINNERS &middot;
+            </textPath>
           </text>
         </svg>
-        <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-          <div class="font-serif text-[26px] leading-none font-bold text-[#1A2230]">2026</div>
-          <div class="mt-0.5 text-[8.5px] font-bold tracking-[0.2em] text-[#9A6E1C] uppercase">Winners</div>
+        <div
+          class="absolute inset-0 flex flex-col items-center justify-center text-center"
+        >
+          <div
+            class="font-serif text-[26px] leading-none font-bold text-[#1A2230]"
+          >
+            2026
+          </div>
+          <div
+            class="mt-0.5 text-[8.5px] font-bold tracking-[0.2em] text-[#9A6E1C] uppercase"
+          >
+            Winners
+          </div>
         </div>
       </div>
     </div>
 
-    <Group field={cmsField(cmsPath, "stats")} class="hv-rise mt-10 flex flex-wrap justify-center gap-8" style="animation-delay:320ms">
-      {stats.map((s, i) => (
-        <Item index={i}>
-          <Text
-            as="div"
-            class={`font-serif text-3xl leading-none font-bold ${i % 2 === 1 ? "text-[#C8902A]" : "text-[#1E78C4]"}`}
-            field={cmsField(cmsPath, `stats.${i}.value`)}
-            value={s.value}
-          />
-          <Text
-            as="div"
-            class="mt-1.5 max-w-48 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase"
-            field={cmsField(cmsPath, `stats.${i}.label`)}
-            value={s.label}
-          />
-        </Item>
-      ))}
+    <Group
+      field={"hero.stats"}
+      class="hv-rise mt-10 flex flex-wrap justify-center gap-8"
+      style="animation-delay:320ms"
+    >
+      {
+        stats.map((s: { value: string; label: string }, i: number) => (
+          <Item index={i}>
+            <Text
+              as="div"
+              class={`font-serif text-3xl leading-none font-bold ${i % 2 === 1 ? "text-[#C8902A]" : "text-[#1E78C4]"}`}
+              field={`hero.stats.${i}.value`}
+              value={s.value}
+            />
+            <Text
+              as="div"
+              class="mt-1.5 max-w-48 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase"
+              field={`hero.stats.${i}.label`}
+              value={s.label}
+            />
+          </Item>
+        ))
+      }
     </Group>
 
     <div class="hv-rise mt-10" style="animation-delay:400ms">
@@ -77,8 +132,20 @@ const { heading, heading2, bodyText, stats, cmsPath } = Astro.props;
         class="group/btn inline-flex items-center gap-2.5 rounded-full bg-[#1E78C4] px-7 py-4 text-[15px] font-bold text-white shadow-[0_10px_24px_-10px_rgba(30,120,196,.7)] transition hover:-translate-y-0.5 hover:bg-[#2E9BE6] hover:shadow-[0_16px_30px_-12px_rgba(46,155,230,.75)]"
       >
         Read Contest Guidelines &amp; Details
-        <svg class="transition-transform group-hover/btn:translate-x-1" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-          <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <svg
+          class="transition-transform group-hover/btn:translate-x-1"
+          viewBox="0 0 24 24"
+          width="14"
+          height="14"
+          aria-hidden="true"
+        >
+          <path
+            d="M5 12h13M13 6l6 6-6 6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
         </svg>
       </a>
     </div>

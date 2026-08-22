@@ -2,18 +2,21 @@
 // Ports components/marketing/hervoice/partner-support.tsx
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
-import { Heading2, Text, Image, Group, Item } from "@alisamadiillc/cms-bridge/components";
+import {
+  Heading2,
+  Text,
+  Image,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
   heading: string;
   description: string;
   partners: { name: string; location: string; logo: string }[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "partnerSupport"). */
-  cmsPath?: string;
 }
-const { eyebrow, heading, description, partners, cmsPath } = Astro.props;
+const { eyebrow, heading, description, partners } = Astro.props;
 
 // Routing (external partner URLs) stays in code, zipped by index with the
 // editable name/location/logo content from the CMS.
@@ -29,66 +32,72 @@ const partnerOrgs = partners.map((p, i) => ({
   href: partnerHrefs[i] ?? "#",
 }));
 ---
+
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="max-w-3xl">
       <Text
         as="p"
         class="text-primary mb-6 text-xs font-semibold tracking-[0.3em] uppercase"
-        field={cmsField(cmsPath, "eyebrow")}
+        field={"partnerSupport.eyebrow"}
         value={eyebrow}
       />
       <Heading2
         class="font-serif text-4xl leading-[1.1] md:text-5xl"
-        field={cmsField(cmsPath, "heading")}
+        field={"partnerSupport.heading"}
         value={heading}
       />
       <Text
         as="p"
         class="text-foreground/70 mt-8 text-base leading-[1.8] md:text-lg"
-        field={cmsField(cmsPath, "description")}
+        field={"partnerSupport.description"}
         value={description}
       />
     </Reveal>
 
     <Reveal delay={120}>
-      <Group field={cmsField(cmsPath, "partners")} class="mt-16 grid gap-5 sm:grid-cols-2">
-        {partnerOrgs.map((p, i) => (
-          <Item
-            index={i}
-            as="a"
-            href={p.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group border-border/60 bg-background hover:border-primary/40 hover:shadow-primary/5 flex items-center gap-5 rounded-2xl border p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
-          >
-            <div class="border-border/60 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border bg-white p-2">
-              <Image
-                field={cmsField(cmsPath, `partners.${i}.logo`)}
-                value={p.logo}
-                alt={p.name}
-                loading="lazy"
-                decoding="async"
-                class="h-full w-full object-contain"
-              />
-            </div>
-            <div class="min-w-0 flex-1">
-              <Text
-                as="p"
-                class="group-hover:text-primary leading-snug font-semibold transition-colors duration-300"
-                field={cmsField(cmsPath, `partners.${i}.name`)}
-                value={p.name}
-              />
-              <Text
-                as="p"
-                class="text-muted-foreground mt-1 text-sm"
-                field={cmsField(cmsPath, `partners.${i}.location`)}
-                value={p.location}
-              />
-            </div>
-            <ArrowUpRight class="text-muted-foreground group-hover:text-primary size-5 shrink-0 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Item>
-        ))}
+      <Group
+        field={"partnerSupport.partners"}
+        class="mt-16 grid gap-5 sm:grid-cols-2"
+      >
+        {
+          partnerOrgs.map((p, i) => (
+            <Item
+              index={i}
+              as="a"
+              href={p.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group border-border/60 bg-background hover:border-primary/40 hover:shadow-primary/5 flex items-center gap-5 rounded-2xl border p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
+            >
+              <div class="border-border/60 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border bg-white p-2">
+                <Image
+                  field={`partnerSupport.partners.${i}.logo`}
+                  value={p.logo}
+                  alt={p.name}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-contain"
+                />
+              </div>
+              <div class="min-w-0 flex-1">
+                <Text
+                  as="p"
+                  class="group-hover:text-primary leading-snug font-semibold transition-colors duration-300"
+                  field={`partnerSupport.partners.${i}.name`}
+                  value={p.name}
+                />
+                <Text
+                  as="p"
+                  class="text-muted-foreground mt-1 text-sm"
+                  field={`partnerSupport.partners.${i}.location`}
+                  value={p.location}
+                />
+              </div>
+              <ArrowUpRight class="text-muted-foreground group-hover:text-primary size-5 shrink-0 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Item>
+          ))
+        }
       </Group>
     </Reveal>
   </div>

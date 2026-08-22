@@ -1,8 +1,8 @@
 ---
 title: The Day I Said No
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpZTtiPVqrM0zsm5gThJ2eDxZtjCFUdBGElvb'
-imageCredit: 'Owned by Reuters; taken from ALARABIYA English, by the author'
-date: '2026-05-30'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpZTtiPVqrM0zsm5gThJ2eDxZtjCFUdBGElvb"
+imageCredit: "Owned by Reuters; taken from ALARABIYA English, by the author"
+date: "2026-05-30"
 authorName: Spogmai Sharifi
 authorPosition: Honorable Mention — HerVoice 2026 Writing Contest
 authorBio: >-

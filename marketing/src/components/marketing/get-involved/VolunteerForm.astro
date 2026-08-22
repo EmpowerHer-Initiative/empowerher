@@ -9,10 +9,23 @@ const content = pages["get-involved-volunteer"];
 const inputClass =
   "w-full rounded-xl border bg-background px-4 py-3 text-sm outline-none transition-all duration-300 placeholder:text-muted-foreground/40 focus:border-primary/40 focus:ring-2 focus:ring-primary/10 border-border/60";
 ---
-<div id="volunteer-success" class="hidden space-y-4 rounded-2xl border border-border/40 bg-primary/[0.03] p-8">
+
+<div
+  id="volunteer-success"
+  class="border-border/40 bg-primary/[0.03] hidden space-y-4 rounded-2xl border p-8"
+>
   <Heading2 class="font-serif text-2xl" field="title" value={content.title} />
-  <Text as="p" class="text-muted-foreground text-base leading-[1.8]" field="text" value={content.text} />
-  <button type="button" id="volunteer-reset" class="text-primary text-sm font-medium underline-offset-4 hover:underline">
+  <Text
+    as="p"
+    class="text-muted-foreground text-base leading-[1.8]"
+    field="text"
+    value={content.text}
+  />
+  <button
+    type="button"
+    id="volunteer-reset"
+    class="text-primary text-sm font-medium underline-offset-4 hover:underline"
+  >
     Submit another application
   </button>
 </div>
@@ -70,7 +83,7 @@ const inputClass =
     <label
       id="cv-dropzone"
       for="cv"
-      class="relative flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed px-6 py-8 transition-all duration-300 border-border/60 bg-background hover:border-primary/30 hover:bg-primary/[0.02]"
+      class="border-border/60 bg-background hover:border-primary/30 hover:bg-primary/[0.02] relative flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed px-6 py-8 transition-all duration-300"
     >
       <input
         id="cv"
@@ -79,7 +92,9 @@ const inputClass =
         accept=".pdf,application/pdf"
         class="hidden"
       />
-      <div class="border-border/60 bg-muted/50 flex size-12 items-center justify-center rounded-full border">
+      <div
+        class="border-border/60 bg-muted/50 flex size-12 items-center justify-center rounded-full border"
+      >
         <Upload class="text-muted-foreground size-5" />
       </div>
       <div class="text-center">
@@ -100,15 +115,15 @@ const inputClass =
     </label>
     <p class="text-muted-foreground text-xs">
       Please tell us briefly about yourself, why you would like to volunteer
-      with EmpowerHer, and how you plan to help address the educational
-      barriers faced by girls.
+      with EmpowerHer, and how you plan to help address the educational barriers
+      faced by girls.
     </p>
     <textarea
       id="message"
       name="message"
       rows="5"
       placeholder="Share your background, motivations, and what you'd like to contribute..."
-      class="bg-background placeholder:text-muted-foreground/40 focus:border-primary/40 focus:ring-primary/10 w-full resize-none rounded-xl border px-4 py-3 text-sm transition-all duration-300 outline-none focus:ring-2 border-border/60"
+      class="bg-background placeholder:text-muted-foreground/40 focus:border-primary/40 focus:ring-primary/10 border-border/60 w-full resize-none rounded-xl border px-4 py-3 text-sm transition-all duration-300 outline-none focus:ring-2"
     ></textarea>
   </div>
 
@@ -118,7 +133,9 @@ const inputClass =
     class="group bg-primary text-primary-foreground hover:shadow-primary/20 inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98] disabled:opacity-70"
   >
     Submit Volunteer Application
-    <span class="bg-primary-foreground/15 flex size-6 items-center justify-center rounded-full transition-transform duration-500 group-hover:translate-x-0.5">
+    <span
+      class="bg-primary-foreground/15 flex size-6 items-center justify-center rounded-full transition-transform duration-500 group-hover:translate-x-0.5"
+    >
       <ArrowRight class="size-3.5" />
     </span>
   </button>
@@ -132,17 +149,29 @@ const inputClass =
   const MAX_CV_BYTES = 1_000_000; // ~1 MB — send() rejects >1 MB combined
 
   const escapeHtml = (s: string) =>
-    s.replace(/[&<>"']/g, (c) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c] as string,
+    s.replace(
+      /[&<>"']/g,
+      (c) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[c] as string,
     );
 
   function initVolunteerForm() {
-    const form = document.getElementById("volunteer-form") as HTMLFormElement | null;
+    const form = document.getElementById(
+      "volunteer-form",
+    ) as HTMLFormElement | null;
     if (!form || (form as any).__bound) return;
     (form as any).__bound = true;
 
     const success = document.getElementById("volunteer-success");
-    const submitBtn = document.getElementById("volunteer-submit") as HTMLButtonElement | null;
+    const submitBtn = document.getElementById(
+      "volunteer-submit",
+    ) as HTMLButtonElement | null;
     const fileInput = document.getElementById("cv") as HTMLInputElement | null;
     const dropzone = document.getElementById("cv-dropzone");
     const cvLabel = document.getElementById("cv-label");
@@ -161,7 +190,8 @@ const inputClass =
     // Reflect the chosen file's name; drag-drop assigns to the input too.
     fileInput?.addEventListener("change", () => {
       const f = fileInput.files?.[0];
-      if (cvLabel) cvLabel.textContent = f ? f.name : "Drag & drop your CV here";
+      if (cvLabel)
+        cvLabel.textContent = f ? f.name : "Drag & drop your CV here";
       if (f) setError("cv", null);
     });
 
@@ -216,16 +246,25 @@ const inputClass =
         return;
       }
       if (file.size > MAX_CV_BYTES) {
-        setError("cv", "That file is too large — please keep your CV under 1 MB.");
+        setError(
+          "cv",
+          "That file is too large — please keep your CV under 1 MB.",
+        );
         return;
       }
       if (message.length < 10) {
-        setError("form", "Please tell us a little more (at least 10 characters).");
+        setError(
+          "form",
+          "Please tell us a little more (at least 10 characters).",
+        );
         return;
       }
 
       if (!agency) {
-        setError("form", "The form is not configured yet (missing PUBLIC_AGENCY_API_KEY).");
+        setError(
+          "form",
+          "The form is not configured yet (missing PUBLIC_AGENCY_API_KEY).",
+        );
         return;
       }
 
@@ -254,7 +293,11 @@ const inputClass =
           html,
           text: `New volunteer application\nName: ${name}\nEmail: ${email}\n\n${message}`,
           attachments: [
-            { filename: file.name, content: buf, contentType: "application/pdf" },
+            {
+              filename: file.name,
+              content: buf,
+              contentType: "application/pdf",
+            },
           ],
         });
 
@@ -272,9 +315,15 @@ const inputClass =
         success?.classList.remove("hidden");
       } catch (err) {
         if (err instanceof AttachmentTooLargeError) {
-          setError("cv", "That file is too large — please keep your CV under 1 MB.");
+          setError(
+            "cv",
+            "That file is too large — please keep your CV under 1 MB.",
+          );
         } else {
-          setError("form", "Something went wrong sending your application. Please try again.");
+          setError(
+            "form",
+            "Something went wrong sending your application. Please try again.",
+          );
         }
       } finally {
         if (submitBtn) {
@@ -284,12 +333,14 @@ const inputClass =
       }
     });
 
-    document.getElementById("volunteer-reset")?.addEventListener("click", () => {
-      form.reset();
-      if (cvLabel) cvLabel.textContent = "Drag & drop your CV here";
-      success?.classList.add("hidden");
-      form.classList.remove("hidden");
-    });
+    document
+      .getElementById("volunteer-reset")
+      ?.addEventListener("click", () => {
+        form.reset();
+        if (cvLabel) cvLabel.textContent = "Drag & drop your CV here";
+        success?.classList.add("hidden");
+        form.classList.remove("hidden");
+      });
   }
 
   document.addEventListener("astro:page-load", initVolunteerForm);

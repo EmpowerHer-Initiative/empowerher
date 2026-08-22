@@ -1,7 +1,6 @@
 ---
 // Ports components/marketing/about-us/our-story.tsx
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
 import { Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
@@ -9,11 +8,10 @@ interface Props {
   bodyBefore: string[];
   pullQuote: string;
   bodyAfter: string[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "ourStory"). */
-  cmsPath?: string;
 }
-const { eyebrow, bodyBefore, pullQuote, bodyAfter, cmsPath } = Astro.props;
+const { eyebrow, bodyBefore, pullQuote, bodyAfter } = Astro.props;
 ---
+
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-3xl">
@@ -21,26 +19,31 @@ const { eyebrow, bodyBefore, pullQuote, bodyAfter, cmsPath } = Astro.props;
         <Text
           as="p"
           class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase"
-          field={cmsField(cmsPath, "eyebrow")}
+          field={"ourStory.eyebrow"}
           value={eyebrow}
         />
       </Reveal>
 
       <Reveal delay={80}>
         <div class="text-muted-foreground space-y-7 text-lg leading-relaxed">
-          {bodyBefore.map((paragraph, i) => (
-            <p data-cms-field={cmsField(cmsPath, `bodyBefore.${i}`)} set:html={paragraph} />
-          ))}
+          {
+            bodyBefore.map((paragraph, i) => (
+              <p
+                data-cms-field={`ourStory.bodyBefore.${i}`}
+                set:html={paragraph}
+              />
+            ))
+          }
         </div>
       </Reveal>
 
-      <!-- Pull Quote -->
+      {/* Pull Quote */}
       <Reveal delay={160}>
         <blockquote class="border-border my-14 border-l-2 pl-8">
           <Text
             as="p"
             class="text-foreground font-serif text-2xl leading-snug md:text-3xl"
-            field={cmsField(cmsPath, "pullQuote")}
+            field={"ourStory.pullQuote"}
             value={pullQuote}
           />
         </blockquote>
@@ -48,9 +51,14 @@ const { eyebrow, bodyBefore, pullQuote, bodyAfter, cmsPath } = Astro.props;
 
       <Reveal delay={80}>
         <div class="text-muted-foreground space-y-7 text-lg leading-relaxed">
-          {bodyAfter.map((paragraph, i) => (
-            <p data-cms-field={cmsField(cmsPath, `bodyAfter.${i}`)} set:html={paragraph} />
-          ))}
+          {
+            bodyAfter.map((paragraph, i) => (
+              <p
+                data-cms-field={`ourStory.bodyAfter.${i}`}
+                set:html={paragraph}
+              />
+            ))
+          }
         </div>
       </Reveal>
     </div>

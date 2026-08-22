@@ -1,8 +1,12 @@
 ---
 // Ports components/marketing/hervoice/congressional-testimonies.tsx
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
-import { Heading2, Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
+import {
+  Heading2,
+  Text,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -12,20 +16,11 @@ interface Props {
   quoteAttribution: string;
   note: string;
   videos: { poster: string; src: string; label: string }[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "congressionalTestimonies"). */
-  cmsPath?: string;
 }
-const {
-  eyebrow,
-  heading,
-  intro,
-  quote,
-  quoteAttribution,
-  note,
-  videos,
-  cmsPath,
-} = Astro.props;
+const { eyebrow, heading, intro, quote, quoteAttribution, note, videos } =
+  Astro.props;
 ---
+
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-4xl">
@@ -33,14 +28,14 @@ const {
         <Text
           as="p"
           class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase"
-          field={cmsField(cmsPath, "eyebrow")}
+          field={"congressionalTestimonies.eyebrow"}
           value={eyebrow}
         />
       </Reveal>
       <Reveal delay={80}>
         <Heading2
           class="text-foreground font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={cmsField(cmsPath, "heading")}
+          field={"congressionalTestimonies.heading"}
           value={heading}
         />
       </Reveal>
@@ -49,24 +44,26 @@ const {
         <Text
           as="p"
           class="text-muted-foreground mt-8 max-w-2xl text-base leading-relaxed"
-          field={cmsField(cmsPath, "intro")}
+          field={"congressionalTestimonies.intro"}
           value={intro}
         />
       </Reveal>
 
       {/* Centered blockquote */}
       <Reveal class="border-border my-16 border-l-2 pl-8">
-        <!-- static &ldquo;/&rdquo; entities wrap the field; Text would drop them, so kept hand-tagged. -->
+        {
+          /* static &ldquo;/&rdquo; entities wrap the field; Text would drop them, so kept hand-tagged. */
+        }
         <p
           class="text-muted-foreground font-serif text-xl leading-relaxed md:text-2xl"
-          data-cms-field={cmsField(cmsPath, "quote")}
+          data-cms-field={"congressionalTestimonies.quote"}
         >
           &ldquo;{quote}&rdquo;
         </p>
         <Text
           as="p"
           class="text-muted-foreground mt-6 text-xs font-semibold tracking-[0.3em] uppercase"
-          field={cmsField(cmsPath, "quoteAttribution")}
+          field={"congressionalTestimonies.quoteAttribution"}
           value={quoteAttribution}
         />
       </Reveal>
@@ -75,38 +72,43 @@ const {
         <Text
           as="p"
           class="text-muted-foreground mb-10 text-sm"
-          field={cmsField(cmsPath, "note")}
+          field={"congressionalTestimonies.note"}
           value={note}
         />
       </Reveal>
 
       {/* Videos */}
       <Reveal delay={160}>
-        <Group field={cmsField(cmsPath, "videos")} class="grid gap-6 md:grid-cols-2">
-          {videos.map((video, i) => (
-            <Item index={i} class="overflow-hidden rounded-2xl">
-              <!-- video/source aren't <img> — poster & src stay hand-tagged, no bridge component covers them. -->
-              <video
-                controls
-                poster={video.poster}
-                class="w-full"
-                data-cms-field={cmsField(cmsPath, `videos.${i}.poster`)}
-              >
-                <source
-                  src={video.src}
-                  type="video/mp4"
-                  data-cms-field={cmsField(cmsPath, `videos.${i}.src`)}
+        <Group
+          field={"congressionalTestimonies.videos"}
+          class="grid gap-6 md:grid-cols-2"
+        >
+          {
+            videos.map((video, i) => (
+              <Item index={i} class="overflow-hidden rounded-2xl">
+                {/* video/source aren't <img> — poster & src stay hand-tagged, no bridge component covers them. */}
+                <video
+                  controls
+                  poster={video.poster}
+                  class="w-full"
+                  data-cms-field={`congressionalTestimonies.videos.${i}.poster`}
+                >
+                  <source
+                    src={video.src}
+                    type="video/mp4"
+                    data-cms-field={`congressionalTestimonies.videos.${i}.src`}
+                  />
+                  Your browser does not support the video tag.
+                </video>
+                <Text
+                  as="p"
+                  class="text-muted-foreground mt-3 text-xs font-semibold tracking-[0.2em] uppercase"
+                  field={`congressionalTestimonies.videos.${i}.label`}
+                  value={video.label}
                 />
-                Your browser does not support the video tag.
-              </video>
-              <Text
-                as="p"
-                class="text-muted-foreground mt-3 text-xs font-semibold tracking-[0.2em] uppercase"
-                field={cmsField(cmsPath, `videos.${i}.label`)}
-                value={video.label}
-              />
-            </Item>
-          ))}
+              </Item>
+            ))
+          }
         </Group>
       </Reveal>
     </div>

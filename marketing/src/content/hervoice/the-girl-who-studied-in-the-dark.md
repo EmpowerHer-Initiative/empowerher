@@ -1,11 +1,11 @@
 ---
 title: The Girl Who Studied in the Dark
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5IuYoRWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5IuYoRWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3"
 imageCredit: >-
   Image taken from
   https://unsplash.com/photos/person-holding-black-tablet-computer-eioOpjkjxxs,
   by the author
-date: '2026-05-30'
+date: "2026-05-30"
 authorName: Khadija Mohammadi
 authorPosition: Honorable Mention — HerVoice 2026 Writing Contest
 authorBio: >-

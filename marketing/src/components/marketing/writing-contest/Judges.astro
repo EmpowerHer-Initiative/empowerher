@@ -1,8 +1,14 @@
 ---
 // Ports components/marketing/writing-contest/judges.tsx
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
-import { Text, Heading2, Heading3, Image, Group, Item } from "@alisamadiillc/cms-bridge/components";
+import {
+  Text,
+  Heading2,
+  Heading3,
+  Image,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -11,11 +17,11 @@ interface Props {
   thankYou: string;
   sponsorsText: string;
   sponsorLogos: { src: string; alt: string }[];
-  cmsPath?: string;
 }
-const { eyebrow, title, items, thankYou, sponsorsText, sponsorLogos, cmsPath } =
+const { eyebrow, title, items, thankYou, sponsorsText, sponsorLogos } =
   Astro.props;
 ---
+
 <section class="bg-foreground/[0.025] py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-6xl">
@@ -23,40 +29,49 @@ const { eyebrow, title, items, thankYou, sponsorsText, sponsorLogos, cmsPath } =
         <Text
           as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={cmsField(cmsPath, "eyebrow")}
+          field={"judges.eyebrow"}
           value={eyebrow}
         />
         <Heading2
           class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={cmsField(cmsPath, "title")}
+          field={"judges.title"}
           value={title}
         />
       </Reveal>
 
-      <Group field={cmsField(cmsPath, "items")} class="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-        {items.map((judge, i) => (
-          <Reveal delay={(i % 3) * 80}>
-            <Item index={i}>
-              <div class="aspect-square overflow-hidden rounded-2xl">
-                <Image
-                  field={cmsField(cmsPath, `items.${i}.image`)}
-                  value={judge.image}
-                  alt={judge.name}
-                  loading="lazy"
-                  decoding="async"
-                  class="h-full w-full object-cover"
+      <Group
+        field={"judges.items"}
+        class="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-3"
+      >
+        {
+          items.map((judge, i) => (
+            <Reveal delay={(i % 3) * 80}>
+              <Item index={i}>
+                <div class="aspect-square overflow-hidden rounded-2xl">
+                  <Image
+                    field={`judges.items.${i}.image`}
+                    value={judge.image}
+                    alt={judge.name}
+                    loading="lazy"
+                    decoding="async"
+                    class="h-full w-full object-cover"
+                  />
+                </div>
+                <Heading3
+                  class="mt-5 font-serif text-2xl"
+                  field={`judges.items.${i}.name`}
+                  value={judge.name}
                 />
-              </div>
-              <Heading3 class="mt-5 font-serif text-2xl" field={cmsField(cmsPath, `items.${i}.name`)} value={judge.name} />
-              <Text
-                as="p"
-                class="text-muted-foreground mt-3 text-sm leading-relaxed"
-                field={cmsField(cmsPath, `items.${i}.description`)}
-                value={judge.description}
-              />
-            </Item>
-          </Reveal>
-        ))}
+                <Text
+                  as="p"
+                  class="text-muted-foreground mt-3 text-sm leading-relaxed"
+                  field={`judges.items.${i}.description`}
+                  value={judge.description}
+                />
+              </Item>
+            </Reveal>
+          ))
+        }
       </Group>
 
       {/* Thank you + sponsors */}
@@ -64,15 +79,22 @@ const { eyebrow, title, items, thankYou, sponsorsText, sponsorLogos, cmsPath } =
         <Text
           as="p"
           class="text-muted-foreground mx-auto max-w-2xl text-center text-base leading-relaxed font-medium md:text-lg"
-          field={cmsField(cmsPath, "thankYou")}
+          field={"judges.thankYou"}
           value={thankYou}
         />
-        <div class="border-border/60 bg-background rounded-3xl border p-10 text-center shadow-sm md:p-14">
-          <Text as="p" class="mx-auto max-w-3xl font-serif text-xl leading-relaxed md:text-2xl" field={cmsField(cmsPath, "sponsorsText")} value={sponsorsText} />
+        <div
+          class="border-border/60 bg-background rounded-3xl border p-10 text-center shadow-sm md:p-14"
+        >
+          <Text
+            as="p"
+            class="mx-auto max-w-3xl font-serif text-xl leading-relaxed md:text-2xl"
+            field={"judges.sponsorsText"}
+            value={sponsorsText}
+          />
           <div class="mt-10 flex flex-wrap items-center justify-center gap-6">
             <div class="bg-muted/50 size-56 overflow-hidden rounded-2xl">
               <Image
-                field={cmsField(cmsPath, "sponsorLogos.0.src")}
+                field={"judges.sponsorLogos.0.src"}
                 value={sponsorLogos[0].src}
                 alt={sponsorLogos[0].alt}
                 loading="lazy"
@@ -80,9 +102,11 @@ const { eyebrow, title, items, thankYou, sponsorsText, sponsorLogos, cmsPath } =
                 class="h-full w-full object-cover"
               />
             </div>
-            <div class="bg-background border-border/60 flex w-56 items-center justify-center overflow-hidden rounded-2xl border p-4">
+            <div
+              class="bg-background border-border/60 flex w-56 items-center justify-center overflow-hidden rounded-2xl border p-4"
+            >
               <Image
-                field={cmsField(cmsPath, "sponsorLogos.1.src")}
+                field={"judges.sponsorLogos.1.src"}
                 value={sponsorLogos[1].src}
                 alt={sponsorLogos[1].alt}
                 loading="lazy"

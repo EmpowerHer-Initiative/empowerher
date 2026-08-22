@@ -2,8 +2,13 @@
 // Ports components/marketing/writing-contest/submission-requirements.tsx
 import Reveal from "../home/Reveal.astro";
 import AlertTriangle from "../../icons/AlertTriangle.astro";
-import { cmsField } from "../../../lib/cms";
-import { Text, Heading2, Heading3, Group, Item } from "@alisamadiillc/cms-bridge/components";
+import {
+  Text,
+  Heading2,
+  Heading3,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -13,7 +18,6 @@ interface Props {
   formatWarning: string;
   rulesTitle: string;
   rules: string[];
-  cmsPath?: string;
 }
 const {
   eyebrow,
@@ -23,9 +27,9 @@ const {
   formatWarning,
   rulesTitle,
   rules,
-  cmsPath,
 } = Astro.props;
 ---
+
 <section class="bg-foreground/[0.025] py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-5xl">
@@ -33,55 +37,90 @@ const {
         <Text
           as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={cmsField(cmsPath, "eyebrow")}
+          field={"submissionRequirements.eyebrow"}
           value={eyebrow}
         />
         <Heading2
           class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={cmsField(cmsPath, "title")}
+          field={"submissionRequirements.title"}
           value={title}
         />
       </Reveal>
 
       <div class="mt-12 grid gap-6 lg:grid-cols-2">
         {/* Format options */}
-        <Reveal class="border-border/60 bg-background rounded-3xl border p-8 shadow-sm">
-          <Heading3 class="font-serif text-2xl" field={cmsField(cmsPath, "formatTitle")} value={formatTitle} />
-          <!-- not Group/Item-wrapped: this container mixes the mapped formatOptions with a static formatWarning sibling under `space-y-4`; wrapping only the map would disturb the sibling-margin spacing -->
+        <Reveal
+          class="border-border/60 bg-background rounded-3xl border p-8 shadow-sm"
+        >
+          <Heading3
+            class="font-serif text-2xl"
+            field={"submissionRequirements.formatTitle"}
+            value={formatTitle}
+          />
+          {
+            /* not Group/Item-wrapped: this container mixes the mapped formatOptions with a static formatWarning sibling under `space-y-4`; wrapping only the map would disturb the sibling-margin spacing */
+          }
           <div class="mt-6 space-y-4">
-            {formatOptions.map((option, i) => (
-              <div class="bg-muted/60 rounded-2xl p-6">
-                <Text
-                  as="p"
-                  class="text-foreground text-lg font-semibold"
-                  field={cmsField(cmsPath, `formatOptions.${i}.title`)}
-                  value={option.title}
-                />
-                <Text
-                  as="p"
-                  class="text-muted-foreground mt-2 text-sm leading-relaxed"
-                  field={cmsField(cmsPath, `formatOptions.${i}.description`)}
-                  value={option.description}
-                />
-              </div>
-            ))}
-            <div class="flex items-start gap-3 rounded-2xl border border-l-4 border-red-200 border-l-red-600 bg-red-50 p-4">
+            {
+              formatOptions.map((option, i) => (
+                <div class="bg-muted/60 rounded-2xl p-6">
+                  <Text
+                    as="p"
+                    class="text-foreground text-lg font-semibold"
+                    field={`submissionRequirements.formatOptions.${i}.title`}
+                    value={option.title}
+                  />
+                  <Text
+                    as="p"
+                    class="text-muted-foreground mt-2 text-sm leading-relaxed"
+                    field={`submissionRequirements.formatOptions.${i}.description`}
+                    value={option.description}
+                  />
+                </div>
+              ))
+            }
+            <div
+              class="flex items-start gap-3 rounded-2xl border border-l-4 border-red-200 border-l-red-600 bg-red-50 p-4"
+            >
               <AlertTriangle class="mt-0.5 size-5 shrink-0 text-red-600" />
-              <Text as="p" class="text-sm leading-relaxed text-red-800" field={cmsField(cmsPath, "formatWarning")} value={formatWarning} />
+              <Text
+                as="p"
+                class="text-sm leading-relaxed text-red-800"
+                field={"submissionRequirements.formatWarning"}
+                value={formatWarning}
+              />
             </div>
           </div>
         </Reveal>
 
         {/* Important rules */}
-        <Reveal class="border-border/60 bg-background rounded-3xl border p-8 shadow-sm" delay={80}>
-          <Heading3 class="font-serif text-2xl" field={cmsField(cmsPath, "rulesTitle")} value={rulesTitle} />
-          <Group field={cmsField(cmsPath, "rules")} as="ul" class="mt-6 space-y-4">
-            {rules.map((rule, i) => (
-              <Item index={i} as="li" class="flex items-start gap-3">
-                <span class="bg-primary mt-2 size-1.5 shrink-0 rounded-full"></span>
-                <Text as="span" class="text-foreground/80 text-sm leading-relaxed" field={cmsField(cmsPath, `rules.${i}`)} value={rule} />
-              </Item>
-            ))}
+        <Reveal
+          class="border-border/60 bg-background rounded-3xl border p-8 shadow-sm"
+          delay={80}
+        >
+          <Heading3
+            class="font-serif text-2xl"
+            field={"submissionRequirements.rulesTitle"}
+            value={rulesTitle}
+          />
+          <Group
+            field={"submissionRequirements.rules"}
+            as="ul"
+            class="mt-6 space-y-4"
+          >
+            {
+              rules.map((rule, i) => (
+                <Item index={i} as="li" class="flex items-start gap-3">
+                  <span class="bg-primary mt-2 size-1.5 shrink-0 rounded-full" />
+                  <Text
+                    as="span"
+                    class="text-foreground/80 text-sm leading-relaxed"
+                    field={`submissionRequirements.rules.${i}`}
+                    value={rule}
+                  />
+                </Item>
+              ))
+            }
           </Group>
         </Reveal>
       </div>

@@ -3,8 +3,8 @@ title: The Voice of an Afghan Girl
 description: >-
   An Afghan girl's powerful letter about resilience, hope, and fighting for
   education rights under oppression.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEKWm9jefRbjSv9fDHMpJXBriOWVtPmoQZNC3'
-date: '2025-10-24'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEKWm9jefRbjSv9fDHMpJXBriOWVtPmoQZNC3"
+date: "2025-10-24"
 authorName: Khatera A
 authorBio: >-
   I am from Kabul, Afghanistan. I studied Computer Science and Information

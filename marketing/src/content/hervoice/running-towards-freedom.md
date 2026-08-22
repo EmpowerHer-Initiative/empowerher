@@ -1,8 +1,8 @@
 ---
 title: Running Towards Freedom
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT6gmlzi49jfnexowH4rdvO7pcMmglFtNsyY50'
-imageCredit: 'Image taken from https://freetorun.org/where-we-work, by the author'
-date: '2026-05-30'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT6gmlzi49jfnexowH4rdvO7pcMmglFtNsyY50"
+imageCredit: "Image taken from https://freetorun.org/where-we-work, by the author"
+date: "2026-05-30"
 authorName: Mohadisa Bazel
 authorPosition: Honorable Mention — HerVoice 2026 Writing Contest
 authorBio: >-

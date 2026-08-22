@@ -8,49 +8,56 @@ interface Props {
   suffix?: string;
   duration?: number;
 }
-const { to, decimals = 0, prefix = "", suffix = "", duration = 2000 } = Astro.props;
+const {
+  to,
+  decimals = 0,
+  prefix = "",
+  suffix = "",
+  duration = 2000,
+} = Astro.props;
 const initial = (0).toFixed(decimals);
 ---
+
 <span
   data-countup
   data-to={to}
   data-decimals={decimals}
   data-prefix={prefix}
   data-suffix={suffix}
-  data-duration={duration}
->{prefix}{initial}{suffix}</span>
+  data-duration={duration}>{prefix}{initial}{suffix}</span
+>
 
 <script>
   function initCountUp() {
-  const nodes = document.querySelectorAll<HTMLElement>("[data-countup]");
-  nodes.forEach((el) => {
-    if (el.dataset.counted) return;
-    el.dataset.counted = "1";
-    const to = parseFloat(el.dataset.to || "0");
-    const decimals = parseInt(el.dataset.decimals || "0", 10);
-    const prefix = el.dataset.prefix || "";
-    const suffix = el.dataset.suffix || "";
-    const duration = parseFloat(el.dataset.duration || "2000");
-    let started = false;
-    const ob = new IntersectionObserver(
-      ([e]) => {
-        if (!e.isIntersecting || started) return;
-        started = true;
-        let startTs: number | null = null;
-        const tick = (ts: number) => {
-          if (startTs === null) startTs = ts;
-          const p = Math.min((ts - startTs) / duration, 1);
-          const eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = prefix + (to * eased).toFixed(decimals) + suffix;
-          if (p < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-        ob.disconnect();
-      },
-      { threshold: 0.4 }
-    );
-    ob.observe(el);
-  });
+    const nodes = document.querySelectorAll<HTMLElement>("[data-countup]");
+    nodes.forEach((el) => {
+      if (el.dataset.counted) return;
+      el.dataset.counted = "1";
+      const to = parseFloat(el.dataset.to || "0");
+      const decimals = parseInt(el.dataset.decimals || "0", 10);
+      const prefix = el.dataset.prefix || "";
+      const suffix = el.dataset.suffix || "";
+      const duration = parseFloat(el.dataset.duration || "2000");
+      let started = false;
+      const ob = new IntersectionObserver(
+        ([e]) => {
+          if (!e.isIntersecting || started) return;
+          started = true;
+          let startTs: number | null = null;
+          const tick = (ts: number) => {
+            if (startTs === null) startTs = ts;
+            const p = Math.min((ts - startTs) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = prefix + (to * eased).toFixed(decimals) + suffix;
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+          ob.disconnect();
+        },
+        { threshold: 0.4 },
+      );
+      ob.observe(el);
+    });
   }
   document.addEventListener("astro:page-load", initCountUp);
 </script>

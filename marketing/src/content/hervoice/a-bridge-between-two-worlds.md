@@ -7,8 +7,8 @@ description: >-
   to the harshness of her own reality, she finds strength not in escape but in
   resolve—to write, to speak, and to build a bridge from dreams to a future
   where Afghan children can smile again.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT56kEagAWxDjwpl6zcWuZFSE0gC1TOnBMHdPh'
-date: '2025-07-01'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT56kEagAWxDjwpl6zcWuZFSE0gC1TOnBMHdPh"
+date: "2025-07-01"
 ---
 
 It was night. The electricity had gone out. The house was filled with darkness, and only

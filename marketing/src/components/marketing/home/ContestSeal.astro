@@ -4,19 +4,57 @@ import pages from "../../../data/pages.json";
 const content = pages.home;
 // Ports components/marketing/home/contest-seal.tsx
 ---
+
 <div class="relative size-32">
-  <svg viewBox="0 0 120 120" aria-hidden="true" class="h-full w-full animate-[spin_26s_linear_infinite]">
+  <svg
+    viewBox="0 0 120 120"
+    aria-hidden="true"
+    class="h-full w-full animate-[spin_26s_linear_infinite]"
+  >
     <defs>
-      <path id="hv-seal-path" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" />
+      <path
+        id="hv-seal-path"
+        d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"></path>
     </defs>
-    <circle cx="60" cy="60" r="56" fill="none" stroke="#E0AE3C" stroke-width="1.4" />
-    <circle cx="60" cy="60" r="44" fill="none" stroke="#E0AE3C" stroke-width="1" stroke-dasharray="1.5 4.5" opacity="0.8" />
-    <text fill="#E0AE3C" style="font-size:9.2px;font-weight:700;letter-spacing:3px">
-      <textPath href="#hv-seal-path" startOffset="0">HERVOICE &middot; CELEBRATING WINNERS &middot; </textPath>
+    <circle
+      cx="60"
+      cy="60"
+      r="56"
+      fill="none"
+      stroke="#E0AE3C"
+      stroke-width="1.4"></circle>
+    <circle
+      cx="60"
+      cy="60"
+      r="44"
+      fill="none"
+      stroke="#E0AE3C"
+      stroke-width="1"
+      stroke-dasharray="1.5 4.5"
+      opacity="0.8"></circle>
+    <text
+      fill="#E0AE3C"
+      style="font-size:9.2px;font-weight:700;letter-spacing:3px"
+    >
+      <textPath href="#hv-seal-path" startOffset="0"
+        >HERVOICE &middot; CELEBRATING WINNERS &middot;
+      </textPath>
     </text>
   </svg>
-  <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-    <Text as="p" class="font-serif text-[26px] leading-none font-bold" field="text" value={content.text} />
-    <Text as="p" class="mt-0.5 text-[8.5px] font-bold tracking-[0.2em] text-[#E0AE3C] uppercase" field="text2" value={content.text2} />
+  <div
+    class="absolute inset-0 flex flex-col items-center justify-center text-center"
+  >
+    <Text
+      as="p"
+      class="font-serif text-[26px] leading-none font-bold"
+      field="text"
+      value={content.text}
+    />
+    <Text
+      as="p"
+      class="mt-0.5 text-[8.5px] font-bold tracking-[0.2em] text-[#E0AE3C] uppercase"
+      field="text2"
+      value={content.text2}
+    />
   </div>
 </div>

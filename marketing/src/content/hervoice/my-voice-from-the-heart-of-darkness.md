@@ -8,8 +8,8 @@ description: >-
   identifying as a builder rather than just a survivor, she dreams of studying
   computer science and advocates for the voices of Afghan girls, embodying the
   enduring light of hope in the darkest circumstances.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfPqEMS3C8OG5vkbyTeNds9rYucAtpJg0PMV7'
-date: '2025-12-08'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfPqEMS3C8OG5vkbyTeNds9rYucAtpJg0PMV7"
+date: "2025-12-08"
 authorName: Nazanin Razawi
 authorBio: >-
   Nazanin Razawi is a dedicated writer, author, and passionate advocate for
@@ -20,7 +20,7 @@ authorBio: >-
   underserved communities. Nazanin is committed to using her abilities in
   writing, communication, and leadership to help create a brighter and more
   equitable future for the next generation.
-authorLinkedin: 'https://www.linkedin.com/in/naz-raz-692826341'
+authorLinkedin: "https://www.linkedin.com/in/naz-raz-692826341"
 ---
 
 In the heart of darkness if there is a light, that's from us.

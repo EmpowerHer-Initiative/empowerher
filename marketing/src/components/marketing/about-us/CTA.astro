@@ -3,31 +3,31 @@
 import ArrowRight from "../../icons/ArrowRight.astro";
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
 import { Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
   heading: string;
-  /** CMS field path prefix for live-preview highlighting (e.g. "cta"). */
-  cmsPath?: string;
 }
-const { eyebrow, heading, cmsPath } = Astro.props;
+const { eyebrow, heading } = Astro.props;
 ---
+
 <section class="py-28 md:py-40">
   <div class="container">
-    <div class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+    <div
+      class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between"
+    >
       <Reveal>
         <div>
           <Text
             as="p"
             class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
-            field={cmsField(cmsPath, "eyebrow")}
+            field={"cta.eyebrow"}
             value={eyebrow}
           />
           <h2
             class="font-serif text-4xl leading-[1.1] md:text-5xl lg:text-6xl"
-            data-cms-field={cmsField(cmsPath, "heading")}
+            data-cms-field={"cta.heading"}
             set:html={heading}
           />
         </div>
@@ -39,7 +39,9 @@ const { eyebrow, heading, cmsPath } = Astro.props;
             class="group bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl active:scale-[0.98]"
           >
             Get Involved
-            <ArrowRight class="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+            <ArrowRight
+              class="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5"
+            />
           </a>
           <a
             href="/mentorship"

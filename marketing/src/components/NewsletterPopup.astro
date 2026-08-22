@@ -6,6 +6,7 @@
 import Mail from "./icons/Mail.astro";
 import Send from "./icons/Send.astro";
 ---
+
 <div
   id="newsletter-popup"
   class="pointer-events-none fixed right-4 bottom-4 z-50 w-[calc(100vw-2rem)] max-w-sm translate-y-4 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] sm:right-6 sm:bottom-6"
@@ -19,12 +20,21 @@ import Send from "./icons/Send.astro";
       aria-label="Dismiss"
       class="text-muted-foreground hover:bg-muted hover:text-foreground absolute top-3 right-3 flex size-8 items-center justify-center rounded-full transition-colors"
     >
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-4">
-        <path d="M6 6l12 12M18 6L6 18" />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        class="size-4"
+      >
+        <path d="M6 6l12 12M18 6L6 18"></path>
       </svg>
     </button>
 
-    <div class="bg-primary/10 text-primary mb-4 flex size-11 items-center justify-center rounded-full">
+    <div
+      class="bg-primary/10 text-primary mb-4 flex size-11 items-center justify-center rounded-full"
+    >
       <Mail class="size-5" />
     </div>
     <h3 class="text-foreground font-serif text-xl leading-tight">
@@ -57,7 +67,8 @@ import Send from "./icons/Send.astro";
       id="newsletter-popup-success"
       class="text-foreground mt-2 hidden text-sm font-medium"
       data-success-text
-    ></p>
+    >
+    </p>
   </div>
 </div>
 
@@ -87,9 +98,13 @@ import Send from "./icons/Send.astro";
     if (!popup || (popup as any).__bound) return;
     (popup as any).__bound = true;
 
-    const form = document.getElementById("newsletter-popup-form") as HTMLFormElement | null;
+    const form = document.getElementById(
+      "newsletter-popup-form",
+    ) as HTMLFormElement | null;
     const success = document.getElementById("newsletter-popup-success");
-    const submitBtn = document.getElementById("newsletter-popup-submit") as HTMLButtonElement | null;
+    const submitBtn = document.getElementById(
+      "newsletter-popup-submit",
+    ) as HTMLButtonElement | null;
     const closeBtn = document.getElementById("newsletter-popup-close");
 
     const dismissed = () => {

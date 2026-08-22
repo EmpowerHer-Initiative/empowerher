@@ -4,8 +4,11 @@
 // description, image, link). MOCK: representative sample hardcoded inline.
 import ExternalLink from "../../icons/ExternalLink.astro";
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
-import { Heading2, Text } from "@alisamadiillc/cms-bridge/components";
+import {
+  Heading2,
+  Text,
+  Collection,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -17,29 +20,30 @@ interface Props {
     image: string;
     link: string;
   }[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "workshops"). */
-  cmsPath?: string;
 }
 
-const { eyebrow, title, items, cmsPath } = Astro.props;
+const { eyebrow, title, items } = Astro.props;
 ---
+
 <section
   id="workshops"
   class="bg-foreground/[0.02] scroll-mt-20 py-28 md:py-40 lg:scroll-mt-24"
 >
   <div class="container">
-    <div class="mb-16 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+    <div
+      class="mb-16 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
+    >
       <Reveal>
         <div>
           <Text
             as="p"
             class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
-            field={cmsField(cmsPath, "eyebrow")}
+            field={"workshops.eyebrow"}
             value={eyebrow}
           />
           <Heading2
             class="font-serif text-4xl leading-[1.1] md:text-5xl"
-            field={cmsField(cmsPath, "title")}
+            field={"workshops.title"}
             value={title}
           />
         </div>
@@ -47,52 +51,54 @@ const { eyebrow, title, items, cmsPath } = Astro.props;
     </div>
 
     {/* Alternating image-left / image-right layout */}
-    <div class="space-y-6">
-      {items.map((workshop, i) => (
-        <Reveal>
-          <div
-            class={`group border-border/40 bg-background hover:border-primary/20 hover:shadow-primary/5 flex flex-col overflow-hidden rounded-3xl border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl ${
-              i % 2 !== 0 ? "md:flex-row-reverse" : "md:flex-row"
-            }`}
-          >
-            {/* Image */}
-            <div class="relative aspect-video overflow-hidden md:aspect-auto md:w-2/5 md:shrink-0">
-              <img
-                src={workshop.image}
-                alt={workshop.name}
-                loading="lazy"
-                decoding="async"
-                class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
-              />
-            </div>
-            {/* Details */}
-            <div class="flex flex-col justify-center gap-6 p-8 md:p-12 lg:p-14">
-              <div>
-                {workshop.mentors.length > 0 && (
-                  <p class="text-primary mb-3 text-xs font-semibold tracking-[0.3em] uppercase">
-                    Mentor — {workshop.mentors.join(", ")}
-                  </p>
-                )}
-                <h3 class="text-2xl leading-snug font-semibold md:text-3xl">
-                  {workshop.name}
-                </h3>
-                <p class="text-muted-foreground mt-4 text-base leading-relaxed">
-                  {workshop.description}
-                </p>
+    <Collection collection="workshops" class="space-y-6">
+      {
+        items.map((workshop, i) => (
+          <Reveal>
+            <div
+              class={`group border-border/40 bg-background hover:border-primary/20 hover:shadow-primary/5 flex flex-col overflow-hidden rounded-3xl border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl ${
+                i % 2 !== 0 ? "md:flex-row-reverse" : "md:flex-row"
+              }`}
+            >
+              {/* Image */}
+              <div class="relative aspect-video overflow-hidden md:aspect-auto md:w-2/5 md:shrink-0">
+                <img
+                  src={workshop.image}
+                  alt={workshop.name}
+                  loading="lazy"
+                  decoding="async"
+                  class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+                />
               </div>
-              <a
-                href={workshop.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex w-fit items-center gap-2 rounded-full px-7 py-3 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
-              >
-                Apply Here
-                <ExternalLink class="size-3.5" />
-              </a>
+              {/* Details */}
+              <div class="flex flex-col justify-center gap-6 p-8 md:p-12 lg:p-14">
+                <div>
+                  {workshop.mentors.length > 0 && (
+                    <p class="text-primary mb-3 text-xs font-semibold tracking-[0.3em] uppercase">
+                      Mentor — {workshop.mentors.join(", ")}
+                    </p>
+                  )}
+                  <h3 class="text-2xl leading-snug font-semibold md:text-3xl">
+                    {workshop.name}
+                  </h3>
+                  <p class="text-muted-foreground mt-4 text-base leading-relaxed">
+                    {workshop.description}
+                  </p>
+                </div>
+                <a
+                  href={workshop.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="bg-primary text-primary-foreground hover:shadow-primary/25 inline-flex w-fit items-center gap-2 rounded-full px-7 py-3 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
+                >
+                  Apply Here
+                  <ExternalLink class="size-3.5" />
+                </a>
+              </div>
             </div>
-          </div>
-        </Reveal>
-      ))}
-    </div>
+          </Reveal>
+        ))
+      }
+    </Collection>
   </div>
 </section>

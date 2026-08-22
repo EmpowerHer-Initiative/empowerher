@@ -9,8 +9,8 @@ description: >-
   both a vision of what could have been and a call to keep alive the dream of a
   peaceful, inclusive Afghanistan where no voice is silenced and no dream
   forbidden.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTVlV0WA82WufQtTg5yH7OAp0KFlsjbkaYIPZ'
-date: '2025-07-01'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTVlV0WA82WufQtTg5yH7OAp0KFlsjbkaYIPZ"
+date: "2025-07-01"
 ---
 
 My name is Samira. I'm eighteen years old. I live in a city where the sun rises without fear, and no explosion steals the sleep of its people. Every morning, the laughter of children echoes through the dusty streets, and girls walk to school dressed in colorful clothes, carrying their books. No one looks at them with suspicion or blame; this is Afghanistan, a place where the Taliban never existed.

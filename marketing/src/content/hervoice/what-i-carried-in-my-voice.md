@@ -1,8 +1,8 @@
 ---
 title: What I Carried in My Voice
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5qlkrZWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5qlkrZWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3"
 imageCredit: Image owned by the author
-date: '2026-05-30'
+date: "2026-05-30"
 authorName: Nazifa Popal
 authorPosition: 3rd Place — HerVoice 2026 Writing Contest
 authorBio: >-

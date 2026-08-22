@@ -17,7 +17,8 @@ fields:
       label: Group,
       type: select,
       required: true,
-      options: { values: ["Executive Team", "Directors", "Mentors & Lecturers"] },
+      options:
+        { values: ["Executive Team", "Directors", "Mentors & Lecturers"] },
       description: Which band this person appears in on the About page.,
     }
   - { name: sort_order, label: Sort order, type: number, required: true }

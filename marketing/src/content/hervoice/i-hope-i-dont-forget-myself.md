@@ -5,9 +5,9 @@ description: >-
   that followed when her education and public life were taken away. Through
   painting, she transforms grief, anger, and injustice into art, using
   creativity as a powerful form of resistance and self‑expression.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTK0t4vXCVy1oGkRMuS0Lravl9JbQIxWFcNhtq'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTK0t4vXCVy1oGkRMuS0Lravl9JbQIxWFcNhtq"
 imageAlt: Paintings done by Mahboba Mushtaq
-date: '2026-01-08'
+date: "2026-01-08"
 authorName: Mahboba Mushtaq
 authorBio: >-
   I am an Afghan student, former English teacher, and community leader who

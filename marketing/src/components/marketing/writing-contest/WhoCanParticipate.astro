@@ -2,17 +2,21 @@
 // Ports components/marketing/writing-contest/who-can-participate.tsx
 import Reveal from "../home/Reveal.astro";
 import CheckCircle2 from "../../icons/CheckCircle2.astro";
-import { cmsField } from "../../../lib/cms";
-import { Text, Heading2, Group, Item } from "@alisamadiillc/cms-bridge/components";
+import {
+  Text,
+  Heading2,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
   title: string;
   items: string[];
-  cmsPath?: string;
 }
-const { eyebrow, title, items, cmsPath } = Astro.props;
+const { eyebrow, title, items } = Astro.props;
 ---
+
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-4xl">
@@ -20,25 +24,35 @@ const { eyebrow, title, items, cmsPath } = Astro.props;
         <Text
           as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={cmsField(cmsPath, "eyebrow")}
+          field={"whoCanParticipate.eyebrow"}
           value={eyebrow}
         />
         <Heading2
           class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={cmsField(cmsPath, "title")}
+          field={"whoCanParticipate.title"}
           value={title}
         />
       </Reveal>
-      <Group field={cmsField(cmsPath, "items")} class="mt-12 grid gap-4">
-        {items.map((item, i) => (
-          <Reveal class="border-border/60 bg-background flex items-start gap-4 rounded-2xl border p-6 shadow-sm" delay={i * 80}>
-            <!-- display:contents: Reveal is a flex row (icon + text side by side); Item must not introduce a box that breaks that layout -->
-            <Item index={i} class="contents">
-              <CheckCircle2 class="text-primary mt-0.5 size-6 shrink-0" />
-              <Text as="p" class="text-foreground/80 text-base leading-relaxed" field={cmsField(cmsPath, `items.${i}`)} value={item} />
-            </Item>
-          </Reveal>
-        ))}
+      <Group field={"whoCanParticipate.items"} class="mt-12 grid gap-4">
+        {
+          items.map((item, i) => (
+            <Reveal
+              class="border-border/60 bg-background flex items-start gap-4 rounded-2xl border p-6 shadow-sm"
+              delay={i * 80}
+            >
+              {/* display:contents: Reveal is a flex row (icon + text side by side); Item must not introduce a box that breaks that layout */}
+              <Item index={i} class="contents">
+                <CheckCircle2 class="text-primary mt-0.5 size-6 shrink-0" />
+                <Text
+                  as="p"
+                  class="text-foreground/80 text-base leading-relaxed"
+                  field={`whoCanParticipate.items.${i}`}
+                  value={item}
+                />
+              </Item>
+            </Reveal>
+          ))
+        }
       </Group>
     </div>
   </div>

@@ -10,23 +10,24 @@ import HerVoiceCTA from "../../components/marketing/hervoice-winners/HerVoiceCTA
 import pages from "../../data/pages.json";
 const data = pages["hervoice-winners"];
 ---
+
 <Layout>
   <div class="text-[#1A2230] antialiased">
     {/* ── SECTION 1: Hero ── */}
-    <Hero {...data.hero} cmsPath="hero" />
+    <Hero {...data.hero} />
 
     {/* ── SECTION 2: Cash Prize Winners ── */}
-    <CashPrizeWinners {...data.cashPrizeWinners} cmsPath="cashPrizeWinners" />
+    <CashPrizeWinners {...data.cashPrizeWinners} />
 
     {/* ── SECTION 3: Honorable Mentions ── */}
-    <HonorableMentions {...data.honorableMentions} cmsPath="honorableMentions" />
+    <HonorableMentions {...data.honorableMentions} />
 
     {/* ── SECTION 4: Judge Testimonials ── */}
-    <JudgeTestimonials {...data.judgeTestimonials} cmsPath="judgeTestimonials" />
+    <JudgeTestimonials {...data.judgeTestimonials} />
 
     {/* ── SECTION 5: CTA Banner ── */}
     <Reveal>
-      <HerVoiceCTA {...data.herVoiceCta} cmsPath="herVoiceCta" />
+      <HerVoiceCTA {...data.herVoiceCta} />
     </Reveal>
   </div>
 </Layout>

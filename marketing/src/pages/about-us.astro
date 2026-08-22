@@ -14,16 +14,16 @@ import MissionVision from "../components/marketing/about-us/MissionVision.astro"
 import OurStory from "../components/marketing/about-us/OurStory.astro";
 import WhatWeDo from "../components/marketing/about-us/WhatWeDo.astro";
 import Team from "../components/marketing/about-us/Team.astro";
-import Partners from "../components/marketing/about-us/Partners.astro";
+import Partners from "../components/marketing/Partners.astro";
 import CTA from "../components/marketing/about-us/CTA.astro";
 ---
 
 <Layout>
-  <Hero {...aboutUs.hero} cmsPath="hero" />
-  <MissionVision cards={aboutUs.missionVision.cards} cmsPath="missionVision" />
-  <OurStory {...aboutUs.ourStory} cmsPath="ourStory" />
-  <WhatWeDo {...aboutUs.whatWeDo} cmsPath="whatWeDo" />
-  <Team {...aboutUs.team} groups={teamGroups} cmsPath="team" />
-  <Partners eyebrow={aboutUs.partners.eyebrow} items={partners} cmsPath="partners" />
-  <CTA {...aboutUs.cta} cmsPath="cta" />
+  <Hero {...aboutUs.hero} />
+  <MissionVision cards={aboutUs.missionVision.cards} />
+  <OurStory {...aboutUs.ourStory} />
+  <WhatWeDo {...aboutUs.whatWeDo} />
+  <Team {...aboutUs.team} groups={teamGroups} />
+  <Partners eyebrow={aboutUs.partners.eyebrow} partners={partners} />
+  <CTA {...aboutUs.cta} />
 </Layout>

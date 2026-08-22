@@ -5,7 +5,6 @@
 import Heart from "../../icons/Heart.astro";
 import Reveal from "./Reveal.astro";
 import Highlight from "../../Highlight.astro";
-import { cmsField } from "../../../lib/cms";
 import { Heading3, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
@@ -16,38 +15,80 @@ interface Props {
   cardTitle: string;
   cardBody: string;
   footnote: string;
-  cmsPath?: string;
 }
-const { badge, heading, heading2, bodyText, cardTitle, cardBody, footnote, cmsPath } = Astro.props;
+const { badge, heading, heading2, bodyText, cardTitle, cardBody, footnote } =
+  Astro.props;
 ---
-<section class="bg-muted text-foreground relative overflow-hidden py-28 md:py-40">
-  <div class="bg-primary/[0.08] pointer-events-none absolute -top-32 -left-32 size-96 rounded-full blur-3xl"></div>
-  <div class="bg-secondary/[0.08] pointer-events-none absolute -right-24 -bottom-24 size-80 rounded-full blur-3xl"></div>
-  <div class="border-foreground/[0.04] pointer-events-none absolute top-1/2 left-1/2 size-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full border"></div>
-  <div class="border-foreground/[0.04] pointer-events-none absolute top-1/2 left-1/2 size-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full border"></div>
+
+<section
+  class="bg-muted text-foreground relative overflow-hidden py-28 md:py-40"
+>
+  <div
+    class="bg-primary/[0.08] pointer-events-none absolute -top-32 -left-32 size-96 rounded-full blur-3xl"
+  >
+  </div>
+  <div
+    class="bg-secondary/[0.08] pointer-events-none absolute -right-24 -bottom-24 size-80 rounded-full blur-3xl"
+  >
+  </div>
+  <div
+    class="border-foreground/[0.04] pointer-events-none absolute top-1/2 left-1/2 size-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full border"
+  >
+  </div>
+  <div
+    class="border-foreground/[0.04] pointer-events-none absolute top-1/2 left-1/2 size-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full border"
+  >
+  </div>
 
   <div class="relative container">
     <div class="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
       <Reveal>
         <div>
-          <div class="border-border bg-card inline-flex items-center gap-2 rounded-full border px-4 py-1.5">
+          <div
+            class="border-border bg-card inline-flex items-center gap-2 rounded-full border px-4 py-1.5"
+          >
             <Heart class="text-primary size-3.5" />
-            <Text as="span" class="text-muted-foreground text-[10px] font-semibold tracking-[0.2em] uppercase" field={cmsField(cmsPath, "badge")} value={badge} />
+            <Text
+              as="span"
+              class="text-muted-foreground text-[10px] font-semibold tracking-[0.2em] uppercase"
+              field={"newsletter.badge"}
+              value={badge}
+            />
           </div>
           <h2 class="mt-6 font-serif text-4xl leading-tight md:text-5xl">
-            <Text as="span" field={cmsField(cmsPath, "heading")} value={heading} />
+            <Text as="span" field={"newsletter.heading"} value={heading} />
             <br />
-            <!-- heading2 uses Highlight hlClass="italic" — bridge can't reproduce that highlight class, so KEPT hand-tagged. -->
-            <span data-cms-field={cmsField(cmsPath, "heading2")}><Highlight text={heading2} hlClass="italic" /></span>
+            {
+              /* heading2 uses Highlight hlClass="italic" — bridge can't reproduce that highlight class, so KEPT hand-tagged. */
+            }
+            <span data-cms-field={"newsletter.heading2"}
+              ><Highlight text={heading2} hlClass="italic" /></span
+            >
           </h2>
-          <Text as="p" class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]" field={cmsField(cmsPath, "bodyText")} value={bodyText} />
+          <Text
+            as="p"
+            class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]"
+            field={"newsletter.bodyText"}
+            value={bodyText}
+          />
         </div>
       </Reveal>
 
       <Reveal delay={120}>
-        <div class="border-border bg-card rounded-3xl border p-8 shadow-sm md:p-10">
-          <Heading3 class="font-serif text-2xl" field={cmsField(cmsPath, "cardTitle")} value={cardTitle} />
-          <Text as="p" class="text-muted-foreground mt-3 text-sm leading-relaxed" field={cmsField(cmsPath, "cardBody")} value={cardBody} />
+        <div
+          class="border-border bg-card rounded-3xl border p-8 shadow-sm md:p-10"
+        >
+          <Heading3
+            class="font-serif text-2xl"
+            field={"newsletter.cardTitle"}
+            value={cardTitle}
+          />
+          <Text
+            as="p"
+            class="text-muted-foreground mt-3 text-sm leading-relaxed"
+            field={"newsletter.cardBody"}
+            value={cardBody}
+          />
           <form id="home-newsletter-form" class="mt-8 space-y-4" novalidate>
             <div>
               <input
@@ -56,7 +97,12 @@ const { badge, heading, heading2, bodyText, cardTitle, cardBody, footnote, cmsPa
                 placeholder="Your email address"
                 class="border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-primary/40 w-full rounded-xl border px-5 py-3.5 text-sm transition-all duration-300 outline-none disabled:opacity-60"
               />
-              <p class="text-destructive mt-2 text-xs" data-error="email" hidden></p>
+              <p
+                class="text-destructive mt-2 text-xs"
+                data-error="email"
+                hidden
+              >
+              </p>
             </div>
             <p class="text-destructive text-xs" data-error="form" hidden></p>
             <button
@@ -71,7 +117,8 @@ const { badge, heading, heading2, bodyText, cardTitle, cardBody, footnote, cmsPa
             id="home-newsletter-success"
             class="text-foreground mt-8 hidden text-center text-sm font-medium"
             data-success-text
-          ></p>
+          >
+          </p>
         </div>
       </Reveal>
     </div>
@@ -83,12 +130,16 @@ const { badge, heading, heading2, bodyText, cardTitle, cardBody, footnote, cmsPa
 
   // Re-run on astro:page-load (view transitions); bind once per form instance.
   function initHomeNewsletterForm() {
-    const form = document.getElementById("home-newsletter-form") as HTMLFormElement | null;
+    const form = document.getElementById(
+      "home-newsletter-form",
+    ) as HTMLFormElement | null;
     if (!form || (form as any).__bound) return;
     (form as any).__bound = true;
 
     const success = document.getElementById("home-newsletter-success");
-    const submitBtn = document.getElementById("home-newsletter-submit") as HTMLButtonElement | null;
+    const submitBtn = document.getElementById(
+      "home-newsletter-submit",
+    ) as HTMLButtonElement | null;
 
     const setError = (name: string, msg: string | null) => {
       const el = form.querySelector<HTMLElement>(`[data-error="${name}"]`);

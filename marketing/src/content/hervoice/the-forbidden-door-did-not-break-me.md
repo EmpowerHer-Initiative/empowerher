@@ -10,7 +10,7 @@ description: >-
 image: >-
   https://cdn.empowerher-initiative.org/HerVoice/694633ec-a8d4-421a-8667-ca1c670ea6c2.png
 imageCredit: Image owned by Shamsia Hassani
-date: '2026-07-24'
+date: "2026-07-24"
 authorName: Nilab Mohammadi
 authorBio: >-
   Nilab Mohammadi is passionate about storytelling and self-expression. Once

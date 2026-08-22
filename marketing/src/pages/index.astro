@@ -8,7 +8,7 @@ import Mission from "../components/marketing/home/Mission.astro";
 import Programs from "../components/marketing/home/Programs.astro";
 import ImpactStory from "../components/marketing/home/ImpactStory.astro";
 import MediaSpotlight from "../components/marketing/home/MediaSpotlight.astro";
-import Partners from "../components/marketing/home/Partners.astro";
+import Partners from "../components/marketing/Partners.astro";
 import Newsletter from "../components/marketing/home/Newsletter.astro";
 import pages from "../data/pages.json";
 const content = pages.home;
@@ -16,14 +16,14 @@ import { partners } from "../lib/collections";
 ---
 
 <Layout>
-  <Hero cmsPath="hero" {...content.hero} />
-  <StatsBar cmsPath="statsBar" {...content.statsBar} />
-  <HerVoiceContest cmsPath="herVoiceContest" {...content.herVoiceContest} />
-  <AtAGlance cmsPath="atAGlance" {...content.atAGlance} />
-  <Mission cmsPath="mission" {...content.mission} />
-  <Programs cmsPath="programs" {...content.programs} />
-  <ImpactStory cmsPath="impactStory" {...content.impactStory} />
-  <MediaSpotlight cmsPath="mediaSpotlight" {...content.mediaSpotlight} />
-  <Partners cmsPath="partners" eyebrow={content.partners.eyebrow} partners={partners} />
-  <Newsletter cmsPath="newsletter" {...content.newsletter} />
+  <Hero {...content.hero} />
+  <StatsBar {...content.statsBar} />
+  <HerVoiceContest {...content.herVoiceContest} />
+  <AtAGlance {...content.atAGlance} />
+  <Mission {...content.mission} />
+  <Programs {...content.programs} />
+  <ImpactStory {...content.impactStory} />
+  <MediaSpotlight {...content.mediaSpotlight} />
+  <Partners eyebrow={content.partners.eyebrow} partners={partners} />
+  <Newsletter {...content.newsletter} />
 </Layout>

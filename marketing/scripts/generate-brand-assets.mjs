@@ -23,7 +23,10 @@ const logo = await readFile(LOGO);
 const { width, height } = await sharp(logo).metadata();
 
 // Two passes: sharp runs trim before extract within one pipeline.
-const topCrop = await sharp(logo).extract(MARK_CROP(width, height)).png().toBuffer();
+const topCrop = await sharp(logo)
+  .extract(MARK_CROP(width, height))
+  .png()
+  .toBuffer();
 const mark = await sharp(topCrop).trim().png().toBuffer();
 
 const TRANSPARENT = { r: 0, g: 0, b: 0, alpha: 0 };
@@ -36,7 +39,7 @@ const icon = (size, background = TRANSPARENT) =>
 
 await writeFile(
   "public/favicon.ico",
-  await pngToIco([await icon(16), await icon(32), await icon(48)])
+  await pngToIco([await icon(16), await icon(32), await icon(48)]),
 );
 // Apple convention: opaque background.
 await writeFile("public/apple-touch-icon.png", await icon(180, BRAND_BG));
@@ -55,4 +58,6 @@ await sharp({
   .png()
   .toFile("public/og-image.png");
 
-console.log("Generated: favicon.ico, apple-touch-icon.png, icon-192/512.png, og-image.png");
+console.log(
+  "Generated: favicon.ico, apple-touch-icon.png, icon-192/512.png, og-image.png",
+);

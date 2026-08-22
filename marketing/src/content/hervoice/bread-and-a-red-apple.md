@@ -1,11 +1,11 @@
 ---
 title: Bread and a Red Apple
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPThZYuVWymYWNaVI2CGjn5RkZbu3BUS0i97AMX'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPThZYuVWymYWNaVI2CGjn5RkZbu3BUS0i97AMX"
 imageCredit: >-
   Image taken from
   http://glutenfriagodsaker.blogspot.com/2014/10/glutenfritt-appelbrod.html, by
   the author
-date: '2026-05-30'
+date: "2026-05-30"
 authorName: Z.H.
 authorPosition: 1st Place — HerVoice 2026 Writing Contest
 authorBio: >-

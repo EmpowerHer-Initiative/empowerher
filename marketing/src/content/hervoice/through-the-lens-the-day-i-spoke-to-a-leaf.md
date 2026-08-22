@@ -5,9 +5,9 @@ description: >-
   a life‑changing moment. Seeing the hidden beauty of a leaf awakens her passion
   for science and medicine, creating a spark that continues to guide her even
   after her education and opportunities are taken away.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT8IydzvqlgkEDp7B3XRvCJzMmyWOSiao4I6cq'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT8IydzvqlgkEDp7B3XRvCJzMmyWOSiao4I6cq"
 imageAlt: Owned by createPeace - Kimia Arts
-date: '2026-01-08'
+date: "2026-01-08"
 authorName: Nilab Mohammadi
 authorBio: >-
   Nilab Mohammadi is a young woman from Mazar-e-Sharif, Afghanistan, who was a

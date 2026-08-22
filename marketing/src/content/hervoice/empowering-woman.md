@@ -7,8 +7,8 @@ description: >-
   schooling and calls for global solidarity to ensure every girl can learn,
   dream, and shape her future. Empowering women uplifts families, strengthens
   nations, and keeps the world’s light from fading.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTbgikfm9xopPYBqCUaZOIeEGDyJzvSfLh2M0n'
-date: '2025-12-08'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTbgikfm9xopPYBqCUaZOIeEGDyJzvSfLh2M0n"
+date: "2025-12-08"
 authorName: Faryal Asadzai
 authorBio: >-
   My name is Faryal Asadzai, and I am a young writer who expresses herself

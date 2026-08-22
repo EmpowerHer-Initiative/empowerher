@@ -9,7 +9,7 @@ description: >-
 image: >-
   https://cdn.empowerher-initiative.org/HerVoice/6b548192-740e-4e6f-bbda-3e0bd8c8e5eb.png
 imageCredit: Image owned by the author
-date: '2026-07-24'
+date: "2026-07-24"
 authorName: Mitra Komak
 authorBio: >-
   Mitra Komak was born and raised in Kabul, Afghanistan. She finished her

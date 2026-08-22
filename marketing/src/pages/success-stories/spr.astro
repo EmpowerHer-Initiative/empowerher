@@ -7,12 +7,12 @@ import Benefits from "../../components/marketing/spr/Benefits.astro";
 import pages from "../../data/pages.json";
 const data = pages.spr;
 
-const { seo, hero, eligibility, stepByStep, benefits } = data;
+const { hero, eligibility, stepByStep, benefits } = data;
 ---
 
 <Layout>
-  <Hero cmsPath="hero" {...hero} />
-  <Eligibility cmsPath="eligibility" {...eligibility} />
-  <StepByStep cmsPath="stepByStep" {...stepByStep} />
-  <Benefits cmsPath="benefits" {...benefits} />
+  <Hero {...hero} />
+  <Eligibility {...eligibility} />
+  <StepByStep {...stepByStep} />
+  <Benefits {...benefits} />
 </Layout>

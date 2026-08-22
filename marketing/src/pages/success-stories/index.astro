@@ -8,10 +8,11 @@ import pages from "../../data/pages.json";
 const data = pages["success-stories"];
 import { impactStories } from "../../lib/collections";
 
-const { seo, header, closingCta } = data;
+const { header, closingCta } = data;
 ---
+
 <Layout>
-  <Header {...header} cmsPath="header" />
+  <Header {...header} />
   <Stories stories={impactStories} />
-  <ClosingCTA {...closingCta} cmsPath="closingCta" />
+  <ClosingCTA {...closingCta} />
 </Layout>

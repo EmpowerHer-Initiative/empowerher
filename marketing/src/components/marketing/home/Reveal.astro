@@ -19,7 +19,14 @@ const {
 } = Astro.props;
 const style = `opacity:0;transform:translateY(${distance}px);transition:opacity 1.2s cubic-bezier(0.32,0.72,0,1),transform 1.2s cubic-bezier(0.32,0.72,0,1);transition-delay:${delay}ms;will-change:opacity,transform;`;
 ---
-<div class={className} data-reveal data-threshold={threshold} style={style} data-cms-field={cmsFieldAttr}>
+
+<div
+  class={className}
+  data-reveal
+  data-threshold={threshold}
+  style={style}
+  data-cms-field={cmsFieldAttr}
+>
   <slot />
 </div>
 
@@ -41,7 +48,7 @@ const style = `opacity:0;transform:translateY(${distance}px);transition:opacity 
             ob.disconnect();
           }
         },
-        { threshold }
+        { threshold },
       );
       // Already in view on load (e.g. hero region) → observer fires immediately.
       ob.observe(el);

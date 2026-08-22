@@ -7,8 +7,8 @@ description: >-
   expression, she transforms the pain of education bans and oppression into a
   powerful testament of hope, determination, and the transformative impact of
   art and empowerment programs like EmpowerHer.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTORikoudH0aBNcwS2RPdoZ4KqAvip3G9kgD5e'
-date: '2025-10-05'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTORikoudH0aBNcwS2RPdoZ4KqAvip3G9kgD5e"
+date: "2025-10-05"
 authorName: Qudsia Mobariz
 authorBio: >-
   Qudsia (Mobariz) is an Afghan student, poet, and artist who turns struggle
@@ -18,36 +18,25 @@ authorBio: >-
   journalist to heal and inspire her people.
 ---
 
-> کجای این جھانم من؟ — *Where in this world am I?*
+> کجای این جھانم من؟ — _Where in this world am I?_
 >
-> اسیر این زمانم من — *A captive of time, I am*
+> اسیر این زمانم من — _A captive of time, I am_
 
-
-
-> مثل موج دریا — *Like a wave of the sea*
+> مثل موج دریا — _Like a wave of the sea_
 >
-> در دل طوفانم من — *In hearth of the storm, I am*
+> در دل طوفانم من — _In hearth of the storm, I am_
 
-
-
-> ریشه دارم در مرداب — *My roots are in the swamp*
+> ریشه دارم در مرداب — _My roots are in the swamp_
 >
-> اما پاک و درخشانم من — *But clean and bright, I am*
+> اما پاک و درخشانم من — _But clean and bright, I am_
 
-
-
-> ھمان نیلوفر آبی ام — *I am a blue Lotus*
+> ھمان نیلوفر آبی ام — _I am a blue Lotus_
 >
-> که ھر شام میمیرم من — *Every evening dying, I am*
+> که ھر شام میمیرم من — _Every evening dying, I am_
 
-
-
-> اما با طلوع خورشید — *But with first light*
+> اما با طلوع خورشید — _But with first light_
 >
-> ھر صبح شکوفانم من — *Every morning blooming, I am*
-
-
-
+> ھر صبح شکوفانم من — _Every morning blooming, I am_
 
 This is my first English poem which means like this for me: we are the girls who have lost ourselves in the labyrinths of this era, unable to go back, and with no future in sight. Like a wave in the heart of a storm of oppression and injustice, we endure. The storm has darkened our lives, destroying the futures, goals, and dreams of so many.
 But each one of us Afghan girls is a water lily. Although we live amidst problems, challenges, oppression, injustice, and inequality, we remain pure and radiant. Although with the arrival of so much hardship and misery, we have died each time, with the appearance of the smallest opening–even a speck of light–we find motivation again and are reborn with new hope and energy…

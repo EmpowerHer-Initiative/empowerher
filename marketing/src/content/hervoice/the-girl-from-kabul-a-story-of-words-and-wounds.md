@@ -1,5 +1,5 @@
 ---
-title: 'The Girl from Kabul: A Story of Words and Wounds'
+title: "The Girl from Kabul: A Story of Words and Wounds"
 description: >-
   In this powerful story, Sadaf A, an EmpowerHer student, portrays the journey
   of Sahar, a young Afghan girl whose dreams of becoming a writer are shattered
@@ -8,8 +8,8 @@ description: >-
   for thousands of Afghan girls and families silenced by war. The Girl from
   Kabul is a testament to how storytelling can transform suffering into strength
   and loss into a legacy that moves the world.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTCNVteXp0xR3LuJK2fkyDlQSq5OVpmHz6CThE'
-date: '2025-07-01'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTCNVteXp0xR3LuJK2fkyDlQSq5OVpmHz6CThE"
+date: "2025-07-01"
 ---
 
 The morning call to prayer floated softly through the air, barely louder than the sound of fresh bread baking next door. It was still a little cold, but the smell of the tanur’s warm bread gave the morning a kind of comfort.

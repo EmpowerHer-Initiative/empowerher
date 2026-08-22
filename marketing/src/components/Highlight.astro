@@ -5,10 +5,17 @@
 // Pass `hlClass` for extra styling on the highlighted run (e.g. "italic").
 // See docs/pages-cms.md → "Inline text highlight — backticks".
 const { text = "", hlClass } = Astro.props;
-const parts = String(text).split(/(`[^`]+`)/g).filter(Boolean);
+const parts = String(text)
+  .split(/(`[^`]+`)/g)
+  .filter(Boolean);
 ---
-{parts.map((p) =>
-  p.startsWith("`") && p.endsWith("`")
-    ? <span class:list={["cms-hl", hlClass]}>{p.slice(1, -1)}</span>
-    : p
-)}
+
+{
+  parts.map((p) =>
+    p.startsWith("`") && p.endsWith("`") ? (
+      <span class:list={["cms-hl", hlClass]}>{p.slice(1, -1)}</span>
+    ) : (
+      p
+    ),
+  )
+}

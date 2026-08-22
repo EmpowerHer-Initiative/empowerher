@@ -2,7 +2,6 @@
 import Reveal from "../home/Reveal.astro";
 import AlertTriangle from "../../icons/AlertTriangle.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
-import { cmsField } from "../../../lib/cms";
 import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
@@ -10,12 +9,11 @@ interface Props {
   heading: string;
   body: string[];
   advisory: string;
-  /** CMS field path prefix for live-preview highlighting (e.g. "content"). */
-  cmsPath?: string;
 }
 
-const { eyebrow, heading, body, advisory, cmsPath } = Astro.props;
+const { eyebrow, heading, body, advisory } = Astro.props;
 ---
+
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-3xl">
@@ -24,14 +22,14 @@ const { eyebrow, heading, body, advisory, cmsPath } = Astro.props;
         <Text
           as="p"
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={cmsField(cmsPath, "eyebrow")}
+          field={"content.eyebrow"}
           value={eyebrow}
         />
       </Reveal>
       <Reveal delay={80}>
         <Heading1
           class="mt-5 font-serif text-4xl leading-[1.1] md:text-6xl"
-          field={cmsField(cmsPath, "heading")}
+          field={"content.heading"}
           value={heading}
         />
       </Reveal>
@@ -40,7 +38,7 @@ const { eyebrow, heading, body, advisory, cmsPath } = Astro.props;
         <Text
           as="p"
           class="text-muted-foreground mt-8 text-lg leading-relaxed"
-          field={cmsField(cmsPath, "body.0")}
+          field={"content.body.0"}
           value={body[0]}
         />
       </Reveal>
@@ -49,19 +47,21 @@ const { eyebrow, heading, body, advisory, cmsPath } = Astro.props;
         <Text
           as="p"
           class="text-muted-foreground mt-6 text-base leading-[1.8]"
-          field={cmsField(cmsPath, "body.1")}
+          field={"content.body.1"}
           value={body[1]}
         />
       </Reveal>
 
       {/* Advisory callout */}
       <Reveal delay={280}>
-        <div class="mt-10 flex items-start gap-4 rounded-2xl border border-amber-400/50 bg-amber-50 p-6">
+        <div
+          class="mt-10 flex items-start gap-4 rounded-2xl border border-amber-400/50 bg-amber-50 p-6"
+        >
           <AlertTriangle class="mt-0.5 size-5 shrink-0 text-amber-600" />
           <Text
             as="p"
             class="text-base leading-relaxed text-amber-900"
-            field={cmsField(cmsPath, "advisory")}
+            field={"content.advisory"}
             value={advisory}
           />
         </div>

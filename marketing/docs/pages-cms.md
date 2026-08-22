@@ -115,7 +115,13 @@ guessing.
 ```astro
 ---
 import {
-  Heading1, Heading2, Text, Image, Link, Group, Item,
+  Heading1,
+  Heading2,
+  Text,
+  Image,
+  Link,
+  Group,
+  Item,
 } from "@alisamadiillc/cms-bridge/components";
 import pages from "../data/pages.json";
 const home = pages.home;
@@ -146,11 +152,17 @@ index goes in the field path.
 
 ```astro
 <Group field="gallery.images" class="grid">
-  {home.gallery.images.map((img, i) => (
-    <Item index={i}>
-      <Image field={`gallery.images.${i}.src`} value={img.src} alt={img.alt} />
-    </Item>
-  ))}
+  {
+    home.gallery.images.map((img, i) => (
+      <Item index={i}>
+        <Image
+          field={`gallery.images.${i}.src`}
+          value={img.src}
+          alt={img.alt}
+        />
+      </Item>
+    ))
+  }
 </Group>
 ```
 
@@ -178,7 +190,11 @@ Style the base look once in global CSS (`.cms-mark { … }`); override per field
 with `markClass` (or `markStyle`):
 
 ```astro
-<Heading1 field="hero.heading" value={home.hero.heading} markClass="text-brand-600 italic" />
+<Heading1
+  field="hero.heading"
+  value={home.hero.heading}
+  markClass="text-brand-600 italic"
+/>
 <!-- **pasta** → <span class="cms-mark text-brand-600 italic">pasta</span> -->
 ```
 

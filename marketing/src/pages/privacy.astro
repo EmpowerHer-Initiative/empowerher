@@ -6,10 +6,8 @@ import Layout from "../layouts/Layout.astro";
 import ArrowLeft from "../components/icons/ArrowLeft.astro";
 import pages from "../data/pages.json";
 const content = pages.privacy;
-import { cmsField } from "../lib/cms";
 
-const { seo, title, description, updated, body } = content as {
-  seo: { title: string; description: string };
+const { title, description, updated, body } = content as {
   title: string;
   description: string;
   updated: string;
@@ -20,29 +18,27 @@ const bodyHtml = marked.parse(body ?? "") as string;
 
 const backButtonClass =
   "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none active:translate-y-px active:scale-95 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 h-9 gap-1.5 px-3";
-
-// Root-level CMS prefix — fields live at the JSON root (title, description, updated, body.sections).
-const cmsPath = "";
 ---
+
 <Layout>
   <div class="container mx-auto max-w-3xl py-10">
     <a href="/" class={backButtonClass}>
       <ArrowLeft /> Back
     </a>
     <div class="mb-8 flex flex-col items-center gap-2 text-center">
-      <h1 class="text-3xl font-bold" data-cms-field={cmsField(cmsPath, "title")}>{title}</h1>
+      <h1 class="text-3xl font-bold" data-cms-field={"title"}>{title}</h1>
       <p
         class="text-muted-foreground max-w-2xl text-sm leading-relaxed md:text-base"
-        data-cms-field={cmsField(cmsPath, "description")}
+        data-cms-field={"description"}
       >
         {description}
       </p>
     </div>
     <div class="prose-theme prose max-w-none">
-      <p data-cms-field={cmsField(cmsPath, "updated")}>
+      <p data-cms-field={"updated"}>
         <strong>{updated}</strong>
       </p>
-      <div data-cms-field={cmsField(cmsPath, "body")} set:html={bodyHtml} />
+      <div data-cms-field={"body"} set:html={bodyHtml} />
     </div>
   </div>
 </Layout>

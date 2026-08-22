@@ -5,8 +5,8 @@ description: >-
   and trauma amid war. It highlights her family's sacrifices and Roya's
   transformation through art as a means of healing and hope, capturing themes of
   resilience and the enduring human spirit.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTi3xOtj2EYyVpqbIDknS5OTfuHm1N4G0ctWRE'
-date: '2025-11-28'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTi3xOtj2EYyVpqbIDknS5OTfuHm1N4G0ctWRE"
+date: "2025-11-28"
 authorName: Nargis Qorbani
 authorBio: >-
   I am Nargis. I love playing football, but as a girl, I had to let go of that

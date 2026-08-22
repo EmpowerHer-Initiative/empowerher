@@ -7,11 +7,15 @@ import pages from "../data/pages.json";
 const data = pages.resources;
 import { resources } from "../lib/collections";
 
-const { seo, header, footerNote } = data;
+const { header, footerNote } = data;
 ---
 
 <Layout>
-  <Header eyebrow={header.eyebrow} heading={header.heading} intro={header.intro} cmsPath="header" />
+  <Header
+    eyebrow={header.eyebrow}
+    heading={header.heading}
+    intro={header.intro}
+  />
   <ResourceList resources={resources} />
-  <FooterNote text={footerNote.text} email={footerNote.email} cmsPath="footerNote" />
+  <FooterNote text={footerNote.text} email={footerNote.email} />
 </Layout>

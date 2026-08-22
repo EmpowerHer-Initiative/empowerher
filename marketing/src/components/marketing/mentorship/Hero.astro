@@ -2,7 +2,6 @@
 // Ports components/marketing/mentorship/hero.tsx
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "../home/Reveal.astro";
-import { cmsField } from "../../../lib/cms";
 import { Text, Image, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
@@ -12,15 +11,14 @@ interface Props {
   image: string;
   imageAlt: string;
   paragraphs: string[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "hero"). */
-  cmsPath?: string;
 }
 
-const { eyebrow, title, titleLine2, image, imageAlt, paragraphs, cmsPath } = Astro.props;
+const { eyebrow, title, titleLine2, image, imageAlt, paragraphs } = Astro.props;
 ---
+
 <section class="relative overflow-hidden py-28 md:py-40">
   <Image
-    field={cmsField(cmsPath, "image")}
+    field={"hero.image"}
     value={image}
     alt={imageAlt}
     loading="eager"
@@ -28,31 +26,49 @@ const { eyebrow, title, titleLine2, image, imageAlt, paragraphs, cmsPath } = Ast
     decoding="async"
     class="absolute inset-0 h-full w-full object-cover"
   />
-  <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"></div>
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"
+  >
+  </div>
   <div class="relative container">
     <div class="mx-auto max-w-4xl">
       <Reveal>
         <Text
           as="p"
           class="mb-8 text-xs font-semibold tracking-[0.3em] text-white/70 uppercase"
-          field={cmsField(cmsPath, "eyebrow")}
+          field={"hero.eyebrow"}
           value={eyebrow}
         />
       </Reveal>
       <Reveal delay={80}>
-        <h1 class="font-serif text-5xl leading-[1.05] text-white md:text-7xl lg:text-8xl">
-          <Text as="span" field={cmsField(cmsPath, "title")} value={title} />
+        <h1
+          class="font-serif text-5xl leading-[1.05] text-white md:text-7xl lg:text-8xl"
+        >
+          <Text as="span" field={"hero.title"} value={title} />
           <br />
-          <Text as="span" field={cmsField(cmsPath, "titleLine2")} value={titleLine2} />
+          <Text as="span" field={"hero.titleLine2"} value={titleLine2} />
         </h1>
       </Reveal>
       <Reveal delay={160}>
-        <Group field={cmsField(cmsPath, "paragraphs")} class="mt-12 grid gap-10 md:grid-cols-2 md:gap-20">
-          {paragraphs.map((paragraph, i) => (
-            <Item index={i} as="p" class="text-lg leading-relaxed text-white/75">
-              <Text as="span" field={cmsField(cmsPath, `paragraphs.${i}`)} value={paragraph} />
-            </Item>
-          ))}
+        <Group
+          field={"hero.paragraphs"}
+          class="mt-12 grid gap-10 md:grid-cols-2 md:gap-20"
+        >
+          {
+            paragraphs.map((paragraph, i) => (
+              <Item
+                index={i}
+                as="p"
+                class="text-lg leading-relaxed text-white/75"
+              >
+                <Text
+                  as="span"
+                  field={`hero.paragraphs.${i}`}
+                  value={paragraph}
+                />
+              </Item>
+            ))
+          }
         </Group>
       </Reveal>
       <Reveal delay={240}>
@@ -62,7 +78,9 @@ const { eyebrow, title, titleLine2, image, imageAlt, paragraphs, cmsPath } = Ast
             class="group inline-flex items-center gap-2.5 rounded-full bg-white px-8 py-4 text-sm font-semibold text-black transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-white/90 active:scale-[0.98]"
           >
             Find Workshop Applications Here
-            <ArrowRight class="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5" />
+            <ArrowRight
+              class="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5"
+            />
           </a>
         </div>
       </Reveal>

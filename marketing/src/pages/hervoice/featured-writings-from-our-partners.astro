@@ -10,8 +10,9 @@ import PlatformSection from "../../components/marketing/hervoice-featured-writin
 import pages from "../../data/pages.json";
 const content = pages["hervoice-featured-writings"];
 import { featuredWritings, type FeaturedWriting } from "../../lib/collections";
+import { Collection } from "@alisamadiillc/cms-bridge/components";
 
-const { seo, header, emptyText } = content as {
+const { header, emptyText } = content as {
   seo: { title: string; description: string };
   header: { eyebrow?: string; heading: string; lede: string };
   emptyText: string;
@@ -37,29 +38,37 @@ const groups = Object.entries(grouped).map(([platform, list]) => ({
   items: list,
 }));
 ---
+
 <Layout>
   <Header
     eyebrow={header.eyebrow}
     heading={header.heading}
     lede={header.lede}
-    cmsPath="header"
   />
 
   <section class="py-28 md:py-40">
     <div class="container">
-      <div class="mx-auto max-w-4xl space-y-24">
-        {groups.length === 0 ? (
-          <Reveal>
-            <p class="text-muted-foreground py-16 text-center text-base" data-cms-field="emptyText">
-              {emptyText}
-            </p>
-          </Reveal>
-        ) : (
-          groups.map(({ id, platform, items }) => (
-            <PlatformSection id={id} platform={platform} writings={items} />
-          ))
-        )}
-      </div>
+      <Collection
+        collection="featured-writings"
+        class="mx-auto max-w-4xl space-y-24"
+      >
+        {
+          groups.length === 0 ? (
+            <Reveal>
+              <p
+                class="text-muted-foreground py-16 text-center text-base"
+                data-cms-field="emptyText"
+              >
+                {emptyText}
+              </p>
+            </Reveal>
+          ) : (
+            groups.map(({ id, platform, items }) => (
+              <PlatformSection id={id} platform={platform} writings={items} />
+            ))
+          )
+        }
+      </Collection>
     </div>
   </section>
 </Layout>

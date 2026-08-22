@@ -6,9 +6,9 @@ description: >-
   achievements. Alongside lessons from The Alchemist and The Little Prince, the
   workshop helped her gain confidence, recognize her growth, and move forward
   with purpose as a medical student.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT4sDw8HoxLP0HVtXjpzDWZR85f7vGSgA1FduQ'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT4sDw8HoxLP0HVtXjpzDWZR85f7vGSgA1FduQ"
 imageAlt: An untitled painting by Mursal Ahmadzai
-date: '2026-01-08'
+date: "2026-01-08"
 authorName: Zahra Darmani
 authorBio: >-
   Zahra Darmani is a medical student at Al-Farabi Kazakh National University, an

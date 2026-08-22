@@ -2,8 +2,12 @@
 // Ports components/marketing/home/impact-story.tsx
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "./Reveal.astro";
-import { cmsField } from "../../../lib/cms";
-import { Heading2, Heading3, Text, Image } from "@alisamadiillc/cms-bridge/components";
+import {
+  Heading2,
+  Heading3,
+  Text,
+  Image,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -13,40 +17,75 @@ interface Props {
   subheadingBody: string;
   image: string;
   imageAlt: string;
-  cmsPath?: string;
 }
-const { eyebrow, heading, bodyText, subheading, subheadingBody, image, imageAlt, cmsPath } = Astro.props;
+const {
+  eyebrow,
+  heading,
+  bodyText,
+  subheading,
+  subheadingBody,
+  image,
+  imageAlt,
+} = Astro.props;
 ---
+
 <section class="bg-muted/30 py-28 md:py-40">
   <div class="container">
     <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
       <Reveal class="order-2 lg:order-1">
-        <Text as="p" class="text-primary text-xs font-semibold tracking-[0.3em] uppercase" field={cmsField(cmsPath, "eyebrow")} value={eyebrow} />
-        <Heading2 class="mt-4 font-serif text-3xl leading-tight md:text-4xl" field={cmsField(cmsPath, "heading")} value={heading} />
-        <Text as="p" class="text-muted-foreground mt-6 text-base leading-[1.8]" field={cmsField(cmsPath, "bodyText")} value={bodyText} />
-        <Heading3 class="mt-8 font-serif text-2xl leading-tight" field={cmsField(cmsPath, "subheading")} value={subheading} />
-        <Text as="p" class="text-muted-foreground mt-3 text-base leading-[1.8]" field={cmsField(cmsPath, "subheadingBody")} value={subheadingBody} />
+        <Text
+          as="p"
+          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
+          field={"impactStory.eyebrow"}
+          value={eyebrow}
+        />
+        <Heading2
+          class="mt-4 font-serif text-3xl leading-tight md:text-4xl"
+          field={"impactStory.heading"}
+          value={heading}
+        />
+        <Text
+          as="p"
+          class="text-muted-foreground mt-6 text-base leading-[1.8]"
+          field={"impactStory.bodyText"}
+          value={bodyText}
+        />
+        <Heading3
+          class="mt-8 font-serif text-2xl leading-tight"
+          field={"impactStory.subheading"}
+          value={subheading}
+        />
+        <Text
+          as="p"
+          class="text-muted-foreground mt-3 text-base leading-[1.8]"
+          field={"impactStory.subheadingBody"}
+          value={subheadingBody}
+        />
         <div class="mt-8 flex flex-wrap gap-4">
           <a
             href="/hervoice/featured-writings-from-our-partners"
             class="group bg-primary text-primary-foreground hover:shadow-primary/20 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
           >
             Featured Writings from Our Partners
-            <ArrowRight class="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5" />
+            <ArrowRight
+              class="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5"
+            />
           </a>
           <a
             href="/success-stories"
             class="group border-border/60 text-foreground/70 hover:border-primary hover:bg-primary/5 hover:text-foreground hover:shadow-primary/10 inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98]"
           >
             Success Stories
-            <ArrowRight class="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5" />
+            <ArrowRight
+              class="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5"
+            />
           </a>
         </div>
       </Reveal>
       <Reveal class="order-1 lg:order-2" delay={120}>
         <div class="relative overflow-hidden rounded-[2.5rem]">
           <Image
-            field={cmsField(cmsPath, "image")}
+            field={"impactStory.image"}
             value={image}
             alt={imageAlt}
             loading="lazy"

@@ -2,16 +2,15 @@
 // Ports components/marketing/writing-contest/writing-prompt.tsx
 import Reveal from "../home/Reveal.astro";
 import Lightbulb from "../../icons/Lightbulb.astro";
-import { cmsField } from "../../../lib/cms";
 import { Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
   prompt: string;
-  cmsPath?: string;
 }
-const { eyebrow, prompt, cmsPath } = Astro.props;
+const { eyebrow, prompt } = Astro.props;
 ---
+
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <Reveal class="mx-auto max-w-4xl text-center">
@@ -19,14 +18,16 @@ const { eyebrow, prompt, cmsPath } = Astro.props;
       <Text
         as="p"
         class="text-primary mt-6 text-xs font-semibold tracking-[0.3em] uppercase"
-        field={cmsField(cmsPath, "eyebrow")}
+        field={"writingPrompt.eyebrow"}
         value={eyebrow}
       />
-      <div class="border-primary/20 bg-background mt-8 rounded-3xl border p-10 shadow-sm md:p-16">
+      <div
+        class="border-primary/20 bg-background mt-8 rounded-3xl border p-10 shadow-sm md:p-16"
+      >
         <Text
           as="p"
           class="font-serif text-3xl leading-snug md:text-4xl lg:text-5xl"
-          field={cmsField(cmsPath, "prompt")}
+          field={"writingPrompt.prompt"}
           value={prompt}
         />
       </div>

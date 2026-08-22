@@ -3,8 +3,14 @@
 import Star from "../../icons/Star.astro";
 import Calendar from "../../icons/Calendar.astro";
 import StatBox from "./StatBox.astro";
-import { cmsField } from "../../../lib/cms";
-import { Image, Heading2, Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
+import type { CmsField } from "@alisamadiillc/cms-bridge/fields";
+import {
+  Image,
+  Heading2,
+  Text,
+  Group,
+  Item,
+} from "@alisamadiillc/cms-bridge/components";
 
 interface Stat {
   icon: string;
@@ -19,15 +25,22 @@ interface Props {
   badge?: string;
   stats?: Stat[];
   /** CMS field path prefix for live-preview highlighting (e.g. "stories.0"). */
-  cmsPath?: string;
+  cmsPath?: CmsField;
 }
 const { logo, title, subtitle, date, badge, stats, cmsPath } = Astro.props;
+const f = (s: string): CmsField | undefined =>
+  cmsPath ? (`${cmsPath}.${s}` as CmsField) : undefined;
 ---
-<div class="border-border/60 bg-background mx-auto max-w-4xl rounded-3xl border p-8 shadow-sm md:p-12">
+
+<div
+  class="border-border/60 bg-background mx-auto max-w-4xl rounded-3xl border p-8 shadow-sm md:p-12"
+>
   {/* Logo */}
-  <div class="border-border/60 size-28 overflow-hidden rounded-2xl border bg-white">
+  <div
+    class="border-border/60 size-28 overflow-hidden rounded-2xl border bg-white"
+  >
     <Image
-      field={cmsField(cmsPath, "image")}
+      field={f("image")}
       value={logo}
       alt={title}
       class="h-full w-full object-contain px-2"
@@ -38,36 +51,64 @@ const { logo, title, subtitle, date, badge, stats, cmsPath } = Astro.props;
 
   {/* Title + badge */}
   <div class="mt-8 flex items-start justify-between gap-6">
-    <Heading2 class="font-serif text-3xl leading-tight md:text-4xl" field={cmsField(cmsPath, "title")} value={title} />
-    {badge && (
-      <span class="bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium" data-cms-field={cmsField(cmsPath, "badge")}>
-        <Star class="size-3.5 fill-current" />
-        {badge}
-      </span>
-    )}
+    <Heading2
+      class="font-serif text-3xl leading-tight md:text-4xl"
+      field={f("title")}
+      value={title}
+    />
+    {
+      badge && (
+        <span
+          class="bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium"
+          data-cms-field={f("badge")}
+        >
+          <Star class="size-3.5 fill-current" />
+          {badge}
+        </span>
+      )
+    }
   </div>
 
-  {subtitle && (
-    <Text as="p" class="text-muted-foreground mt-3 text-lg italic" field={cmsField(cmsPath, "subtitle")} value={subtitle} />
-  )}
+  {
+    subtitle && (
+      <Text
+        as="p"
+        class="text-muted-foreground mt-3 text-lg italic"
+        field={f("subtitle")}
+        value={subtitle}
+      />
+    )
+  }
 
-  {date && (
-    <div class="text-muted-foreground mt-4 flex items-center gap-2 text-sm" data-cms-field={cmsField(cmsPath, "date")}>
-      <Calendar class="size-4" />
-      {date}
-    </div>
-  )}
+  {
+    date && (
+      <div
+        class="text-muted-foreground mt-4 flex items-center gap-2 text-sm"
+        data-cms-field={f("date")}
+      >
+        <Calendar class="size-4" />
+        {date}
+      </div>
+    )
+  }
 
   {/* Stats */}
-  {stats && stats.length > 0 && (
-    <Group field={cmsField(cmsPath, "stats")} class="mt-8 grid gap-4 sm:grid-cols-3">
-      {stats.map((s, j) => (
-        <Item index={j}>
-          <StatBox icon={s.icon} value={s.value} label={s.label} cmsPath={cmsField(cmsPath, `stats.${j}`)} />
-        </Item>
-      ))}
-    </Group>
-  )}
+  {
+    stats && stats.length > 0 && (
+      <Group field={f("stats")} class="mt-8 grid gap-4 sm:grid-cols-3">
+        {stats.map((s, j) => (
+          <Item index={j}>
+            <StatBox
+              icon={s.icon}
+              value={s.value}
+              label={s.label}
+              cmsPath={f(`stats.${j}`)}
+            />
+          </Item>
+        ))}
+      </Group>
+    )
+  }
 
   {/* Body */}
   <div class="mt-10 space-y-6"><slot /></div>

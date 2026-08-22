@@ -1,8 +1,8 @@
 ---
 title: When did I feel that I am a strong girl?
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTCB4oDy6p0xR3LuJK2fkyDlQSq5OVpmHz6CTh'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTCB4oDy6p0xR3LuJK2fkyDlQSq5OVpmHz6CTh"
 imageCredit: Image owned by the author
-date: '2026-05-30'
+date: "2026-05-30"
 authorName: Roqia Qasemi
 authorPosition: 2nd Place — HerVoice 2026 Writing Contest
 authorBio: >-

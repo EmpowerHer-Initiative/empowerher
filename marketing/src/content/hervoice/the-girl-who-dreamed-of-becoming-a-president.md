@@ -7,8 +7,8 @@ description: >-
   storytelling, advocating for human rights and empowering others. Freshta's
   resilience and commitment to her dreams highlight the transformative power of
   hope and determination, even in the face of adversity.
-image: 'https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEKZkTi8fRbjSv9fDHMpJXBriOWVtPmoQZNC3'
-date: '2025-11-28'
+image: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEKZkTi8fRbjSv9fDHMpJXBriOWVtPmoQZNC3"
+date: "2025-11-28"
 authorName: Freshta Ebadi
 authorBio: >-
   I'm Freshta Ebadi, a young Afghan changemaker living as a refugee in Quetta,
@@ -18,7 +18,7 @@ authorBio: >-
   community culture, democracy, human rights, and girls' empowerment. My focus
   is education, leadership, and creative expression, and I hope to pursue higher
   education abroad and become a political leader representing Afghan girls.
-authorInstagram: 'https://www.instagram.com/freshta_ebadi?igsh=MWZxbzBwZ2x1bGN2Yg%3D%3D'
+authorInstagram: "https://www.instagram.com/freshta_ebadi?igsh=MWZxbzBwZ2x1bGN2Yg%3D%3D"
 authorFacebook: >-
   https://www.facebook.com/Angel.ebadi1?rdid=DwPi2vSN03tJn65t&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1PDJCe8sfB%2F
 ---
