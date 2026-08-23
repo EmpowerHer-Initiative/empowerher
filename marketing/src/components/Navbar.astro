@@ -4,6 +4,7 @@
 import Logo from "./icons/Logo.astro";
 import ChevronDown from "./icons/ChevronDown.astro";
 import variables from "../data/variables.json";
+import { Region } from "@alisamadiillc/cms-bridge/components";
 
 // Nav links + CTA are hardcoded here (not CMS-managed). The brand name is the
 // global identity from variables.json. Active-tab ownership (data-paths) is
@@ -76,9 +77,11 @@ const isHome = Astro.url.pathname === "/";
       class="nav-brand flex items-center gap-2 transition-colors duration-300"
     >
       <Logo class="size-12" />
-      <span class="font-serif text-xl leading-[1]"
-        >{nameFirst}<br class="md:hidden" /> {nameRest}</span
-      >
+      <Region type="variant" variantName="name">
+        <span class="font-serif text-xl leading-[1]"
+          >{nameFirst}<br class="md:hidden" /> {nameRest}</span
+        >
+      </Region>
     </a>
 
     <div class="hidden items-center gap-6 lg:flex">

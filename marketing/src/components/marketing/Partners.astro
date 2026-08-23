@@ -2,7 +2,7 @@
 // Shared partners strip, used by the home and about pages.
 // Partner list is synced from the admin DB by scripts/sync-from-db.ts.
 import Reveal from "./home/Reveal.astro";
-import { Text, Collection } from "@alisamadiillc/cms-bridge/components";
+import { Text, Region } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   eyebrow: string;
@@ -24,28 +24,27 @@ const { eyebrow, partners } = Astro.props;
           />
         </Reveal>
         <Reveal delay={80}>
-          <Collection
-            collection="partners"
-            class="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16"
-          >
-            {partners.map((p) => (
-              <a
-                href={p.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={p.name}
-                class="group block transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1.5 hover:scale-105"
-              >
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  loading="lazy"
-                  decoding="async"
-                  class="h-16 w-auto object-contain md:h-24"
-                />
-              </a>
-            ))}
-          </Collection>
+          <Region type="collection" name="partners">
+            <div class="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16">
+              {partners.map((p) => (
+                <a
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={p.name}
+                  class="group block transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1.5 hover:scale-105"
+                >
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    loading="lazy"
+                    decoding="async"
+                    class="h-16 w-auto object-contain md:h-24"
+                  />
+                </a>
+              ))}
+            </div>
+          </Region>
         </Reveal>
       </div>
     </section>

@@ -12,8 +12,8 @@ importers:
         specifier: 0.3.5
         version: 0.3.5
       '@alisamadiillc/cms-bridge':
-        specifier: 0.7.0
-        version: 0.7.0(astro@7.1.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))
+        specifier: 0.7.5
+        version: 0.7.5(astro@7.1.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3
@@ -70,8 +70,8 @@ packages:
     resolution: {integrity: sha512-nLU4nkw0/mKY6N4L8VTRSqpmIC6q9GIhS/E4DMNDfOOj7KWdX5XeG3fXTJj14n26O1tuBqbhv6KDGnv0q1TKrw==}
     engines: {node: '>=18'}
 
-  '@alisamadiillc/cms-bridge@0.7.0':
-    resolution: {integrity: sha512-Ud7ierI+NLKb44PmrSYSYQ2FKxZoZCx1DeLWff4Ndi8gM+AnDse9i3RL0NkSjEgcWUBb8Wo5qQgrQWRjYl0cvg==}
+  '@alisamadiillc/cms-bridge@0.7.5':
+    resolution: {integrity: sha512-oi8qM+tzRzL1mmaBHnRTl1FGI4Tz4fh4GZl0T3KjjSHRaIYs9prjLq7Nmhq2nSH5e8rm4MkvPaBNQYtQ57Fc7A==}
     hasBin: true
     peerDependencies:
       astro: '>=4.0.0'
@@ -2128,7 +2128,7 @@ snapshots:
 
   '@alisamadiillc/agency-api@0.3.5': {}
 
-  '@alisamadiillc/cms-bridge@0.7.0(astro@7.1.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))':
+  '@alisamadiillc/cms-bridge@0.7.5(astro@7.1.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))':
     dependencies:
       '@astrojs/compiler': 2.13.1
       es-module-lexer: 1.7.0

@@ -6,12 +6,12 @@
 import Reveal from "../home/Reveal.astro";
 import MapPin from "../../icons/MapPin.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
-import type { CmsField } from "@alisamadiillc/cms-bridge/fields";
+import type { CmsField } from "../../../lib/cms-fields";
 import {
   Heading3,
   Text,
   Image,
-  Collection,
+  Region,
   Item,
 } from "@alisamadiillc/cms-bridge/components";
 
@@ -49,73 +49,71 @@ const total = resources.length;
         </p>
       </Reveal>
 
-      <Collection
-        collection="resource-listings"
-        field={cmsPath}
-        class="space-y-6"
-      >
-        {
-          resources.map((resource, i) => (
-            <Item
-              index={i}
-              class="resource-card"
-              data-page={Math.floor(i / PAGE_SIZE) + 1}
-              style="opacity:0;transform:translateY(48px);transition:opacity 1.2s cubic-bezier(0.32,0.72,0,1),transform 1.2s cubic-bezier(0.32,0.72,0,1);will-change:opacity,transform;"
-            >
-              <div class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col gap-8 rounded-3xl border p-8 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl lg:flex-row lg:p-10">
-                {/* Content */}
-                <div class="flex flex-1 flex-col items-start gap-4">
-                  <Heading3
-                    class="font-serif text-2xl leading-tight md:text-3xl"
-                    field={f(`${i}.name`)}
-                    value={resource.name}
-                  />
-
-                  <span
-                    class="text-muted-foreground inline-flex items-center gap-2 text-sm"
-                    data-cms-field={f(`${i}.location`)}
-                  >
-                    <MapPin class="size-4" />
-                    {resource.location}
-                  </span>
-
-                  <Text
-                    as="p"
-                    class="text-muted-foreground text-base leading-relaxed whitespace-pre-line"
-                    field={f(`${i}.description`)}
-                    value={resource.description}
-                  />
-
-                  <a
-                    href={resource.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-cms-field={f(`${i}.link`)}
-                    class="group/btn bg-primary text-primary-foreground hover:shadow-primary/25 mt-auto inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
-                  >
-                    View
-                    <ExternalLink class="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover/btn:translate-x-0.5" />
-                  </a>
-                </div>
-
-                {/* Logo */}
-                {resource.image && (
-                  <div class="border-border/30 relative flex aspect-video w-full shrink-0 items-center justify-center overflow-hidden rounded-2xl border bg-white p-6 lg:aspect-square lg:w-72">
-                    <Image
-                      field={f(`${i}.image`)}
-                      value={resource.image}
-                      alt={resource.name}
-                      loading="lazy"
-                      decoding="async"
-                      class="max-h-full max-w-full object-contain transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+      <Region type="collection" name="resource-listings">
+        <div class="space-y-6">
+          {
+            resources.map((resource, i) => (
+              <Item
+                index={i}
+                class="resource-card"
+                data-page={Math.floor(i / PAGE_SIZE) + 1}
+                style="opacity:0;transform:translateY(48px);transition:opacity 1.2s cubic-bezier(0.32,0.72,0,1),transform 1.2s cubic-bezier(0.32,0.72,0,1);will-change:opacity,transform;"
+              >
+                <div class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col gap-8 rounded-3xl border p-8 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl lg:flex-row lg:p-10">
+                  {/* Content */}
+                  <div class="flex flex-1 flex-col items-start gap-4">
+                    <Heading3
+                      class="font-serif text-2xl leading-tight md:text-3xl"
+                      field={f(`${i}.name`)}
+                      value={resource.name}
                     />
+
+                    <span
+                      class="text-muted-foreground inline-flex items-center gap-2 text-sm"
+                      data-cms-field={f(`${i}.location`)}
+                    >
+                      <MapPin class="size-4" />
+                      {resource.location}
+                    </span>
+
+                    <Text
+                      as="p"
+                      class="text-muted-foreground text-base leading-relaxed whitespace-pre-line"
+                      field={f(`${i}.description`)}
+                      value={resource.description}
+                    />
+
+                    <a
+                      href={resource.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-cms-field={f(`${i}.link`)}
+                      class="group/btn bg-primary text-primary-foreground hover:shadow-primary/25 mt-auto inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
+                    >
+                      View
+                      <ExternalLink class="size-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover/btn:translate-x-0.5" />
+                    </a>
                   </div>
-                )}
-              </div>
-            </Item>
-          ))
-        }
-      </Collection>
+
+                  {/* Logo */}
+                  {resource.image && (
+                    <div class="border-border/30 relative flex aspect-video w-full shrink-0 items-center justify-center overflow-hidden rounded-2xl border bg-white p-6 lg:aspect-square lg:w-72">
+                      <Image
+                        field={f(`${i}.image`)}
+                        value={resource.image}
+                        alt={resource.name}
+                        loading="lazy"
+                        decoding="async"
+                        class="max-h-full max-w-full object-contain transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+                      />
+                    </div>
+                  )}
+                </div>
+              </Item>
+            ))
+          }
+        </div>
+      </Region>
 
       <nav
         id="resource-pagination"
