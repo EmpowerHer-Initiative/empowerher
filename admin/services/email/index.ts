@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
 import { render } from "@react-email/render";
 
-import { agency } from "@/lib/agency-api";
+import { sendEmailRaw } from "@/lib/email-client";
 import { siteConfig } from "@/lib/site";
 import type { EmailTemplateName } from "@/services/db/schema";
 import { log } from "@/services/log";
@@ -54,29 +54,14 @@ async function send({ from, to, subject, react, attachments, type }: SendOptions
   const { template, templateProps } = extractTemplateInfo(react);
 
   try {
-    // `emails.send` throws AttachmentTooLargeError synchronously (>1 MB combined);
-    // API failures come back on `error` rather than throwing.
-    const { data, error } = await agency.emails.send({
+    const { id, provider } = await sendEmailRaw({
       from: source,
       to: toAddresses,
       subject,
       html,
-      // Categorize the hub log row; default to the template name.
-      ...(type ?? template ? { type: type ?? template } : {}),
-      ...(attachments?.length
-        ? {
-            attachments: attachments.map((a) => ({
-              filename: a.filename,
-              content: a.content,
-              contentType: a.contentType,
-            })),
-          }
-        : {}),
+      type: type ?? template ?? "send",
+      attachments,
     });
-
-    if (error) {
-      throw new Error(error.message);
-    }
 
     log({
       type: "email",
@@ -88,11 +73,14 @@ async function send({ from, to, subject, react, attachments, type }: SendOptions
         attachmentCount: attachments?.length,
         template,
         templateProps,
-        emailId: data.id,
-        emailUrl: `${siteConfig.emailHubUrl}/${data.id}`,
+        emailId: id,
+        // Hub Emails tab only knows Resend ids.
+        ...(provider === "resend"
+          ? { emailUrl: `${siteConfig.emailHubUrl}/${id}` }
+          : {}),
       },
     });
-    return { data: { id: data.id } };
+    return { data: { id } };
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Failed to send email";
@@ -129,16 +117,13 @@ async function resend({
   const source = from ?? siteConfig.noreplyEmail;
 
   try {
-    const { data, error } = await agency.emails.send({
+    const { id, provider } = await sendEmailRaw({
       from: source,
       to: toAddresses,
       subject,
       html,
+      type: "resend",
     });
-
-    if (error) {
-      throw new Error(error.message);
-    }
 
     log({
       type: "email",
@@ -148,11 +133,14 @@ async function resend({
         to: toAddresses.join(", "),
         subject,
         retry: true,
-        emailId: data.id,
-        emailUrl: `${siteConfig.emailHubUrl}/${data.id}`,
+        emailId: id,
+        // Hub Emails tab only knows Resend ids.
+        ...(provider === "resend"
+          ? { emailUrl: `${siteConfig.emailHubUrl}/${id}` }
+          : {}),
       },
     });
-    return { data: { id: data.id } };
+    return { data: { id } };
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Failed to send email";

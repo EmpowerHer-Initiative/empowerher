@@ -7,11 +7,16 @@ const ROOT = resolve(import.meta.dirname, "..");
 // ─── Feature → required env vars mapping ────────────────────────────
 // Add a new feature: featureName: ["VAR_1", "VAR_2"]
 // Remove a feature: delete the line
+// "VAR_A|VAR_B" means at least one of the alternatives must be set.
 const FEATURE_ENV_MAP: Record<string, string[]> = {
   auth: ["BETTER_AUTH_SECRET", "DATABASE_URL", "NEXT_PUBLIC_API_URL"],
   // cron: ["CRON_SECRET"],
   agencyApi: ["NEXT_PUBLIC_AGENCY_API_KEY"],
+  email: ["RESEND_API_KEY|USESEND_API_KEY"],
 };
+
+// Known vars that are never required (fine to leave unset).
+const OPTIONAL_ENV = ["USESEND_URL"];
 
 // ─── Collect all required vars ─────────────────────────────────────
 const required = new Set<string>();
@@ -40,13 +45,20 @@ const merged = { ...envFile, ...process.env };
 
 const missing: string[] = [];
 for (const key of required) {
-  if (!merged[key]?.trim()) {
+  // "A|B" entries pass when any one alternative is set.
+  const alternatives = key.split("|");
+  if (!alternatives.some((alt) => merged[alt]?.trim())) {
     missing.push(key);
   }
 }
 
 // ─── Detect untracked vars (in .env but not in FEATURE_ENV_MAP) ─────
-const allKnown = new Set(Object.values(FEATURE_ENV_MAP).flat());
+const allKnown = new Set([
+  ...Object.values(FEATURE_ENV_MAP)
+    .flat()
+    .flatMap((key) => key.split("|")),
+  ...OPTIONAL_ENV,
+]);
 const untracked: string[] = [];
 for (const key of Object.keys(envFile)) {
   if (!allKnown.has(key)) {

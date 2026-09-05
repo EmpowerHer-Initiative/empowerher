@@ -30,6 +30,15 @@ const inputClass =
 </div>
 
 <form id="partner-form" class="space-y-6" novalidate>
+  {/* Honeypot — real users never see this; bots fill it and the server drops the send. */}
+  <input
+    type="text"
+    name="company"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+    class="hidden"
+  />
   <div class="grid gap-5 sm:grid-cols-2">
     <div class="space-y-2">
       <label for="firstName" class="text-foreground/80 text-sm font-medium">
@@ -133,8 +142,6 @@ const inputClass =
 </form>
 
 <script>
-  import { agency } from "../../../lib/agency";
-
   function initPartnerForm() {
     const form = document.getElementById(
       "partner-form",
@@ -181,37 +188,39 @@ const inputClass =
         setFormError("Please tell us a little more (at least 10 characters).");
         return;
       }
-      if (!agency) {
-        setFormError(
-          "The form is not configured yet (missing PUBLIC_AGENCY_API_KEY).",
-        );
-        return;
-      }
-
       const originalBtn = submitBtn?.innerHTML;
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.textContent = "Sending…";
       }
-      const { error } = await agency.emails.sendContact({
-        name: `${firstName} ${lastName}`.trim(),
-        email: businessEmail,
-        message,
-        subject: `Partnership inquiry — ${organization}`,
-        source: "EmpowerHer — Partner Form",
-        metadata: { organization, position },
-      });
+      let failed: string | null = null;
+      try {
+        const res = await fetch("/api/partner", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: `${firstName} ${lastName}`.trim(),
+            email: businessEmail,
+            organization,
+            position,
+            message,
+            company: String(data.get("company") || ""),
+          }),
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => null);
+          failed = err?.error || "Something went wrong — please try again.";
+        }
+      } catch {
+        failed = "Network error — please try again.";
+      }
       if (submitBtn) {
         submitBtn.disabled = false;
         if (originalBtn !== undefined) submitBtn.innerHTML = originalBtn;
       }
 
-      if (error) {
-        setFormError(
-          error.code === "RATE_LIMIT_EXCEEDED"
-            ? "Too many submissions — please try again in a few minutes."
-            : error.message,
-        );
+      if (failed) {
+        setFormError(failed);
         return;
       }
       form.classList.add("hidden");

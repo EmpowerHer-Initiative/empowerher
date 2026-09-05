@@ -31,6 +31,15 @@ const inputClass =
 </div>
 
 <form id="volunteer-form" class="space-y-6" novalidate>
+  {/* Honeypot — real users never see this; bots fill it and the server drops the send. */}
+  <input
+    type="text"
+    name="company"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+    class="hidden"
+  />
   <div class="grid gap-5 sm:grid-cols-2">
     <div class="space-y-2">
       <label for="firstName" class="text-foreground/80 text-sm font-medium">
@@ -143,23 +152,18 @@ const inputClass =
 </form>
 
 <script>
-  import { agency } from "../../../lib/agency";
-  import { AttachmentTooLargeError } from "@alisamadiillc/agency-api";
+  const MAX_CV_BYTES = 1_000_000; // ~1 MB — the /api/volunteer route rejects larger
 
-  const MAX_CV_BYTES = 1_000_000; // ~1 MB — send() rejects >1 MB combined
-
-  const escapeHtml = (s: string) =>
-    s.replace(
-      /[&<>"']/g,
-      (c) =>
-        ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#39;",
-        })[c] as string,
-    );
+  // Chunked to avoid call-stack limits String.fromCharCode hits on big buffers.
+  const toBase64 = (buf: ArrayBuffer) => {
+    const bytes = new Uint8Array(buf);
+    let binary = "";
+    const CHUNK = 0x8000;
+    for (let i = 0; i < bytes.length; i += CHUNK) {
+      binary += String.fromCharCode(...bytes.subarray(i, i + CHUNK));
+    }
+    return btoa(binary);
+  };
 
   function initVolunteerForm() {
     const form = document.getElementById(
@@ -260,14 +264,6 @@ const inputClass =
         return;
       }
 
-      if (!agency) {
-        setError(
-          "form",
-          "The form is not configured yet (missing PUBLIC_AGENCY_API_KEY).",
-        );
-        return;
-      }
-
       const originalBtn = submitBtn?.innerHTML;
       if (submitBtn) {
         submitBtn.disabled = true;
@@ -275,56 +271,37 @@ const inputClass =
       }
 
       try {
-        const buf = new Uint8Array(await file.arrayBuffer());
         const name = `${firstName} ${lastName}`.trim();
-        const html = `
-          <h2>New volunteer application</h2>
-          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-          <p><strong>Message:</strong></p>
-          <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
-          <p>CV attached: ${escapeHtml(file.name)}</p>`;
-
-        const { error } = await agency.emails.send({
-          from: "info@empowerher-initiative.org",
-          to: "info@empowerher-initiative.org",
-          subject: `Volunteer application — ${name}`,
-          type: "volunteer",
-          html,
-          text: `New volunteer application\nName: ${name}\nEmail: ${email}\n\n${message}`,
-          attachments: [
-            {
+        const res = await fetch("/api/volunteer", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            email,
+            message,
+            company: String(data.get("company") || ""),
+            cv: {
               filename: file.name,
-              content: buf,
-              contentType: "application/pdf",
+              content: toBase64(await file.arrayBuffer()),
             },
-          ],
+          }),
         });
 
-        if (error) {
+        if (!res.ok) {
+          const err = await res.json().catch(() => null);
           setError(
-            "form",
-            error.code === "EMAIL_DOMAIN_NOT_CONFIGURED" ||
-              error.code === "SENDER_DOMAIN_MISMATCH"
-              ? "The form's sender address isn't configured correctly. Please contact us directly."
-              : error.message,
+            res.status === 413 ? "cv" : "form",
+            err?.error || "Something went wrong — please try again.",
           );
           return;
         }
         form.classList.add("hidden");
         success?.classList.remove("hidden");
-      } catch (err) {
-        if (err instanceof AttachmentTooLargeError) {
-          setError(
-            "cv",
-            "That file is too large — please keep your CV under 1 MB.",
-          );
-        } else {
-          setError(
-            "form",
-            "Something went wrong sending your application. Please try again.",
-          );
-        }
+      } catch {
+        setError(
+          "form",
+          "Something went wrong sending your application. Please try again.",
+        );
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
