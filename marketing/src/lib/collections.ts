@@ -4,12 +4,12 @@
  * no sort step. Reorder / add / remove a record = a change to that one file.
  */
 
-import partnersData from "../data/collections/partners.json";
-import teamData from "../data/collections/team.json";
-import resourcesData from "../data/collections/resource-listings.json";
-import featuredWritingsData from "../data/collections/featured-writings.json";
-import workshopsData from "../data/collections/workshops.json";
-import impactStoriesData from "../data/collections/impact-stories.json";
+import partnersData from "_collections/partners.json";
+import teamData from "_collections/team.json";
+import resourcesData from "_collections/resource-listings.json";
+import featuredWritingsData from "_collections/featured-writings.json";
+import workshopsData from "_collections/workshops.json";
+import impactStoriesData from "_collections/impact-stories.json";
 
 export type Partner = { name: string; image: string; link: string };
 export const partners = partnersData as Partner[];

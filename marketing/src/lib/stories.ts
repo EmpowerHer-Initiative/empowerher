@@ -1,5 +1,5 @@
 /**
- * Loads HerVoice stories from the Pages CMS collection at src/content/hervoice/
+ * Loads HerVoice stories from the Pages CMS collection at _collections/hervoice/
  * (one markdown file per story, yaml-frontmatter). Slug = filename.
  */
 import matter from "gray-matter";
@@ -27,7 +27,7 @@ export type Story = {
   content: string;
 };
 
-const files = import.meta.glob("../content/hervoice/*.md", {
+const files = import.meta.glob("../../_collections/hervoice/*.md", {
   eager: true,
   query: "?raw",
   import: "default",

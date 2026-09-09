@@ -1,0 +1,523 @@
+{
+  "seo": {
+    "site": {
+      "title": "EmpowerHer Initiative",
+      "description": "A nonprofit empowering Afghan women and girls across the Middle East and Central Asia through mentorship, leadership development, educational support, storytelling, and community engagement.",
+      "favicon": "/favicon.ico",
+      "ogImage": "/og-image.png",
+      "appleTouchIcon": "/apple-touch-icon.png",
+      "googleAnalytics": ""
+    },
+    "pages": {
+      "home": {
+        "title": "EmpowerHer Initiative",
+        "description": "A nonprofit organization empowering Afghan women and girls across the Middle East and Central Asia through mentorship, leadership development, educational support, storytelling, publication, and community engagement.",
+        "ogImage": ""
+      },
+      "about-us": {
+        "title": "About Us — EmpowerHer Initiative",
+        "description": "Learn about our mission, vision, story, and the team behind EmpowerHer.",
+        "ogImage": ""
+      },
+      "writing-contest": {
+        "title": "HerVoice 2026 Writing Contest — EmpowerHer Initiative",
+        "description": "Submit your story to the HerVoice 2026 Writing Contest.",
+        "ogImage": ""
+      },
+      "mentorship": {
+        "title": "Mentorship Program — EmpowerHer Initiative",
+        "description": "Free workshops and mentorship for Afghan girls to build resilience, gain support, and launch impact projects.",
+        "ogImage": ""
+      },
+      "sisterhood-sessions": {
+        "title": "Sisterhood Sessions — EmpowerHer Initiative",
+        "description": "A supportive and caring space for EmpowerHer students to connect, share ideas, and build friendships.",
+        "ogImage": ""
+      },
+      "hervoice": {
+        "title": "HerVoice — EmpowerHer Initiative",
+        "description": "HerVoice is EmpowerHer's creative storytelling and publication platform, where students publish their original writings and express themselves freely.",
+        "ogImage": ""
+      },
+      "hervoice-winners": {
+        "title": "HerVoice 2026 Writing Contest Winners — EmpowerHer Initiative",
+        "description": "Results of the HerVoice 2026 Writing Contest, including cash prize winners and honorable mentions.",
+        "ogImage": ""
+      },
+      "hervoice-featured-writings": {
+        "title": "Featured Writings from Our Partners — EmpowerHer Initiative",
+        "description": "Read featured writings from Afghan girls published through EmpowerHer's partner platforms — NSHSS and Amplify Afghan Women.",
+        "ogImage": ""
+      },
+      "success-stories": {
+        "title": "Success Stories — EmpowerHer Initiative",
+        "description": "Past program outcomes and impact stories from EmpowerHer participants.",
+        "ogImage": ""
+      },
+      "spr": {
+        "title": "Student Project Roadmap — EmpowerHer Initiative",
+        "description": "A leadership pathway for EmpowerHer graduates to design and lead their own impact-driven online classes.",
+        "ogImage": ""
+      },
+      "get-involved": {
+        "title": "Get Involved — EmpowerHer Initiative",
+        "description": "Partner with us or volunteer to support Afghan girls' education and empowerment.",
+        "ogImage": ""
+      },
+      "get-involved-partner": {
+        "title": "Partner With Us — EmpowerHer Initiative",
+        "description": "Partner with us or volunteer to support Afghan girls' education and empowerment.",
+        "ogImage": ""
+      },
+      "get-involved-volunteer": {
+        "title": "Volunteer With Us — EmpowerHer Initiative",
+        "description": "Partner with us or volunteer to support Afghan girls' education and empowerment.",
+        "ogImage": ""
+      },
+      "agfaf": {
+        "title": "AGFAF — EmpowerHer Initiative",
+        "description": "Afghan Girls Financial Assistance Fund — our primary sponsor and partner.",
+        "ogImage": ""
+      },
+      "annual-report": {
+        "title": "Annual Impact Reports — EmpowerHer Initiative",
+        "description": "View and download EmpowerHer's annual impact reports.",
+        "ogImage": ""
+      },
+      "resources": {
+        "title": "Resources — EmpowerHer Initiative",
+        "description": "Educational resources, scholarships, and opportunities for Afghan girls.",
+        "ogImage": ""
+      },
+      "mis": {
+        "title": "Monthly Internet Scholarship (MIS) — EmpowerHer Initiative",
+        "description": "EmpowerHer provides monthly internet scholarships to help members participate in our programs.",
+        "ogImage": ""
+      },
+      "newsletter": {
+        "title": "Newsletter",
+        "description": "Subscribe to the EmpowerHer newsletter for the latest updates on our programs, success stories, and opportunities to get involved.",
+        "ogImage": ""
+      },
+      "contact": {
+        "title": "Contact",
+        "description": "Get in touch with the EmpowerHer team.",
+        "ogImage": ""
+      },
+      "legal": {
+        "title": "Terms & Privacy — EmpowerHer Initiative",
+        "description": "The terms of use and privacy policy for the EmpowerHer Initiative.",
+        "ogImage": ""
+      },
+      "privacy": {
+        "title": "Privacy — EmpowerHer Initiative",
+        "description": "This Privacy Policy describes how EmpowerHer collects, uses, and protects participant information across its programs, workshops, publications, and platforms.",
+        "ogImage": ""
+      },
+      "terms": {
+        "title": "Terms — EmpowerHer Initiative",
+        "description": "These Terms and Policies describe the terms and conditions for participating in EmpowerHer programs, workshops, publications, scholarships, events, and initiatives.",
+        "ogImage": ""
+      }
+    }
+  },
+  "cms": {
+    "version": 1,
+    "baseUrl": "https://www.empowerher-initiative.org",
+    "media": {
+      "input": "public/media",
+      "output": "/media"
+    },
+    "pages": {
+      "home": {
+        "route": "/"
+      },
+      "about-us": {
+        "route": "/about-us"
+      },
+      "writing-contest": {
+        "route": "/writing-contest"
+      },
+      "mentorship": {
+        "route": "/mentorship"
+      },
+      "sisterhood-sessions": {
+        "route": "/sisterhood-sessions"
+      },
+      "hervoice": {
+        "route": "/hervoice/",
+        "title": "HerVoice"
+      },
+      "hervoice-winners": {
+        "route": "/hervoice/winners",
+        "title": "HerVoice Winners"
+      },
+      "hervoice-featured-writings": {
+        "route": "/hervoice/featured-writings-from-our-partners",
+        "title": "Featured Writings"
+      },
+      "success-stories": {
+        "route": "/success-stories/",
+        "title": "Success Stories"
+      },
+      "spr": {
+        "route": "/success-stories/spr",
+        "title": "Student Project Roadmap"
+      },
+      "get-involved": {
+        "route": "/get-involved/",
+        "title": "Get Involved"
+      },
+      "get-involved-partner": {
+        "route": "/get-involved/partner-with-us",
+        "title": "Partner With Us"
+      },
+      "get-involved-volunteer": {
+        "route": "/get-involved/volunteer-with-us",
+        "title": "Volunteer With Us"
+      },
+      "agfaf": {
+        "route": "/agfaf",
+        "title": "AGFAF"
+      },
+      "annual-report": {
+        "route": "/annual-report"
+      },
+      "resources": {
+        "route": "/resources"
+      },
+      "mis": {
+        "route": "/mis"
+      },
+      "newsletter": {
+        "route": "/newsletter"
+      },
+      "contact": {
+        "route": "/contact"
+      },
+      "legal": {
+        "route": "/legal"
+      },
+      "privacy": {
+        "route": "/privacy"
+      },
+      "terms": {
+        "route": "/terms"
+      }
+    },
+    "collections": [
+      {
+        "name": "hervoice-stories",
+        "label": "HerVoice Stories",
+        "path": "_collections/hervoice",
+        "route": "/hervoice/{slug}",
+        "fields": [
+          {
+            "name": "title",
+            "type": "string",
+            "required": true,
+            "label": "Title"
+          },
+          {
+            "name": "description",
+            "type": "text",
+            "label": "Description"
+          },
+          {
+            "name": "image",
+            "type": "image",
+            "required": true,
+            "label": "Cover image"
+          },
+          {
+            "name": "imageAlt",
+            "type": "string",
+            "label": "Image alt / caption"
+          },
+          {
+            "name": "imageCredit",
+            "type": "string",
+            "label": "Image credit"
+          },
+          {
+            "name": "date",
+            "type": "date",
+            "required": true,
+            "label": "Date"
+          },
+          {
+            "name": "hideFromListing",
+            "type": "boolean",
+            "label": "Hide from the HerVoice listing"
+          },
+          {
+            "name": "authorName",
+            "type": "string",
+            "label": "Author name"
+          },
+          {
+            "name": "authorPosition",
+            "type": "string",
+            "label": "Author position"
+          },
+          {
+            "name": "authorBio",
+            "type": "text",
+            "label": "Author bio"
+          },
+          {
+            "name": "authorInstagram",
+            "type": "string",
+            "label": "Author Instagram"
+          },
+          {
+            "name": "authorFacebook",
+            "type": "string",
+            "label": "Author Facebook"
+          },
+          {
+            "name": "authorLinkedin",
+            "type": "string",
+            "label": "Author LinkedIn"
+          },
+          {
+            "name": "messageToWorld",
+            "type": "text",
+            "label": "Message to the world"
+          }
+        ]
+      },
+      {
+        "name": "featured-writings",
+        "label": "Featured Writings",
+        "path": "_collections/featured-writings.json",
+        "fields": [
+          {
+            "name": "title",
+            "type": "string",
+            "required": true,
+            "label": "Title"
+          },
+          {
+            "name": "description",
+            "type": "text",
+            "label": "Description"
+          },
+          {
+            "name": "image",
+            "type": "image",
+            "required": true,
+            "label": "Image"
+          },
+          {
+            "name": "link",
+            "type": "string",
+            "label": "Link"
+          },
+          {
+            "name": "from",
+            "type": "string",
+            "label": "Platform"
+          }
+        ]
+      },
+      {
+        "name": "impact-stories",
+        "label": "Success Stories",
+        "path": "_collections/impact-stories.json",
+        "fields": [
+          {
+            "name": "image",
+            "type": "image",
+            "required": true,
+            "label": "Logo image"
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "required": true,
+            "label": "Title"
+          },
+          {
+            "name": "subtitle",
+            "type": "string",
+            "label": "Subtitle"
+          },
+          {
+            "name": "date",
+            "type": "string",
+            "label": "Date"
+          },
+          {
+            "name": "badge",
+            "type": "string",
+            "label": "Badge"
+          },
+          {
+            "name": "intro",
+            "type": "text",
+            "label": "Intro paragraph"
+          },
+          {
+            "name": "afterQuote",
+            "type": "text",
+            "label": "Paragraph after quote"
+          }
+        ]
+      },
+      {
+        "name": "partners",
+        "label": "Partners",
+        "path": "_collections/partners.json",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "label": "Name"
+          },
+          {
+            "name": "image",
+            "type": "image",
+            "required": true,
+            "label": "Logo"
+          },
+          {
+            "name": "link",
+            "type": "string",
+            "label": "Link"
+          }
+        ]
+      },
+      {
+        "name": "resource-listings",
+        "label": "Resources",
+        "path": "_collections/resource-listings.json",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "label": "Name"
+          },
+          {
+            "name": "location",
+            "type": "string",
+            "label": "Location"
+          },
+          {
+            "name": "description",
+            "type": "text",
+            "label": "Description"
+          },
+          {
+            "name": "link",
+            "type": "string",
+            "label": "Link"
+          },
+          {
+            "name": "image",
+            "type": "image",
+            "label": "Logo"
+          }
+        ]
+      },
+      {
+        "name": "team",
+        "label": "Team Members",
+        "path": "_collections/team.json",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "label": "Name"
+          },
+          {
+            "name": "role",
+            "type": "string",
+            "label": "Role / title"
+          },
+          {
+            "name": "image",
+            "type": "image",
+            "required": true,
+            "label": "Photo"
+          },
+          {
+            "name": "group",
+            "type": "select",
+            "required": true,
+            "label": "Group",
+            "options": [
+              "Executive Team",
+              "Directors",
+              "Mentors & Lecturers"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "workshops",
+        "label": "Workshops",
+        "path": "_collections/workshops.json",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "label": "Name"
+          },
+          {
+            "name": "mentors",
+            "type": "string",
+            "label": "Mentors"
+          },
+          {
+            "name": "description",
+            "type": "text",
+            "label": "Description"
+          },
+          {
+            "name": "image",
+            "type": "image",
+            "required": true,
+            "label": "Image"
+          },
+          {
+            "name": "link",
+            "type": "string",
+            "label": "Application link"
+          }
+        ]
+      }
+    ]
+  },
+  "variables": {
+    "name": "EmpowerHer Initiative",
+    "logo": "https://cdn.empowerher-initiative.org/logo.png",
+    "phone": "",
+    "email": "info@empowerher-initiative.org",
+    "address": {
+      "street": "",
+      "city": "",
+      "region": "",
+      "zip": "",
+      "mapsUrl": ""
+    },
+    "socials": [
+      {
+        "label": "Facebook",
+        "url": "https://www.facebook.com/share/157naMfgkw"
+      },
+      {
+        "label": "Instagram",
+        "url": "https://www.instagram.com/_empowerher_org"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/company/empowerher-org/"
+      }
+    ]
+  }
+}

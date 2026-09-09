@@ -2,7 +2,9 @@
 // Ports components/footer.tsx. Footer text/links are hardcoded here (not
 // CMS-managed); brand name, email, and socials are the global identity from
 // variables.json.
-import variables from "../data/variables.json";
+import site from "_site.json";
+
+const variables = site.variables;
 import Facebook from "./icons/Facebook.astro";
 import Instagram from "./icons/Instagram.astro";
 import LinkedIn from "./icons/LinkedIn.astro";

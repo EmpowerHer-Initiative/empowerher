@@ -4,12 +4,14 @@ import { ClientRouter } from "astro:transitions";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import NewsletterPopup from "../components/NewsletterPopup.astro";
-import cms from "../data/cms.json";
-import seo from "../data/seo.json";
-import variables from "../data/variables.json";
+import site from "_site.json";
+
+const cms = site.cms;
+const seo = site.seo;
+const variables = site.variables;
 
 interface Props {
-  /** Overrides the seo.json title for this route (e.g. dynamic pages). */
+  /** Overrides the _site.json seo title for this route (e.g. dynamic pages). */
   title?: string;
   /** Overrides the seo.json description for this route. */
   description?: string;

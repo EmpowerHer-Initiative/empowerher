@@ -6,7 +6,7 @@
 // typo-checked paths bring their own `DotPaths<typeof pages.json>` helper —
 // this file is ours. `CmsField` is a strict union of page-relative dot-paths,
 // and (being a subtype of `string`) drops straight into any `field` prop.
-import type pages from "../data/pages.json";
+import type pages from "_pages.json";
 
 /**
  * Every dot-path into `T`: nested object keys joined with `.`, arrays expanded

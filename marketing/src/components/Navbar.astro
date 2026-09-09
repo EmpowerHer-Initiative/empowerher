@@ -3,7 +3,9 @@
 // on scroll. Desktop dropdowns are CSS hover; mobile menu + scroll state are JS.
 import Logo from "./icons/Logo.astro";
 import ChevronDown from "./icons/ChevronDown.astro";
-import variables from "../data/variables.json";
+import site from "_site.json";
+
+const variables = site.variables;
 import { Region } from "@alisamadiillc/cms-bridge/components";
 
 // Nav links + CTA are hardcoded here (not CMS-managed). The brand name is the
