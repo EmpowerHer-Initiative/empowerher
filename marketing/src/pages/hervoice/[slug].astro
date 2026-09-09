@@ -11,6 +11,7 @@ import Instagram from "../../components/icons/Instagram.astro";
 import Facebook from "../../components/icons/Facebook.astro";
 import LinkedIn from "../../components/icons/LinkedIn.astro";
 import { stories, type Story } from "../../lib/stories";
+import CommentsSection from "../../components/hervoice/CommentsSection.tsx";
 
 const DEFAULT_AVATAR =
   "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTK53dXUCVy1oGkRMuS0Lravl9JbQIxWFcNhtq";
@@ -266,6 +267,8 @@ const articleSchema = post && {
                 )}
               </div>
             )}
+
+            <CommentsSection slug={`/hervoice/${post.slug}`} client:load />
           </div>
         </div>
       </section>

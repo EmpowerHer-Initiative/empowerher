@@ -2,6 +2,7 @@
 // (`/api/newsletter`), which dedupes + stores the email. CORS is locked to the
 // EmpowerHer origins server-side.
 const ADMIN_API_URL = "https://admin.empowerher-initiative.org";
+// const ADMIN_API_URL = "http://localhost:3000"; // for local dev, must match the admin app's port
 
 export type SubscribeResult =
   { ok: true; alreadySubscribed: boolean } | { ok: false; error: string };

@@ -6,6 +6,7 @@ import {
   rejectedStudentsTable,
   studentsTable,
 } from "@/services/db/schema";
+import { addNewsletterContact } from "@/services/newsletter/usesend-contacts";
 
 /**
  * Dedupes an email against the full roster (accepted, rejected, newsletter),
@@ -26,11 +27,15 @@ export async function subscribeEmail(
       .limit(1);
 
     if (existing) {
+      // Still sync to useSend so already-rostered emails land in the contact
+      // book too (upsert by email; safe to repeat).
+      await addNewsletterContact(email);
       return { alreadySubscribed: true };
     }
   }
 
   await db.insert(allStudentsTable).values({ email }).onConflictDoNothing();
+  await addNewsletterContact(email);
 
   return { alreadySubscribed: false };
 }
