@@ -1,0 +1,28 @@
+---
+// Secret AI-edit-mode activation route (injected by the ai-inspector
+// integration). Sets the localStorage flag and bounces back.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>…</title>
+  </head>
+  <body>
+    <script is:inline>
+      localStorage.setItem("__aiInspect", "1");
+      var back = "/";
+      try {
+        if (
+          document.referrer &&
+          new URL(document.referrer).origin === location.origin
+        ) {
+          back = document.referrer;
+        }
+      } catch (e) {}
+      location.replace(back);
+    </script>
+  </body>
+</html>
