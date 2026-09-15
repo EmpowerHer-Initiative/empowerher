@@ -1,12 +1,19 @@
 {
-  "src/components/Footer.astro": ["image_g5w0", "text_1955"],
-  "src/components/Navbar.astro": ["navItems_nuoj"],
+  "src/components/Footer.astro": [
+    "image_g5w0",
+    "text_1955"
+  ],
+  "src/components/Navbar.astro": [
+    "navItems_nuoj"
+  ],
   "src/components/NewsletterPopup.astro": [
     "title_ksto",
     "text_y35c",
     "text_jtnh"
   ],
-  "src/components/marketing/Partners.astro": ["text_ctv7"],
+  "src/components/marketing/Partners.astro": [
+    "text_ctv7"
+  ],
   "src/components/marketing/about-us/CTA.astro": [
     "text_naa4",
     "text_zh07",
@@ -327,7 +334,9 @@
     "text_669e",
     "stats_jbnl"
   ],
-  "src/components/marketing/home/StoryCover.astro": ["text_mtzf"],
+  "src/components/marketing/home/StoryCover.astro": [
+    "text_mtzf"
+  ],
   "src/components/marketing/legal/Hero.astro": [
     "eyebrow_dj5w",
     "heading_ikr8",
@@ -411,7 +420,9 @@
     "heading_nkc7",
     "text_7emq"
   ],
-  "src/components/marketing/resources/ResourceList.astro": ["text_q4zu"],
+  "src/components/marketing/resources/ResourceList.astro": [
+    "text_q4zu"
+  ],
   "src/components/marketing/sisterhood-sessions/Community.astro": [
     "eyebrow_0bcn",
     "title_0w5b",
@@ -476,7 +487,9 @@
     "heading_7d9o",
     "text_bs3b"
   ],
-  "src/components/marketing/success-stories/Stories.astro": ["statIcons_hj43"],
+  "src/components/marketing/success-stories/Stories.astro": [
+    "statIcons_hj43"
+  ],
   "src/components/marketing/writing-contest/AboutContest.astro": [
     "text_cq80",
     "text_0ty4"
