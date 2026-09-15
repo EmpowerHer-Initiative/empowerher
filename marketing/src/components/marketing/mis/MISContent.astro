@@ -2,16 +2,6 @@
 import Reveal from "../home/Reveal.astro";
 import AlertTriangle from "../../icons/AlertTriangle.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
-import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  eyebrow: string;
-  heading: string;
-  body: string[];
-  advisory: string;
-}
-
-const { eyebrow, heading, body, advisory } = Astro.props;
 ---
 
 <section class="py-28 md:py-40">
@@ -19,37 +9,28 @@ const { eyebrow, heading, body, advisory } = Astro.props;
     <div class="mx-auto max-w-3xl">
       {/* Header */}
       <Reveal>
-        <Text
-          as="p"
+        <p
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"content.eyebrow"}
-          value={eyebrow}
-        />
+        >
+          Financial Support
+        </p>
       </Reveal>
       <Reveal delay={80}>
-        <Heading1
-          class="mt-5 font-serif text-4xl leading-[1.1] md:text-6xl"
-          field={"content.heading"}
-          value={heading}
-        />
+        <h1 class="mt-5 font-serif text-4xl leading-[1.1] md:text-6xl">
+          Monthly Internet Scholarship (MIS)
+        </h1>
       </Reveal>
 
       <Reveal delay={160}>
-        <Text
-          as="p"
-          class="text-muted-foreground mt-8 text-lg leading-relaxed"
-          field={"content.body.0"}
-          value={body[0]}
-        />
+        <p class="text-muted-foreground mt-8 text-lg leading-relaxed">
+          EmpowerHer provides Monthly Internet Scholarships (MIS) to all students who need them most, helping them participate fully in our programs. We understand the financial challenges many girls face in Afghanistan and how difficult it can be to access reliable internet. That's why we're proud to offer this financial support and ensure that access to learning is not limited by financial barriers.
+        </p>
       </Reveal>
 
       <Reveal delay={240}>
-        <Text
-          as="p"
-          class="text-muted-foreground mt-6 text-base leading-[1.8]"
-          field={"content.body.1"}
-          value={body[1]}
-        />
+        <p class="text-muted-foreground mt-6 text-base leading-[1.8]">
+          Please note: EmpowerHer does not send funds through "Hawala" or any platform that allows cash withdrawal. Instead, we provide internet credit through the Ding application, which lets students activate any internet bundles they need. Also, Ding and our system do not support Salam SIM cards, so please do not include Salam numbers in your MIS or workshop registration forms.
+        </p>
       </Reveal>
 
       {/* Advisory callout */}
@@ -58,12 +39,9 @@ const { eyebrow, heading, body, advisory } = Astro.props;
           class="mt-10 flex items-start gap-4 rounded-2xl border border-amber-400/50 bg-amber-50 p-6"
         >
           <AlertTriangle class="mt-0.5 size-5 shrink-0 text-amber-600" />
-          <Text
-            as="p"
-            class="text-base leading-relaxed text-amber-900"
-            field={"content.advisory"}
-            value={advisory}
-          />
+          <p class="text-base leading-relaxed text-amber-900">
+            Please be advised that EmpowerHer provides MIS exclusively to students formally accepted into its programs. This support is not available to individuals outside EmpowerHer or to those currently attending virtual or in-person programs offered by other organizations.
+          </p>
         </div>
       </Reveal>
 

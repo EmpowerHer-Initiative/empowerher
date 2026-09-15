@@ -2,48 +2,37 @@
 // Ports components/marketing/resources/footer-note.tsx
 import Reveal from "../home/Reveal.astro";
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
-import { Text, Heading2 } from "@alisamadiillc/cms-bridge/components";
-import pages from "_pages.json";
-const content = pages.resources;
 
-interface Props {
-  text: string;
-  email?: string;
-}
-
-const { text, email } = Astro.props;
+const email = "info@empowerher-initiative.org";
 ---
 
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <div class="max-w-3xl">
       <Reveal>
-        <Text
-          as="p"
+        <p
           class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
-          field="helpUsGrow.eyebrow"
-          value={content.helpUsGrow.eyebrow}
-        />
+        >
+          Know a resource?
+        </p>
       </Reveal>
       <Reveal delay={80}>
-        <Heading2
-          class="mt-5 font-serif text-4xl leading-tight md:text-5xl"
-          field="helpUsGrow.title"
-          value={content.helpUsGrow.title}
-        />
+        <h2 class="mt-5 font-serif text-4xl leading-tight md:text-5xl">
+          Help us grow this list.
+        </h2>
       </Reveal>
       <Reveal delay={160}>
-        <Text
-          as="p"
+        <p
           class="text-muted-foreground mt-6 max-w-xl text-base leading-relaxed"
-          field={"footerNote.text"}
-          value={text}
-        />
+        >
+          If you know of an educational resource, scholarship, or program that
+          supports Afghan girls and women, we'd love to hear about it. Reach out
+          and help us connect more girls with the opportunities they deserve.
+        </p>
       </Reveal>
       <Reveal delay={240}>
         <a
           href={`mailto:${email}`}
-          data-cms-field={"footerNote.email"}
           class="text-foreground mt-8 inline-flex items-center gap-2 text-sm font-medium hover:opacity-70"
         >
           {email}

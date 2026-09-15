@@ -8,7 +8,7 @@ import ArrowRight from "../../icons/ArrowRight.astro";
 import ChevronLeft from "../../icons/ChevronLeft.astro";
 import ChevronRight from "../../icons/ChevronRight.astro";
 import Reveal from "../home/Reveal.astro";
-import { Heading2, Text, Region } from "@alisamadiillc/cms-bridge/components";
+import { Region } from "@alisamadiillc/cms-bridge/components";
 
 type WritingCard = {
   slug: string;
@@ -18,11 +18,9 @@ type WritingCard = {
 };
 
 interface Props {
-  eyebrow: string;
-  heading: string;
   stories: WritingCard[];
 }
-const { eyebrow, heading, stories } = Astro.props;
+const { stories } = Astro.props;
 
 const PER_PAGE = 6;
 const totalPages = Math.max(1, Math.ceil(stories.length / PER_PAGE));
@@ -45,17 +43,12 @@ const smSize =
       class="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
     >
       <div>
-        <Text
-          as="p"
+        <p
           class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"featuredWritings.eyebrow"}
-          value={eyebrow}
-        />
-        <Heading2
-          class="font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={"featuredWritings.heading"}
-          value={heading}
-        />
+        >
+          Published Stories
+        </p>
+        <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">Writings</h2>
       </div>
     </Reveal>
 

@@ -6,16 +6,14 @@ import WorkshopStructure from "../components/marketing/mentorship/WorkshopStruct
 import Eligibility from "../components/marketing/mentorship/Eligibility.astro";
 import Opportunities from "../components/marketing/mentorship/Opportunities.astro";
 import Workshops from "../components/marketing/mentorship/Workshops.astro";
-import pages from "_pages.json";
-const data = pages.mentorship;
 import { workshops } from "../lib/collections";
 ---
 
 <Layout>
-  <Hero {...data.hero} />
-  <Intro {...data.intro} />
-  <WorkshopStructure {...data.workshopStructure} />
-  <Eligibility {...data.eligibility} />
-  <Opportunities {...data.opportunities} />
-  <Workshops {...data.workshops} items={workshops} />
+  <Hero />
+  <Intro />
+  <WorkshopStructure />
+  <Eligibility />
+  <Opportunities />
+  <Workshops items={workshops} />
 </Layout>

@@ -2,22 +2,35 @@
 // Ports components/marketing/legal/legal-body.tsx.
 import Reveal from "../home/Reveal.astro";
 import Article from "./Article.astro";
-import { Text } from "@alisamadiillc/cms-bridge/components";
 
 interface Part {
   eyebrow: string;
   title: string;
   paragraphs: string[];
 }
-interface Props {
-  parts: Part[];
-  footer: {
-    updated: string;
-    contactPrompt: string;
-    email: string;
-  };
-}
-const { parts, footer } = Astro.props;
+
+const parts: Part[] = [
+  {
+    eyebrow: "Part One",
+    title: "Terms of Use",
+    paragraphs: [
+      "Terms of Use content coming soon. This section will outline the rules and conditions for using the EmpowerHer website, programs, and services.",
+    ],
+  },
+  {
+    eyebrow: "Part Two",
+    title: "Privacy Policy",
+    paragraphs: [
+      "Privacy Policy content coming soon. This section will describe what information we collect, how we use it, and the choices you have over your data.",
+    ],
+  },
+];
+
+const footer = {
+  updated: "Last updated: 2026.",
+  contactPrompt: "Questions? Email",
+  email: "info@empowerher-initiative.org",
+};
 
 const sectionIds = ["terms", "privacy"];
 ---
@@ -27,18 +40,9 @@ const sectionIds = ["terms", "privacy"];
     {
       parts.map((part, i) => (
         <Reveal>
-          <Article
-            id={sectionIds[i]}
-            eyebrow={part.eyebrow}
-            title={part.title}
-            cmsPath={`body.parts.${i}`}
-          >
-            {/* Hand-tagged: no wrapper div at this call site to host <Group> without
-              breaking Article's `space-y-4` direct-child spacing on these paragraphs. */}
-            {part.paragraphs.map((paragraph, j) => (
-              <p data-cms-field={`body.parts.${i}.paragraphs.${j}`}>
-                {paragraph}
-              </p>
+          <Article id={sectionIds[i]} eyebrow={part.eyebrow} title={part.title}>
+            {part.paragraphs.map((paragraph) => (
+              <p>{paragraph}</p>
             ))}
           </Article>
         </Reveal>
@@ -48,13 +52,11 @@ const sectionIds = ["terms", "privacy"];
     <div class="border-border/30 text-muted-foreground border-t pt-10 text-xs">
       {footer.updated}
       {footer.contactPrompt}{" "}
-      <Text
-        as="a"
+      <a
         href={`mailto:${footer.email}`}
-        field={"body.footer.email"}
-        value={footer.email}
         class="text-foreground underline-offset-4 hover:underline"
-      />
+        >{footer.email}</a
+      >
       .
     </div>
   </div>

@@ -1,25 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import MISContent from "../components/marketing/mis/MISContent.astro";
-import pages from "_pages.json";
-const data = pages.mis;
-
-const { content } = data as {
-  seo: { title: string; description: string };
-  content: {
-    eyebrow: string;
-    heading: string;
-    body: string[];
-    advisory: string;
-  };
-};
 ---
 
 <Layout>
-  <MISContent
-    eyebrow={content.eyebrow}
-    heading={content.heading}
-    body={content.body}
-    advisory={content.advisory}
-  />
+  <MISContent />
 </Layout>

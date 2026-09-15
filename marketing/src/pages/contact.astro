@@ -1,19 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ContactForm from "../components/marketing/contact/ContactForm.astro";
-import pages from "_pages.json";
-const content = pages.contact;
-
-const { eyebrow, heading, intro, email, location, followUsTitle } = content;
 ---
 
 <Layout>
-  <ContactForm
-    eyebrow={eyebrow}
-    heading={heading}
-    intro={intro}
-    email={email}
-    location={location}
-    followUsTitle={followUsTitle}
-  />
+  <ContactForm />
 </Layout>

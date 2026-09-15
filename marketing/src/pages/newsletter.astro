@@ -1,18 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import NewsletterForm from "../components/marketing/newsletter/NewsletterForm.astro";
-import pages from "_pages.json";
-const content = pages.newsletter;
-
-const { eyebrow, heading, subheading, image, overlay } = content;
 ---
 
 <Layout>
-  <NewsletterForm
-    eyebrow={eyebrow}
-    heading={heading}
-    subheading={subheading}
-    image={image}
-    overlay={overlay}
-  />
+  <NewsletterForm />
 </Layout>

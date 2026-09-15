@@ -3,18 +3,14 @@
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Download from "../../icons/Download.astro";
 import Reveal from "../home/Reveal.astro";
-import { Heading2, Text, Link } from "@alisamadiillc/cms-bridge/components";
-import pages from "_pages.json";
-const content = pages["annual-report"];
 
-interface Props {
-  year?: string;
-  title: string;
-  description: string[];
-  /** Path to the downloadable report PDF (in public/). */
-  pdf?: string;
-}
-const { year, title, description, pdf } = Astro.props;
+const description = [
+  "EmpowerHer is dedicated to equipping Afghan girls and women with the tools, confidence, and opportunities to create meaningful and lasting change.",
+  "Through creative arts, storytelling, education, leadership development, and cultural exchange, the organization provides supportive spaces where participants can express themselves, preserve their lived experiences, and amplify their voices.",
+];
+
+const pdf =
+  "https://ik.imagekit.io/he2ukwxtl/Reports/empowerher-annual-impact-report-2025.pdf";
 ---
 
 <section class="py-28 md:py-40">
@@ -24,12 +20,11 @@ const { year, title, description, pdf } = Astro.props;
       <Reveal>
         <div class="mb-10 flex items-center gap-4">
           <div class="bg-border/30 h-px flex-1"></div>
-          <Text
-            as="span"
+          <span
             class="border-border/40 text-muted-foreground rounded-full border px-4 py-1.5 text-xs font-semibold tracking-[0.2em] uppercase"
-            field={"reportCard.year"}
-            value={year}
-          />
+          >
+            2024 – 2025
+          </span>
           <div class="bg-border/30 h-px flex-1"></div>
         </div>
       </Reveal>
@@ -38,39 +33,26 @@ const { year, title, description, pdf } = Astro.props;
         {/* Content */}
         <Reveal delay={160}>
           <div class="pt-2">
-            <Heading2
-              class="font-serif text-4xl leading-tight md:text-5xl"
-              field={"reportCard.title"}
-              value={title}
-            />
+            <h2 class="font-serif text-4xl leading-tight md:text-5xl">
+              Annual Report 2024–2025
+            </h2>
 
             <div
               class="text-muted-foreground mt-8 space-y-4 text-base leading-relaxed"
             >
-              {
-                description.map((paragraph, i) => (
-                  <Text
-                    as="p"
-                    field={`reportCard.description.${i}`}
-                    value={paragraph}
-                  />
-                ))
-              }
+              {description.map((paragraph) => <p>{paragraph}</p>)}
               <p>
                 The initiative operates through two core programs: the{" "}
-                <Link
+                <a
                   class="text-foreground font-medium underline-offset-2 hover:underline"
-                  field="section.cta"
-                  value={content.section.cta}>{content.section.cta.label}</Link
+                  href="/mentorship">Mentorship Program</a
                 >
                 , a structured six-week cycle of workshops designed to develop leadership
                 skills, strengthen capacity, and support participants in designing
                 and advancing impact-driven projects; and{" "}
-                <Link
+                <a
                   class="text-foreground font-medium underline-offset-2 hover:underline"
-                  field="section.cta2"
-                  value={content.section.cta2}
-                  >{content.section.cta2.label}</Link
+                  href="/hervoice">HerVoice</a
                 >
                 , a storytelling platform that publishes and elevates the voices and
                 lived experiences of Afghan girls and women.

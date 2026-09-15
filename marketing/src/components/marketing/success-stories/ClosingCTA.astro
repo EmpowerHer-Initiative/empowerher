@@ -2,32 +2,22 @@
 // Ports components/marketing/success-stories/closing-cta.tsx
 import Heart from "../../icons/Heart.astro";
 import Reveal from "../home/Reveal.astro";
-import { Heading2, Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  eyebrow: string;
-  heading: string;
-}
-const { eyebrow, heading } = Astro.props;
 ---
 
 <section class="pb-28 md:pb-40">
   <div class="container">
     <div class="mx-auto max-w-2xl text-center">
       <Reveal>
-        <Text
-          as="p"
+        <p
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"closingCta.eyebrow"}
-          value={eyebrow}
-        />
+        >
+          Be Part of the Next Story
+        </p>
       </Reveal>
       <Reveal delay={80}>
-        <Heading2
-          class="mt-5 font-serif text-3xl md:text-5xl"
-          field={"closingCta.heading"}
-          value={heading}
-        />
+        <h2 class="mt-5 font-serif text-3xl md:text-5xl">
+          Want to support more stories like this?
+        </h2>
       </Reveal>
       <Reveal class="mt-10" delay={160}>
         <a

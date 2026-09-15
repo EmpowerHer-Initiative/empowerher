@@ -1,13 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import SplitScreen from "../../components/marketing/get-involved/SplitScreen.astro";
-import pages from "_pages.json";
-const data = pages["get-involved"];
 ---
 
 <Layout>
-  <SplitScreen
-    partner={data.splitScreen.partner}
-    volunteer={data.splitScreen.volunteer}
-  />
+  <SplitScreen />
 </Layout>

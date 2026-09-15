@@ -2,34 +2,23 @@
 // Ports components/marketing/writing-contest/writing-prompt.tsx
 import Reveal from "../home/Reveal.astro";
 import Lightbulb from "../../icons/Lightbulb.astro";
-import { Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  eyebrow: string;
-  prompt: string;
-}
-const { eyebrow, prompt } = Astro.props;
 ---
 
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <Reveal class="mx-auto max-w-4xl text-center">
       <Lightbulb class="text-primary mx-auto size-12" />
-      <Text
-        as="p"
+      <p
         class="text-primary mt-6 text-xs font-semibold tracking-[0.3em] uppercase"
-        field={"writingPrompt.eyebrow"}
-        value={eyebrow}
-      />
+      >
+        Writing Prompt / Theme
+      </p>
       <div
         class="border-primary/20 bg-background mt-8 rounded-3xl border p-10 shadow-sm md:p-16"
       >
-        <Text
-          as="p"
-          class="font-serif text-3xl leading-snug md:text-4xl lg:text-5xl"
-          field={"writingPrompt.prompt"}
-          value={prompt}
-        />
+        <p class="font-serif text-3xl leading-snug md:text-4xl lg:text-5xl">
+          “A time when you felt strength in being a woman/girl”
+        </p>
       </div>
     </Reveal>
   </div>

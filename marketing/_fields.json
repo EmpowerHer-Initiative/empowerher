@@ -1,0 +1,553 @@
+{
+  "src/components/Footer.astro": [
+    "image_g5w0",
+    "text_1955"
+  ],
+  "src/components/Navbar.astro": [
+    "navItems_nuoj"
+  ],
+  "src/components/NewsletterPopup.astro": [
+    "title_ksto",
+    "text_y35c",
+    "text_jtnh"
+  ],
+  "src/components/marketing/Partners.astro": [
+    "text_ctv7"
+  ],
+  "src/components/marketing/about-us/CTA.astro": [
+    "text_naa4",
+    "text_zh07",
+    "text_vyxa"
+  ],
+  "src/components/marketing/about-us/Hero.astro": [
+    "image_czp1",
+    "text_pcgu",
+    "text_2ldx",
+    "text_2cjh",
+    "text_5xdk"
+  ],
+  "src/components/marketing/about-us/MissionVision.astro": [
+    "eyebrow_48qj",
+    "title_zzyt",
+    "text_3w1q",
+    "text_qx2e",
+    "title_1ghc",
+    "text_321m"
+  ],
+  "src/components/marketing/about-us/OurStory.astro": [
+    "text_ysci",
+    "text_0aw9",
+    "bodyBefore_8o93",
+    "bodyAfter_7zn7"
+  ],
+  "src/components/marketing/about-us/Team.astro": [
+    "eyebrow_4ody",
+    "title_85el",
+    "text_jcnw"
+  ],
+  "src/components/marketing/about-us/WhatWeDo.astro": [
+    "eyebrow_6gch",
+    "title_h1ln",
+    "text_84g8",
+    "pillars_8e54"
+  ],
+  "src/components/marketing/agfaf/AgfafContent.astro": [
+    "image_bqn5",
+    "heading_btz4",
+    "text_qfz2",
+    "text_5zr1",
+    "description_ko1x"
+  ],
+  "src/components/marketing/annual-report/Header.astro": [
+    "eyebrow_czhd",
+    "heading_aa9a",
+    "text_bu5e"
+  ],
+  "src/components/marketing/annual-report/ReportCard.astro": [
+    "eyebrow_6xng",
+    "title_stzh",
+    "text_ann0",
+    "text_h7dm",
+    "text_oo8b",
+    "cta_t9j6",
+    "cta_gp1l",
+    "description_fwc9"
+  ],
+  "src/components/marketing/contact/ContactForm.astro": [
+    "eyebrow_gngy",
+    "heading_lvr6",
+    "text_zsav",
+    "text_85bc",
+    "cta_xgaq",
+    "text_cz4a",
+    "text_xmj0",
+    "text_d0qu",
+    "title_xg6h",
+    "text_7bd8",
+    "text_qs05",
+    "text_r2bf",
+    "text_onfm",
+    "text_m1pp",
+    "text_hd1j",
+    "text_hxqj",
+    "text_yl02"
+  ],
+  "src/components/marketing/get-involved/PartnerContact.astro": [
+    "image_hkha",
+    "eyebrow_min6",
+    "heading_hse8",
+    "text_3fth",
+    "text_nvjp",
+    "text_urfs",
+    "title_h4yd",
+    "text_2tth"
+  ],
+  "src/components/marketing/get-involved/PartnerForm.astro": [
+    "title_yc0l",
+    "text_tf8p",
+    "text_hae1",
+    "text_ovd1",
+    "text_lxkc",
+    "text_a9jv",
+    "text_b594",
+    "text_bcad",
+    "text_w3vm",
+    "text_jq4u",
+    "text_2g7n"
+  ],
+  "src/components/marketing/get-involved/SplitScreen.astro": [
+    "image_nj35",
+    "eyebrow_1i52",
+    "title_m3sd",
+    "text_x2vf",
+    "image_8m55",
+    "text_arao",
+    "title_dwt8",
+    "text_egi6"
+  ],
+  "src/components/marketing/get-involved/VolunteerContact.astro": [
+    "image_7s7g",
+    "eyebrow_doe8",
+    "heading_layu",
+    "text_yo3c",
+    "text_29gh",
+    "text_kqen",
+    "text_lxpl",
+    "text_18cm",
+    "text_sj96",
+    "text_iaww"
+  ],
+  "src/components/marketing/get-involved/VolunteerForm.astro": [
+    "title_boys",
+    "text_0tpc",
+    "text_wl2k",
+    "text_4r70",
+    "text_pzsn",
+    "text_htwa",
+    "text_89gd",
+    "text_huq1",
+    "text_9wbd",
+    "text_oy6b",
+    "text_k4xd",
+    "text_q54l"
+  ],
+  "src/components/marketing/hervoice-featured-writings/Header.astro": [
+    "eyebrow_35uu",
+    "heading_p2vr",
+    "text_tb4c"
+  ],
+  "src/components/marketing/hervoice-featured-writings/WritingCard.astro": [
+    "text_zxc2",
+    "text_c1gh",
+    "text_fwnc"
+  ],
+  "src/components/marketing/hervoice-winners/CashPrizeWinners.astro": [
+    "title_3rjg",
+    "winners_afbf"
+  ],
+  "src/components/marketing/hervoice-winners/HerVoiceCTA.astro": [
+    "title_yulf",
+    "text_jvq2"
+  ],
+  "src/components/marketing/hervoice-winners/Hero.astro": [
+    "text_b1za",
+    "text_52qx",
+    "text_1hlp",
+    "text_urxt",
+    "text_jnu1",
+    "text_mf0u",
+    "stats_xm16"
+  ],
+  "src/components/marketing/hervoice-winners/HonorableMentions.astro": [
+    "title_ba5h",
+    "mentions_bkmw"
+  ],
+  "src/components/marketing/hervoice-winners/JudgeTestimonials.astro": [
+    "title_oojo",
+    "judges_sbq6"
+  ],
+  "src/components/marketing/hervoice/CongressionalTestimonies.astro": [
+    "eyebrow_pxzm",
+    "title_4frr",
+    "text_wqlb",
+    "text_gjpw",
+    "text_alez",
+    "text_n23v",
+    "videos_62vo"
+  ],
+  "src/components/marketing/hervoice/Eligibility.astro": [
+    "eyebrow_kssq",
+    "title_83o1",
+    "text_knsn",
+    "text_is42",
+    "text_od4j",
+    "cta_2brz",
+    "text_au14",
+    "title_vtlx",
+    "text_hmuy",
+    "title_4cf5",
+    "text_zbz9",
+    "text_qsci",
+    "text_gx5t",
+    "cta_81xs",
+    "text_21sy",
+    "text_j8kj",
+    "text_1zkf",
+    "requirements_u54d"
+  ],
+  "src/components/marketing/hervoice/FeaturedWritings.astro": [
+    "eyebrow_pqac",
+    "title_5xbv"
+  ],
+  "src/components/marketing/hervoice/Hero.astro": [
+    "eyebrow_c26n",
+    "heading_gtji",
+    "text_49e2",
+    "text_c6zo",
+    "text_tp91",
+    "text_epwg",
+    "text_za9q",
+    "text_4re5"
+  ],
+  "src/components/marketing/hervoice/HowToSubmit.astro": [
+    "text_jjq2",
+    "text_tm78",
+    "text_g6f1",
+    "text_blw7",
+    "text_s9eu",
+    "guidelines_zsiz",
+    "steps_n2vi"
+  ],
+  "src/components/marketing/hervoice/PartnerSupport.astro": [
+    "eyebrow_9h61",
+    "title_3xw4",
+    "text_vzgk",
+    "partnerOrgs_cawf"
+  ],
+  "src/components/marketing/hervoice/WritingContestCTA.astro": [
+    "eyebrow_z660",
+    "title_po72",
+    "text_7pxd"
+  ],
+  "src/components/marketing/home/AtAGlance.astro": [
+    "eyebrow_u88g",
+    "title_yt7b",
+    "stats_qcij"
+  ],
+  "src/components/marketing/home/ContestSeal.astro": [
+    "text_u17a",
+    "text_yzvg",
+    "text_bt4j"
+  ],
+  "src/components/marketing/home/HerVoiceContest.astro": [
+    "text_0cnl",
+    "text_lw2r",
+    "text_to4z",
+    "text_ehz9",
+    "text_ka6l",
+    "text_a5lz",
+    "text_mgtd",
+    "text_dkre",
+    "winners_sit4",
+    "WINNER_STYLES_4u89"
+  ],
+  "src/components/marketing/home/Hero.astro": [
+    "text_n8ed",
+    "text_hcbw",
+    "text_0xd7",
+    "images_x5fi"
+  ],
+  "src/components/marketing/home/ImpactStory.astro": [
+    "eyebrow_4xb8",
+    "title_48id",
+    "text_ersw",
+    "title_dkaa",
+    "text_dd7o",
+    "image_ruty"
+  ],
+  "src/components/marketing/home/MediaSpotlight.astro": [
+    "eyebrow_cn2i",
+    "title_7tvc",
+    "features_axnd"
+  ],
+  "src/components/marketing/home/Mission.astro": [
+    "eyebrow_kh5c",
+    "title_joa5",
+    "text_lljb",
+    "text_5pey",
+    "text_o3d7",
+    "image_r3ry",
+    "text_of34",
+    "text_mh6r",
+    "text_m5tj",
+    "image_iv1h",
+    "text_28nj",
+    "text_j7ul",
+    "paragraphs_ssxr"
+  ],
+  "src/components/marketing/home/Newsletter.astro": [
+    "eyebrow_crjy",
+    "eyebrow_p2yj",
+    "eyebrow_6j2o",
+    "text_5qq8",
+    "title_7oxi",
+    "text_ahu2",
+    "text_bw7d"
+  ],
+  "src/components/marketing/home/Programs.astro": [
+    "eyebrow_8cjl",
+    "title_vhlg",
+    "text_zhre",
+    "image_aszd",
+    "text_iox6",
+    "title_vsm2",
+    "text_hmyl",
+    "text_0lp1",
+    "image_p1cd",
+    "text_09so",
+    "title_1ix8",
+    "text_oio9",
+    "text_a66a"
+  ],
+  "src/components/marketing/home/StatsBar.astro": [
+    "title_c4xo",
+    "text_669e",
+    "stats_jbnl"
+  ],
+  "src/components/marketing/home/StoryCover.astro": [
+    "text_mtzf"
+  ],
+  "src/components/marketing/legal/Hero.astro": [
+    "eyebrow_dj5w",
+    "heading_ikr8",
+    "text_v9tb"
+  ],
+  "src/components/marketing/legal/LegalBody.astro": [
+    "parts_kivn",
+    "sectionIds_umyw"
+  ],
+  "src/components/marketing/mentorship/Eligibility.astro": [
+    "eyebrow_15ng",
+    "title_phfa",
+    "text_l8wr",
+    "rules_ec29"
+  ],
+  "src/components/marketing/mentorship/Hero.astro": [
+    "image_3c1b",
+    "text_dmhf",
+    "text_f9x6",
+    "text_cmpv",
+    "paragraphs_ctl3"
+  ],
+  "src/components/marketing/mentorship/Intro.astro": [
+    "text_9wzj",
+    "text_57p4",
+    "text_msmg",
+    "text_i0zk",
+    "text_0p7p"
+  ],
+  "src/components/marketing/mentorship/Opportunities.astro": [
+    "eyebrow_2n2o",
+    "eyebrow_o66j",
+    "eyebrow_n5u2",
+    "eyebrow_76cm",
+    "title_50e9",
+    "text_m7ko",
+    "text_4co8",
+    "title_333c",
+    "text_01xm",
+    "text_zjic",
+    "title_6nde",
+    "text_q14z",
+    "text_7la9"
+  ],
+  "src/components/marketing/mentorship/WorkshopStructure.astro": [
+    "eyebrow_6mrk",
+    "title_96go",
+    "text_cawp",
+    "items_to06"
+  ],
+  "src/components/marketing/mentorship/Workshops.astro": [
+    "eyebrow_5q57",
+    "title_u0m9"
+  ],
+  "src/components/marketing/mis/MISContent.astro": [
+    "eyebrow_kmoh",
+    "heading_z043",
+    "text_81ff",
+    "text_izv3",
+    "text_tgvz"
+  ],
+  "src/components/marketing/newsletter/NewsletterForm.astro": [
+    "eyebrow_c1sg",
+    "heading_5zso",
+    "text_jfw8",
+    "text_xkme",
+    "text_4d2e",
+    "text_fydr",
+    "text_mwcu",
+    "image_p5y6",
+    "title_ff6s",
+    "text_cs9o"
+  ],
+  "src/components/marketing/resources/FooterNote.astro": [
+    "eyebrow_ttnv",
+    "title_7y6f",
+    "text_io11"
+  ],
+  "src/components/marketing/resources/Header.astro": [
+    "eyebrow_6byx",
+    "heading_nkc7",
+    "text_7emq"
+  ],
+  "src/components/marketing/resources/ResourceList.astro": [
+    "text_q4zu"
+  ],
+  "src/components/marketing/sisterhood-sessions/Community.astro": [
+    "eyebrow_0bcn",
+    "title_0w5b",
+    "text_b0f9",
+    "text_exjg",
+    "text_yx6n",
+    "benefits_1db7"
+  ],
+  "src/components/marketing/sisterhood-sessions/Header.astro": [
+    "eyebrow_jary",
+    "heading_csp4",
+    "text_qvxs"
+  ],
+  "src/components/marketing/sisterhood-sessions/SessionFormat.astro": [
+    "eyebrow_v8r9",
+    "title_itph",
+    "text_si7w",
+    "cta_ue2f",
+    "cards_hbv4"
+  ],
+  "src/components/marketing/sisterhood-sessions/WhyTheyMatter.astro": [
+    "eyebrow_cbax",
+    "title_nvm1",
+    "text_ijiv",
+    "text_0b95"
+  ],
+  "src/components/marketing/spr/Benefits.astro": [
+    "eyebrow_gchg",
+    "title_zjvg",
+    "text_86ka",
+    "text_b1o0",
+    "items_l859"
+  ],
+  "src/components/marketing/spr/Eligibility.astro": [
+    "eyebrow_45zf",
+    "title_shtu",
+    "text_a2oh",
+    "text_epox",
+    "title_hv92",
+    "text_1xsq",
+    "text_qhrv",
+    "cta_2ku6",
+    "items_v1vh",
+    "ruleAccents_vt4s"
+  ],
+  "src/components/marketing/spr/Hero.astro": [
+    "image_s3p5",
+    "eyebrow_n7uy",
+    "heading_yve1",
+    "text_mq6w"
+  ],
+  "src/components/marketing/spr/StepByStep.astro": [
+    "eyebrow_i3em",
+    "title_8tm0",
+    "steps_6yci"
+  ],
+  "src/components/marketing/success-stories/ClosingCTA.astro": [
+    "eyebrow_r82m",
+    "title_g4s1"
+  ],
+  "src/components/marketing/success-stories/Header.astro": [
+    "heading_7d9o",
+    "text_bs3b"
+  ],
+  "src/components/marketing/success-stories/Stories.astro": [
+    "statIcons_hj43"
+  ],
+  "src/components/marketing/writing-contest/AboutContest.astro": [
+    "text_cq80",
+    "text_0ty4"
+  ],
+  "src/components/marketing/writing-contest/Awards.astro": [
+    "eyebrow_f4ju",
+    "title_fzw2",
+    "text_crz7",
+    "prizes_5qnn",
+    "recognitionBenefits_ajdv",
+    "prizeAccents_f6nb"
+  ],
+  "src/components/marketing/writing-contest/Deadlines.astro": [
+    "eyebrow_yfp0",
+    "title_jd5s",
+    "text_qxrg",
+    "items_kxhk"
+  ],
+  "src/components/marketing/writing-contest/Hero.astro": [
+    "eyebrow_r2eh",
+    "heading_d8ty",
+    "text_yznw",
+    "text_ayza",
+    "cta_6e4j",
+    "image_cbr8"
+  ],
+  "src/components/marketing/writing-contest/HowToSubmit.astro": [
+    "title_j5w9",
+    "text_wytv",
+    "text_w13a",
+    "text_9fe7",
+    "cta_q2fl"
+  ],
+  "src/components/marketing/writing-contest/Judges.astro": [
+    "eyebrow_m2c9",
+    "title_f6a6",
+    "text_lv6p",
+    "text_phny",
+    "image_sa6u",
+    "image_atjl",
+    "items_90r8"
+  ],
+  "src/components/marketing/writing-contest/SubmissionRequirements.astro": [
+    "eyebrow_m3jb",
+    "title_zt50",
+    "title_xa4v",
+    "text_q108",
+    "title_sink",
+    "formatOptions_h8c2",
+    "rules_au73"
+  ],
+  "src/components/marketing/writing-contest/WhoCanParticipate.astro": [
+    "eyebrow_g6po",
+    "title_x19f",
+    "items_f6af"
+  ],
+  "src/components/marketing/writing-contest/WritingPrompt.astro": [
+    "text_clrt",
+    "text_fa2s"
+  ]
+}

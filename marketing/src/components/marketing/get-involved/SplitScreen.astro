@@ -2,20 +2,6 @@
 // Ports components/marketing/get-involved/split-screen.tsx
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "../home/Reveal.astro";
-import { Heading2, Text, Image } from "@alisamadiillc/cms-bridge/components";
-
-interface Panel {
-  eyebrow: string;
-  heading: string;
-  body: string;
-  image: string;
-  imageAlt: string;
-}
-interface Props {
-  partner: Panel;
-  volunteer: Panel;
-}
-const { partner, volunteer } = Astro.props;
 ---
 
 <section class="flex min-h-screen flex-col lg:flex-row">
@@ -25,10 +11,9 @@ const { partner, volunteer } = Astro.props;
   >
     {/* Background image */}
     <div class="absolute inset-0">
-      <Image
-        field={"splitScreen.partner.image"}
-        value={partner.image}
-        alt={partner.imageAlt}
+      <img
+        src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT3hSLjjKpPsIbjXnuoAM3O2JygVY8KzGFtD6k"
+        alt="Partner with EmpowerHer"
         loading="eager"
         fetchpriority="high"
         decoding="async"
@@ -45,23 +30,16 @@ const { partner, volunteer } = Astro.props;
     <Reveal
       class="relative px-10 pt-32 pb-16 md:px-14 md:pb-20 lg:px-16 lg:pb-24"
     >
-      <Text
-        as="p"
-        class="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase"
-        field={"splitScreen.partner.eyebrow"}
-        value={partner.eyebrow}
-      />
-      <Heading2
-        class="mt-4 font-serif text-4xl leading-[1.1] text-white md:text-5xl"
-        field={"splitScreen.partner.heading"}
-        value={partner.heading}
-      />
-      <Text
-        as="p"
-        class="mt-5 max-w-sm text-base leading-relaxed text-white/70"
-        field={"splitScreen.partner.body"}
-        value={partner.body}
-      />
+      <p class="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase">
+        Organizations &amp; Companies
+      </p>
+      <h2 class="mt-4 font-serif text-4xl leading-[1.1] text-white md:text-5xl">
+        Partner With Us
+      </h2>
+      <p class="mt-5 max-w-sm text-base leading-relaxed text-white/70">
+        EmpowerHer would love to partner with organizations that share its
+        values. Please leave us a message by clicking the arrow below.
+      </p>
       <a
         href="/get-involved/partner-with-us"
         class="group/btn mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-black transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-white/90 hover:shadow-xl hover:shadow-black/20 active:scale-[0.98]"
@@ -85,10 +63,9 @@ const { partner, volunteer } = Astro.props;
   >
     {/* Background image */}
     <div class="absolute inset-0">
-      <Image
-        field={"splitScreen.volunteer.image"}
-        value={volunteer.image}
-        alt={volunteer.imageAlt}
+      <img
+        src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTDe1RCWh0fiZ3z8JjCWsbc2laUL6tAeqPnMNS"
+        alt="Volunteer with EmpowerHer"
         loading="lazy"
         decoding="async"
         class="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
@@ -105,23 +82,17 @@ const { partner, volunteer } = Astro.props;
       delay={120}
       class="relative px-10 pt-32 pb-16 md:px-14 md:pb-20 lg:px-16 lg:pb-24"
     >
-      <Text
-        as="p"
-        class="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase"
-        field={"splitScreen.volunteer.eyebrow"}
-        value={volunteer.eyebrow}
-      />
-      <Heading2
-        class="mt-4 font-serif text-4xl leading-[1.1] text-white md:text-5xl"
-        field={"splitScreen.volunteer.heading"}
-        value={volunteer.heading}
-      />
-      <Text
-        as="p"
-        class="mt-5 max-w-sm text-base leading-relaxed text-white/70"
-        field={"splitScreen.volunteer.body"}
-        value={volunteer.body}
-      />
+      <p class="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase">
+        Open to All
+      </p>
+      <h2 class="mt-4 font-serif text-4xl leading-[1.1] text-white md:text-5xl">
+        Volunteer With Us
+      </h2>
+      <p class="mt-5 max-w-sm text-base leading-relaxed text-white/70">
+        EmpowerHer accepts volunteers for different roles within our programs.
+        To express your interest, please click the arrow below and send us a
+        message.
+      </p>
       <a
         href="/get-involved/volunteer-with-us"
         class="group/btn mt-8 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-3.5 text-sm font-medium text-white backdrop-blur-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-white/20 hover:shadow-xl hover:shadow-black/20 active:scale-[0.98]"

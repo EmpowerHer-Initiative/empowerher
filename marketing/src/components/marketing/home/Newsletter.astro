@@ -4,20 +4,6 @@
 // src/lib/newsletter.ts, swapping to a success message on subscribe.
 import Heart from "../../icons/Heart.astro";
 import Reveal from "./Reveal.astro";
-import Highlight from "../../Highlight.astro";
-import { Heading3, Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  badge: string;
-  heading: string;
-  heading2: string;
-  bodyText: string;
-  cardTitle: string;
-  cardBody: string;
-  footnote: string;
-}
-const { badge, heading, heading2, bodyText, cardTitle, cardBody, footnote } =
-  Astro.props;
 ---
 
 <section
@@ -48,29 +34,21 @@ const { badge, heading, heading2, bodyText, cardTitle, cardBody, footnote } =
             class="border-border bg-card inline-flex items-center gap-2 rounded-full border px-4 py-1.5"
           >
             <Heart class="text-primary size-3.5" />
-            <Text
-              as="span"
+            <span
               class="text-muted-foreground text-[10px] font-semibold tracking-[0.2em] uppercase"
-              field={"newsletter.badge"}
-              value={badge}
-            />
+            >
+              Stay Connected
+            </span>
           </div>
           <h2 class="mt-6 font-serif text-4xl leading-tight md:text-5xl">
-            <Text as="span" field={"newsletter.heading"} value={heading} />
+            <span>Join Our</span>
             <br />
-            {
-              /* heading2 uses Highlight hlClass="italic" — bridge can't reproduce that highlight class, so KEPT hand-tagged. */
-            }
-            <span data-cms-field={"newsletter.heading2"}
-              ><Highlight text={heading2} hlClass="italic" /></span
-            >
+            <span><span class="cms-hl italic">Community</span></span>
           </h2>
-          <Text
-            as="p"
-            class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]"
-            field={"newsletter.bodyText"}
-            value={bodyText}
-          />
+          <p class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]">
+            Get updates on our programs, success stories, and ways to support
+            Afghan girls' education. Be part of a growing movement for change.
+          </p>
         </div>
       </Reveal>
 
@@ -78,17 +56,10 @@ const { badge, heading, heading2, bodyText, cardTitle, cardBody, footnote } =
         <div
           class="border-border bg-card rounded-3xl border p-8 shadow-sm md:p-10"
         >
-          <Heading3
-            class="font-serif text-2xl"
-            field={"newsletter.cardTitle"}
-            value={cardTitle}
-          />
-          <Text
-            as="p"
-            class="text-muted-foreground mt-3 text-sm leading-relaxed"
-            field={"newsletter.cardBody"}
-            value={cardBody}
-          />
+          <h3 class="font-serif text-2xl">Subscribe to Our Newsletter</h3>
+          <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
+            Join hundreds of supporters and community members.
+          </p>
           <form id="home-newsletter-form" class="mt-8 space-y-4" novalidate>
             <div>
               <input

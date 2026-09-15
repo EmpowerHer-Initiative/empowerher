@@ -1,64 +1,52 @@
 ---
 // Ports components/marketing/about-us/our-story.tsx
 import Reveal from "../home/Reveal.astro";
-import { Text } from "@alisamadiillc/cms-bridge/components";
 
-interface Props {
-  eyebrow: string;
-  bodyBefore: string[];
-  pullQuote: string;
-  bodyAfter: string[];
-}
-const { eyebrow, bodyBefore, pullQuote, bodyAfter } = Astro.props;
+// Paragraphs carry inline HTML (name highlights); rendered with set:html.
+const bodyBefore = [
+  'EmpowerHer was born out of the lived experiences of its Co-Founders, <span class="text-foreground font-semibold">Mahdi Rahimi</span> and <span class="text-foreground font-semibold">Nahid Karimi</span>, both of whom were raised in Kabul, Afghanistan.',
+  "Growing up, they witnessed firsthand the deep-rooted inequalities and daily struggles Afghan communities — particularly women and girls — face. From societal restrictions to systemic educational barriers, the challenges were immense, but the desire to create change was even greater.",
+];
+
+const bodyAfter = [
+  "With schools closed to girls over the age of 12 and women increasingly pushed out of public life, Mahdi and Nahid knew silence was not an option.",
+  "After resettling in the United States, they immediately began organizing virtual programs aimed at supporting Afghan youth — both men and women — inside Afghanistan and across the diaspora. These early efforts, though impactful, were limited in scope and duration. They reached small groups and operated with minimal resources, yet they revealed something powerful: the need was urgent, and the demand was growing.",
+  "It was from this realization that EmpowerHer emerged — not just as a project, but as a movement. A more comprehensive, organized, and sustainable platform was needed to continue this work on a larger scale. Founded and led by Afghan youth who understand the struggles of their own people, EmpowerHer stands today as a symbol of resilience, hope, and empowerment.",
+];
 ---
 
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-3xl">
       <Reveal>
-        <Text
-          as="p"
+        <p
           class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"ourStory.eyebrow"}
-          value={eyebrow}
-        />
+        >
+          How We Started
+        </p>
       </Reveal>
 
       <Reveal delay={80}>
         <div class="text-muted-foreground space-y-7 text-lg leading-relaxed">
-          {
-            bodyBefore.map((paragraph, i) => (
-              <p
-                data-cms-field={`ourStory.bodyBefore.${i}`}
-                set:html={paragraph}
-              />
-            ))
-          }
+          {bodyBefore.map((paragraph) => <p set:html={paragraph} />)}
         </div>
       </Reveal>
 
       {/* Pull Quote */}
       <Reveal delay={160}>
         <blockquote class="border-border my-14 border-l-2 pl-8">
-          <Text
-            as="p"
-            class="text-foreground font-serif text-2xl leading-snug md:text-3xl"
-            field={"ourStory.pullQuote"}
-            value={pullQuote}
-          />
+          <p class="text-foreground font-serif text-2xl leading-snug md:text-3xl">
+            “The fall of Kabul on August 15, 2021, marked a turning point — not
+            only for their own lives but for the future of millions of Afghan
+            girls who were suddenly stripped of their basic right to
+            education.”
+          </p>
         </blockquote>
       </Reveal>
 
       <Reveal delay={80}>
         <div class="text-muted-foreground space-y-7 text-lg leading-relaxed">
-          {
-            bodyAfter.map((paragraph, i) => (
-              <p
-                data-cms-field={`ourStory.bodyAfter.${i}`}
-                set:html={paragraph}
-              />
-            ))
-          }
+          {bodyAfter.map((paragraph) => <p set:html={paragraph} />)}
         </div>
       </Reveal>
     </div>

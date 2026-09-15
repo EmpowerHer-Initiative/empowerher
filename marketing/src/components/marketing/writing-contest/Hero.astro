@@ -2,67 +2,33 @@
 // Ports components/marketing/writing-contest/hero.tsx
 import Reveal from "../home/Reveal.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
-import {
-  Heading1,
-  Text,
-  Image,
-  Link,
-} from "@alisamadiillc/cms-bridge/components";
-import pages from "_pages.json";
-const content = pages["writing-contest"];
 
 const FORM_URL = "https://forms.gle/J5D6atwg4cH5yicf9";
-
-interface Props {
-  eyebrow: string;
-  heading: string;
-  paragraph: string;
-  calloutText: string;
-  calloutName: string;
-  image: { src: string; alt: string };
-}
-const { eyebrow, heading, paragraph, calloutText, calloutName, image } =
-  Astro.props;
 ---
 
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="grid items-center gap-16 lg:grid-cols-[1fr_1fr]">
       <Reveal class="max-w-xl">
-        <Text
-          as="p"
+        <p
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"hero.eyebrow"}
-          value={eyebrow}
-        />
-        <Heading1
-          class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl"
-          field={"hero.heading"}
-          value={heading}
-        />
-        <Text
-          as="p"
+        >
+          HerVoice · 2026
+        </p>
+        <h1 class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl">
+          Writing Contest
+        </h1>
+        <p
           class="text-muted-foreground mt-8 text-base leading-relaxed md:text-lg"
-          field={"hero.paragraph"}
-          value={paragraph}
-        />
+        >
+          HerVoice is EmpowerHer's creative storytelling platform where students share original writing and express themselves freely. We believe in the power of words to heal, connect, and inspire change.
+        </p>
         <div
           class="border-primary/30 bg-primary/[0.05] border-l-primary mt-8 rounded-2xl border border-l-4 p-5"
         >
-          {
-            /* kept hand-tagged: paragraph mixes calloutText + nested span + literal period (multiple child elements) */
-          }
-          <p
-            class="text-foreground text-sm leading-relaxed"
-            data-cms-field={"hero.calloutText"}
-          >
-            {calloutText}{" "}
-            <Text
-              as="span"
-              class="font-semibold"
-              field={"hero.calloutName"}
-              value={calloutName}
-            />.
+          <p class="text-foreground text-sm leading-relaxed">
+            HerVoice is directed by our CWS Mentor and Co-Founder,{" "}
+            <span class="font-semibold">Nahid Karimi</span>.
           </p>
         </div>
         <div class="mt-10 flex flex-wrap gap-4">
@@ -77,10 +43,9 @@ const { eyebrow, heading, paragraph, calloutText, calloutName, image } =
               class="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
             />
           </a>
-          <Link
+          <a
             class="border-border/60 text-foreground/70 hover:border-primary hover:text-foreground inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-sm font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
-            field="section.cta"
-            value={content.section.cta}>{content.section.cta.label}</Link
+            href="/hervoice">Explore HerVoice</a
           >
         </div>
       </Reveal>
@@ -89,10 +54,9 @@ const { eyebrow, heading, paragraph, calloutText, calloutName, image } =
         class="border-border/30 overflow-hidden rounded-3xl border"
         delay={120}
       >
-        <Image
-          field={"hero.image.src"}
-          value={image.src}
-          alt={image.alt}
+        <img
+          src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTUAlOSJMuHB63DFcWbZp7rAk9VUJPgitsO2Ca"
+          alt="HerVoice 2026 Writing Contest"
           loading="eager"
           fetchpriority="high"
           decoding="async"

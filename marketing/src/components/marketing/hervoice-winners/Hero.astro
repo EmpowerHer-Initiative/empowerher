@@ -1,14 +1,12 @@
 ---
 // Ports components/marketing/hervoice-winners/hero.tsx
 // hv-* tokens inlined to exact hex; --hv-display -> font-serif.
-import { Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
-interface Props {
-  heading: string;
-  heading2: string;
-  bodyText: string;
-  stats: { value: string; label: string }[];
-}
-const { heading, heading2, bodyText, stats } = Astro.props;
+const stats = [
+  { value: "300+", label: "Submissions" },
+  { value: "21+", label: "Provinces across Afghanistan" },
+  { value: "5", label: "Cash Winners" },
+  { value: "3", label: "Honorees" },
+];
 // gold flag is a style toggle derived by index (odd = gold).
 ---
 
@@ -31,18 +29,20 @@ const { heading, heading2, bodyText, stats } = Astro.props;
       class="hv-rise mt-5 font-serif text-[clamp(36px,5.5vw,72px)] leading-[0.92] font-bold tracking-[-0.03em]"
       style="animation-delay:80ms;--cms-highlight:#1E78C4"
     >
-      <Text as="span" field={"hero.heading"} value={heading} />
+      <span>HerVoice <span class="cms-hl">2026</span></span>
       <br />
-      <Text as="span" field={"hero.heading2"} value={heading2} />
+      <span>Writing Contest</span>
     </h1>
 
-    <Text
-      as="p"
+    <p
       class="hv-rise mt-8 max-w-2xl text-lg leading-relaxed [text-wrap:pretty] text-[#3C4654]"
       style="animation-delay:160ms"
-      field={"hero.bodyText"}
-      value={bodyText}
-    />
+    >
+      HerVoice is EmpowerHer's creative publication platform, dedicated to
+      amplifying and documenting the voices, stories, and ideas of Afghan girls
+      through original writing. We believe in the power of storytelling to
+      inspire, heal, connect communities, and create meaningful change.
+    </p>
 
     <div
       class="hv-rise mt-10 flex items-center justify-center"
@@ -101,30 +101,25 @@ const { heading, heading2, bodyText, stats } = Astro.props;
       </div>
     </div>
 
-    <Group
-      field={"hero.stats"}
+    <div
       class="hv-rise mt-10 flex flex-wrap justify-center gap-8"
       style="animation-delay:320ms"
     >
       {
-        stats.map((s: { value: string; label: string }, i: number) => (
-          <Item index={i}>
-            <Text
-              as="div"
+        stats.map((s, i) => (
+          <div>
+            <div
               class={`font-serif text-3xl leading-none font-bold ${i % 2 === 1 ? "text-[#C8902A]" : "text-[#1E78C4]"}`}
-              field={`hero.stats.${i}.value`}
-              value={s.value}
-            />
-            <Text
-              as="div"
-              class="mt-1.5 max-w-48 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase"
-              field={`hero.stats.${i}.label`}
-              value={s.label}
-            />
-          </Item>
+            >
+              {s.value}
+            </div>
+            <div class="mt-1.5 max-w-48 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase">
+              {s.label}
+            </div>
+          </div>
         ))
       }
-    </Group>
+    </div>
 
     <div class="hv-rise mt-10" style="animation-delay:400ms">
       <a

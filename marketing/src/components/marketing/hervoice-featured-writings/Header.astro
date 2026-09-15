@@ -2,14 +2,6 @@
 // Ports the header <section> of app/(marketing)/hervoice/featured-writings-from-our-partners/page.tsx
 import Reveal from "../home/Reveal.astro";
 import ArrowLeft from "../../icons/ArrowLeft.astro";
-import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  eyebrow?: string;
-  heading: string;
-  lede: string;
-}
-const { eyebrow, heading, lede } = Astro.props;
 ---
 
 <section class="py-28 md:py-40">
@@ -27,32 +19,26 @@ const { eyebrow, heading, lede } = Astro.props;
         </a>
       </Reveal>
 
-      {
-        eyebrow && (
-          <Reveal delay={80}>
-            <Text
-              as="p"
-              class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
-              field={"header.eyebrow"}
-              value={eyebrow}
-            />
-          </Reveal>
-        )
-      }
+      <Reveal delay={80}>
+        <p
+          class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
+        >
+          Published Stories
+        </p>
+      </Reveal>
       <Reveal delay={160}>
-        <Heading1
-          class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl"
-          field={"header.heading"}
-          value={heading}
-        />
+        <h1 class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl">
+          Featured Writings from Our Partners
+        </h1>
       </Reveal>
       <Reveal delay={240}>
-        <Text
-          as="p"
+        <p
           class="text-muted-foreground mt-8 max-w-xl text-base leading-relaxed md:text-lg"
-          field={"header.lede"}
-          value={lede}
-        />
+        >
+          Afghan girls and women sharing their stories, experiences, and
+          perspectives with the world through our network of publication
+          partners.
+        </p>
       </Reveal>
     </div>
   </div>

@@ -3,19 +3,8 @@
 import Reveal from "../home/Reveal.astro";
 import AlertTriangle from "../../icons/AlertTriangle.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
-import { Heading2, Text, Link } from "@alisamadiillc/cms-bridge/components";
-import pages from "_pages.json";
-const content = pages["writing-contest"];
 
 const FORM_URL = "https://forms.gle/J5D6atwg4cH5yicf9";
-
-interface Props {
-  title: string;
-  intro: string;
-  warning: string;
-  contactText: string;
-}
-const { title, intro, warning, contactText } = Astro.props;
 ---
 
 <section class="py-28 md:py-40">
@@ -25,17 +14,12 @@ const { title, intro, warning, contactText } = Astro.props;
         class="border-primary/20 bg-primary/[0.04] rounded-3xl border p-10 text-center md:p-16"
       >
         <ExternalLink class="text-primary mx-auto size-12" />
-        <Heading2
-          class="mt-6 font-serif text-3xl leading-tight md:text-4xl"
-          field={"howToSubmit.title"}
-          value={title}
-        />
-        <Text
-          as="p"
-          class="text-foreground/80 mt-5 text-lg font-medium"
-          field={"howToSubmit.intro"}
-          value={intro}
-        />
+        <h2 class="mt-6 font-serif text-3xl leading-tight md:text-4xl">
+          How to Submit
+        </h2>
+        <p class="text-foreground/80 mt-5 text-lg font-medium">
+          You must submit your written pieces by clicking on this form:
+        </p>
         <div class="mt-8">
           <a
             href={FORM_URL}
@@ -53,25 +37,15 @@ const { title, intro, warning, contactText } = Astro.props;
           class="mt-8 flex items-start gap-3 rounded-2xl border border-amber-400/50 bg-amber-50 p-5 text-left"
         >
           <AlertTriangle class="mt-0.5 size-5 shrink-0 text-amber-600" />
-          <Text
-            as="p"
-            class="text-sm leading-relaxed text-amber-900"
-            field={"howToSubmit.warning"}
-            value={warning}
-          />
+          <p class="text-sm leading-relaxed text-amber-900">
+            We do not accept submissions through any of our email addresses. Please ONLY submit by clicking on the form above.
+          </p>
         </div>
-        {
-          /* kept hand-tagged: paragraph mixes contactText + static mailto <a> + literal text (multiple child elements) */
-        }
-        <p
-          class="text-muted-foreground mt-6 text-sm"
-          data-cms-field={"howToSubmit.contactText"}
-        >
-          {contactText}{" "}
-          <Link
+        <p class="text-muted-foreground mt-6 text-sm">
+          For any questions please email us at{" "}
+          <a
             class="text-primary font-semibold underline underline-offset-4"
-            field="section.cta2"
-            value={content.section.cta2}>{content.section.cta2.label}</Link
+            href="mailto:hervoice@empowerher-initiative.org">hervoice@empowerher-initiative.org</a
           >
         </p>
       </Reveal>

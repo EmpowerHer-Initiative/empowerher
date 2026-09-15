@@ -122,7 +122,7 @@
     }
   },
   "cms": {
-    "version": 1,
+    "version": 2,
     "baseUrl": "https://www.empowerher-initiative.org",
     "media": {
       "input": "public/media",

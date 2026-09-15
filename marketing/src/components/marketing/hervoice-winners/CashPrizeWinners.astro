@@ -1,28 +1,6 @@
 ---
 // Ports components/marketing/hervoice-winners/cash-prize-winners.tsx
 import Reveal from "../home/Reveal.astro";
-import {
-  Heading2,
-  Heading3,
-  Text,
-  Image,
-  Group,
-  Item,
-} from "@alisamadiillc/cms-bridge/components";
-
-interface Winner {
-  rank: string;
-  prize: string;
-  name: string;
-  title: string;
-  image: string;
-  slug: string;
-}
-interface Props {
-  title: string;
-  winners: Winner[];
-}
-const { title, winners } = Astro.props;
 
 // Ribbon gradient styling stays hardcoded and is zipped to winners by index.
 const RIBBON_BG = {
@@ -34,6 +12,54 @@ const RIBBON_BG = {
 } as const;
 const RIBBON_KEYS = ["g", "b", "s", "t", "p"] as const;
 
+const winners = [
+  {
+    rank: "1ST",
+    prize: "$400",
+    name: "Z.H.",
+    title: "Bread and a Red Apple",
+    image:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPThZYuVWymYWNaVI2CGjn5RkZbu3BUS0i97AMX",
+    slug: "bread-and-a-red-apple",
+  },
+  {
+    rank: "2ND",
+    prize: "$300",
+    name: "Roqia Qasemi",
+    title: "When did I feel that I am a strong girl?",
+    image:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTCB4oDy6p0xR3LuJK2fkyDlQSq5OVpmHz6CTh",
+    slug: "when-did-i-feel-that-i-am-a-strong-girl",
+  },
+  {
+    rank: "3RD",
+    prize: "$200",
+    name: "Nazifa Popal",
+    title: "What I Carried in My Voice",
+    image:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5qlkrZWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3",
+    slug: "what-i-carried-in-my-voice",
+  },
+  {
+    rank: "4TH",
+    prize: "$150",
+    name: "Samreen Makhfi",
+    title: "Confession in the shadow",
+    image:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTd2PyGnq0CAlsFIfYUDjLkbMy5eOzoTwZ6x1p",
+    slug: "confession-in-the-shadow",
+  },
+  {
+    rank: "5TH",
+    prize: "$50",
+    name: "Zarifa Gulabzada",
+    title: "A Story from the Window of a Mud House",
+    image:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqjUgW9BYobifLHTavDVU7h0yBGlSc4z8XEQn",
+    slug: "a-story-from-the-window-of-a-mud-house",
+  },
+];
+
 const cashWinners = winners.map((w, i) => ({ ...w, ribbon: RIBBON_KEYS[i] }));
 const topThree = cashWinners.slice(0, 3);
 const bottomTwo = cashWinners.slice(3);
@@ -42,31 +68,25 @@ const bottomTwo = cashWinners.slice(3);
 <section class="bg-white px-6 py-16 md:py-24">
   <div class="mx-auto max-w-6xl">
     <Reveal>
-      <Heading2
+      <h2
         class="text-center font-serif text-3xl font-bold tracking-tight md:text-4xl"
-        field={"cashPrizeWinners.title"}
-        value={title}
-      />
+      >
+        Writings from Cash Prize Winners
+      </h2>
     </Reveal>
 
     {/* Top 3 — larger cards */}
     <Reveal>
-      <Group
-        field={"cashPrizeWinners.winners"}
-        class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3"
-      >
+      <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
         {
-          topThree.map((w, i) => (
-            <Item
-              index={i}
-              as="a"
+          topThree.map((w) => (
+            <a
               href={`/hervoice/${w.slug}`}
               class="group relative overflow-hidden rounded-2xl border border-[#ECE3D2] bg-white shadow-[0_12px_32px_-16px_rgba(26,34,48,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_-18px_rgba(26,34,48,.45)]"
             >
               <div class="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  field={`cashPrizeWinners.winners.${i}.image`}
-                  value={w.image}
+                <img
+                  src={w.image}
                   alt={w.title}
                   loading="lazy"
                   decoding="async"
@@ -76,56 +96,38 @@ const bottomTwo = cashWinners.slice(3);
               </div>
               <div class="p-5">
                 <div class="flex items-center gap-2">
-                  <Text
-                    as="span"
+                  <span
                     class={`inline-block rounded-md px-2.5 py-1 font-serif text-[11px] font-bold tracking-[0.1em] text-white ${RIBBON_BG[w.ribbon]}`}
-                    field={`cashPrizeWinners.winners.${i}.rank`}
-                    value={w.rank}
-                  />
-                  <Text
-                    as="span"
-                    class="font-serif text-sm font-bold text-[#C8902A]"
-                    field={`cashPrizeWinners.winners.${i}.prize`}
-                    value={w.prize}
-                  />
+                  >
+                    {w.rank}
+                  </span>
+                  <span class="font-serif text-sm font-bold text-[#C8902A]">
+                    {w.prize}
+                  </span>
                 </div>
-                <Heading3
-                  class="mt-2 font-serif text-xl font-bold text-[#1A2230]"
-                  field={`cashPrizeWinners.winners.${i}.title`}
-                  value={w.title}
-                />
-                {/* "by " prefix is literal, not part of the `name` field value — kept hand-tagged. */}
-                <p
-                  class="mt-1 text-sm text-[#6B7686]"
-                  data-cms-field={`cashPrizeWinners.winners.${i}.name`}
-                >
-                  by {w.name}
-                </p>
+                <h3 class="mt-2 font-serif text-xl font-bold text-[#1A2230]">
+                  {w.title}
+                </h3>
+                <p class="mt-1 text-sm text-[#6B7686]">by {w.name}</p>
               </div>
-            </Item>
+            </a>
           ))
         }
-      </Group>
+      </div>
     </Reveal>
 
     {/* 4th & 5th — smaller cards */}
     <Reveal delay={80}>
-      <Group
-        field={"cashPrizeWinners.winners"}
-        class="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2"
-      >
+      <div class="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2">
         {
-          bottomTwo.map((w, i) => (
-            <Item
-              index={topThree.length + i}
-              as="a"
+          bottomTwo.map((w) => (
+            <a
               href={`/hervoice/${w.slug}`}
               class="group relative overflow-hidden rounded-2xl border border-[#ECE3D2] bg-white shadow-[0_12px_32px_-16px_rgba(26,34,48,.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_-18px_rgba(26,34,48,.45)]"
             >
               <div class="relative aspect-[3/2] overflow-hidden">
-                <Image
-                  field={`cashPrizeWinners.winners.${topThree.length + i}.image`}
-                  value={w.image}
+                <img
+                  src={w.image}
                   alt={w.title}
                   loading="lazy"
                   decoding="async"
@@ -135,36 +137,24 @@ const bottomTwo = cashWinners.slice(3);
               </div>
               <div class="p-5">
                 <div class="flex items-center gap-2">
-                  <Text
-                    as="span"
+                  <span
                     class={`inline-block rounded-md px-2.5 py-1 font-serif text-[11px] font-bold tracking-[0.1em] text-white ${RIBBON_BG[w.ribbon]}`}
-                    field={`cashPrizeWinners.winners.${topThree.length + i}.rank`}
-                    value={w.rank}
-                  />
-                  <Text
-                    as="span"
-                    class="font-serif text-sm font-bold text-[#C8902A]"
-                    field={`cashPrizeWinners.winners.${topThree.length + i}.prize`}
-                    value={w.prize}
-                  />
+                  >
+                    {w.rank}
+                  </span>
+                  <span class="font-serif text-sm font-bold text-[#C8902A]">
+                    {w.prize}
+                  </span>
                 </div>
-                <Heading3
-                  class="mt-2 font-serif text-lg font-bold text-[#1A2230]"
-                  field={`cashPrizeWinners.winners.${topThree.length + i}.title`}
-                  value={w.title}
-                />
-                {/* "by " prefix is literal, not part of the `name` field value — kept hand-tagged. */}
-                <p
-                  class="mt-1 text-sm text-[#6B7686]"
-                  data-cms-field={`cashPrizeWinners.winners.${topThree.length + i}.name`}
-                >
-                  by {w.name}
-                </p>
+                <h3 class="mt-2 font-serif text-lg font-bold text-[#1A2230]">
+                  {w.title}
+                </h3>
+                <p class="mt-1 text-sm text-[#6B7686]">by {w.name}</p>
               </div>
-            </Item>
+            </a>
           ))
         }
-      </Group>
+      </div>
     </Reveal>
   </div>
 </section>

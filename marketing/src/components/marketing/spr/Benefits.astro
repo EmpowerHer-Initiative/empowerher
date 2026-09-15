@@ -9,25 +9,39 @@ import TrendingUp from "../../icons/TrendingUp.astro";
 import Users from "../../icons/Users.astro";
 import Zap from "../../icons/Zap.astro";
 import Reveal from "../home/Reveal.astro";
-import {
-  Heading2,
-  Heading3,
-  Text,
-  Group,
-  Item,
-} from "@alisamadiillc/cms-bridge/components";
 
-interface Benefit {
-  title: string;
-  description: string;
-}
-interface Props {
-  eyebrow: string;
-  heading: string;
-  items: Benefit[];
-  importantNote: { title: string; body: string };
-}
-const { eyebrow, heading, items, importantNote } = Astro.props;
+const items = [
+  {
+    title: "Hands-On Leadership Experience",
+    description:
+      "Gain practical skills in leading online classes and mentoring peers.",
+  },
+  {
+    title: "Professional Development",
+    description:
+      "Learn how a nonprofit operates and develop communication, project management, and organizational skills.",
+  },
+  {
+    title: "Direct Impact",
+    description:
+      "Expand educational access for Afghan girls through student-led initiatives.",
+  },
+  {
+    title: "Mentorship & Guidance",
+    description:
+      "Receive structured support and feedback from EmpowerHer's experienced team throughout the roadmap.",
+  },
+  {
+    title: "Resource & Networking Opportunities",
+    description:
+      "Use EmpowerHer's resources to enhance your skills and connect with a broader network.",
+  },
+  {
+    title: "Promotion",
+    description:
+      "Based on strong workshop performance, dedication, and demonstrated leadership, EmpowerHer may offer talented members opportunities for promotion.",
+  },
+];
 
 // Per-item icons stay in code, zipped to items by index.
 const icons = [Laptop, BriefcaseBusiness, Zap, Users, Network, TrendingUp];
@@ -36,51 +50,36 @@ const icons = [Laptop, BriefcaseBusiness, Zap, Users, Network, TrendingUp];
 <section class="bg-foreground/[0.03] py-28 md:py-40">
   <div class="container">
     <Reveal class="mx-auto max-w-2xl">
-      <Text
-        as="p"
-        class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-        field={"benefits.eyebrow"}
-        value={eyebrow}
-      />
-      <Heading2
-        class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-        field={"benefits.heading"}
-        value={heading}
-      />
+      <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        What You Gain
+      </p>
+      <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+        Roadmap Benefits
+      </h2>
     </Reveal>
 
     <div class="mx-auto mt-16 max-w-2xl">
       <Reveal class="grid gap-5 sm:grid-cols-2" delay={80}>
-        <Group field={"benefits.items"} class="contents">
+        <div class="contents">
           {
             items.map((benefit, i) => {
               const Icon = icons[i % icons.length];
               return (
-                <Item
-                  index={i}
-                  class="group border-border/60 bg-background hover:border-primary/30 hover:shadow-primary/5 flex gap-5 rounded-2xl border p-7 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
-                >
+                <div class="group border-border/60 bg-background hover:border-primary/30 hover:shadow-primary/5 flex gap-5 rounded-2xl border p-7 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg">
                   <div class="bg-primary/10 text-primary flex size-11 shrink-0 items-center justify-center rounded-xl">
                     <Icon class="size-5" />
                   </div>
                   <div>
-                    <Heading3
-                      class="text-base font-semibold"
-                      field={`benefits.items.${i}.title`}
-                      value={benefit.title}
-                    />
-                    <Text
-                      as="p"
-                      class="text-foreground/70 mt-2 text-sm leading-relaxed"
-                      field={`benefits.items.${i}.description`}
-                      value={benefit.description}
-                    />
+                    <h3 class="text-base font-semibold">{benefit.title}</h3>
+                    <p class="text-foreground/70 mt-2 text-sm leading-relaxed">
+                      {benefit.description}
+                    </p>
                   </div>
-                </Item>
+                </div>
               );
             })
           }
-        </Group>
+        </div>
       </Reveal>
     </div>
 
@@ -91,18 +90,13 @@ const icons = [Laptop, BriefcaseBusiness, Zap, Users, Network, TrendingUp];
       >
         <AlertCircle class="mt-0.5 size-5 shrink-0 text-red-600" />
         <div>
-          <Text
-            as="p"
-            class="text-sm font-semibold text-red-800"
-            field={"benefits.importantNote.title"}
-            value={importantNote.title}
-          />
-          <Text
-            as="p"
-            class="text-foreground/80 mt-1.5 text-sm leading-relaxed"
-            field={"benefits.importantNote.body"}
-            value={importantNote.body}
-          />
+          <p class="text-sm font-semibold text-red-800">Important Note</p>
+          <p class="text-foreground/80 mt-1.5 text-sm leading-relaxed">
+            EmpowerHer does not provide a monthly salary for its staff members.
+            All roles within this roadmap are volunteer-based. Participation as
+            an Assistant or Mentor is completely free, and no monetary
+            compensation is provided.
+          </p>
         </div>
       </div>
     </Reveal>

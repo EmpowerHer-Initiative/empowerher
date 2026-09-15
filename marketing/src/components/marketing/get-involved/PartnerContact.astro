@@ -3,22 +3,6 @@
 import ArrowLeft from "../../icons/ArrowLeft.astro";
 import Reveal from "../home/Reveal.astro";
 import PartnerForm from "./PartnerForm.astro";
-import {
-  Heading1,
-  Text,
-  Heading2,
-  Image,
-} from "@alisamadiillc/cms-bridge/components";
-import pages from "_pages.json";
-const content = pages["get-involved-partner"];
-
-interface Props {
-  eyebrow: string;
-  heading: string;
-  body: string;
-  questions: string;
-}
-const { eyebrow, heading, body, questions } = Astro.props;
 
 const email = "info@empowerher-initiative.org";
 ---
@@ -32,14 +16,13 @@ const email = "info@empowerher-initiative.org";
   >
     {/* Background image subtle overlay */}
     <div class="absolute inset-0 opacity-10">
-      <Image
+      <img
         loading="eager"
         fetchpriority="high"
         decoding="async"
         class="h-full w-full object-cover"
-        field="image"
-        value={content.image}
-        alt={content.imageAlt}
+        src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT3hSLjjKpPsIbjXnuoAM3O2JygVY8KzGFtD6k"
+        alt=""
       />
     </div>
 
@@ -54,31 +37,25 @@ const email = "info@empowerher-initiative.org";
         Back
       </a>
 
-      <Text
-        as="p"
+      <p
         class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
-        field={"eyebrow"}
-        value={eyebrow}
-      />
-      <Heading1
-        class="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl"
-        field={"heading"}
-        value={heading}
-      />
-      <Text
-        as="p"
-        class="text-muted-foreground mt-6 text-base leading-relaxed"
-        field={"body"}
-        value={body}
-      />
+      >
+        Organizations &amp; Companies
+      </p>
+      <h1 class="mt-4 font-serif text-4xl leading-[1.1] md:text-5xl">
+        Partner With Us
+      </h1>
+      <p class="text-muted-foreground mt-6 text-base leading-relaxed">
+        Organizations and companies aligned with our mission and vision, or
+        those interested in supporting our work, are encouraged to complete the
+        form below. A member of our team will be in touch to explore potential
+        partnership opportunities.
+      </p>
     </Reveal>
 
     <Reveal delay={120} class="border-border relative mt-16 border-t pt-8">
-      {
-        /* Hand-tagged: content spans multiple child elements (text + nested <a>). */
-      }
-      <p class="text-muted-foreground text-xs" data-cms-field={"questions"}>
-        {questions}{" "}
+      <p class="text-muted-foreground text-xs">
+        Questions?{" "}
         <a
           href={`mailto:${email}`}
           class="text-muted-foreground underline-offset-2 hover:underline"
@@ -96,17 +73,12 @@ const email = "info@empowerher-initiative.org";
     class="flex flex-1 flex-col justify-center px-8 py-16 md:px-14 lg:px-16 lg:py-24"
   >
     <Reveal class="mx-auto w-full max-w-lg">
-      <Text
-        as="p"
-        class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-        field="eyebrow2"
-        value={content.eyebrow2}
-      />
-      <Heading2
-        class="mt-4 font-serif text-3xl md:text-4xl"
-        field="title"
-        value={content.title}
-      />
+      <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        Partnership Inquiry
+      </p>
+      <h2 class="mt-4 font-serif text-3xl md:text-4xl">
+        Tell us about your organization
+      </h2>
       <p class="text-muted-foreground mt-3 text-sm">
         All fields marked with <span class="text-primary">*</span>{" "}
         are required.

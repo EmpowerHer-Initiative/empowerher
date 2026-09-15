@@ -4,23 +4,33 @@ import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "./Reveal.astro";
 import ContestSeal from "./ContestSeal.astro";
 import StoryCover from "./StoryCover.astro";
-import { Text, Group, Item } from "@alisamadiillc/cms-bridge/components";
 
-interface Props {
-  eyebrow: string;
-  heading: string;
-  headingSub: string;
-  bodyText: string;
-  stats: { value: string; label: string }[];
-  winners: {
-    rank: string;
-    prize: string;
-    name: string;
-    title: string;
-    quote: string;
-  }[];
-}
-const { eyebrow, heading, headingSub, bodyText, stats, winners } = Astro.props;
+const winners = [
+  {
+    rank: "1st",
+    prize: "$400",
+    name: "Z.H.",
+    title: "Bread and a Red Apple",
+    quote:
+      "I have turned the basement of my house into a school, a secret school for girls, to teach them everything that is forbidden.",
+  },
+  {
+    rank: "2nd",
+    prize: "$300",
+    name: "Roqia Qasemi",
+    title: "When Did I Feel That I Am a Strong Girl?",
+    quote:
+      "You close the door, I will reach my dreams through the window. You beat me, I will use my blood as ink for my pen.",
+  },
+  {
+    rank: "3rd",
+    prize: "$200",
+    name: "Nazifa Popal",
+    title: "What I Carried in My Voice",
+    quote:
+      "Every limitation had been, in its own crooked and unasked-for way, a preparation. And I had used all of it.",
+  },
+];
 
 const WINNER_STYLES = [
   {
@@ -66,31 +76,26 @@ const CONTEST_WINNERS = winners.map((w, i) => ({ ...w, ...WINNER_STYLES[i] }));
     >
       <div>
         <Reveal>
-          <Text
-            as="p"
+          <p
             class="text-secondary text-xs font-semibold tracking-[0.3em] uppercase"
-            field={"herVoiceContest.eyebrow"}
-            value={eyebrow}
-          />
+          >
+            EmpowerHer Presents
+          </p>
         </Reveal>
         <Reveal delay={90}>
           <h2 class="mt-5 font-serif text-4xl leading-[1.02] md:text-6xl">
-            <Text as="span" field={"herVoiceContest.heading"} value={heading} />
+            <span>HerVoice <span class="cms-hl">2026</span></span>
             <br />
-            <Text
-              as="span"
-              field={"herVoiceContest.headingSub"}
-              value={headingSub}
-            />
+            <span>Writing Contest</span>
           </h2>
         </Reveal>
         <Reveal delay={180}>
-          <Text
-            as="p"
+          <p
             class="mt-6 max-w-md text-base leading-relaxed text-[#3C4654] md:text-lg"
-            field={"herVoiceContest.bodyText"}
-            value={bodyText}
-          />
+          >
+            Courage, identity, and storytelling — by Afghan girls and women,
+            written from within Afghanistan.
+          </p>
         </Reveal>
 
         <Reveal delay={270}>
@@ -102,46 +107,28 @@ const CONTEST_WINNERS = winners.map((w, i) => ({ ...w, ...WINNER_STYLES[i] }));
         <Reveal delay={360}>
           <div class="mt-8 flex gap-8 md:gap-10">
             <div>
-              <Text
-                as="p"
-                class="text-primary font-serif text-4xl md:text-5xl"
-                field={"herVoiceContest.stats.0.value"}
-                value={stats[0].value}
-              />
-              <Text
-                as="p"
+              <p class="text-primary font-serif text-4xl md:text-5xl">300+</p>
+              <p
                 class="mt-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase"
-                field={"herVoiceContest.stats.0.label"}
-                value={stats[0].label}
-              />
+              >
+                Submissions
+              </p>
             </div>
             <div>
-              <Text
-                as="p"
-                class="text-secondary font-serif text-4xl md:text-5xl"
-                field={"herVoiceContest.stats.1.value"}
-                value={stats[1].value}
-              />
-              <Text
-                as="p"
+              <p class="text-secondary font-serif text-4xl md:text-5xl">3</p>
+              <p
                 class="mt-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase"
-                field={"herVoiceContest.stats.1.label"}
-                value={stats[1].label}
-              />
+              >
+                Honorees
+              </p>
             </div>
             <div>
-              <Text
-                as="p"
-                class="text-primary font-serif text-4xl md:text-5xl"
-                field={"herVoiceContest.stats.2.value"}
-                value={stats[2].value}
-              />
-              <Text
-                as="p"
+              <p class="text-primary font-serif text-4xl md:text-5xl">5</p>
+              <p
                 class="mt-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase"
-                field={"herVoiceContest.stats.2.label"}
-                value={stats[2].label}
-              />
+              >
+                Cash Winners
+              </p>
             </div>
           </div>
         </Reveal>
@@ -161,56 +148,33 @@ const CONTEST_WINNERS = winners.map((w, i) => ({ ...w, ...WINNER_STYLES[i] }));
         </Reveal>
       </div>
 
-      <Group field={"herVoiceContest.winners"} class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4">
         {
           CONTEST_WINNERS.map((w, i) => (
             <Reveal delay={270 + i * 90}>
-              <Item
-                index={i}
-                as="a"
+              <a
                 href={`/hervoice/${w.slug}`}
                 class={`group bg-background text-foreground grid grid-cols-[104px_1fr] items-center gap-5 rounded-2xl p-[18px] shadow-[0_18px_44px_-30px_rgba(0,0,0,.5)] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-x-1.5 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-32px_rgba(0,0,0,.6)] ${w.offset}`}
               >
-                <StoryCover
-                  title={w.title}
-                  author={w.name}
-                  cover={w.cover}
-                  cmsPath={`herVoiceContest.winners.${i}`}
-                />
+                <StoryCover title={w.title} author={w.name} cover={w.cover} />
                 <div class="min-w-0">
                   <div class="flex items-baseline justify-between gap-2.5">
-                    <Text
-                      as="span"
-                      class="truncate text-lg font-bold"
-                      field={`herVoiceContest.winners.${i}.name`}
-                      value={w.name}
-                    />
+                    <span class="truncate text-lg font-bold">{w.name}</span>
                     <span class="flex items-center gap-2">
-                      <Text
-                        as="span"
+                      <span
                         class={`inline-block rounded-md px-2.5 py-1 text-[11px] font-bold tracking-[0.1em] text-white uppercase ${w.ribbon}`}
-                        field={`herVoiceContest.winners.${i}.rank`}
-                        value={w.rank}
-                      />
-                      <Text
-                        as="span"
-                        class="font-serif text-lg font-bold text-[#C8902A]"
-                        field={`herVoiceContest.winners.${i}.prize`}
-                        value={w.prize}
-                      />
+                      >
+                        {w.rank}
+                      </span>
+                      <span class="font-serif text-lg font-bold text-[#C8902A]">
+                        {w.prize}
+                      </span>
                     </span>
                   </div>
-                  <Text
-                    as="p"
-                    class="text-primary mt-0.5 truncate font-serif text-base italic"
-                    field={`herVoiceContest.winners.${i}.title`}
-                    value={w.title}
-                  />
-                  {/* quote is wrapped in literal curly-quote entities (non-trivial markup), so KEPT hand-tagged. */}
-                  <p
-                    class="text-muted-foreground mt-2 line-clamp-3 text-[13px] leading-snug"
-                    data-cms-field={`herVoiceContest.winners.${i}.quote`}
-                  >
+                  <p class="text-primary mt-0.5 truncate font-serif text-base italic">
+                    {w.title}
+                  </p>
+                  <p class="text-muted-foreground mt-2 line-clamp-3 text-[13px] leading-snug">
                     &ldquo;{w.quote}&rdquo;
                   </p>
                   <span class="mt-2.5 inline-flex items-center gap-1.5 text-[13px] font-bold whitespace-nowrap text-[#C8902A] transition-all duration-500 group-hover:gap-2.5">
@@ -218,11 +182,11 @@ const CONTEST_WINNERS = winners.map((w, i) => ({ ...w, ...WINNER_STYLES[i] }));
                     <ArrowRight class="size-3.5" />
                   </span>
                 </div>
-              </Item>
+              </a>
             </Reveal>
           ))
         }
-      </Group>
+      </div>
     </div>
   </div>
 </section>

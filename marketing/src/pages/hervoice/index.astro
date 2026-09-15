@@ -8,8 +8,6 @@ import FeaturedWritings from "../../components/marketing/hervoice/FeaturedWritin
 import CongressionalTestimonies from "../../components/marketing/hervoice/CongressionalTestimonies.astro";
 import PartnerSupport from "../../components/marketing/hervoice/PartnerSupport.astro";
 import WritingContestCTA from "../../components/marketing/hervoice/WritingContestCTA.astro";
-import pages from "_pages.json";
-const content = pages.hervoice;
 import { stories } from "../../lib/stories";
 
 // Contest winners are showcased on /hervoice/winners, not in this listing.
@@ -24,11 +22,11 @@ const writingCards = stories
 ---
 
 <Layout>
-  <Hero {...content.hero} />
-  <HowToSubmit {...content.howToSubmit} />
-  <Eligibility {...content.eligibility} />
-  <FeaturedWritings {...content.featuredWritings} stories={writingCards} />
-  <CongressionalTestimonies {...content.congressionalTestimonies} />
-  <PartnerSupport {...content.partnerSupport} />
-  <WritingContestCTA {...content.writingContestCTA} />
+  <Hero />
+  <HowToSubmit />
+  <Eligibility />
+  <FeaturedWritings stories={writingCards} />
+  <CongressionalTestimonies />
+  <PartnerSupport />
+  <WritingContestCTA />
 </Layout>

@@ -7,27 +7,25 @@ import CashPrizeWinners from "../../components/marketing/hervoice-winners/CashPr
 import HonorableMentions from "../../components/marketing/hervoice-winners/HonorableMentions.astro";
 import JudgeTestimonials from "../../components/marketing/hervoice-winners/JudgeTestimonials.astro";
 import HerVoiceCTA from "../../components/marketing/hervoice-winners/HerVoiceCTA.astro";
-import pages from "_pages.json";
-const data = pages["hervoice-winners"];
 ---
 
 <Layout>
   <div class="text-[#1A2230] antialiased">
     {/* ── SECTION 1: Hero ── */}
-    <Hero {...data.hero} />
+    <Hero />
 
     {/* ── SECTION 2: Cash Prize Winners ── */}
-    <CashPrizeWinners {...data.cashPrizeWinners} />
+    <CashPrizeWinners />
 
     {/* ── SECTION 3: Honorable Mentions ── */}
-    <HonorableMentions {...data.honorableMentions} />
+    <HonorableMentions />
 
     {/* ── SECTION 4: Judge Testimonials ── */}
-    <JudgeTestimonials {...data.judgeTestimonials} />
+    <JudgeTestimonials />
 
     {/* ── SECTION 5: CTA Banner ── */}
     <Reveal>
-      <HerVoiceCTA {...data.herVoiceCta} />
+      <HerVoiceCTA />
     </Reveal>
   </div>
 </Layout>

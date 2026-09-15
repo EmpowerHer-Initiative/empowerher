@@ -22,7 +22,7 @@
     "cms:blog": "npx @alisamadiillc/cms-bridge blog"
   },
   "dependencies": {
-    "@alisamadiillc/cms-bridge": "0.7.5",
+    "@alisamadiillc/cms-bridge": "file:/Users/alisamadi/Documents/saas/Portfolio/packages/cms-bridge",
     "@astrojs/node": "^11.1.5",
     "@astrojs/react": "^6.0.5",
     "@astrojs/sitemap": "^3.7.3",

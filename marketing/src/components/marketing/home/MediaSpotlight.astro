@@ -3,25 +3,16 @@
 // Single feature → nav arrows and dots are hidden (source hides them when total === 1).
 import Play from "../../icons/Play.astro";
 import Reveal from "./Reveal.astro";
-import {
-  Heading2,
-  Heading3,
-  Text,
-  Group,
-  Item,
-} from "@alisamadiillc/cms-bridge/components";
 
-interface Props {
-  eyebrow: string;
-  heading: string;
-  features: {
-    youtubeId: string;
-    label: string;
-    title: string;
-    description: string;
-  }[];
-}
-const { eyebrow, heading, features: mediaFeatures } = Astro.props;
+const features = [
+  {
+    youtubeId: "l5YSKsYqbfY",
+    label: "Podcast",
+    title: "Interview with EmpowerHer Co-Founders",
+    description:
+      "Our co-founders, Nahid Karimi and Mahdi Rahimi, joined the NSHSS Scholars Connect Podcast to share their personal journeys from Afghanistan to the United States and the experiences that inspired them to launch EmpowerHer. In this episode, they discuss the challenges facing Afghan girls under Taliban rule, the role of education and mentorship in creating opportunity, and how young people can transform adversity into meaningful impact and leadership.",
+  },
+];
 ---
 
 <section class="py-28 md:py-40">
@@ -29,34 +20,29 @@ const { eyebrow, heading, features: mediaFeatures } = Astro.props;
     <Reveal>
       <div class="flex items-end justify-between gap-6">
         <div>
-          <Text
-            as="p"
+          <p
             class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-            field={"mediaSpotlight.eyebrow"}
-            value={eyebrow}
-          />
-          <Heading2
-            class="mt-4 font-serif text-3xl leading-tight md:text-4xl"
-            field={"mediaSpotlight.heading"}
-            value={heading}
-          />
+          >
+            Watch & Listen
+          </p>
+          <h2 class="mt-4 font-serif text-3xl leading-tight md:text-4xl">
+            Featured Media
+          </h2>
         </div>
       </div>
     </Reveal>
 
     <Reveal delay={120}>
       <div class="relative mt-12 overflow-hidden rounded-[2.5rem]">
-        <Group
-          field={"mediaSpotlight.features"}
+        <div
           class="flex transition-transform duration-[800ms] ease-[cubic-bezier(0.32,0.72,0,1)]"
           style="transform:translateX(0)"
         >
           {
-            mediaFeatures.map((m, i) => (
-              <Item index={i} as="div" class="w-full shrink-0">
+            features.map((m) => (
+              <div class="w-full shrink-0">
                 <div class="bg-muted/30 grid gap-0 lg:grid-cols-2">
                   <div class="relative aspect-video lg:aspect-auto lg:min-h-[440px]">
-                    {/* iframe src carries the raw youtubeId; no bridge element for iframe, so KEPT hand-tagged. */}
                     <iframe
                       src={`https://www.youtube.com/embed/${m.youtubeId}`}
                       title={m.title}
@@ -64,36 +50,27 @@ const { eyebrow, heading, features: mediaFeatures } = Astro.props;
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowfullscreen
                       class="absolute inset-0 h-full w-full"
-                      data-cms-field={`mediaSpotlight.features.${i}.youtubeId`}
                     />
                   </div>
                   <div class="flex flex-col justify-center p-8 md:p-14">
                     <div class="text-primary flex items-center gap-2">
                       <Play class="size-4 fill-current" />
-                      <Text
-                        as="span"
-                        class="text-xs font-medium tracking-[0.2em] uppercase"
-                        field={`mediaSpotlight.features.${i}.label`}
-                        value={m.label}
-                      />
+                      <span class="text-xs font-medium tracking-[0.2em] uppercase">
+                        {m.label}
+                      </span>
                     </div>
-                    <Heading3
-                      class="mt-4 font-serif text-2xl leading-tight md:text-3xl"
-                      field={`mediaSpotlight.features.${i}.title`}
-                      value={m.title}
-                    />
-                    <Text
-                      as="p"
-                      class="text-muted-foreground mt-5 text-base leading-[1.8]"
-                      field={`mediaSpotlight.features.${i}.description`}
-                      value={m.description}
-                    />
+                    <h3 class="mt-4 font-serif text-2xl leading-tight md:text-3xl">
+                      {m.title}
+                    </h3>
+                    <p class="text-muted-foreground mt-5 text-base leading-[1.8]">
+                      {m.description}
+                    </p>
                   </div>
                 </div>
-              </Item>
+              </div>
             ))
           }
-        </Group>
+        </div>
       </div>
     </Reveal>
   </div>

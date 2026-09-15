@@ -2,34 +2,20 @@
 // Ports components/marketing/writing-contest/about-contest.tsx
 import Reveal from "../home/Reveal.astro";
 import BookOpen from "../../icons/BookOpen.astro";
-import { Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  title: string;
-  paragraph: string;
-}
-const { title, paragraph } = Astro.props;
 ---
 
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="mx-auto max-w-4xl">
-      {
-        /* kept hand-tagged: heading mixes icon + text (multiple child elements) */
-      }
       <h2
         class="flex items-center gap-3 font-serif text-3xl leading-tight md:text-4xl"
-        data-cms-field={"aboutContest.title"}
       >
         <BookOpen class="text-primary size-8 shrink-0" />
-        {title}
+        About the Contest
       </h2>
-      <Text
-        as="p"
-        class="text-muted-foreground mt-8 text-lg leading-[1.8]"
-        field={"aboutContest.paragraph"}
-        value={paragraph}
-      />
+      <p class="text-muted-foreground mt-8 text-lg leading-[1.8]">
+        EmpowerHer's HerVoice initiative aims to provide a space where Afghan girls can truly express their stories, feelings, and experiences freely. This contest is designed to reflect the realities Afghan girls and women are facing under the oppressive Taliban regime. Their educational, social, and economic lives have been shattered, and through this contest, we seek to share these narratives, commemorate the hardships Afghan girls and women continue to endure, and reward and recognize their resilience, courage, and motivation to push forward in the face of adversity.
+      </p>
     </Reveal>
   </div>
 </section>

@@ -4,15 +4,11 @@ import Hero from "../../components/marketing/spr/Hero.astro";
 import Eligibility from "../../components/marketing/spr/Eligibility.astro";
 import StepByStep from "../../components/marketing/spr/StepByStep.astro";
 import Benefits from "../../components/marketing/spr/Benefits.astro";
-import pages from "_pages.json";
-const data = pages.spr;
-
-const { hero, eligibility, stepByStep, benefits } = data;
 ---
 
 <Layout>
-  <Hero {...hero} />
-  <Eligibility {...eligibility} />
-  <StepByStep {...stepByStep} />
-  <Benefits {...benefits} />
+  <Hero />
+  <Eligibility />
+  <StepByStep />
+  <Benefits />
 </Layout>

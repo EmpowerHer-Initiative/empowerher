@@ -3,14 +3,6 @@
 import Star from "../../icons/Star.astro";
 import Calendar from "../../icons/Calendar.astro";
 import StatBox from "./StatBox.astro";
-import type { CmsField } from "../../../lib/cms-fields";
-import {
-  Image,
-  Heading2,
-  Text,
-  Group,
-  Item,
-} from "@alisamadiillc/cms-bridge/components";
 
 interface Stat {
   icon: string;
@@ -24,12 +16,8 @@ interface Props {
   date?: string;
   badge?: string;
   stats?: Stat[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "stories.0"). */
-  cmsPath?: CmsField;
 }
-const { logo, title, subtitle, date, badge, stats, cmsPath } = Astro.props;
-const f = (s: string): CmsField | undefined =>
-  cmsPath ? (`${cmsPath}.${s}` as CmsField) : undefined;
+const { logo, title, subtitle, date, badge, stats } = Astro.props;
 ---
 
 <div
@@ -39,9 +27,8 @@ const f = (s: string): CmsField | undefined =>
   <div
     class="border-border/60 size-28 overflow-hidden rounded-2xl border bg-white"
   >
-    <Image
-      field={f("image")}
-      value={logo}
+    <img
+      src={logo}
       alt={title}
       class="h-full w-full object-contain px-2"
       loading="lazy"
@@ -51,17 +38,10 @@ const f = (s: string): CmsField | undefined =>
 
   {/* Title + badge */}
   <div class="mt-8 flex items-start justify-between gap-6">
-    <Heading2
-      class="font-serif text-3xl leading-tight md:text-4xl"
-      field={f("title")}
-      value={title}
-    />
+    <h2 class="font-serif text-3xl leading-tight md:text-4xl">{title}</h2>
     {
       badge && (
-        <span
-          class="bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium"
-          data-cms-field={f("badge")}
-        >
+        <span class="bg-primary/10 text-primary inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium">
           <Star class="size-3.5 fill-current" />
           {badge}
         </span>
@@ -71,21 +51,13 @@ const f = (s: string): CmsField | undefined =>
 
   {
     subtitle && (
-      <Text
-        as="p"
-        class="text-muted-foreground mt-3 text-lg italic"
-        field={f("subtitle")}
-        value={subtitle}
-      />
+      <p class="text-muted-foreground mt-3 text-lg italic">{subtitle}</p>
     )
   }
 
   {
     date && (
-      <div
-        class="text-muted-foreground mt-4 flex items-center gap-2 text-sm"
-        data-cms-field={f("date")}
-      >
+      <div class="text-muted-foreground mt-4 flex items-center gap-2 text-sm">
         <Calendar class="size-4" />
         {date}
       </div>
@@ -95,18 +67,13 @@ const f = (s: string): CmsField | undefined =>
   {/* Stats */}
   {
     stats && stats.length > 0 && (
-      <Group field={f("stats")} class="mt-8 grid gap-4 sm:grid-cols-3">
-        {stats.map((s, j) => (
-          <Item index={j}>
-            <StatBox
-              icon={s.icon}
-              value={s.value}
-              label={s.label}
-              cmsPath={f(`stats.${j}`)}
-            />
-          </Item>
+      <div class="mt-8 grid gap-4 sm:grid-cols-3">
+        {stats.map((s) => (
+          <div>
+            <StatBox icon={s.icon} value={s.value} label={s.label} />
+          </div>
         ))}
-      </Group>
+      </div>
     )
   }
 

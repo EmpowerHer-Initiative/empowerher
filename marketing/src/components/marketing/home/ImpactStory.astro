@@ -2,65 +2,34 @@
 // Ports components/marketing/home/impact-story.tsx
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "./Reveal.astro";
-import {
-  Heading2,
-  Heading3,
-  Text,
-  Image,
-} from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  eyebrow: string;
-  heading: string;
-  bodyText: string;
-  subheading: string;
-  subheadingBody: string;
-  image: string;
-  imageAlt: string;
-}
-const {
-  eyebrow,
-  heading,
-  bodyText,
-  subheading,
-  subheadingBody,
-  image,
-  imageAlt,
-} = Astro.props;
 ---
 
 <section class="bg-muted/30 py-28 md:py-40">
   <div class="container">
     <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
       <Reveal class="order-2 lg:order-1">
-        <Text
-          as="p"
+        <p
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"impactStory.eyebrow"}
-          value={eyebrow}
-        />
-        <Heading2
-          class="mt-4 font-serif text-3xl leading-tight md:text-4xl"
-          field={"impactStory.heading"}
-          value={heading}
-        />
-        <Text
-          as="p"
-          class="text-muted-foreground mt-6 text-base leading-[1.8]"
-          field={"impactStory.bodyText"}
-          value={bodyText}
-        />
-        <Heading3
-          class="mt-8 font-serif text-2xl leading-tight"
-          field={"impactStory.subheading"}
-          value={subheading}
-        />
-        <Text
-          as="p"
-          class="text-muted-foreground mt-3 text-base leading-[1.8]"
-          field={"impactStory.subheadingBody"}
-          value={subheadingBody}
-        />
+        >
+          Media Coverage
+        </p>
+        <h2 class="mt-4 font-serif text-3xl leading-tight md:text-4xl">
+          EmpowerHer in the News
+        </h2>
+        <p class="text-muted-foreground mt-6 text-base leading-[1.8]">
+          Our mission to empower Afghan girls has been recognized and celebrated
+          by local media, amplifying the voices of resilience and leadership
+          within our community.
+        </p>
+        <h3 class="mt-8 font-serif text-2xl leading-tight">
+          Featured in Rappahannock News
+        </h3>
+        <p class="text-muted-foreground mt-3 text-base leading-[1.8]">
+          EmpowerHer was featured in a local Virginia newsletter through our
+          former partnership with Rappahannock News. This acknowledgment
+          underscored our mission to empower Afghan girls and amplify their
+          narratives of resilience and leadership within a broader community.
+        </p>
         <div class="mt-8 flex flex-wrap gap-4">
           <a
             href="/hervoice/featured-writings-from-our-partners"
@@ -84,10 +53,9 @@ const {
       </Reveal>
       <Reveal class="order-1 lg:order-2" delay={120}>
         <div class="relative overflow-hidden rounded-[2.5rem]">
-          <Image
-            field={"impactStory.image"}
-            value={image}
-            alt={imageAlt}
+          <img
+            src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBGUBwPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O"
+            alt="EmpowerHer in the news"
             loading="lazy"
             decoding="async"
             class="h-auto w-full object-contain"

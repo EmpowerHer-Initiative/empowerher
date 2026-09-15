@@ -1,1283 +1,1072 @@
 {
-  "home": {
-    "seo": {
-      "title": "EmpowerHer Initiative",
-      "description": "A nonprofit organization empowering Afghan women and girls across the Middle East and Central Asia through mentorship, leadership development, educational support, storytelling, publication, and community engagement."
-    },
-    "hero": {
-      "heading": "Empowering Dreams",
-      "heading2": "`Inspiring Futures`",
-      "bodyText": "At EmpowerHer, we believe every Afghan girl and woman has a story worth telling and a future worth fighting for. Through mentorship programs and publication opportunities, we help them find the tools, confidence, and platforms they need to raise their voices and become changemakers in their communities and beyond.",
-      "images": [
-        {
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTN5bpAvcOGaUAyKX1dPWs9RnojYZeu4JbiQHv"
-        },
-        {
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTvX8bHR050TX8DRt9gfxu6sU74iOHozSwBKGJ"
-        },
-        {
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfCWhJzn3C8OG5vkbyTeNds9rYucAtpJg0PMV"
-        },
-        {
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTQRqW7Y9a2imSKVTAuXrJU9NxI0LRsOFlgdvw"
-        }
-      ]
-    },
-    "statsBar": {
-      "heading": "Abandoned Futures: Let Afghan Girls Learn",
-      "bodyText": "Since September 2021, all Afghan girls over the age of 12 have been banned from attending school.",
-      "stats": [
-        {
-          "number": "1.4 million",
-          "label": "Girls have been deliberately denied access to secondary education since 2021."
-        },
-        {
-          "number": "2.5 million",
-          "label": "Afghan girls (80% of school-age girls) are currently deprived of their right to education."
-        },
-        {
-          "number": "80%",
-          "label": "Of school-age Afghan girls are currently out of school."
-        }
-      ]
-    },
-    "herVoiceContest": {
-      "eyebrow": "EmpowerHer Presents",
-      "heading": "HerVoice `2026`",
-      "headingSub": "Writing Contest",
-      "bodyText": "Courage, identity, and storytelling — by Afghan girls and women, written from within Afghanistan.",
-      "stats": [
-        {
-          "value": "300+",
-          "label": "Submissions"
-        },
-        {
-          "value": "3",
-          "label": "Honorees"
-        },
-        {
-          "value": "5",
-          "label": "Cash Winners"
-        }
-      ],
-      "winners": [
-        {
-          "rank": "1st",
-          "prize": "$400",
-          "name": "Z.H.",
-          "title": "Bread and a Red Apple",
-          "quote": "I have turned the basement of my house into a school, a secret school for girls, to teach them everything that is forbidden."
-        },
-        {
-          "rank": "2nd",
-          "prize": "$300",
-          "name": "Roqia Qasemi",
-          "title": "When Did I Feel That I Am a Strong Girl?",
-          "quote": "You close the door, I will reach my dreams through the window. You beat me, I will use my blood as ink for my pen."
-        },
-        {
-          "rank": "3rd",
-          "prize": "$200",
-          "name": "Nazifa Popal",
-          "title": "What I Carried in My Voice",
-          "quote": "Every limitation had been, in its own crooked and unasked-for way, a preparation. And I had used all of it."
-        }
-      ]
-    },
-    "atAGlance": {
-      "eyebrow": "By the Numbers",
-      "heading": "EmpowerHer at a Glance",
-      "stats": [
-        {
-          "number": "500+",
-          "label": "Students Mentored"
-        },
-        {
-          "number": "9+",
-          "label": "Countries Reached",
-          "detail": "Afghanistan, Tajikistan, Kazakhstan, Pakistan, Iran, Turkey, India, Bangladesh, Malaysia"
-        },
-        {
-          "number": "8+",
-          "label": "Countries in Our Global Team",
-          "detail": "Afghanistan, Poland, Peru, United States, China, Pakistan, Iran, Bangladesh"
-        },
-        {
-          "number": "25+",
-          "label": "Provinces of Afghanistan Reached"
-        },
-        {
-          "number": "50+",
-          "label": "Student Publications",
-          "detail": "Published through HerVoice"
-        }
-      ]
-    },
-    "mission": {
-      "eyebrow": "Message From Our Co-Founders",
-      "heading": "We see you. We hear you. `And we are with you.`",
+  "parts_kivn": [
+    {
+      "eyebrow": "Part One",
+      "title": "Terms of Use",
       "paragraphs": [
-        "EmpowerHer was born from the hope and strength that you carry within you—even in the darkest of days. You are not forgotten. Your dreams, your voices, your potential—they matter. They are powerful, and they are needed in this world.",
-        "We know that many of you are facing unimaginable challenges. Barriers to education, threats to your freedom, and a world that too often refuses to see your worth. But we believe in your resilience. And through EmpowerHer, we are building a path forward—together.",
-        "Our mission is simple: to support you, to uplift you, and to walk beside you. Whether through education, mentorship, leadership workshops, or simply being a voice when yours is silenced, we are here for you.",
-        "Please don't give up. There is a growing community—inside and outside Afghanistan—that believes in your power to lead, to learn, and to rise. And we are proud to stand with you."
-      ],
-      "signatureName": "Mahdi Rahimi & Nahid Karimi",
-      "signatureRole": "– Co-Founders",
-      "quotes": [
-        {
-          "text": "For too long, Afghan girls have been written into history as victims. This time, let's write our own.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTPXlWDWYhZvxtB3ycfP5jQXiMRAWOCrnJ2oYe",
-          "name": "Nahid Karimi",
-          "role": "Co-Founder"
-        },
-        {
-          "text": "WE RISE, WE RISE, WE RISE IN THE FACE OF ADVERSITY",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfgQqh43C8OG5vkbyTeNds9rYucAtpJg0PMV7",
-          "name": "Mahdi Rahimi",
-          "role": "Co-Founder"
-        }
+        "Terms of Use content coming soon. This section will outline the rules and conditions for using the EmpowerHer website, programs, and services."
       ]
     },
-    "programs": {
-      "eyebrow": "What We Do",
-      "heading": "Our Programs",
-      "bodyText": "Our projects are designed to meet Afghan girls where they are—and help them grow into who they're meant to be. Each initiative provides a safe, inclusive space where participants gain the tools, guidance, and community they need to rise. From leadership workshops to storytelling programs, every project builds confidence, sharpens skills, and encourages bold self-expression. Together, we're creating spaces where Afghan girls can learn, lead, and shape their own futures.",
-      "cards": [
-        {
-          "label": "Storytelling Platform",
-          "title": "HerVoice",
-          "description": "A platform for Afghan girls to share their stories, amplify their voices, and inspire change through creative expression.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEK40ctbfRbjSv9fDHMpJXBriOWVtPmoQZNC3",
-          "alt": "HerVoice"
-        },
-        {
-          "label": "Core Program",
-          "title": "Mentorship",
-          "description": "EmpowerHer's core program offers Afghan girls free workshops and mentorship to build resilience, gain support, and launch impact projects.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTztHu6kOQlbZOApif7EkNI4MXGo08zhqH6CwY",
-          "alt": "Mentorship"
-        }
-      ]
-    },
-    "impactStory": {
-      "eyebrow": "Media Coverage",
-      "heading": "EmpowerHer in the News",
-      "bodyText": "Our mission to empower Afghan girls has been recognized and celebrated by local media, amplifying the voices of resilience and leadership within our community.",
-      "subheading": "Featured in Rappahannock News",
-      "subheadingBody": "EmpowerHer was featured in a local Virginia newsletter through our former partnership with Rappahannock News. This acknowledgment underscored our mission to empower Afghan girls and amplify their narratives of resilience and leadership within a broader community.",
-      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBGUBwPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O",
-      "imageAlt": "EmpowerHer in the news"
-    },
-    "mediaSpotlight": {
-      "eyebrow": "Watch & Listen",
-      "heading": "Featured Media",
-      "features": [
-        {
-          "youtubeId": "l5YSKsYqbfY",
-          "label": "Podcast",
-          "title": "Interview with EmpowerHer Co-Founders",
-          "description": "Our co-founders, Nahid Karimi and Mahdi Rahimi, joined the NSHSS Scholars Connect Podcast to share their personal journeys from Afghanistan to the United States and the experiences that inspired them to launch EmpowerHer. In this episode, they discuss the challenges facing Afghan girls under Taliban rule, the role of education and mentorship in creating opportunity, and how young people can transform adversity into meaningful impact and leadership."
-        }
-      ]
-    },
-    "partners": {
-      "eyebrow": "Trusted Partners & Supporters"
-    },
-    "newsletter": {
-      "badge": "Stay Connected",
-      "heading": "Join Our",
-      "heading2": "`Community`",
-      "bodyText": "Get updates on our programs, success stories, and ways to support Afghan girls' education. Be part of a growing movement for change.",
-      "cardTitle": "Subscribe to Our Newsletter",
-      "cardBody": "Join hundreds of supporters and community members.",
-      "footnote": "We respect your privacy. Unsubscribe anytime."
-    },
-    "text": "2026",
-    "text2": "Winners"
-  },
-  "about-us": {
-    "seo": {
-      "title": "About Us — EmpowerHer Initiative",
-      "description": "Learn about our mission, vision, story, and the team behind EmpowerHer."
-    },
-    "hero": {
-      "eyebrow": "Our Story",
-      "heading": "Born from lived experience.<br />Built for Afghan women.",
-      "body": "A movement dedicated to equipping Afghan women with resilience, creativity, and leadership to shine as sources of inspiration — even in the face of adversity.",
-      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTrO039TyJ9E7UkRP3K1djBMpWoJuiOHs42atf",
-      "imageAlt": "About EmpowerHer"
-    },
-    "missionVision": {
-      "cards": [
-        {
-          "eyebrow": "What Drives Us",
-          "heading": "Our Mission",
-          "body": "EmpowerHer focuses on equipping Afghan women to become beacons of hope in the darkest of times when the shadows of the Taliban seek to stifle the voices of Afghan women. By nurturing resilience, creativity, and leadership, we strive to empower them to shine as sources of inspiration and strength, uplifting their communities even in the face of adversity."
-        },
-        {
-          "eyebrow": "Where We’re Headed",
-          "heading": "Our Vision",
-          "body": "We envision Afghan women as guiding lights in their communities, inspiring hope and progress while leading the way to a more equitable, inclusive, and sustainable society."
-        }
-      ]
-    },
-    "ourStory": {
-      "eyebrow": "How We Started",
-      "bodyBefore": [
-        "EmpowerHer was born out of the lived experiences of its Co-Founders, <span class=\"text-foreground font-semibold\">Mahdi Rahimi</span> and <span class=\"text-foreground font-semibold\">Nahid Karimi</span>, both of whom were raised in Kabul, Afghanistan.",
-        "Growing up, they witnessed firsthand the deep-rooted inequalities and daily struggles Afghan communities — particularly women and girls — face. From societal restrictions to systemic educational barriers, the challenges were immense, but the desire to create change was even greater."
-      ],
-      "pullQuote": "“The fall of Kabul on August 15, 2021, marked a turning point — not only for their own lives but for the future of millions of Afghan girls who were suddenly stripped of their basic right to education.”",
-      "bodyAfter": [
-        "With schools closed to girls over the age of 12 and women increasingly pushed out of public life, Mahdi and Nahid knew silence was not an option.",
-        "After resettling in the United States, they immediately began organizing virtual programs aimed at supporting Afghan youth — both men and women — inside Afghanistan and across the diaspora. These early efforts, though impactful, were limited in scope and duration. They reached small groups and operated with minimal resources, yet they revealed something powerful: the need was urgent, and the demand was growing.",
-        "It was from this realization that EmpowerHer emerged — not just as a project, but as a movement. A more comprehensive, organized, and sustainable platform was needed to continue this work on a larger scale. Founded and led by Afghan youth who understand the struggles of their own people, EmpowerHer stands today as a symbol of resilience, hope, and empowerment."
-      ]
-    },
-    "whatWeDo": {
-      "eyebrow": "Our Work",
-      "heading": "What We Do",
-      "intro": "Four interconnected pillars that work together to create lasting change for Afghan women.",
-      "pillars": [
-        {
-          "index": "01",
-          "title": "Advocacy",
-          "description": "We amplify the voices of Afghan women and girls through storytelling, leadership training, and global engagement. Our initiatives empower them to speak out, share their experiences, and inspire meaningful change toward justice and equal opportunity."
-        },
-        {
-          "index": "02",
-          "title": "Education & Leadership",
-          "description": "Through skill-based workshops focused on leadership, personal development, communication, and decision-making, we equip Afghan girls with the confidence and tools to lead their communities with strength and purpose."
-        },
-        {
-          "index": "03",
-          "title": "Creative Expression",
-          "description": "We empower Afghan girls to reclaim their voices through writing, storytelling, and the arts. Our programs provide platforms for creative expression as a powerful form of resistance and healing, helping them share their lived experiences with the world."
-        },
-        {
-          "index": "04",
-          "title": "Community Engagement",
-          "description": "Our graduates and members can access EmpowerHer's resources and engage with our vibrant community. We support them in creating impactful initiatives both within and outside Afghanistan through virtual and in-person programs."
-        }
-      ]
-    },
-    "team": {
-      "eyebrow": "The People Behind It",
-      "heading": "Our Team",
-      "intro": "Founded and led by a diverse team committed to expanding access to education across borders."
-    },
-    "partners": {
-      "eyebrow": "Trusted Partners & Supporters"
-    },
-    "cta": {
-      "eyebrow": "Take Action",
-      "heading": "Join the<br />Movement"
-    }
-  },
-  "hervoice": {
-    "seo": {
-      "title": "HerVoice — EmpowerHer Initiative",
-      "description": "HerVoice is EmpowerHer's creative storytelling and publication platform, where students publish their original writings and express themselves freely."
-    },
-    "hero": {
-      "eyebrow": "Publication Platform",
-      "heading": "HerVoice",
-      "description": "HerVoice is EmpowerHer's creative storytelling and publication platform, where students can publish their original writings and express themselves freely. At EmpowerHer, we believe in the power of words to heal, connect, and drive change.",
-      "quote": "Many of our students have demonstrated remarkable resilience and courage through storytelling, using their voices to share personal truths and inspire others.",
-      "descriptionAfter": "HerVoice gives them the space to do just that—amplifying their experiences and perspectives in a world that too often silences them.",
-      "partnersEyebrow": "Global Partners",
-      "partnersText": "With the support of our partners—including the National Society of High School Scholars (Atlanta, Georgia), and Amplify Afghan Women (Melbourne, Australia)—we are proud to bring these stories to a global audience.",
-      "closing": "Through HerVoice, every story becomes a step toward empowerment, visibility, and hope."
-    },
-    "howToSubmit": {
-      "eyebrow": "Submission Guide",
-      "heading": "How to Submit",
-      "headingAccent": "`Your Story`",
-      "description": "Every submission is a step toward being heard. Follow these four steps to share your voice with the world through HerVoice.",
-      "guidelinesTitle": "Important Guidelines",
-      "guidelines": [
-        {
-          "label": "Content Quality",
-          "text": "Write from the heart with honest reflection on your personal journey."
-        },
-        {
-          "label": "Image Required",
-          "text": "Include a relevant image that connects to your story."
-        },
-        {
-          "label": "No Hate Speech",
-          "text": "Submissions with inappropriate content will not be published."
-        },
-        {
-          "label": "Review Process",
-          "text": "All submissions will be reviewed by the EmpowerHer team."
-        }
-      ],
-      "steps": [
-        {
-          "num": "01",
-          "title": "Write Your Story",
-          "desc": "Write from the heart, reflecting honestly on your personal journey, challenges, and experiences."
-        },
-        {
-          "num": "02",
-          "title": "Review & Edit",
-          "desc": "Carefully review your piece for grammar, spelling, and clarity. Rough drafts may be rejected."
-        },
-        {
-          "num": "03",
-          "title": "Prepare Materials",
-          "desc": "Include your story and a relevant image (REQUIRED). Insert the image or share a link."
-        },
-        {
-          "num": "04",
-          "title": "Submit",
-          "desc": "Email to hervoice@empowerher-initiative.org. Subject: \"Submission to HerVoice\"."
-        }
-      ]
-    },
-    "eligibility": {
-      "eyebrow": "Requirements",
-      "heading": "Eligibility",
-      "description": "HerVoice is open exclusively to students who have been accepted into EmpowerHer's Mentorship Program.",
-      "priorityEyebrow": "Priority Given To",
-      "priorityNote": "However, submissions are welcome from all currently enrolled participants.",
-      "requirementsEyebrow": "Content Requirements",
-      "requirements": [
-        {
-          "value": "900–1000",
-          "label": "Word Count",
-          "note": "12-point font, single-spaced"
-        },
-        {
-          "value": "40",
-          "label": "Max Poetry Lines",
-          "note": "Poems should not exceed this limit"
-        }
-      ]
-    },
-    "featuredWritings": {
-      "eyebrow": "Published Stories",
-      "heading": "Writings"
-    },
-    "congressionalTestimonies": {
-      "eyebrow": "Amplifying Voices",
-      "heading": "Congressional Testimonies",
-      "intro": "These two congressional testimonies were shared for publication by the Afghan Scouts Relief Fund (ASRF) with the EmpowerHer HerVoice Initiative.",
-      "quote": "These testimonies are representative of the passion of so many Afghan women to share their powerful experiences and their drive to become their best selves and contribute in their own unique ways to society. By sharing the obstacles they have overcome and their amazing pursuits, they serve as an inspiration to many of their peers who want to navigate their own path to success.",
-      "quoteAttribution": "— Afghan Scouts Relief Fund (ASRF)",
-      "note": "Coming from a country where their very existence is dehumanized, and their human rights are not recognized, their resilience in the face of adversity should be a message to the whole world that we must support the future of Afghan women in every possible way.",
-      "videos": [
-        {
-          "poster": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT4ggEVZxLP0HVtXjpzDWZR85f7vGSgA1FduQY",
-          "src": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTFAaVBPi81Sgch3ByG9m45xzoRfbnkKwIXpZO",
-          "label": "Congressional Testimony — Part 1"
-        },
-        {
-          "poster": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTawihdJkAtfy8gUMVlFj5QpoO3BkxsndH9Dm2",
-          "src": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT1BPtxl2QzEuUaBX9YLlpwGm6Z8oisI4dSv7k",
-          "label": "Congressional Testimony — Part 2"
-        }
-      ]
-    },
-    "partnerSupport": {
-      "eyebrow": "Our Partners",
-      "heading": "Support from Partners",
-      "description": "EmpowerHer is proud to partner with four respected publication organizations: Amplify Afghan Women, the National Society of High School Scholars (NSHSS), Humanitas Media, and Inanna Publications. Through HerVoice and our partners' platforms, we advocate for girls' education, storytelling, and creative expression. Our partners help our students publish their work and reach wider audiences across the globe. With the support of these organizations and their communities, we are creating a space where Afghan girls can share their stories and voices with the world.",
-      "partners": [
-        {
-          "name": "Amplify Afghan Women",
-          "location": "Melbourne, Australia",
-          "logo": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBzmSPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O9"
-        },
-        {
-          "name": "National Society of High School Scholars (NSHSS)",
-          "location": "Atlanta, Georgia",
-          "logo": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTjPNmNesfkIRBuYnTVcl8O9LdXP5103pNyJUt"
-        },
-        {
-          "name": "Humanitas Media",
-          "location": "Minneapolis, Minnesota",
-          "logo": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT2HJysqLQtJ7K2Z4UcWn3gCXRdBvVoY9Ohil8"
-        },
-        {
-          "name": "Inanna Publications",
-          "location": "Toronto, Canada",
-          "logo": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTIznPr82WufQtTg5yH7OAp0KFlsjbkaYIPZB"
-        }
-      ]
-    },
-    "writingContestCTA": {
-      "eyebrow": "Contest Results",
-      "heading": "HerVoice 2026 Writing Contest",
-      "description": "Look at the results of the HerVoice 2026 Writing Contest, including cash prize winners and honorable mentions."
-    },
-    "workshopEnrollment": {
-      "cta": {
-        "label": "Creative Writing and Storytelling Workshop",
-        "link": "/mentorship"
-      },
-      "title": "Workshop Enrollment",
-      "title2": "Submission Process",
-      "cta2": {
-        "label": "hervoice@empowerher-initiative.org",
-        "link": "mailto:hervoice@empowerher-initiative.org"
-      }
-    }
-  },
-  "hervoice-winners": {
-    "seo": {
-      "title": "HerVoice 2026 Writing Contest Winners — EmpowerHer Initiative",
-      "description": "Results of the HerVoice 2026 Writing Contest, including cash prize winners and honorable mentions."
-    },
-    "hero": {
-      "heading": "HerVoice `2026`",
-      "heading2": "Writing Contest",
-      "bodyText": "HerVoice is EmpowerHer's creative publication platform, dedicated to amplifying and documenting the voices, stories, and ideas of Afghan girls through original writing. We believe in the power of storytelling to inspire, heal, connect communities, and create meaningful change.",
-      "stats": [
-        {
-          "value": "300+",
-          "label": "Submissions"
-        },
-        {
-          "value": "21+",
-          "label": "Provinces across Afghanistan"
-        },
-        {
-          "value": "5",
-          "label": "Cash Winners"
-        },
-        {
-          "value": "3",
-          "label": "Honorees"
-        }
-      ]
-    },
-    "cashPrizeWinners": {
-      "title": "Writings from Cash Prize Winners",
-      "winners": [
-        {
-          "rank": "1ST",
-          "prize": "$400",
-          "name": "Z.H.",
-          "title": "Bread and a Red Apple",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPThZYuVWymYWNaVI2CGjn5RkZbu3BUS0i97AMX",
-          "slug": "bread-and-a-red-apple"
-        },
-        {
-          "rank": "2ND",
-          "prize": "$300",
-          "name": "Roqia Qasemi",
-          "title": "When did I feel that I am a strong girl?",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTCB4oDy6p0xR3LuJK2fkyDlQSq5OVpmHz6CTh",
-          "slug": "when-did-i-feel-that-i-am-a-strong-girl"
-        },
-        {
-          "rank": "3RD",
-          "prize": "$200",
-          "name": "Nazifa Popal",
-          "title": "What I Carried in My Voice",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5qlkrZWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3",
-          "slug": "what-i-carried-in-my-voice"
-        },
-        {
-          "rank": "4TH",
-          "prize": "$150",
-          "name": "Samreen Makhfi",
-          "title": "Confession in the shadow",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTd2PyGnq0CAlsFIfYUDjLkbMy5eOzoTwZ6x1p",
-          "slug": "confession-in-the-shadow"
-        },
-        {
-          "rank": "5TH",
-          "prize": "$50",
-          "name": "Zarifa Gulabzada",
-          "title": "A Story from the Window of a Mud House",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqjUgW9BYobifLHTavDVU7h0yBGlSc4z8XEQn",
-          "slug": "a-story-from-the-window-of-a-mud-house"
-        }
-      ]
-    },
-    "honorableMentions": {
-      "title": "Writings from Honorable Mention Winners",
-      "mentions": [
-        {
-          "name": "Khadija Mohammadi",
-          "title": "The Girl Who Studied in the Dark",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5IuYoRWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3",
-          "slug": "the-girl-who-studied-in-the-dark"
-        },
-        {
-          "name": "Mohadisa Bazel",
-          "title": "Running Towards Freedom",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT6gmlzi49jfnexowH4rdvO7pcMmglFtNsyY50",
-          "slug": "running-towards-freedom"
-        },
-        {
-          "name": "Spogmai Sharifi",
-          "title": "The Day I Said No",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpZTtiPVqrM0zsm5gThJ2eDxZtjCFUdBGElvb",
-          "slug": "the-day-i-said-no"
-        }
-      ]
-    },
-    "judgeTestimonials": {
-      "title": "What Our Judges Felt Reading These Stories",
-      "judges": [
-        {
-          "name": "Dr. Ellen Leggett",
-          "title": "Professor of Psychology and Founding Director of Applied Psychology Master’s Program (Retired), University of Southern California",
-          "quote": "It was an honor to read about and bear witness to the incredibly moving stories told by these writers. Many of us aspire to be courageous and to overcome adversity in our lives, and the writings of these Afghan women teach us all a humbling lesson. With elegant beauty and wisdom, the inspirational stories recounted by these writers demonstrate strength of character, love of learning, and the best of human persistence and resilience in the face of pain. A reverberating question stays with me: What feats would these remarkable women accomplish in a world that welcomed them? And the world does need them. Let their voices teach you.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5RG1ajWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3"
-        },
-        {
-          "name": "Dr. Susan M. Blaustein",
-          "title": "Instructor, Columbia University, Founder/Board Chair, WomenStrong International",
-          "quote": "My immediate impression, when reading the submissions, was that this body of work has been produced by an extraordinarily talented, capable, bold, and determined group of young women. I was deeply moved by their courage, grit, and refusal to be restrained in shadow and silence. These are young women who, like all young women and girls everywhere, have dreams, rights, and hopes for their futures, yet in far too many cruel places on earth, those dreams and rights are denied. I am honored to have worked closely with Afghan women and girls over the past seven years as they have repeatedly faced and overcome seemingly insurmountable challenges. We must continue to raise awareness of, and refuse to tolerate, this tremendous injustice, which threatens the future and promise of Afghanistan and stands in clear violation of the rights of women and girls.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnlKrZzPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O"
-        },
-        {
-          "name": "Dr. Sonia Palmieri",
-          "title": "Associate Professor, Department of Pacific Affairs, Australian National University",
-          "quote": "I was incredibly moved by the stories of bravery, confidence, tragedy and injustice shared by the Afghan artists. As an academic, creative writing is something I admire, perhaps in part because it is so difficult for me. But the huge response to the EmpowerHer writing competition shows that there is a wealth of creativity among Afghan women, and that writing can be a powerful way to process a range of both conflicting and complementary emotions — sadness, rage, frustration, joy. Certainly, the entrants wanted to share a profound sense of injustice at the hands of the Taliban. They did this with strong, pictorial clarity. Yet this was always underpinned by narratives of resilience and hope. Afghan women’s refusal of defeat in such conditions will change the world.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTK2M6BgCVy1oGkRMuS0Lravl9JbQIxWFcNhtq"
-        }
-      ]
-    },
-    "herVoiceCta": {
-      "heading": "Explore HerVoice Initiative",
-      "bodyText": "Discover student writing, voices, and stories published through the HerVoice platform."
-    }
-  },
-  "hervoice-featured-writings": {
-    "seo": {
-      "title": "Featured Writings from Our Partners — EmpowerHer Initiative",
-      "description": "Read featured writings from Afghan girls published through EmpowerHer's partner platforms — NSHSS and Amplify Afghan Women."
-    },
-    "header": {
-      "eyebrow": "Published Stories",
-      "heading": "Featured Writings from Our Partners",
-      "lede": "Afghan girls and women sharing their stories, experiences, and perspectives with the world through our network of publication partners."
-    },
-    "emptyText": "No featured writings yet."
-  },
-  "writing-contest": {
-    "seo": {
-      "title": "HerVoice 2026 Writing Contest — EmpowerHer Initiative",
-      "description": "Submit your story to the HerVoice 2026 Writing Contest."
-    },
-    "hero": {
-      "eyebrow": "HerVoice · 2026",
-      "heading": "Writing Contest",
-      "paragraph": "HerVoice is EmpowerHer's creative storytelling platform where students share original writing and express themselves freely. We believe in the power of words to heal, connect, and inspire change.",
-      "calloutText": "HerVoice is directed by our CWS Mentor and Co-Founder,",
-      "calloutName": "Nahid Karimi",
-      "image": {
-        "src": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTUAlOSJMuHB63DFcWbZp7rAk9VUJPgitsO2Ca",
-        "alt": "HerVoice 2026 Writing Contest"
-      }
-    },
-    "aboutContest": {
-      "title": "About the Contest",
-      "paragraph": "EmpowerHer's HerVoice initiative aims to provide a space where Afghan girls can truly express their stories, feelings, and experiences freely. This contest is designed to reflect the realities Afghan girls and women are facing under the oppressive Taliban regime. Their educational, social, and economic lives have been shattered, and through this contest, we seek to share these narratives, commemorate the hardships Afghan girls and women continue to endure, and reward and recognize their resilience, courage, and motivation to push forward in the face of adversity."
-    },
-    "writingPrompt": {
-      "eyebrow": "Writing Prompt / Theme",
-      "prompt": "“A time when you felt strength in being a woman/girl”"
-    },
-    "whoCanParticipate": {
-      "eyebrow": "Eligibility",
-      "title": "Who Can Participate",
-      "items": [
-        "All Afghan girls and women regardless of any age can submit their writings. Men are not eligible.",
-        "You can submit your writings if you live in Afghanistan ONLY. Submissions from other countries are not accepted.",
-        "You must have an intermediate English level and be able to express your ideas and stories clearly without any help from AI (ChatGPT or any other platforms).",
-        "You must have a valid ID, contact information, and be able to receive our cash prizes, if you are selected as a winner."
-      ]
-    },
-    "submissionRequirements": {
-      "eyebrow": "Guidelines",
-      "title": "Submission Requirements",
-      "formatTitle": "Format Options",
-      "formatOptions": [
-        {
-          "title": "Stories",
-          "description": "Maximum 900 words (any type of writing; must be your original work and not written by Generative AI)."
-        },
-        {
-          "title": "Poems",
-          "description": "Maximum 40 lines."
-        }
-      ],
-      "formatWarning": "Submissions that exceed the stated word or line limits will not be accepted.",
-      "rulesTitle": "Important Rules",
-      "rules": [
-        "Articles and biographies are not accepted. We value creativity and your ability to work with language to produce a meaningful and original piece of writing.",
-        "All submissions must be original work written by the participant and not previously published elsewhere.",
-        "Entries must be written in English.",
-        "Each entry must have a title.",
-        "Each participant may submit one entry only.",
-        "Submissions must reflect the writer's own lived experience or personal perspective. Plagiarism or AI-generated content is strictly prohibited.",
-        "Writing must align with the theme and purpose of the HerVoice Writing Contest.",
-        "Submissions must be respectful and must not include hate speech, harassment, or harmful content.",
-        "All entries must be submitted by the official deadline; late submissions will not be considered."
-      ]
-    },
-    "howToSubmit": {
-      "title": "How to Submit",
-      "intro": "You must submit your written pieces by clicking on this form:",
-      "warning": "We do not accept submissions through any of our email addresses. Please ONLY submit by clicking on the form above.",
-      "contactText": "For any questions please email us at"
-    },
-    "deadlines": {
-      "eyebrow": "Timeline",
-      "title": "Important Deadlines",
-      "items": [
-        {
-          "date": "March 1",
-          "title": "Contest Opens",
-          "description": "Application form goes live and submissions begin."
-        },
-        {
-          "date": "March 21",
-          "title": "Submission Deadline",
-          "description": "All entries must be submitted by this date."
-        },
-        {
-          "date": "March 22 – May 1",
-          "title": "Review Period",
-          "description": "Judges evaluate all submissions."
-        },
-        {
-          "date": "May 2",
-          "title": "Notification Day",
-          "description": "All participants receive an update on their submissions."
-        }
-      ],
-      "note": "Note: Deadlines are subject to extension if needed."
-    },
-    "awards": {
-      "eyebrow": "Recognition",
-      "title": "Awards & Recognition",
-      "introLead": "We carefully review all submissions with full consideration of each participant's circumstances. From this contest, we will select",
-      "introHighlight1": "5 winners",
-      "introHighlight2": "3 honorable mentions",
-      "prizes": [
-        {
-          "place": "1st Place",
-          "amount": "400"
-        },
-        {
-          "place": "2nd Place",
-          "amount": "300"
-        },
-        {
-          "place": "3rd Place",
-          "amount": "200"
-        },
-        {
-          "place": "4th Place",
-          "amount": "150"
-        },
-        {
-          "place": "5th Place",
-          "amount": "50"
-        }
-      ],
-      "recognitionBenefits": [
-        {
-          "title": "Publication on HerVoice Platform",
-          "description": "All 5 cash prize winners and 3 honorable mentions will have their stories published on the HerVoice platform, sharing their voices with the wider EmpowerHer community."
-        },
-        {
-          "title": "Featured on NSHSS Website",
-          "description": "Stories from the 1st, 2nd, and 3rd place winners will also be featured on our partner organization's website, The National Society of High School Scholars (NSHSS), reaching audiences in over 170 countries."
-        },
-        {
-          "title": "Priority for Future Opportunities",
-          "description": "Cash prize winners and honorable mentions will be prioritized for future EmpowerHer workshops and opportunities to use our Student Project Roadmap to create their own impact projects. (Acceptance to workshops is not guaranteed, but their applications will receive priority consideration.)"
-        },
-        {
-          "title": "Cash Prizes",
-          "description": "Winners will receive cash prizes ranging from $50 to $400 USD to support their educational and personal development goals."
-        }
-      ]
-    },
-    "judges": {
-      "eyebrow": "The Panel",
-      "title": "Our Judges",
-      "items": [
-        {
-          "name": "Dr. Susan M. Blaustein",
-          "description": "Dr. Susan M. Blaustein is the Founding Board Chair and President of WomenStrong International, a global nonprofit that supports local feminist leaders advancing the rights of women and girls worldwide. She previously co-founded and directed the Millennium Cities Initiative at Columbia University's Earth Institute and has worked on conflict prevention and international justice with leading global organizations. A writer and journalist, she has reported on global politics and social justice for major publications including The New Yorker and The Wall Street Journal. Dr. Blaustein teaches at Columbia University's Climate School, holds a doctorate from Yale University, was a Harvard Junior Fellow, and has received numerous honors, including a Guggenheim Fellowship and the Ban Ki-moon Award for Women's Empowerment.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnlKrZzPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O"
-        },
-        {
-          "name": "Dr. Ellen Leggett",
-          "description": "Dr. Ellen Leggett is a psychologist with a lifelong passion for supporting the education of girls and women. She graduated from Mount Holyoke College, the first U.S. college founded for women, and was Associate Dean of Students at Scripps College, an esteemed California college for women. Most recently, she has been Professor of Psychology at the University of Southern California and Founding Director of the Master's in Applied Psychology program there, where she has taught students from all over the world. She holds master's and doctoral degrees in Human Development and Education from Harvard University.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5RG1ajWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3"
-        },
-        {
-          "name": "Dr. Sonia Palmieri",
-          "description": "Associate Professor Dr. Sonia Palmieri is Head of the Department of Pacific Affairs at the Coral Bell School of Asia and Pacific Affairs, Australian National University. Her research focuses on women's leadership in political institutions, particularly gender-sensitive parliaments. She is a leading contributor to both the theory and practice of inclusive and feminist research methodologies.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTK2M6BgCVy1oGkRMuS0Lravl9JbQIxWFcNhtq"
-        },
-        {
-          "name": "Dr. Marilyn Sides",
-          "description": "Dr. Marilyn Sides is an Associate Teaching Professor in the Department of English and Creative Writing at Wellesley College, where she also serves as Director of Creative Writing. She is affiliated with the Comparative Literary Studies Program. Marilyn is the author of the short story collection The Island of the Mapmaker's Wife and the novel The Genius of Affection. At Wellesley, she teaches creative writing as well as literature courses.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEXcdsbfRbjSv9fDHMpJXBriOWVtPmoQZNC3q"
-        },
-        {
-          "name": "Patrick M. Erwin",
-          "description": "Patrick M. Erwin is the Curriculum Director at the Maxwell Leadership Foundation, with extensive experience in education and leadership development. He previously served 17 years as a high school band director in Cobb County, Georgia. Patrick holds degrees in Political Science, Music Education, and Leadership, and is an award-winning speaker who presents nationally on leadership, student engagement, and professional growth.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTPp5idDYhZvxtB3ycfP5jQXiMRAWOCrnJ2oYe"
-        },
-        {
-          "name": "Andrew McPeak",
-          "description": "Andrew McPeak is an author, researcher, and expert on emerging generations with over a decade of experience working with young adults across education and professional settings. He is the co-host of the School on a Mission Podcast, co-author of Marching off the Map (2017) and Generation Z Unfiltered (2019), and the author of Ready for Real Life (2023).",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTtLlBep7RH9uDZYO2eqksXLbgS5pT0fia4Unh"
-        },
-        {
-          "name": "Bella Fisher",
-          "description": "Bella Fisher is a junior at Miss Hall's School in Massachusetts and grew up on a farm in Berkshire County. She has a strong interest in creative writing and the arts, particularly prose and fiction, and enjoys exploring literary and artistic projects. She is an editor at the literary magazine Girls Write the World, where she helps amplify young voices through writing and editorial work. Bella is passionate about supporting other young writers and aspires to publish her own work in the future.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT3cvDJJKpPsIbjXnuoAM3O2JygVY8KzGFtD6k"
-        },
-        {
-          "name": "Maia Roberts",
-          "description": "Maia Roberts is a junior at Miss Hall's School, where she pursues advanced coursework in English and history with a particular focus on feminist studies. Her academic work has earned her placement on the Head's List each semester of high school. She is an editor at the international literary journal Girls Right the World, where she contributes to elevating young voices through writing and editorial work. Maia believes in the importance of using literature and education to explore gender equity and amplify underrepresented perspectives.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT1n9bdNM2QzEuUaBX9YLlpwGm6Z8oisI4dSv7"
-        },
-        {
-          "name": "Juliet Hopkins",
-          "description": "Juliet Hopkins is a junior at Miss Hall's School and is originally from Rabun County, Georgia. She has a strong interest in creative writing and oil painting, and she balances her artistic pursuits with athletics as a varsity volleyball player. She is an editor at the literary magazine Girls Right the World, where she helps amplify young voices through writing and editorial work. Juliet believes in the importance of uplifting the voices of refugee girls and learning more about their experiences and backgrounds.",
-          "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTDbXy77h0fiZ3z8JjCWsbc2laUL6tAeqPnMNS"
-        }
-      ],
-      "thankYou": "We thank our judges for their support of this contest and appreciate their time and effort to help Afghan girls share their voices globally.",
-      "sponsorsText": "Special thanks to our sponsors, the Solebury School community in Pennsylvania, United States, and the Afghan Girls Financial Assistance Fund (AGFAF) in New Jersey, United States, for their generous donations to our efforts to uplift and support Afghan girls through HerVoice.",
-      "sponsorLogos": [
-        {
-          "src": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTytzgM9tSQWCPTDEdgq92vwoMZR87xBLuIAfs",
-          "alt": "Solebury School"
-        },
-        {
-          "src": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpavV7aqrM0zsm5gThJ2eDxZtjCFUdBGElvb1",
-          "alt": "AGFAF"
-        }
-      ]
-    },
-    "section": {
-      "cta": {
-        "label": "Explore HerVoice",
-        "link": "/hervoice"
-      },
-      "cta2": {
-        "label": "hervoice@empowerher-initiative.org",
-        "link": "mailto:hervoice@empowerher-initiative.org"
-      }
-    }
-  },
-  "mentorship": {
-    "seo": {
-      "title": "Mentorship Program — EmpowerHer Initiative",
-      "description": "Free workshops and mentorship for Afghan girls to build resilience, gain support, and launch impact projects."
-    },
-    "hero": {
-      "eyebrow": "Core Program",
-      "title": "Mentorship",
-      "titleLine2": "Program",
-      "image": "https://cdn.empowerher-initiative.org/mentorship-hero.jpeg",
-      "imageAlt": "",
+    {
+      "eyebrow": "Part Two",
+      "title": "Privacy Policy",
       "paragraphs": [
-        "EmpowerHer's main program is the Mentorship Program, where students can apply to one of our workshops and receive free mentorship from our dedicated and highly trained mentors and lecturers.",
-        "This program aims to provide Afghan girls with the resources, opportunities, and networks they need to launch their own impact projects."
+        "Privacy Policy content coming soon. This section will describe what information we collect, how we use it, and the choices you have over your data."
       ]
-    },
-    "intro": {
-      "quote": "Through this platform, EmpowerHer encourages students to think outside the box and view their challenges as sources of resilience—life lessons that empower them to pursue their goals and dreams.",
-      "paragraph": "EmpowerHer creates a safe, supportive space where students can discuss their struggles openly, feel heard and seen, and reflect on their experiences.",
-      "impactLabel": "Our Impact",
-      "impactText": "Whether through launching a project, mentoring a sibling or friend, or simply taking a first step, EmpowerHer helps students grow—one story, one action, and one empowered voice at a time.",
-      "closing": "Join us in empowering the next generation of Afghan leaders and changemakers through our comprehensive mentorship program."
-    },
-    "workshopStructure": {
-      "eyebrow": "How It Works",
-      "title": "Workshop Structure",
-      "description": "Every detail is designed to maximize learning, connection, and empowerment.",
-      "items": [
-        {
-          "title": "Cycle Duration",
-          "description": "Each workshop runs in 6-week cycles (about 1.5 months)."
-        },
-        {
-          "title": "Sessions per Week",
-          "description": "Workshops meet twice weekly — on Saturdays and Sundays."
-        },
-        {
-          "title": "Session Length",
-          "description": "Each session is 2 hours long."
-        },
-        {
-          "title": "Saturday Sessions",
-          "description": "Led by assigned mentors. Focused on skill-building, presentations, and guided activities."
-        },
-        {
-          "title": "Sunday Sessions",
-          "description": "Dedicated to guest speaker presentations, group discussions, lecturers, and Q&A. Covers themes related to empowerment, leadership, storytelling, and resilience."
-        },
-        {
-          "title": "Workshop Format",
-          "description": "Fully virtual via Google Meet. Materials including assignments and other activities are posted through separate Google Classrooms."
-        },
-        {
-          "title": "Participant Limit",
-          "description": "Each workshop accepts 16 participants to ensure personalized attention."
-        },
-        {
-          "title": "Mentorship Style",
-          "description": "Collaborative and discussion-based, encouraging peer support and active participation. Mentors guide students through both personal reflection and project development."
-        },
-        {
-          "title": "Project-Based Learning",
-          "description": "Participants complete capstone or final projects such as creative writing, art, real-world projects, impact proposals, or cultural presentations reflecting what they have learned."
-        }
-      ]
-    },
-    "eligibility": {
-      "eyebrow": "Requirements",
-      "title": "Who Can Apply",
-      "description": "Please review the following requirements before applying to any EmpowerHer workshop.",
-      "rules": [
-        "Afghan girls residing in Afghanistan and any other Middle Eastern or Central Asian countries are welcome to apply to our programs.",
-        "Intermediate or advanced English proficiency is required.",
-        "Although there is no age limit to apply to any of EmpowerHer's workshops, our team prefers applicants aged 14 and above.",
-        "Afghan girls residing in Europe or America (any region outside the Middle East and Central Asia) are not eligible to apply to our programs; however, we encourage them to volunteer with us through the following link: <a href=\"/get-involved/volunteer-with-us\" class=\"text-primary hover:text-primary/80 underline underline-offset-4\">Volunteer</a>",
-        "Men are not eligible to apply to our programs at this time."
-      ]
-    },
-    "opportunities": {
-      "eyebrow": "After Completion",
-      "title": "Opportunities After",
-      "titleLine2": "Completing Programs",
-      "items": [
-        {
-          "title": "Leadership Opportunities",
-          "description": "Graduates may be selected as assistant mentors and eventually lead their own workshops. EmpowerHer identifies a number of promising students and works closely with them to help launch their own initiatives."
-        },
-        {
-          "title": "Publication Access",
-          "description": "Students may publish their work through HerVoice and our partner platforms."
-        },
-        {
-          "title": "Continued Engagement",
-          "description": "Ongoing involvement in projects, events, and the EmpowerHer community."
-        }
-      ],
-      "note": "Additional information will be shared during our virtual sessions by EmpowerHer mentors."
-    },
-    "workshops": {
-      "eyebrow": "Apply Now",
-      "title": "Available Workshops"
-    },
-    "section": {
-      "text": "01",
-      "text2": "02",
-      "text3": "03"
     }
-  },
-  "spr": {
-    "seo": {
-      "title": "Student Project Roadmap — EmpowerHer Initiative",
-      "description": "A leadership pathway for EmpowerHer graduates to design and lead their own impact-driven online classes."
+  ],
+  "sectionIds_umyw": ["terms", "privacy"],
+  "image_7s7g": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTDe1RCWh0fiZ3z8JjCWsbc2laUL6tAeqPnMNS",
+  "image_7s7gAlt": "",
+  "eyebrow_doe8": "Open to All",
+  "heading_layu": "Volunteer With Us",
+  "text_yo3c": "EmpowerHer welcomes volunteers from around the world to contribute to our virtual workshops and programs. Volunteers may support our community and staff in different ways, such as serving as lecturers, mentors, assistants, or administrative members, as positions become available. We encourage volunteers to share perspectives from their countries and backgrounds to foster meaningful cross-cultural learning. We value diverse voices committed to educating and empowering Afghan girls and youth.",
+  "text_29gh": "Afghan girls outside the Middle East and Central Asia are especially encouraged to volunteer with us.",
+  "text_kqen": "Questions?",
+  "text_lxpl": "Volunteer Application",
+  "text_18cm": "Join our volunteer community",
+  "text_sj96": "Tell us about yourself and how you'd like to contribute. All fields marked",
+  "text_iaww": "are required.",
+  "eyebrow_r82m": "Be Part of the Next Story",
+  "title_g4s1": "Want to support more stories like this?",
+  "heading_7d9o": "Success Stories",
+  "text_bs3b": "Each program created meaningful change in the lives of participating girls. These are their stories.",
+  "statIcons_hj43": ["Users", "BookOpen", "Award"],
+  "text_naa4": "Take Action",
+  "eyebrow_kmoh": "Financial Support",
+  "heading_z043": "Monthly Internet Scholarship (MIS)",
+  "text_81ff": "EmpowerHer provides Monthly Internet Scholarships (MIS) to all students who need them most, helping them participate fully in our programs. We understand the financial challenges many girls face in Afghanistan and how difficult it can be to access reliable internet. That's why we're proud to offer this financial support and ensure that access to learning is not limited by financial barriers.",
+  "text_izv3": "Please note: EmpowerHer does not send funds through \"Hawala\" or any platform that allows cash withdrawal. Instead, we provide internet credit through the Ding application, which lets students activate any internet bundles they need. Also, Ding and our system do not support Salam SIM cards, so please do not include Salam numbers in your MIS or workshop registration forms.",
+  "text_tgvz": "Please be advised that EmpowerHer provides MIS exclusively to students formally accepted into its programs. This support is not available to individuals outside EmpowerHer or to those currently attending virtual or in-person programs offered by other organizations.",
+  "eyebrow_ttnv": "Know a resource?",
+  "title_7y6f": "Help us grow this list.",
+  "text_io11": "If you know of an educational resource, scholarship, or program that supports Afghan girls and women, we'd love to hear about it. Reach out and help us connect more girls with the opportunities they deserve.",
+  "eyebrow_6byx": "Education &amp; Opportunities",
+  "heading_nkc7": "Resources",
+  "text_7emq": "A curated collection of educational programs, scholarships, and opportunities for Afghan girls and women — vetted by our team and organized to help you find the right path forward.",
+  "text_q4zu": "Number of Resources found:",
+  "eyebrow_c1sg": "Stay Connected",
+  "heading_5zso": "Subscribe to Our Newsletter",
+  "text_jfw8": "Get the latest updates on our programs, success stories, and opportunities to get involved.",
+  "text_xkme": "You're subscribed 🎉",
+  "text_4d2e": "Thanks for joining — watch your inbox for our next update.",
+  "text_fydr": "Email Address",
+  "text_mwcu": "Subscribe",
+  "image_p5y6": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfa0gFM3C8OG5vkbyTeNds9rYucAtpJg0PMV7",
+  "image_p5y6Alt": "Empowering women and girls worldwide",
+  "title_ff6s": "Together We Rise",
+  "text_cs9o": "Join supporters who are making a difference in the lives of Afghan girls and women around the world.",
+  "eyebrow_gchg": "What You Gain",
+  "title_zjvg": "Roadmap Benefits",
+  "text_86ka": "Important Note",
+  "text_b1o0": "EmpowerHer does not provide a monthly salary for its staff members. All roles within this roadmap are volunteer-based. Participation as an Assistant or Mentor is completely free, and no monetary compensation is provided.",
+  "items_l859": [
+    {
+      "title": "Hands-On Leadership Experience",
+      "description": "Gain practical skills in leading online classes and mentoring peers."
     },
-    "hero": {
-      "backText": "Back to Success Stories",
-      "eyebrow": "Leadership Pathway",
-      "heading": "Student Project Roadmap (SPR)",
-      "intro": "The Student Project Roadmap (SPR) is a leadership pathway for EmpowerHer students who have completed their workshops and met eligibility requirements and wish to deepen their practical leadership experience. Through a structured, step-by-step process, students work closely with EmpowerHer's team to design and lead their own impact-driven online classes, directly advancing EmpowerHer's mission and expanding educational access for more Afghan girls.",
-      "image": {
-        "src": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqmNmG6BYobifLHTavDVU7h0yBGlSc4z8XEQn"
-      }
+    {
+      "title": "Professional Development",
+      "description": "Learn how a nonprofit operates and develop communication, project management, and organizational skills."
     },
-    "eligibility": {
-      "eyebrow": "Requirements",
-      "heading": "Eligibility Requirements",
-      "subtitle": "Before applying, confirm you meet all three criteria below.",
-      "items": [
-        "Students must successfully complete and obtain Certificates of Completion for two consecutive workshops.",
-        "Students must be actively engaged in the two workshops they attended and punctual with all assigned work, including discussions, projects, assignments, and other mentorship materials.",
-        "Students must pass an interview with the Mentorship Program Director assessing skillsets and language proficiency."
-      ],
-      "howToApply": {
-        "eyebrow": "Application",
-        "title": "How to Apply",
-        "bodyBefore": "Submit an inquiry to",
-        "bodyAfter": ". Include your full name, the two EmpowerHer workshops you have attended, and your reasons for wanting to join this roadmap. Once received, the Mentorship Program Director will schedule an interview shortly."
-      }
+    {
+      "title": "Direct Impact",
+      "description": "Expand educational access for Afghan girls through student-led initiatives."
     },
-    "stepByStep": {
-      "eyebrow": "The Process",
-      "heading": "Step by Step Guide",
-      "steps": [
-        {
-          "title": "Welcome as Assistant",
-          "description": "Successful candidates are welcomed as Assistants for two workshop cycles. We will match you with any available mentor and his/her respective workshop."
-        },
-        {
-          "title": "Hands-On Experience",
-          "description": "Assistants gain hands-on experience supporting new participants and learning how an EmpowerHer workshop operates. They will learn about EmpowerHer's internal system, including training on how to check MIS applications, registration applications, communicate effectively, and lead online sessions."
-        },
-        {
-          "title": "Design Your Workshop",
-          "description": "During these two workshop cycles, assistants design their own online workshops and prepare mentorship materials. All materials are subject to approval from EmpowerHer's Mentorship Program Director."
-        },
-        {
-          "title": "Academic Demo Session",
-          "description": "Towards the end of Assistant training and the two month workshop cycle, assistants conduct a one and half hour long Academic Demo Session, mentoring a staff member (with their materials) to demonstrate their teaching and leadership skills."
-        },
-        {
-          "title": "Promoted to Mentor",
-          "description": "After successfully completing the demo, Assistants are promoted to Mentor positions, officially joining the EmpowerHer Mentorship Program and mentoring many more Afghan girls."
-        }
-      ]
+    {
+      "title": "Mentorship & Guidance",
+      "description": "Receive structured support and feedback from EmpowerHer's experienced team throughout the roadmap."
     },
-    "benefits": {
-      "eyebrow": "What You Gain",
-      "heading": "Roadmap Benefits",
-      "items": [
-        {
-          "title": "Hands-On Leadership Experience",
-          "description": "Gain practical skills in leading online classes and mentoring peers."
-        },
-        {
-          "title": "Professional Development",
-          "description": "Learn how a nonprofit operates and develop communication, project management, and organizational skills."
-        },
-        {
-          "title": "Direct Impact",
-          "description": "Expand educational access for Afghan girls through student-led initiatives."
-        },
-        {
-          "title": "Mentorship & Guidance",
-          "description": "Receive structured support and feedback from EmpowerHer's experienced team throughout the roadmap."
-        },
-        {
-          "title": "Resource & Networking Opportunities",
-          "description": "Use EmpowerHer's resources to enhance your skills and connect with a broader network."
-        },
-        {
-          "title": "Promotion",
-          "description": "Based on strong workshop performance, dedication, and demonstrated leadership, EmpowerHer may offer talented members opportunities for promotion."
-        }
-      ],
-      "importantNote": {
-        "title": "Important Note",
-        "body": "EmpowerHer does not provide a monthly salary for its staff members. All roles within this roadmap are volunteer-based. Participation as an Assistant or Mentor is completely free, and no monetary compensation is provided."
-      }
+    {
+      "title": "Resource & Networking Opportunities",
+      "description": "Use EmpowerHer's resources to enhance your skills and connect with a broader network."
     },
-    "section": {
-      "cta": {
-        "label": "apply@empowerher-initiative.org",
-        "link": "mailto:apply@empowerher-initiative.org"
-      }
+    {
+      "title": "Promotion",
+      "description": "Based on strong workshop performance, dedication, and demonstrated leadership, EmpowerHer may offer talented members opportunities for promotion."
     }
+  ],
+  "title_yulf": "Explore HerVoice Initiative",
+  "text_jvq2": "Discover student writing, voices, and stories published through the HerVoice platform.",
+  "image_czp1": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTrO039TyJ9E7UkRP3K1djBMpWoJuiOHs42atf",
+  "image_czp1Alt": "About EmpowerHer",
+  "text_pcgu": "Our Story",
+  "text_5xdk": "A movement dedicated to equipping Afghan women with resilience, creativity, and leadership to shine as sources of inspiration — even in the face of adversity.",
+  "eyebrow_gngy": "Contact",
+  "heading_lvr6": "Get in Touch",
+  "text_zsav": "Have a question about EmpowerHer or any of our programs? Fill out the form and we'll get back to you as soon as possible.",
+  "text_85bc": "Email",
+  "cta_xgaq": {
+    "label": "info@empowerher-initiative.org",
+    "link": "mailto:info@empowerher-initiative.org"
   },
-  "sisterhood-sessions": {
-    "seo": {
-      "title": "Sisterhood Sessions — EmpowerHer Initiative",
-      "description": "A supportive and caring space for EmpowerHer students to connect, share ideas, and build friendships."
+  "text_cz4a": "Location",
+  "text_xmj0": "United States of America",
+  "text_d0qu": "Follow Us",
+  "title_xg6h": "Thank you — your message is on its way.",
+  "text_7bd8": "We've received your message and will get back to you as soon as we can.",
+  "text_qs05": "Send another message",
+  "text_r2bf": "Name",
+  "text_onfm": "Email",
+  "text_m1pp": "Subject",
+  "text_hd1j": "Phone `(optional)`",
+  "text_hxqj": "Message",
+  "text_yl02": "Send Message",
+  "title_ba5h": "Writings from Honorable Mention Winners",
+  "mentions_bkmw": [
+    {
+      "name": "Khadija Mohammadi",
+      "title": "The Girl Who Studied in the Dark",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5IuYoRWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3",
+      "slug": "the-girl-who-studied-in-the-dark"
     },
-    "header": {
-      "eyebrow": "Community & Connection",
-      "heading": "Sisterhood Sessions",
-      "body": "Sisterhood Sessions are designed to provide a supportive and caring space for all EmpowerHer students enrolled in the mentorship program. These sessions allow students to connect with one another, share their ideas, build friendships, and offer constructive feedback on EmpowerHer programs."
+    {
+      "name": "Mohadisa Bazel",
+      "title": "Running Towards Freedom",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT6gmlzi49jfnexowH4rdvO7pcMmglFtNsyY50",
+      "slug": "running-towards-freedom"
     },
-    "whyTheyMatter": {
-      "eyebrow": "The Purpose",
-      "heading": "Why Sisterhood Sessions Matter",
-      "body": "Sisterhood Sessions were created in response to the loss of hope many girls and women in Afghanistan are experiencing due to restrictions on education and opportunity. EmpowerHer aims to provide not only educational support but also a space where students feel encouraged, heard, and valued.",
-      "quote": "During these sessions, EmpowerHer assistants support students with both personal challenges and workshop-related concerns. The conversations are designed to foster confidence, resilience, and hope as students continue advocating for their right to education and a better future."
+    {
+      "name": "Spogmai Sharifi",
+      "title": "The Day I Said No",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpZTtiPVqrM0zsm5gThJ2eDxZtjCFUdBGElvb",
+      "slug": "the-day-i-said-no"
+    }
+  ],
+  "text_b1za": "HerVoice `2026`",
+  "text_52qx": "Writing Contest",
+  "text_1hlp": "HerVoice is EmpowerHer's creative publication platform, dedicated to amplifying and documenting the voices, stories, and ideas of Afghan girls through original writing. We believe in the power of storytelling to inspire, heal, connect communities, and create meaningful change.",
+  "text_urxt": "HERVOICE &middot; CELEBRATING WINNERS &middot;",
+  "text_jnu1": "2026",
+  "text_mf0u": "Winners",
+  "stats_xm16": [
+    {
+      "value": "300+",
+      "label": "Submissions"
     },
-    "community": {
-      "eyebrow": "Belonging",
-      "heading": "A Safe and Supportive Community",
-      "body": "The purpose of Sisterhood Sessions is to help students build long-lasting relationships and create a safe space where they can openly share their thoughts, experiences, and life stories. Many of our students rarely have environments where they feel truly heard, respected, and supported.",
-      "listIntro": "Through open conversations and peer connection, students can:",
-      "benefits": [
-        "Express their thoughts and experiences",
-        "Discuss challenges they face in their daily lives",
-        "Support and encourage one another",
-        "Strengthen their sense of community"
-      ],
-      "closing": "These sessions help students develop stronger emotional well-being and a deeper sense of belonging within the EmpowerHer community."
+    {
+      "value": "21+",
+      "label": "Provinces across Afghanistan"
     },
-    "sessionFormat": {
-      "eyebrow": "The Details",
-      "heading": "Session Format",
-      "cards": [
+    {
+      "value": "5",
+      "label": "Cash Winners"
+    },
+    {
+      "value": "3",
+      "label": "Honorees"
+    }
+  ],
+  "eyebrow_48qj": "What Drives Us",
+  "title_zzyt": "Our Mission",
+  "text_3w1q": "EmpowerHer focuses on equipping Afghan women to become beacons of hope in the darkest of times when the shadows of the Taliban seek to stifle the voices of Afghan women. By nurturing resilience, creativity, and leadership, we strive to empower them to shine as sources of inspiration and strength, uplifting their communities even in the face of adversity.",
+  "text_qx2e": "Where We’re Headed",
+  "title_1ghc": "Our Vision",
+  "text_321m": "We envision Afghan women as guiding lights in their communities, inspiring hope and progress while leading the way to a more equitable, inclusive, and sustainable society.",
+  "title_3rjg": "Writings from Cash Prize Winners",
+  "winners_afbf": [
+    {
+      "rank": "1ST",
+      "prize": "$400",
+      "name": "Z.H.",
+      "title": "Bread and a Red Apple",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPThZYuVWymYWNaVI2CGjn5RkZbu3BUS0i97AMX",
+      "slug": "bread-and-a-red-apple"
+    },
+    {
+      "rank": "2ND",
+      "prize": "$300",
+      "name": "Roqia Qasemi",
+      "title": "When did I feel that I am a strong girl?",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTCB4oDy6p0xR3LuJK2fkyDlQSq5OVpmHz6CTh",
+      "slug": "when-did-i-feel-that-i-am-a-strong-girl"
+    },
+    {
+      "rank": "3RD",
+      "prize": "$200",
+      "name": "Nazifa Popal",
+      "title": "What I Carried in My Voice",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5qlkrZWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3",
+      "slug": "what-i-carried-in-my-voice"
+    },
+    {
+      "rank": "4TH",
+      "prize": "$150",
+      "name": "Samreen Makhfi",
+      "title": "Confession in the shadow",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTd2PyGnq0CAlsFIfYUDjLkbMy5eOzoTwZ6x1p",
+      "slug": "confession-in-the-shadow"
+    },
+    {
+      "rank": "5TH",
+      "prize": "$50",
+      "name": "Zarifa Gulabzada",
+      "title": "A Story from the Window of a Mud House",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqjUgW9BYobifLHTavDVU7h0yBGlSc4z8XEQn",
+      "slug": "a-story-from-the-window-of-a-mud-house"
+    }
+  ],
+  "text_ysci": "How We Started",
+  "text_0aw9": "“The fall of Kabul on August 15, 2021, marked a turning point — not only for their own lives but for the future of millions of Afghan girls who were suddenly stripped of their basic right to education.”",
+  "bodyBefore_8o93": [
+    "EmpowerHer was born out of the lived experiences of its Co-Founders, <span class=\"text-foreground font-semibold\">Mahdi Rahimi</span> and <span class=\"text-foreground font-semibold\">Nahid Karimi</span>, both of whom were raised in Kabul, Afghanistan.",
+    "Growing up, they witnessed firsthand the deep-rooted inequalities and daily struggles Afghan communities — particularly women and girls — face. From societal restrictions to systemic educational barriers, the challenges were immense, but the desire to create change was even greater."
+  ],
+  "bodyAfter_7zn7": [
+    "With schools closed to girls over the age of 12 and women increasingly pushed out of public life, Mahdi and Nahid knew silence was not an option.",
+    "After resettling in the United States, they immediately began organizing virtual programs aimed at supporting Afghan youth — both men and women — inside Afghanistan and across the diaspora. These early efforts, though impactful, were limited in scope and duration. They reached small groups and operated with minimal resources, yet they revealed something powerful: the need was urgent, and the demand was growing.",
+    "It was from this realization that EmpowerHer emerged — not just as a project, but as a movement. A more comprehensive, organized, and sustainable platform was needed to continue this work on a larger scale. Founded and led by Afghan youth who understand the struggles of their own people, EmpowerHer stands today as a symbol of resilience, hope, and empowerment."
+  ],
+  "title_oojo": "What Our Judges Felt Reading These Stories",
+  "judges_sbq6": [
+    {
+      "name": "Dr. Ellen Leggett",
+      "title": "Professor of Psychology and Founding Director of Applied Psychology Master’s Program (Retired), University of Southern California",
+      "quote": "It was an honor to read about and bear witness to the incredibly moving stories told by these writers. Many of us aspire to be courageous and to overcome adversity in our lives, and the writings of these Afghan women teach us all a humbling lesson. With elegant beauty and wisdom, the inspirational stories recounted by these writers demonstrate strength of character, love of learning, and the best of human persistence and resilience in the face of pain. A reverberating question stays with me: What feats would these remarkable women accomplish in a world that welcomed them? And the world does need them. Let their voices teach you.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5RG1ajWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3"
+    },
+    {
+      "name": "Dr. Susan M. Blaustein",
+      "title": "Instructor, Columbia University, Founder/Board Chair, WomenStrong International",
+      "quote": "My immediate impression, when reading the submissions, was that this body of work has been produced by an extraordinarily talented, capable, bold, and determined group of young women. I was deeply moved by their courage, grit, and refusal to be restrained in shadow and silence. These are young women who, like all young women and girls everywhere, have dreams, rights, and hopes for their futures, yet in far too many cruel places on earth, those dreams and rights are denied. I am honored to have worked closely with Afghan women and girls over the past seven years as they have repeatedly faced and overcome seemingly insurmountable challenges. We must continue to raise awareness of, and refuse to tolerate, this tremendous injustice, which threatens the future and promise of Afghanistan and stands in clear violation of the rights of women and girls.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnlKrZzPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O"
+    },
+    {
+      "name": "Dr. Sonia Palmieri",
+      "title": "Associate Professor, Department of Pacific Affairs, Australian National University",
+      "quote": "I was incredibly moved by the stories of bravery, confidence, tragedy and injustice shared by the Afghan artists. As an academic, creative writing is something I admire, perhaps in part because it is so difficult for me. But the huge response to the EmpowerHer writing competition shows that there is a wealth of creativity among Afghan women, and that writing can be a powerful way to process a range of both conflicting and complementary emotions — sadness, rage, frustration, joy. Certainly, the entrants wanted to share a profound sense of injustice at the hands of the Taliban. They did this with strong, pictorial clarity. Yet this was always underpinned by narratives of resilience and hope. Afghan women’s refusal of defeat in such conditions will change the world.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTK2M6BgCVy1oGkRMuS0Lravl9JbQIxWFcNhtq"
+    }
+  ],
+  "eyebrow_z660": "Contest Results",
+  "title_po72": "HerVoice 2026 Writing Contest",
+  "text_7pxd": "Look at the results of the HerVoice 2026 Writing Contest, including cash prize winners and honorable mentions.",
+  "image_hkha": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT3hSLjjKpPsIbjXnuoAM3O2JygVY8KzGFtD6k",
+  "image_hkhaAlt": "",
+  "eyebrow_min6": "Organizations &amp; Companies",
+  "heading_hse8": "Partner With Us",
+  "text_3fth": "Organizations and companies aligned with our mission and vision, or those interested in supporting our work, are encouraged to complete the form below. A member of our team will be in touch to explore potential partnership opportunities.",
+  "text_nvjp": "Questions?",
+  "text_urfs": "Partnership Inquiry",
+  "title_h4yd": "Tell us about your organization",
+  "text_2tth": "All fields marked with `*` are required.",
+  "eyebrow_6gch": "Our Work",
+  "title_h1ln": "What We Do",
+  "text_84g8": "Four interconnected pillars that work together to create lasting change for Afghan women.",
+  "pillars_8e54": [
+    {
+      "index": "01",
+      "title": "Advocacy",
+      "description": "We amplify the voices of Afghan women and girls through storytelling, leadership training, and global engagement. Our initiatives empower them to speak out, share their experiences, and inspire meaningful change toward justice and equal opportunity."
+    },
+    {
+      "index": "02",
+      "title": "Education & Leadership",
+      "description": "Through skill-based workshops focused on leadership, personal development, communication, and decision-making, we equip Afghan girls with the confidence and tools to lead their communities with strength and purpose."
+    },
+    {
+      "index": "03",
+      "title": "Creative Expression",
+      "description": "We empower Afghan girls to reclaim their voices through writing, storytelling, and the arts. Our programs provide platforms for creative expression as a powerful form of resistance and healing, helping them share their lived experiences with the world."
+    },
+    {
+      "index": "04",
+      "title": "Community Engagement",
+      "description": "Our graduates and members can access EmpowerHer's resources and engage with our vibrant community. We support them in creating impactful initiatives both within and outside Afghanistan through virtual and in-person programs."
+    }
+  ],
+  "eyebrow_m2c9": "The Panel",
+  "title_f6a6": "Our Judges",
+  "text_lv6p": "We thank our judges for their support of this contest and appreciate their time and effort to help Afghan girls share their voices globally.",
+  "text_phny": "Special thanks to our sponsors, the Solebury School community in Pennsylvania, United States, and the Afghan Girls Financial Assistance Fund (AGFAF) in New Jersey, United States, for their generous donations to our efforts to uplift and support Afghan girls through HerVoice.",
+  "image_sa6u": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTytzgM9tSQWCPTDEdgq92vwoMZR87xBLuIAfs",
+  "image_sa6uAlt": "Solebury School",
+  "image_atjl": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpavV7aqrM0zsm5gThJ2eDxZtjCFUdBGElvb1",
+  "image_atjlAlt": "AGFAF",
+  "items_90r8": [
+    {
+      "name": "Dr. Susan M. Blaustein",
+      "description": "Dr. Susan M. Blaustein is the Founding Board Chair and President of WomenStrong International, a global nonprofit that supports local feminist leaders advancing the rights of women and girls worldwide. She previously co-founded and directed the Millennium Cities Initiative at Columbia University's Earth Institute and has worked on conflict prevention and international justice with leading global organizations. A writer and journalist, she has reported on global politics and social justice for major publications including The New Yorker and The Wall Street Journal. Dr. Blaustein teaches at Columbia University's Climate School, holds a doctorate from Yale University, was a Harvard Junior Fellow, and has received numerous honors, including a Guggenheim Fellowship and the Ban Ki-moon Award for Women's Empowerment.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnlKrZzPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O"
+    },
+    {
+      "name": "Dr. Ellen Leggett",
+      "description": "Dr. Ellen Leggett is a psychologist with a lifelong passion for supporting the education of girls and women. She graduated from Mount Holyoke College, the first U.S. college founded for women, and was Associate Dean of Students at Scripps College, an esteemed California college for women. Most recently, she has been Professor of Psychology at the University of Southern California and Founding Director of the Master's in Applied Psychology program there, where she has taught students from all over the world. She holds master's and doctoral degrees in Human Development and Education from Harvard University.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5RG1ajWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3"
+    },
+    {
+      "name": "Dr. Sonia Palmieri",
+      "description": "Associate Professor Dr. Sonia Palmieri is Head of the Department of Pacific Affairs at the Coral Bell School of Asia and Pacific Affairs, Australian National University. Her research focuses on women's leadership in political institutions, particularly gender-sensitive parliaments. She is a leading contributor to both the theory and practice of inclusive and feminist research methodologies.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTK2M6BgCVy1oGkRMuS0Lravl9JbQIxWFcNhtq"
+    },
+    {
+      "name": "Dr. Marilyn Sides",
+      "description": "Dr. Marilyn Sides is an Associate Teaching Professor in the Department of English and Creative Writing at Wellesley College, where she also serves as Director of Creative Writing. She is affiliated with the Comparative Literary Studies Program. Marilyn is the author of the short story collection The Island of the Mapmaker's Wife and the novel The Genius of Affection. At Wellesley, she teaches creative writing as well as literature courses.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEXcdsbfRbjSv9fDHMpJXBriOWVtPmoQZNC3q"
+    },
+    {
+      "name": "Patrick M. Erwin",
+      "description": "Patrick M. Erwin is the Curriculum Director at the Maxwell Leadership Foundation, with extensive experience in education and leadership development. He previously served 17 years as a high school band director in Cobb County, Georgia. Patrick holds degrees in Political Science, Music Education, and Leadership, and is an award-winning speaker who presents nationally on leadership, student engagement, and professional growth.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTPp5idDYhZvxtB3ycfP5jQXiMRAWOCrnJ2oYe"
+    },
+    {
+      "name": "Andrew McPeak",
+      "description": "Andrew McPeak is an author, researcher, and expert on emerging generations with over a decade of experience working with young adults across education and professional settings. He is the co-host of the School on a Mission Podcast, co-author of Marching off the Map (2017) and Generation Z Unfiltered (2019), and the author of Ready for Real Life (2023).",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTtLlBep7RH9uDZYO2eqksXLbgS5pT0fia4Unh"
+    },
+    {
+      "name": "Bella Fisher",
+      "description": "Bella Fisher is a junior at Miss Hall's School in Massachusetts and grew up on a farm in Berkshire County. She has a strong interest in creative writing and the arts, particularly prose and fiction, and enjoys exploring literary and artistic projects. She is an editor at the literary magazine Girls Write the World, where she helps amplify young voices through writing and editorial work. Bella is passionate about supporting other young writers and aspires to publish her own work in the future.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT3cvDJJKpPsIbjXnuoAM3O2JygVY8KzGFtD6k"
+    },
+    {
+      "name": "Maia Roberts",
+      "description": "Maia Roberts is a junior at Miss Hall's School, where she pursues advanced coursework in English and history with a particular focus on feminist studies. Her academic work has earned her placement on the Head's List each semester of high school. She is an editor at the international literary journal Girls Right the World, where she contributes to elevating young voices through writing and editorial work. Maia believes in the importance of using literature and education to explore gender equity and amplify underrepresented perspectives.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT1n9bdNM2QzEuUaBX9YLlpwGm6Z8oisI4dSv7"
+    },
+    {
+      "name": "Juliet Hopkins",
+      "description": "Juliet Hopkins is a junior at Miss Hall's School and is originally from Rabun County, Georgia. She has a strong interest in creative writing and oil painting, and she balances her artistic pursuits with athletics as a varsity volleyball player. She is an editor at the literary magazine Girls Right the World, where she helps amplify young voices through writing and editorial work. Juliet believes in the importance of uplifting the voices of refugee girls and learning more about their experiences and backgrounds.",
+      "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTDbXy77h0fiZ3z8JjCWsbc2laUL6tAeqPnMNS"
+    }
+  ],
+  "eyebrow_4ody": "The People Behind It",
+  "title_85el": "Our Team",
+  "text_jcnw": "Founded and led by a diverse team committed to expanding access to education across borders.",
+  "eyebrow_c26n": "Publication Platform",
+  "heading_gtji": "HerVoice",
+  "text_49e2": "HerVoice is EmpowerHer's creative storytelling and publication platform, where students can publish their original writings and express themselves freely. At EmpowerHer, we believe in the power of words to heal, connect, and drive change.",
+  "text_c6zo": "Many of our students have demonstrated remarkable resilience and courage through storytelling, using their voices to share personal truths and inspire others.",
+  "text_tp91": "HerVoice gives them the space to do just that—amplifying their experiences and perspectives in a world that too often silences them.",
+  "text_epwg": "Global Partners",
+  "text_za9q": "With the support of our partners—including the National Society of High School Scholars (Atlanta, Georgia), and Amplify Afghan Women (Melbourne, Australia)—we are proud to bring these stories to a global audience.",
+  "text_4re5": "Through HerVoice, every story becomes a step toward empowerment, visibility, and hope.",
+  "text_jjq2": "Submission Guide",
+  "text_tm78": "How to Submit",
+  "text_g6f1": "Your Story",
+  "text_blw7": "Every submission is a step toward being heard. Follow these four steps to share your voice with the world through HerVoice.",
+  "text_s9eu": "Important Guidelines",
+  "guidelines_zsiz": [
+    {
+      "label": "Content Quality",
+      "text": "Write from the heart with honest reflection on your personal journey."
+    },
+    {
+      "label": "Image Required",
+      "text": "Include a relevant image that connects to your story."
+    },
+    {
+      "label": "No Hate Speech",
+      "text": "Submissions with inappropriate content will not be published."
+    },
+    {
+      "label": "Review Process",
+      "text": "All submissions will be reviewed by the EmpowerHer team."
+    }
+  ],
+  "steps_n2vi": [
+    {
+      "num": "01",
+      "title": "Write Your Story",
+      "desc": "Write from the heart, reflecting honestly on your personal journey, challenges, and experiences."
+    },
+    {
+      "num": "02",
+      "title": "Review & Edit",
+      "desc": "Carefully review your piece for grammar, spelling, and clarity. Rough drafts may be rejected."
+    },
+    {
+      "num": "03",
+      "title": "Prepare Materials",
+      "desc": "Include your story and a relevant image (REQUIRED). Insert the image or share a link."
+    },
+    {
+      "num": "04",
+      "title": "Submit",
+      "desc": "Email to hervoice@empowerher-initiative.org. Subject: \"Submission to HerVoice\"."
+    }
+  ],
+  "eyebrow_5q57": "Apply Now",
+  "title_u0m9": "Available Workshops",
+  "image_nj35": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT3hSLjjKpPsIbjXnuoAM3O2JygVY8KzGFtD6k",
+  "image_nj35Alt": "Partner with EmpowerHer",
+  "eyebrow_1i52": "Organizations &amp; Companies",
+  "title_m3sd": "Partner With Us",
+  "text_x2vf": "EmpowerHer would love to partner with organizations that share its values. Please leave us a message by clicking the arrow below.",
+  "image_8m55": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTDe1RCWh0fiZ3z8JjCWsbc2laUL6tAeqPnMNS",
+  "image_8m55Alt": "Volunteer with EmpowerHer",
+  "text_arao": "Open to All",
+  "title_dwt8": "Volunteer With Us",
+  "text_egi6": "EmpowerHer accepts volunteers for different roles within our programs. To express your interest, please click the arrow below and send us a message.",
+  "eyebrow_kssq": "Requirements",
+  "title_83o1": "Eligibility",
+  "text_knsn": "HerVoice is open exclusively to students who have been accepted into EmpowerHer's Mentorship Program.",
+  "text_is42": "Priority Given To",
+  "text_od4j": "Students from EmpowerHer's",
+  "cta_2brz": {
+    "label": "Creative Writing and Storytelling Workshop",
+    "link": "/mentorship"
+  },
+  "text_au14": "However, submissions are welcome from all currently enrolled participants.",
+  "title_vtlx": "Workshop Enrollment",
+  "text_hmuy": "If you are attending `any` EmpowerHer workshop, you are eligible to submit your writing.",
+  "title_4cf5": "Submission Process",
+  "text_zbz9": "Email your submission to",
+  "text_qsci": "and include the",
+  "text_gx5t": "you are attending.",
+  "cta_81xs": {
+    "label": "hervoice@empowerher-initiative.org",
+    "link": "mailto:hervoice@empowerher-initiative.org"
+  },
+  "text_21sy": "name of the workshop",
+  "text_j8kj": "Content Requirements",
+  "text_1zkf": "Due to a high volume of submissions, we `cannot accept pieces that exceed the word limit` .",
+  "requirements_u54d": [
+    {
+      "value": "900–1000",
+      "label": "Word Count",
+      "note": "12-point font, single-spaced"
+    },
+    {
+      "value": "40",
+      "label": "Max Poetry Lines",
+      "note": "Poems should not exceed this limit"
+    }
+  ],
+  "eyebrow_pqac": "Published Stories",
+  "title_5xbv": "Writings",
+  "eyebrow_v8r9": "The Details",
+  "title_itph": "Session Format",
+  "text_si7w": "These sessions ensure that every workshop not only focuses on learning and skill development but also prioritizes community, connection, and emotional support. By creating time for reflection and conversation, Sisterhood Sessions help students strengthen their relationships with one another and feel supported throughout their EmpowerHer journey.",
+  "cta_ue2f": {
+    "label": "Back to Mentorship Program",
+    "link": "/mentorship"
+  },
+  "cards_hbv4": [
+    {
+      "title": "When They Take Place",
+      "body": "Sisterhood Sessions take place at the end of each workshop session on Saturdays and Sundays."
+    },
+    {
+      "title": "Session Duration",
+      "highlight": "30 min",
+      "body": "Each Sisterhood Session lasts 30 minutes, providing dedicated time for connection and conversation."
+    }
+  ],
+  "eyebrow_6xng": "2024 – 2025",
+  "title_stzh": "Annual Report 2024–2025",
+  "text_ann0": "The initiative operates through two core programs: the",
+  "text_h7dm": ", a structured six-week cycle of workshops designed to develop leadership skills, strengthen capacity, and support participants in designing and advancing impact-driven projects; and",
+  "text_oo8b": ", a storytelling platform that publishes and elevates the voices and lived experiences of Afghan girls and women.",
+  "cta_t9j6": {
+    "label": "Mentorship Program",
+    "link": "/mentorship"
+  },
+  "cta_gp1l": {
+    "label": "HerVoice",
+    "link": "/hervoice"
+  },
+  "description_fwc9": [
+    "EmpowerHer is dedicated to equipping Afghan girls and women with the tools, confidence, and opportunities to create meaningful and lasting change.",
+    "Through creative arts, storytelling, education, leadership development, and cultural exchange, the organization provides supportive spaces where participants can express themselves, preserve their lived experiences, and amplify their voices."
+  ],
+  "image_3c1b": "https://cdn.empowerher-initiative.org/mentorship-hero.jpeg",
+  "image_3c1bAlt": "",
+  "text_dmhf": "Core Program",
+  "text_f9x6": "Mentorship",
+  "text_cmpv": "Program",
+  "paragraphs_ctl3": [
+    "EmpowerHer's main program is the Mentorship Program, where students can apply to one of our workshops and receive free mentorship from our dedicated and highly trained mentors and lecturers.",
+    "This program aims to provide Afghan girls with the resources, opportunities, and networks they need to launch their own impact projects."
+  ],
+  "eyebrow_pxzm": "Amplifying Voices",
+  "title_4frr": "Congressional Testimonies",
+  "text_wqlb": "These two congressional testimonies were shared for publication by the Afghan Scouts Relief Fund (ASRF) with the EmpowerHer HerVoice Initiative.",
+  "text_gjpw": "&ldquo;These testimonies are representative of the passion of so many Afghan women to share their powerful experiences and their drive to become their best selves and contribute in their own unique ways to society. By sharing the obstacles they have overcome and their amazing pursuits, they serve as an inspiration to many of their peers who want to navigate their own path to success.&rdquo;",
+  "text_alez": "— Afghan Scouts Relief Fund (ASRF)",
+  "text_n23v": "Coming from a country where their very existence is dehumanized, and their human rights are not recognized, their resilience in the face of adversity should be a message to the whole world that we must support the future of Afghan women in every possible way.",
+  "videos_62vo": [
+    {
+      "poster": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT4ggEVZxLP0HVtXjpzDWZR85f7vGSgA1FduQY",
+      "src": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTFAaVBPi81Sgch3ByG9m45xzoRfbnkKwIXpZO",
+      "label": "Congressional Testimony — Part 1"
+    },
+    {
+      "poster": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTawihdJkAtfy8gUMVlFj5QpoO3BkxsndH9Dm2",
+      "src": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT1BPtxl2QzEuUaBX9YLlpwGm6Z8oisI4dSv7k",
+      "label": "Congressional Testimony — Part 2"
+    }
+  ],
+  "eyebrow_9h61": "Our Partners",
+  "title_3xw4": "Support from Partners",
+  "text_vzgk": "EmpowerHer is proud to partner with four respected publication organizations: Amplify Afghan Women, the National Society of High School Scholars (NSHSS), Humanitas Media, and Inanna Publications. Through HerVoice and our partners' platforms, we advocate for girls' education, storytelling, and creative expression. Our partners help our students publish their work and reach wider audiences across the globe. With the support of these organizations and their communities, we are creating a space where Afghan girls can share their stories and voices with the world.",
+  "partnerOrgs_cawf": [
+    {
+      "name": "Amplify Afghan Women",
+      "location": "Melbourne, Australia",
+      "logo": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBzmSPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O9",
+      "href": "https://sites.google.com/view/amplifyafghans/home"
+    },
+    {
+      "name": "National Society of High School Scholars (NSHSS)",
+      "location": "Atlanta, Georgia",
+      "logo": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTjPNmNesfkIRBuYnTVcl8O9LdXP5103pNyJUt",
+      "href": "https://www.nshss.org/"
+    },
+    {
+      "name": "Humanitas Media",
+      "location": "Minneapolis, Minnesota",
+      "logo": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT2HJysqLQtJ7K2Z4UcWn3gCXRdBvVoY9Ohil8",
+      "href": "https://humanitasmedia.org/"
+    },
+    {
+      "name": "Inanna Publications",
+      "location": "Toronto, Canada",
+      "logo": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTIznPr82WufQtTg5yH7OAp0KFlsjbkaYIPZB",
+      "href": "https://inanna.ca/"
+    }
+  ],
+  "text_9wzj": "Through this platform, EmpowerHer encourages students to think outside the box and view their challenges as sources of resilience—life lessons that empower them to pursue their goals and dreams.",
+  "text_57p4": "EmpowerHer creates a safe, supportive space where students can discuss their struggles openly, feel heard and seen, and reflect on their experiences.",
+  "text_msmg": "Our Impact",
+  "text_i0zk": "Whether through launching a project, mentoring a sibling or friend, or simply taking a first step, EmpowerHer helps students grow—one story, one action, and one empowered voice at a time.",
+  "text_0p7p": "Join us in empowering the next generation of Afghan leaders and changemakers through our comprehensive mentorship program.",
+  "eyebrow_6mrk": "How It Works",
+  "title_96go": "Workshop Structure",
+  "text_cawp": "Every detail is designed to maximize learning, connection, and empowerment.",
+  "items_to06": [
+    {
+      "title": "Cycle Duration",
+      "description": "Each workshop runs in 6-week cycles (about 1.5 months)."
+    },
+    {
+      "title": "Sessions per Week",
+      "description": "Workshops meet twice weekly — on Saturdays and Sundays."
+    },
+    {
+      "title": "Session Length",
+      "description": "Each session is 2 hours long."
+    },
+    {
+      "title": "Saturday Sessions",
+      "description": "Led by assigned mentors. Focused on skill-building, presentations, and guided activities."
+    },
+    {
+      "title": "Sunday Sessions",
+      "description": "Dedicated to guest speaker presentations, group discussions, lecturers, and Q&A. Covers themes related to empowerment, leadership, storytelling, and resilience."
+    },
+    {
+      "title": "Workshop Format",
+      "description": "Fully virtual via Google Meet. Materials including assignments and other activities are posted through separate Google Classrooms."
+    },
+    {
+      "title": "Participant Limit",
+      "description": "Each workshop accepts 16 participants to ensure personalized attention."
+    },
+    {
+      "title": "Mentorship Style",
+      "description": "Collaborative and discussion-based, encouraging peer support and active participation. Mentors guide students through both personal reflection and project development."
+    },
+    {
+      "title": "Project-Based Learning",
+      "description": "Participants complete capstone or final projects such as creative writing, art, real-world projects, impact proposals, or cultural presentations reflecting what they have learned."
+    }
+  ],
+  "eyebrow_jary": "Community & Connection",
+  "heading_csp4": "Sisterhood Sessions",
+  "text_qvxs": "Sisterhood Sessions are designed to provide a supportive and caring space for all EmpowerHer students enrolled in the mentorship program. These sessions allow students to connect with one another, share their ideas, build friendships, and offer constructive feedback on EmpowerHer programs.",
+  "eyebrow_35uu": "Published Stories",
+  "heading_p2vr": "Featured Writings from Our Partners",
+  "text_tb4c": "Afghan girls and women sharing their stories, experiences, and perspectives with the world through our network of publication partners.",
+  "eyebrow_cbax": "The Purpose",
+  "title_nvm1": "Why Sisterhood Sessions Matter",
+  "text_ijiv": "Sisterhood Sessions were created in response to the loss of hope many girls and women in Afghanistan are experiencing due to restrictions on education and opportunity. EmpowerHer aims to provide not only educational support but also a space where students feel encouraged, heard, and valued.",
+  "text_0b95": "During these sessions, EmpowerHer assistants support students with both personal challenges and workshop-related concerns. The conversations are designed to foster confidence, resilience, and hope as students continue advocating for their right to education and a better future.",
+  "eyebrow_15ng": "Requirements",
+  "title_phfa": "Who Can Apply",
+  "text_l8wr": "Please review the following requirements before applying to any EmpowerHer workshop.",
+  "rules_ec29": [
+    "Afghan girls residing in Afghanistan and any other Middle Eastern or Central Asian countries are welcome to apply to our programs.",
+    "Intermediate or advanced English proficiency is required.",
+    "Although there is no age limit to apply to any of EmpowerHer's workshops, our team prefers applicants aged 14 and above.",
+    "Afghan girls residing in Europe or America (any region outside the Middle East and Central Asia) are not eligible to apply to our programs; however, we encourage them to volunteer with us through the following link: <a href=\"/get-involved/volunteer-with-us\" class=\"text-primary hover:text-primary/80 underline underline-offset-4\">Volunteer</a>",
+    "Men are not eligible to apply to our programs at this time."
+  ],
+  "eyebrow_2n2o": "After Completion",
+  "eyebrow_o66j": "Opportunities After",
+  "eyebrow_n5u2": "Completing Programs",
+  "eyebrow_76cm": "01",
+  "title_50e9": "Leadership Opportunities",
+  "text_m7ko": "Graduates may be selected as assistant mentors and eventually lead their own workshops. EmpowerHer identifies a number of promising students and works closely with them to help launch their own initiatives.",
+  "text_4co8": "02",
+  "title_333c": "Publication Access",
+  "text_01xm": "Students may publish their work through HerVoice and our partner platforms.",
+  "text_zjic": "03",
+  "title_6nde": "Continued Engagement",
+  "text_q14z": "Ongoing involvement in projects, events, and the EmpowerHer community.",
+  "text_7la9": "Additional information will be shared during our virtual sessions by EmpowerHer mentors.",
+  "eyebrow_0bcn": "Belonging",
+  "title_0w5b": "A Safe and Supportive Community",
+  "text_b0f9": "The purpose of Sisterhood Sessions is to help students build long-lasting relationships and create a safe space where they can openly share their thoughts, experiences, and life stories. Many of our students rarely have environments where they feel truly heard, respected, and supported.",
+  "text_exjg": "Through open conversations and peer connection, students can:",
+  "text_yx6n": "These sessions help students develop stronger emotional well-being and a deeper sense of belonging within the EmpowerHer community.",
+  "benefits_1db7": [
+    "Express their thoughts and experiences",
+    "Discuss challenges they face in their daily lives",
+    "Support and encourage one another",
+    "Strengthen their sense of community"
+  ],
+  "eyebrow_czhd": "Transparency &amp; Impact",
+  "heading_aa9a": "Annual Impact Reports",
+  "text_bu5e": "Each year we document the reach and outcomes of our programs — the girls we've supported, the stories we've amplified, and the communities we've strengthened. These reports hold us accountable to our mission.",
+  "eyebrow_crjy": "Stay Connected",
+  "eyebrow_p2yj": "Join Our",
+  "eyebrow_6j2o": "Community",
+  "text_5qq8": "Get updates on our programs, success stories, and ways to support Afghan girls' education. Be part of a growing movement for change.",
+  "title_7oxi": "Subscribe to Our Newsletter",
+  "text_ahu2": "Join hundreds of supporters and community members.",
+  "text_bw7d": "Subscribe",
+  "eyebrow_g6po": "Eligibility",
+  "title_x19f": "Who Can Participate",
+  "items_f6af": [
+    "All Afghan girls and women regardless of any age can submit their writings. Men are not eligible.",
+    "You can submit your writings if you live in Afghanistan ONLY. Submissions from other countries are not accepted.",
+    "You must have an intermediate English level and be able to express your ideas and stories clearly without any help from AI (ChatGPT or any other platforms).",
+    "You must have a valid ID, contact information, and be able to receive our cash prizes, if you are selected as a winner."
+  ],
+  "image_bqn5": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpavV7aqrM0zsm5gThJ2eDxZtjCFUdBGElvb1",
+  "image_bqn5Alt": "AGFAF — Afghan Girls Financial Assistance Fund",
+  "heading_btz4": "Afghan Girls Financial Assistance Fund (AGFAF)",
+  "text_qfz2": "Our Deepest Gratitude",
+  "text_5zr1": "EmpowerHer deeply values the unwavering support of the Afghan Girls Financial Assistance Fund (AGFAF). As our primary sponsor and partner, AGFAF has played a pivotal role in making many of our initiatives and programs possible. For nearly two decades, AGFAF has illuminated the path toward a brighter future for countless Afghan girls. As fellow Afghans and an organization aligned with their mission and vision, we extend our heartfelt gratitude for their continued support and belief in our work.",
+  "description_ko1x": [
+    "The Afghan Girls Financial Assistance Fund (AGFAF) is a U.S.-based nonprofit organization dedicated to empowering young Afghan women through education. Founded in response to the systemic barriers Afghan girls face in accessing quality education, AGFAF works to identify, support, and sponsor talented students who demonstrate academic promise and leadership potential.",
+    "AGFAF partners with high schools, colleges, and universities across the United States to provide full financial aid, housing, and mentorship for Afghan girls who have limited or no access to education in their home country. In addition to academic support, AGFAF also offers guidance in college and career planning, cultural adjustment, and leadership development, helping these students become confident, educated changemakers within their communities and beyond.",
+    "The organization's mission is rooted in the belief that educating girls is one of the most powerful tools for creating lasting peace, gender equality, and economic growth in Afghanistan and the world.",
+    "AGFAF continues to grow as a network of scholars, educators, host families, and global advocates working together to ensure that Afghan girls have the opportunity to learn, lead, and thrive."
+  ],
+  "title_j5w9": "How to Submit",
+  "text_wytv": "You must submit your written pieces by clicking on this form:",
+  "text_w13a": "We do not accept submissions through any of our email addresses. Please ONLY submit by clicking on the form above.",
+  "text_9fe7": "For any questions please email us at",
+  "cta_q2fl": {
+    "label": "hervoice@empowerher-initiative.org",
+    "link": "mailto:hervoice@empowerher-initiative.org"
+  },
+  "eyebrow_r2eh": "HerVoice · 2026",
+  "heading_d8ty": "Writing Contest",
+  "text_yznw": "HerVoice is EmpowerHer's creative storytelling platform where students share original writing and express themselves freely. We believe in the power of words to heal, connect, and inspire change.",
+  "text_ayza": "HerVoice is directed by our CWS Mentor and Co-Founder, `Nahid Karimi`.",
+  "cta_6e4j": {
+    "label": "Explore HerVoice",
+    "link": "/hervoice"
+  },
+  "image_cbr8": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTUAlOSJMuHB63DFcWbZp7rAk9VUJPgitsO2Ca",
+  "image_cbr8Alt": "HerVoice 2026 Writing Contest",
+  "eyebrow_yfp0": "Timeline",
+  "title_jd5s": "Important Deadlines",
+  "text_qxrg": "Note: Deadlines are subject to extension if needed.",
+  "items_kxhk": [
+    {
+      "date": "March 1",
+      "title": "Contest Opens",
+      "description": "Application form goes live and submissions begin."
+    },
+    {
+      "date": "March 21",
+      "title": "Submission Deadline",
+      "description": "All entries must be submitted by this date."
+    },
+    {
+      "date": "March 22 – May 1",
+      "title": "Review Period",
+      "description": "Judges evaluate all submissions."
+    },
+    {
+      "date": "May 2",
+      "title": "Notification Day",
+      "description": "All participants receive an update on their submissions."
+    }
+  ],
+  "eyebrow_dj5w": "Legal",
+  "heading_ikr8": "Terms `&amp;` Privacy",
+  "text_v9tb": "How we operate, what we expect, and how we protect the information you share with the EmpowerHer Initiative.",
+  "text_clrt": "Writing Prompt / Theme",
+  "text_fa2s": "“A time when you felt strength in being a woman/girl”",
+  "text_n8ed": "Empowering Dreams",
+  "text_hcbw": "Inspiring Futures",
+  "text_0xd7": "At EmpowerHer, we believe every Afghan girl and woman has a story worth telling and a future worth fighting for. Through mentorship programs and publication opportunities, we help them find the tools, confidence, and platforms they need to raise their voices and become changemakers in their communities and beyond.",
+  "images_x5fi": [
+    "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTN5bpAvcOGaUAyKX1dPWs9RnojYZeu4JbiQHv",
+    "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTvX8bHR050TX8DRt9gfxu6sU74iOHozSwBKGJ",
+    "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfCWhJzn3C8OG5vkbyTeNds9rYucAtpJg0PMV",
+    "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTQRqW7Y9a2imSKVTAuXrJU9NxI0LRsOFlgdvw"
+  ],
+  "eyebrow_f4ju": "Recognition",
+  "title_fzw2": "Awards & Recognition",
+  "text_crz7": "We carefully review all submissions with full consideration of each participant's circumstances. From this contest, we will select `5 winners` and `3 honorable mentions` .",
+  "prizes_5qnn": [
+    {
+      "place": "1st Place",
+      "amount": "400"
+    },
+    {
+      "place": "2nd Place",
+      "amount": "300"
+    },
+    {
+      "place": "3rd Place",
+      "amount": "200"
+    },
+    {
+      "place": "4th Place",
+      "amount": "150"
+    },
+    {
+      "place": "5th Place",
+      "amount": "50"
+    }
+  ],
+  "recognitionBenefits_ajdv": [
+    {
+      "title": "Publication on HerVoice Platform",
+      "description": "All 5 cash prize winners and 3 honorable mentions will have their stories published on the HerVoice platform, sharing their voices with the wider EmpowerHer community."
+    },
+    {
+      "title": "Featured on NSHSS Website",
+      "description": "Stories from the 1st, 2nd, and 3rd place winners will also be featured on our partner organization's website, The National Society of High School Scholars (NSHSS), reaching audiences in over 170 countries."
+    },
+    {
+      "title": "Priority for Future Opportunities",
+      "description": "Cash prize winners and honorable mentions will be prioritized for future EmpowerHer workshops and opportunities to use our Student Project Roadmap to create their own impact projects. (Acceptance to workshops is not guaranteed, but their applications will receive priority consideration.)"
+    },
+    {
+      "title": "Cash Prizes",
+      "description": "Winners will receive cash prizes ranging from $50 to $400 USD to support their educational and personal development goals."
+    }
+  ],
+  "prizeAccents_f6nb": [
+    "text-amber-600 bg-amber-100",
+    "text-slate-600 bg-slate-100",
+    "text-orange-600 bg-orange-100",
+    "text-emerald-600 bg-emerald-100",
+    "text-violet-600 bg-violet-100"
+  ],
+  "text_cq80": "About the Contest",
+  "text_0ty4": "EmpowerHer's HerVoice initiative aims to provide a space where Afghan girls can truly express their stories, feelings, and experiences freely. This contest is designed to reflect the realities Afghan girls and women are facing under the oppressive Taliban regime. Their educational, social, and economic lives have been shattered, and through this contest, we seek to share these narratives, commemorate the hardships Afghan girls and women continue to endure, and reward and recognize their resilience, courage, and motivation to push forward in the face of adversity.",
+  "eyebrow_i3em": "The Process",
+  "title_8tm0": "Step by Step Guide",
+  "steps_6yci": [
+    {
+      "title": "Welcome as Assistant",
+      "description": "Successful candidates are welcomed as Assistants for two workshop cycles. We will match you with any available mentor and his/her respective workshop."
+    },
+    {
+      "title": "Hands-On Experience",
+      "description": "Assistants gain hands-on experience supporting new participants and learning how an EmpowerHer workshop operates. They will learn about EmpowerHer's internal system, including training on how to check MIS applications, registration applications, communicate effectively, and lead online sessions."
+    },
+    {
+      "title": "Design Your Workshop",
+      "description": "During these two workshop cycles, assistants design their own online workshops and prepare mentorship materials. All materials are subject to approval from EmpowerHer's Mentorship Program Director."
+    },
+    {
+      "title": "Academic Demo Session",
+      "description": "Towards the end of Assistant training and the two month workshop cycle, assistants conduct a one and half hour long Academic Demo Session, mentoring a staff member (with their materials) to demonstrate their teaching and leadership skills."
+    },
+    {
+      "title": "Promoted to Mentor",
+      "description": "After successfully completing the demo, Assistants are promoted to Mentor positions, officially joining the EmpowerHer Mentorship Program and mentoring many more Afghan girls."
+    }
+  ],
+  "image_s3p5": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqmNmG6BYobifLHTavDVU7h0yBGlSc4z8XEQn",
+  "image_s3p5Alt": "",
+  "eyebrow_n7uy": "Leadership Pathway",
+  "heading_yve1": "Student Project Roadmap (SPR)",
+  "text_mq6w": "The Student Project Roadmap (SPR) is a leadership pathway for EmpowerHer students who have completed their workshops and met eligibility requirements and wish to deepen their practical leadership experience. Through a structured, step-by-step process, students work closely with EmpowerHer's team to design and lead their own impact-driven online classes, directly advancing EmpowerHer's mission and expanding educational access for more Afghan girls.",
+  "eyebrow_8cjl": "What We Do",
+  "title_vhlg": "Our Programs",
+  "text_zhre": "Our projects are designed to meet Afghan girls where they are—and help them grow into who they're meant to be. Each initiative provides a safe, inclusive space where participants gain the tools, guidance, and community they need to rise. From leadership workshops to storytelling programs, every project builds confidence, sharpens skills, and encourages bold self-expression. Together, we're creating spaces where Afghan girls can learn, lead, and shape their own futures.",
+  "image_aszd": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEK40ctbfRbjSv9fDHMpJXBriOWVtPmoQZNC3",
+  "image_aszdAlt": "HerVoice",
+  "text_iox6": "Storytelling Platform",
+  "title_vsm2": "HerVoice",
+  "text_hmyl": "A platform for Afghan girls to share their stories, amplify their voices, and inspire change through creative expression.",
+  "text_0lp1": "Explore",
+  "image_p1cd": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTztHu6kOQlbZOApif7EkNI4MXGo08zhqH6CwY",
+  "image_p1cdAlt": "Mentorship",
+  "text_09so": "Core Program",
+  "title_1ix8": "Mentorship",
+  "text_oio9": "EmpowerHer's core program offers Afghan girls free workshops and mentorship to build resilience, gain support, and launch impact projects.",
+  "text_a66a": "Explore",
+  "eyebrow_kh5c": "Message From Our Co-Founders",
+  "title_joa5": "We see you. We hear you. `And we are with you.`",
+  "text_lljb": "Mahdi Rahimi & Nahid Karimi",
+  "text_5pey": "– Co-Founders",
+  "text_o3d7": "&ldquo;For too long, Afghan girls have been written into history as victims. This time, let's write our own.&rdquo;",
+  "image_r3ry": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTPXlWDWYhZvxtB3ycfP5jQXiMRAWOCrnJ2oYe",
+  "image_r3ryAlt": "Nahid Karimi",
+  "text_of34": "Nahid Karimi",
+  "text_mh6r": "Co-Founder",
+  "text_m5tj": "&ldquo;WE RISE, WE RISE, WE RISE IN THE FACE OF ADVERSITY&rdquo;",
+  "image_iv1h": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfgQqh43C8OG5vkbyTeNds9rYucAtpJg0PMV7",
+  "image_iv1hAlt": "Mahdi Rahimi",
+  "text_28nj": "Mahdi Rahimi",
+  "text_j7ul": "Co-Founder",
+  "paragraphs_ssxr": [
+    "EmpowerHer was born from the hope and strength that you carry within you—even in the darkest of days. You are not forgotten. Your dreams, your voices, your potential—they matter. They are powerful, and they are needed in this world.",
+    "We know that many of you are facing unimaginable challenges. Barriers to education, threats to your freedom, and a world that too often refuses to see your worth. But we believe in your resilience. And through EmpowerHer, we are building a path forward—together.",
+    "Our mission is simple: to support you, to uplift you, and to walk beside you. Whether through education, mentorship, leadership workshops, or simply being a voice when yours is silenced, we are here for you.",
+    "Please don't give up. There is a growing community—inside and outside Afghanistan—that believes in your power to lead, to learn, and to rise. And we are proud to stand with you."
+  ],
+  "eyebrow_45zf": "Requirements",
+  "title_shtu": "Eligibility Requirements",
+  "text_a2oh": "Before applying, confirm you meet all three criteria below.",
+  "text_epox": "Application",
+  "title_hv92": "How to Apply",
+  "text_1xsq": "Submit an inquiry to",
+  "text_qhrv": ". Include your full name, the two EmpowerHer workshops you have attended, and your reasons for wanting to join this roadmap. Once received, the Mentorship Program Director will schedule an interview shortly.",
+  "cta_2ku6": {
+    "label": "apply@empowerher-initiative.org",
+    "link": "mailto:apply@empowerher-initiative.org"
+  },
+  "items_v1vh": [
+    "Students must successfully complete and obtain Certificates of Completion for two consecutive workshops.",
+    "Students must be actively engaged in the two workshops they attended and punctual with all assigned work, including discussions, projects, assignments, and other mentorship materials.",
+    "Students must pass an interview with the Mentorship Program Director assessing skillsets and language proficiency."
+  ],
+  "ruleAccents_vt4s": [
+    "from-amber-300 to-amber-500 shadow-amber-500/30",
+    "from-rose-300 to-rose-500 shadow-rose-500/30",
+    "from-emerald-300 to-emerald-500 shadow-emerald-500/30"
+  ],
+  "eyebrow_m3jb": "Guidelines",
+  "title_zt50": "Submission Requirements",
+  "title_xa4v": "Format Options",
+  "text_q108": "Submissions that exceed the stated word or line limits will not be accepted.",
+  "title_sink": "Important Rules",
+  "formatOptions_h8c2": [
+    {
+      "title": "Stories",
+      "description": "Maximum 900 words (any type of writing; must be your original work and not written by Generative AI)."
+    },
+    {
+      "title": "Poems",
+      "description": "Maximum 40 lines."
+    }
+  ],
+  "rules_au73": [
+    "Articles and biographies are not accepted. We value creativity and your ability to work with language to produce a meaningful and original piece of writing.",
+    "All submissions must be original work written by the participant and not previously published elsewhere.",
+    "Entries must be written in English.",
+    "Each entry must have a title.",
+    "Each participant may submit one entry only.",
+    "Submissions must reflect the writer's own lived experience or personal perspective. Plagiarism or AI-generated content is strictly prohibited.",
+    "Writing must align with the theme and purpose of the HerVoice Writing Contest.",
+    "Submissions must be respectful and must not include hate speech, harassment, or harmful content.",
+    "All entries must be submitted by the official deadline; late submissions will not be considered."
+  ],
+  "eyebrow_4xb8": "Media Coverage",
+  "title_48id": "EmpowerHer in the News",
+  "text_ersw": "Our mission to empower Afghan girls has been recognized and celebrated by local media, amplifying the voices of resilience and leadership within our community.",
+  "title_dkaa": "Featured in Rappahannock News",
+  "text_dd7o": "EmpowerHer was featured in a local Virginia newsletter through our former partnership with Rappahannock News. This acknowledgment underscored our mission to empower Afghan girls and amplify their narratives of resilience and leadership within a broader community.",
+  "image_ruty": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBGUBwPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O",
+  "image_rutyAlt": "EmpowerHer in the news",
+  "title_c4xo": "Abandoned Futures: Let Afghan Girls Learn",
+  "text_669e": "Since September 2021, all Afghan girls over the age of 12 have been banned from attending school.",
+  "stats_jbnl": [
+    {
+      "number": "1.4 million",
+      "label": "Girls have been deliberately denied access to secondary education since 2021."
+    },
+    {
+      "number": "2.5 million",
+      "label": "Afghan girls (80% of school-age girls) are currently deprived of their right to education."
+    },
+    {
+      "number": "80%",
+      "label": "Of school-age Afghan girls are currently out of school."
+    }
+  ],
+  "eyebrow_u88g": "By the Numbers",
+  "title_yt7b": "EmpowerHer at a Glance",
+  "stats_qcij": [
+    {
+      "number": "500+",
+      "label": "Students Mentored"
+    },
+    {
+      "number": "9+",
+      "label": "Countries Reached",
+      "detail": "Afghanistan, Tajikistan, Kazakhstan, Pakistan, Iran, Turkey, India, Bangladesh, Malaysia"
+    },
+    {
+      "number": "8+",
+      "label": "Countries in Our Global Team",
+      "detail": "Afghanistan, Poland, Peru, United States, China, Pakistan, Iran, Bangladesh"
+    },
+    {
+      "number": "25+",
+      "label": "Provinces of Afghanistan Reached"
+    },
+    {
+      "number": "50+",
+      "label": "Student Publications",
+      "detail": "Published through HerVoice"
+    }
+  ],
+  "eyebrow_cn2i": "Watch & Listen",
+  "title_7tvc": "Featured Media",
+  "features_axnd": [
+    {
+      "youtubeId": "l5YSKsYqbfY",
+      "label": "Podcast",
+      "title": "Interview with EmpowerHer Co-Founders",
+      "description": "Our co-founders, Nahid Karimi and Mahdi Rahimi, joined the NSHSS Scholars Connect Podcast to share their personal journeys from Afghanistan to the United States and the experiences that inspired them to launch EmpowerHer. In this episode, they discuss the challenges facing Afghan girls under Taliban rule, the role of education and mentorship in creating opportunity, and how young people can transform adversity into meaningful impact and leadership."
+    }
+  ],
+  "text_0cnl": "EmpowerHer Presents",
+  "text_lw2r": "HerVoice `2026`",
+  "text_to4z": "Writing Contest",
+  "text_ehz9": "Courage, identity, and storytelling — by Afghan girls and women, written from within Afghanistan.",
+  "text_ka6l": "300+",
+  "text_a5lz": "Submissions",
+  "text_mgtd": "Honorees",
+  "text_dkre": "Cash Winners",
+  "winners_sit4": [
+    {
+      "rank": "1st",
+      "prize": "$400",
+      "name": "Z.H.",
+      "title": "Bread and a Red Apple",
+      "quote": "I have turned the basement of my house into a school, a secret school for girls, to teach them everything that is forbidden."
+    },
+    {
+      "rank": "2nd",
+      "prize": "$300",
+      "name": "Roqia Qasemi",
+      "title": "When Did I Feel That I Am a Strong Girl?",
+      "quote": "You close the door, I will reach my dreams through the window. You beat me, I will use my blood as ink for my pen."
+    },
+    {
+      "rank": "3rd",
+      "prize": "$200",
+      "name": "Nazifa Popal",
+      "title": "What I Carried in My Voice",
+      "quote": "Every limitation had been, in its own crooked and unasked-for way, a preparation. And I had used all of it."
+    }
+  ],
+  "WINNER_STYLES_4u89": [
+    {
+      "slug": "bread-and-a-red-apple",
+      "cover": "bg-[radial-gradient(120%_90%_at_28%_8%,#F0C963_0%,transparent_55%),linear-gradient(160deg,#C9942C_0%,#9A6A18_60%,#7A5212_100%)] text-[#FBF3DD]",
+      "ribbon": "bg-gradient-to-b from-[#E0AE3C] to-[#C8902A]",
+      "offset": "lg:-ml-6"
+    },
+    {
+      "slug": "when-did-i-feel-that-i-am-a-strong-girl",
+      "cover": "bg-[radial-gradient(120%_90%_at_28%_8%,#5FB6F0_0%,transparent_55%),linear-gradient(160deg,#2C72B6_0%,#194B7E_62%,#123A63_100%)] text-[#EAF3FB]",
+      "ribbon": "bg-gradient-to-b from-[#2E9BE6] to-[#1E78C4]",
+      "offset": "lg:ml-1.5"
+    },
+    {
+      "slug": "what-i-carried-in-my-voice",
+      "cover": "bg-[radial-gradient(120%_90%_at_28%_8%,#5C7793_0%,transparent_55%),linear-gradient(160deg,#33445C_0%,#212E42_60%,#18222F_100%)] text-[#E7ECF3]",
+      "ribbon": "bg-gradient-to-b from-[#46586F] to-[#33445C]",
+      "offset": "lg:ml-9"
+    }
+  ],
+  "title_boys": "Thank you for applying to volunteer.",
+  "text_0tpc": "We've received your application and CV. Our team will review it and reach out to you.",
+  "text_wl2k": "Submit another application",
+  "text_4r70": "First Name `*`",
+  "text_pzsn": "Last Name `*`",
+  "text_htwa": "Email Address `*`",
+  "text_89gd": "CV / Resume `*` `(PDF)`",
+  "text_huq1": "Drag &amp; drop your CV here",
+  "text_9wbd": "or click to browse — PDF only, max 1 MB",
+  "text_oy6b": "Message `*`",
+  "text_k4xd": "Please tell us briefly about yourself, why you would like to volunteer with EmpowerHer, and how you plan to help address the educational barriers faced by girls.",
+  "text_q54l": "Submit Volunteer Application",
+  "title_yc0l": "Thank you for your interest in partnering.",
+  "text_tf8p": "We've received your inquiry and our team will be in touch shortly.",
+  "text_hae1": "Submit another inquiry",
+  "text_ovd1": "First Name `*`",
+  "text_lxkc": "Last Name `*`",
+  "text_a9jv": "Business Email Address `*`",
+  "text_b594": "Your Position `*`",
+  "text_bcad": "Organization / Company `*`",
+  "text_w3vm": "Message `*`",
+  "text_jq4u": "Please tell us briefly about your company/organization and how your company/organization can join us as a partner and support us",
+  "text_2g7n": "Submit Partnership Inquiry",
+  "text_zxc2": "&ldquo;",
+  "text_c1gh": "&rdquo;",
+  "text_fwnc": "Read more",
+  "text_mtzf": "HerVoice &middot; 2026",
+  "image_g5w0": "https://cdn.empowerher-initiative.org/logo.png",
+  "image_g5w0Alt": "EmpowerHer",
+  "text_1955": "&copy;",
+  "title_ksto": "Subscribe to Our Newsletter",
+  "text_y35c": "Join hundreds of supporters and community members.",
+  "text_jtnh": "Subscribe",
+  "navItems_nuoj": [
+    {
+      "label": "About",
+      "link": "/about-us"
+    },
+    {
+      "label": "Programs",
+      "link": "#",
+      "children": [
         {
-          "title": "When They Take Place",
-          "body": "Sisterhood Sessions take place at the end of each workshop session on Saturdays and Sundays."
-        },
-        {
-          "title": "Session Duration",
-          "highlight": "30 min",
-          "body": "Each Sisterhood Session lasts 30 minutes, providing dedicated time for connection and conversation."
-        }
-      ],
-      "closing": "These sessions ensure that every workshop not only focuses on learning and skill development but also prioritizes community, connection, and emotional support. By creating time for reflection and conversation, Sisterhood Sessions help students strengthen their relationships with one another and feel supported throughout their EmpowerHer journey."
-    },
-    "section": {
-      "cta": {
-        "label": "Back to Mentorship Program",
-        "link": "/mentorship"
-      }
-    }
-  },
-  "get-involved": {
-    "seo": {
-      "title": "Get Involved — EmpowerHer Initiative",
-      "description": "Partner with us or volunteer to support Afghan girls' education and empowerment."
-    },
-    "splitScreen": {
-      "partner": {
-        "eyebrow": "Organizations & Companies",
-        "heading": "Partner With Us",
-        "body": "EmpowerHer would love to partner with organizations that share its values. Please leave us a message by clicking the arrow below.",
-        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT3hSLjjKpPsIbjXnuoAM3O2JygVY8KzGFtD6k",
-        "imageAlt": "Partner with EmpowerHer"
-      },
-      "volunteer": {
-        "eyebrow": "Open to All",
-        "heading": "Volunteer With Us",
-        "body": "EmpowerHer accepts volunteers for different roles within our programs. To express your interest, please click the arrow below and send us a message.",
-        "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTDe1RCWh0fiZ3z8JjCWsbc2laUL6tAeqPnMNS",
-        "imageAlt": "Volunteer with EmpowerHer"
-      }
-    }
-  },
-  "get-involved-partner": {
-    "seo": {
-      "title": "Partner With Us — EmpowerHer Initiative",
-      "description": "Partner with us or volunteer to support Afghan girls' education and empowerment."
-    },
-    "eyebrow": "Organizations & Companies",
-    "heading": "Partner With Us",
-    "body": "Organizations and companies aligned with our mission and vision, or those interested in supporting our work, are encouraged to complete the form below. A member of our team will be in touch to explore potential partnership opportunities.",
-    "questions": "Questions?",
-    "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT3hSLjjKpPsIbjXnuoAM3O2JygVY8KzGFtD6k",
-    "imageAlt": "",
-    "eyebrow2": "Partnership Inquiry",
-    "title": "Tell us about your organization",
-    "title2": "Thank you for your interest in partnering.",
-    "text": "We've received your inquiry and our team will be in touch shortly."
-  },
-  "get-involved-volunteer": {
-    "seo": {
-      "title": "Volunteer With Us — EmpowerHer Initiative",
-      "description": "Partner with us or volunteer to support Afghan girls' education and empowerment."
-    },
-    "eyebrow": "Open to All",
-    "heading": "Volunteer With Us",
-    "body": "EmpowerHer welcomes volunteers from around the world to contribute to our virtual workshops and programs. Volunteers may support our community and staff in different ways, such as serving as lecturers, mentors, assistants, or administrative members, as positions become available. We encourage volunteers to share perspectives from their countries and backgrounds to foster meaningful cross-cultural learning. We value diverse voices committed to educating and empowering Afghan girls and youth.",
-    "note": "Afghan girls outside the Middle East and Central Asia are especially encouraged to volunteer with us.",
-    "questions": "Questions?",
-    "image": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTDe1RCWh0fiZ3z8JjCWsbc2laUL6tAeqPnMNS",
-    "imageAlt": "",
-    "title": "Thank you for applying to volunteer.",
-    "text": "We've received your application and CV. Our team will review it and reach out to you."
-  },
-  "success-stories": {
-    "seo": {
-      "title": "Success Stories — EmpowerHer Initiative",
-      "description": "Past program outcomes and impact stories from EmpowerHer participants."
-    },
-    "header": {
-      "heading": "Success Stories",
-      "subtitle": "Each program created meaningful change in the lives of participating girls. These are their stories."
-    },
-    "closingCta": {
-      "eyebrow": "Be Part of the Next Story",
-      "heading": "Want to support more stories like this?"
-    }
-  },
-  "annual-report": {
-    "seo": {
-      "title": "Annual Impact Reports — EmpowerHer Initiative",
-      "description": "View and download EmpowerHer's annual impact reports."
-    },
-    "header": {
-      "eyebrow": "Transparency & Impact",
-      "heading": "Annual Impact Reports",
-      "body": "Each year we document the reach and outcomes of our programs — the girls we've supported, the stories we've amplified, and the communities we've strengthened. These reports hold us accountable to our mission."
-    },
-    "reportCard": {
-      "year": "2024 – 2025",
-      "title": "Annual Report 2024–2025",
-      "description": [
-        "EmpowerHer is dedicated to equipping Afghan girls and women with the tools, confidence, and opportunities to create meaningful and lasting change.",
-        "Through creative arts, storytelling, education, leadership development, and cultural exchange, the organization provides supportive spaces where participants can express themselves, preserve their lived experiences, and amplify their voices."
-      ],
-      "pdf": "https://ik.imagekit.io/he2ukwxtl/Reports/empowerher-annual-impact-report-2025.pdf"
-    },
-    "section": {
-      "cta": {
-        "label": "Mentorship Program",
-        "link": "/mentorship"
-      },
-      "cta2": {
-        "label": "HerVoice",
-        "link": "/hervoice"
-      }
-    }
-  },
-  "agfaf": {
-    "seo": {
-      "title": "AGFAF — EmpowerHer Initiative",
-      "description": "Afghan Girls Financial Assistance Fund — our primary sponsor and partner."
-    },
-    "logo": {
-      "src": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTpavV7aqrM0zsm5gThJ2eDxZtjCFUdBGElvb1",
-      "alt": "AGFAF — Afghan Girls Financial Assistance Fund"
-    },
-    "title": "Afghan Girls Financial Assistance Fund (AGFAF)",
-    "description": [
-      "The Afghan Girls Financial Assistance Fund (AGFAF) is a U.S.-based nonprofit organization dedicated to empowering young Afghan women through education. Founded in response to the systemic barriers Afghan girls face in accessing quality education, AGFAF works to identify, support, and sponsor talented students who demonstrate academic promise and leadership potential.",
-      "AGFAF partners with high schools, colleges, and universities across the United States to provide full financial aid, housing, and mentorship for Afghan girls who have limited or no access to education in their home country. In addition to academic support, AGFAF also offers guidance in college and career planning, cultural adjustment, and leadership development, helping these students become confident, educated changemakers within their communities and beyond.",
-      "The organization's mission is rooted in the belief that educating girls is one of the most powerful tools for creating lasting peace, gender equality, and economic growth in Afghanistan and the world.",
-      "AGFAF continues to grow as a network of scholars, educators, host families, and global advocates working together to ensure that Afghan girls have the opportunity to learn, lead, and thrive."
-    ],
-    "gratitude": {
-      "title": "Our Deepest Gratitude",
-      "quote": "EmpowerHer deeply values the unwavering support of the Afghan Girls Financial Assistance Fund (AGFAF). As our primary sponsor and partner, AGFAF has played a pivotal role in making many of our initiatives and programs possible. For nearly two decades, AGFAF has illuminated the path toward a brighter future for countless Afghan girls. As fellow Afghans and an organization aligned with their mission and vision, we extend our heartfelt gratitude for their continued support and belief in our work."
-    }
-  },
-  "resources": {
-    "seo": {
-      "title": "Resources — EmpowerHer Initiative",
-      "description": "Educational resources, scholarships, and opportunities for Afghan girls."
-    },
-    "header": {
-      "eyebrow": "Education & Opportunities",
-      "heading": "Resources",
-      "intro": "A curated collection of educational programs, scholarships, and opportunities for Afghan girls and women — vetted by our team and organized to help you find the right path forward."
-    },
-    "footerNote": {
-      "text": "If you know of an educational resource, scholarship, or program that supports Afghan girls and women, we'd love to hear about it. Reach out and help us connect more girls with the opportunities they deserve.",
-      "email": "info@empowerher-initiative.org"
-    },
-    "helpUsGrow": {
-      "eyebrow": "Know a resource?",
-      "title": "Help us grow this list."
-    }
-  },
-  "mis": {
-    "seo": {
-      "title": "Monthly Internet Scholarship (MIS) — EmpowerHer Initiative",
-      "description": "EmpowerHer provides monthly internet scholarships to help members participate in our programs."
-    },
-    "content": {
-      "eyebrow": "Financial Support",
-      "heading": "Monthly Internet Scholarship (MIS)",
-      "body": [
-        "EmpowerHer provides Monthly Internet Scholarships (MIS) to all students who need them most, helping them participate fully in our programs. We understand the financial challenges many girls face in Afghanistan and how difficult it can be to access reliable internet. That's why we're proud to offer this financial support and ensure that access to learning is not limited by financial barriers.",
-        "Please note: EmpowerHer does not send funds through \"Hawala\" or any platform that allows cash withdrawal. Instead, we provide internet credit through the Ding application, which lets students activate any internet bundles they need. Also, Ding and our system do not support Salam SIM cards, so please do not include Salam numbers in your MIS or workshop registration forms."
-      ],
-      "advisory": "Please be advised that EmpowerHer provides MIS exclusively to students formally accepted into its programs. This support is not available to individuals outside EmpowerHer or to those currently attending virtual or in-person programs offered by other organizations."
-    }
-  },
-  "newsletter": {
-    "seo": {
-      "title": "Newsletter",
-      "description": "Subscribe to the EmpowerHer newsletter for the latest updates on our programs, success stories, and opportunities to get involved."
-    },
-    "eyebrow": "Stay Connected",
-    "heading": "Subscribe to Our Newsletter",
-    "subheading": "Get the latest updates on our programs, success stories, and opportunities to get involved.",
-    "image": {
-      "url": "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfa0gFM3C8OG5vkbyTeNds9rYucAtpJg0PMV7",
-      "alt": "Empowering women and girls worldwide"
-    },
-    "overlay": {
-      "heading": "Together We Rise",
-      "text": "Join supporters who are making a difference in the lives of Afghan girls and women around the world."
-    }
-  },
-  "contact": {
-    "seo": {
-      "title": "Contact",
-      "description": "Get in touch with the EmpowerHer team."
-    },
-    "eyebrow": "Contact",
-    "heading": "Get in Touch",
-    "intro": "Have a question about EmpowerHer or any of our programs? Fill out the form and we'll get back to you as soon as possible.",
-    "email": {
-      "label": "Email",
-      "value": "info@empowerher-initiative.org"
-    },
-    "location": {
-      "label": "Location",
-      "value": "United States of America"
-    },
-    "followUsTitle": "Follow Us",
-    "thankYouYour": {
-      "title": "Thank you — your message is on its way.",
-      "text": "We've received your message and will get back to you as soon as we can."
-    }
-  },
-  "legal": {
-    "seo": {
-      "title": "Terms & Privacy — EmpowerHer Initiative",
-      "description": "The terms of use and privacy policy for the EmpowerHer Initiative."
-    },
-    "hero": {
-      "eyebrow": "Legal",
-      "heading": "Terms `&` Privacy",
-      "body": "How we operate, what we expect, and how we protect the information you share with the EmpowerHer Initiative."
-    },
-    "body": {
-      "parts": [
-        {
-          "eyebrow": "Part One",
-          "title": "Terms of Use",
-          "paragraphs": [
-            "Terms of Use content coming soon. This section will outline the rules and conditions for using the EmpowerHer website, programs, and services."
+          "label": "Mentorship Program",
+          "link": "/mentorship",
+          "children": [
+            {
+              "label": "Monthly Internet Scholarship (MIS)",
+              "link": "/mis"
+            },
+            {
+              "label": "Student Project Roadmap",
+              "link": "/success-stories/spr"
+            }
           ]
         },
         {
-          "eyebrow": "Part Two",
-          "title": "Privacy Policy",
-          "paragraphs": [
-            "Privacy Policy content coming soon. This section will describe what information we collect, how we use it, and the choices you have over your data."
+          "label": "HerVoice",
+          "link": "/hervoice",
+          "children": [
+            {
+              "label": "Featured Writings from Our Partners",
+              "link": "/hervoice/featured-writings-from-our-partners"
+            }
           ]
         }
-      ],
-      "footer": {
-        "updated": "Last updated: 2026.",
-        "contactPrompt": "Questions? Email",
-        "email": "info@empowerher-initiative.org"
-      }
+      ]
+    },
+    {
+      "label": "Success Stories",
+      "link": "/success-stories"
+    },
+    {
+      "label": "Resources",
+      "link": "/resources"
+    },
+    {
+      "label": "AGFAF",
+      "link": "/agfaf"
+    },
+    {
+      "label": "Contact",
+      "link": "/contact"
     }
-  },
-  "privacy": {
-    "seo": {
-      "title": "Privacy — EmpowerHer Initiative",
-      "description": "This Privacy Policy describes how EmpowerHer collects, uses, and protects participant information across its programs, workshops, publications, and platforms."
-    },
-    "title": "Privacy",
-    "description": "This Privacy Policy describes how EmpowerHer collects, uses, and protects participant information across its programs, workshops, publications, and platforms.",
-    "updated": "Last updated: June 28, 2026",
-    "body": "EmpowerHer is committed to protecting the privacy of the Afghan women and girls who participate in its programs. This Privacy Policy describes the information we collect, how we use it, and the choices and protections available to participants across our programs, workshops, publication platforms, scholarships, events, and initiatives.\n\n## Information We Collect\n\nEmpowerHer may collect information including:\n\n- Names\n- Email addresses\n- Application materials\n- Educational information\n- Workshop participation records\n- Submitted writings and creative works\n\n## How We Use Your Information\n\nInformation collected may be used for:\n\n- Program administration\n- Workshop coordination\n- Scholarship review\n- Publication opportunities\n- Communication regarding EmpowerHer activities\n\n## Confidentiality\n\nEmpowerHer will protect participant information and will not share personal data with third parties without consent, except when necessary for program administration or improvement of program operations. EmpowerHer is not responsible for unauthorized disclosure, sharing, or misuse of program materials or participant information by third parties or participants.\n\nParticipants should avoid sharing sensitive personal information during public workshops, events, or publications.\n\n## Media and Publication Consent\n\nBy participating in EmpowerHer programs and voluntarily submitting written work, photographs, or creative projects, participants grant EmpowerHer permission to:\n\n- Publish submitted work on EmpowerHer platforms.\n- Share participant achievements and success stories.\n- Promote EmpowerHer programs through websites, newsletters, reports, and social media.\n\n## Data Retention and Security\n\nEmpowerHer implements reasonable safeguards to protect participant data and retains information only as long as necessary for program administration and reporting purposes.\n\n## Modifications\n\n- EmpowerHer reserves the right to modify this Privacy Policy at any time. Updated policies will be posted on official EmpowerHer platforms.\n- Continued participation in EmpowerHer programs constitutes acceptance of this policy.\n\n## Contact Us\n\nIf you have questions about this Privacy Policy or our practices, contact us at:\n\n**EmpowerHer Initiative**  \nEmail: [info@empowerher-initiative.org](mailto:info@empowerher-initiative.org)"
-  },
-  "terms": {
-    "seo": {
-      "title": "Terms — EmpowerHer Initiative",
-      "description": "These Terms and Policies describe the terms and conditions for participating in EmpowerHer programs, workshops, publications, scholarships, events, and initiatives."
-    },
-    "title": "Terms",
-    "description": "These Terms and Policies describe the terms and conditions for participating in EmpowerHer programs, workshops, publications, scholarships, events, and initiatives.",
-    "updated": "Last updated: June 28, 2026",
-    "body": "EmpowerHer is committed to creating educational, mentorship, leadership, and publication opportunities for Afghan women and girls in the safest and most efficient ways possible. By participating in any EmpowerHer program, workshop, publication platform, scholarship program, event, or initiative, participants agree to comply with the following terms and policies.\n\n## General Community Guidelines\n\nAll EmpowerHer participants, including students, mentors, lecturers, volunteers, staff members, and contributors, are expected to:\n\n- Treat all members of the EmpowerHer community with respect, dignity, and kindness.\n- Maintain a safe, inclusive, and supportive learning environment.\n- Refrain from harassment, discrimination, or harmful conduct.\n- Respect the privacy and confidentiality of other participants.\n- Communicate respectfully during workshops, meetings, online discussions, and other EmpowerHer activities and programs.\n- Uphold EmpowerHer's mission of empowering Afghan women and girls through education, leadership, storytelling, and advocacy.\n\nEmpowerHer maintains a zero-tolerance policy for violations of these guidelines. Participants who violate these policies may be removed from programs, workshops, or other EmpowerHer opportunities.\n\n## Mentorship Program Policies\n\n### Attendance\n\n- Students are expected to attend all workshop sessions.\n- Students may miss only one workshop session during a workshop round (exclusively a Sunday session).\n- Missing more than one session may result in disqualification from receiving a certificate of completion.\n- Students should notify their mentors or workshop assistants in advance if they are unable to attend a session. Reasonable exceptions may be granted for extenuating circumstances.\n\n### Assignments\n\n- All assignments must be completed and submitted before the stated deadlines.\n- Students who fail to submit more than two assignments may be disqualified from receiving a certificate of completion.\n- Assignments are evaluated as Complete or Incomplete.\n- EmpowerHer maintains a strict no-AI policy across all Mentorship Program workshops and initiatives. The use of AI tools for assignments or activities is prohibited.\n\n### Conduct\n\n- Students must follow all workshop-specific expectations established by mentors.\n- Mentors reserve the right to remove students who repeatedly violate EmpowerHer policies or disrupt the learning environment.\n- Academic honesty is expected in all submitted work.\n- Students must treat fellow students and EmpowerHer staff with respect at all times, including during discussions and disagreements.\n\n## HerVoice Publication Policies\n\n### Eligibility\n\n- Contributors must be active participants in EmpowerHer programs, particularly the Creative Writing and Storytelling Workshop.\n- All submissions must align with EmpowerHer's mission and values.\n\n### Content Guidelines\n\n- Writers must carefully revise and edit their work before submission.\n- First drafts and unfinished pieces may be rejected.\n- Submissions should focus on a single topic, prompt, or theme.\n- Writing should reflect personal experiences, perspectives, creativity, or issues connected to EmpowerHer's mission.\n- Language should be respectful, appropriate, and free from harmful content.\n\n### Images\n\n- Every submission must include a photo, artwork, or illustration.\n- AI-generated images are not permitted.\n- If an image is obtained from another source, proper credit and the original link must be provided.\n\n### Word Limits\n\n- Essays, articles, stories, and fiction pieces: Maximum 1,000 words.\n- Poems: Maximum 40 lines.\n\n### Originality and AI Policy\n\n- The use of generative artificial intelligence tools (including ChatGPT and similar platforms) for writing submissions is prohibited.\n- All submitted work must be the author's original work.\n- Submissions suspected of substantial AI generation may be rejected.\n\n### Author Biography\n\n- Writers must include a short biography of no more than 150 words.\n- Providing social media links is optional.\n\n### Editorial Rights\n\n- EmpowerHer reserves the right to edit submissions for grammar, formatting, clarity, and publication standards.\n- Submission does not guarantee publication.\n- EmpowerHer reserves the right to decline submissions that do not meet publication standards or align with its mission.\n- Copyright in the Work remains vested in the Author, who is responsible for ensuring that the Work does not infringe upon the rights of any third party.\n\n## Monthly Internet Scholarship Policies\n\n### Eligibility\n\n- Applicants must be active participants in EmpowerHer programs.\n- Applicants must demonstrate consistent participation and engagement.\n- Priority may be given to students who demonstrate financial need through their MIS application, as well as strong attendance, assignment completion, and active involvement within the EmpowerHer community throughout their workshop cycle.\n\n### Expectations\n\n- Scholarship recipients are expected to use the support primarily for educational purposes.\n- Recipients should maintain active participation in EmpowerHer programs.\n- Students must communicate honestly regarding their educational and financial needs.\n- Receiving a scholarship does not guarantee future funding.\n\n## Modifications\n\n- EmpowerHer reserves the right to modify these terms, policies, and program requirements at any time. Updated policies will be posted on official EmpowerHer platforms.\n- Continued participation in EmpowerHer programs constitutes acceptance of these policies.\n\n## Legal Protections and Compliance\n\n1. EmpowerHer is not liable for any direct or indirect loss, harm, or damages arising from participation in its programs, workshops, publications, or use of its platforms.\n2. Participants agree to indemnify and hold EmpowerHer harmless from any claims, damages, or liabilities arising from submitted work or participation, including but not limited to copyright infringement or violations of third-party rights.\n3. By submitting work for publication, participants grant EmpowerHer a non-exclusive, royalty-free, and perpetual license to publish, reproduce, and distribute the submitted content across its platforms.\n4. EmpowerHer implements reasonable safeguards to protect participant data and retains information only as long as necessary for program administration and reporting purposes.\n5. Violations of EmpowerHer policies, including academic misconduct, use of prohibited AI tools, or disruptive behavior, may result in disqualification, removal from programs, or revocation of certificates or benefits.\n6. Organizations may verify the validity of certificates issued to EmpowerHer staff, volunteers, and students by contacting [info@empowerher-initiative.org](mailto:info@empowerher-initiative.org).\n\n## Contact Us\n\nIf you have questions about these Terms and Policies, contact us at:\n\n**EmpowerHer Initiative**  \nEmail: [info@empowerher-initiative.org](mailto:info@empowerher-initiative.org)"
-  }
+  ],
+  "text_u17a": "HERVOICE &middot; CELEBRATING WINNERS &middot;",
+  "text_yzvg": "2026",
+  "text_bt4j": "Winners",
+  "text_ctv7": "Trusted Partners & Supporters",
+  "text_2ldx": "Born from lived experience.",
+  "text_2cjh": "Built for Afghan women.",
+  "text_zh07": "Join the",
+  "text_vyxa": "Movement"
 }

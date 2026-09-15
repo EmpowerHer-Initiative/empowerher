@@ -1,23 +1,12 @@
 ---
 // Ports components/marketing/about-us/hero.tsx
 import Reveal from "../home/Reveal.astro";
-import { Text, Image } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  eyebrow: string;
-  heading: string;
-  body: string;
-  image: string;
-  imageAlt: string;
-}
-const { eyebrow, heading, body, image, imageAlt } = Astro.props;
 ---
 
 <section class="relative h-[90vh] min-h-[600px] overflow-hidden">
-  <Image
-    field={"hero.image"}
-    value={image}
-    alt={imageAlt}
+  <img
+    src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTrO039TyJ9E7UkRP3K1djBMpWoJuiOHs42atf"
+    alt="About EmpowerHer"
     loading="eager"
     fetchpriority="high"
     decoding="async"
@@ -32,30 +21,24 @@ const { eyebrow, heading, body, image, imageAlt } = Astro.props;
   <div class="relative flex h-full flex-col justify-end pb-20 md:pb-28">
     <div class="container">
       <Reveal>
-        <Text
-          as="p"
+        <p
           class="mb-5 text-xs font-semibold tracking-[0.3em] text-white/60 uppercase"
-          field={"hero.eyebrow"}
-          value={eyebrow}
-        />
+        >
+          Our Story
+        </p>
       </Reveal>
       <Reveal delay={80}>
-        {
-          /* heading carries an inline <br />; keep hand-tagged (renderRich escapes HTML). */
-        }
+        {/* heading carries an inline <br />; rendered as HTML. */}
         <h1
           class="max-w-3xl font-serif text-5xl leading-[1.05] text-white md:text-7xl lg:text-8xl"
-          data-cms-field={"hero.heading"}
-          set:html={heading}
-        />
+        >Born from lived experience.<br />Built for Afghan women.</h1>
       </Reveal>
       <Reveal delay={160}>
-        <Text
-          as="p"
-          class="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg"
-          field={"hero.body"}
-          value={body}
-        />
+        <p class="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
+          A movement dedicated to equipping Afghan women with resilience,
+          creativity, and leadership to shine as sources of inspiration — even
+          in the face of adversity.
+        </p>
       </Reveal>
     </div>
   </div>

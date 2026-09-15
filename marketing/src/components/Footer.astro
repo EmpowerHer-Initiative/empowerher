@@ -9,7 +9,6 @@ import Facebook from "./icons/Facebook.astro";
 import Instagram from "./icons/Instagram.astro";
 import LinkedIn from "./icons/LinkedIn.astro";
 import FileText from "./icons/FileText.astro";
-import { Region } from "@alisamadiillc/cms-bridge/components";
 
 const { name, email, socials } = variables;
 const year = new Date().getFullYear();
@@ -57,14 +56,12 @@ const socialIcons: Record<string, any> = { Facebook, Instagram, LinkedIn };
         <p class="text-muted-foreground max-w-sm text-sm leading-[1.8]">
           {footer.text}
         </p>
-        <Region type="variant" variantName="email">
-          <a
-            href={`mailto:${email}`}
-            class="text-foreground/70 hover:text-foreground mt-4 text-sm transition-colors"
-          >
-            Email: {email}
-          </a>
-        </Region>
+        <a
+          href={`mailto:${email}`}
+          class="text-foreground/70 hover:text-foreground mt-4 text-sm transition-colors"
+        >
+          Email: {email}
+        </a>
         <p class="text-muted-foreground mt-4 text-sm font-medium">
           {footer.est}
         </p>
@@ -94,20 +91,18 @@ const socialIcons: Record<string, any> = { Facebook, Instagram, LinkedIn };
           <p class="mb-4 text-lg font-bold">{footer.followTitle}</p>
           <div class="flex gap-4">
             {
-              socials.map((s, i) => {
+              socials.map((s) => {
                 const Icon = socialIcons[s.label];
                 return (
-                  <Region type="variant" variantName={`socials.${i}.url`}>
-                    <a
-                      href={s.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={s.label}
-                      class="text-foreground/70 hover:text-foreground transition-colors"
-                    >
-                      {Icon ? <Icon class="size-6" /> : s.label}
-                    </a>
-                  </Region>
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    class="text-foreground/70 hover:text-foreground transition-colors"
+                  >
+                    {Icon ? <Icon class="size-6" /> : s.label}
+                  </a>
                 );
               })
             }
@@ -129,7 +124,7 @@ const socialIcons: Record<string, any> = { Facebook, Instagram, LinkedIn };
     >
       <p class="text-muted-foreground text-xs">
         &copy; {year}
-        <Region type="variant" variantName="name"><span>{name}</span></Region>.
+        <span>{name}</span>.
         <span>{footer.rights}</span>
       </p>
       <div class="flex gap-6">

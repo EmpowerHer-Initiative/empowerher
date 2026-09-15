@@ -1,41 +1,29 @@
 ---
 // Ports components/marketing/sisterhood-sessions/header.tsx
 import Reveal from "../home/Reveal.astro";
-import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  eyebrow?: string;
-  heading: string;
-  body: string;
-}
-const { eyebrow, heading, body } = Astro.props;
 ---
 
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-3xl">
       <Reveal delay={0}>
-        <Text
-          as="p"
-          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"header.eyebrow"}
-          value={eyebrow}
-        />
+        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+          Community & Connection
+        </p>
       </Reveal>
       <Reveal delay={80}>
-        <Heading1
-          class="mt-5 font-serif text-4xl leading-[1.1] md:text-6xl"
-          field={"header.heading"}
-          value={heading}
-        />
+        <h1 class="mt-5 font-serif text-4xl leading-[1.1] md:text-6xl">
+          Sisterhood Sessions
+        </h1>
       </Reveal>
       <Reveal delay={160}>
-        <Text
-          as="p"
-          class="text-muted-foreground mt-8 text-lg leading-relaxed"
-          field={"header.body"}
-          value={body}
-        />
+        <p class="text-muted-foreground mt-8 text-lg leading-relaxed">
+          Sisterhood Sessions are designed to provide a supportive and caring
+          space for all EmpowerHer students enrolled in the mentorship program.
+          These sessions allow students to connect with one another, share their
+          ideas, build friendships, and offer constructive feedback on
+          EmpowerHer programs.
+        </p>
       </Reveal>
     </div>
   </div>

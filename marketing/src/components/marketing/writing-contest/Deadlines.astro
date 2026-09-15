@@ -3,88 +3,79 @@
 import Reveal from "../home/Reveal.astro";
 import AlertTriangle from "../../icons/AlertTriangle.astro";
 import Calendar from "../../icons/Calendar.astro";
-import {
-  Text,
-  Heading2,
-  Heading3,
-  Group,
-  Item,
-} from "@alisamadiillc/cms-bridge/components";
 
-interface Props {
-  eyebrow: string;
-  title: string;
-  items: { date: string; title: string; description: string }[];
-  note: string;
-}
-const { eyebrow, title, items, note } = Astro.props;
+const items = [
+  {
+    "date": "March 1",
+    "title": "Contest Opens",
+    "description": "Application form goes live and submissions begin."
+  },
+  {
+    "date": "March 21",
+    "title": "Submission Deadline",
+    "description": "All entries must be submitted by this date."
+  },
+  {
+    "date": "March 22 – May 1",
+    "title": "Review Period",
+    "description": "Judges evaluate all submissions."
+  },
+  {
+    "date": "May 2",
+    "title": "Notification Day",
+    "description": "All participants receive an update on their submissions."
+  }
+];
 ---
 
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-5xl">
       <Reveal>
-        <Text
-          as="p"
+        <p
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"deadlines.eyebrow"}
-          value={eyebrow}
-        />
-        <Heading2
-          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={"deadlines.title"}
-          value={title}
-        />
+        >
+          Timeline
+        </p>
+        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+          Important Deadlines
+        </h2>
       </Reveal>
 
-      <Group field={"deadlines.items"} class="mt-12 grid gap-6 md:grid-cols-2">
+      <div class="mt-12 grid gap-6 md:grid-cols-2">
         {
           items.map((deadline, i) => (
             <Reveal
               class="border-border/60 bg-background border-l-primary relative overflow-hidden rounded-2xl border border-l-4 p-7 shadow-sm"
               delay={i * 80}
             >
-              <Item index={i} class="flex items-start gap-4">
+              <div class="flex items-start gap-4">
                 <div class="bg-primary text-primary-foreground flex size-12 shrink-0 items-center justify-center rounded-xl font-serif text-lg">
                   {i + 1}
                 </div>
                 <div>
-                  {/* kept hand-tagged: badge mixes Calendar icon + date text (multiple child elements) */}
-                  <span
-                    class="bg-primary/10 text-primary inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
-                    data-cms-field={`deadlines.items.${i}.date`}
-                  >
+                  <span class="bg-primary/10 text-primary inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold">
                     <Calendar class="size-3.5" />
                     {deadline.date}
                   </span>
-                  <Heading3
-                    class="mt-3 font-serif text-2xl"
-                    field={`deadlines.items.${i}.title`}
-                    value={deadline.title}
-                  />
-                  <Text
-                    as="p"
-                    class="text-muted-foreground mt-1.5 text-sm leading-relaxed"
-                    field={`deadlines.items.${i}.description`}
-                    value={deadline.description}
-                  />
+                  <h3 class="mt-3 font-serif text-2xl">{deadline.title}</h3>
+                  <p class="text-muted-foreground mt-1.5 text-sm leading-relaxed">
+                    {deadline.description}
+                  </p>
                 </div>
-              </Item>
+              </div>
             </Reveal>
           ))
         }
-      </Group>
+      </div>
 
       <Reveal
         class="mt-8 flex items-center justify-center gap-3 rounded-2xl border border-amber-400/50 bg-amber-50 p-5 text-center"
       >
         <AlertTriangle class="size-5 shrink-0 text-amber-600" />
-        <Text
-          as="p"
-          class="text-sm font-medium text-amber-900"
-          field={"deadlines.note"}
-          value={note}
-        />
+        <p class="text-sm font-medium text-amber-900">
+          Note: Deadlines are subject to extension if needed.
+        </p>
       </Reveal>
     </div>
   </div>

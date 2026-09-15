@@ -1,16 +1,11 @@
 ---
 // Ports components/marketing/home/story-cover.tsx
-import type { CmsField } from "../../../lib/cms-fields";
-import { Text } from "@alisamadiillc/cms-bridge/components";
 interface Props {
   title: string;
   author: string;
   cover: string;
-  cmsPath?: CmsField;
 }
-const { title, author, cover, cmsPath } = Astro.props;
-const f = (s: string): CmsField | undefined =>
-  cmsPath ? (`${cmsPath}.${s}` as CmsField) : undefined;
+const { title, author, cover } = Astro.props;
 ---
 
 <div
@@ -22,19 +17,14 @@ const f = (s: string): CmsField | undefined =>
     <span class="text-[6.5px] font-bold tracking-[0.22em] uppercase opacity-70"
       >HerVoice &middot; 2026</span
     >
-    <Text
-      as="span"
-      class="font-serif text-xs leading-[1.05] font-medium italic"
-      field={f("title")}
-      value={title}
-    />
+    <span class="font-serif text-xs leading-[1.05] font-medium italic"
+      >{title}</span
+    >
     <span class="h-px w-[18px] bg-current opacity-50"></span>
-    <Text
-      as="span"
+    <span
       class="text-[6.5px] font-semibold tracking-[0.16em] uppercase opacity-60"
-      field={f("name")}
-      value={author}
-    />
+      >{author}</span
+    >
   </div>
   <span
     class="absolute top-0 bottom-0 left-0 w-[5px] bg-black/20 shadow-[inset_-1px_0_0_rgba(255,255,255,.12)]"

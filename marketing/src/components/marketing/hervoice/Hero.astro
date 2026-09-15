@@ -3,28 +3,6 @@
 import ArrowRight from "../../icons/ArrowRight.astro";
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
 import Reveal from "../home/Reveal.astro";
-import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  eyebrow: string;
-  heading: string;
-  description: string;
-  quote: string;
-  descriptionAfter: string;
-  partnersEyebrow: string;
-  partnersText: string;
-  closing: string;
-}
-const {
-  eyebrow,
-  heading,
-  description,
-  quote,
-  descriptionAfter,
-  partnersEyebrow,
-  partnersText,
-  closing,
-} = Astro.props;
 ---
 
 <section class="py-28 md:py-40">
@@ -33,62 +11,55 @@ const {
       {/* Left: large editorial title */}
       <Reveal>
         <div>
-          <Text
-            as="p"
+          <p
             class="text-primary mb-8 text-xs font-semibold tracking-[0.3em] uppercase"
-            field={"hero.eyebrow"}
-            value={eyebrow}
-          />
-          <Heading1
-            class="font-serif text-5xl leading-[1.0] md:text-7xl lg:text-8xl"
-            field={"hero.heading"}
-            value={heading}
-          />
+          >
+            Publication Platform
+          </p>
+          <h1 class="font-serif text-5xl leading-[1.0] md:text-7xl lg:text-8xl">
+            HerVoice
+          </h1>
         </div>
       </Reveal>
 
       {/* Right: description + CTA */}
       <Reveal class="lg:pb-4" delay={120}>
-        <Text
-          as="p"
-          class="text-muted-foreground text-lg leading-relaxed md:text-xl"
-          field={"hero.description"}
-          value={description}
-        />
-        <Text
-          as="blockquote"
+        <p class="text-muted-foreground text-lg leading-relaxed md:text-xl">
+          HerVoice is EmpowerHer's creative storytelling and publication
+          platform, where students can publish their original writings and
+          express themselves freely. At EmpowerHer, we believe in the power of
+          words to heal, connect, and drive change.
+        </p>
+        <blockquote
           class="border-primary/20 mt-8 border-l-2 pl-6 font-serif text-xl leading-relaxed italic"
-          field={"hero.quote"}
-          value={quote}
-        />
-        <Text
-          as="p"
-          class="text-muted-foreground mt-8 text-base leading-relaxed"
-          field={"hero.descriptionAfter"}
-          value={descriptionAfter}
-        />
+        >
+          Many of our students have demonstrated remarkable resilience and
+          courage through storytelling, using their voices to share personal
+          truths and inspire others.
+        </blockquote>
+        <p class="text-muted-foreground mt-8 text-base leading-relaxed">
+          HerVoice gives them the space to do just that—amplifying their
+          experiences and perspectives in a world that too often silences them.
+        </p>
         <div
           class="border-primary/20 bg-primary/[0.04] mt-8 rounded-2xl border p-6"
         >
-          <Text
-            as="p"
+          <p
             class="text-muted-foreground/50 text-xs font-semibold tracking-[0.2em] uppercase"
-            field={"hero.partnersEyebrow"}
-            value={partnersEyebrow}
-          />
-          <Text
-            as="p"
-            class="text-muted-foreground mt-3 text-base leading-relaxed"
-            field={"hero.partnersText"}
-            value={partnersText}
-          />
+          >
+            Global Partners
+          </p>
+          <p class="text-muted-foreground mt-3 text-base leading-relaxed">
+            With the support of our partners—including the National Society of
+            High School Scholars (Atlanta, Georgia), and Amplify Afghan Women
+            (Melbourne, Australia)—we are proud to bring these stories to a
+            global audience.
+          </p>
         </div>
-        <Text
-          as="p"
-          class="mt-8 text-base leading-relaxed font-medium"
-          field={"hero.closing"}
-          value={closing}
-        />
+        <p class="mt-8 text-base leading-relaxed font-medium">
+          Through HerVoice, every story becomes a step toward empowerment,
+          visibility, and hope.
+        </p>
         <div class="mt-10 flex flex-wrap items-center gap-4">
           <a
             href="#writings"

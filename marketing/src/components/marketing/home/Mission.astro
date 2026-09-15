@@ -3,61 +3,36 @@
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Quote from "../../icons/Quote.astro";
 import Reveal from "./Reveal.astro";
-import Highlight from "../../Highlight.astro";
-import { Text, Image } from "@alisamadiillc/cms-bridge/components";
 
-interface Props {
-  eyebrow: string;
-  heading: string;
-  paragraphs: string[];
-  signatureName: string;
-  signatureRole: string;
-  quotes: { text: string; image: string; name: string; role: string }[];
-}
-const { eyebrow, heading, paragraphs, signatureName, signatureRole, quotes } =
-  Astro.props;
+const paragraphs = [
+  "EmpowerHer was born from the hope and strength that you carry within you—even in the darkest of days. You are not forgotten. Your dreams, your voices, your potential—they matter. They are powerful, and they are needed in this world.",
+  "We know that many of you are facing unimaginable challenges. Barriers to education, threats to your freedom, and a world that too often refuses to see your worth. But we believe in your resilience. And through EmpowerHer, we are building a path forward—together.",
+  "Our mission is simple: to support you, to uplift you, and to walk beside you. Whether through education, mentorship, leadership workshops, or simply being a voice when yours is silenced, we are here for you.",
+  "Please don't give up. There is a growing community—inside and outside Afghanistan—that believes in your power to lead, to learn, and to rise. And we are proud to stand with you.",
+];
 ---
 
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="mx-auto max-w-4xl">
-      <Text
-        as="p"
-        class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-        field={"mission.eyebrow"}
-        value={eyebrow}
-      />
-      {
-        /* heading uses Highlight hlClass="italic" — bridge can't reproduce that highlight class, so KEPT hand-tagged. */
-      }
-      <h2
-        class="mt-6 font-serif text-3xl leading-[1.25] md:text-5xl lg:text-6xl"
-        data-cms-field={"mission.heading"}
-      >
-        <Highlight text={heading} hlClass="italic" />
+      <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+        Message From Our Co-Founders
+      </p>
+      <h2 class="mt-6 font-serif text-3xl leading-[1.25] md:text-5xl lg:text-6xl">
+        We see you. We hear you. <span class="cms-hl italic"
+          >And we are with you.</span
+        >
       </h2>
       <div
         class="text-muted-foreground mx-auto mt-8 max-w-2xl space-y-5 text-base leading-[1.8] md:text-lg"
       >
-        {
-          paragraphs.map((p, i) => (
-            <Text as="p" field={`mission.paragraphs.${i}`} value={p} />
-          ))
-        }
+        {paragraphs.map((p) => (<p>{p}</p>))}
       </div>
       <div class="mt-8 text-right">
-        <Text
-          as="p"
-          class="text-foreground font-semibold"
-          field={"mission.signatureName"}
-          value={signatureName}
-        />
-        <Text
-          as="p"
-          class="text-muted-foreground text-sm"
-          field={"mission.signatureRole"}
-          value={signatureRole}
-        />
+        <p class="text-foreground font-semibold">
+          Mahdi Rahimi & Nahid Karimi
+        </p>
+        <p class="text-muted-foreground text-sm">– Co-Founders</p>
       </div>
 
       <div class="mt-16 grid gap-12 md:grid-cols-2 md:gap-8">
@@ -65,37 +40,23 @@ const { eyebrow, heading, paragraphs, signatureName, signatureRole, quotes } =
           <Quote
             class="bg-background text-primary absolute top-0 -left-3 size-6 rounded-full"
           />
-          {
-            /* quote text is wrapped in literal curly-quote entities (non-trivial markup), so KEPT hand-tagged. */
-          }
           <blockquote
             class="font-serif text-xl leading-relaxed italic md:text-2xl"
-            data-cms-field={"mission.quotes.0.text"}
           >
-            &ldquo;{quotes[0].text}&rdquo;
+            &ldquo;For too long, Afghan girls have been written into history as
+            victims. This time, let's write our own.&rdquo;
           </blockquote>
           <div class="mt-6 flex items-center gap-4">
-            <Image
-              field={"mission.quotes.0.image"}
-              value={quotes[0].image}
-              alt={quotes[0].name}
+            <img
+              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTPXlWDWYhZvxtB3ycfP5jQXiMRAWOCrnJ2oYe"
+              alt="Nahid Karimi"
               loading="lazy"
               decoding="async"
               class="size-12 rounded-full object-cover"
             />
             <div>
-              <Text
-                as="p"
-                class="text-sm font-semibold"
-                field={"mission.quotes.0.name"}
-                value={quotes[0].name}
-              />
-              <Text
-                as="p"
-                class="text-muted-foreground text-xs"
-                field={"mission.quotes.0.role"}
-                value={quotes[0].role}
-              />
+              <p class="text-sm font-semibold">Nahid Karimi</p>
+              <p class="text-muted-foreground text-xs">Co-Founder</p>
             </div>
           </div>
         </div>
@@ -104,37 +65,22 @@ const { eyebrow, heading, paragraphs, signatureName, signatureRole, quotes } =
           <Quote
             class="bg-background text-secondary absolute top-0 -left-3 size-6 rounded-full"
           />
-          {
-            /* quote text is wrapped in literal curly-quote entities (non-trivial markup), so KEPT hand-tagged. */
-          }
           <blockquote
             class="font-serif text-xl leading-relaxed italic md:text-2xl"
-            data-cms-field={"mission.quotes.1.text"}
           >
-            &ldquo;{quotes[1].text}&rdquo;
+            &ldquo;WE RISE, WE RISE, WE RISE IN THE FACE OF ADVERSITY&rdquo;
           </blockquote>
           <div class="mt-6 flex items-center gap-4">
-            <Image
-              field={"mission.quotes.1.image"}
-              value={quotes[1].image}
-              alt={quotes[1].name}
+            <img
+              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTfgQqh43C8OG5vkbyTeNds9rYucAtpJg0PMV7"
+              alt="Mahdi Rahimi"
               loading="lazy"
               decoding="async"
               class="size-12 rounded-full object-cover"
             />
             <div>
-              <Text
-                as="p"
-                class="text-sm font-semibold"
-                field={"mission.quotes.1.name"}
-                value={quotes[1].name}
-              />
-              <Text
-                as="p"
-                class="text-muted-foreground text-xs"
-                field={"mission.quotes.1.role"}
-                value={quotes[1].role}
-              />
+              <p class="text-sm font-semibold">Mahdi Rahimi</p>
+              <p class="text-muted-foreground text-xs">Co-Founder</p>
             </div>
           </div>
         </div>

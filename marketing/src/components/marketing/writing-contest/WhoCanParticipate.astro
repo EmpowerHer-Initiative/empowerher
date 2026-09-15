@@ -2,58 +2,46 @@
 // Ports components/marketing/writing-contest/who-can-participate.tsx
 import Reveal from "../home/Reveal.astro";
 import CheckCircle2 from "../../icons/CheckCircle2.astro";
-import {
-  Text,
-  Heading2,
-  Group,
-  Item,
-} from "@alisamadiillc/cms-bridge/components";
 
-interface Props {
-  eyebrow: string;
-  title: string;
-  items: string[];
-}
-const { eyebrow, title, items } = Astro.props;
+const items = [
+  "All Afghan girls and women regardless of any age can submit their writings. Men are not eligible.",
+  "You can submit your writings if you live in Afghanistan ONLY. Submissions from other countries are not accepted.",
+  "You must have an intermediate English level and be able to express your ideas and stories clearly without any help from AI (ChatGPT or any other platforms).",
+  "You must have a valid ID, contact information, and be able to receive our cash prizes, if you are selected as a winner."
+];
 ---
 
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-4xl">
       <Reveal>
-        <Text
-          as="p"
+        <p
           class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"whoCanParticipate.eyebrow"}
-          value={eyebrow}
-        />
-        <Heading2
-          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={"whoCanParticipate.title"}
-          value={title}
-        />
+        >
+          Eligibility
+        </p>
+        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+          Who Can Participate
+        </h2>
       </Reveal>
-      <Group field={"whoCanParticipate.items"} class="mt-12 grid gap-4">
+      <div class="mt-12 grid gap-4">
         {
           items.map((item, i) => (
             <Reveal
               class="border-border/60 bg-background flex items-start gap-4 rounded-2xl border p-6 shadow-sm"
               delay={i * 80}
             >
-              {/* display:contents: Reveal is a flex row (icon + text side by side); Item must not introduce a box that breaks that layout */}
-              <Item index={i} class="contents">
+              {/* display:contents: Reveal is a flex row (icon + text side by side); this wrapper must not introduce a box that breaks that layout */}
+              <div class="contents">
                 <CheckCircle2 class="text-primary mt-0.5 size-6 shrink-0" />
-                <Text
-                  as="p"
-                  class="text-foreground/80 text-base leading-relaxed"
-                  field={`whoCanParticipate.items.${i}`}
-                  value={item}
-                />
-              </Item>
+                <p class="text-foreground/80 text-base leading-relaxed">
+                  {item}
+                </p>
+              </div>
             </Reveal>
           ))
         }
-      </Group>
+      </div>
     </div>
   </div>
 </section>

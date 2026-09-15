@@ -1,7 +1,4 @@
 ---
-import { Text } from "@alisamadiillc/cms-bridge/components";
-import pages from "_pages.json";
-const content = pages.home;
 // Ports components/marketing/home/contest-seal.tsx
 ---
 
@@ -44,17 +41,11 @@ const content = pages.home;
   <div
     class="absolute inset-0 flex flex-col items-center justify-center text-center"
   >
-    <Text
-      as="p"
-      class="font-serif text-[26px] leading-none font-bold"
-      field="text"
-      value={content.text}
-    />
-    <Text
-      as="p"
+    <p class="font-serif text-[26px] leading-none font-bold">2026</p>
+    <p
       class="mt-0.5 text-[8.5px] font-bold tracking-[0.2em] text-[#E0AE3C] uppercase"
-      field="text2"
-      value={content.text2}
-    />
+    >
+      Winners
+    </p>
   </div>
 </div>

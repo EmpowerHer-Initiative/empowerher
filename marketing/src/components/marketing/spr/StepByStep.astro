@@ -1,41 +1,46 @@
 ---
 // Ports the StepByStep section from app/(marketing)/success-stories/spr/page.tsx
 import Reveal from "../home/Reveal.astro";
-import {
-  Heading2,
-  Heading3,
-  Text,
-  Group,
-  Item,
-} from "@alisamadiillc/cms-bridge/components";
 
-interface Step {
-  title: string;
-  description: string;
-}
-interface Props {
-  eyebrow: string;
-  heading: string;
-  steps: Step[];
-}
-const { eyebrow, heading, steps } = Astro.props;
+const steps = [
+  {
+    title: "Welcome as Assistant",
+    description:
+      "Successful candidates are welcomed as Assistants for two workshop cycles. We will match you with any available mentor and his/her respective workshop.",
+  },
+  {
+    title: "Hands-On Experience",
+    description:
+      "Assistants gain hands-on experience supporting new participants and learning how an EmpowerHer workshop operates. They will learn about EmpowerHer's internal system, including training on how to check MIS applications, registration applications, communicate effectively, and lead online sessions.",
+  },
+  {
+    title: "Design Your Workshop",
+    description:
+      "During these two workshop cycles, assistants design their own online workshops and prepare mentorship materials. All materials are subject to approval from EmpowerHer's Mentorship Program Director.",
+  },
+  {
+    title: "Academic Demo Session",
+    description:
+      "Towards the end of Assistant training and the two month workshop cycle, assistants conduct a one and half hour long Academic Demo Session, mentoring a staff member (with their materials) to demonstrate their teaching and leadership skills.",
+  },
+  {
+    title: "Promoted to Mentor",
+    description:
+      "After successfully completing the demo, Assistants are promoted to Mentor positions, officially joining the EmpowerHer Mentorship Program and mentoring many more Afghan girls.",
+  },
+];
 ---
 
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-2xl">
       <Reveal>
-        <Text
-          as="p"
-          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"stepByStep.eyebrow"}
-          value={eyebrow}
-        />
-        <Heading2
-          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={"stepByStep.heading"}
-          value={heading}
-        />
+        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+          The Process
+        </p>
+        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+          Step by Step Guide
+        </h2>
       </Reveal>
 
       {/* Vertical timeline */}
@@ -44,14 +49,10 @@ const { eyebrow, heading, steps } = Astro.props;
         <div class="bg-border absolute top-4 bottom-4 left-[1.125rem] w-px">
         </div>
 
-        <Group as="ol" field={"stepByStep.steps"} class="space-y-0">
+        <ol class="space-y-0">
           {
             steps.map((step, i) => (
-              <Item
-                index={i}
-                as="li"
-                class="group relative flex gap-8 pb-12 last:pb-0"
-              >
+              <li class="group relative flex gap-8 pb-12 last:pb-0">
                 {/* Circle node */}
                 <div class="border-primary/40 bg-background group-hover:border-primary group-hover:bg-primary group-hover:shadow-primary/25 relative z-10 flex size-9 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:shadow-lg">
                   <span class="text-primary group-hover:text-primary-foreground text-[10px] font-bold transition-colors duration-500">
@@ -61,22 +62,17 @@ const { eyebrow, heading, steps } = Astro.props;
 
                 {/* Content */}
                 <div class="pt-0.5 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1">
-                  <Heading3
-                    class="group-hover:text-primary text-lg leading-snug font-semibold transition-colors duration-500"
-                    field={`stepByStep.steps.${i}.title`}
-                    value={step.title}
-                  />
-                  <Text
-                    as="p"
-                    class="text-foreground/70 mt-3 text-sm leading-relaxed"
-                    field={`stepByStep.steps.${i}.description`}
-                    value={step.description}
-                  />
+                  <h3 class="group-hover:text-primary text-lg leading-snug font-semibold transition-colors duration-500">
+                    {step.title}
+                  </h3>
+                  <p class="text-foreground/70 mt-3 text-sm leading-relaxed">
+                    {step.description}
+                  </p>
                 </div>
-              </Item>
+              </li>
             ))
           }
-        </Group>
+        </ol>
       </Reveal>
     </div>
   </div>

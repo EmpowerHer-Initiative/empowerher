@@ -1,50 +1,42 @@
 ---
 // Ports components/marketing/sisterhood-sessions/why-they-matter.tsx
 import Reveal from "../home/Reveal.astro";
-import { Heading2, Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  eyebrow?: string;
-  heading: string;
-  body: string;
-  quote: string;
-}
-const { eyebrow, heading, body, quote } = Astro.props;
 ---
 
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-3xl">
       <Reveal delay={0}>
-        <Text
-          as="p"
+        <p
           class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"whyTheyMatter.eyebrow"}
-          value={eyebrow}
-        />
+        >
+          The Purpose
+        </p>
       </Reveal>
       <Reveal delay={80}>
-        <Heading2
-          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={"whyTheyMatter.heading"}
-          value={heading}
-        />
+        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+          Why Sisterhood Sessions Matter
+        </h2>
       </Reveal>
       <Reveal delay={160}>
-        <Text
-          as="p"
-          class="text-muted-foreground mt-8 text-lg leading-relaxed"
-          field={"whyTheyMatter.body"}
-          value={body}
-        />
+        <p class="text-muted-foreground mt-8 text-lg leading-relaxed">
+          Sisterhood Sessions were created in response to the loss of hope many
+          girls and women in Afghanistan are experiencing due to restrictions on
+          education and opportunity. EmpowerHer aims to provide not only
+          educational support but also a space where students feel encouraged,
+          heard, and valued.
+        </p>
       </Reveal>
       <Reveal delay={240}>
-        <Text
-          as="blockquote"
+        <blockquote
           class="border-border text-muted-foreground mt-14 border-l-2 pl-8 font-serif text-2xl leading-[1.4] md:text-3xl"
-          field={"whyTheyMatter.quote"}
-          value={quote}
-        />
+        >
+          During these sessions, EmpowerHer assistants support students with
+          both personal challenges and workshop-related concerns. The
+          conversations are designed to foster confidence, resilience, and hope
+          as students continue advocating for their right to education and a
+          better future.
+        </blockquote>
       </Reveal>
     </div>
   </div>

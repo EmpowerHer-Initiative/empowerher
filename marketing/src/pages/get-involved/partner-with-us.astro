@@ -1,15 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import PartnerContact from "../../components/marketing/get-involved/PartnerContact.astro";
-import pages from "_pages.json";
-const data = pages["get-involved-partner"];
 ---
 
 <Layout>
-  <PartnerContact
-    eyebrow={data.eyebrow}
-    heading={data.heading}
-    body={data.body}
-    questions={data.questions}
-  />
+  <PartnerContact />
 </Layout>

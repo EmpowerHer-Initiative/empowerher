@@ -2,22 +2,51 @@
 // Ports components/marketing/mentorship/workshop-structure.tsx
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "../home/Reveal.astro";
-import {
-  Heading2,
-  Heading3,
-  Text,
-  Group,
-  Item,
-} from "@alisamadiillc/cms-bridge/components";
 
-interface Props {
-  eyebrow: string;
-  title: string;
-  description: string;
-  items: { title: string; description: string }[];
-}
-
-const { eyebrow, title, description, items } = Astro.props;
+const items = [
+  {
+    title: "Cycle Duration",
+    description: "Each workshop runs in 6-week cycles (about 1.5 months).",
+  },
+  {
+    title: "Sessions per Week",
+    description: "Workshops meet twice weekly — on Saturdays and Sundays.",
+  },
+  {
+    title: "Session Length",
+    description: "Each session is 2 hours long.",
+  },
+  {
+    title: "Saturday Sessions",
+    description:
+      "Led by assigned mentors. Focused on skill-building, presentations, and guided activities.",
+  },
+  {
+    title: "Sunday Sessions",
+    description:
+      "Dedicated to guest speaker presentations, group discussions, lecturers, and Q&A. Covers themes related to empowerment, leadership, storytelling, and resilience.",
+  },
+  {
+    title: "Workshop Format",
+    description:
+      "Fully virtual via Google Meet. Materials including assignments and other activities are posted through separate Google Classrooms.",
+  },
+  {
+    title: "Participant Limit",
+    description:
+      "Each workshop accepts 16 participants to ensure personalized attention.",
+  },
+  {
+    title: "Mentorship Style",
+    description:
+      "Collaborative and discussion-based, encouraging peer support and active participation. Mentors guide students through both personal reflection and project development.",
+  },
+  {
+    title: "Project-Based Learning",
+    description:
+      "Participants complete capstone or final projects such as creative writing, art, real-world projects, impact proposals, or cultural presentations reflecting what they have learned.",
+  },
+];
 ---
 
 <section class="py-28 md:py-40">
@@ -27,42 +56,30 @@ const { eyebrow, title, description, items } = Astro.props;
     >
       <Reveal>
         <div>
-          <Text
-            as="p"
+          <p
             class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
-            field={"workshopStructure.eyebrow"}
-            value={eyebrow}
-          />
-          <Heading2
-            class="font-serif text-4xl leading-[1.1] md:text-5xl"
-            field={"workshopStructure.title"}
-            value={title}
-          />
+          >
+            How It Works
+          </p>
+          <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">
+            Workshop Structure
+          </h2>
         </div>
       </Reveal>
       <Reveal delay={80}>
-        <Text
-          as="p"
-          class="text-muted-foreground max-w-xs text-sm leading-relaxed"
-          field={"workshopStructure.description"}
-          value={description}
-        />
+        <p class="text-muted-foreground max-w-xs text-sm leading-relaxed">
+          Every detail is designed to maximize learning, connection, and
+          empowerment.
+        </p>
       </Reveal>
     </div>
 
     {/* Card grid — brand-accented */}
     <Reveal delay={160}>
-      <Group
-        field={"workshopStructure.items"}
-        class="grid gap-5 md:grid-cols-2 lg:grid-cols-3"
-      >
+      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {
           items.map((item, i) => (
-            <Item
-              index={i}
-              as="div"
-              class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 relative flex flex-col overflow-hidden rounded-2xl border p-7 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl"
-            >
+            <div class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 relative flex flex-col overflow-hidden rounded-2xl border p-7 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl">
               {/* Top accent bar */}
               <span class="from-primary to-secondary absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-x-100" />
 
@@ -71,21 +88,14 @@ const { eyebrow, title, description, items } = Astro.props;
                   {String(i + 1).padStart(2, "0")}
                 </span>
               </div>
-              <Heading3
-                class="mt-5 text-lg font-semibold"
-                field={`workshopStructure.items.${i}.title`}
-                value={item.title}
-              />
-              <Text
-                as="p"
-                class="text-muted-foreground mt-2 text-sm leading-relaxed"
-                field={`workshopStructure.items.${i}.description`}
-                value={item.description}
-              />
-            </Item>
+              <h3 class="mt-5 text-lg font-semibold">{item.title}</h3>
+              <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
+                {item.description}
+              </p>
+            </div>
           ))
         }
-      </Group>
+      </div>
     </Reveal>
 
     <Reveal delay={240}>

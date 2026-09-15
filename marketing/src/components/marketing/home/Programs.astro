@@ -5,26 +5,6 @@ import ArrowUpRight from "../../icons/ArrowUpRight.astro";
 import BookOpen from "../../icons/BookOpen.astro";
 import Users from "../../icons/Users.astro";
 import Reveal from "./Reveal.astro";
-import {
-  Heading2,
-  Heading3,
-  Text,
-  Image,
-} from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  eyebrow: string;
-  heading: string;
-  bodyText: string;
-  cards: {
-    label: string;
-    title: string;
-    description: string;
-    image: string;
-    alt: string;
-  }[];
-}
-const { eyebrow, heading, bodyText, cards } = Astro.props;
 ---
 
 <section class="bg-muted text-foreground py-28 md:py-40">
@@ -34,17 +14,12 @@ const { eyebrow, heading, bodyText, cards } = Astro.props;
         class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
       >
         <div>
-          <Text
-            as="p"
+          <p
             class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
-            field={"programs.eyebrow"}
-            value={eyebrow}
-          />
-          <Heading2
-            class="mt-4 font-serif text-3xl md:text-5xl"
-            field={"programs.heading"}
-            value={heading}
-          />
+          >
+            What We Do
+          </p>
+          <h2 class="mt-4 font-serif text-3xl md:text-5xl">Our Programs</h2>
         </div>
         <a
           href="/mentorship"
@@ -56,12 +31,15 @@ const { eyebrow, heading, bodyText, cards } = Astro.props;
     </Reveal>
 
     <Reveal delay={80}>
-      <Text
-        as="p"
-        class="text-muted-foreground mt-8 max-w-3xl text-base leading-[1.8]"
-        field={"programs.bodyText"}
-        value={bodyText}
-      />
+      <p class="text-muted-foreground mt-8 max-w-3xl text-base leading-[1.8]">
+        Our projects are designed to meet Afghan girls where they are—and help
+        them grow into who they're meant to be. Each initiative provides a safe,
+        inclusive space where participants gain the tools, guidance, and
+        community they need to rise. From leadership workshops to storytelling
+        programs, every project builds confidence, sharpens skills, and
+        encourages bold self-expression. Together, we're creating spaces where
+        Afghan girls can learn, lead, and shape their own futures.
+      </p>
     </Reveal>
 
     <Reveal delay={160}>
@@ -70,10 +48,9 @@ const { eyebrow, heading, bodyText, cards } = Astro.props;
           <div
             class="relative aspect-[4/3] overflow-hidden rounded-[2rem] md:aspect-auto md:h-full"
           >
-            <Image
-              field={"programs.cards.0.image"}
-              value={cards[0].image}
-              alt={cards[0].alt}
+            <img
+              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTEK40ctbfRbjSv9fDHMpJXBriOWVtPmoQZNC3"
+              alt="HerVoice"
               loading="lazy"
               decoding="async"
               class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
@@ -85,24 +62,17 @@ const { eyebrow, heading, bodyText, cards } = Astro.props;
             <div class="absolute right-0 bottom-0 left-0 p-8">
               <div class="flex items-center gap-2 text-white/60">
                 <BookOpen class="size-4" />
-                <Text
-                  as="span"
-                  class="text-xs font-medium tracking-[0.2em] uppercase"
-                  field={"programs.cards.0.label"}
-                  value={cards[0].label}
-                />
+                <span class="text-xs font-medium tracking-[0.2em] uppercase">
+                  Storytelling Platform
+                </span>
               </div>
-              <Heading3
-                class="mt-2 font-serif text-3xl text-white md:text-4xl"
-                field={"programs.cards.0.title"}
-                value={cards[0].title}
-              />
-              <Text
-                as="p"
-                class="mt-2 max-w-md text-sm text-white/70"
-                field={"programs.cards.0.description"}
-                value={cards[0].description}
-              />
+              <h3 class="mt-2 font-serif text-3xl text-white md:text-4xl">
+                HerVoice
+              </h3>
+              <p class="mt-2 max-w-md text-sm text-white/70">
+                A platform for Afghan girls to share their stories, amplify
+                their voices, and inspire change through creative expression.
+              </p>
               <span
                 class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-white/80 transition-all duration-500 group-hover:gap-2.5"
               >
@@ -116,10 +86,9 @@ const { eyebrow, heading, bodyText, cards } = Astro.props;
           <div
             class="relative aspect-[4/3] overflow-hidden rounded-[2rem] md:aspect-auto md:h-full md:min-h-[360px]"
           >
-            <Image
-              field={"programs.cards.1.image"}
-              value={cards[1].image}
-              alt={cards[1].alt}
+            <img
+              src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTztHu6kOQlbZOApif7EkNI4MXGo08zhqH6CwY"
+              alt="Mentorship"
               loading="lazy"
               decoding="async"
               class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
@@ -131,24 +100,16 @@ const { eyebrow, heading, bodyText, cards } = Astro.props;
             <div class="absolute right-0 bottom-0 left-0 p-6">
               <div class="flex items-center gap-2 text-white/60">
                 <Users class="size-4" />
-                <Text
-                  as="span"
-                  class="text-xs font-medium tracking-[0.2em] uppercase"
-                  field={"programs.cards.1.label"}
-                  value={cards[1].label}
-                />
+                <span class="text-xs font-medium tracking-[0.2em] uppercase">
+                  Core Program
+                </span>
               </div>
-              <Heading3
-                class="mt-2 font-serif text-2xl text-white"
-                field={"programs.cards.1.title"}
-                value={cards[1].title}
-              />
-              <Text
-                as="p"
-                class="mt-1 text-sm text-white/70"
-                field={"programs.cards.1.description"}
-                value={cards[1].description}
-              />
+              <h3 class="mt-2 font-serif text-2xl text-white">Mentorship</h3>
+              <p class="mt-1 text-sm text-white/70">
+                EmpowerHer's core program offers Afghan girls free workshops and
+                mentorship to build resilience, gain support, and launch impact
+                projects.
+              </p>
               <span
                 class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-white/80 transition-all duration-500 group-hover:gap-2.5"
               >

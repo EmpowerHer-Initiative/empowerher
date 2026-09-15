@@ -4,16 +4,9 @@
 // image). Client-side pagination (PAGE_SIZE = 10) mirrors the source's useState
 // paging + Reveal.
 import Reveal from "../home/Reveal.astro";
+import { Region } from "@alisamadiillc/cms-bridge/components";
 import MapPin from "../../icons/MapPin.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
-import type { CmsField } from "../../../lib/cms-fields";
-import {
-  Heading3,
-  Text,
-  Image,
-  Region,
-  Item,
-} from "@alisamadiillc/cms-bridge/components";
 
 interface Resource {
   id?: number;
@@ -26,15 +19,11 @@ interface Resource {
 
 interface Props {
   resources: Resource[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "resources"). */
-  cmsPath?: CmsField;
 }
 
 const PAGE_SIZE = 10;
 
-const { resources, cmsPath } = Astro.props;
-const f = (s: string): CmsField | undefined =>
-  cmsPath ? (`${cmsPath}.${s}` as CmsField) : undefined;
+const { resources } = Astro.props;
 
 const total = resources.length;
 ---
@@ -49,12 +38,11 @@ const total = resources.length;
         </p>
       </Reveal>
 
-      <Region type="collection" name="resource-listings">
+      <Region type="collection" name="resources">
         <div class="space-y-6">
           {
             resources.map((resource, i) => (
-              <Item
-                index={i}
+              <div
                 class="resource-card"
                 data-page={Math.floor(i / PAGE_SIZE) + 1}
                 style="opacity:0;transform:translateY(48px);transition:opacity 1.2s cubic-bezier(0.32,0.72,0,1),transform 1.2s cubic-bezier(0.32,0.72,0,1);will-change:opacity,transform;"
@@ -62,32 +50,23 @@ const total = resources.length;
                 <div class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col gap-8 rounded-3xl border p-8 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-xl lg:flex-row lg:p-10">
                   {/* Content */}
                   <div class="flex flex-1 flex-col items-start gap-4">
-                    <Heading3
-                      class="font-serif text-2xl leading-tight md:text-3xl"
-                      field={f(`${i}.name`)}
-                      value={resource.name}
-                    />
+                    <h3 class="font-serif text-2xl leading-tight md:text-3xl">
+                      {resource.name}
+                    </h3>
 
-                    <span
-                      class="text-muted-foreground inline-flex items-center gap-2 text-sm"
-                      data-cms-field={f(`${i}.location`)}
-                    >
+                    <span class="text-muted-foreground inline-flex items-center gap-2 text-sm">
                       <MapPin class="size-4" />
                       {resource.location}
                     </span>
 
-                    <Text
-                      as="p"
-                      class="text-muted-foreground text-base leading-relaxed whitespace-pre-line"
-                      field={f(`${i}.description`)}
-                      value={resource.description}
-                    />
+                    <p class="text-muted-foreground text-base leading-relaxed whitespace-pre-line">
+                      {resource.description}
+                    </p>
 
                     <a
                       href={resource.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      data-cms-field={f(`${i}.link`)}
                       class="group/btn bg-primary text-primary-foreground hover:shadow-primary/25 mt-auto inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-lg active:scale-[0.98]"
                     >
                       View
@@ -98,9 +77,8 @@ const total = resources.length;
                   {/* Logo */}
                   {resource.image && (
                     <div class="border-border/30 relative flex aspect-video w-full shrink-0 items-center justify-center overflow-hidden rounded-2xl border bg-white p-6 lg:aspect-square lg:w-72">
-                      <Image
-                        field={f(`${i}.image`)}
-                        value={resource.image}
+                      <img
+                        src={resource.image}
                         alt={resource.name}
                         loading="lazy"
                         decoding="async"
@@ -109,7 +87,7 @@ const total = resources.length;
                     </div>
                   )}
                 </div>
-              </Item>
+              </div>
             ))
           }
         </div>

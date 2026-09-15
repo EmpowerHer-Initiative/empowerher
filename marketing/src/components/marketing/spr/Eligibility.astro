@@ -2,31 +2,12 @@
 // Ports the Eligibility section from app/(marketing)/success-stories/spr/page.tsx
 import Mail from "../../icons/Mail.astro";
 import Reveal from "../home/Reveal.astro";
-import {
-  Heading2,
-  Heading3,
-  Text,
-  Group,
-  Item,
-  Link,
-} from "@alisamadiillc/cms-bridge/components";
-import pages from "_pages.json";
-const content = pages.spr;
 
-interface HowToApply {
-  eyebrow: string;
-  title: string;
-  bodyBefore: string;
-  bodyAfter: string;
-}
-interface Props {
-  eyebrow: string;
-  heading: string;
-  subtitle: string;
-  items: string[];
-  howToApply: HowToApply;
-}
-const { eyebrow, heading, subtitle, items, howToApply } = Astro.props;
+const items = [
+  "Students must successfully complete and obtain Certificates of Completion for two consecutive workshops.",
+  "Students must be actively engaged in the two workshops they attended and punctual with all assigned work, including discussions, projects, assignments, and other mentorship materials.",
+  "Students must pass an interview with the Mentorship Program Director assessing skillsets and language proficiency.",
+];
 
 const ruleAccents = [
   "from-amber-300 to-amber-500 shadow-amber-500/30",
@@ -51,29 +32,23 @@ const ruleAccents = [
   <div class="relative container">
     <div class="mx-auto max-w-2xl">
       <Reveal>
-        <Text
-          as="p"
+        <p
           class="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase"
-          field={"eligibility.eyebrow"}
-          value={eyebrow}
-        />
-        <Heading2
-          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={"eligibility.heading"}
-          value={heading}
-        />
-        <Text
-          as="p"
-          class="mt-6 text-base leading-relaxed text-white/70"
-          field={"eligibility.subtitle"}
-          value={subtitle}
-        />
+        >
+          Requirements
+        </p>
+        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+          Eligibility Requirements
+        </h2>
+        <p class="mt-6 text-base leading-relaxed text-white/70">
+          Before applying, confirm you meet all three criteria below.
+        </p>
       </Reveal>
 
-      <Group as="ol" field={"eligibility.items"} class="mt-12 space-y-5">
+      <ol class="mt-12 space-y-5">
         {
           items.map((rule, i) => (
-            <Item index={i} as="li">
+            <li>
               <Reveal
                 class="group flex gap-5 rounded-2xl border border-white/10 bg-white/[0.05] p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.09]"
                 delay={i * 140}
@@ -83,45 +58,33 @@ const ruleAccents = [
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <Text
-                  as="p"
-                  class="self-center text-base leading-relaxed text-white/85"
-                  field={`eligibility.items.${i}`}
-                  value={rule}
-                />
+                <p class="self-center text-base leading-relaxed text-white/85">
+                  {rule}
+                </p>
               </Reveal>
-            </Item>
+            </li>
           ))
         }
-      </Group>
+      </ol>
 
       {/* How to apply — inline */}
       <Reveal class="mt-16 border-t border-white/15 pt-12">
-        <Text
-          as="p"
-          class="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase"
-          field={"eligibility.howToApply.eyebrow"}
-          value={howToApply.eyebrow}
-        />
-        <Heading3
-          class="mt-4 font-serif text-3xl text-white"
-          field={"eligibility.howToApply.title"}
-          value={howToApply.title}
-        />
-        {
-          /* bodyBefore/bodyAfter share one <p> around a hardcoded mailto link — content spans multiple child elements, left hand-tagged. */
-        }
         <p
-          class="mt-5 text-base leading-relaxed text-white/75"
-          data-cms-field={"eligibility.howToApply.bodyBefore"}
+          class="text-xs font-semibold tracking-[0.3em] text-amber-300 uppercase"
         >
-          {howToApply.bodyBefore}{" "}
-          <Link
+          Application
+        </p>
+        <h3 class="mt-4 font-serif text-3xl text-white">How to Apply</h3>
+        <p class="mt-5 text-base leading-relaxed text-white/75">
+          Submit an inquiry to{" "}
+          <a
             class="font-medium text-amber-300 underline decoration-amber-300/40 underline-offset-4 transition-colors hover:decoration-amber-300"
-            field="section.cta"
-            value={content.section.cta}>{content.section.cta.label}</Link
+            href="mailto:apply@empowerher-initiative.org"
+            >apply@empowerher-initiative.org</a
           >
-          {howToApply.bodyAfter}
+          . Include your full name, the two EmpowerHer workshops you have attended,
+          and your reasons for wanting to join this roadmap. Once received, the Mentorship
+          Program Director will schedule an interview shortly.
         </p>
         <div class="mt-8">
           <a

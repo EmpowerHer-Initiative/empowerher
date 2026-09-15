@@ -1,13 +1,6 @@
 ---
 // Ports components/marketing/success-stories/header.tsx
 import Reveal from "../home/Reveal.astro";
-import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  heading: string;
-  subtitle: string;
-}
-const { heading, subtitle } = Astro.props;
 ---
 
 <section class="pt-28 pb-12 md:pt-40 md:pb-16">
@@ -16,22 +9,20 @@ const { heading, subtitle } = Astro.props;
       <span
         class="via-border h-px max-w-[120px] flex-1 bg-gradient-to-r from-transparent to-transparent"
       ></span>
-      <Heading1
-        class="text-center font-serif text-4xl md:text-6xl"
-        field={"header.heading"}
-        value={heading}
-      />
+      <h1 class="text-center font-serif text-4xl md:text-6xl">
+        Success Stories
+      </h1>
       <span
         class="via-border h-px max-w-[120px] flex-1 bg-gradient-to-r from-transparent to-transparent"
       ></span>
     </Reveal>
     <Reveal delay={80}>
-      <Text
-        as="p"
+      <p
         class="text-muted-foreground mx-auto mt-6 max-w-xl text-center text-base leading-relaxed"
-        field={"header.subtitle"}
-        value={subtitle}
-      />
+      >
+        Each program created meaningful change in the lives of participating
+        girls. These are their stories.
+      </p>
     </Reveal>
   </div>
 </section>

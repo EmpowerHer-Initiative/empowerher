@@ -1,11 +1,5 @@
 ---
 // Ports HerVoiceCTA from components/hervoice/shared.tsx (default props).
-import { Heading2, Text } from "@alisamadiillc/cms-bridge/components";
-interface Props {
-  heading: string;
-  bodyText: string;
-}
-const { heading, bodyText } = Astro.props;
 ---
 
 <section class="px-6 py-12 md:py-16">
@@ -13,17 +7,13 @@ const { heading, bodyText } = Astro.props;
     class="mx-auto max-w-5xl overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#1E78C4,#2E9BE6)] px-8 py-10 md:flex md:items-center md:justify-between md:px-12 md:py-12"
   >
     <div>
-      <Heading2
-        class="text-2xl font-bold text-white md:text-3xl"
-        field={"herVoiceCta.heading"}
-        value={heading}
-      />
-      <Text
-        as="p"
-        class="mt-2 max-w-lg text-[15px] leading-relaxed text-white/70"
-        field={"herVoiceCta.bodyText"}
-        value={bodyText}
-      />
+      <h2 class="text-2xl font-bold text-white md:text-3xl">
+        Explore HerVoice Initiative
+      </h2>
+      <p class="mt-2 max-w-lg text-[15px] leading-relaxed text-white/70">
+        Discover student writing, voices, and stories published through the
+        HerVoice platform.
+      </p>
     </div>
     <a
       href="/hervoice"

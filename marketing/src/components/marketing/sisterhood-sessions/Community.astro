@@ -1,94 +1,66 @@
 ---
 // Ports components/marketing/sisterhood-sessions/community.tsx
 import Reveal from "../home/Reveal.astro";
-import {
-  Heading2,
-  Text,
-  Group,
-  Item,
-} from "@alisamadiillc/cms-bridge/components";
 
-interface Props {
-  eyebrow?: string;
-  heading: string;
-  body: string;
-  listIntro: string;
-  benefits: string[];
-  closing: string;
-}
-const { eyebrow, heading, body, listIntro, benefits, closing } = Astro.props;
+const benefits = [
+  "Express their thoughts and experiences",
+  "Discuss challenges they face in their daily lives",
+  "Support and encourage one another",
+  "Strengthen their sense of community",
+];
 ---
 
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-3xl">
       <Reveal delay={0}>
-        <Text
-          as="p"
-          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"community.eyebrow"}
-          value={eyebrow}
-        />
+        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+          Belonging
+        </p>
       </Reveal>
       <Reveal delay={80}>
-        <Heading2
-          class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={"community.heading"}
-          value={heading}
-        />
+        <h2 class="mt-5 font-serif text-4xl leading-[1.1] md:text-5xl">
+          A Safe and Supportive Community
+        </h2>
       </Reveal>
       <Reveal delay={160}>
-        <Text
-          as="p"
-          class="text-muted-foreground mt-8 text-lg leading-relaxed"
-          field={"community.body"}
-          value={body}
-        />
+        <p class="text-muted-foreground mt-8 text-lg leading-relaxed">
+          The purpose of Sisterhood Sessions is to help students build
+          long-lasting relationships and create a safe space where they can
+          openly share their thoughts, experiences, and life stories. Many of
+          our students rarely have environments where they feel truly heard,
+          respected, and supported.
+        </p>
       </Reveal>
       <Reveal delay={240}>
-        <Text
-          as="p"
-          class="mt-10 text-base font-semibold"
-          field={"community.listIntro"}
-          value={listIntro}
-        />
+        <p class="mt-10 text-base font-semibold">
+          Through open conversations and peer connection, students can:
+        </p>
       </Reveal>
 
       {/* Numbered list — large serif numbers */}
       <Reveal delay={320}>
-        <Group
-          as="div"
-          field={"community.benefits"}
-          class="divide-border/40 mt-6 divide-y"
-        >
+        <div class="divide-border/40 mt-6 divide-y">
           {
             benefits.map((benefit, i) => (
-              <Item
-                index={i}
-                class="group hover:bg-muted/20 flex items-start gap-8 py-7 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:gap-12"
-              >
+              <div class="group hover:bg-muted/20 flex items-start gap-8 py-7 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:gap-12">
                 <span class="text-muted-foreground/25 group-hover:text-primary/25 font-serif text-4xl leading-none transition-colors duration-500 md:text-5xl">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <Text
-                  as="p"
-                  class="text-muted-foreground pt-2 text-base leading-relaxed md:text-lg"
-                  field={`community.benefits.${i}`}
-                  value={benefit}
-                />
-              </Item>
+                <p class="text-muted-foreground pt-2 text-base leading-relaxed md:text-lg">
+                  {benefit}
+                </p>
+              </div>
             ))
           }
-        </Group>
+        </div>
       </Reveal>
 
       <Reveal delay={0}>
-        <Text
-          as="p"
-          class="text-muted-foreground mt-10 text-lg leading-relaxed"
-          field={"community.closing"}
-          value={closing}
-        />
+        <p class="text-muted-foreground mt-10 text-lg leading-relaxed">
+          These sessions help students develop stronger emotional well-being and
+          a deeper sense of belonging within the EmpowerHer community.
+        </p>
       </Reveal>
     </div>
   </div>

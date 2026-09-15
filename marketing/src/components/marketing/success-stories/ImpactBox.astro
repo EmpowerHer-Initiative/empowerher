@@ -1,28 +1,16 @@
 ---
 // Ports the ImpactBox from components/marketing/success-stories/_shared.tsx
 import Heart from "../../icons/Heart.astro";
-import type { CmsField } from "../../../lib/cms-fields";
-import { Text } from "@alisamadiillc/cms-bridge/components";
 
-const { title, cmsPath } = Astro.props;
-const f = (s: string): CmsField | undefined =>
-  cmsPath ? (`${cmsPath}.${s}` as CmsField) : undefined;
+const { title } = Astro.props;
 ---
 
 <div class="bg-muted/50 rounded-2xl p-6 md:p-8">
   <div class="text-primary flex items-center gap-2.5">
     <Heart class="size-5" />
-    <Text
-      as="p"
-      class="text-foreground text-base font-semibold"
-      field={f("title")}
-      value={title}
-    />
+    <p class="text-foreground text-base font-semibold">{title}</p>
   </div>
-  <p
-    class="text-muted-foreground mt-3 text-base leading-relaxed"
-    data-cms-field={f("body")}
-  >
+  <p class="text-muted-foreground mt-3 text-base leading-relaxed">
     <slot />
   </p>
 </div>

@@ -9,18 +9,16 @@ import HowToSubmit from "../components/marketing/writing-contest/HowToSubmit.ast
 import Deadlines from "../components/marketing/writing-contest/Deadlines.astro";
 import Awards from "../components/marketing/writing-contest/Awards.astro";
 import Judges from "../components/marketing/writing-contest/Judges.astro";
-import pages from "_pages.json";
-const data = pages["writing-contest"];
 ---
 
 <Layout>
-  <Hero {...data.hero} />
-  <AboutContest {...data.aboutContest} />
-  <WritingPrompt {...data.writingPrompt} />
-  <WhoCanParticipate {...data.whoCanParticipate} />
-  <SubmissionRequirements {...data.submissionRequirements} />
-  <HowToSubmit {...data.howToSubmit} />
-  <Deadlines {...data.deadlines} />
-  <Awards {...data.awards} />
-  <Judges {...data.judges} />
+  <Hero />
+  <AboutContest />
+  <WritingPrompt />
+  <WhoCanParticipate />
+  <SubmissionRequirements />
+  <HowToSubmit />
+  <Deadlines />
+  <Awards />
+  <Judges />
 </Layout>

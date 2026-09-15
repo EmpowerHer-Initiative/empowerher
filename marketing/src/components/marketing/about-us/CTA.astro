@@ -3,13 +3,6 @@
 import ArrowRight from "../../icons/ArrowRight.astro";
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
 import Reveal from "../home/Reveal.astro";
-import { Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  eyebrow: string;
-  heading: string;
-}
-const { eyebrow, heading } = Astro.props;
 ---
 
 <section class="py-28 md:py-40">
@@ -19,17 +12,16 @@ const { eyebrow, heading } = Astro.props;
     >
       <Reveal>
         <div>
-          <Text
-            as="p"
+          <p
             class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
-            field={"cta.eyebrow"}
-            value={eyebrow}
-          />
+          >
+            Take Action
+          </p>
           <h2
             class="font-serif text-4xl leading-[1.1] md:text-5xl lg:text-6xl"
-            data-cms-field={"cta.heading"}
-            set:html={heading}
-          />
+          >
+            Join the<br />Movement
+          </h2>
         </div>
       </Reveal>
       <Reveal delay={120}>

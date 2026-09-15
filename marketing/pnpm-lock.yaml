@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@alisamadiillc/cms-bridge':
-        specifier: 0.7.5
-        version: 0.7.5(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))
+        specifier: file:/Users/alisamadi/Documents/saas/Portfolio/packages/cms-bridge
+        version: file:../../../saas/Portfolio/packages/cms-bridge(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))
       '@astrojs/node':
         specifier: ^11.1.5
         version: 11.1.5(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))
@@ -99,8 +99,8 @@ importers:
 
 packages:
 
-  '@alisamadiillc/cms-bridge@0.7.5':
-    resolution: {integrity: sha512-oi8qM+tzRzL1mmaBHnRTl1FGI4Tz4fh4GZl0T3KjjSHRaIYs9prjLq7Nmhq2nSH5e8rm4MkvPaBNQYtQ57Fc7A==}
+  '@alisamadiillc/cms-bridge@file:../../../saas/Portfolio/packages/cms-bridge':
+    resolution: {directory: ../../../saas/Portfolio/packages/cms-bridge, type: directory}
     hasBin: true
     peerDependencies:
       astro: '>=4.0.0'
@@ -3023,7 +3023,7 @@ packages:
 
 snapshots:
 
-  '@alisamadiillc/cms-bridge@0.7.5(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))':
+  '@alisamadiillc/cms-bridge@file:../../../saas/Portfolio/packages/cms-bridge(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))':
     dependencies:
       '@astrojs/compiler': 2.13.1
       es-module-lexer: 1.7.0
@@ -3249,7 +3249,7 @@ snapshots:
   '@babel/helper-module-imports@7.29.7':
     dependencies:
       '@babel/traverse': 7.29.8
-      '@babel/types': 7.29.7
+      '@babel/types': 7.29.8
     transitivePeerDependencies:
       - supports-color
 
@@ -4918,8 +4918,8 @@ snapshots:
 
   magicast@0.3.5:
     dependencies:
-      '@babel/parser': 7.29.7
-      '@babel/types': 7.29.7
+      '@babel/parser': 7.29.8
+      '@babel/types': 7.29.8
       source-map-js: 1.2.1
 
   magicast@0.5.3:

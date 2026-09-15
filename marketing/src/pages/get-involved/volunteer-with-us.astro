@@ -1,16 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import VolunteerContact from "../../components/marketing/get-involved/VolunteerContact.astro";
-import pages from "_pages.json";
-const data = pages["get-involved-volunteer"];
 ---
 
 <Layout>
-  <VolunteerContact
-    eyebrow={data.eyebrow}
-    heading={data.heading}
-    body={data.body}
-    note={data.note}
-    questions={data.questions}
-  />
+  <VolunteerContact />
 </Layout>

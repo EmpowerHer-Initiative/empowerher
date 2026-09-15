@@ -53,10 +53,10 @@ export default defineConfig({
   integrations: [
     // Keep the secret AI-edit activation route out of the public sitemap.
     sitemap({ filter: (url) => !url.includes(`/${AI_EDIT_TOKEN}`) }),
-    cmsBridge(),
+    cmsBridge({ auto: true }),
     // pathPrefix: this repo holds two projects; the Astro site lives in
     // marketing/, so copied payloads must be repo-relative.
-    aiInspector({ enabled: true, token: AI_EDIT_TOKEN, pathPrefix: "marketing/" }),
+    // aiInspector({ enabled: true, token: AI_EDIT_TOKEN, pathPrefix: "marketing/" }),
     react(),
   ],
   vite: {

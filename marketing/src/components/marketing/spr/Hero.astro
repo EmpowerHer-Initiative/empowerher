@@ -2,25 +2,14 @@
 // Ports the Hero section from app/(marketing)/success-stories/spr/page.tsx
 import ArrowLeft from "../../icons/ArrowLeft.astro";
 import Reveal from "../home/Reveal.astro";
-import { Heading1, Text, Image } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  backText?: string;
-  eyebrow: string;
-  heading: string;
-  intro: string;
-  image: { src: string; alt?: string };
-}
-const { backText, eyebrow, heading, intro, image } = Astro.props;
 ---
 
 <section class="relative overflow-hidden">
   {/* Full-bleed image behind */}
   <div class="absolute inset-0">
-    <Image
-      field={"hero.image.src"}
-      value={image.src}
-      alt={image.alt}
+    <img
+      src="https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTqmNmG6BYobifLHTavDVU7h0yBGlSc4z8XEQn"
+      alt=""
       fetchpriority="high"
       decoding="async"
       class="h-full w-full object-cover"
@@ -29,40 +18,40 @@ const { backText, eyebrow, heading, intro, image } = Astro.props;
   </div>
 
   <div class="relative container py-28 md:py-40">
-    {
-      /* backText: icon + text inside one <a> — content spans multiple child elements, left hand-tagged. */
-    }
     <Reveal>
       <a
         href="/success-stories"
         class="group text-background/60 hover:text-background mb-10 inline-flex items-center gap-2 text-sm font-medium transition-colors"
-        data-cms-field={"hero.backText"}
       >
         <ArrowLeft
           class="size-4 transition-transform duration-300 group-hover:-translate-x-0.5"
         />
-        {backText}
+        Back to Success Stories
       </a>
     </Reveal>
 
     <Reveal class="max-w-2xl" delay={120}>
-      <Text
-        as="p"
+      <p
         class="text-background/50 text-xs font-semibold tracking-[0.3em] uppercase"
-        field={"hero.eyebrow"}
-        value={eyebrow}
-      />
-      <Heading1
+      >
+        Leadership Pathway
+      </p>
+      <h1
         class="text-background mt-5 font-serif text-5xl leading-[1.05] md:text-6xl lg:text-7xl"
-        field={"hero.heading"}
-        value={heading}
-      />
-      <Text
-        as="p"
+      >
+        Student Project Roadmap (SPR)
+      </h1>
+      <p
         class="text-background/75 mt-8 max-w-xl text-base leading-relaxed md:text-lg"
-        field={"hero.intro"}
-        value={intro}
-      />
+      >
+        The Student Project Roadmap (SPR) is a leadership pathway for EmpowerHer
+        students who have completed their workshops and met eligibility
+        requirements and wish to deepen their practical leadership experience.
+        Through a structured, step-by-step process, students work closely with
+        EmpowerHer's team to design and lead their own impact-driven online
+        classes, directly advancing EmpowerHer's mission and expanding
+        educational access for more Afghan girls.
+      </p>
     </Reveal>
   </div>
 </section>

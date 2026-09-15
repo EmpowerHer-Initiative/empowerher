@@ -4,11 +4,9 @@
 // description, image, link). MOCK: representative sample hardcoded inline.
 import ExternalLink from "../../icons/ExternalLink.astro";
 import Reveal from "../home/Reveal.astro";
-import { Heading2, Text, Region } from "@alisamadiillc/cms-bridge/components";
+import { Region } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
-  eyebrow: string;
-  title: string;
   items: {
     name: string;
     mentors: string[];
@@ -18,7 +16,7 @@ interface Props {
   }[];
 }
 
-const { eyebrow, title, items } = Astro.props;
+const { items } = Astro.props;
 ---
 
 <section
@@ -31,17 +29,14 @@ const { eyebrow, title, items } = Astro.props;
     >
       <Reveal>
         <div>
-          <Text
-            as="p"
+          <p
             class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
-            field={"workshops.eyebrow"}
-            value={eyebrow}
-          />
-          <Heading2
-            class="font-serif text-4xl leading-[1.1] md:text-5xl"
-            field={"workshops.title"}
-            value={title}
-          />
+          >
+            Apply Now
+          </p>
+          <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">
+            Available Workshops
+          </h2>
         </div>
       </Reveal>
     </div>

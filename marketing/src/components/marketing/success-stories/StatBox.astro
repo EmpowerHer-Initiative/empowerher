@@ -3,30 +3,16 @@
 import Users from "../../icons/Users.astro";
 import BookOpen from "../../icons/BookOpen.astro";
 import Award from "../../icons/Award.astro";
-import type { CmsField } from "../../../lib/cms-fields";
-import { Text } from "@alisamadiillc/cms-bridge/components";
 
 const icons = { Users, BookOpen, Award };
-const { icon, value, label, cmsPath } = Astro.props;
-const f = (s: string): CmsField | undefined =>
-  cmsPath ? (`${cmsPath}.${s}` as CmsField) : undefined;
+const { icon, value, label } = Astro.props;
 const Icon = icons[icon as keyof typeof icons];
 ---
 
 <div class="bg-muted/50 rounded-2xl p-5">
   <div class="flex items-center gap-2.5">
     <Icon class="text-primary size-5" />
-    <Text
-      as="span"
-      class="text-foreground text-base font-semibold"
-      field={f("value")}
-      value={value}
-    />
+    <span class="text-foreground text-base font-semibold">{value}</span>
   </div>
-  <Text
-    as="p"
-    class="text-muted-foreground mt-1.5 text-sm"
-    field={f("label")}
-    value={label}
-  />
+  <p class="text-muted-foreground mt-1.5 text-sm">{label}</p>
 </div>

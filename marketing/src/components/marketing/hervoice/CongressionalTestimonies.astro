@@ -1,115 +1,96 @@
 ---
 // Ports components/marketing/hervoice/congressional-testimonies.tsx
 import Reveal from "../home/Reveal.astro";
-import {
-  Heading2,
-  Text,
-  Group,
-  Item,
-} from "@alisamadiillc/cms-bridge/components";
 
-interface Props {
-  eyebrow: string;
-  heading: string;
-  intro: string;
-  quote: string;
-  quoteAttribution: string;
-  note: string;
-  videos: { poster: string; src: string; label: string }[];
-}
-const { eyebrow, heading, intro, quote, quoteAttribution, note, videos } =
-  Astro.props;
+const videos = [
+  {
+    poster:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT4ggEVZxLP0HVtXjpzDWZR85f7vGSgA1FduQY",
+    src: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTFAaVBPi81Sgch3ByG9m45xzoRfbnkKwIXpZO",
+    label: "Congressional Testimony — Part 1",
+  },
+  {
+    poster:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTawihdJkAtfy8gUMVlFj5QpoO3BkxsndH9Dm2",
+    src: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT1BPtxl2QzEuUaBX9YLlpwGm6Z8oisI4dSv7k",
+    label: "Congressional Testimony — Part 2",
+  },
+];
 ---
 
 <section class="bg-muted text-foreground py-28 md:py-40">
   <div class="container">
     <div class="mx-auto max-w-4xl">
       <Reveal>
-        <Text
-          as="p"
+        <p
           class="text-muted-foreground mb-8 text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"congressionalTestimonies.eyebrow"}
-          value={eyebrow}
-        />
+        >
+          Amplifying Voices
+        </p>
       </Reveal>
       <Reveal delay={80}>
-        <Heading2
+        <h2
           class="text-foreground font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={"congressionalTestimonies.heading"}
-          value={heading}
-        />
+        >
+          Congressional Testimonies
+        </h2>
       </Reveal>
 
       <Reveal delay={160}>
-        <Text
-          as="p"
+        <p
           class="text-muted-foreground mt-8 max-w-2xl text-base leading-relaxed"
-          field={"congressionalTestimonies.intro"}
-          value={intro}
-        />
+        >
+          These two congressional testimonies were shared for publication by the
+          Afghan Scouts Relief Fund (ASRF) with the EmpowerHer HerVoice
+          Initiative.
+        </p>
       </Reveal>
 
       {/* Centered blockquote */}
       <Reveal class="border-border my-16 border-l-2 pl-8">
-        {
-          /* static &ldquo;/&rdquo; entities wrap the field; Text would drop them, so kept hand-tagged. */
-        }
         <p
           class="text-muted-foreground font-serif text-xl leading-relaxed md:text-2xl"
-          data-cms-field={"congressionalTestimonies.quote"}
         >
-          &ldquo;{quote}&rdquo;
+          &ldquo;These testimonies are representative of the passion of so many
+          Afghan women to share their powerful experiences and their drive to
+          become their best selves and contribute in their own unique ways to
+          society. By sharing the obstacles they have overcome and their amazing
+          pursuits, they serve as an inspiration to many of their peers who want
+          to navigate their own path to success.&rdquo;
         </p>
-        <Text
-          as="p"
+        <p
           class="text-muted-foreground mt-6 text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"congressionalTestimonies.quoteAttribution"}
-          value={quoteAttribution}
-        />
+        >
+          — Afghan Scouts Relief Fund (ASRF)
+        </p>
       </Reveal>
 
       <Reveal delay={80}>
-        <Text
-          as="p"
-          class="text-muted-foreground mb-10 text-sm"
-          field={"congressionalTestimonies.note"}
-          value={note}
-        />
+        <p class="text-muted-foreground mb-10 text-sm">
+          Coming from a country where their very existence is dehumanized, and
+          their human rights are not recognized, their resilience in the face of
+          adversity should be a message to the whole world that we must support
+          the future of Afghan women in every possible way.
+        </p>
       </Reveal>
 
       {/* Videos */}
       <Reveal delay={160}>
-        <Group
-          field={"congressionalTestimonies.videos"}
-          class="grid gap-6 md:grid-cols-2"
-        >
+        <div class="grid gap-6 md:grid-cols-2">
           {
-            videos.map((video, i) => (
-              <Item index={i} class="overflow-hidden rounded-2xl">
-                {/* video/source aren't <img> — poster & src stay hand-tagged, no bridge component covers them. */}
-                <video
-                  controls
-                  poster={video.poster}
-                  class="w-full"
-                  data-cms-field={`congressionalTestimonies.videos.${i}.poster`}
-                >
-                  <source
-                    src={video.src}
-                    type="video/mp4"
-                    data-cms-field={`congressionalTestimonies.videos.${i}.src`}
-                  />
+            videos.map((video) => (
+              <div class="overflow-hidden rounded-2xl">
+                <video controls poster={video.poster} class="w-full">
+                  <source src={video.src} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
-                <Text
-                  as="p"
-                  class="text-muted-foreground mt-3 text-xs font-semibold tracking-[0.2em] uppercase"
-                  field={`congressionalTestimonies.videos.${i}.label`}
-                  value={video.label}
-                />
-              </Item>
+                <p class="text-muted-foreground mt-3 text-xs font-semibold tracking-[0.2em] uppercase">
+                  {video.label}
+                </p>
+              </div>
             ))
           }
-        </Group>
+        </div>
       </Reveal>
     </div>
   </div>

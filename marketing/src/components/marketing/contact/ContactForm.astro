@@ -10,20 +10,6 @@ import Facebook from "../../icons/Facebook.astro";
 import LinkedIn from "../../icons/LinkedIn.astro";
 import Instagram from "../../icons/Instagram.astro";
 import Reveal from "../home/Reveal.astro";
-import { Heading1, Text, Heading2 } from "@alisamadiillc/cms-bridge/components";
-import pages from "_pages.json";
-const content = pages.contact;
-
-interface Props {
-  eyebrow: string;
-  heading: string;
-  intro: string;
-  email: { label: string; value: string };
-  location: { label: string; value: string };
-  followUsTitle: string;
-}
-
-const { eyebrow, heading, intro, email, location, followUsTitle } = Astro.props;
 
 const socialLinks = [
   {
@@ -52,23 +38,16 @@ const inputClass =
     <div class="grid gap-16 lg:grid-cols-2 lg:gap-24">
       {/* Left — Contact Info */}
       <Reveal>
-        <Text
-          as="p"
-          class="text-primary text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"eyebrow"}
-          value={eyebrow}
-        />
-        <Heading1
-          class="mt-4 font-serif text-4xl leading-tight md:text-5xl"
-          field={"heading"}
-          value={heading}
-        />
-        <Text
-          as="p"
-          class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]"
-          field={"intro"}
-          value={intro}
-        />
+        <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
+          Contact
+        </p>
+        <h1 class="mt-4 font-serif text-4xl leading-tight md:text-5xl">
+          Get in Touch
+        </h1>
+        <p class="text-muted-foreground mt-6 max-w-md text-base leading-[1.8]">
+          Have a question about EmpowerHer or any of our programs? Fill out the
+          form and we'll get back to you as soon as possible.
+        </p>
 
         <div class="mt-12 space-y-6">
           <div class="flex items-start gap-4">
@@ -78,22 +57,16 @@ const inputClass =
               <Mail class="text-primary size-4" />
             </div>
             <div>
-              <Text
-                as="p"
+              <p
                 class="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase"
-                field={"email.label"}
-                value={email.label}
-              />
-              {
-                /* Hand-tagged: <a> is not p|span|div (Text scope) and href is a
-              hardcoded mailto:, not a {label,link} object (Link scope). */
-              }
+              >
+                Email
+              </p>
               <a
                 href="mailto:info@empowerher-initiative.org"
-                data-cms-field={"email.value"}
                 class="text-foreground hover:text-primary mt-1 text-sm transition-colors"
               >
-                {email.value}
+                info@empowerher-initiative.org
               </a>
             </div>
           </div>
@@ -105,29 +78,24 @@ const inputClass =
               <MapPin class="text-primary size-4" />
             </div>
             <div>
-              <Text
-                as="p"
+              <p
                 class="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase"
-                field={"location.label"}
-                value={location.label}
-              />
-              <Text
-                as="p"
-                class="text-foreground mt-1 text-sm"
-                field={"location.value"}
-                value={location.value}
-              />
+              >
+                Location
+              </p>
+              <p class="text-foreground mt-1 text-sm">
+                United States of America
+              </p>
             </div>
           </div>
         </div>
 
         <div class="border-border/30 mt-12 border-t pt-8">
-          <Text
-            as="p"
+          <p
             class="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase"
-            field={"followUsTitle"}
-            value={followUsTitle}
-          />
+          >
+            Follow Us
+          </p>
           <div class="mt-4 flex items-center gap-3">
             {
               socialLinks.map((s) => (
@@ -152,17 +120,13 @@ const inputClass =
           id="contact-success"
           class="border-border/40 bg-primary/[0.03] hidden space-y-4 rounded-2xl border p-8"
         >
-          <Heading2
-            class="font-serif text-2xl"
-            field="thankYouYour.title"
-            value={content.thankYouYour.title}
-          />
-          <Text
-            as="p"
-            class="text-muted-foreground text-base leading-[1.8]"
-            field="thankYouYour.text"
-            value={content.thankYouYour.text}
-          />
+          <h2 class="font-serif text-2xl">
+            Thank you — your message is on its way.
+          </h2>
+          <p class="text-muted-foreground text-base leading-[1.8]">
+            We've received your message and will get back to you as soon as we
+            can.
+          </p>
           <button
             type="button"
             id="contact-reset"

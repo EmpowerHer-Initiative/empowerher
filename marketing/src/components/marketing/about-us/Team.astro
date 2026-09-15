@@ -2,7 +2,7 @@
 // Ports components/marketing/about-us/team.tsx
 import Reveal from "../home/Reveal.astro";
 import TeamMember from "./TeamMember.astro";
-import { Heading2, Text, Region } from "@alisamadiillc/cms-bridge/components";
+import { Region } from "@alisamadiillc/cms-bridge/components";
 
 interface Member {
   name: string;
@@ -14,12 +14,9 @@ interface Group {
   members: Member[];
 }
 interface Props {
-  eyebrow: string;
-  heading: string;
-  intro: string;
   groups: Group[];
 }
-const { eyebrow, heading, intro, groups } = Astro.props;
+const { groups } = Astro.props;
 const [executiveTeam, directors, mentorsTeam] = groups;
 ---
 
@@ -27,23 +24,16 @@ const [executiveTeam, directors, mentorsTeam] = groups;
   <div class="container">
     <Reveal>
       <div class="mb-16">
-        <Text
-          as="p"
+        <p
           class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"team.eyebrow"}
-          value={eyebrow}
-        />
-        <Heading2
-          class="font-serif text-4xl leading-[1.1] md:text-5xl"
-          field={"team.heading"}
-          value={heading}
-        />
-        <Text
-          as="p"
-          class="text-muted-foreground mt-4 max-w-lg"
-          field={"team.intro"}
-          value={intro}
-        />
+        >
+          The People Behind It
+        </p>
+        <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">Our Team</h2>
+        <p class="text-muted-foreground mt-4 max-w-lg">
+          Founded and led by a diverse team committed to expanding access to
+          education across borders.
+        </p>
       </div>
     </Reveal>
 

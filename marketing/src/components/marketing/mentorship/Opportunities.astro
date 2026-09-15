@@ -2,39 +2,21 @@
 // Ports components/marketing/mentorship/opportunities.tsx
 import ArrowRight from "../../icons/ArrowRight.astro";
 import Reveal from "../home/Reveal.astro";
-import { Heading3, Text } from "@alisamadiillc/cms-bridge/components";
-import pages from "_pages.json";
-const content = pages.mentorship;
-
-interface Props {
-  eyebrow: string;
-  title: string;
-  titleLine2: string;
-  items: { title: string; description: string }[];
-  note: string;
-}
-
-const { eyebrow, title, titleLine2, items, note } = Astro.props;
 ---
 
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal>
       <div class="mb-16">
-        <Text
-          as="p"
+        <p
           class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"opportunities.eyebrow"}
-          value={eyebrow}
-        />
+        >
+          After Completion
+        </p>
         <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">
-          <Text as="span" field={"opportunities.title"} value={title} />
+          <span>Opportunities After</span>
           <br />
-          <Text
-            as="span"
-            field={"opportunities.titleLine2"}
-            value={titleLine2}
-          />
+          <span>Completing Programs</span>
         </h2>
       </div>
     </Reveal>
@@ -44,23 +26,14 @@ const { eyebrow, title, titleLine2, items, note } = Astro.props;
         <div
           class="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors"
         >
-          <Text
-            as="p"
-            class="text-primary/40 font-serif text-5xl"
-            field="section.text"
-            value={content.section.text}
-          />
-          <Heading3
-            class="mt-6 text-xl font-semibold"
-            field={"opportunities.items.0.title"}
-            value={items[0].title}
-          />
-          <Text
-            as="p"
-            class="text-muted-foreground mt-3 text-sm leading-relaxed"
-            field={"opportunities.items.0.description"}
-            value={items[0].description}
-          />
+          <p class="text-primary/40 font-serif text-5xl">01</p>
+          <h3 class="mt-6 text-xl font-semibold">Leadership Opportunities</h3>
+          <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
+            Graduates may be selected as assistant mentors and eventually lead
+            their own workshops. EmpowerHer identifies a number of promising
+            students and works closely with them to help launch their own
+            initiatives.
+          </p>
           <a
             href="/success-stories/spr"
             class="text-primary hover:text-primary/80 mt-6 inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
@@ -73,23 +46,12 @@ const { eyebrow, title, titleLine2, items, note } = Astro.props;
         <div
           class="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors"
         >
-          <Text
-            as="p"
-            class="text-primary/40 font-serif text-5xl"
-            field="section.text2"
-            value={content.section.text2}
-          />
-          <Heading3
-            class="mt-6 text-xl font-semibold"
-            field={"opportunities.items.1.title"}
-            value={items[1].title}
-          />
-          <Text
-            as="p"
-            class="text-muted-foreground mt-3 text-sm leading-relaxed"
-            field={"opportunities.items.1.description"}
-            value={items[1].description}
-          />
+          <p class="text-primary/40 font-serif text-5xl">02</p>
+          <h3 class="mt-6 text-xl font-semibold">Publication Access</h3>
+          <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
+            Students may publish their work through HerVoice and our partner
+            platforms.
+          </p>
           <a
             href="/hervoice"
             class="text-primary hover:text-primary/80 mt-6 inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
@@ -102,34 +64,21 @@ const { eyebrow, title, titleLine2, items, note } = Astro.props;
         <div
           class="border-border bg-background hover:border-primary/30 rounded-2xl border p-10 shadow-sm transition-colors"
         >
-          <Text
-            as="p"
-            class="text-primary/40 font-serif text-5xl"
-            field="section.text3"
-            value={content.section.text3}
-          />
-          <Heading3
-            class="mt-6 text-xl font-semibold"
-            field={"opportunities.items.2.title"}
-            value={items[2].title}
-          />
-          <Text
-            as="p"
-            class="text-muted-foreground mt-3 text-sm leading-relaxed"
-            field={"opportunities.items.2.description"}
-            value={items[2].description}
-          />
+          <p class="text-primary/40 font-serif text-5xl">03</p>
+          <h3 class="mt-6 text-xl font-semibold">Continued Engagement</h3>
+          <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
+            Ongoing involvement in projects, events, and the EmpowerHer
+            community.
+          </p>
         </div>
       </div>
     </Reveal>
 
     <Reveal delay={240}>
-      <Text
-        as="p"
-        class="text-muted-foreground mt-10 text-sm leading-relaxed"
-        field={"opportunities.note"}
-        value={note}
-      />
+      <p class="text-muted-foreground mt-10 text-sm leading-relaxed">
+        Additional information will be shared during our virtual sessions by
+        EmpowerHer mentors.
+      </p>
     </Reveal>
   </div>
 </section>

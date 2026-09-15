@@ -2,78 +2,74 @@
 // Ports components/marketing/hervoice/partner-support.tsx
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
 import Reveal from "../home/Reveal.astro";
-import {
-  Heading2,
-  Text,
-  Image,
-  Group,
-  Item,
-} from "@alisamadiillc/cms-bridge/components";
 
-interface Props {
-  eyebrow: string;
-  heading: string;
-  description: string;
-  partners: { name: string; location: string; logo: string }[];
-}
-const { eyebrow, heading, description, partners } = Astro.props;
-
-// Routing (external partner URLs) stays in code, zipped by index with the
-// editable name/location/logo content from the CMS.
-const partnerHrefs = [
-  "https://sites.google.com/view/amplifyafghans/home",
-  "https://www.nshss.org/",
-  "https://humanitasmedia.org/",
-  "https://inanna.ca/",
+// External partner URLs stay in code, zipped by index with each org's
+// name/location/logo.
+const partnerOrgs = [
+  {
+    name: "Amplify Afghan Women",
+    location: "Melbourne, Australia",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnBzmSPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O9",
+    href: "https://sites.google.com/view/amplifyafghans/home",
+  },
+  {
+    name: "National Society of High School Scholars (NSHSS)",
+    location: "Atlanta, Georgia",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTjPNmNesfkIRBuYnTVcl8O9LdXP5103pNyJUt",
+    href: "https://www.nshss.org/",
+  },
+  {
+    name: "Humanitas Media",
+    location: "Minneapolis, Minnesota",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT2HJysqLQtJ7K2Z4UcWn3gCXRdBvVoY9Ohil8",
+    href: "https://humanitasmedia.org/",
+  },
+  {
+    name: "Inanna Publications",
+    location: "Toronto, Canada",
+    logo: "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTTIznPr82WufQtTg5yH7OAp0KFlsjbkaYIPZB",
+    href: "https://inanna.ca/",
+  },
 ];
-
-const partnerOrgs = partners.map((p, i) => ({
-  ...p,
-  href: partnerHrefs[i] ?? "#",
-}));
 ---
 
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="max-w-3xl">
-      <Text
-        as="p"
+      <p
         class="text-primary mb-6 text-xs font-semibold tracking-[0.3em] uppercase"
-        field={"partnerSupport.eyebrow"}
-        value={eyebrow}
-      />
-      <Heading2
-        class="font-serif text-4xl leading-[1.1] md:text-5xl"
-        field={"partnerSupport.heading"}
-        value={heading}
-      />
-      <Text
-        as="p"
-        class="text-foreground/70 mt-8 text-base leading-[1.8] md:text-lg"
-        field={"partnerSupport.description"}
-        value={description}
-      />
+      >
+        Our Partners
+      </p>
+      <h2 class="font-serif text-4xl leading-[1.1] md:text-5xl">
+        Support from Partners
+      </h2>
+      <p class="text-foreground/70 mt-8 text-base leading-[1.8] md:text-lg">
+        EmpowerHer is proud to partner with four respected publication
+        organizations: Amplify Afghan Women, the National Society of High School
+        Scholars (NSHSS), Humanitas Media, and Inanna Publications. Through
+        HerVoice and our partners' platforms, we advocate for girls' education,
+        storytelling, and creative expression. Our partners help our students
+        publish their work and reach wider audiences across the globe. With the
+        support of these organizations and their communities, we are creating a
+        space where Afghan girls can share their stories and voices with the
+        world.
+      </p>
     </Reveal>
 
     <Reveal delay={120}>
-      <Group
-        field={"partnerSupport.partners"}
-        class="mt-16 grid gap-5 sm:grid-cols-2"
-      >
+      <div class="mt-16 grid gap-5 sm:grid-cols-2">
         {
-          partnerOrgs.map((p, i) => (
-            <Item
-              index={i}
-              as="a"
+          partnerOrgs.map((p) => (
+            <a
               href={p.href}
               target="_blank"
               rel="noopener noreferrer"
               class="group border-border/60 bg-background hover:border-primary/40 hover:shadow-primary/5 flex items-center gap-5 rounded-2xl border p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lg"
             >
               <div class="border-border/60 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border bg-white p-2">
-                <Image
-                  field={`partnerSupport.partners.${i}.logo`}
-                  value={p.logo}
+                <img
+                  src={p.logo}
                   alt={p.name}
                   loading="lazy"
                   decoding="async"
@@ -81,24 +77,16 @@ const partnerOrgs = partners.map((p, i) => ({
                 />
               </div>
               <div class="min-w-0 flex-1">
-                <Text
-                  as="p"
-                  class="group-hover:text-primary leading-snug font-semibold transition-colors duration-300"
-                  field={`partnerSupport.partners.${i}.name`}
-                  value={p.name}
-                />
-                <Text
-                  as="p"
-                  class="text-muted-foreground mt-1 text-sm"
-                  field={`partnerSupport.partners.${i}.location`}
-                  value={p.location}
-                />
+                <p class="group-hover:text-primary leading-snug font-semibold transition-colors duration-300">
+                  {p.name}
+                </p>
+                <p class="text-muted-foreground mt-1 text-sm">{p.location}</p>
               </div>
               <ArrowUpRight class="text-muted-foreground group-hover:text-primary size-5 shrink-0 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Item>
+            </a>
           ))
         }
-      </Group>
+      </div>
     </Reveal>
   </div>
 </section>

@@ -2,13 +2,12 @@
 // Shared partners strip, used by the home and about pages.
 // Partner list is synced from the admin DB by scripts/sync-from-db.ts.
 import Reveal from "./home/Reveal.astro";
-import { Text, Region } from "@alisamadiillc/cms-bridge/components";
+import { Region } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
-  eyebrow: string;
   partners: { name: string; image: string; link: string }[];
 }
-const { eyebrow, partners } = Astro.props;
+const { partners } = Astro.props;
 ---
 
 {
@@ -16,12 +15,11 @@ const { eyebrow, partners } = Astro.props;
     <section class="py-28 md:py-32">
       <div class="container">
         <Reveal>
-          <Text
-            as="p"
+          <p
             class="text-muted-foreground text-center text-xs font-semibold tracking-[0.3em] uppercase"
-            field={"partners.eyebrow"}
-            value={eyebrow}
-          />
+          >
+            Trusted Partners & Supporters
+          </p>
         </Reveal>
         <Reveal delay={80}>
           <Region type="collection" name="partners">

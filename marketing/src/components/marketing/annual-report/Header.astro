@@ -1,41 +1,32 @@
 ---
 // Ports components/marketing/annual-report/header.tsx
 import Reveal from "../home/Reveal.astro";
-import { Heading1, Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  eyebrow?: string;
-  heading: string;
-  body: string;
-}
-const { eyebrow, heading, body } = Astro.props;
 ---
 
 <section class="py-28 md:py-40">
   <div class="container">
     <div class="max-w-3xl">
       <Reveal>
-        <Text
-          as="p"
+        <p
           class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
-          field={"header.eyebrow"}
-          value={eyebrow}
-        />
+        >
+          Transparency &amp; Impact
+        </p>
       </Reveal>
       <Reveal delay={80}>
-        <Heading1
-          class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl"
-          field={"header.heading"}
-          value={heading}
-        />
+        <h1 class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl">
+          Annual Impact Reports
+        </h1>
       </Reveal>
       <Reveal delay={160}>
-        <Text
-          as="p"
+        <p
           class="text-muted-foreground mt-8 max-w-xl text-base leading-relaxed md:text-lg"
-          field={"header.body"}
-          value={body}
-        />
+        >
+          Each year we document the reach and outcomes of our programs — the
+          girls we've supported, the stories we've amplified, and the
+          communities we've strengthened. These reports hold us accountable to
+          our mission.
+        </p>
       </Reveal>
     </div>
   </div>

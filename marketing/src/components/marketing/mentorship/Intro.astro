@@ -1,61 +1,46 @@
 ---
 // Ports components/marketing/mentorship/intro.tsx
 import Reveal from "../home/Reveal.astro";
-import { Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  quote: string;
-  paragraph: string;
-  impactLabel: string;
-  impactText: string;
-  closing: string;
-}
-
-const { quote, paragraph, impactLabel, impactText, closing } = Astro.props;
 ---
 
 <section class="pt-28 md:pt-40">
   <div class="container">
     <div class="mx-auto max-w-3xl space-y-10">
       <Reveal>
-        <Text
-          as="blockquote"
+        <blockquote
           class="border-primary/20 border-l-2 pl-8 font-serif text-2xl leading-relaxed italic md:text-3xl"
-          field={"intro.quote"}
-          value={quote}
-        />
+        >
+          Through this platform, EmpowerHer encourages students to think outside
+          the box and view their challenges as sources of resilience—life
+          lessons that empower them to pursue their goals and dreams.
+        </blockquote>
       </Reveal>
       <Reveal delay={80}>
-        <Text
-          as="p"
-          class="text-muted-foreground leading-[1.8]"
-          field={"intro.paragraph"}
-          value={paragraph}
-        />
+        <p class="text-muted-foreground leading-[1.8]">
+          EmpowerHer creates a safe, supportive space where students can discuss
+          their struggles openly, feel heard and seen, and reflect on their
+          experiences.
+        </p>
       </Reveal>
       <Reveal delay={160}>
         <div class="border-primary/20 bg-primary/[0.04] rounded-2xl border p-8">
-          <Text
-            as="p"
+          <p
             class="text-primary mb-4 text-xs font-semibold tracking-[0.3em] uppercase"
-            field={"intro.impactLabel"}
-            value={impactLabel}
-          />
-          <Text
-            as="p"
-            class="text-muted-foreground leading-[1.8]"
-            field={"intro.impactText"}
-            value={impactText}
-          />
+          >
+            Our Impact
+          </p>
+          <p class="text-muted-foreground leading-[1.8]">
+            Whether through launching a project, mentoring a sibling or friend,
+            or simply taking a first step, EmpowerHer helps students grow—one
+            story, one action, and one empowered voice at a time.
+          </p>
         </div>
       </Reveal>
       <Reveal delay={240}>
-        <Text
-          as="p"
-          class="leading-[1.8] font-medium"
-          field={"intro.closing"}
-          value={closing}
-        />
+        <p class="leading-[1.8] font-medium">
+          Join us in empowering the next generation of Afghan leaders and
+          changemakers through our comprehensive mentorship program.
+        </p>
       </Reveal>
     </div>
   </div>

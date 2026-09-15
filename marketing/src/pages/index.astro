@@ -10,20 +10,18 @@ import ImpactStory from "../components/marketing/home/ImpactStory.astro";
 import MediaSpotlight from "../components/marketing/home/MediaSpotlight.astro";
 import Partners from "../components/marketing/Partners.astro";
 import Newsletter from "../components/marketing/home/Newsletter.astro";
-import pages from "_pages.json";
-const content = pages.home;
 import { partners } from "../lib/collections";
 ---
 
 <Layout>
-  <Hero {...content.hero} />
-  <StatsBar {...content.statsBar} />
-  <HerVoiceContest {...content.herVoiceContest} />
-  <AtAGlance {...content.atAGlance} />
-  <Mission {...content.mission} />
-  <Programs {...content.programs} />
-  <ImpactStory {...content.impactStory} />
-  <MediaSpotlight {...content.mediaSpotlight} />
-  <Partners eyebrow={content.partners.eyebrow} partners={partners} />
-  <Newsletter {...content.newsletter} />
+  <Hero />
+  <StatsBar />
+  <HerVoiceContest />
+  <AtAGlance />
+  <Mission />
+  <Programs />
+  <ImpactStory />
+  <MediaSpotlight />
+  <Partners partners={partners} />
+  <Newsletter />
 </Layout>

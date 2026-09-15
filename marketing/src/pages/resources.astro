@@ -3,19 +3,11 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/marketing/resources/Header.astro";
 import ResourceList from "../components/marketing/resources/ResourceList.astro";
 import FooterNote from "../components/marketing/resources/FooterNote.astro";
-import pages from "_pages.json";
-const data = pages.resources;
 import { resources } from "../lib/collections";
-
-const { header, footerNote } = data;
 ---
 
 <Layout>
-  <Header
-    eyebrow={header.eyebrow}
-    heading={header.heading}
-    intro={header.intro}
-  />
+  <Header />
   <ResourceList resources={resources} />
-  <FooterNote text={footerNote.text} email={footerNote.email} />
+  <FooterNote />
 </Layout>

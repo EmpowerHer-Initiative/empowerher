@@ -1,41 +1,23 @@
 ---
 // Ports components/marketing/legal/hero.tsx.
 import Reveal from "../home/Reveal.astro";
-import Highlight from "../../Highlight.astro";
-import { Text } from "@alisamadiillc/cms-bridge/components";
-
-interface Props {
-  eyebrow: string;
-  heading: string;
-  body: string;
-}
-const { eyebrow, heading, body } = Astro.props;
 ---
 
 <section class="py-28 md:py-40">
   <div class="container">
     <Reveal class="max-w-4xl">
-      <Text
-        as="p"
+      <p
         class="text-muted-foreground text-xs font-semibold tracking-[0.3em] uppercase"
-        field={"hero.eyebrow"}
-        value={eyebrow}
-      />
-      {
-        /* heading wraps <Highlight hlClass="italic" />: kept hand-tagged, not a plain-text field */
-      }
-      <h1
-        class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl"
-        data-cms-field={"hero.heading"}
       >
-        <Highlight text={heading} hlClass="italic" />
+        Legal
+      </p>
+      <h1 class="mt-5 font-serif text-5xl leading-[1.05] md:text-7xl">
+        Terms <span class="cms-hl italic">&amp;</span> Privacy
       </h1>
-      <Text
-        as="p"
-        class="text-muted-foreground mt-6 max-w-xl text-lg leading-relaxed"
-        field={"hero.body"}
-        value={body}
-      />
+      <p class="text-muted-foreground mt-6 max-w-xl text-lg leading-relaxed">
+        How we operate, what we expect, and how we protect the information you
+        share with the EmpowerHer Initiative.
+      </p>
     </Reveal>
   </div>
 </section>

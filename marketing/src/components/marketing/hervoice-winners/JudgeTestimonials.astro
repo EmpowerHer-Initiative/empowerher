@@ -2,83 +2,80 @@
 // Ports components/marketing/hervoice-winners/judge-testimonials.tsx
 // --hv-serif-i -> font-serif italic.
 import Reveal from "../home/Reveal.astro";
-import {
-  Heading2,
-  Text,
-  Image,
-  Group,
-  Item,
-} from "@alisamadiillc/cms-bridge/components";
 
-interface Judge {
-  name: string;
-  title: string;
-  quote: string;
-  image: string;
-}
-interface Props {
-  title: string;
-  judges: Judge[];
-}
-const { title, judges } = Astro.props;
+const judges = [
+  {
+    name: "Dr. Ellen Leggett",
+    title:
+      "Professor of Psychology and Founding Director of Applied Psychology Master’s Program (Retired), University of Southern California",
+    quote:
+      "It was an honor to read about and bear witness to the incredibly moving stories told by these writers. Many of us aspire to be courageous and to overcome adversity in our lives, and the writings of these Afghan women teach us all a humbling lesson. With elegant beauty and wisdom, the inspirational stories recounted by these writers demonstrate strength of character, love of learning, and the best of human persistence and resilience in the face of pain. A reverberating question stays with me: What feats would these remarkable women accomplish in a world that welcomed them? And the world does need them. Let their voices teach you.",
+    image:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPT5RG1ajWxDjwpl6zcWuZFSE0gC1TOnBMHdPh3",
+  },
+  {
+    name: "Dr. Susan M. Blaustein",
+    title:
+      "Instructor, Columbia University, Founder/Board Chair, WomenStrong International",
+    quote:
+      "My immediate impression, when reading the submissions, was that this body of work has been produced by an extraordinarily talented, capable, bold, and determined group of young women. I was deeply moved by their courage, grit, and refusal to be restrained in shadow and silence. These are young women who, like all young women and girls everywhere, have dreams, rights, and hopes for their futures, yet in far too many cruel places on earth, those dreams and rights are denied. I am honored to have worked closely with Afghan women and girls over the past seven years as they have repeatedly faced and overcome seemingly insurmountable challenges. We must continue to raise awareness of, and refuse to tolerate, this tremendous injustice, which threatens the future and promise of Afghanistan and stands in clear violation of the rights of women and girls.",
+    image:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTnlKrZzPQgRrhjkv2mNoAG6Y5KExwBW7Cqs1O",
+  },
+  {
+    name: "Dr. Sonia Palmieri",
+    title:
+      "Associate Professor, Department of Pacific Affairs, Australian National University",
+    quote:
+      "I was incredibly moved by the stories of bravery, confidence, tragedy and injustice shared by the Afghan artists. As an academic, creative writing is something I admire, perhaps in part because it is so difficult for me. But the huge response to the EmpowerHer writing competition shows that there is a wealth of creativity among Afghan women, and that writing can be a powerful way to process a range of both conflicting and complementary emotions — sadness, rage, frustration, joy. Certainly, the entrants wanted to share a profound sense of injustice at the hands of the Taliban. They did this with strong, pictorial clarity. Yet this was always underpinned by narratives of resilience and hope. Afghan women’s refusal of defeat in such conditions will change the world.",
+    image:
+      "https://3625xubr2k.ufs.sh/f/yiXnwfSQWCPTK2M6BgCVy1oGkRMuS0Lravl9JbQIxWFcNhtq",
+  },
+];
 ---
 
 <section class="bg-white px-6 py-16 md:py-24">
   <div class="mx-auto max-w-5xl">
     <Reveal>
-      <Heading2
+      <h2
         class="text-center font-serif text-3xl font-bold tracking-tight md:text-4xl"
-        field={"judgeTestimonials.title"}
-        value={title}
-      />
+      >
+        What Our Judges Felt Reading These Stories
+      </h2>
     </Reveal>
 
-    <Group field={"judgeTestimonials.judges"} class="mt-14 space-y-10">
+    <div class="mt-14 space-y-10">
       {
         judges.map((judge, i) => (
           <Reveal delay={i * 100}>
-            <Item
-              index={i}
-              class="flex flex-col gap-8 rounded-2xl border border-[#ECE3D2] bg-[#FAF6EE] p-8 md:flex-row md:p-10"
-            >
-              <Image
-                field={`judgeTestimonials.judges.${i}.image`}
-                value={judge.image}
+            <div class="flex flex-col gap-8 rounded-2xl border border-[#ECE3D2] bg-[#FAF6EE] p-8 md:flex-row md:p-10">
+              <img
+                src={judge.image}
                 alt={judge.name}
                 loading="lazy"
                 decoding="async"
                 class="h-40 w-40 shrink-0 self-center rounded-2xl border-2 border-[#E0AE3C]/40 object-cover md:self-start"
               />
               <div class="flex-1">
-                {/* Quote is wrapped in literal &ldquo;/&rdquo; typographic marks around the field value — kept hand-tagged. */}
-                <blockquote
-                  class="font-serif text-[17px] leading-relaxed text-[#3C4654] italic"
-                  data-cms-field={`judgeTestimonials.judges.${i}.quote`}
-                >
+                <blockquote class="font-serif text-[17px] leading-relaxed text-[#3C4654] italic">
                   &ldquo;{judge.quote}&rdquo;
                 </blockquote>
                 <div class="mt-6">
                   <div class="h-px w-full bg-[#E0AE3C]/30" />
                   <div class="mt-4">
-                    <Text
-                      as="p"
-                      class="font-serif text-sm font-bold text-[#1A2230]"
-                      field={`judgeTestimonials.judges.${i}.name`}
-                      value={judge.name}
-                    />
-                    <Text
-                      as="p"
-                      class="mt-0.5 text-xs leading-snug text-[#6B7686]"
-                      field={`judgeTestimonials.judges.${i}.title`}
-                      value={judge.title}
-                    />
+                    <p class="font-serif text-sm font-bold text-[#1A2230]">
+                      {judge.name}
+                    </p>
+                    <p class="mt-0.5 text-xs leading-snug text-[#6B7686]">
+                      {judge.title}
+                    </p>
                   </div>
                 </div>
               </div>
-            </Item>
+            </div>
           </Reveal>
         ))
       }
-    </Group>
+    </div>
   </div>
 </section>
