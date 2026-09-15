@@ -7,6 +7,7 @@ WORKDIR /app
 # 1. Install + build
 FROM base AS builder
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY vendor ./vendor
 RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile
 COPY . .
@@ -16,6 +17,7 @@ RUN pnpm build
 FROM base AS runner
 ENV NODE_ENV=production HOST=0.0.0.0 PORT=4321
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY vendor ./vendor
 RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile --prod
 COPY --from=builder /app/dist ./dist
