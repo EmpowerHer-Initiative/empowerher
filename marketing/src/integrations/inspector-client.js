@@ -94,7 +94,7 @@
         chip.classList.remove("in");
         chip.classList.add("out");
       },
-      ok ? 900 : 1300
+      ok ? 900 : 1300,
     );
   }
 
@@ -180,7 +180,9 @@
       '<div style="display:flex;gap:12px;align-items:center">' +
       "<span>AI edit mode — click to copy · ⌘-click to follow links</span>" +
       '<div style="display:flex;gap:6px;align-items:center">' +
-      '<button id="ai-inspect-help" ' + helpBtnStyle + ">?</button>" +
+      '<button id="ai-inspect-help" ' +
+      helpBtnStyle +
+      ">?</button>" +
       '<button id="ai-inspect-exit" style="background:#fff;border:1px solid #fff;' +
       "color:#111;border-radius:999px;padding:4px 12px;" +
       'font:12px/1 system-ui,sans-serif;cursor:pointer">Exit</button>' +
@@ -319,7 +321,7 @@
         mouse.x = e.clientX;
         mouse.y = e.clientY;
       },
-      { passive: true }
+      { passive: true },
     );
 
     document.addEventListener(
@@ -328,7 +330,7 @@
         var el = editableFrom(e.target);
         if (el) target = el;
       },
-      true
+      true,
     );
 
     document.addEventListener(
@@ -344,7 +346,7 @@
             target = null;
         }
       },
-      true
+      true,
     );
 
     document.addEventListener(
@@ -375,10 +377,10 @@
           },
           function () {
             showChip(false);
-          }
+          },
         );
       },
-      true
+      true,
     );
 
     requestAnimationFrame(frame);

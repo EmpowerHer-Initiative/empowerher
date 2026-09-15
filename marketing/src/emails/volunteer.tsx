@@ -81,7 +81,9 @@ export default function VolunteerEmail({
             >
               New Volunteer Application
             </Text>
-            <Text style={{ margin: "4px 0 0", fontSize: "14px", color: "#6b7280" }}>
+            <Text
+              style={{ margin: "4px 0 0", fontSize: "14px", color: "#6b7280" }}
+            >
               {siteName}
             </Text>
           </Section>

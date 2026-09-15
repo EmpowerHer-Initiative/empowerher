@@ -2,6 +2,7 @@
 // Ports components/marketing/success-stories/stories.tsx
 import ExternalLink from "../../icons/ExternalLink.astro";
 import Reveal from "../home/Reveal.astro";
+import { Region } from "@alisamadiillc/cms-bridge/components";
 import StoryCard from "./StoryCard.astro";
 import QuoteBox from "./QuoteBox.astro";
 import ImpactBox from "./ImpactBox.astro";
@@ -38,59 +39,61 @@ const statIcons = ["Users", "BookOpen", "Award"];
 
 <section class="pb-28 md:pb-40">
   <div class="container">
-    <div class="space-y-10">
-      {
-        stories.map((story) => (
-          <div>
-            <Reveal>
-              <StoryCard
-                logo={story.image}
-                title={story.title}
-                subtitle={story.subtitle}
-                date={story.date}
-                badge={story.badge}
-                stats={(story.stats ?? []).map((s, i) => ({
-                  icon: statIcons[i % statIcons.length],
-                  value: s.value,
-                  label: s.label,
-                }))}
-              >
-                <p class="text-foreground/80 text-base leading-relaxed">
-                  {story.intro}
-                </p>
-                {story.links && story.links.length > 0 && (
-                  <div class="flex flex-col gap-3 sm:flex-row sm:gap-8">
-                    {story.links.map((link) => (
-                      <a
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="text-primary inline-flex items-center gap-1.5 text-base font-medium underline underline-offset-4 transition-opacity hover:opacity-80"
-                      >
-                        {link.label}
-                        <ExternalLink class="size-4" />
-                      </a>
-                    ))}
-                  </div>
-                )}
-                <QuoteBox author={story.quote.author}>
-                  <Fragment set:html={story.quote.body} />
-                </QuoteBox>
-                {story.afterQuote && (
+    <Region type="collection" name="impact-stories">
+      <div class="space-y-10">
+        {
+          stories.map((story) => (
+            <div>
+              <Reveal>
+                <StoryCard
+                  logo={story.image}
+                  title={story.title}
+                  subtitle={story.subtitle}
+                  date={story.date}
+                  badge={story.badge}
+                  stats={(story.stats ?? []).map((s, i) => ({
+                    icon: statIcons[i % statIcons.length],
+                    value: s.value,
+                    label: s.label,
+                  }))}
+                >
                   <p class="text-foreground/80 text-base leading-relaxed">
-                    {story.afterQuote}
+                    {story.intro}
                   </p>
-                )}
-                {story.impact && (
-                  <ImpactBox title={story.impact.title}>
-                    {story.impact.body}
-                  </ImpactBox>
-                )}
-              </StoryCard>
-            </Reveal>
-          </div>
-        ))
-      }
-    </div>
+                  {story.links && story.links.length > 0 && (
+                    <div class="flex flex-col gap-3 sm:flex-row sm:gap-8">
+                      {story.links.map((link) => (
+                        <a
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-primary inline-flex items-center gap-1.5 text-base font-medium underline underline-offset-4 transition-opacity hover:opacity-80"
+                        >
+                          {link.label}
+                          <ExternalLink class="size-4" />
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                  <QuoteBox author={story.quote.author}>
+                    <Fragment set:html={story.quote.body} />
+                  </QuoteBox>
+                  {story.afterQuote && (
+                    <p class="text-foreground/80 text-base leading-relaxed">
+                      {story.afterQuote}
+                    </p>
+                  )}
+                  {story.impact && (
+                    <ImpactBox title={story.impact.title}>
+                      {story.impact.body}
+                    </ImpactBox>
+                  )}
+                </StoryCard>
+              </Reveal>
+            </div>
+          ))
+        }
+      </div>
+    </Region>
   </div>
 </section>

@@ -5,13 +5,14 @@ import AlertTriangle from "../../icons/AlertTriangle.astro";
 
 const formatOptions = [
   {
-    "title": "Stories",
-    "description": "Maximum 900 words (any type of writing; must be your original work and not written by Generative AI)."
+    title: "Stories",
+    description:
+      "Maximum 900 words (any type of writing; must be your original work and not written by Generative AI).",
   },
   {
-    "title": "Poems",
-    "description": "Maximum 40 lines."
-  }
+    title: "Poems",
+    description: "Maximum 40 lines.",
+  },
 ];
 
 const rules = [
@@ -23,7 +24,7 @@ const rules = [
   "Submissions must reflect the writer's own lived experience or personal perspective. Plagiarism or AI-generated content is strictly prohibited.",
   "Writing must align with the theme and purpose of the HerVoice Writing Contest.",
   "Submissions must be respectful and must not include hate speech, harassment, or harmful content.",
-  "All entries must be submitted by the official deadline; late submissions will not be considered."
+  "All entries must be submitted by the official deadline; late submissions will not be considered.",
 ];
 ---
 
@@ -46,9 +47,7 @@ const rules = [
         <Reveal
           class="border-border/60 bg-background rounded-3xl border p-8 shadow-sm"
         >
-          <h3 class="font-serif text-2xl">
-            Format Options
-          </h3>
+          <h3 class="font-serif text-2xl">Format Options</h3>
           <div class="mt-6 space-y-4">
             {
               formatOptions.map((option) => (
@@ -67,7 +66,8 @@ const rules = [
             >
               <AlertTriangle class="mt-0.5 size-5 shrink-0 text-red-600" />
               <p class="text-sm leading-relaxed text-red-800">
-                Submissions that exceed the stated word or line limits will not be accepted.
+                Submissions that exceed the stated word or line limits will not
+                be accepted.
               </p>
             </div>
           </div>
@@ -78,9 +78,7 @@ const rules = [
           class="border-border/60 bg-background rounded-3xl border p-8 shadow-sm"
           delay={80}
         >
-          <h3 class="font-serif text-2xl">
-            Important Rules
-          </h3>
+          <h3 class="font-serif text-2xl">Important Rules</h3>
           <ul class="mt-6 space-y-4">
             {
               rules.map((rule) => (

@@ -26,7 +26,10 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
   const raw = await request.text();
   if (raw.length > MAX_BODY_BYTES) {
-    return json({ error: "That file is too large — please keep your CV under 1 MB" }, 413);
+    return json(
+      { error: "That file is too large — please keep your CV under 1 MB" },
+      413,
+    );
   }
 
   let body: {
@@ -70,7 +73,10 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   }
   // Base64 length ≈ bytes * 4/3.
   if (cvContent.length > (MAX_CV_BYTES * 4) / 3 + 4) {
-    return json({ error: "That file is too large — please keep your CV under 1 MB" }, 413);
+    return json(
+      { error: "That file is too large — please keep your CV under 1 MB" },
+      413,
+    );
   }
 
   const to = CONTACT_EMAIL;

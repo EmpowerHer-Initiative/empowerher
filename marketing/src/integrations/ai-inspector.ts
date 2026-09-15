@@ -91,7 +91,7 @@ function collectInserts(
   node: any,
   buf: Buffer,
   srcPath: string,
-  out: Insert[]
+  out: Insert[],
 ): void {
   if (
     node.type === "element" &&
@@ -160,7 +160,7 @@ export default function aiInspector({
                     // Ordering regression guard: compiled output, not raw source.
                     if (source.includes("astro/compiler-runtime")) {
                       logger.warn(
-                        `ai-src received compiled output for ${id} — skipping (plugin ordering broke)`
+                        `ai-src received compiled output for ${id} — skipping (plugin ordering broke)`,
                       );
                       return null;
                     }
@@ -184,7 +184,7 @@ export default function aiInspector({
                       for (const ins of inserts) {
                         parts.unshift(
                           Buffer.from(ins.text),
-                          buf.subarray(ins.offset, end)
+                          buf.subarray(ins.offset, end),
                         );
                         end = ins.offset;
                       }
@@ -196,7 +196,7 @@ export default function aiInspector({
                     } catch (err) {
                       // Fail-open: an annotation failure must never break a build.
                       logger.warn(
-                        `ai-src skipped ${id}: ${err instanceof Error ? err.message : err}`
+                        `ai-src skipped ${id}: ${err instanceof Error ? err.message : err}`,
                       );
                       return null;
                     }
@@ -211,8 +211,8 @@ export default function aiInspector({
           "page",
           readFileSync(
             new URL("./inspector-client.js", import.meta.url),
-            "utf-8"
-          )
+            "utf-8",
+          ),
         );
 
         injectRoute({

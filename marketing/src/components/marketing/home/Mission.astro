@@ -18,7 +18,9 @@ const paragraphs = [
       <p class="text-primary text-xs font-semibold tracking-[0.3em] uppercase">
         Message From Our Co-Founders
       </p>
-      <h2 class="mt-6 font-serif text-3xl leading-[1.25] md:text-5xl lg:text-6xl">
+      <h2
+        class="mt-6 font-serif text-3xl leading-[1.25] md:text-5xl lg:text-6xl"
+      >
         We see you. We hear you. <span class="cms-hl italic"
           >And we are with you.</span
         >
@@ -26,12 +28,10 @@ const paragraphs = [
       <div
         class="text-muted-foreground mx-auto mt-8 max-w-2xl space-y-5 text-base leading-[1.8] md:text-lg"
       >
-        {paragraphs.map((p) => (<p>{p}</p>))}
+        {paragraphs.map((p) => <p>{p}</p>)}
       </div>
       <div class="mt-8 text-right">
-        <p class="text-foreground font-semibold">
-          Mahdi Rahimi & Nahid Karimi
-        </p>
+        <p class="text-foreground font-semibold">Mahdi Rahimi & Nahid Karimi</p>
         <p class="text-muted-foreground text-sm">– Co-Founders</p>
       </div>
 

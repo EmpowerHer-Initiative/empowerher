@@ -74,7 +74,8 @@ export default function CommentsSection({ slug }: { slug: string }) {
     const message = String(data.get("comment") || "").trim();
 
     const nextErrors: typeof errors = {};
-    if (from.length < 3) nextErrors.name = "Please enter your name (min 3 characters).";
+    if (from.length < 3)
+      nextErrors.name = "Please enter your name (min 3 characters).";
     if (message.length < 3)
       nextErrors.comment = "Please write a comment (min 3 characters).";
     if (Object.keys(nextErrors).length) {
@@ -121,7 +122,12 @@ export default function CommentsSection({ slug }: { slug: string }) {
         </div>
       )}
 
-      <form ref={formRef} onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4" noValidate>
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit}
+        className="mt-8 flex flex-col gap-4"
+        noValidate
+      >
         <div>
           <input
             name="name"
@@ -131,7 +137,9 @@ export default function CommentsSection({ slug }: { slug: string }) {
             aria-invalid={errors.name ? "true" : undefined}
             className="border-border bg-muted/30 text-foreground placeholder:text-muted-foreground/50 focus:border-primary/40 w-full rounded-xl border px-5 py-3.5 text-sm transition-all duration-300 outline-none disabled:opacity-60"
           />
-          {errors.name && <p className="text-destructive mt-2 text-xs">{errors.name}</p>}
+          {errors.name && (
+            <p className="text-destructive mt-2 text-xs">{errors.name}</p>
+          )}
         </div>
         <div>
           <textarea
@@ -146,7 +154,9 @@ export default function CommentsSection({ slug }: { slug: string }) {
             <p className="text-destructive mt-2 text-xs">{errors.comment}</p>
           )}
         </div>
-        {errors.form && <p className="text-destructive text-xs">{errors.form}</p>}
+        {errors.form && (
+          <p className="text-destructive text-xs">{errors.form}</p>
+        )}
         <div className="flex justify-end">
           <button
             type="submit"
