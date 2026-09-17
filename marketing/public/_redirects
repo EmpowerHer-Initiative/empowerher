@@ -1,0 +1,3 @@
+# /admin → external admin app (was vercel.json redirects). 302 (temporary).
+/admin  https://admin.empowerher-initiative.org  302
+/admin/*  https://admin.empowerher-initiative.org/:splat  302

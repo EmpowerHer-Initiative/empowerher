@@ -1,7 +1,7 @@
 import cmsBridge from "@alisamadiillc/cms-bridge/astro";
 // @ts-check
 import { defineConfig, envField } from "astro/config";
-import node from "@astrojs/node";
+import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
@@ -16,11 +16,12 @@ const AI_EDIT_TOKEN = "edit-h4w8rq";
 export default defineConfig({
   site: "https://www.empowerher-initiative.org",
   // Pages stay prerendered; the adapter only serves the /api/* form
-  // endpoints (prerender = false) from the Node standalone server.
-  adapter: node({ mode: "standalone" }),
+  // endpoints (prerender = false) from the Cloudflare Worker.
+  adapter: cloudflare(),
   // Server secrets read at RUNTIME (never baked into dist) — from .env in
-  // dev, from platform env vars (Coolify) in production. All optional so a
-  // Docker build without env succeeds; the API routes guard missing values.
+  // dev, from Worker env (wrangler secrets / dashboard) in production. All
+  // optional so a build without env succeeds; the API routes guard missing
+  // values.
   env: {
     schema: {
       RESEND_API_KEY: envField.string({
