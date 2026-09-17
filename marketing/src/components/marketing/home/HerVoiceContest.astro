@@ -55,7 +55,11 @@ const WINNER_STYLES = [
     offset: "lg:ml-9",
   },
 ];
-const CONTEST_WINNERS = winners.map((w, i) => ({ ...w, ...WINNER_STYLES[i] }));
+const stats = [
+  { value: "300+", label: "Submissions" },
+  { value: "3", label: "Honorees" },
+  { value: "5", label: "Cash Winners" },
+];
 ---
 
 <section
@@ -106,30 +110,12 @@ const CONTEST_WINNERS = winners.map((w, i) => ({ ...w, ...WINNER_STYLES[i] }));
 
         <Reveal delay={360}>
           <div class="mt-8 flex gap-8 md:gap-10">
-            <div>
-              <p class="text-primary font-serif text-4xl md:text-5xl">300+</p>
-              <p
-                class="mt-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase"
-              >
-                Submissions
-              </p>
-            </div>
-            <div>
-              <p class="text-secondary font-serif text-4xl md:text-5xl">3</p>
-              <p
-                class="mt-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase"
-              >
-                Honorees
-              </p>
-            </div>
-            <div>
-              <p class="text-primary font-serif text-4xl md:text-5xl">5</p>
-              <p
-                class="mt-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase"
-              >
-                Cash Winners
-              </p>
-            </div>
+            {stats.map((s, i) => (
+              <div>
+                <p class={`font-serif text-4xl md:text-5xl ${i === 1 ? "text-secondary" : "text-primary"}`}>{s.value}</p>
+                <p class="mt-1.5 text-[11px] font-semibold tracking-[0.12em] text-[#6B7686] uppercase">{s.label}</p>
+              </div>
+            ))}
           </div>
         </Reveal>
 
@@ -150,19 +136,19 @@ const CONTEST_WINNERS = winners.map((w, i) => ({ ...w, ...WINNER_STYLES[i] }));
 
       <div class="flex flex-col gap-4">
         {
-          CONTEST_WINNERS.map((w, i) => (
+          winners.map((w, i) => (
             <Reveal delay={270 + i * 90}>
               <a
-                href={`/hervoice/${w.slug}`}
-                class={`group bg-background text-foreground grid grid-cols-[104px_1fr] items-center gap-5 rounded-2xl p-[18px] shadow-[0_18px_44px_-30px_rgba(0,0,0,.5)] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-x-1.5 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-32px_rgba(0,0,0,.6)] ${w.offset}`}
+                href={`/hervoice/${WINNER_STYLES[i].slug}`}
+                class={`group bg-background text-foreground grid grid-cols-[104px_1fr] items-center gap-5 rounded-2xl p-[18px] shadow-[0_18px_44px_-30px_rgba(0,0,0,.5)] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-x-1.5 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-32px_rgba(0,0,0,.6)] ${WINNER_STYLES[i].offset}`}
               >
-                <StoryCover title={w.title} author={w.name} cover={w.cover} />
+                <StoryCover title={w.title} author={w.name} cover={WINNER_STYLES[i].cover} />
                 <div class="min-w-0">
                   <div class="flex items-baseline justify-between gap-2.5">
                     <span class="truncate text-lg font-bold">{w.name}</span>
                     <span class="flex items-center gap-2">
                       <span
-                        class={`inline-block rounded-md px-2.5 py-1 text-[11px] font-bold tracking-[0.1em] text-white uppercase ${w.ribbon}`}
+                        class={`inline-block rounded-md px-2.5 py-1 text-[11px] font-bold tracking-[0.1em] text-white uppercase ${WINNER_STYLES[i].ribbon}`}
                       >
                         {w.rank}
                       </span>

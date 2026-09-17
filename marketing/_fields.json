@@ -255,7 +255,6 @@
     "stats_qcij"
   ],
   "src/components/marketing/home/ContestSeal.astro": [
-    "text_u17a",
     "text_yzvg",
     "text_bt4j"
   ],
@@ -264,12 +263,9 @@
     "text_lw2r",
     "text_to4z",
     "text_ehz9",
-    "text_ka6l",
-    "text_a5lz",
-    "text_mgtd",
-    "text_dkre",
     "winners_sit4",
-    "WINNER_STYLES_4u89"
+    "WINNER_STYLES_4u89",
+    "stats_w200"
   ],
   "src/components/marketing/home/Hero.astro": [
     "text_n8ed",

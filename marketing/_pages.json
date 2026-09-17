@@ -1075,5 +1075,19 @@
   "text_2ldx": "Born from lived experience.",
   "text_2cjh": "Built for Afghan women.",
   "text_zh07": "Join the",
-  "text_vyxa": "Movement"
+  "text_vyxa": "Movement",
+  "stats_w200": [
+    {
+      "value": "300+",
+      "label": "Submissions"
+    },
+    {
+      "value": "3",
+      "label": "Honorees"
+    },
+    {
+      "value": "5",
+      "label": "Cash Winners"
+    }
+  ]
 }
