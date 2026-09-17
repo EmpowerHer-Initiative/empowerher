@@ -100,7 +100,7 @@ importers:
 packages:
 
   '@alisamadiillc/cms-bridge@file:vendor/cms-bridge-0.9.0.tgz':
-    resolution: {integrity: sha512-F7W8yI86KQQYOVOEqinD6c3Opxr6qw6HWmCqBgQKOyl5sqiNpkINYSWnBtbdURvphmfrOtpSxnWRg+IC5iWsIw==, tarball: file:vendor/cms-bridge-0.9.0.tgz}
+    resolution: {integrity: sha512-3WmqjMKa2iEMv1npfPRTuomX4wlDamC4fTw6S96XMMatAHGaxvq8ijy81OjyYCp/gaXAfoFBbfRFhgPbOXK+iQ==, tarball: file:vendor/cms-bridge-0.9.0.tgz}
     version: 0.9.0
     hasBin: true
     peerDependencies:
