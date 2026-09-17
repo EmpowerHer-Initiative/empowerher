@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "empowerher-marketing",
+  "name": "empowerher",
   "compatibility_date": "2026-09-17",
   // react-email / resend pull in node builtins (stream, buffer) at runtime.
   "compatibility_flags": ["nodejs_compat"],
