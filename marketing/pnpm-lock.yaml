@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@alisamadiillc/cms-bridge':
-        specifier: file:./vendor/cms-bridge-0.9.0.tgz
-        version: file:vendor/cms-bridge-0.9.0.tgz(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))
+        specifier: file:./vendor/cms-bridge-0.9.1.tgz
+        version: file:vendor/cms-bridge-0.9.1.tgz(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))
       '@astrojs/cloudflare':
         specifier: ^14.3.2
         version: 14.3.2(@types/node@25.9.5)(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.4)(wrangler@4.134.0(@types/node@25.9.5))(yaml@2.9.0)
@@ -102,9 +102,9 @@ importers:
 
 packages:
 
-  '@alisamadiillc/cms-bridge@file:vendor/cms-bridge-0.9.0.tgz':
-    resolution: {integrity: sha512-3WmqjMKa2iEMv1npfPRTuomX4wlDamC4fTw6S96XMMatAHGaxvq8ijy81OjyYCp/gaXAfoFBbfRFhgPbOXK+iQ==, tarball: file:vendor/cms-bridge-0.9.0.tgz}
-    version: 0.9.0
+  '@alisamadiillc/cms-bridge@file:vendor/cms-bridge-0.9.1.tgz':
+    resolution: {integrity: sha512-vV71i4bkjUjdXgfbeO0kyOQqtxtqvePmLOIfNyCic/K2AeaLDYLv9f0FXok61ZxmzIOCmIdkB4wA542xDkpeIg==, tarball: file:vendor/cms-bridge-0.9.1.tgz}
+    version: 0.9.1
     hasBin: true
     peerDependencies:
       astro: '>=4.0.0'
@@ -3117,7 +3117,7 @@ packages:
 
 snapshots:
 
-  '@alisamadiillc/cms-bridge@file:vendor/cms-bridge-0.9.0.tgz(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))':
+  '@alisamadiillc/cms-bridge@file:vendor/cms-bridge-0.9.1.tgz(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))':
     dependencies:
       '@astrojs/compiler': 2.13.1
       es-module-lexer: 1.7.0
