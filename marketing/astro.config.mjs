@@ -6,12 +6,6 @@ import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 
-import aiInspector from "./src/integrations/ai-inspector.ts";
-
-// AI Inspector: set enabled:false to fully remove it from public builds.
-// Visiting /<token> turns on the click-to-copy edit overlay for that browser.
-const AI_EDIT_TOKEN = "edit-h4w8rq";
-
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.empowerher-initiative.org",
@@ -52,12 +46,18 @@ export default defineConfig({
     },
   },
   integrations: [
-    // Keep the secret AI-edit activation route out of the public sitemap.
-    sitemap({ filter: (url) => !url.includes(`/${AI_EDIT_TOKEN}`) }),
-    cmsBridge({ auto: true }),
-    // pathPrefix: this repo holds two projects; the Astro site lives in
-    // marketing/, so copied payloads must be repo-relative.
-    // aiInspector({ enabled: true, token: AI_EDIT_TOKEN, pathPrefix: "marketing/" }),
+    sitemap(),
+    cmsBridge({
+      enabled: true,
+      endpoint: "https://pilot.alisamadii.com",
+      repoId: 1247662764,
+      owner: "alisamadiillc",
+      repo: "empowerher",
+      branch: "main",
+      // This repo holds two projects; the Astro site lives in marketing/, so
+      // source refs must be repo-relative for the worker to find files.
+      pathPrefix: "marketing/",
+    }),
     react(),
   ],
   vite: {

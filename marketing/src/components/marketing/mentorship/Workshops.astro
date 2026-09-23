@@ -4,7 +4,6 @@
 // description, image, link). MOCK: representative sample hardcoded inline.
 import ExternalLink from "../../icons/ExternalLink.astro";
 import Reveal from "../home/Reveal.astro";
-import { Region } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   items: {
@@ -42,7 +41,6 @@ const { items } = Astro.props;
     </div>
 
     {/* Alternating image-left / image-right layout */}
-    <Region type="collection" name="workshops">
       <div class="space-y-6">
         {
           items.map((workshop, i) => (
@@ -92,6 +90,5 @@ const { items } = Astro.props;
           ))
         }
       </div>
-    </Region>
   </div>
 </section>

@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@alisamadiillc/cms-bridge':
-        specifier: file:./vendor/cms-bridge-0.9.1.tgz
-        version: file:vendor/cms-bridge-0.9.1.tgz(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))
+        specifier: ^1.0.1
+        version: 1.0.1(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))
       '@astrojs/cloudflare':
         specifier: ^14.3.2
         version: 14.3.2(@types/node@25.9.5)(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.4)(wrangler@4.134.0(@types/node@25.9.5))(yaml@2.9.0)
@@ -102,10 +102,8 @@ importers:
 
 packages:
 
-  '@alisamadiillc/cms-bridge@file:vendor/cms-bridge-0.9.1.tgz':
-    resolution: {integrity: sha512-vV71i4bkjUjdXgfbeO0kyOQqtxtqvePmLOIfNyCic/K2AeaLDYLv9f0FXok61ZxmzIOCmIdkB4wA542xDkpeIg==, tarball: file:vendor/cms-bridge-0.9.1.tgz}
-    version: 0.9.1
-    hasBin: true
+  '@alisamadiillc/cms-bridge@1.0.1':
+    resolution: {integrity: sha512-579dF4xnXfJn190tdQ5bXvG82tjFJ9cAoj0NKY0tsQYRc2LSGWUwqFQ3Ic8PUlCgnGiJIVp4mXIWC8QuiNVj/w==}
     peerDependencies:
       astro: '>=4.0.0'
     peerDependenciesMeta:
@@ -1786,9 +1784,6 @@ packages:
   error-stack-parser-es@1.0.5:
     resolution: {integrity: sha512-5qucVt2XcuGMcEGgWI7i+yZpmpByQ8J1lHhcL7PwqCwu9FPP3VUXzT4ltHe5i2z9dePwEHcDVOAfSnHsOlCXRA==}
 
-  es-module-lexer@1.7.0:
-    resolution: {integrity: sha512-jEQoCwk8hyb2AZziIOLhDqpm5+2ww5uIE6lkO/6jcOCusfk6LhMHpXXfBLXTZ7Ydyt0j4VoUQv6uGNYbdW+kBA==}
-
   es-module-lexer@2.3.1:
     resolution: {integrity: sha512-shc1dbU90Yl/xq1QrC7QRtfcwURZuVRfPhZbDoldJ1cn1gzDvBaBWlv0eFolj5+0znnPJz5TXLxsN77X/12KTA==}
 
@@ -2157,9 +2152,6 @@ packages:
   magic-string@1.2.3:
     resolution: {integrity: sha512-Bpb0W2TbLKOZ7vJnOUnVRGq3WL2p+ISV29M6hYPL1AFCpyKZpdr5ytiXoTSSxRVhg8YW7f65+6gbG8WG6PCa/g==}
 
-  magicast@0.3.5:
-    resolution: {integrity: sha512-L0WhttDl+2BOsybvEOLK7fW3UA0OQ0IQ2d6Zl2x/a6vVRs3bAY0ECOSHHeL5jD+SbOpOCUEi0y1DgHEn9Qn1AQ==}
-
   magicast@0.5.3:
     resolution: {integrity: sha512-pVKE4UdSQ7DvHzivsCIFx2BJn1mHG6KsyrFcaxFx6tONdneEuThrDx0Cj3AMg58KyN4pzYT+LHOotxDQDjNvkw==}
 
@@ -2231,10 +2223,6 @@ packages:
   minipass@7.1.3:
     resolution: {integrity: sha512-tEBHqDnIoM/1rXME1zgka9g6Q2lcoCkxHLuc7ODJ5BxbP5d4c2Z5cGgtXAku59200Cx7diuHTOYfSBD8n6mm8A==}
     engines: {node: '>=16 || 14 >=14.17'}
-
-  mri@1.2.0:
-    resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
-    engines: {node: '>=4'}
 
   mrmime@2.0.1:
     resolution: {integrity: sha512-Y3wQdFg2Va6etvQ5I82yUhGdsKrcYox6p7FfL1LbK2J4V01F9TGlepTIhnK24t7koZibmg82KGglhA1XK5IsLQ==}
@@ -3117,13 +3105,9 @@ packages:
 
 snapshots:
 
-  '@alisamadiillc/cms-bridge@file:vendor/cms-bridge-0.9.1.tgz(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))':
+  '@alisamadiillc/cms-bridge@1.0.1(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))':
     dependencies:
       '@astrojs/compiler': 2.13.1
-      es-module-lexer: 1.7.0
-      magicast: 0.3.5
-      mri: 1.2.0
-      picocolors: 1.1.1
     optionalDependencies:
       astro: 7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0)
 
@@ -4750,8 +4734,6 @@ snapshots:
 
   error-stack-parser-es@1.0.5: {}
 
-  es-module-lexer@1.7.0: {}
-
   es-module-lexer@2.3.1: {}
 
   esbuild@0.28.1:
@@ -5074,12 +5056,6 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  magicast@0.3.5:
-    dependencies:
-      '@babel/parser': 7.29.8
-      '@babel/types': 7.29.8
-      source-map-js: 1.2.1
-
   magicast@0.5.3:
     dependencies:
       '@babel/parser': 7.29.8
@@ -5157,8 +5133,6 @@ snapshots:
   minimist@1.2.8: {}
 
   minipass@7.1.3: {}
-
-  mri@1.2.0: {}
 
   mrmime@2.0.1: {}
 

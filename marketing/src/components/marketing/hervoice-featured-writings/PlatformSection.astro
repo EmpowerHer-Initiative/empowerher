@@ -7,7 +7,6 @@ import Reveal from "../home/Reveal.astro";
 import ChevronLeft from "../../icons/ChevronLeft.astro";
 import ChevronRight from "../../icons/ChevronRight.astro";
 import WritingCard from "./WritingCard.astro";
-import type { CmsField } from "../../../lib/cms-fields";
 
 interface Writing {
   id?: number;
@@ -15,16 +14,13 @@ interface Writing {
   description: string;
   image: string;
   link: string;
-  cmsIndex?: number;
 }
 interface Props {
   id: string;
   platform: string;
   writings: Writing[];
-  /** CMS field path prefix for live-preview highlighting (e.g. "writings"). */
-  cmsPath?: CmsField;
 }
-const { id, platform, writings, cmsPath } = Astro.props;
+const { id, platform, writings } = Astro.props;
 
 const PER_PAGE = 4;
 const totalPages = Math.max(1, Math.ceil(writings.length / PER_PAGE));
@@ -62,7 +58,6 @@ const smSize =
           platform={platform}
           index={i % PER_PAGE}
           page={Math.floor(i / PER_PAGE) + 1}
-          cmsPath={cmsPath}
         />
       ))
     }

@@ -2,7 +2,6 @@
 // Ports components/marketing/success-stories/stories.tsx
 import ExternalLink from "../../icons/ExternalLink.astro";
 import Reveal from "../home/Reveal.astro";
-import { Region } from "@alisamadiillc/cms-bridge/components";
 import StoryCard from "./StoryCard.astro";
 import QuoteBox from "./QuoteBox.astro";
 import ImpactBox from "./ImpactBox.astro";
@@ -39,7 +38,6 @@ const statIcons = ["Users", "BookOpen", "Award"];
 
 <section class="pb-28 md:pb-40">
   <div class="container">
-    <Region type="collection" name="impact-stories">
       <div class="space-y-10">
         {
           stories.map((story) => (
@@ -94,6 +92,5 @@ const statIcons = ["Users", "BookOpen", "Award"];
           ))
         }
       </div>
-    </Region>
   </div>
 </section>

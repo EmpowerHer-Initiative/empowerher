@@ -2,7 +2,6 @@
 // Ports components/marketing/about-us/team.tsx
 import Reveal from "../home/Reveal.astro";
 import TeamMember from "./TeamMember.astro";
-import { Region } from "@alisamadiillc/cms-bridge/components";
 
 interface Member {
   name: string;
@@ -37,7 +36,6 @@ const [executiveTeam, directors, mentorsTeam] = groups;
       </div>
     </Reveal>
 
-    <Region type="collection" name="team">
       <div>
         {
           executiveTeam.members.length > 0 && (
@@ -90,6 +88,5 @@ const [executiveTeam, directors, mentorsTeam] = groups;
           )
         }
       </div>
-    </Region>
   </div>
 </section>

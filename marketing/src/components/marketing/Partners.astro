@@ -2,7 +2,6 @@
 // Shared partners strip, used by the home and about pages.
 // Partner list is synced from the admin DB by scripts/sync-from-db.ts.
 import Reveal from "./home/Reveal.astro";
-import { Region } from "@alisamadiillc/cms-bridge/components";
 
 interface Props {
   partners: { name: string; image: string; link: string }[];
@@ -20,7 +19,6 @@ const { partners } = Astro.props;
           </p>
         </Reveal>
         <Reveal delay={80}>
-          <Region type="collection" name="partners">
             <div class="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16">
               {partners.map((p) => (
                 <a
@@ -40,7 +38,6 @@ const { partners } = Astro.props;
                 </a>
               ))}
             </div>
-          </Region>
         </Reveal>
       </div>
     </section>

@@ -16,14 +16,10 @@
     "typecheck": "astro check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "sync": "tsx scripts/sync-from-db.ts",
-    "cms:init": "npx @alisamadiillc/cms-bridge init",
-    "cms:check": "npx @alisamadiillc/cms-bridge check",
-    "cms:collection": "npx @alisamadiillc/cms-bridge collection",
-    "cms:blog": "npx @alisamadiillc/cms-bridge blog"
+    "sync": "tsx scripts/sync-from-db.ts"
   },
   "dependencies": {
-    "@alisamadiillc/cms-bridge": "file:./vendor/cms-bridge-0.9.1.tgz",
+    "@alisamadiillc/cms-bridge": "^1.0.1",
     "@astrojs/cloudflare": "^14.3.2",
     "@astrojs/react": "^6.0.5",
     "@astrojs/sitemap": "^3.7.3",

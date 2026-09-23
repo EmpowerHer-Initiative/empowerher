@@ -4,7 +4,6 @@
 // image). Client-side pagination (PAGE_SIZE = 10) mirrors the source's useState
 // paging + Reveal.
 import Reveal from "../home/Reveal.astro";
-import { Region } from "@alisamadiillc/cms-bridge/components";
 import MapPin from "../../icons/MapPin.astro";
 import ExternalLink from "../../icons/ExternalLink.astro";
 
@@ -38,7 +37,6 @@ const total = resources.length;
         </p>
       </Reveal>
 
-      <Region type="collection" name="resource-listings">
         <div class="space-y-6">
           {
             resources.map((resource, i) => (
@@ -91,7 +89,6 @@ const total = resources.length;
             ))
           }
         </div>
-      </Region>
 
       <nav
         id="resource-pagination"

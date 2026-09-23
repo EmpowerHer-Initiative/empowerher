@@ -8,7 +8,6 @@ import Reveal from "../../components/marketing/home/Reveal.astro";
 import Header from "../../components/marketing/hervoice-featured-writings/Header.astro";
 import PlatformSection from "../../components/marketing/hervoice-featured-writings/PlatformSection.astro";
 import { featuredWritings, type FeaturedWriting } from "../../lib/collections";
-import { Region } from "@alisamadiillc/cms-bridge/components";
 
 const slugify = (value: string) =>
   value
@@ -36,7 +35,6 @@ const groups = Object.entries(grouped).map(([platform, list]) => ({
 
   <section class="py-28 md:py-40">
     <div class="container">
-      <Region type="collection" name="featured-writings">
         <div class="mx-auto max-w-4xl space-y-24">
           {
             groups.length === 0 ? (
@@ -52,7 +50,6 @@ const groups = Object.entries(grouped).map(([platform, list]) => ({
             )
           }
         </div>
-      </Region>
     </div>
   </section>
 </Layout>

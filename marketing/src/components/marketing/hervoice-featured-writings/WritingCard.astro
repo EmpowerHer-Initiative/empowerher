@@ -4,8 +4,6 @@
 // on the anchor. Extra data-* hooks drive the client-side pagination in
 // PlatformSection.astro.
 import ArrowUpRight from "../../icons/ArrowUpRight.astro";
-import type { CmsField } from "../../../lib/cms-fields";
-import { Text, Image } from "@alisamadiillc/cms-bridge/components";
 
 interface Writing {
   id?: number;
@@ -13,21 +11,14 @@ interface Writing {
   description: string;
   image: string;
   link: string;
-  /** Flat index within the CMS `writings` list (for live-preview highlighting). */
-  cmsIndex?: number;
 }
 interface Props {
   writing: Writing;
   platform: string;
   index?: number;
   page: number;
-  /** CMS field path prefix for live-preview highlighting (e.g. "writings"). */
-  cmsPath?: CmsField;
 }
-const { writing, platform, index = 0, page, cmsPath } = Astro.props;
-const f = (s: string): CmsField | undefined =>
-  cmsPath ? (`${cmsPath}.${s}` as CmsField) : undefined;
-const cmsBase = writing.cmsIndex ?? index;
+const { writing, platform, index = 0, page } = Astro.props;
 const delay = Math.min(index, 3) * 80;
 const style = `opacity:0;transform:translateY(48px);transition:opacity 1.2s cubic-bezier(0.32,0.72,0,1),transform 1.2s cubic-bezier(0.32,0.72,0,1);transition-delay:${delay}ms;will-change:opacity,transform;`;
 ---
@@ -43,12 +34,10 @@ const style = `opacity:0;transform:translateY(48px);transition:opacity 1.2s cubi
   hidden={page !== 1}
   style={style}
   class="group border-border/20 grid gap-5 border-b py-8 last:border-0 sm:grid-cols-[320px_1fr] sm:gap-8 lg:grid-cols-[400px_1fr]"
-  data-cms-field={f(`${cmsBase}.link`)}
 >
   <div class="relative aspect-[16/9] overflow-hidden rounded-xl">
-    <Image
-      field={f(`${cmsBase}.image`)}
-      value={writing.image}
+    <img
+      src={writing.image}
       alt={writing.title}
       loading="lazy"
       decoding="async"
@@ -56,24 +45,20 @@ const style = `opacity:0;transform:translateY(48px);transition:opacity 1.2s cubi
     />
   </div>
   <div class="flex flex-col justify-center">
-    <Text
-      as="span"
+    <span
       class="bg-primary/10 text-primary w-fit rounded-full px-2.5 py-0.5 text-[10px] font-semibold tracking-[0.1em] uppercase"
-      field={f(`${cmsBase}.from`)}
-      value={platform}
-    />
+      >{platform}</span
+    >
     <h3
       class="group-hover:text-primary mt-2 text-base leading-snug font-semibold transition-colors duration-300"
-      data-cms-field={f(`${cmsBase}.title`)}
     >
       &ldquo;{writing.title}&rdquo;
     </h3>
-    <Text
-      as="p"
+    <p
       class="text-muted-foreground mt-2 line-clamp-2 text-sm leading-relaxed"
-      field={f(`${cmsBase}.description`)}
-      value={writing.description}
-    />
+    >
+      {writing.description}
+    </p>
     <span
       class="text-primary mt-3 inline-flex items-center gap-1.5 text-xs font-medium opacity-0 transition-all duration-300 group-hover:opacity-100"
     >
