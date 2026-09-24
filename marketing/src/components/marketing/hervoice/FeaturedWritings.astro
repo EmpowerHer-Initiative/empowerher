@@ -53,47 +53,50 @@ const smSize =
 
     {/* Editorial card grid */}
     <Reveal delay={80}>
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-stories-grid>
-          {
-            stories.map((story, i) => (
-              <a
-                href={`/hervoice/${story.slug}`}
-                data-story-card
-                hidden={i >= PER_PAGE}
-                class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col overflow-hidden rounded-2xl border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl"
-              >
-                <div class="bg-muted relative aspect-[16/10] overflow-hidden">
-                  {story.image && (
-                    <img
-                      src={story.image}
-                      alt={story.title}
-                      loading="lazy"
-                      decoding="async"
-                      class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
-                    />
-                  )}
-                  <span class="bg-background/90 text-foreground absolute top-4 left-4 rounded-full px-3 py-1 font-serif text-xs backdrop-blur-sm">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                <div class="flex flex-1 flex-col p-6">
-                  <p class="group-hover:text-primary font-serif text-xl leading-snug transition-colors duration-300">
-                    &ldquo;{story.title}&rdquo;
+      <div
+        class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        data-collection="hervoice"
+      >
+        {
+          stories.map((story, i) => (
+            <a
+              href={`/hervoice/${story.slug}`}
+              data-story-card
+              hidden={i >= PER_PAGE}
+              class="group border-border/40 bg-background hover:border-primary/30 hover:shadow-primary/5 flex flex-col overflow-hidden rounded-2xl border transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-xl"
+            >
+              <div class="bg-muted relative aspect-[16/10] overflow-hidden">
+                {story.image && (
+                  <img
+                    src={story.image}
+                    alt={story.title}
+                    loading="lazy"
+                    decoding="async"
+                    class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+                  />
+                )}
+                <span class="bg-background/90 text-foreground absolute top-4 left-4 rounded-full px-3 py-1 font-serif text-xs backdrop-blur-sm">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <div class="flex flex-1 flex-col p-6">
+                <p class="group-hover:text-primary font-serif text-xl leading-snug transition-colors duration-300">
+                  &ldquo;{story.title}&rdquo;
+                </p>
+                {story.authorName && (
+                  <p class="text-muted-foreground mt-2 text-sm">
+                    {story.authorName}
                   </p>
-                  {story.authorName && (
-                    <p class="text-muted-foreground mt-2 text-sm">
-                      {story.authorName}
-                    </p>
-                  )}
-                  <span class="text-muted-foreground/50 group-hover:text-primary mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-medium transition-colors duration-300">
-                    Read story
-                    <ArrowRight class="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
-                  </span>
-                </div>
-              </a>
-            ))
-          }
-        </div>
+                )}
+                <span class="text-muted-foreground/50 group-hover:text-primary mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-medium transition-colors duration-300">
+                  Read story
+                  <ArrowRight class="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+                </span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
     </Reveal>
 
     {

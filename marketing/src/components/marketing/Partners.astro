@@ -19,7 +19,7 @@ const { partners } = Astro.props;
           </p>
         </Reveal>
         <Reveal delay={80}>
-            <div class="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16">
+            <div class="mt-12 flex flex-wrap items-center justify-center gap-10 md:gap-16" data-collection="partners">
               {partners.map((p) => (
                 <a
                   href={p.link}

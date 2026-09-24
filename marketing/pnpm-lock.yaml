@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@alisamadiillc/cms-bridge':
-        specifier: ^1.0.1
-        version: 1.0.1(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))
+        specifier: ^1.0.15
+        version: 1.0.15(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))
       '@astrojs/cloudflare':
         specifier: ^14.3.2
         version: 14.3.2(@types/node@25.9.5)(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.4)(wrangler@4.134.0(@types/node@25.9.5))(yaml@2.9.0)
@@ -102,8 +102,8 @@ importers:
 
 packages:
 
-  '@alisamadiillc/cms-bridge@1.0.1':
-    resolution: {integrity: sha512-579dF4xnXfJn190tdQ5bXvG82tjFJ9cAoj0NKY0tsQYRc2LSGWUwqFQ3Ic8PUlCgnGiJIVp4mXIWC8QuiNVj/w==}
+  '@alisamadiillc/cms-bridge@1.0.15':
+    resolution: {integrity: sha512-Nu4V08rWcujFV0njWiXcS2bp4vKK5WfiuCIaZWXAHj88zRJuRHT90V/yyfO3NmGawWocFIjoDsdjHZn+IbA1hQ==}
     peerDependencies:
       astro: '>=4.0.0'
     peerDependenciesMeta:
@@ -3105,7 +3105,7 @@ packages:
 
 snapshots:
 
-  '@alisamadiillc/cms-bridge@1.0.1(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))':
+  '@alisamadiillc/cms-bridge@1.0.15(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))':
     dependencies:
       '@astrojs/compiler': 2.13.1
     optionalDependencies:
