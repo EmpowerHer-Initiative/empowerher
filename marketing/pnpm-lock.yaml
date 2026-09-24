@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@alisamadiillc/cms-bridge':
-        specifier: ^1.0.15
+        specifier: ^1.0.2
         version: 1.0.15(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.9.5)(jiti@2.7.0)(tsx@4.23.4)(yaml@2.9.0))
       '@astrojs/cloudflare':
         specifier: ^14.3.2
