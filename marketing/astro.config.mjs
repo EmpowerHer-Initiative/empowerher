@@ -48,15 +48,7 @@ export default defineConfig({
   integrations: [
     sitemap(),
     cmsBridge({
-      enabled: true,
-      endpoint: "https://pilot.alisamadii.com",
       repoId: 1247662764,
-      owner: "alisamadiillc",
-      repo: "empowerher",
-      branch: "main",
-      // This repo holds two projects; the Astro site lives in marketing/, so
-      // source refs must be repo-relative for the worker to find files.
-      pathPrefix: "marketing/",
     }),
     react(),
   ],
