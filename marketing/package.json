@@ -15,7 +15,8 @@
     "typecheck": "astro check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "sync": "tsx scripts/sync-from-db.ts"
+    "sync": "tsx scripts/sync-from-db.ts",
+    "check": "astro check"
   },
   "dependencies": {
     "@alisamadiillc/cms-bridge": "^1.0.2",
