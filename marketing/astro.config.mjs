@@ -1,4 +1,3 @@
-import cmsBridge from "@alisamadiillc/cms-bridge/astro";
 // @ts-check
 import { defineConfig, envField } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
@@ -45,13 +44,7 @@ export default defineConfig({
       }),
     },
   },
-  integrations: [
-    sitemap(),
-    cmsBridge({
-      repoId: 1247662764,
-    }),
-    react(),
-  ],
+  integrations: [sitemap(), react()],
   vite: {
     plugins: [tailwindcss()],
   },
